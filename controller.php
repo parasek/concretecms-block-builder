@@ -9,7 +9,7 @@ class Controller extends Package
 {
     protected $pkgHandle = 'block_builder';
     protected $appVersionRequired = '8.2.1';
-    protected $pkgVersion = '1.0.3';
+    protected $pkgVersion = '1.0.4';
 
     protected $pkgAutoloaderRegistries = [
         'src/BlockBuilder' => 'BlockBuilder'

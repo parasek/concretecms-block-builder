@@ -1,3 +1,6 @@
+#1.0.4
+Added more info in README.md
+
 #1.0.3
 Block Builder is now free. License changed to MIT.
 
