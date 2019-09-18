@@ -1,0 +1,164 @@
+    private function prepareForViewImage($type, $fields, $options = []) {
+
+        // Options
+        if (!is_array($options)) {
+            $options = [];
+        }
+
+        $defaultOptions = [];
+        $defaultOptions['fullscreen']       = false;
+        $defaultOptions['fullscreenWidth']  = 1920;
+        $defaultOptions['fullscreenHeight'] = 1080;
+        $defaultOptions['fullscreenCrop']   = false;
+
+        $defaultOptions['thumbnail']        = false;
+        $defaultOptions['thumbnailWidth']   = 600;
+        $defaultOptions['thumbnailHeight']  = 450;
+        $defaultOptions['thumbnailCrop']    = true;
+
+        $options = array_merge($defaultOptions, $options);
+
+        // Prepare links/images
+        $keys = array_keys($fields);
+        $fileIDFieldName = $keys[0];
+        $altFieldName    = $keys[1];
+
+        $fileID = $fields[$fileIDFieldName];
+        $alt    = $fields[$altFieldName];
+
+        $fileObject = false;
+        $filename   = '';
+
+        $link   = '';
+        $width  = '';
+        $height = '';
+
+        $fullscreenLink   = '';
+        $fullscreenWidth  = '';
+        $fullscreenHeight = '';
+
+        $thumbnailLink   = '';
+        $thumbnailWidth  = '';
+        $thumbnailHeight = '';
+
+        if (!empty($fileID)) {
+
+            $fileObject = File::getByID($fileID);
+
+            if (is_object($fileObject)) {
+
+                $filename = $fileObject->getFileName();
+
+                if (empty($alt)) {
+                    $alt = $filename;
+                }
+
+                // Original image
+                $link   = $fileObject->getURL();
+                $width  = $fileObject->getAttribute('width');
+                $height = $fileObject->getAttribute('height');
+
+                // Fullscreen image
+                if (!empty($options['fullscreen'])) {
+
+                    $fullscreenWidth  = $options['fullscreenWidth'];
+                    $fullscreenHeight = $options['fullscreenHeight'];
+                    $fullscreenCrop   = $options['fullscreenCrop'];
+
+                    if ($fileObject->canEdit() AND (($width > $fullscreenWidth AND $fullscreenWidth!=false) OR ($height > $fullscreenHeight AND $fullscreenHeight!=false))) {
+
+                        $fullscreen       = $this->app->make('helper/image')->getThumbnail($fileObject, $fullscreenWidth, $fullscreenHeight, $fullscreenCrop);
+                        $fullscreenLink   = $fullscreen->src;
+                        $fullscreenWidth  = $fullscreen->width;
+                        $fullscreenHeight = $fullscreen->height;
+
+                    } else {
+
+                        $fullscreenLink   = $link;
+                        $fullscreenWidth  = $width;
+                        $fullscreenHeight = $height;
+
+                    }
+
+                }
+
+                // Thumbnail image
+                if (!empty($options['thumbnail'])) {
+
+                    $thumbnailWidth  = $options['thumbnailWidth'];
+                    $thumbnailHeight = $options['thumbnailHeight'];
+                    $thumbnailCrop   = $options['thumbnailCrop'];
+
+                    if ($fileObject->canEdit() AND (($width > $thumbnailWidth AND $thumbnailWidth!=false) OR ($height > $thumbnailHeight AND $thumbnailHeight!=false))) {
+
+                        $thumbnail       = $this->app->make('helper/image')->getThumbnail($fileObject, $thumbnailWidth, $thumbnailHeight, $thumbnailCrop);
+                        $thumbnailLink   = $thumbnail->src;
+                        $thumbnailWidth  = $thumbnail->width;
+                        $thumbnailHeight = $thumbnail->height;
+
+                    } else {
+
+                        $thumbnailLink   = $link;
+                        $thumbnailWidth  = $width;
+                        $thumbnailHeight = $height;
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        if ($type == 'view') {
+
+            // Fields from database
+            $this->set($fileIDFieldName, $fileID);
+            $this->set($altFieldName, $alt);
+
+            // Additional data
+            $this->set($fileIDFieldName.'_object', $fileObject);
+            $this->set($fileIDFieldName.'_filename', $filename);
+
+            $this->set($fileIDFieldName.'_link', $link);
+            $this->set($fileIDFieldName.'_width', $width);
+            $this->set($fileIDFieldName.'_height', $height);
+
+            $this->set($fileIDFieldName.'_fullscreenLink', $fullscreenLink);
+            $this->set($fileIDFieldName.'_fullscreenWidth', $fullscreenWidth);
+            $this->set($fileIDFieldName.'_fullscreenHeight', $fullscreenHeight);
+
+            $this->set($fileIDFieldName.'_thumbnailLink', $thumbnailLink);
+            $this->set($fileIDFieldName.'_thumbnailWidth', $thumbnailWidth);
+            $this->set($fileIDFieldName.'_thumbnailHeight', $thumbnailHeight);
+
+        } elseif ($type == 'entry') {
+
+            $entry = [];
+
+            // Fields from database
+            $entry[$fileIDFieldName] = $fileID;
+            $entry[$altFieldName]    = $alt;
+
+            // Additional data
+            $entry[$fileIDFieldName.'_object']   = $fileObject;
+            $entry[$fileIDFieldName.'_filename'] = $filename;
+
+            $entry[$fileIDFieldName.'_link']   = $link;
+            $entry[$fileIDFieldName.'_width']  = $width;
+            $entry[$fileIDFieldName.'_height'] = $height;
+
+            $entry[$fileIDFieldName.'_fullscreenLink']   = $fullscreenLink;
+            $entry[$fileIDFieldName.'_fullscreenWidth']  = $fullscreenWidth;
+            $entry[$fileIDFieldName.'_fullscreenHeight'] = $fullscreenHeight;
+
+            $entry[$fileIDFieldName.'_thumbnailLink']   = $thumbnailLink;
+            $entry[$fileIDFieldName.'_thumbnailWidth']  = $thumbnailWidth;
+            $entry[$fileIDFieldName.'_thumbnailHeight'] = $thumbnailHeight;
+
+            return $entry;
+
+        }
+
+    }
+

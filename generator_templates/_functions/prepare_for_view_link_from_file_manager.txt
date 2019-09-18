@@ -1,0 +1,69 @@
+    private function prepareForViewLinkFromFileManager($type, $fields) {
+
+        $keys = array_keys($fields);
+        $fileIDFieldName = $keys[0];
+        $textFieldName   = $keys[1];
+        $titleFieldName  = $keys[2];
+
+        $fileID = $fields[$fileIDFieldName];
+        $text   = $fields[$textFieldName];
+        $title  = $fields[$titleFieldName];
+
+        $fileObject = false;
+        $filename   = '';
+        $link       = '';
+
+
+        if (!empty($fileID)) {
+
+            $fileObject = File::getByID($fileID);
+
+            if (is_object($fileObject)) {
+
+                $link     = $fileObject->getURL();
+                $filename = $fileObject->getFileName();
+
+                if (empty($text)) {
+                    $text = $filename;
+                }
+
+                if (empty($title)) {
+                    $title = $filename;
+                }
+
+            }
+
+        }
+
+        if ($type == 'view') {
+
+            // Fields from database
+            $this->set($fileIDFieldName, $fileID);
+            $this->set($textFieldName, $text);
+            $this->set($titleFieldName, $title);
+
+            // Additional data
+            $this->set($fileIDFieldName.'_object', $fileObject);
+            $this->set($fileIDFieldName.'_filename', $filename);
+            $this->set($fileIDFieldName.'_link', $link);
+
+        } elseif ($type == 'entry') {
+
+            $entry = [];
+
+            // Fields from database
+            $entry[$fileIDFieldName] = $fileID;
+            $entry[$textFieldName]   = $text;
+            $entry[$titleFieldName]  = $title;
+
+            // Additional data
+            $entry[$fileIDFieldName.'_object'] = $fileObject;
+            $entry[$fileIDFieldName.'_name']   = $filename;
+            $entry[$fileIDFieldName.'_link']   = $link;
+
+            return $entry;
+
+        }
+
+    }
+

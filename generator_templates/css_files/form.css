@@ -1,0 +1,95 @@
+/* Entries - buttons and links */
+.ccm-ui .entries-actions {
+    margin-bottom: 15px;
+}
+
+.ccm-ui .entries-action-button {
+    margin-bottom: 5px;
+    width: 100%;
+}
+
+@media only screen and (min-width: 768px) {
+    .ccm-ui .entries-action-button {
+        width: auto;
+    }
+}
+
+.ccm-ui .entries-actions-links {
+    display: inline-block;
+    margin-top: 14px;
+}
+
+@media only screen and (min-width: 768px) {
+    .ccm-ui .entries-actions-links {
+        margin-top: 0;
+        margin-left: 21px;
+    }
+}
+
+.ccm-ui .entries-action-link {
+    color: #555555;
+    margin-right: 15px;
+}
+
+.ccm-ui .entries-action-link:hover,
+.ccm-ui .entries-action-link:focus {
+    text-decoration: none;
+}
+
+@media only screen and (min-width: 768px) {
+    .ccm-ui .entries-action-link {
+        width: auto;
+    }
+}
+
+/* Well */
+.ccm-ui .entry.well {
+    background: #fff;
+    box-shadow: none;
+}
+
+.ccm-ui .entry-header {
+    position: relative;
+}
+
+.ccm-ui .entry-header-action  {
+    position: absolute;
+    top: 0;
+}
+
+.ccm-ui .entry-header-remove-entry  {
+    right: 0;
+    color: #c34d52;
+    cursor: pointer;
+}
+
+.ccm-ui .entry-header-move-entry  {
+    left: 0;
+    cursor: move;
+    color: #737272;
+}
+
+.ccm-ui .entry-header-toggle-entry  {
+    left: 30px;
+    font-size: 17px;
+    cursor: pointer;
+    color: #737272;
+}
+
+.ccm-ui .entry-header-title {
+    text-align: center;
+    margin: 0 30px 0 60px;
+    overflow: hidden;
+    min-height: 22px;
+}
+
+.ccm-ui .entry-content {
+    border-top: 1px solid #e3e3e3;
+    margin-top: 15px;
+    padding-top: 30px;
+}
+
+div.ui-dialog .ui-dialog-content .entries hr {
+    margin-left: 0;
+    margin-right: 0;
+}

@@ -1,0 +1,37 @@
+    private function prepareForViewExternalLink($type, $fields) {
+
+        $keys = array_keys($fields);
+        $linkFieldName     = $keys[0];
+        $protocolFieldName = $keys[1];
+        $textFieldName     = $keys[2];
+        $titleFieldName    = $keys[3];
+
+        $link     = $fields[$linkFieldName];
+        $protocol = $fields[$protocolFieldName];
+        $text     = $fields[$textFieldName];
+        $title    = $fields[$titleFieldName];
+
+        if ($type == 'view') {
+
+            // Fields from database
+            $this->set($linkFieldName, $link);
+            $this->set($protocolFieldName, $protocol);
+            $this->set($textFieldName, $text);
+            $this->set($titleFieldName, $title);
+
+        } elseif ($type == 'entry') {
+
+            $entry = [];
+
+            // Fields from database
+            $entry[$linkFieldName]     = $link;
+            $entry[$protocolFieldName] = $protocol;
+            $entry[$textFieldName]     = $text;
+            $entry[$titleFieldName]    = $title;
+
+            return $entry;
+
+        }
+
+    }
+
