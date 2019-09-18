@@ -6,9 +6,13 @@ Block Builder is a Concrete5 addon that lets you easily create your own custom b
 
 Min. Concrete5 version: 5.8.2.1
 
-PHP 5.5.9+ (PHP 5.6 or 7 recommended)
+PHP 5.5.9+ (PHP7+ is recommended)
 
-If you want to use block builder for version 5.7 check [Block Builder Legacy](https://github.com/parasek/c5-block-builder-legacy).
+Concrete5 Marketplace: [https://www.concrete5.org/marketplace/addons/block-builder](https://www.concrete5.org/marketplace/addons/block-builder)
+
+GitHub: [https://github.com/parasek/c5-block-builder](https://github.com/parasek/c5-block-builder)
+
+If you are looking for version suited for Concrete5.7, check [Block Builder Legacy](https://github.com/parasek/c5-block-builder-legacy).
 It has almost the same functionality but uses pre-8.0 code/api.
 
 # Features
