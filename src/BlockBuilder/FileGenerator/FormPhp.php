@@ -288,6 +288,18 @@ class FormPhp
 
                 }
 
+                if ($v['fieldType'] == 'date_picker') {
+
+                    $code .= BlockBuilderUtility::tab(2).'<div class="form-group">'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3).'<?php echo $form->label($view->field(\''.$v['handle'].'\'), t(\''.addslashes($v['label']).'\')'.$required.'); ?>'.PHP_EOL;
+                    if ( ! empty($v['helpText'])) {
+                        $code .= BlockBuilderUtility::tab(3) . '<p class="small text-muted"><?php echo t(\''.$v['helpText'].'\'); ?></p>'.PHP_EOL;
+                    }
+                    $code .= BlockBuilderUtility::tab(3).'<?php echo $app->make(\'helper/form/date_time\')->date($view->field(\''.$v['handle'].'\'), $'.$v['handle'].'); ?>'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2).'</div>'.PHP_EOL.PHP_EOL;
+
+                }
+
             }
 
         }
@@ -597,6 +609,23 @@ class FormPhp
                     }
                     $code .= BlockBuilderUtility::tab(6) . '<div id="entry-<%=position%>-' . $v['handle'] . '-html-editor-<?php echo $uniqueID; ?>" data-textarea-id="<?php echo $view->field(\'entry\'); ?>[<%=position%>][' . $v['handle'] . ']" class="js-html-editor" style="height: '.$height.'px; border: 1px solid #dedede;"><%=' . $v['handle'] . '%></div>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(6) . '<textarea id="<?php echo $view->field(\'entry\'); ?>[<%=position%>][' . $v['handle'] . ']" name="<?php echo $view->field(\'entry\'); ?>[<%=position%>][' . $v['handle'] . ']" class="form-control" style="display: none;"><%=' . $v['handle'] . '%></textarea>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL . PHP_EOL;
+
+                }
+
+                if ($v['fieldType'] == 'date_picker') {
+
+                    $code .= BlockBuilderUtility::tab(5) . '<div class="form-group">' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(6) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=position%>][' . $v['handle'] . ']" class="control-label"><?php echo t(\'' . addslashes($v['label']) . '\'); ?>' . $required . '</label>' . PHP_EOL;
+                    if ( ! empty($v['helpText'])) {
+                        $code .= BlockBuilderUtility::tab(6) . '<p class="small text-muted"><?php echo t(\''.$v['helpText'].'\'); ?></p>'.PHP_EOL;
+                    }
+
+                    $code .= BlockBuilderUtility::tab(5) . '<div class="form-group">'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(6) . '<input type="text" id="<?php echo $view->field(\'entry\'); ?>[<%=position%>][' . $v['handle'] . ']" name="<?php echo $view->field(\'entry\'); ?>[<%=position%>][' . $v['handle'] . ']" value="<%=' . $v['handle'] . '%>" class="form-control js-entry-' . $v['handle'] . '-<%=position%>" style="display: none;"/>'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(6) . '<input type="text" id="<?php echo $view->field(\'entry\'); ?>[<%=position%>][' . $v['handle'] . 'Displayed]" name="<?php echo $view->field(\'entry\'); ?>[<%=position%>][' . $v['handle'] . 'Displayed]" value="<%=' . $v['handle'] . 'Displayed%>" class="form-control js-entry-date-displayed" data-date-format="<?php echo $app->make(\'helper/date\')->getJQueryUIDatePickerFormat(\'' . $v['datePickerPattern'] . '\'); ?>" data-target-field="' . $v['handle'] . '" data-position="<%=position%>" />'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5) . '</div>'.PHP_EOL;
+
                     $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL . PHP_EOL;
 
                 }
