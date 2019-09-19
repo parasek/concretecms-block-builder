@@ -112,7 +112,7 @@ class Validation
                         $urlEnding = '/inspect/'.$blockType->getBlockTypeID();
                     }
 
-                    $errors[] = t('Block with that handle is already installed. <a href="%s" target="_blank" rel="noopener">Uninstall it</a> first or use another handle (%s).',  $this->resolverManager->resolve(['dashboard/blocks/types'.$urlEnding]), t('Block settings'));
+                    $errors[] = t('Block with that handle is already installed. <a href="%s" target="_blank" rel="noopener">Uninstall it</a> first and then build block again or use another handle (%s).',  $this->resolverManager->resolve(['dashboard/blocks/types'.$urlEnding]), t('Block settings'));
                     $fieldsWithError[] = 'blockHandle';
                     $tabsWithError[] = 'block-settings';
 

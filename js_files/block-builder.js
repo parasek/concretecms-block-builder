@@ -155,9 +155,11 @@ $(function() {
                 templateData['imageFullscreenHeight']      = 1080;
                 templateData['imageFullscreenCrop']        = 0;
 
-
                 // html_editor
                 templateData['htmlEditorHeight'] = '';
+
+                // date_picker
+                templateData['datePickerPattern'] = 'd.m.Y';
 
                 entriesContainer.append(template(templateData));
                 var newField = entriesContainer.children(':last');

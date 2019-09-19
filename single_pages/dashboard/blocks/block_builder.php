@@ -603,6 +603,21 @@
                             </div>
                         <% } %>
 
+                        <% if (fieldType == 'date_picker') { %>
+                            <div class="<% if (error['datePickerPattern']!=undefined) { %>has-error<% } %>">
+                                <label for="<%=groupHandle%>[<%=counter%>][datePickerPattern]" class="control-label"><?php echo t('PHP Date Pattern'); ?></label>
+                                <p class="small text-muted">
+                                    <?php echo t('Check %sphp manual%s for available formats. Examples: <code>d.m.Y</code>, <code>d-m-Y</code>, <code>Y-m-d</code>, <code>m-d-Y</code>, <code>m/d/Y</code>', '<a href="https://www.php.net/manual/en/function.date.php" target="_blank" rel="noopener noreferrer">','</a>'); ?>
+                                </p>
+                                <input type="text"
+                                       id="<%=groupHandle%>[<%=counter%>][datePickerPattern]"
+                                       name="<%=groupHandle%>[<%=counter%>][datePickerPattern]"
+                                       class="form-control"
+                                       value="<%=datePickerPattern%>"
+                                />
+                            </div>
+                        <% } %>
+
                     </div>
 
                 <% } %>

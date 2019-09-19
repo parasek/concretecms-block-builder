@@ -162,6 +162,16 @@ class ViewPhp
 
                 }
 
+                if ($v['fieldType']=='date_picker') {
+
+                    $code .= '<?php if (!empty($'.$v['handle'].')): ?>'.PHP_EOL.PHP_EOL;
+
+                    $code .= BlockBuilderUtility::tab(1).'<?php echo date(\''.$v['datePickerPattern'].'\', strtotime($'.$v['handle'].')); ?>'.PHP_EOL.PHP_EOL;
+
+                    $code .= '<?php endif; ?>'.PHP_EOL.PHP_EOL;
+
+                }
+
             }
 
         }
@@ -316,6 +326,16 @@ class ViewPhp
                     $code .= BlockBuilderUtility::tab(3).'<?php echo $entry[\''.$v['handle'].'\']; ?>'.PHP_EOL;
 
                     $code .= BlockBuilderUtility::tab(2).'<?php endif; ?>'.PHP_EOL.PHP_EOL.PHP_EOL;
+
+                }
+
+                if ($v['fieldType']=='date_picker') {
+
+                    $code .= BlockBuilderUtility::tab(2).'<?php if (!empty($entry[\''.$v['handle'].'\'])): ?>'.PHP_EOL.PHP_EOL;
+
+                    $code .= BlockBuilderUtility::tab(3).'<?php echo date(\''.$v['datePickerPattern'].'\', strtotime($entry[\''.$v['handle'].'\'])); ?>'.PHP_EOL.PHP_EOL;
+
+                    $code .= BlockBuilderUtility::tab(2).'<?php endif; ?>'.PHP_EOL.PHP_EOL;
 
                 }
 

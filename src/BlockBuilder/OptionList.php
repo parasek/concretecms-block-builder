@@ -35,6 +35,7 @@ class OptionList
         $options['external_link']          = t('External Link');
         $options['image']                  = t('Image');
         $options['html_editor']            = t('HTML Editor');
+        $options['date_picker']            = t('Date Picker');
 
         return $options;
 

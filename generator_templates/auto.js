@@ -51,6 +51,30 @@ $(function() {
 
         }
 
+        function activateDatePickers(parentContainer) {
+
+            var datePickers = parentContainer.find('.js-entry-date-displayed');
+            datePickers.each(function(i, item) {
+                var position = $(item).attr('data-position');
+                var dateFormat = $(item).attr('data-date-format');
+                var targetField = $(item).attr('data-target-field');
+                $(item).datepicker({
+                    dateFormat: dateFormat,
+                    altFormat: 'yy-mm-dd',
+                    altField: '.js-entry-'+targetField+'-'+position,
+                    changeYear: true,
+                    showAnim: 'fadeIn',
+                    yearRange: 'c-100:c+10',
+                    onClose: function(dateText, inst) {
+                        if(!dateText) {
+                            $(inst.settings.altField).val('');
+                        }
+                    }
+                });
+            });
+
+        }
+
         function countEntries(parentContainer) {
 
             var numberOfEntries = parentContainer.children().length;
@@ -88,6 +112,8 @@ $(function() {
         activateFileSelectors(formContainer);
 
         activateHtmlEditors(formContainer);
+
+        activateDatePickers(formContainer);
 
         // Add entry
         formContainer.on('click', '.js-add-entry', function(e) {
@@ -128,6 +154,8 @@ $(function() {
             activateFileSelectors(newEntry);
 
             activateHtmlEditors(newEntry);
+
+            activateDatePickers(newEntry);
 
             // Smooth scroll
             $(this).closest('.ui-dialog-content').animate({

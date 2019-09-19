@@ -252,6 +252,18 @@ class ControllerPhp
 
             $code .= BlockBuilderUtility::tab(2).'// Get entry column names'.PHP_EOL;
             $code .= BlockBuilderUtility::tab(2).'$entryColumnNames = $this->getEntryColumnNames();'.PHP_EOL;
+
+            if ($postDataSummary['datePickerUsed_entry']) {
+                $code .= PHP_EOL;
+                $code .= BlockBuilderUtility::tab(2).'// Fields that don\'t exist in database, but are required in repeatable entry'.PHP_EOL;
+                foreach ($postData['entries'] as $k => $v) {
+                    if ($v['fieldType'] == 'date_picker') {
+                        $code .= BlockBuilderUtility::tab(2) . '$entryColumnNames[] = \'' . $v['handle'] . 'Displayed\';' . PHP_EOL;
+                    }
+                }
+                $code .= PHP_EOL;
+            }
+
             $code .= BlockBuilderUtility::tab(2).'$this->set(\'entryColumnNames\', $entryColumnNames);'.PHP_EOL.PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(2).'// Load form.css'.PHP_EOL;
@@ -495,6 +507,8 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(2).'$args[\''.$v['handle'].'\'] '.BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength).'= $args[\''.$v['handle'].'\'];'.PHP_EOL;
                 } else if (in_array($v['fieldType'], ['link_from_sitemap', 'link_from_file_manager', 'image'])) {
                     $code .= BlockBuilderUtility::tab(2).'$args[\''.$v['handle'].'\'] '.BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength).'= intval($args[\''.$v['handle'].'\']);'.PHP_EOL;
+                } else if ($v['fieldType']=='date_picker') {
+                    $code .= BlockBuilderUtility::tab(2).'$args[\''.$v['handle'].'\'] '.BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength).'= !empty($args[\''.$v['handle'].'\']) ? $this->app->make(\'helper/form/date_time\')->translate(\''.$v['handle'].'\') : null;'.PHP_EOL;
                 } else {
                     $code .= BlockBuilderUtility::tab(2).'$args[\''.$v['handle'].'\'] '.BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength).'= trim($args[\''.$v['handle'].'\']);'.PHP_EOL;
                 }
@@ -597,6 +611,8 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(4) . '$data[\''.$v['handle'].'\'] '.BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength).'= $entry[\''.$v['handle'].'\'];'.PHP_EOL;
                 } else if (in_array($v['fieldType'], ['link_from_sitemap', 'link_from_file_manager', 'image'])) {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\''.$v['handle'].'\'] '.BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength).'= intval($entry[\''.$v['handle'].'\']);'.PHP_EOL;
+                } else if ($v['fieldType']=='date_picker') {
+                    $code .= BlockBuilderUtility::tab(4).'$data[\''.$v['handle'].'\'] '.BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength).'= !empty($entry[\''.$v['handle'].'\']) ? $this->app->make(\'helper/form/date_time\')->translate(\''.$v['handle'].'\', $entry) : null;'.PHP_EOL;
                 } else {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\''.$v['handle'].'\'] '.BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength).'= trim($entry[\''.$v['handle'].'\']);'.PHP_EOL;
                 }
@@ -834,6 +850,11 @@ class ControllerPhp
             foreach ($postData['entries'] as $k => $v) {
                 if ($v['fieldType'] == 'image' OR $v['fieldType'] == 'link_from_file_manager') {
                     $code .= BlockBuilderUtility::tab(3).'$entry[\''.$v['handle'].'\'] = (is_object(File::getByID($entry[\''.$v['handle'].'\']))) ? $entry[\''.$v['handle'].'\'] : 0;'.PHP_EOL;
+                }
+            }
+            foreach ($postData['entries'] as $k => $v) {
+                if ($v['fieldType'] == 'date_picker') {
+                    $code .= BlockBuilderUtility::tab(3).'$entry[\''.$v['handle'].'Displayed\'] = (!empty($entry[\''.$v['handle'].'\'])) ? date(\''.$v['datePickerPattern'].'\', strtotime($entry[\''.$v['handle'].'\'])) : null;'.PHP_EOL;
                 }
             }
             $code .= BlockBuilderUtility::tab(3).'$modifiedEntries[] = $entry;'.PHP_EOL;
