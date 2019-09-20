@@ -59,27 +59,34 @@
             </div>
 
             <div class="row">
-                <div class="col-md-3 form-group <?php in_array('blockWidth', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <div class="col-md-4 form-group <?php in_array('blockWidth', $fieldsWithError) ? print 'has-error' : false; ?>">
                     <?php echo $form->label('blockWidth', t('Block width').' *'); ?>
                     <div class="input-group">
                         <?php echo $form->text('blockWidth', $blockWidth); ?>
                         <span class="input-group-addon">px</span>
                     </div>
                 </div>
-                <div class="col-md-3 form-group <?php in_array('blockHeight', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <div class="col-md-4 form-group <?php in_array('blockHeight', $fieldsWithError) ? print 'has-error' : false; ?>">
                     <?php echo $form->label('blockHeight', t('Block height').' *'); ?>
                     <div class="input-group">
                         <?php echo $form->text('blockHeight', $blockHeight); ?>
                         <span class="input-group-addon">px</span>
                     </div>
                 </div>
-                <div class="col-md-3 form-group <?php in_array('blockTypeSet', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <div class="col-md-4 form-group <?php in_array('blockTypeSet', $fieldsWithError) ? print 'has-error' : false; ?>">
                     <?php echo $form->label('blockTypeSet', t('Block type set')); ?>
                     <?php echo $form->select('blockTypeSet', $blockTypeSets, $blockTypeSet); ?>
                 </div>
-                <div class="col-md-3 form-group <?php in_array('entriesAsFirstTab', $fieldsWithError) ? print 'has-error' : false; ?>">
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 form-group <?php in_array('entriesAsFirstTab', $fieldsWithError) ? print 'has-error' : false; ?>">
                     <?php echo $form->label('entriesAsFirstTab', t('Entries as first tab')); ?>
                     <?php echo $form->select('entriesAsFirstTab', $entriesAsFirstTabOptions, $entriesAsFirstTab); ?>
+                </div>
+                <div class="col-md-6 form-group <?php in_array('maxNumberOfEntries', $fieldsWithError) ? print 'has-error' : false; ?>">
+                    <?php echo $form->label('maxNumberOfEntries', t('Max. number of entries').' '.t('(0 for unlimited)')); ?>
+                    <?php echo $form->number('maxNumberOfEntries', $maxNumberOfEntries); ?>
                 </div>
             </div>
 
@@ -140,6 +147,11 @@
             <div class="form-group <?php in_array('noEntriesFoundLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
                 <?php echo $form->label('noEntriesFoundLabel', t('No entries found.')); ?>
                 <?php echo $form->text('noEntriesFoundLabel', $noEntriesFoundLabel, ['data-translated-text'=>t('No entries found.'), 'data-untranslated-text'=>'No entries found.']); ?>
+            </div>
+
+            <div class="form-group <?php in_array('maxNumberOfEntriesLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('maxNumberOfEntriesLabel', t('Max. number of entries')); ?>
+                <?php echo $form->text('maxNumberOfEntriesLabel', $maxNumberOfEntriesLabel, ['data-translated-text'=>t('Max. number of entries'), 'data-untranslated-text'=>'Max. number of entries']); ?>
             </div>
 
             <div class="form-group <?php in_array('areYouSureLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
