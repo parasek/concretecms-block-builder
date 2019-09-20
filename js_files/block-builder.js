@@ -274,11 +274,7 @@ $(function() {
 
             if (confirmQuestion == true) {
 
-                var entries = $(entriesContainer).find('.js-entry');
-
-                entries.each(function(i, item) {
-                    $(item).remove();
-                });
+                entriesContainer.html('');
 
                 $(entriesContainer).append(templateNoEntries());
 
