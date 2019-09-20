@@ -107,6 +107,16 @@
     color: #555555;
 }
 
+.ccm-ui .checkbox.entries-action-scroll {
+    display: inline;
+}
+
+@media only screen and (min-width: 1280px) {
+    .ccm-ui .checkbox.entries-action-scroll {
+        margin-right: 62px;
+    }
+}
+
 .ccm-ui .entries-action-remove-all {
     color: #c34d52;
     white-space: nowrap;

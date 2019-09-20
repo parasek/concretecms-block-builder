@@ -169,9 +169,11 @@ $(function() {
                 selectedFieldType.val('');
 
                 // Smooth scroll
-                $('html').animate({
-                    scrollTop: entriesContainer.find('.js-entry[data-counter="'+counter+'"]').position().top-50 + entriesContainer.scrollTop()
-                });
+                if ( ! $.cookie('scrollDisabled')) {
+                    $('html').animate({
+                        scrollTop: entriesContainer.find('.js-entry[data-counter="'+counter+'"]').position().top-50 + entriesContainer.scrollTop()
+                    });
+                }
 
             }
 
@@ -225,6 +227,19 @@ $(function() {
                 $(this).find('i').addClass('fa-minus-square-o');
                 $(this).attr('data-action', 'collapse');
 
+            }
+
+        };
+
+        // Toggle scroll
+        var toggleScroll = function(e) {
+
+            if ( ! $(this).is(':checked')) {
+                $('.js-toggle-scroll').prop('checked', false);
+                $.cookie('scrollDisabled', 1, { expires : 180 });
+            } else {
+                $('.js-toggle-scroll').prop('checked', true);
+                $.cookie('scrollDisabled', 1, { expires : -1 });
             }
 
         };
@@ -511,6 +526,7 @@ $(function() {
             bbContainer.on('change', '.js-add-entry', addEntry);
             bbContainer.on('click',  '.js-remove-entry', removeEntry);
             bbContainer.on('click',  '.js-toggle-entry', toggleEntry);
+            bbContainer.on('click',  '.js-toggle-scroll', toggleScroll);
             bbContainer.on('click',  '.js-expand-all', expandAllEntries);
             bbContainer.on('click',  '.js-collapse-all', collapseAllEntries);
             bbContainer.on('click',  '.js-remove-all', removeAllEntries);
