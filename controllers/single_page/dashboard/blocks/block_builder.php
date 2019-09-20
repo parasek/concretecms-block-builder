@@ -111,6 +111,9 @@ class BlockBuilder extends DashboardPageController
         $blockTypeSets = $blockBuilderOptionList->getBlockTypeSets();
         $this->set('blockTypeSets', $blockTypeSets);
 
+        $entriesAsFirstTabOptions = $blockBuilderOptionList->getEntriesAsFirstTabOptions();
+        $this->set('entriesAsFirstTabOptions', $entriesAsFirstTabOptions);
+
         $dividerOptions = $blockBuilderOptionList->getDividerOptions();
         $this->set('dividerOptions', $dividerOptions);
 

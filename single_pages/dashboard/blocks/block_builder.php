@@ -59,23 +59,27 @@
             </div>
 
             <div class="row">
-                <div class="col-md-4 form-group <?php in_array('blockWidth', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <div class="col-md-3 form-group <?php in_array('blockWidth', $fieldsWithError) ? print 'has-error' : false; ?>">
                     <?php echo $form->label('blockWidth', t('Block width').' *'); ?>
                     <div class="input-group">
                         <?php echo $form->text('blockWidth', $blockWidth); ?>
                         <span class="input-group-addon">px</span>
                     </div>
                 </div>
-                <div class="col-md-4 form-group <?php in_array('blockHeight', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <div class="col-md-3 form-group <?php in_array('blockHeight', $fieldsWithError) ? print 'has-error' : false; ?>">
                     <?php echo $form->label('blockHeight', t('Block height').' *'); ?>
                     <div class="input-group">
                         <?php echo $form->text('blockHeight', $blockHeight); ?>
                         <span class="input-group-addon">px</span>
                     </div>
                 </div>
-                <div class="col-md-4 form-group <?php in_array('blockTypeSet', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <div class="col-md-3 form-group <?php in_array('blockTypeSet', $fieldsWithError) ? print 'has-error' : false; ?>">
                     <?php echo $form->label('blockTypeSet', t('Block type set')); ?>
                     <?php echo $form->select('blockTypeSet', $blockTypeSets, $blockTypeSet); ?>
+                </div>
+                <div class="col-md-3 form-group <?php in_array('entriesAsFirstTab', $fieldsWithError) ? print 'has-error' : false; ?>">
+                    <?php echo $form->label('entriesAsFirstTab', t('Entries as first tab')); ?>
+                    <?php echo $form->select('entriesAsFirstTab', $entriesAsFirstTabOptions, $entriesAsFirstTab); ?>
                 </div>
             </div>
 
