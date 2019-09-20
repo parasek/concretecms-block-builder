@@ -119,6 +119,9 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(4) . '.js-custom-editor-height-<?php echo str_replace([\'[\', \']\'], [\'\[\', \'\]\'], $view->field(\'' . $v['handle'] . '\')); ?>-<?php echo $uniqueID; ?> .cke_contents {' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(5) . 'height: '.$height.'px !important;' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(4) . '}' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(4) . '.js-custom-editor-height-<?php echo str_replace([\'[\', \']\'], [\'\[\', \'\]\'], $view->field(\'' . $v['handle'] . '\')); ?>-<?php echo $uniqueID; ?> .cke_editable {' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . 'min-height: '.$height.'px !important;' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(4) . '}' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(3) . '</style>' . PHP_EOL;
                     }
                     $code .= BlockBuilderUtility::tab(2).'</div>'.PHP_EOL.PHP_EOL;
@@ -463,6 +466,9 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(6) . '<style>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . '.js-custom-editor-height-<?php echo str_replace([\'[\', \']\'], [\'\[\', \'\]\'], $view->field(\'entry\').\'[<%=position%>][' . $v['handle'] . ']\'); ?>-<?php echo $uniqueID; ?> .cke_contents {' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(8) . 'height: '.$height.'px !important;' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '}' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '.js-custom-editor-height-<?php echo str_replace([\'[\', \']\'], [\'\[\', \'\]\'], $view->field(\'entry\').\'[<%=position%>][' . $v['handle'] . ']\'); ?>-<?php echo $uniqueID; ?> .cke_editable {' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . 'min-height: '.$height.'px !important;' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . '}' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(6) . '</style>' . PHP_EOL;
                     }
