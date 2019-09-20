@@ -333,6 +333,9 @@ class FormPhp
             $code .= BlockBuilderUtility::tab(4) . '<a href="#" class="entries-action-link js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t(\''.addslashes($postData['expandAllLabel']).'\'); ?></a>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(4) . '<a href="#" class="entries-action-link js-collapse-all"><i class="fa fa-minus-square-o"></i> <?php echo t(\''.addslashes($postData['collapseAllLabel']).'\'); ?></a>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(3) . '</span>' . PHP_EOL;
+            if (!empty($postData['maxNumberOfEntries'])) {
+                $code .= BlockBuilderUtility::tab(3) . '<span class="entries-actions-counter"><i class="fa fa-question-circle" title="<?php echo t(\''.$postData['maxNumberOfEntriesLabel'].'\'); ?>"></i> <span class="js-number-of-entries">0</span>/<span class="js-max-number-of-entries">'.$postData['maxNumberOfEntries'].'</span></span>' . PHP_EOL;
+            }
             $code .= BlockBuilderUtility::tab(2) . '</div>' . PHP_EOL . PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(2) . '<div class="entries" id="entries-<?php echo $uniqueID; ?>" data-entries="<?php echo h(json_encode($entries)); ?>" data-column-names="<?php echo h(json_encode($entryColumnNames)); ?>"></div>' . PHP_EOL . PHP_EOL;
@@ -344,6 +347,9 @@ class FormPhp
             $code .= BlockBuilderUtility::tab(4) . '<a href="#" class="entries-action-link js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t(\''.addslashes($postData['expandAllLabel']).'\'); ?></a>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(4) . '<a href="#" class="entries-action-link js-collapse-all"><i class="fa fa-minus-square-o"></i> <?php echo t(\''.addslashes($postData['collapseAllLabel']).'\'); ?></a>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(3) . '</span>' . PHP_EOL;
+            if (!empty($postData['maxNumberOfEntries'])) {
+                $code .= BlockBuilderUtility::tab(3) . '<span class="entries-actions-counter"><i class="fa fa-question-circle" title="<?php echo t(\''.$postData['maxNumberOfEntriesLabel'].'\'); ?>"></i> <span class="js-number-of-entries">0</span>/<span>'.$postData['maxNumberOfEntries'].'</span></span>' . PHP_EOL;
+            }
             $code .= BlockBuilderUtility::tab(2) . '</div>' . PHP_EOL . PHP_EOL;
 
         }

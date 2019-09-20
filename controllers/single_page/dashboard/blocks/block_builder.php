@@ -124,6 +124,7 @@ class BlockBuilder extends DashboardPageController
         $this->set('blockWidth', 800);
         $this->set('blockHeight', 650);
         $this->set('installBlock', 1);
+        $this->set('maxNumberOfEntries', 0);
 
         $this->set('basicLabel', t('Basic information'));
         $this->set('entriesLabel', t('Entries'));
@@ -132,6 +133,7 @@ class BlockBuilder extends DashboardPageController
         $this->set('collapseAllLabel', t('Collapse all'));
         $this->set('expandAllLabel', t('Expand all'));
         $this->set('noEntriesFoundLabel', t('No entries found.'));
+        $this->set('maxNumberOfEntriesLabel', t('Max. number of entries'));
         $this->set('requiredFieldsLabel', t('Required fields'));
         $this->set('urlEndingLabel', t('Custom string at the end of URL'));
         $this->set('urlEndingHelpText', t('(e.g. #contact-form or ?ccm_paging_p=2)'));
