@@ -24,7 +24,7 @@ class OptionList
 
     public function getEntriesAsFirstTabOptions() {
 
-        $options = array();
+        $options = [];
         $options[0] = t('No');
         $options[1] = t('Yes');
 

@@ -169,9 +169,9 @@ $(function() {
                 selectedFieldType.val('');
 
                 // Smooth scroll
-                $('body').animate({
+                $('html').animate({
                     scrollTop: entriesContainer.find('.js-entry[data-counter="'+counter+'"]').position().top-50 + entriesContainer.scrollTop()
-            });
+                });
 
             }
 
@@ -258,6 +258,31 @@ $(function() {
             toggleButtons.find('i').removeClass('fa-plus-square-o');
             toggleButtons.find('i').addClass('fa-minus-square-o');
             toggleButtons.attr('data-action', 'collapse');
+
+        };
+
+        // Remove all entries
+        var removeAllEntries = function(e) {
+
+            e.preventDefault();
+
+            var confirmText = $(this).attr('data-confirm-text');
+            var groupHandle = $(this).attr('data-group-handle');
+            var entriesContainer = $('#field-types-'+groupHandle);
+
+            var confirmQuestion = confirm(confirmText);
+
+            if (confirmQuestion == true) {
+
+                var entries = $(entriesContainer).find('.js-entry');
+
+                entries.each(function(i, item) {
+                    $(item).remove();
+                });
+
+                $(entriesContainer).append(templateNoEntries());
+
+            }
 
         };
 
@@ -492,6 +517,7 @@ $(function() {
             bbContainer.on('click',  '.js-toggle-entry', toggleEntry);
             bbContainer.on('click',  '.js-expand-all', expandAllEntries);
             bbContainer.on('click',  '.js-collapse-all', collapseAllEntries);
+            bbContainer.on('click',  '.js-remove-all', removeAllEntries);
             bbContainer.on('input',  '.js-entry-title-source', changeEntryTitle);
             bbContainer.on('click',  '.js-populate-translation-fields', populateTranslationFields);
             bbContainer.on('change', '.js-use-field-as-title-in-repeatable-entries', useFieldAsTitleInRepeatableEntries);
