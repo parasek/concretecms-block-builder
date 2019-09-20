@@ -20,8 +20,13 @@ class FormPhp
         if ( ! empty($postData['basic']) AND ! empty($postData['entries'])) {
             $code .= BlockBuilderUtility::tab(1).'<?php'.PHP_EOL;
             $code .= BlockBuilderUtility::tab(1).'echo $app->make(\'helper/concrete/ui\')->tabs(['.PHP_EOL;
+            if (!empty($postData['entriesAsFirstTab'])) {
+            $code .= BlockBuilderUtility::tab(2).'[\'entries-\'.$uniqueID, t(\''.addslashes($postData['entriesLabel']).'\'), true],'.PHP_EOL;
+            $code .= BlockBuilderUtility::tab(2).'[\'basic-information-\'.$uniqueID, t(\''.addslashes($postData['basicLabel']).'\')]'.PHP_EOL;
+            } else {
             $code .= BlockBuilderUtility::tab(2).'[\'basic-information-\'.$uniqueID, t(\''.addslashes($postData['basicLabel']).'\'), true],'.PHP_EOL;
             $code .= BlockBuilderUtility::tab(2).'[\'entries-\'.$uniqueID, t(\''.addslashes($postData['entriesLabel']).'\')]'.PHP_EOL;
+            }
             $code .= BlockBuilderUtility::tab(1).']);'.PHP_EOL;
             $code .= BlockBuilderUtility::tab(1).'?>'.PHP_EOL.PHP_EOL;
         }

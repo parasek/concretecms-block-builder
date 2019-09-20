@@ -22,6 +22,16 @@ class OptionList
 
     }
 
+    public function getEntriesAsFirstTabOptions() {
+
+        $options = array();
+        $options[0] = t('No');
+        $options[1] = t('Yes');
+
+        return $options;
+
+    }
+
     public function getFieldTypes() {
 
         $options = [];
