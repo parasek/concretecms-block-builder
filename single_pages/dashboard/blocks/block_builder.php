@@ -194,14 +194,22 @@
         <div class="ccm-tab-content" id="ccm-tab-content-tab-basic-information">
 
             <div class="row">
-                <div class="col-md-4 form-group">
+                <div class="col-md-3 form-group">
                     <select class="js-add-entry form-control" data-group-handle="basic">
                         <?php foreach ($fieldTypes as $k => $v): ?>
                             <option value="<?php echo h($k); ?>"><?php echo h($v); ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="col-md-8 form-group entries-actions">
+                <div class="col-md-9 form-group entries-actions">
+                    <div class="entries-action entries-action-scroll checkbox">
+                        <label><input type="checkbox"
+                               name="scroll"
+                               class="js-toggle-scroll"
+                               value="1"
+                               <?php if (empty($_COOKIE['scrollDisabled'])): ?>checked="checked"<?php endif; ?>
+                        ><?php echo t('Scroll down'); ?></label>
+                    </div>
                     <a href="#" class="entries-action js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t('Expand all'); ?></a>
                     <a href="#" class="entries-action js-collapse-all"><i class="fa fa-minus-square-o"></i> <?php echo t('Collapse all'); ?></a>
                     <a href="#" class="entries-action entries-action-remove-all js-remove-all" data-group-handle="basic" data-confirm-text="<?php echo t('Are you sure?'); ?>"><i class="fa fa-times"></i> <?php echo t('Remove all'); ?></a>
@@ -213,14 +221,22 @@
             </div>
 
             <div class="row">
-                <div class="col-md-4 form-group">
+                <div class="col-md-3 form-group">
                     <select class="js-add-entry form-control" data-group-handle="basic">
                         <?php foreach ($fieldTypes as $k => $v): ?>
                             <option value="<?php echo h($k); ?>"><?php echo h($v); ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="col-md-8 form-group entries-actions">
+                <div class="col-md-9 form-group entries-actions">
+                    <div class="entries-action entries-action-scroll checkbox">
+                        <label><input type="checkbox"
+                               name="scroll"
+                               class="js-toggle-scroll"
+                               value="1"
+                               <?php if (empty($_COOKIE['scrollDisabled'])): ?>checked="checked"<?php endif; ?>
+                        ><?php echo t('Scroll down'); ?></label>
+                    </div>
                     <a href="#" class="entries-action js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t('Expand all'); ?></a>
                     <a href="#" class="entries-action js-collapse-all"><i class="fa fa-minus-square-o"></i> <?php echo t('Collapse all'); ?></a>
                     <a href="#" class="entries-action entries-action-remove-all js-remove-all" data-group-handle="basic" data-confirm-text="<?php echo t('Are you sure?'); ?>"><i class="fa fa-times"></i> <?php echo t('Remove all'); ?></a>
@@ -232,14 +248,22 @@
         <div class="ccm-tab-content" id="ccm-tab-content-tab-repeatable-entries">
 
             <div class="row">
-                <div class="col-md-4 form-group">
+                <div class="col-md-3 form-group">
                     <select class="js-add-entry form-control" data-group-handle="entries">
                         <?php foreach ($fieldTypes as $k => $v): ?>
                             <option value="<?php echo h($k); ?>"><?php echo h($v); ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="col-md-8 form-group entries-actions">
+                <div class="col-md-9 form-group entries-actions">
+                    <div class="entries-action entries-action-scroll checkbox">
+                        <label><input type="checkbox"
+                               name="scroll"
+                               class="js-toggle-scroll"
+                               value="1"
+                               <?php if (empty($_COOKIE['scrollDisabled'])): ?>checked="checked"<?php endif; ?>
+                        ><?php echo t('Scroll down'); ?></label>
+                    </div>
                     <a href="#" class="entries-action js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t('Expand all'); ?></a>
                     <a href="#" class="entries-action js-collapse-all"><i class="fa fa-minus-square-o"></i> <?php echo t('Collapse all'); ?></a>
                     <a href="#" class="entries-action entries-action-remove-all js-remove-all" data-group-handle="entries" data-confirm-text="<?php echo t('Are you sure?'); ?>"><i class="fa fa-times"></i> <?php echo t('Remove all'); ?></a>
@@ -251,14 +275,22 @@
             </div>
 
             <div class="row">
-                <div class="col-md-4 form-group">
+                <div class="col-md-3 form-group">
                     <select class="js-add-entry form-control" data-group-handle="entries">
                         <?php foreach ($fieldTypes as $k => $v): ?>
                             <option value="<?php echo h($k); ?>"><?php echo h($v); ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="col-md-8 form-group entries-actions">
+                <div class="col-md-9 form-group entries-actions">
+                    <div class="entries-action entries-action-scroll checkbox">
+                        <label><input type="checkbox"
+                               name="scroll"
+                               class="js-toggle-scroll"
+                               value="1"
+                               <?php if (empty($_COOKIE['scrollDisabled'])): ?>checked="checked"<?php endif; ?>
+                        ><?php echo t('Scroll down'); ?></label>
+                    </div>
                     <a href="#" class="entries-action js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t('Expand all'); ?></a>
                     <a href="#" class="entries-action js-collapse-all"><i class="fa fa-minus-square-o"></i> <?php echo t('Collapse all'); ?></a>
                     <a href="#" class="entries-action entries-action-remove-all js-remove-all" data-group-handle="entries" data-confirm-text="<?php echo t('Are you sure?'); ?>"><i class="fa fa-times"></i> <?php echo t('Remove all'); ?></a>
