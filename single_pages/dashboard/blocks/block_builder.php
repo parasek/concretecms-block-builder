@@ -204,6 +204,7 @@
                 <div class="col-md-8 form-group entries-actions">
                     <a href="#" class="entries-action js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t('Expand all'); ?></a>
                     <a href="#" class="entries-action js-collapse-all"><i class="fa fa-minus-square-o"></i> <?php echo t('Collapse all'); ?></a>
+                    <a href="#" class="entries-action entries-action-remove-all js-remove-all" data-group-handle="basic" data-confirm-text="<?php echo t('Are you sure?'); ?>"><i class="fa fa-times"></i> <?php echo t('Remove all'); ?></a>
                 </div>
             </div>
 
@@ -222,6 +223,7 @@
                 <div class="col-md-8 form-group entries-actions">
                     <a href="#" class="entries-action js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t('Expand all'); ?></a>
                     <a href="#" class="entries-action js-collapse-all"><i class="fa fa-minus-square-o"></i> <?php echo t('Collapse all'); ?></a>
+                    <a href="#" class="entries-action entries-action-remove-all js-remove-all" data-group-handle="basic" data-confirm-text="<?php echo t('Are you sure?'); ?>"><i class="fa fa-times"></i> <?php echo t('Remove all'); ?></a>
                 </div>
             </div>
 
@@ -240,6 +242,7 @@
                 <div class="col-md-8 form-group entries-actions">
                     <a href="#" class="entries-action js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t('Expand all'); ?></a>
                     <a href="#" class="entries-action js-collapse-all"><i class="fa fa-minus-square-o"></i> <?php echo t('Collapse all'); ?></a>
+                    <a href="#" class="entries-action entries-action-remove-all js-remove-all" data-group-handle="entries" data-confirm-text="<?php echo t('Are you sure?'); ?>"><i class="fa fa-times"></i> <?php echo t('Remove all'); ?></a>
                 </div>
             </div>
 
@@ -258,6 +261,7 @@
                 <div class="col-md-8 form-group entries-actions">
                     <a href="#" class="entries-action js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t('Expand all'); ?></a>
                     <a href="#" class="entries-action js-collapse-all"><i class="fa fa-minus-square-o"></i> <?php echo t('Collapse all'); ?></a>
+                    <a href="#" class="entries-action entries-action-remove-all js-remove-all" data-group-handle="entries" data-confirm-text="<?php echo t('Are you sure?'); ?>"><i class="fa fa-times"></i> <?php echo t('Remove all'); ?></a>
                 </div>
             </div>
 

@@ -107,6 +107,17 @@
     color: #555555;
 }
 
+.ccm-ui .entries-action-remove-all {
+    color: #c34d52;
+    white-space: nowrap;
+}
+
+@media only screen and (min-width: 1280px) {
+    .ccm-ui .entries-action-remove-all {
+        margin-left: 45px;
+    }
+}
+
 .ccm-ui .entries-action:hover,
 .ccm-ui .entries-action:focus {
     text-decoration: none;
