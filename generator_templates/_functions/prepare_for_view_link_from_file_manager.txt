@@ -2,12 +2,10 @@
 
         $keys = array_keys($fields);
         $fileIDFieldName = $keys[0];
-        $endingFieldName = $keys[1];
-        $textFieldName   = $keys[2];
-        $titleFieldName  = $keys[3];
+        $textFieldName   = $keys[1];
+        $titleFieldName  = $keys[2];
 
         $fileID = $fields[$fileIDFieldName];
-        $ending = $fields[$endingFieldName];
         $text   = $fields[$textFieldName];
         $title  = $fields[$titleFieldName];
 
@@ -41,7 +39,6 @@
 
             // Fields from database
             $this->set($fileIDFieldName, $fileID);
-            $this->set($endingFieldName, $ending);
             $this->set($textFieldName, $text);
             $this->set($titleFieldName, $title);
 
@@ -56,14 +53,13 @@
 
             // Fields from database
             $entry[$fileIDFieldName] = $fileID;
-            $entry[$endingFieldName] = $ending;
             $entry[$textFieldName]   = $text;
             $entry[$titleFieldName]  = $title;
 
             // Additional data
-            // $entry[$fileIDFieldName.'_object']   = $fileObject;
-            $entry[$fileIDFieldName.'_filename'] = $filename;
-            $entry[$fileIDFieldName.'_link']     = $link;
+            $entry[$fileIDFieldName.'_object'] = $fileObject;
+            $entry[$fileIDFieldName.'_name']   = $filename;
+            $entry[$fileIDFieldName.'_link']   = $link;
 
             return $entry;
 

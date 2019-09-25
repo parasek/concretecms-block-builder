@@ -22,16 +22,6 @@ class OptionList
 
     }
 
-    public function getEntriesAsFirstTabOptions() {
-
-        $options = [];
-        $options[0] = t('No');
-        $options[1] = t('Yes');
-
-        return $options;
-
-    }
-
     public function getFieldTypes() {
 
         $options = [];
@@ -40,13 +30,11 @@ class OptionList
         $options['textarea']               = t('Textarea');
         $options['wysiwyg_editor']         = t('WYSIWYG Editor');
         $options['select_field']           = t('Select field');
-        $options['link']                   = t('Link');
         $options['link_from_sitemap']      = t('Link from Sitemap');
         $options['link_from_file_manager'] = t('Link from File Manager');
         $options['external_link']          = t('External Link');
         $options['image']                  = t('Image');
         $options['html_editor']            = t('HTML Editor');
-        $options['date_picker']            = t('Date Picker');
 
         return $options;
 
