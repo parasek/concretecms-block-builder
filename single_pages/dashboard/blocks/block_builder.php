@@ -189,6 +189,36 @@
                 <?php echo $form->text('altTextLabel', $altTextLabel, ['data-translated-text'=>t('Alt text'), 'data-untranslated-text'=>'Alt text']); ?>
             </div>
 
+            <div class="form-group <?php in_array('linkFromSitemapLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('linkFromSitemapLabel', t('Link from Sitemap')); ?>
+                <?php echo $form->text('linkFromSitemapLabel', $linkFromSitemapLabel, ['data-translated-text'=>t('Link from Sitemap'), 'data-untranslated-text'=>'Link from Sitemap']); ?>
+            </div>
+
+            <div class="form-group <?php in_array('linkFromFileManagerLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('linkFromFileManagerLabel', t('Link from File Manager')); ?>
+                <?php echo $form->text('linkFromFileManagerLabel', $linkFromFileManagerLabel, ['data-translated-text'=>t('Link from File Manager'), 'data-untranslated-text'=>'Link from File Manager']); ?>
+            </div>
+
+            <div class="form-group <?php in_array('externalLinkLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('externalLinkLabel', t('External Link')); ?>
+                <?php echo $form->text('externalLinkLabel', $externalLinkLabel, ['data-translated-text'=>t('External Link'), 'data-untranslated-text'=>'External Link']); ?>
+            </div>
+
+            <div class="form-group <?php in_array('showAdditionalFieldsLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('showAdditionalFieldsLabel', t('Show additional fields')); ?>
+                <?php echo $form->text('showAdditionalFieldsLabel', $showAdditionalFieldsLabel, ['data-translated-text'=>t('Show additional fields'), 'data-untranslated-text'=>'Show additional fields']); ?>
+            </div>
+
+            <div class="form-group <?php in_array('noLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('noLabel', t('No')); ?>
+                <?php echo $form->text('noLabel', $noLabel, ['data-translated-text'=>t('No'), 'data-untranslated-text'=>'No']); ?>
+            </div>
+
+            <div class="form-group <?php in_array('yesLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('yesLabel', t('Yes')); ?>
+                <?php echo $form->text('yesLabel', $yesLabel, ['data-translated-text'=>t('Yes'), 'data-untranslated-text'=>'Yes']); ?>
+            </div>
+
         </div>
 
         <div class="ccm-tab-content" id="ccm-tab-content-tab-basic-information">
@@ -490,6 +520,15 @@
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox"
+                                           name="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowEndingField]"
+                                           id="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowEndingField]"
+                                           value="1"
+                                    <% if (parseInt(linkFromFileManagerShowEndingField)) { %> checked="checked" <% } %>
+                                    ><?php echo t('Show "Custom string at the end of URL" field'); ?></label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"
                                            name="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowTextField]"
                                            id="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowTextField]"
                                            value="1"
@@ -508,6 +547,15 @@
                         <% } %>
 
                         <% if (fieldType == 'external_link') { %>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"
+                                           name="<%=groupHandle%>[<%=counter%>][externalLinkShowEndingField]"
+                                           id="<%=groupHandle%>[<%=counter%>][externalLinkShowEndingField]"
+                                           value="1"
+                                    <% if (parseInt(externalLinkShowEndingField)) { %> checked="checked" <% } %>
+                                    ><?php echo t('Show "Custom string at the end of URL" field'); ?></label>
+                            </div>
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox"

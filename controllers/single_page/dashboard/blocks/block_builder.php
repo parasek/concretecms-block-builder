@@ -134,13 +134,19 @@ class BlockBuilder extends DashboardPageController
         $this->set('expandAllLabel', t('Expand all'));
         $this->set('noEntriesFoundLabel', t('No entries found.'));
         $this->set('maxNumberOfEntriesLabel', t('Max. number of entries'));
+        $this->set('areYouSureLabel', t('Are you sure?'));
         $this->set('requiredFieldsLabel', t('Required fields'));
         $this->set('urlEndingLabel', t('Custom string at the end of URL'));
         $this->set('urlEndingHelpText', t('(e.g. #contact-form or ?ccm_paging_p=2)'));
         $this->set('textLabel', t('Text'));
         $this->set('titleLabel', t('Title'));
         $this->set('altTextLabel', t('Alt text'));
-        $this->set('areYouSureLabel', t('Are you sure?'));
+        $this->set('linkFromSitemapLabel', t('Link from Sitemap'));
+        $this->set('linkFromFileManagerLabel', t('Link from File Manager'));
+        $this->set('externalLinkLabel', t('External Link'));
+        $this->set('showAdditionalFieldsLabel', t('Show additional fields'));
+        $this->set('noLabel', t('No'));
+        $this->set('yesLabel', t('Yes'));
 
         // Get rid of keys in repeatable entries (for json manipulation in js)
         if (is_array($basic)) {
