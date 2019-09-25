@@ -984,7 +984,7 @@ class ControllerPhp
             }
             foreach ($postData['entries'] as $k => $v) {
                 if ($v['fieldType'] == 'date_picker') {
-                    $code .= BlockBuilderUtility::tab(3).'$entry[\''.$v['handle'].'Displayed\'] = (!empty($entry[\''.$v['handle'].'\'])) ? date(\''.$v['datePickerPattern'].'\', strtotime($entry[\''.$v['handle'].'\'])) : null;'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3).'$entry[\''.$v['handle'].'Displayed\'] = (!empty($entry[\''.$v['handle'].'\'])) ? date(\''.addslashes($v['datePickerPattern']).'\', strtotime($entry[\''.$v['handle'].'\'])) : null;'.PHP_EOL;
                 }
             }
             $code .= BlockBuilderUtility::tab(3).'$modifiedEntries[] = $entry;'.PHP_EOL;
