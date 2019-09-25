@@ -168,10 +168,10 @@ class FormPhp
 
                     $code .= BlockBuilderUtility::tab(2).'<div class="form-group js-link-wrapper-'.$v['handle'].'-<?php echo $uniqueID; ?> js-link-wrapper-'.$v['handle'].'-external_link-<?php echo $uniqueID; ?>" style="display: none;">'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3).'<div class="row">'.PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(4).'<div class="col-xs-12 col-md-2">'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4).'<div class="col-xs-12 col-md-3 margin-bottom-on-mobile">'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5).'<?php echo $form->select($view->field(\''.$v['handle'].'_external_link_protocol\'), $externalLinkProtocols, $'.$v['handle'].'[\'external_link_protocol\'] ? $'.$v['handle'].'[\'external_link_protocol\'] : \'http://\', [\'class\'=>\'js-external-link-protocol-'.$v['handle'].'-\'.$uniqueID]); ?>'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4).'</div>'.PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(4).'<div class="col-xs-12 col-md-10">'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4).'<div class="col-xs-12 col-md-9">'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5).'<?php echo $form->text($view->field(\''.$v['handle'].'_external_link\'), $'.$v['handle'].'[\'external_link\'], [\'maxlength\'=>\'255\', \'class\'=>\'js-external-link-url-'.$v['handle'].'-\'.$uniqueID]); ?>'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4).'</div>'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3).'</div>'.PHP_EOL;
@@ -314,10 +314,10 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(3) . '<p class="small text-muted"><?php echo t(\''.$v['helpText'].'\'); ?></p>'.PHP_EOL;
                     }
                     $code .= BlockBuilderUtility::tab(3) . '<div class="row">' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(4) . '<div class="col-xs-12 col-md-2 margin-bottom-on-mobile">' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4) . '<div class="col-xs-12 col-md-3 margin-bottom-on-mobile">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5) . '<?php echo $form->select($view->field(\'' . $v['handle'] . '_protocol\'), $externalLinkProtocols, $' . $v['handle'] . '_protocol ? $' . $v['handle'] . '_protocol : \'http://\', [\'class\'=>\'js-external-link-protocol-' . $v['handle'] . '-\'.$uniqueID]); ?>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '</div>' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(4) . '<div class="col-xs-12 col-md-10">' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4) . '<div class="col-xs-12 col-md-9">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5) . '<?php echo $form->text($view->field(\'' . $v['handle'] . '\'), $' . $v['handle'] . ', [\'maxlength\'=>\'255\', \'class\'=>\'js-external-link-url-' . $v['handle'] . '-\'.$uniqueID]); ?>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '</div>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL;
@@ -689,14 +689,14 @@ class FormPhp
                     }
 
                     $code .= BlockBuilderUtility::tab(6) . '<div class="row">' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(7) . '<div class="col-xs-12 col-md-2 margin-bottom-on-mobile">' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(7) . '<div class="col-xs-12 col-md-3 margin-bottom-on-mobile">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(8) . '<select id="<?php echo $view->field(\'entry\'); ?>[<%=position%>][' . $v['handle'] . '_protocol]" name="<?php echo $view->field(\'entry\'); ?>[<%=position%>][' . $v['handle'] . '_protocol]" class="form-control js-external-link-protocol">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(9) . '<?php foreach ($externalLinkProtocols as $k => $v): ?>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(10) . '<option value="<?php echo $k; ?>" <% if (' . $v['handle'] . '_protocol==\'<?php echo $k; ?>\') { %>selected="selected"<% } %> ><?php echo h($v); ?></option>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(9) . '<?php endforeach; ?>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(8) . '</select>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(7) . '<div class="col-xs-12 col-md-10">' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(7) . '<div class="col-xs-12 col-md-9">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(8) . '<input type="text" id="<?php echo $view->field(\'entry\'); ?>[<%=position%>][' . $v['handle'] . ']" name="<?php echo $view->field(\'entry\'); ?>[<%=position%>][' . $v['handle'] . ']" value="<%=' . $v['handle'] . '%>" class="form-control js-external-link-url" maxlength="255" />' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL;
