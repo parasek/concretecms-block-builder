@@ -47,12 +47,14 @@ $(function() {
                     item.linkFromSitemapShowEndingField = item.linkFromSitemapShowEndingField==undefined ? 0 : 1;
 
                     // link_from_file_manager
-                    item.linkFromFileManagerShowTextField  = item.linkFromFileManagerShowTextField==undefined ? 0 : 1;
-                    item.linkFromFileManagerShowTitleField = item.linkFromFileManagerShowTitleField==undefined ? 0 : 1;
+                    item.linkFromFileManagerShowTextField   = item.linkFromFileManagerShowTextField==undefined ? 0 : 1;
+                    item.linkFromFileManagerShowTitleField  = item.linkFromFileManagerShowTitleField==undefined ? 0 : 1;
+                    item.linkFromFileManagerShowEndingField = item.linkFromFileManagerShowEndingField==undefined ? 0 : 1;
 
                     // external_link
-                    item.externalLinkShowTextField  = item.externalLinkShowTextField==undefined ? 0 : 1;
-                    item.externalLinkShowTitleField = item.externalLinkShowTitleField==undefined ? 0 : 1;
+                    item.externalLinkShowTextField   = item.externalLinkShowTextField==undefined ? 0 : 1;
+                    item.externalLinkShowTitleField  = item.externalLinkShowTitleField==undefined ? 0 : 1;
+                    item.externalLinkShowEndingField = item.externalLinkShowEndingField==undefined ? 0 : 1;
 
                     // image
                     item.imageShowAltTextField      = item.imageShowAltTextField==undefined ? 0 : 1;
@@ -129,18 +131,23 @@ $(function() {
                 // select_field
                 templateData['selectOptions'] = '';
 
+                // link
+                templateData['link'] = 0;
+
                 // link_from_sitemap
                 templateData['linkFromSitemapShowTextField']   = 0;
                 templateData['linkFromSitemapShowTitleField']  = 0;
                 templateData['linkFromSitemapShowEndingField'] = 0;
 
                 // link_from_file_manager
-                templateData['linkFromFileManagerShowTextField']  = 0;
-                templateData['linkFromFileManagerShowTitleField'] = 0;
+                templateData['linkFromFileManagerShowTextField']   = 0;
+                templateData['linkFromFileManagerShowTitleField']  = 0;
+                templateData['linkFromFileManagerShowEndingField'] = 0;
 
                 // external_link
-                templateData['externalLinkShowTextField']  = 0;
-                templateData['externalLinkShowTitleField'] = 0;
+                templateData['externalLinkShowTextField']   = 0;
+                templateData['externalLinkShowTitleField']  = 0;
+                templateData['externalLinkShowEndingField'] = 0;
 
                 // image
                 templateData['imageShowAltTextField']      = 0;
