@@ -47,14 +47,12 @@ $(function() {
                     item.linkFromSitemapShowEndingField = item.linkFromSitemapShowEndingField==undefined ? 0 : 1;
 
                     // link_from_file_manager
-                    item.linkFromFileManagerShowTextField   = item.linkFromFileManagerShowTextField==undefined ? 0 : 1;
-                    item.linkFromFileManagerShowTitleField  = item.linkFromFileManagerShowTitleField==undefined ? 0 : 1;
-                    item.linkFromFileManagerShowEndingField = item.linkFromFileManagerShowEndingField==undefined ? 0 : 1;
+                    item.linkFromFileManagerShowTextField  = item.linkFromFileManagerShowTextField==undefined ? 0 : 1;
+                    item.linkFromFileManagerShowTitleField = item.linkFromFileManagerShowTitleField==undefined ? 0 : 1;
 
                     // external_link
-                    item.externalLinkShowTextField   = item.externalLinkShowTextField==undefined ? 0 : 1;
-                    item.externalLinkShowTitleField  = item.externalLinkShowTitleField==undefined ? 0 : 1;
-                    item.externalLinkShowEndingField = item.externalLinkShowEndingField==undefined ? 0 : 1;
+                    item.externalLinkShowTextField  = item.externalLinkShowTextField==undefined ? 0 : 1;
+                    item.externalLinkShowTitleField = item.externalLinkShowTitleField==undefined ? 0 : 1;
 
                     // image
                     item.imageShowAltTextField      = item.imageShowAltTextField==undefined ? 0 : 1;
@@ -131,23 +129,18 @@ $(function() {
                 // select_field
                 templateData['selectOptions'] = '';
 
-                // link
-                templateData['link'] = 0;
-
                 // link_from_sitemap
                 templateData['linkFromSitemapShowTextField']   = 0;
                 templateData['linkFromSitemapShowTitleField']  = 0;
                 templateData['linkFromSitemapShowEndingField'] = 0;
 
                 // link_from_file_manager
-                templateData['linkFromFileManagerShowTextField']   = 0;
-                templateData['linkFromFileManagerShowTitleField']  = 0;
-                templateData['linkFromFileManagerShowEndingField'] = 0;
+                templateData['linkFromFileManagerShowTextField']  = 0;
+                templateData['linkFromFileManagerShowTitleField'] = 0;
 
                 // external_link
-                templateData['externalLinkShowTextField']   = 0;
-                templateData['externalLinkShowTitleField']  = 0;
-                templateData['externalLinkShowEndingField'] = 0;
+                templateData['externalLinkShowTextField']  = 0;
+                templateData['externalLinkShowTitleField'] = 0;
 
                 // image
                 templateData['imageShowAltTextField']      = 0;
@@ -162,11 +155,9 @@ $(function() {
                 templateData['imageFullscreenHeight']      = 1080;
                 templateData['imageFullscreenCrop']        = 0;
 
+
                 // html_editor
                 templateData['htmlEditorHeight'] = '';
-
-                // date_picker
-                templateData['datePickerPattern'] = 'd.m.Y';
 
                 entriesContainer.append(template(templateData));
                 var newField = entriesContainer.children(':last');
@@ -176,11 +167,9 @@ $(function() {
                 selectedFieldType.val('');
 
                 // Smooth scroll
-                if ( ! $.cookie('scrollDisabled')) {
-                    $('html').animate({
-                        scrollTop: entriesContainer.find('.js-entry[data-counter="'+counter+'"]').position().top-50 + entriesContainer.scrollTop()
-                    });
-                }
+                $('body').animate({
+                    scrollTop: entriesContainer.find('.js-entry[data-counter="'+counter+'"]').position().top-50 + entriesContainer.scrollTop()
+            });
 
             }
 
@@ -238,19 +227,6 @@ $(function() {
 
         };
 
-        // Toggle scroll
-        var toggleScroll = function(e) {
-
-            if ( ! $(this).is(':checked')) {
-                $('.js-toggle-scroll').prop('checked', false);
-                $.cookie('scrollDisabled', 1, { expires : 180 });
-            } else {
-                $('.js-toggle-scroll').prop('checked', true);
-                $.cookie('scrollDisabled', 1, { expires : -1 });
-            }
-
-        };
-
         // Collapse all entries
         var collapseAllEntries = function(e) {
 
@@ -280,27 +256,6 @@ $(function() {
             toggleButtons.find('i').removeClass('fa-plus-square-o');
             toggleButtons.find('i').addClass('fa-minus-square-o');
             toggleButtons.attr('data-action', 'collapse');
-
-        };
-
-        // Remove all entries
-        var removeAllEntries = function(e) {
-
-            e.preventDefault();
-
-            var confirmText = $(this).attr('data-confirm-text');
-            var groupHandle = $(this).attr('data-group-handle');
-            var entriesContainer = $('#field-types-'+groupHandle);
-
-            var confirmQuestion = confirm(confirmText);
-
-            if (confirmQuestion == true) {
-
-                entriesContainer.html('');
-
-                $(entriesContainer).append(templateNoEntries());
-
-            }
 
         };
 
@@ -533,10 +488,8 @@ $(function() {
             bbContainer.on('change', '.js-add-entry', addEntry);
             bbContainer.on('click',  '.js-remove-entry', removeEntry);
             bbContainer.on('click',  '.js-toggle-entry', toggleEntry);
-            bbContainer.on('click',  '.js-toggle-scroll', toggleScroll);
             bbContainer.on('click',  '.js-expand-all', expandAllEntries);
             bbContainer.on('click',  '.js-collapse-all', collapseAllEntries);
-            bbContainer.on('click',  '.js-remove-all', removeAllEntries);
             bbContainer.on('input',  '.js-entry-title-source', changeEntryTitle);
             bbContainer.on('click',  '.js-populate-translation-fields', populateTranslationFields);
             bbContainer.on('change', '.js-use-field-as-title-in-repeatable-entries', useFieldAsTitleInRepeatableEntries);

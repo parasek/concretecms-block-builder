@@ -1,10 +1,3 @@
-/* Styles */
-@media only screen and (max-width: 991px) {
-    .ccm-ui .margin-bottom-on-mobile {
-        margin-bottom: 30px;
-    }
-}
-
 /* Entries - buttons and links */
 .ccm-ui .entries-actions {
     margin-bottom: 15px;

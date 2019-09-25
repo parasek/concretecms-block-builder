@@ -59,7 +59,7 @@
             $entry[$titleFieldName]  = $title;
 
             // Additional data
-            // $entry[$pageIDFieldName.'_object'] = $pageObject;
+            $entry[$pageIDFieldName.'_object'] = $pageObject;
             $entry[$pageIDFieldName.'_name']   = $name;
             $entry[$pageIDFieldName.'_link']   = $link;
 
