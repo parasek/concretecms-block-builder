@@ -43,6 +43,10 @@ class DbXml
                     $code .= BlockBuilderUtility::tab(2).'<field name="'.$v['handle'].'" type="C" size="255"></field>'.PHP_EOL.PHP_EOL;
                 }
 
+                if ($v['fieldType']=='link') {
+                    $code .= BlockBuilderUtility::tab(2).'<field name="'.$v['handle'].'" type="X2"></field>'.PHP_EOL.PHP_EOL;
+                }
+
                 if ($v['fieldType']=='link_from_sitemap') {
                     $code .= BlockBuilderUtility::tab(2).'<field name="'.$v['handle'].'" type="I">'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3).'<default value="0"/>'.PHP_EOL;
@@ -65,6 +69,9 @@ class DbXml
                     $code .= BlockBuilderUtility::tab(3).'<default value="0"/>'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3).'<unsigned/>'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(2).'</field>'.PHP_EOL;
+                    if ( ! empty($v['linkFromFileManagerShowEndingField'])) {
+                        $code .= BlockBuilderUtility::tab(2).'<field name="'.$v['handle'].'_ending" type="C" size="255"></field>'.PHP_EOL;
+                    }
                     if ( ! empty($v['linkFromFileManagerShowTextField'])) {
                         $code .= BlockBuilderUtility::tab(2).'<field name="'.$v['handle'].'_text" type="C" size="255"></field>'.PHP_EOL;
                     }
@@ -77,6 +84,9 @@ class DbXml
                 if ($v['fieldType']=='external_link') {
                     $code .= BlockBuilderUtility::tab(2).'<field name="'.$v['handle'].'" type="C" size="255"></field>'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(2).'<field name="'.$v['handle'].'_protocol" type="C" size="10"></field>'.PHP_EOL;
+                    if ( ! empty($v['externalLinkShowEndingField'])) {
+                        $code .= BlockBuilderUtility::tab(2).'<field name="'.$v['handle'].'_ending" type="C" size="255"></field>'.PHP_EOL;
+                    }
                     if ( ! empty($v['externalLinkShowTextField'])) {
                         $code .= BlockBuilderUtility::tab(2).'<field name="'.$v['handle'].'_text" type="C" size="255"></field>'.PHP_EOL;
                     }
@@ -99,6 +109,10 @@ class DbXml
 
                 if ($v['fieldType']=='html_editor') {
                     $code .= BlockBuilderUtility::tab(2).'<field name="'.$v['handle'].'" type="X2"></field>'.PHP_EOL.PHP_EOL;
+                }
+
+                if ($v['fieldType']=='date_picker') {
+                    $code .= BlockBuilderUtility::tab(2).'<field name="'.$v['handle'].'" type="T"></field>'.PHP_EOL.PHP_EOL;
                 }
 
             }
@@ -167,6 +181,9 @@ class DbXml
                     $code .= BlockBuilderUtility::tab(3).'<default value="0"/>'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3).'<unsigned/>'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(2).'</field>'.PHP_EOL;
+                    if ( ! empty($v['linkFromFileManagerShowEndingField'])) {
+                        $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '_ending" type="C" size="255"></field>' . PHP_EOL;
+                    }
                     if ( ! empty($v['linkFromFileManagerShowTextField'])) {
                         $code .= BlockBuilderUtility::tab(2).'<field name="'.$v['handle'].'_text" type="C" size="255"></field>'.PHP_EOL;
                     }
@@ -179,6 +196,9 @@ class DbXml
                 if ($v['fieldType']=='external_link') {
                     $code .= BlockBuilderUtility::tab(2).'<field name="'.$v['handle'].'" type="C" size="255"></field>'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(2).'<field name="'.$v['handle'].'_protocol" type="C" size="10"></field>'.PHP_EOL;
+                    if ( ! empty($v['externalLinkShowEndingField'])) {
+                        $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '_ending" type="C" size="255"></field>' . PHP_EOL;
+                    }
                     if ( ! empty($v['externalLinkShowTextField'])) {
                         $code .= BlockBuilderUtility::tab(2).'<field name="'.$v['handle'].'_text" type="C" size="255"></field>'.PHP_EOL;
                     }
@@ -201,6 +221,10 @@ class DbXml
 
                 if ($v['fieldType']=='html_editor') {
                     $code .= BlockBuilderUtility::tab(2).'<field name="'.$v['handle'].'" type="X2"></field>'.PHP_EOL.PHP_EOL;
+                }
+
+                if ($v['fieldType']=='date_picker') {
+                    $code .= BlockBuilderUtility::tab(2).'<field name="'.$v['handle'].'" type="T"></field>'.PHP_EOL.PHP_EOL;
                 }
 
             }

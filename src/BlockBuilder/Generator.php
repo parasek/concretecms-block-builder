@@ -43,6 +43,7 @@ class Generator
 
         $postDataSummary['wysiwygEditorUsed']       = false;
         $postDataSummary['htmlEditorUsed']          = false;
+        $postDataSummary['linkUsed']                = false;
         $postDataSummary['linkFromSitemapUsed']     = false;
         $postDataSummary['linkFromFileManagerUsed'] = false;
         $postDataSummary['externalLinkUsed']        = false;
@@ -54,6 +55,7 @@ class Generator
         $postDataSummary['linkFromFileManagerUsed_entry'] = false;
         $postDataSummary['externalLinkUsed_entry']        = false;
         $postDataSummary['imageUsed_entry']               = false;
+        $postDataSummary['datePickerUsed_entry']          = false;
 
         $postDataSummary['entryTitleSource'] = false;
 
@@ -97,15 +99,19 @@ class Generator
                     $postDataSummary['htmlEditorUsed'] = true;
                 }
 
-                if ($v['fieldType']=='link_from_sitemap') {
+                if ($v['fieldType']=='link') {
+                    $postDataSummary['linkUsed'] = true;
+                }
+
+                if ($v['fieldType']=='link_from_sitemap' OR $v['fieldType']=='link') {
                     $postDataSummary['linkFromSitemapUsed'] = true;
                 }
 
-                if ($v['fieldType']=='link_from_file_manager') {
+                if ($v['fieldType']=='link_from_file_manager' OR $v['fieldType']=='link') {
                     $postDataSummary['linkFromFileManagerUsed'] = true;
                 }
 
-                if ($v['fieldType']=='external_link') {
+                if ($v['fieldType']=='external_link' OR $v['fieldType']=='link') {
                     $postDataSummary['externalLinkUsed'] = true;
                 }
 
@@ -173,6 +179,10 @@ class Generator
                     $postDataSummary['imageUsed_entry'] = true;
                 }
 
+                if ($v['fieldType']=='date_picker') {
+                    $postDataSummary['datePickerUsed_entry'] = true;
+                }
+
                 // entryTitleSource
                 if ( ! empty($v['titleSource'])) {
                     $postDataSummary['entryTitleSource'] = $v['handle'];
@@ -199,6 +209,7 @@ class Generator
                 $this->generateControllerPhp($postData, $postDataSummary);
                 $this->generateViewPhp($postData, $postDataSummary);
                 $this->generateDbXml($postData, $postDataSummary);
+                $this->generateFormCss(false, $postDataSummary);
 
                 if (!empty($postData['basic']) OR !empty($postData['entries'])) {
                     $this->generateAddPhp(false, $postDataSummary);
@@ -207,7 +218,6 @@ class Generator
                 }
 
                 if (!empty($postData['entries'])) {
-                    $this->generateFormCss(false, $postDataSummary);
                     $this->generateAutoJs(false, $postDataSummary);
                 }
 
