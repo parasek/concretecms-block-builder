@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2017-09-14 12:32+0200\n"
-"PO-Revision-Date: 2017-09-14 12:34+0200\n"
+"POT-Creation-Date: 2019-09-30 17:10+0200\n"
+"PO-Revision-Date: 2019-09-30 17:10+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pl_PL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.1\n"
+"X-Generator: Poedit 2.2.1\n"
 "X-Poedit-Basepath: ../../..\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
@@ -26,7 +26,7 @@ msgstr ""
 "Buduj niestandardowe bloki c5 (z opcjonalnym zestawem powtarzalnych wpisów)."
 
 #: controllers/ajax.php:28 controllers/ajax.php:40 controllers/ajax.php:54
-#: src/BlockBuilder/Generator.php:248
+#: src/BlockBuilder/Generator.php:263
 msgid "Oops! Something went wrong..."
 msgstr "Uups! Coś poszło nie tak..."
 
@@ -42,108 +42,152 @@ msgstr "Folder typu bloku nie mógł być usunięty."
 msgid "Block type folder has been deleted."
 msgstr "Folder typu bloku został usunięty."
 
-#: controllers/single_page/dashboard/blocks/block_builder.php:125
-#: single_pages/dashboard/blocks/block_builder.php:105
-#: single_pages/dashboard/blocks/block_builder.php:107
+#: controllers/single_page/dashboard/blocks/block_builder.php:129
+#: single_pages/dashboard/blocks/block_builder.php:116
+#: single_pages/dashboard/blocks/block_builder.php:118
 #: src/BlockBuilder/Validation.php:182
 msgid "Basic information"
 msgstr "Podstawowe informacje"
 
-#: controllers/single_page/dashboard/blocks/block_builder.php:126
-#: single_pages/dashboard/blocks/block_builder.php:111
-#: single_pages/dashboard/blocks/block_builder.php:113
+#: controllers/single_page/dashboard/blocks/block_builder.php:130
+#: single_pages/dashboard/blocks/block_builder.php:122
+#: single_pages/dashboard/blocks/block_builder.php:124
 #: src/BlockBuilder/Validation.php:188
 msgid "Entries"
 msgstr "Wpisy"
 
-#: controllers/single_page/dashboard/blocks/block_builder.php:127
-#: single_pages/dashboard/blocks/block_builder.php:117
-#: single_pages/dashboard/blocks/block_builder.php:118
+#: controllers/single_page/dashboard/blocks/block_builder.php:131
+#: single_pages/dashboard/blocks/block_builder.php:128
+#: single_pages/dashboard/blocks/block_builder.php:129
 msgid "Add at the top"
 msgstr "Dodaj na górze"
 
-#: controllers/single_page/dashboard/blocks/block_builder.php:128
-#: single_pages/dashboard/blocks/block_builder.php:122
-#: single_pages/dashboard/blocks/block_builder.php:123
+#: controllers/single_page/dashboard/blocks/block_builder.php:132
+#: single_pages/dashboard/blocks/block_builder.php:133
+#: single_pages/dashboard/blocks/block_builder.php:134
 msgid "Add at the bottom"
 msgstr "Dodaj na dole"
 
-#: controllers/single_page/dashboard/blocks/block_builder.php:129
-#: single_pages/dashboard/blocks/block_builder.php:127
-#: single_pages/dashboard/blocks/block_builder.php:128
-#: single_pages/dashboard/blocks/block_builder.php:190
-#: single_pages/dashboard/blocks/block_builder.php:208
-#: single_pages/dashboard/blocks/block_builder.php:226
-#: single_pages/dashboard/blocks/block_builder.php:244
+#: controllers/single_page/dashboard/blocks/block_builder.php:133
+#: single_pages/dashboard/blocks/block_builder.php:138
+#: single_pages/dashboard/blocks/block_builder.php:139
+#: single_pages/dashboard/blocks/block_builder.php:239
+#: single_pages/dashboard/blocks/block_builder.php:266
+#: single_pages/dashboard/blocks/block_builder.php:293
+#: single_pages/dashboard/blocks/block_builder.php:320
 msgid "Collapse all"
 msgstr "Zwiń wszystkie"
 
-#: controllers/single_page/dashboard/blocks/block_builder.php:130
-#: single_pages/dashboard/blocks/block_builder.php:132
-#: single_pages/dashboard/blocks/block_builder.php:133
-#: single_pages/dashboard/blocks/block_builder.php:189
-#: single_pages/dashboard/blocks/block_builder.php:207
-#: single_pages/dashboard/blocks/block_builder.php:225
-#: single_pages/dashboard/blocks/block_builder.php:243
+#: controllers/single_page/dashboard/blocks/block_builder.php:134
+#: single_pages/dashboard/blocks/block_builder.php:143
+#: single_pages/dashboard/blocks/block_builder.php:144
+#: single_pages/dashboard/blocks/block_builder.php:238
+#: single_pages/dashboard/blocks/block_builder.php:265
+#: single_pages/dashboard/blocks/block_builder.php:292
+#: single_pages/dashboard/blocks/block_builder.php:319
 msgid "Expand all"
 msgstr "Rozwiń wszystkie"
 
-#: controllers/single_page/dashboard/blocks/block_builder.php:131
-#: single_pages/dashboard/blocks/block_builder.php:137
-#: single_pages/dashboard/blocks/block_builder.php:138
+#: controllers/single_page/dashboard/blocks/block_builder.php:135
+#: single_pages/dashboard/blocks/block_builder.php:148
+#: single_pages/dashboard/blocks/block_builder.php:149
 msgid "No entries found."
 msgstr "Nie znaleziono wpisów."
 
-#: controllers/single_page/dashboard/blocks/block_builder.php:132
-#: single_pages/dashboard/blocks/block_builder.php:147
-#: single_pages/dashboard/blocks/block_builder.php:148
-#: single_pages/dashboard/blocks/block_builder.php:251
-msgid "Required fields"
-msgstr "Wymagane pola"
-
-#: controllers/single_page/dashboard/blocks/block_builder.php:133
-#: single_pages/dashboard/blocks/block_builder.php:152
-#: single_pages/dashboard/blocks/block_builder.php:153
-msgid "Custom string at the end of URL"
-msgstr "Niestandardowe zakończenie adresu URL"
-
-#: controllers/single_page/dashboard/blocks/block_builder.php:134
-#: single_pages/dashboard/blocks/block_builder.php:157
-#: single_pages/dashboard/blocks/block_builder.php:158
-msgid "(e.g. #contact-form or ?ccm_paging_p=2)"
-msgstr "(np. #formularz-kontaktowy lub ?ccm_paging_p=2)"
-
-#: controllers/single_page/dashboard/blocks/block_builder.php:135
-#: single_pages/dashboard/blocks/block_builder.php:162
-#: single_pages/dashboard/blocks/block_builder.php:163
-msgid "Text"
-msgstr "Tekst"
-
 #: controllers/single_page/dashboard/blocks/block_builder.php:136
-#: single_pages/dashboard/blocks/block_builder.php:167
-#: single_pages/dashboard/blocks/block_builder.php:168
-msgid "Title"
-msgstr "Tytuł"
+#: single_pages/dashboard/blocks/block_builder.php:88
+#: single_pages/dashboard/blocks/block_builder.php:153
+#: single_pages/dashboard/blocks/block_builder.php:154
+msgid "Max. number of entries"
+msgstr "Maks. liczba wpisów"
 
 #: controllers/single_page/dashboard/blocks/block_builder.php:137
-#: single_pages/dashboard/blocks/block_builder.php:172
-#: single_pages/dashboard/blocks/block_builder.php:173
-msgid "Alt text"
-msgstr "Tekst alternatywny"
-
-#: controllers/single_page/dashboard/blocks/block_builder.php:138
 #: single_pages/dashboard/blocks/block_builder.php:22
-#: single_pages/dashboard/blocks/block_builder.php:142
-#: single_pages/dashboard/blocks/block_builder.php:143
-#: single_pages/dashboard/blocks/block_builder.php:266
+#: single_pages/dashboard/blocks/block_builder.php:158
+#: single_pages/dashboard/blocks/block_builder.php:159
+#: single_pages/dashboard/blocks/block_builder.php:240
+#: single_pages/dashboard/blocks/block_builder.php:267
+#: single_pages/dashboard/blocks/block_builder.php:294
+#: single_pages/dashboard/blocks/block_builder.php:321
+#: single_pages/dashboard/blocks/block_builder.php:343
 msgid "Are you sure?"
 msgstr "Jesteś pewny?"
 
-#: controllers/single_page/dashboard/blocks/block_builder.php:189
+#: controllers/single_page/dashboard/blocks/block_builder.php:138
+#: single_pages/dashboard/blocks/block_builder.php:163
+#: single_pages/dashboard/blocks/block_builder.php:164
+#: single_pages/dashboard/blocks/block_builder.php:328
+msgid "Required fields"
+msgstr "Wymagane pola"
+
+#: controllers/single_page/dashboard/blocks/block_builder.php:139
+#: single_pages/dashboard/blocks/block_builder.php:168
+#: single_pages/dashboard/blocks/block_builder.php:169
+msgid "Custom string at the end of URL"
+msgstr "Niestandardowe zakończenie adresu URL"
+
+#: controllers/single_page/dashboard/blocks/block_builder.php:140
+#: single_pages/dashboard/blocks/block_builder.php:173
+#: single_pages/dashboard/blocks/block_builder.php:174
+msgid "(e.g. #contact-form or ?ccm_paging_p=2)"
+msgstr "(np. #formularz-kontaktowy lub ?ccm_paging_p=2)"
+
+#: controllers/single_page/dashboard/blocks/block_builder.php:141
+#: single_pages/dashboard/blocks/block_builder.php:178
+#: single_pages/dashboard/blocks/block_builder.php:179
+msgid "Text"
+msgstr "Tekst"
+
+#: controllers/single_page/dashboard/blocks/block_builder.php:142
+#: single_pages/dashboard/blocks/block_builder.php:183
+#: single_pages/dashboard/blocks/block_builder.php:184
+msgid "Title"
+msgstr "Tytuł"
+
+#: controllers/single_page/dashboard/blocks/block_builder.php:143
+#: single_pages/dashboard/blocks/block_builder.php:188
+#: single_pages/dashboard/blocks/block_builder.php:189
+msgid "Alt text"
+msgstr "Tekst alternatywny"
+
+#: controllers/single_page/dashboard/blocks/block_builder.php:144
+#: single_pages/dashboard/blocks/block_builder.php:193
+#: single_pages/dashboard/blocks/block_builder.php:194
+#: src/BlockBuilder/OptionList.php:44
+msgid "Link from Sitemap"
+msgstr "Link z mapy strony"
+
+#: controllers/single_page/dashboard/blocks/block_builder.php:145
+#: single_pages/dashboard/blocks/block_builder.php:198
+#: single_pages/dashboard/blocks/block_builder.php:199
+#: src/BlockBuilder/OptionList.php:45
+msgid "Link from File Manager"
+msgstr "Link z menedżera plików"
+
+#: controllers/single_page/dashboard/blocks/block_builder.php:146
+#: single_pages/dashboard/blocks/block_builder.php:203
+#: single_pages/dashboard/blocks/block_builder.php:204
+#: src/BlockBuilder/OptionList.php:46
+msgid "External Link"
+msgstr "Link zewnętrzny"
+
+#: controllers/single_page/dashboard/blocks/block_builder.php:147
+#: single_pages/dashboard/blocks/block_builder.php:208
+#: single_pages/dashboard/blocks/block_builder.php:209
+msgid "Show additional fields"
+msgstr "Pokaż dodatkowe pola"
+
+#: controllers/single_page/dashboard/blocks/block_builder.php:148
+#: single_pages/dashboard/blocks/block_builder.php:213
+#: single_pages/dashboard/blocks/block_builder.php:214
+msgid "Hide additional fields"
+msgstr "Ukryj dodatkowe pola"
+
+#: controllers/single_page/dashboard/blocks/block_builder.php:199
 msgid "You have successfully loaded configuration from:"
 msgstr "Udało ci się pomyślnie załadować ustawienia z:"
 
-#: controllers/single_page/dashboard/blocks/block_builder.php:201
+#: controllers/single_page/dashboard/blocks/block_builder.php:211
 #, php-format
 msgid ""
 "Block \"%s\" has been successfully created. Go to \"Block Types\" page to "
@@ -152,7 +196,7 @@ msgstr ""
 "Blok \"%s\" został pomyślnie stworzony. Przejdź do strony \"Typy bloków\" by "
 "go ręcznie zainstalować."
 
-#: controllers/single_page/dashboard/blocks/block_builder.php:209
+#: controllers/single_page/dashboard/blocks/block_builder.php:219
 #, php-format
 msgid "Block \"%s\" has been successfully created and installed."
 msgstr "Blok \"%s\" został pomyślnie stworzony i zainstalowany."
@@ -242,108 +286,130 @@ msgstr "Wysokość bloku"
 msgid "Block type set"
 msgstr "Zestaw typu bloków"
 
-#: single_pages/dashboard/blocks/block_builder.php:83
+#: single_pages/dashboard/blocks/block_builder.php:84
+msgid "Entries as first tab"
+msgstr "Wpisy jako pierwsza zakładka"
+
+#: single_pages/dashboard/blocks/block_builder.php:88
+msgid "(0 for unlimited)"
+msgstr "(0 dla bez ograniczeń)"
+
+#: single_pages/dashboard/blocks/block_builder.php:94
 msgid "Use horizontal line as field's divider"
 msgstr "Użyj poziomej linii do oddzielania pól"
 
-#: single_pages/dashboard/blocks/block_builder.php:88
+#: single_pages/dashboard/blocks/block_builder.php:99
 msgid "Use horizontal line as field's divider in repeatable entries"
 msgstr "Użyj poziomej linii do oddzielania pól w powtarzalnych wpisach"
 
-#: single_pages/dashboard/blocks/block_builder.php:97
+#: single_pages/dashboard/blocks/block_builder.php:108
 msgid "Populate fields with"
 msgstr "Wypełnij pola"
 
-#: single_pages/dashboard/blocks/block_builder.php:98
+#: single_pages/dashboard/blocks/block_builder.php:109
 msgid "translated"
 msgstr "przetłumaczonymi"
 
-#: single_pages/dashboard/blocks/block_builder.php:100
+#: single_pages/dashboard/blocks/block_builder.php:111
 msgid "untranslated"
 msgstr "nieprzetłumaczonymi"
 
-#: single_pages/dashboard/blocks/block_builder.php:101
+#: single_pages/dashboard/blocks/block_builder.php:112
 msgid "default texts"
 msgstr "domyślnymi tekstami"
 
-#: single_pages/dashboard/blocks/block_builder.php:106
+#: single_pages/dashboard/blocks/block_builder.php:117
 msgid "Displayed name of \"Basic information\" tab"
 msgstr "Wyświetlana nazwa zakładki \"Podstawowe informacje\""
 
-#: single_pages/dashboard/blocks/block_builder.php:112
+#: single_pages/dashboard/blocks/block_builder.php:123
 msgid "Displayed name of \"Repeatable entries\" tab"
 msgstr "Wyświetlana nazwa zakładki \"Powtarzalne wpisy\""
 
-#: single_pages/dashboard/blocks/block_builder.php:255
+#: single_pages/dashboard/blocks/block_builder.php:236
+#: single_pages/dashboard/blocks/block_builder.php:263
+#: single_pages/dashboard/blocks/block_builder.php:290
+#: single_pages/dashboard/blocks/block_builder.php:317
+msgid "Scroll down"
+msgstr "Przejedź na dół"
+
+#: single_pages/dashboard/blocks/block_builder.php:240
+#: single_pages/dashboard/blocks/block_builder.php:267
+#: single_pages/dashboard/blocks/block_builder.php:294
+#: single_pages/dashboard/blocks/block_builder.php:321
+msgid "Remove all"
+msgstr "Usuń wszystkie"
+
+#: single_pages/dashboard/blocks/block_builder.php:332
 msgid "Build your block now!"
 msgstr "Zbuduj blok!"
 
-#: single_pages/dashboard/blocks/block_builder.php:286
+#: single_pages/dashboard/blocks/block_builder.php:363
 msgid "Label"
 msgstr "Etykieta"
 
-#: single_pages/dashboard/blocks/block_builder.php:287
+#: single_pages/dashboard/blocks/block_builder.php:364
 msgid "Human-readable name e.g. \"Product name\""
 msgstr "Nazwa zrozumiała dla człowieka, np. \"Nazwa produktu\""
 
-#: single_pages/dashboard/blocks/block_builder.php:296
+#: single_pages/dashboard/blocks/block_builder.php:373
 msgid "Handle"
 msgstr "Identyfikator"
 
-#: single_pages/dashboard/blocks/block_builder.php:297
+#: single_pages/dashboard/blocks/block_builder.php:374
 msgid "a-zA-Z_ characters only e.g. \"productName\" or \"product_name\""
 msgstr ""
 "Dozwolone tylko litery a-zA-Z_, np. \"nazwaProduktu\" lub \"nazwa_produktu\""
 
-#: single_pages/dashboard/blocks/block_builder.php:317
+#: single_pages/dashboard/blocks/block_builder.php:394
 msgid "Required"
 msgstr "Wymagane"
 
-#: single_pages/dashboard/blocks/block_builder.php:328
+#: single_pages/dashboard/blocks/block_builder.php:405
 msgid "Use this field as title in repeatable entries"
 msgstr "Użyj tego pola jako tytuł w powtarzalnych wpisach"
 
-#: single_pages/dashboard/blocks/block_builder.php:333
+#: single_pages/dashboard/blocks/block_builder.php:410
 msgid "Help text"
 msgstr "Tekst pomocy"
 
-#: single_pages/dashboard/blocks/block_builder.php:334
+#: single_pages/dashboard/blocks/block_builder.php:411
 msgid "It will look exactly like this text"
 msgstr "Będzie on wyglądać dokładnie jak niniejsze zdanie"
 
-#: single_pages/dashboard/blocks/block_builder.php:352
-#: single_pages/dashboard/blocks/block_builder.php:370
-#: single_pages/dashboard/blocks/block_builder.php:514
-#: single_pages/dashboard/blocks/block_builder.php:562
-#: single_pages/dashboard/blocks/block_builder.php:590
+#: single_pages/dashboard/blocks/block_builder.php:429
+#: single_pages/dashboard/blocks/block_builder.php:447
+#: single_pages/dashboard/blocks/block_builder.php:609
+#: single_pages/dashboard/blocks/block_builder.php:657
+#: single_pages/dashboard/blocks/block_builder.php:685
 msgid "Height"
 msgstr "Wysokość"
 
-#: single_pages/dashboard/blocks/block_builder.php:354
+#: single_pages/dashboard/blocks/block_builder.php:431
 msgid "Default height: 62px."
 msgstr "Standardowa wysokość: 62px."
 
-#: single_pages/dashboard/blocks/block_builder.php:372
+#: single_pages/dashboard/blocks/block_builder.php:449
 msgid "Default height of editable area: 300px."
 msgstr "Domyślna wysokość edytowalnego obszaru: 300px."
 
-#: single_pages/dashboard/blocks/block_builder.php:388
+#: single_pages/dashboard/blocks/block_builder.php:465
 msgid "Select options"
 msgstr "Opcje wyboru"
 
-#: single_pages/dashboard/blocks/block_builder.php:390
+#: single_pages/dashboard/blocks/block_builder.php:467
 msgid "Enter every option in new line, e.g."
 msgstr "Wprowadź każdą kolejną opcję w nowej linii, np."
 
-#: single_pages/dashboard/blocks/block_builder.php:391
+#: single_pages/dashboard/blocks/block_builder.php:468
 msgid "Don't show"
 msgstr "Nie pokazuj"
 
-#: single_pages/dashboard/blocks/block_builder.php:392
+#: single_pages/dashboard/blocks/block_builder.php:469
 msgid "Show"
 msgstr "Pokaż"
 
-#: single_pages/dashboard/blocks/block_builder.php:395
+#: single_pages/dashboard/blocks/block_builder.php:472
 msgid ""
 "You can also use double colon to specify key (value saved in database, only "
 "a-zA-Z0-9_ characters are permitted) and value (displayed text), e.g."
@@ -352,35 +418,37 @@ msgstr ""
 "zapisywana w bazie danych, dozwolone są tylko znaki a-zA-Z0-9_) i wartości "
 "(wyświetlany tekst), np."
 
-#: single_pages/dashboard/blocks/block_builder.php:396
+#: single_pages/dashboard/blocks/block_builder.php:473
 msgid "no :: Don't show"
 msgstr "nie :: Nie pokazuj"
 
-#: single_pages/dashboard/blocks/block_builder.php:397
+#: single_pages/dashboard/blocks/block_builder.php:474
 msgid "yes :: Show"
 msgstr "tak :: Pokaż"
 
-#: single_pages/dashboard/blocks/block_builder.php:415
+#: single_pages/dashboard/blocks/block_builder.php:492
+#: single_pages/dashboard/blocks/block_builder.php:522
+#: single_pages/dashboard/blocks/block_builder.php:552
 msgid "Show \"Custom string at the end of URL\" field"
 msgstr "Pokaż pole \"Niestandardowe zakończenie adresu URL\""
 
-#: single_pages/dashboard/blocks/block_builder.php:424
-#: single_pages/dashboard/blocks/block_builder.php:445
-#: single_pages/dashboard/blocks/block_builder.php:466
+#: single_pages/dashboard/blocks/block_builder.php:501
+#: single_pages/dashboard/blocks/block_builder.php:531
+#: single_pages/dashboard/blocks/block_builder.php:561
 msgid "Show \"Text\" field"
 msgstr "Pokaż pole \"Tekst\""
 
-#: single_pages/dashboard/blocks/block_builder.php:433
-#: single_pages/dashboard/blocks/block_builder.php:454
-#: single_pages/dashboard/blocks/block_builder.php:475
+#: single_pages/dashboard/blocks/block_builder.php:510
+#: single_pages/dashboard/blocks/block_builder.php:540
+#: single_pages/dashboard/blocks/block_builder.php:570
 msgid "Show \"Title\" field"
 msgstr "Pokaż pole \"Tytuł\""
 
-#: single_pages/dashboard/blocks/block_builder.php:487
+#: single_pages/dashboard/blocks/block_builder.php:582
 msgid "Show \"Alt text\" field"
 msgstr "Pokaż pole \"Tekst alternatywny\""
 
-#: single_pages/dashboard/blocks/block_builder.php:498
+#: single_pages/dashboard/blocks/block_builder.php:593
 msgid ""
 "Generate thumbnail using image helper (if original image is bigger than "
 "specified dimensions)"
@@ -388,23 +456,23 @@ msgstr ""
 "Wygeneruj miniaturę za pomocą \"image helpera\" (jeśli oryginalny obraz jest "
 "większy niż podane wymiary)"
 
-#: single_pages/dashboard/blocks/block_builder.php:502
-#: single_pages/dashboard/blocks/block_builder.php:550
+#: single_pages/dashboard/blocks/block_builder.php:597
+#: single_pages/dashboard/blocks/block_builder.php:645
 msgid "Width"
 msgstr "Szerokość"
 
-#: single_pages/dashboard/blocks/block_builder.php:526
-#: single_pages/dashboard/blocks/block_builder.php:574
+#: single_pages/dashboard/blocks/block_builder.php:621
+#: single_pages/dashboard/blocks/block_builder.php:669
 msgid "Crop"
 msgstr "Przytnij"
 
-#: single_pages/dashboard/blocks/block_builder.php:534
-#: single_pages/dashboard/blocks/block_builder.php:582
-#: src/BlockBuilder/OptionList.php:58
+#: single_pages/dashboard/blocks/block_builder.php:629
+#: single_pages/dashboard/blocks/block_builder.php:677
+#: src/BlockBuilder/OptionList.php:29 src/BlockBuilder/OptionList.php:70
 msgid "Yes"
 msgstr "Tak"
 
-#: single_pages/dashboard/blocks/block_builder.php:546
+#: single_pages/dashboard/blocks/block_builder.php:641
 msgid ""
 "Generate fullscreen image using image helper (if original image is bigger "
 "than specified dimensions)"
@@ -412,11 +480,26 @@ msgstr ""
 "Wygeneruj obraz pełnoekranowy za pomocą \"image helpera\" (jeśli oryginalny "
 "obraz jest większy niż podane wymiary)"
 
-#: single_pages/dashboard/blocks/block_builder.php:592
+#: single_pages/dashboard/blocks/block_builder.php:687
 msgid "Default height: 250px."
 msgstr "Standardowa wysokość: 250px."
 
-#: single_pages/dashboard/blocks/block_builder.php:618
+#: single_pages/dashboard/blocks/block_builder.php:703
+msgid "PHP Date Pattern"
+msgstr "Wzorzec PHP daty"
+
+#: single_pages/dashboard/blocks/block_builder.php:705
+#, php-format
+msgid ""
+"Check %sphp manual%s for available formats. Examples: <code>d.m.Y</code>, "
+"<code>d-m-Y</code>, <code>Y-m-d</code>, <code>m-d-Y</code>, <code>m/d/Y</"
+"code>"
+msgstr ""
+"Sprawdź %smanual php%s dla dostępnych formatów. Przykłady: <code>d.m.Y</"
+"code>, <code>d-m-Y</code>, <code>Y-m-d</code>, <code>m-d-Y</code>, <code>m/d/"
+"Y</code>"
+
+#: single_pages/dashboard/blocks/block_builder.php:728
 msgid "You haven't added any field types yet."
 msgstr "Nie dodałeś jeszcze żadnych typów pól."
 
@@ -432,12 +515,12 @@ msgstr "Znaleziono pliki konfiguracyjne następujących bloków:"
 msgid "No blocks created by Block Builder have been found."
 msgstr "Nie znaleziono żadnych bloków zbudowanych za pomocą \"Blok Buildera\"."
 
-#: src/BlockBuilder/Generator.php:238
+#: src/BlockBuilder/Generator.php:253
 msgid "Folder couldn't be created. Check your write permissions."
 msgstr ""
 "Folder nie mógł zostać utworzony. Sprawdź czy masz odpowiednie prawa zapisu."
 
-#: src/BlockBuilder/Generator.php:244
+#: src/BlockBuilder/Generator.php:259
 msgid "You do not have permission to install custom block types or add-ons."
 msgstr ""
 "Nie masz uprawnień by instalować niestandardowe typy bloków lub paczki."
@@ -446,61 +529,57 @@ msgstr ""
 msgid "None"
 msgstr "Żaden"
 
-#: src/BlockBuilder/OptionList.php:28
+#: src/BlockBuilder/OptionList.php:28 src/BlockBuilder/OptionList.php:69
+msgid "No"
+msgstr "Nie"
+
+#: src/BlockBuilder/OptionList.php:38
 msgid "+ Add new field type"
 msgstr "+ Dodaj nowy typ pola"
 
-#: src/BlockBuilder/OptionList.php:29
+#: src/BlockBuilder/OptionList.php:39
 msgid "Text field"
 msgstr "Pole tekstowe"
 
-#: src/BlockBuilder/OptionList.php:30
+#: src/BlockBuilder/OptionList.php:40
 msgid "Textarea"
 msgstr "Obszar tekstu"
 
-#: src/BlockBuilder/OptionList.php:31
+#: src/BlockBuilder/OptionList.php:41
 msgid "WYSIWYG Editor"
 msgstr "Edytor WYSIWYG"
 
-#: src/BlockBuilder/OptionList.php:32
+#: src/BlockBuilder/OptionList.php:42
 msgid "Select field"
 msgstr "Pole wyboru"
 
-#: src/BlockBuilder/OptionList.php:33
-msgid "Link from Sitemap"
-msgstr "Link z mapy strony"
+#: src/BlockBuilder/OptionList.php:43
+msgid "Link"
+msgstr "Link"
 
-#: src/BlockBuilder/OptionList.php:34
-msgid "Link from File Manager"
-msgstr "Link z menedżera plików"
-
-#: src/BlockBuilder/OptionList.php:35
-msgid "External Link"
-msgstr "Link zewnętrzny"
-
-#: src/BlockBuilder/OptionList.php:36
+#: src/BlockBuilder/OptionList.php:47
 msgid "Image"
 msgstr "Obraz"
 
-#: src/BlockBuilder/OptionList.php:37
+#: src/BlockBuilder/OptionList.php:48
 msgid "HTML Editor"
 msgstr "Edytor HTML"
 
-#: src/BlockBuilder/OptionList.php:46
+#: src/BlockBuilder/OptionList.php:49
+msgid "Date Picker"
+msgstr "Wybór daty"
+
+#: src/BlockBuilder/OptionList.php:58
 msgid "Only if the field type consists of more than 1 element (default)"
 msgstr "Tylko, jeśli typ pola zawiera więcej niż jeden element (standardowe)"
 
-#: src/BlockBuilder/OptionList.php:47
+#: src/BlockBuilder/OptionList.php:59
 msgid "Always"
 msgstr "Zawsze"
 
-#: src/BlockBuilder/OptionList.php:48
+#: src/BlockBuilder/OptionList.php:60
 msgid "Never"
 msgstr "Nigdy"
-
-#: src/BlockBuilder/OptionList.php:57
-msgid "No"
-msgstr "Nie"
 
 #: src/BlockBuilder/Validation.php:51 src/BlockBuilder/Validation.php:68
 #: src/BlockBuilder/Validation.php:144 src/BlockBuilder/Validation.php:160
@@ -549,10 +628,12 @@ msgstr ""
 #, php-format
 msgid ""
 "Block with that handle is already installed. <a href=\"%s\" target=\"_blank"
-"\" rel=\"noopener\">Uninstall it</a> first or use another handle (%s)."
+"\" rel=\"noopener\">Uninstall it</a> first and then build block again or use "
+"another handle (%s)."
 msgstr ""
 "Blok o podanym identyfikatorze jest już zainstalowany. <a href=\"%s\" target="
-"\"_blank\" rel=\"noopener\">Odinstaluj go</a> lub użyj innej nazwy (%s)."
+"\"_blank\" rel=\"noopener\">Odinstaluj go</a> i zbuduj blok ponownie albo "
+"użyj innej nazwy (%s)."
 
 #: src/BlockBuilder/Validation.php:123
 #, php-format
