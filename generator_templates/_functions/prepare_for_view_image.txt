@@ -117,7 +117,7 @@
             $this->set($altFieldName, $alt);
 
             // Additional data
-            // $this->set($fileIDFieldName.'_object', $fileObject);
+            $this->set($fileIDFieldName.'_object', $fileObject);
             $this->set($fileIDFieldName.'_filename', $filename);
 
             $this->set($fileIDFieldName.'_link', $link);
@@ -141,7 +141,7 @@
             $entry[$altFieldName]    = $alt;
 
             // Additional data
-            $entry[$fileIDFieldName.'_object']   = $fileObject;
+            // $entry[$fileIDFieldName.'_object']   = $fileObject;
             $entry[$fileIDFieldName.'_filename'] = $filename;
 
             $entry[$fileIDFieldName.'_link']   = $link;

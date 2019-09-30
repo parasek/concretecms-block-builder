@@ -145,8 +145,7 @@ class BlockBuilder extends DashboardPageController
         $this->set('linkFromFileManagerLabel', t('Link from File Manager'));
         $this->set('externalLinkLabel', t('External Link'));
         $this->set('showAdditionalFieldsLabel', t('Show additional fields'));
-        $this->set('noLabel', t('No'));
-        $this->set('yesLabel', t('Yes'));
+        $this->set('hideAdditionalFieldsLabel', t('Hide additional fields'));
 
         // Get rid of keys in repeatable entries (for json manipulation in js)
         if (is_array($basic)) {
