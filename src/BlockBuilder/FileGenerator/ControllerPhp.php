@@ -22,10 +22,10 @@ class ControllerPhp
             $code .= 'use Concrete\Core\Editor\LinkAbstractor;'.PHP_EOL;
         }
 
-        if ( ! empty($postDataSummary['exportFileColumns']) OR $postDataSummary['linkUsed']) {
+        if ( ! empty($postDataSummary['exportFileColumns']) OR $postDataSummary['linkUsed'] OR $postDataSummary['linkUsed_entry']) {
             $code .= 'use Concrete\Core\File\File;'.PHP_EOL;
         }
-        if ( ! empty($postDataSummary['exportPageColumns']) OR $postDataSummary['linkUsed']) {
+        if ( ! empty($postDataSummary['exportPageColumns']) OR $postDataSummary['linkUsed'] OR $postDataSummary['linkUsed_entry']) {
             $code .= 'use Concrete\Core\Page\Page;'.PHP_EOL;
         }
 
@@ -241,16 +241,16 @@ class ControllerPhp
 
         if ( ! empty($postData['entries'])) {
 
-            if ($postDataSummary['linkFromSitemapUsed_entry'] OR$postDataSummary['linkFromFileManagerUsed_entry'] OR $postDataSummary['imageUsed_entry']) {
+            if ($postDataSummary['linkUsed_entry'] OR $postDataSummary['linkFromSitemapUsed_entry'] OR $postDataSummary['linkFromFileManagerUsed_entry'] OR $postDataSummary['imageUsed_entry']) {
                 $code .= BlockBuilderUtility::tab(2) . '// Load assets for repeatable entries' . PHP_EOL;
             }
-            if ($postDataSummary['linkFromSitemapUsed_entry']) {
+            if ($postDataSummary['linkUsed_entry'] OR $postDataSummary['linkFromSitemapUsed_entry']) {
                 $code .= BlockBuilderUtility::tab(2) . '$this->requireAsset(\'core/sitemap\');' . PHP_EOL;
             }
-            if ($postDataSummary['linkFromFileManagerUsed_entry'] OR $postDataSummary['imageUsed_entry']) {
+            if ($postDataSummary['linkUsed_entry'] OR $postDataSummary['linkFromFileManagerUsed_entry'] OR $postDataSummary['imageUsed_entry']) {
                 $code .= BlockBuilderUtility::tab(2) . '$this->requireAsset(\'core/file-manager\');' . PHP_EOL;
             }
-            if ($postDataSummary['linkFromSitemapUsed_entry'] OR $postDataSummary['linkFromFileManagerUsed_entry'] OR $postDataSummary['imageUsed_entry']) {
+            if ($postDataSummary['linkUsed_entry'] OR $postDataSummary['linkFromSitemapUsed_entry'] OR $postDataSummary['linkFromFileManagerUsed_entry'] OR $postDataSummary['imageUsed_entry']) {
                 $code .= PHP_EOL;
             }
 
@@ -259,15 +259,33 @@ class ControllerPhp
 
             if ($postDataSummary['datePickerUsed_entry']) {
                 $code .= PHP_EOL;
-                $code .= BlockBuilderUtility::tab(2).'// Fields that don\'t exist in database, but are required in repeatable entry'.PHP_EOL;
+                $code .= BlockBuilderUtility::tab(2).'// ' . addslashes($v['label']) . ' (' . $v['handle'] . ') - Fields that don\'t exist in database, but are required in repeatable entry'.PHP_EOL;
                 foreach ($postData['entries'] as $k => $v) {
                     if ($v['fieldType'] == 'date_picker') {
-                        $code .= BlockBuilderUtility::tab(2) . '$entryColumnNames[] = \'' . $v['handle'] . 'Displayed\';' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '$entryColumnNames[] = \'' . $v['handle'] . '_displayed\';' . PHP_EOL;
                     }
                 }
-                $code .= PHP_EOL;
             }
 
+            if ($postDataSummary['linkUsed_entry']) {
+                $code .= PHP_EOL;
+                $code .= BlockBuilderUtility::tab(2).'// ' . addslashes($v['label']) . ' (' . $v['handle'] . ') - Fields that don\'t exist in database, but are required in repeatable entry'.PHP_EOL;
+                foreach ($postData['entries'] as $k => $v) {
+                    if ($v['fieldType'] == 'link') {
+                        $code .= BlockBuilderUtility::tab(2) . '$entryColumnNames[] = \'' . $v['handle'] . '_link_type\';' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '$entryColumnNames[] = \'' . $v['handle'] . '_show_additional_fields\';' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '$entryColumnNames[] = \'' . $v['handle'] . '_link_from_sitemap\';' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '$entryColumnNames[] = \'' . $v['handle'] . '_link_from_file_manager\';' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '$entryColumnNames[] = \'' . $v['handle'] . '_protocol\';' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '$entryColumnNames[] = \'' . $v['handle'] . '_external_link\';' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '$entryColumnNames[] = \'' . $v['handle'] . '_ending\';' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '$entryColumnNames[] = \'' . $v['handle'] . '_text\';' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '$entryColumnNames[] = \'' . $v['handle'] . '_title\';' . PHP_EOL;
+                    }
+                }
+            }
+
+            $code .= PHP_EOL;
             $code .= BlockBuilderUtility::tab(2).'$this->set(\'entryColumnNames\', $entryColumnNames);'.PHP_EOL.PHP_EOL;
 
         }
@@ -277,7 +295,7 @@ class ControllerPhp
         $code .= BlockBuilderUtility::tab(2).'$al->register(\'css\', \''.$postDataSummary['blockHandleDashed'].'/form\', \'blocks/'.$postDataSummary['blockHandle'].'/css_files/form.css\', [], false);'.PHP_EOL;
         $code .= BlockBuilderUtility::tab(2).'$this->requireAsset(\'css\', \''.$postDataSummary['blockHandleDashed'].'/form\');'.PHP_EOL.PHP_EOL;
 
-        if ($postDataSummary['externalLinkUsed'] OR $postDataSummary['externalLinkUsed_entry']) {
+        if ($postDataSummary['linkUsed'] OR $postDataSummary['linkUsed_entry'] OR $postDataSummary['externalLinkUsed'] OR $postDataSummary['externalLinkUsed_entry']) {
             $code .= BlockBuilderUtility::tab(2).'// External link protocols' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(2).'$externalLinkProtocols = [' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(3).'\'http://\'  => \'http://\',' . PHP_EOL;
@@ -297,13 +315,6 @@ class ControllerPhp
             $code .= BlockBuilderUtility::tab(3).'\'external_link\'          => t(\''.addslashes($postData['externalLinkLabel']).'\')' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(2).'];' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(2).'$this->set(\'linkTypes\', $linkTypes);' . PHP_EOL . PHP_EOL;
-
-            $code .= BlockBuilderUtility::tab(2).'// Show additional fields options' . PHP_EOL;
-            $code .= BlockBuilderUtility::tab(2).'$showAdditionalFieldsOptions = [' . PHP_EOL;
-            $code .= BlockBuilderUtility::tab(3).'0 => t(\''.addslashes($postData['noLabel']).'\'),' . PHP_EOL;
-            $code .= BlockBuilderUtility::tab(3).'1 => t(\''.addslashes($postData['yesLabel']).'\')' . PHP_EOL;
-            $code .= BlockBuilderUtility::tab(2).'];' . PHP_EOL;
-            $code .= BlockBuilderUtility::tab(2).'$this->set(\'showAdditionalFieldsOptions\', $showAdditionalFieldsOptions);' . PHP_EOL . PHP_EOL;
         }
 
         if ($postDataSummary['htmlEditorUsed'] OR $postDataSummary['htmlEditorUsed_entry']) {
@@ -334,7 +345,7 @@ class ControllerPhp
 
         if ( ! empty($postData['basic'])) {
 
-            if ($postDataSummary['linkFromSitemapUsed'] OR $postDataSummary['linkFromFileManagerUsed'] OR $postDataSummary['externalLinkUsed'] OR $postDataSummary['imageUsed']) {
+            if ($postDataSummary['linkUsed'] OR $postDataSummary['linkFromSitemapUsed'] OR $postDataSummary['linkFromFileManagerUsed'] OR $postDataSummary['externalLinkUsed'] OR $postDataSummary['imageUsed']) {
                 $code .= BlockBuilderUtility::tab(2).'// Prepare fields for view'.PHP_EOL;
             }
 
@@ -346,7 +357,7 @@ class ControllerPhp
 
                     $code .= BlockBuilderUtility::tab(2).'if ($this->'.$v['handle'].'[\'link_type\'] == \'link_from_sitemap\') {'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3).'$this->prepareForViewLinkFromSitemap(\'view\', ['.PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(4).'\''.$v['handle'].'_value\'  => $this->'.$v['handle'].'[\'link_from_sitemap\'],'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4).'\''.$v['handle'].'\'        => $this->'.$v['handle'].'[\'link_from_sitemap\'],'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4).'\''.$v['handle'].'_ending\' => $this->'.$v['handle'].'[\'ending\'],'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4).'\''.$v['handle'].'_text\'   => $this->'.$v['handle'].'[\'text\'],'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4).'\''.$v['handle'].'_title\'  => $this->'.$v['handle'].'[\'title\']'.PHP_EOL;
@@ -354,7 +365,7 @@ class ControllerPhp
 
                     $code .= BlockBuilderUtility::tab(2).'} elseif ($this->'.$v['handle'].'[\'link_type\'] == \'link_from_file_manager\') {'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3).'$this->prepareForViewLinkFromFileManager(\'view\', ['.PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(4).'\''.$v['handle'].'_value\'  => $this->'.$v['handle'].'[\'link_from_file_manager\'],'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4).'\''.$v['handle'].'\'        => $this->'.$v['handle'].'[\'link_from_file_manager\'],'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4).'\''.$v['handle'].'_ending\' => $this->'.$v['handle'].'[\'ending\'],'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4).'\''.$v['handle'].'_text\'   => $this->'.$v['handle'].'[\'text\'],'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4).'\''.$v['handle'].'_title\'  => $this->'.$v['handle'].'[\'title\']'.PHP_EOL;
@@ -362,11 +373,11 @@ class ControllerPhp
 
                     $code .= BlockBuilderUtility::tab(2).'} elseif ($this->'.$v['handle'].'[\'link_type\'] == \'external_link\') {'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3).'$this->prepareForViewExternalLink(\'view\', ['.PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(4).'\''.$v['handle'].'_value\'                  => $this->'.$v['handle'].'[\'external_link\'],'.PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(4).'\''.$v['handle'].'_external_link_protocol\' => $this->'.$v['handle'].'[\'external_link_protocol\'],'.PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(4).'\''.$v['handle'].'_ending\'                 => $this->'.$v['handle'].'[\'ending\'],'.PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(4).'\''.$v['handle'].'_text\'                   => $this->'.$v['handle'].'[\'text\'],'.PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(4).'\''.$v['handle'].'_title\'                  => $this->'.$v['handle'].'[\'title\']'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4).'\''.$v['handle'].'\'          => $this->'.$v['handle'].'[\'external_link\'],'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4).'\''.$v['handle'].'_protocol\' => $this->'.$v['handle'].'[\'protocol\'],'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4).'\''.$v['handle'].'_ending\'   => $this->'.$v['handle'].'[\'ending\'],'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4).'\''.$v['handle'].'_text\'     => $this->'.$v['handle'].'[\'text\'],'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4).'\''.$v['handle'].'_title\'    => $this->'.$v['handle'].'[\'title\']'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3).']);'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(2).'}'.PHP_EOL.PHP_EOL;
 
@@ -513,6 +524,7 @@ class ControllerPhp
             $code .= BlockBuilderUtility::tab(2) . '$entries = $this->getEntries();'.PHP_EOL;
 
             if (
+                $postDataSummary['linkUsed_entry'] OR
                 $postDataSummary['linkFromSitemapUsed_entry'] OR
                 $postDataSummary['linkFromFileManagerUsed_entry'] OR
                 $postDataSummary['externalLinkUsed_entry'] OR
@@ -633,7 +645,7 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(3) . '\'show_additional_fields\' => intval($args[\''.$v['handle'].'_show_additional_fields\']),'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '\'link_from_sitemap\'      => intval($args[\''.$v['handle'].'_link_from_sitemap\']),'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '\'link_from_file_manager\' => intval($args[\''.$v['handle'].'_link_from_file_manager\']),'.PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(3) . '\'external_link_protocol\' => trim($args[\''.$v['handle'].'_external_link_protocol\']),'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '\'protocol\'               => trim($args[\''.$v['handle'].'_protocol\']),'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '\'external_link\'          => trim($args[\''.$v['handle'].'_external_link\']),'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '\'ending\'                 => trim($args[\''.$v['handle'].'_ending\']),'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '\'text\'                   => trim($args[\''.$v['handle'].'_text\']),'.PHP_EOL;
@@ -751,6 +763,25 @@ class ControllerPhp
                     if ( ! empty($v['imageShowAltTextField'])) {
                         $code .= BlockBuilderUtility::tab(4) . '$data[\''.$v['handle'].'_alt\'] '.BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength+4).'= trim($entry[\''.$v['handle'].'_alt\']);'.PHP_EOL;
                     }
+                }
+
+            }
+
+            foreach ($postData['entries'] as $k => $v) {
+                if ($v['fieldType']=='link') {
+                    $code .= PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4) . '// '.addslashes($v['label']).' ('.$v['handle'].') - Link'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4) . '$data[\''.$v['handle'].'\'] = json_encode(['.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5) . '\'link_type\'              => trim($entry[\''.$v['handle'].'_link_type\']),'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5) . '\'show_additional_fields\' => intval($entry[\''.$v['handle'].'_show_additional_fields\']),'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5) . '\'link_from_sitemap\'      => intval($entry[\''.$v['handle'].'_link_from_sitemap\']),'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5) . '\'link_from_file_manager\' => intval($entry[\''.$v['handle'].'_link_from_file_manager\']),'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5) . '\'protocol\'               => trim($entry[\''.$v['handle'].'_protocol\']),'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5) . '\'external_link\'          => trim($entry[\''.$v['handle'].'_external_link\']),'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5) . '\'ending\'                 => trim($entry[\''.$v['handle'].'_ending\']),'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5) . '\'text\'                   => trim($entry[\''.$v['handle'].'_text\']),'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5) . '\'title\'                  => trim($entry[\''.$v['handle'].'_title\']),'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4) . ']);'.PHP_EOL;
                 }
             }
 
@@ -882,15 +913,22 @@ class ControllerPhp
 
         if ( ! empty($postDataSummary['requiredEntryFields'])) {
 
-            $code .= BlockBuilderUtility::tab(2).'// Required fields in repeatable entries'.PHP_EOL;
+            $code .= BlockBuilderUtility::tab(2).'// Repeatable entries'.PHP_EOL;
             $code .= BlockBuilderUtility::tab(2).'if (isset($args[\'entry\']) AND is_array($args[\'entry\'])) {'.PHP_EOL.PHP_EOL;
 
+            // Required fields in repeatable entries
+            $code .= BlockBuilderUtility::tab(3).'// Required fields in repeatable entries'.PHP_EOL;
             $code .= BlockBuilderUtility::tab(3).'$requiredEntryFields = [];'.PHP_EOL;
             $maxKeyLength = 0;
             foreach ($postData['entries'] as $k => $v) {
-                if ( ! empty($v['required'])) {
+                if ( ! empty($v['required']) AND $v['fieldType']!='link') {
                     $keyLength = mb_strlen($v['handle']);
                     $maxKeyLength = $keyLength>$maxKeyLength ? $keyLength : $maxKeyLength;
+                }
+            }
+            foreach ($postData['entries'] as $k => $v) {
+                if ( ! empty($v['required']) AND $v['fieldType']!='link') {
+                    $keyLength = mb_strlen($v['handle']);
                     $code .= BlockBuilderUtility::tab(3).'$requiredEntryFields[\''.$v['handle'].'\'] '.BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength).'= t(\''.addslashes($v['label']).'\');'.PHP_EOL;
                 }
             }
@@ -910,6 +948,48 @@ class ControllerPhp
 
             $code .= BlockBuilderUtility::tab(4).'if (count($emptyEntries) AND in_array($requiredEntryFieldHandle, $emptyEntries)) {'.PHP_EOL;
             $code .= BlockBuilderUtility::tab(5).'$error->add(t(\'Field "%s" is required in every entry.\', $requiredEntryFieldLabel));'.PHP_EOL;
+            $code .= BlockBuilderUtility::tab(4).'}'.PHP_EOL.PHP_EOL;
+
+            $code .= BlockBuilderUtility::tab(3).'}'.PHP_EOL.PHP_EOL;
+
+            // Required fields in repeatable entries - Links
+            $code .= BlockBuilderUtility::tab(3).'// Required fields in repeatable entries - Links'.PHP_EOL;
+            $code .= BlockBuilderUtility::tab(3).'$requiredEntryLinkFields = [];'.PHP_EOL;
+            $maxKeyLength = 0;
+            foreach ($postData['entries'] as $k => $v) {
+                if ( ! empty($v['required']) AND $v['fieldType']=='link') {
+                    $keyLength = mb_strlen($v['handle']);
+                    $maxKeyLength = $keyLength>$maxKeyLength ? $keyLength : $maxKeyLength;
+                }
+            }
+            foreach ($postData['entries'] as $k => $v) {
+                if ( ! empty($v['required']) AND $v['fieldType']=='link') {
+                    $keyLength = mb_strlen($v['handle']);
+                    $code .= BlockBuilderUtility::tab(3).'$requiredEntryLinkFields[\''.$v['handle'].'\'] '.BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength).'= t(\''.addslashes($v['label']).'\');'.PHP_EOL;
+                }
+            }
+            $code .= PHP_EOL;
+
+            $code .= BlockBuilderUtility::tab(3).'foreach ($requiredEntryLinkFields as $requiredEntryLinkFieldHandle => $requiredEntryLinkFieldLabel) {'.PHP_EOL.PHP_EOL;
+
+            $code .= BlockBuilderUtility::tab(4).'$emptyEntries = [];'.PHP_EOL.PHP_EOL;
+
+            $code .= BlockBuilderUtility::tab(4).'foreach ($args[\'entry\'] as $entry) {'.PHP_EOL.PHP_EOL;
+
+            $code .= BlockBuilderUtility::tab(5).'$errorCounter = 0;'.PHP_EOL;
+            $code .= BlockBuilderUtility::tab(5).'$errorCounter += empty($entry[$requiredEntryLinkFieldHandle.\'_link_type\']) ? 1 : 0;'.PHP_EOL;
+            $code .= BlockBuilderUtility::tab(5).'$errorCounter += ($entry[$requiredEntryLinkFieldHandle.\'_link_type\']==\'link_from_sitemap\' AND empty($entry[$requiredEntryLinkFieldHandle.\'_link_from_sitemap\'])) ? 1 : 0;'.PHP_EOL;
+            $code .= BlockBuilderUtility::tab(5).'$errorCounter += ($entry[$requiredEntryLinkFieldHandle.\'_link_type\']==\'link_from_file_manager\' AND empty($entry[$requiredEntryLinkFieldHandle.\'_link_from_file_manager\'])) ? 1 : 0;'.PHP_EOL;
+            $code .= BlockBuilderUtility::tab(5).'$errorCounter += ($entry[$requiredEntryLinkFieldHandle.\'_link_type\']==\'external_link\' AND empty($entry[$requiredEntryLinkFieldHandle.\'_external_link\'])) ? 1 : 0;'.PHP_EOL.PHP_EOL;
+
+            $code .= BlockBuilderUtility::tab(5).'if ($errorCounter > 0) {'.PHP_EOL;
+            $code .= BlockBuilderUtility::tab(6).'$emptyEntries[] = $requiredEntryLinkFieldHandle;'.PHP_EOL;
+            $code .= BlockBuilderUtility::tab(5).'}'.PHP_EOL.PHP_EOL;
+
+            $code .= BlockBuilderUtility::tab(4).'}'.PHP_EOL.PHP_EOL;
+
+            $code .= BlockBuilderUtility::tab(4).'if (count($emptyEntries) AND in_array($requiredEntryLinkFieldHandle, $emptyEntries)) {'.PHP_EOL;
+            $code .= BlockBuilderUtility::tab(5).'$error->add(t(\'Field "%s" is required in every entry.\', $requiredEntryLinkFieldLabel));'.PHP_EOL;
             $code .= BlockBuilderUtility::tab(4).'}'.PHP_EOL.PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(3).'}'.PHP_EOL.PHP_EOL;
@@ -971,7 +1051,7 @@ class ControllerPhp
 
             $code .= BlockBuilderUtility::tab(2).'$modifiedEntries = [];'.PHP_EOL.PHP_EOL;
 
-            $code .= BlockBuilderUtility::tab(2).'foreach ($entries as $entry) {'.PHP_EOL;
+            $code .= BlockBuilderUtility::tab(2).'foreach ($entries as $entry) {'.PHP_EOL.PHP_EOL;
             foreach ($postData['entries'] as $k => $v) {
                 if ($v['fieldType'] == 'wysiwyg_editor') {
                     $code .= BlockBuilderUtility::tab(3).'$entry[\''.$v['handle'].'\'] = ($outputMethod==\'edit\') ? LinkAbstractor::translateFromEditMode($entry[\''.$v['handle'].'\']) : LinkAbstractor::translateFrom($entry[\''.$v['handle'].'\']);'.PHP_EOL;
@@ -984,10 +1064,26 @@ class ControllerPhp
             }
             foreach ($postData['entries'] as $k => $v) {
                 if ($v['fieldType'] == 'date_picker') {
-                    $code .= BlockBuilderUtility::tab(3).'$entry[\''.$v['handle'].'Displayed\'] = (!empty($entry[\''.$v['handle'].'\'])) ? date(\''.addslashes($v['datePickerPattern']).'\', strtotime($entry[\''.$v['handle'].'\'])) : null;'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3).'$entry[\''.$v['handle'].'_displayed\'] = (!empty($entry[\''.$v['handle'].'\'])) ? date(\''.addslashes($v['datePickerPattern']).'\', strtotime($entry[\''.$v['handle'].'\'])) : null;'.PHP_EOL;
                 }
             }
-            $code .= BlockBuilderUtility::tab(3).'$modifiedEntries[] = $entry;'.PHP_EOL;
+            foreach ($postData['entries'] as $k => $v) {
+                if ($v['fieldType'] == 'link') {
+                    $code .= BlockBuilderUtility::tab(3).'// '.addslashes($v['label']).' ('.$v['handle'].') - Link'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3).'$'.$v['handle'].'Array = json_decode($entry[\''.$v['handle'].'\'], true);'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3).'$entry[\''.$v['handle'].'_link_type\']              = $'.$v['handle'].'Array[\'link_type\'];'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3).'$entry[\''.$v['handle'].'_show_additional_fields\'] = $'.$v['handle'].'Array[\'show_additional_fields\'];'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3).'$entry[\''.$v['handle'].'_link_from_sitemap\']      = $'.$v['handle'].'Array[\'link_from_sitemap\'];'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3).'$entry[\''.$v['handle'].'_link_from_file_manager\'] = (is_object(File::getByID($'.$v['handle'].'Array[\'link_from_file_manager\']))) ? $'.$v['handle'].'Array[\'link_from_file_manager\'] : 0;'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3).'$entry[\''.$v['handle'].'_protocol\']               = $'.$v['handle'].'Array[\'protocol\'];'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3).'$entry[\''.$v['handle'].'_external_link\']          = $'.$v['handle'].'Array[\'external_link\'];'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3).'$entry[\''.$v['handle'].'_ending\']                 = $'.$v['handle'].'Array[\'ending\'];'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3).'$entry[\''.$v['handle'].'_text\']                   = $'.$v['handle'].'Array[\'text\'];'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3).'$entry[\''.$v['handle'].'_title\']                  = $'.$v['handle'].'Array[\'title\'];'.PHP_EOL;
+                }
+            }
+            $code .= BlockBuilderUtility::tab(3).PHP_EOL;
+            $code .= BlockBuilderUtility::tab(3).'$modifiedEntries[] = $entry;'.PHP_EOL.PHP_EOL;
             $code .= BlockBuilderUtility::tab(2).'}'.PHP_EOL.PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(2).'return $modifiedEntries;'.PHP_EOL.PHP_EOL;
@@ -1027,7 +1123,7 @@ class ControllerPhp
 
 
         // 16. prepareForViewLinkFromSitemap()
-        if ($postDataSummary['linkFromSitemapUsed'] OR $postDataSummary['linkFromSitemapUsed_entry']) {
+        if ($postDataSummary['linkUsed'] OR $postDataSummary['linkUsed_entry'] OR $postDataSummary['linkFromSitemapUsed'] OR $postDataSummary['linkFromSitemapUsed_entry']) {
 
             $code .= file_get_contents($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . '_functions' . DIRECTORY_SEPARATOR . 'prepare_for_view_link_from_sitemap.txt');
 
@@ -1035,7 +1131,7 @@ class ControllerPhp
 
 
         // 17. prepareForViewLinkFromFileManager()
-        if ($postDataSummary['linkFromFileManagerUsed'] OR $postDataSummary['linkFromFileManagerUsed_entry']) {
+        if ($postDataSummary['linkUsed'] OR $postDataSummary['linkUsed_entry'] OR $postDataSummary['linkFromFileManagerUsed'] OR $postDataSummary['linkFromFileManagerUsed_entry']) {
 
             $code .= file_get_contents($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . '_functions' . DIRECTORY_SEPARATOR . 'prepare_for_view_link_from_file_manager.txt');
 
@@ -1043,7 +1139,7 @@ class ControllerPhp
 
 
         // 18. prepareForViewExternalLink()
-        if ($postDataSummary['externalLinkUsed'] OR $postDataSummary['externalLinkUsed_entry']) {
+        if ($postDataSummary['linkUsed'] OR $postDataSummary['linkUsed_entry'] OR $postDataSummary['externalLinkUsed'] OR $postDataSummary['externalLinkUsed_entry']) {
 
             $code .= file_get_contents($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . '_functions' . DIRECTORY_SEPARATOR . 'prepare_for_view_external_link.txt');
 
@@ -1063,6 +1159,7 @@ class ControllerPhp
             ! empty($postData['entries'])
             AND
             (
+                $postDataSummary['linkUsed_entry'] OR
                 $postDataSummary['linkFromSitemapUsed_entry'] OR
                 $postDataSummary['linkFromFileManagerUsed_entry'] OR
                 $postDataSummary['externalLinkUsed_entry'] OR
@@ -1081,6 +1178,37 @@ class ControllerPhp
 
             foreach ($postData['entries'] as $k => $v) {
 
+                if ($v['fieldType'] == 'link') {
+
+                    $code .= BlockBuilderUtility::tab(4).'// '.addslashes($v['label']).' ('.$v['handle'].') - Link'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4).'$modifiedEntry = [];'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4).'if ($entry[\''.$v['handle'].'_link_type\'] == \'link_from_sitemap\') {'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5).'$modifiedEntry = $this->prepareForViewLinkFromSitemap(\'entry\', ['.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(6).'\''.$v['handle'].'\'        => $entry[\''.$v['handle'].'_link_from_sitemap\'],'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(6).'\''.$v['handle'].'_ending\' => $entry[\''.$v['handle'].'_ending\'],'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(6).'\''.$v['handle'].'_text\'   => $entry[\''.$v['handle'].'_text\'],'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(6).'\''.$v['handle'].'_title\'  => $entry[\''.$v['handle'].'_title\']'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5).']);'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4).'} elseif ($entry[\''.$v['handle'].'_link_type\'] == \'link_from_file_manager\') {'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5).'$modifiedEntry = $this->prepareForViewLinkFromFileManager(\'entry\', ['.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(6).'\''.$v['handle'].'\'        => $entry[\''.$v['handle'].'_link_from_file_manager\'],'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(6).'\''.$v['handle'].'_ending\' => $entry[\''.$v['handle'].'_ending\'],'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(6).'\''.$v['handle'].'_text\'   => $entry[\''.$v['handle'].'_text\'],'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(6).'\''.$v['handle'].'_title\'  => $entry[\''.$v['handle'].'_title\']'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5).']);'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4).'} elseif ($entry[\''.$v['handle'].'_link_type\'] == \'external_link\') {'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5).'$modifiedEntry = $this->prepareForViewExternalLink(\'entry\', ['.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(6).'\''.$v['handle'].'\'          => $entry[\''.$v['handle'].'_external_link\'],'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(6).'\''.$v['handle'].'_protocol\' => $entry[\''.$v['handle'].'_protocol\'],'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(6).'\''.$v['handle'].'_ending\'   => $entry[\''.$v['handle'].'_ending\'],'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(6).'\''.$v['handle'].'_text\'     => $entry[\''.$v['handle'].'_text\'],'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(6).'\''.$v['handle'].'_title\'    => $entry[\''.$v['handle'].'_title\']'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5).']);'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4).'}'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4).'$entry = array_merge($entry, $modifiedEntry);'.PHP_EOL.PHP_EOL;
+
+                }
+
                 if ($v['fieldType'] == 'external_link') {
 
                     $ending = 'false';
@@ -1096,6 +1224,7 @@ class ControllerPhp
                         $title = '$entry[\'' . $v['handle'] . '_title\']';
                     }
 
+                    $code .= BlockBuilderUtility::tab(4).'// '.addslashes($v['label']).' ('.$v['handle'].') - External Link'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '$modifiedEntry = $this->prepareForViewExternalLink(\'entry\', [' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '\'          => $entry[\'' . $v['handle'] . '\'],' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '_protocol\' => $entry[\'' . $v['handle'] . '_protocol\'],'.PHP_EOL;
@@ -1121,6 +1250,7 @@ class ControllerPhp
                         $title = '$entry[\'' . $v['handle'] . '_title\']';
                     }
 
+                    $code .= BlockBuilderUtility::tab(4).'// '.addslashes($v['label']).' ('.$v['handle'].') - Link from Sitemap'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '$modifiedEntry = $this->prepareForViewLinkFromSitemap(\'entry\', [' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '\'        => $entry[\'' . $v['handle'] . '\'],' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '_ending\' => ' . $ending . ',' . PHP_EOL;
@@ -1146,6 +1276,7 @@ class ControllerPhp
                         $title = '$entry[\'' . $v['handle'] . '_title\']';
                     }
 
+                    $code .= BlockBuilderUtility::tab(4).'// '.addslashes($v['label']).' ('.$v['handle'].') - Link from File Manager'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '$modifiedEntry = $this->prepareForViewLinkFromFileManager(\'entry\', [' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '\'        => $entry[\'' . $v['handle'] . '\'],' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '_ending\' => ' . $ending . ',' . PHP_EOL;
@@ -1197,6 +1328,7 @@ class ControllerPhp
                         }
                     }
 
+                    $code .= BlockBuilderUtility::tab(4).'// '.addslashes($v['label']).' ('.$v['handle'].') - Image'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '$modifiedEntry = $this->prepareForViewImage(\'entry\', [' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '\'     => $entry[\'' . $v['handle'] . '\'],' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '_alt\' => ' . $alt . '' . PHP_EOL;

@@ -209,14 +209,9 @@
                 <?php echo $form->text('showAdditionalFieldsLabel', $showAdditionalFieldsLabel, ['data-translated-text'=>t('Show additional fields'), 'data-untranslated-text'=>'Show additional fields']); ?>
             </div>
 
-            <div class="form-group <?php in_array('noLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?php echo $form->label('noLabel', t('No')); ?>
-                <?php echo $form->text('noLabel', $noLabel, ['data-translated-text'=>t('No'), 'data-untranslated-text'=>'No']); ?>
-            </div>
-
-            <div class="form-group <?php in_array('yesLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?php echo $form->label('yesLabel', t('Yes')); ?>
-                <?php echo $form->text('yesLabel', $yesLabel, ['data-translated-text'=>t('Yes'), 'data-untranslated-text'=>'Yes']); ?>
+            <div class="form-group <?php in_array('hideAdditionalFieldsLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('hideAdditionalFieldsLabel', t('Hide additional fields')); ?>
+                <?php echo $form->text('hideAdditionalFieldsLabel', $hideAdditionalFieldsLabel, ['data-translated-text'=>t('Hide additional fields'), 'data-untranslated-text'=>'Hide additional fields']); ?>
             </div>
 
         </div>
