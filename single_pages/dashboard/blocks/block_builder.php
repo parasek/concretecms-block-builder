@@ -232,7 +232,7 @@
                                name="scroll"
                                class="js-toggle-scroll"
                                value="1"
-                               <?php if (empty($_COOKIE['scrollDisabled'])): ?>checked="checked"<?php endif; ?>
+                               <?php if (empty($app->make('cookie')->get('scrollDisabled'))): ?>checked="checked"<?php endif; ?>
                         ><?php echo t('Scroll down'); ?></label>
                     </div>
                     <a href="#" class="entries-action js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t('Expand all'); ?></a>
@@ -259,7 +259,7 @@
                                name="scroll"
                                class="js-toggle-scroll"
                                value="1"
-                               <?php if (empty($_COOKIE['scrollDisabled'])): ?>checked="checked"<?php endif; ?>
+                               <?php if (empty($app->make('cookie')->get('scrollDisabled'))): ?>checked="checked"<?php endif; ?>
                         ><?php echo t('Scroll down'); ?></label>
                     </div>
                     <a href="#" class="entries-action js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t('Expand all'); ?></a>
@@ -286,7 +286,7 @@
                                name="scroll"
                                class="js-toggle-scroll"
                                value="1"
-                               <?php if (empty($_COOKIE['scrollDisabled'])): ?>checked="checked"<?php endif; ?>
+                               <?php if (empty($app->make('cookie')->get('scrollDisabled'))): ?>checked="checked"<?php endif; ?>
                         ><?php echo t('Scroll down'); ?></label>
                     </div>
                     <a href="#" class="entries-action js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t('Expand all'); ?></a>
@@ -313,7 +313,7 @@
                                name="scroll"
                                class="js-toggle-scroll"
                                value="1"
-                               <?php if (empty($_COOKIE['scrollDisabled'])): ?>checked="checked"<?php endif; ?>
+                               <?php if (empty($app->make('cookie')->get('scrollDisabled'))): ?>checked="checked"<?php endif; ?>
                         ><?php echo t('Scroll down'); ?></label>
                     </div>
                     <a href="#" class="entries-action js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t('Expand all'); ?></a>
