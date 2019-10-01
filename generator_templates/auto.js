@@ -32,9 +32,10 @@ $(function() {
 
             var fileSelectors = parentContainer.find('.js-file-selector');
             fileSelectors.each(function(i, item) {
+                var chooseText = $(item).attr('data-choose-text');
                 var inputName = $(item).attr('data-input-name');
                 var fID = parseInt($(item).attr('data-file-id'));
-                $(item).concreteFileSelector({'inputName': inputName, 'filters': [], 'fID': fID});
+                $(item).concreteFileSelector({'chooseText': chooseText, 'inputName': inputName, 'filters': [], 'fID': fID});
             });
 
         }

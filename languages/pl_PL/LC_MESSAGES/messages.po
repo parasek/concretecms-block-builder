@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-09-30 17:10+0200\n"
-"PO-Revision-Date: 2019-09-30 17:10+0200\n"
+"POT-Creation-Date: 2019-10-01 11:58+0200\n"
+"PO-Revision-Date: 2019-10-01 11:58+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pl_PL\n"
@@ -515,6 +515,15 @@ msgstr "Znaleziono pliki konfiguracyjne następujących bloków:"
 msgid "No blocks created by Block Builder have been found."
 msgstr "Nie znaleziono żadnych bloków zbudowanych za pomocą \"Blok Buildera\"."
 
+#: src/BlockBuilder/FileGenerator/FormPhp.php:674
+#: src/BlockBuilder/FileGenerator/FormPhp.php:752
+msgid "Choose File"
+msgstr "Wybierz plik"
+
+#: src/BlockBuilder/FileGenerator/FormPhp.php:836
+msgid "Choose Image"
+msgstr "Wybierz obraz"
+
 #: src/BlockBuilder/Generator.php:253
 msgid "Folder couldn't be created. Check your write permissions."
 msgstr ""
@@ -554,8 +563,8 @@ msgid "Select field"
 msgstr "Pole wyboru"
 
 #: src/BlockBuilder/OptionList.php:43
-msgid "Link"
-msgstr "Link"
+msgid "Link with Type Selection"
+msgstr "Link z wyborem typu"
 
 #: src/BlockBuilder/OptionList.php:47
 msgid "Image"
@@ -857,6 +866,9 @@ msgid ""
 msgstr ""
 "Nieprawidłowa wartość w jednym z pól \"Edytor HTML/Wysokość\", powinny one "
 "być liczbą z zakresu %s-%s albo być puste (%s)."
+
+#~ msgid "Link"
+#~ msgstr "Link"
 
 #~ msgid "Default height in c5.7: 54px. Default height in c5.8: 62px."
 #~ msgstr "Domyślna wysokość w c5.7: 54px. Domyślna wysokość w c5.8: 62px."
