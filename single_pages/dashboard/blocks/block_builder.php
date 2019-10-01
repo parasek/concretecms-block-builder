@@ -418,7 +418,7 @@
                     </div>
                 </div>
 
-                <% if (fieldType != 'text_field') { %>
+                <% if (fieldType != 'text_field' && fieldType != 'link') { %>
 
                     <hr class="entry-hr"/>
 
