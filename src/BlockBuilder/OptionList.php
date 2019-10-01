@@ -40,7 +40,7 @@ class OptionList
         $options['textarea']               = t('Textarea');
         $options['wysiwyg_editor']         = t('WYSIWYG Editor');
         $options['select_field']           = t('Select field');
-        $options['link']                   = t('Link - Multiple Types');
+        $options['link']                   = t('Link with Type Selection');
         $options['link_from_sitemap']      = t('Link from Sitemap');
         $options['link_from_file_manager'] = t('Link from File Manager');
         $options['external_link']          = t('External Link');
