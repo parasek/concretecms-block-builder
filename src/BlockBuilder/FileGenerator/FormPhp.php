@@ -173,7 +173,7 @@ class FormPhp
 
                     $code .= BlockBuilderUtility::tab(3).'<div class="row margin-bottom  js-link-wrapper-'.$v['handle'].'-<?php echo $uniqueID; ?> js-link-wrapper-link_from_file_manager-'.$v['handle'].'-<?php echo $uniqueID; ?>" style="display: none;">'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4).'<div class="col-xs-12">'.PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(5).'<?php echo $app->make(\'helper/concrete/asset_library\')->file(\''.$v['handle'].'_link_from_file_manager-\'.$uniqueID, $view->field(\''.$v['handle'].'_link_from_file_manager\'), t(\'Choose Image\'), !empty($'.$v['handle'].'[\'link_from_file_manager\']) ? File::getByID($'.$v['handle'].'[\'link_from_file_manager\']) : null); ?>'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5).'<?php echo $app->make(\'helper/concrete/asset_library\')->file(\''.$v['handle'].'_link_from_file_manager-\'.$uniqueID, $view->field(\''.$v['handle'].'_link_from_file_manager\'), t(\'Choose File\'), !empty($'.$v['handle'].'[\'link_from_file_manager\']) ? File::getByID($'.$v['handle'].'[\'link_from_file_manager\']) : null); ?>'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4).'</div>'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3).'</div>'.PHP_EOL.PHP_EOL;
 
@@ -305,7 +305,7 @@ class FormPhp
                     if ( ! empty($v['helpText'])) {
                         $code .= BlockBuilderUtility::tab(3) . '<p class="small text-muted"><?php echo t(\''.addslashes($v['helpText']).'\'); ?></p>'.PHP_EOL;
                     }
-                    $code .= BlockBuilderUtility::tab(3) . '<?php echo $app->make(\'helper/concrete/asset_library\')->file(\'' . $v['handle'] . '-\'.$uniqueID, $view->field(\'' . $v['handle'] . '\'), t(\'Choose Image\'), !empty($' . $v['handle'] . ') ? File::getByID($' . $v['handle'] . ') : null); ?>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '<?php echo $app->make(\'helper/concrete/asset_library\')->file(\'' . $v['handle'] . '-\'.$uniqueID, $view->field(\'' . $v['handle'] . '\'), t(\'Choose File\'), !empty($' . $v['handle'] . ') ? File::getByID($' . $v['handle'] . ') : null); ?>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(2) . '</div>' . PHP_EOL . PHP_EOL;
 
                     if ( ! empty($v['linkFromFileManagerShowEndingField'])) {
@@ -671,7 +671,7 @@ class FormPhp
                     
                     $code .= BlockBuilderUtility::tab(6) . '<div class="row margin-bottom js-link-type-wrapper js-link-type-wrapper-link_from_file_manager" <% if ('.$v['handle'].'_link_type!=\'link_from_file_manager\') { %>style="display: none;"<% } %>>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '<div class="col-xs-12">' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(8) . '<div class="ccm-file-selector js-file-selector" data-input-name="<?php echo $view->field(\'entry\'); ?>[<%=position%>]['.$v['handle'].'_link_from_file_manager]" data-file-id="<%='.$v['handle'].'_link_from_file_manager%>"></div>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(8) . '<div class="ccm-file-selector js-file-selector" data-choose-text="'.t('Choose File').'" data-input-name="<?php echo $view->field(\'entry\'); ?>[<%=position%>]['.$v['handle'].'_link_from_file_manager]" data-file-id="<%='.$v['handle'].'_link_from_file_manager%>"></div>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
                     
@@ -749,6 +749,7 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(6) . '<p class="small text-muted"><?php echo t(\''.addslashes($v['helpText']).'\'); ?></p>'.PHP_EOL;
                     }
                     $code .= BlockBuilderUtility::tab(6) . '<div class="ccm-file-selector js-file-selector"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(7) . 'data-choose-text="'.t('Choose File').'"' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . 'data-input-name="<?php echo $view->field(\'entry\'); ?>[<%=position%>][' . $v['handle'] . ']"' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . 'data-file-id="<%=' . $v['handle'] . '%>"' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(6) . '></div>' . PHP_EOL;
@@ -832,6 +833,7 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(6) . '<p class="small text-muted"><?php echo t(\''.addslashes($v['helpText']).'\'); ?></p>'.PHP_EOL;
                     }
                     $code .= BlockBuilderUtility::tab(6) . '<div class="ccm-file-selector js-file-selector"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(7) . 'data-choose-text="'.t('Choose Image').'"' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . 'data-input-name="<?php echo $view->field(\'entry\'); ?>[<%=position%>][' . $v['handle'] . ']"' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . 'data-file-id="<%=' . $v['handle'] . '%>"' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(6) . '></div>' . PHP_EOL;
