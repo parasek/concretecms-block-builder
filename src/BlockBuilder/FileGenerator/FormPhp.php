@@ -149,7 +149,7 @@ class FormPhp
 
                     $code .= BlockBuilderUtility::tab(3).'<div class="row margin-bottom">'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4).'<div class="col-xs-12 col-md-6">'.PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(5).'<?php echo $form->label($view->field(\''.$v['handle'].'_link_type\'), t(\''.addslashes($v['label']).'\')); ?>'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5).'<?php echo $form->label($view->field(\''.$v['handle'].'_link_type\'), t(\''.addslashes($v['label']).'\')'.$required.'); ?>'.PHP_EOL;
                     if ( ! empty($v['helpText'])) {
                         $code .= BlockBuilderUtility::tab(5) . '<p class="small text-muted"><?php echo t(\''.addslashes($v['helpText']).'\'); ?></p>'.PHP_EOL;
                     }
