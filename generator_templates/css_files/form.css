@@ -1,3 +1,60 @@
+/* Styles */
+@media only screen and (max-width: 991px) {
+    .ccm-ui .margin-bottom-on-mobile {
+        margin-bottom: 30px;
+    }
+}
+
+.ccm-ui .margin-bottom {
+    margin-bottom: 30px;
+}
+
+/* Link */
+.ccm-ui .toggle-additional-fields {
+    margin-top: 30px;
+}
+
+@media only screen and (min-width: 992px) {
+   .ccm-ui .toggle-additional-fields {
+        margin-top: 27px;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+   .ccm-ui .toggle-additional-fields.toggle-additional-fields-with-help-text {
+        margin-top: 57px;
+    }
+}
+
+
+.ccm-ui .toggle-additional-fields:focus,
+.ccm-ui .toggle-additional-fields:active {
+    background: #fff;
+}
+
+.ccm-ui .toggle-additional-fields:hover {
+    background: transparent;
+}
+
+.ccm-ui .toggle-additional-fields i {
+    margin-right: 10px;
+    transition: .2s;
+}
+
+.ccm-ui .toggle-additional-fields-active {
+    background-color: #efefef;
+}
+
+.ccm-ui .toggle-additional-fields-active:focus,
+.ccm-ui .toggle-additional-fields-active:active,
+.ccm-ui .toggle-additional-fields-active:hover {
+    background: #efefef;
+}
+
+.ccm-ui .toggle-additional-fields-active i {
+    transform: rotate(90deg);
+}
+
 /* Entries - buttons and links */
 .ccm-ui .entries-actions {
     margin-bottom: 15px;

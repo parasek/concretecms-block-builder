@@ -30,9 +30,10 @@ $(function() {
 
             var fileSelectors = parentContainer.find('.js-file-selector');
             fileSelectors.each(function(i, item) {
+                var chooseText = $(item).attr('data-choose-text');
                 var inputName = $(item).attr('data-input-name');
                 var fID = parseInt($(item).attr('data-file-id'));
-                $(item).concreteFileSelector({'inputName': inputName, 'filters': [], 'fID': fID});
+                $(item).concreteFileSelector({'chooseText': chooseText, 'inputName': inputName, 'filters': [], 'fID': fID});
             });
 
         }
@@ -273,6 +274,50 @@ $(function() {
             } else if (url.indexOf('http://') == 0) {
                 $(this).val(url.substring(7));
                 $(this).parent().closest('.row').find('.js-external-link-protocol').val(url.substring(0, 7));
+            }
+
+        });
+
+        // Change link type
+        entriesContainer.on('change', '.js-link-type', function() {
+
+            var linkWrapper = $(this).closest('.js-link-wrapper');
+            var linkType = linkWrapper.find('.js-link-type').val();
+            var toggleAdditionalFieldsValue = parseInt(linkWrapper.find('.js-toggle-additional-fields-value').val());
+
+            linkWrapper.find('.js-toggle-additional-fields').hide();
+            linkWrapper.find('.js-link-type-wrapper').hide();
+            linkWrapper.find('.js-additional-fields-wrapper').hide();
+
+            if (linkType!=0) {
+                linkWrapper.find('.js-toggle-additional-fields').show();
+                linkWrapper.find('.js-link-type-wrapper-'+linkType).show();
+                if (toggleAdditionalFieldsValue==1) {
+                    linkWrapper.find('.js-additional-fields-wrapper').show();
+                }
+            }
+
+        });
+
+        // Change link type - Show additional fields
+        entriesContainer.on('click', '.js-toggle-additional-fields', function() {
+
+            var linkWrapper = $(this).closest('.js-link-wrapper');
+            var showText = linkWrapper.find('.js-toggle-additional-fields').attr('data-show-text');
+            var hideText = linkWrapper.find('.js-toggle-additional-fields').attr('data-hide-text');
+            var toggleAdditionalFieldsValue = parseInt(linkWrapper.find('.js-toggle-additional-fields-value').val());
+
+            if (toggleAdditionalFieldsValue) {
+                linkWrapper.find('.js-additional-fields-wrapper').hide();
+                linkWrapper.find('.js-toggle-additional-fields').removeClass('toggle-additional-fields-active');
+                linkWrapper.find('.js-toggle-additional-fields-value').val(0);
+                linkWrapper.find('.js-toggle-additional-fields-text').text(showText);
+            } else {
+                linkWrapper.find('.js-additional-fields-wrapper').show();
+                linkWrapper.find('.js-toggle-additional-fields').addClass('toggle-additional-fields-active');
+                linkWrapper.find('.js-toggle-additional-fields-value').val(1);
+                linkWrapper.find('.js-toggle-additional-fields-text').text(hideText);
+
             }
 
         });

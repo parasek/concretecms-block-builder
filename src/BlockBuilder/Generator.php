@@ -43,6 +43,7 @@ class Generator
 
         $postDataSummary['wysiwygEditorUsed']       = false;
         $postDataSummary['htmlEditorUsed']          = false;
+        $postDataSummary['linkUsed']                = false;
         $postDataSummary['linkFromSitemapUsed']     = false;
         $postDataSummary['linkFromFileManagerUsed'] = false;
         $postDataSummary['externalLinkUsed']        = false;
@@ -50,10 +51,12 @@ class Generator
 
         $postDataSummary['wysiwygEditorUsed_entry']       = false;
         $postDataSummary['htmlEditorUsed_entry']          = false;
+        $postDataSummary['linkUsed_entry']                = false;
         $postDataSummary['linkFromSitemapUsed_entry']     = false;
         $postDataSummary['linkFromFileManagerUsed_entry'] = false;
         $postDataSummary['externalLinkUsed_entry']        = false;
         $postDataSummary['imageUsed_entry']               = false;
+        $postDataSummary['datePickerUsed_entry']          = false;
 
         $postDataSummary['entryTitleSource'] = false;
 
@@ -95,6 +98,10 @@ class Generator
 
                 if ($v['fieldType']=='html_editor') {
                     $postDataSummary['htmlEditorUsed'] = true;
+                }
+
+                if ($v['fieldType']=='link') {
+                    $postDataSummary['linkUsed'] = true;
                 }
 
                 if ($v['fieldType']=='link_from_sitemap') {
@@ -157,6 +164,10 @@ class Generator
                     $postDataSummary['htmlEditorUsed_entry'] = true;
                 }
 
+                if ($v['fieldType']=='link') {
+                    $postDataSummary['linkUsed_entry'] = true;
+                }
+
                 if ($v['fieldType']=='link_from_sitemap') {
                     $postDataSummary['linkFromSitemapUsed_entry'] = true;
                 }
@@ -171,6 +182,10 @@ class Generator
 
                 if ($v['fieldType']=='image') {
                     $postDataSummary['imageUsed_entry'] = true;
+                }
+
+                if ($v['fieldType']=='date_picker') {
+                    $postDataSummary['datePickerUsed_entry'] = true;
                 }
 
                 // entryTitleSource
@@ -199,6 +214,7 @@ class Generator
                 $this->generateControllerPhp($postData, $postDataSummary);
                 $this->generateViewPhp($postData, $postDataSummary);
                 $this->generateDbXml($postData, $postDataSummary);
+                $this->generateFormCss(false, $postDataSummary);
 
                 if (!empty($postData['basic']) OR !empty($postData['entries'])) {
                     $this->generateAddPhp(false, $postDataSummary);
@@ -207,7 +223,6 @@ class Generator
                 }
 
                 if (!empty($postData['entries'])) {
-                    $this->generateFormCss(false, $postDataSummary);
                     $this->generateAutoJs(false, $postDataSummary);
                 }
 

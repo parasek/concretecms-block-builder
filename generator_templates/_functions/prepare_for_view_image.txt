@@ -141,7 +141,7 @@
             $entry[$altFieldName]    = $alt;
 
             // Additional data
-            $entry[$fileIDFieldName.'_object']   = $fileObject;
+            // $entry[$fileIDFieldName.'_object']   = $fileObject;
             $entry[$fileIDFieldName.'_filename'] = $filename;
 
             $entry[$fileIDFieldName.'_link']   = $link;

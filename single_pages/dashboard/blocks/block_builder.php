@@ -79,6 +79,17 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div class="col-md-6 form-group <?php in_array('entriesAsFirstTab', $fieldsWithError) ? print 'has-error' : false; ?>">
+                    <?php echo $form->label('entriesAsFirstTab', t('Entries as first tab')); ?>
+                    <?php echo $form->select('entriesAsFirstTab', $entriesAsFirstTabOptions, $entriesAsFirstTab); ?>
+                </div>
+                <div class="col-md-6 form-group <?php in_array('maxNumberOfEntries', $fieldsWithError) ? print 'has-error' : false; ?>">
+                    <?php echo $form->label('maxNumberOfEntries', t('Max. number of entries').' '.t('(0 for unlimited)')); ?>
+                    <?php echo $form->number('maxNumberOfEntries', $maxNumberOfEntries); ?>
+                </div>
+            </div>
+
             <div class="form-group <?php in_array('fieldsDivider', $fieldsWithError) ? print 'has-error' : false; ?>">
                 <?php echo $form->label('fieldsDivider', t('Use horizontal line as field\'s divider')); ?>
                 <?php echo $form->select('fieldsDivider', $dividerOptions, $fieldsDivider); ?>
@@ -138,6 +149,11 @@
                 <?php echo $form->text('noEntriesFoundLabel', $noEntriesFoundLabel, ['data-translated-text'=>t('No entries found.'), 'data-untranslated-text'=>'No entries found.']); ?>
             </div>
 
+            <div class="form-group <?php in_array('maxNumberOfEntriesLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('maxNumberOfEntriesLabel', t('Max. number of entries')); ?>
+                <?php echo $form->text('maxNumberOfEntriesLabel', $maxNumberOfEntriesLabel, ['data-translated-text'=>t('Max. number of entries'), 'data-untranslated-text'=>'Max. number of entries']); ?>
+            </div>
+
             <div class="form-group <?php in_array('areYouSureLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
                 <?php echo $form->label('areYouSureLabel', t('Are you sure?')); ?>
                 <?php echo $form->text('areYouSureLabel', $areYouSureLabel, ['data-translated-text'=>t('Are you sure?'), 'data-untranslated-text'=>'Are you sure?']); ?>
@@ -173,21 +189,55 @@
                 <?php echo $form->text('altTextLabel', $altTextLabel, ['data-translated-text'=>t('Alt text'), 'data-untranslated-text'=>'Alt text']); ?>
             </div>
 
+            <div class="form-group <?php in_array('linkFromSitemapLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('linkFromSitemapLabel', t('Link from Sitemap')); ?>
+                <?php echo $form->text('linkFromSitemapLabel', $linkFromSitemapLabel, ['data-translated-text'=>t('Link from Sitemap'), 'data-untranslated-text'=>'Link from Sitemap']); ?>
+            </div>
+
+            <div class="form-group <?php in_array('linkFromFileManagerLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('linkFromFileManagerLabel', t('Link from File Manager')); ?>
+                <?php echo $form->text('linkFromFileManagerLabel', $linkFromFileManagerLabel, ['data-translated-text'=>t('Link from File Manager'), 'data-untranslated-text'=>'Link from File Manager']); ?>
+            </div>
+
+            <div class="form-group <?php in_array('externalLinkLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('externalLinkLabel', t('External Link')); ?>
+                <?php echo $form->text('externalLinkLabel', $externalLinkLabel, ['data-translated-text'=>t('External Link'), 'data-untranslated-text'=>'External Link']); ?>
+            </div>
+
+            <div class="form-group <?php in_array('showAdditionalFieldsLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('showAdditionalFieldsLabel', t('Show additional fields')); ?>
+                <?php echo $form->text('showAdditionalFieldsLabel', $showAdditionalFieldsLabel, ['data-translated-text'=>t('Show additional fields'), 'data-untranslated-text'=>'Show additional fields']); ?>
+            </div>
+
+            <div class="form-group <?php in_array('hideAdditionalFieldsLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('hideAdditionalFieldsLabel', t('Hide additional fields')); ?>
+                <?php echo $form->text('hideAdditionalFieldsLabel', $hideAdditionalFieldsLabel, ['data-translated-text'=>t('Hide additional fields'), 'data-untranslated-text'=>'Hide additional fields']); ?>
+            </div>
+
         </div>
 
         <div class="ccm-tab-content" id="ccm-tab-content-tab-basic-information">
 
             <div class="row">
-                <div class="col-md-4 form-group">
+                <div class="col-md-3 form-group">
                     <select class="js-add-entry form-control" data-group-handle="basic">
                         <?php foreach ($fieldTypes as $k => $v): ?>
                             <option value="<?php echo h($k); ?>"><?php echo h($v); ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="col-md-8 form-group entries-actions">
+                <div class="col-md-9 form-group entries-actions">
+                    <div class="entries-action entries-action-scroll checkbox">
+                        <label><input type="checkbox"
+                               name="scroll"
+                               class="js-toggle-scroll"
+                               value="1"
+                               <?php if (empty($_COOKIE['scrollDisabled'])): ?>checked="checked"<?php endif; ?>
+                        ><?php echo t('Scroll down'); ?></label>
+                    </div>
                     <a href="#" class="entries-action js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t('Expand all'); ?></a>
                     <a href="#" class="entries-action js-collapse-all"><i class="fa fa-minus-square-o"></i> <?php echo t('Collapse all'); ?></a>
+                    <a href="#" class="entries-action entries-action-remove-all js-remove-all" data-group-handle="basic" data-confirm-text="<?php echo t('Are you sure?'); ?>"><i class="fa fa-times"></i> <?php echo t('Remove all'); ?></a>
                 </div>
             </div>
 
@@ -196,16 +246,25 @@
             </div>
 
             <div class="row">
-                <div class="col-md-4 form-group">
+                <div class="col-md-3 form-group">
                     <select class="js-add-entry form-control" data-group-handle="basic">
                         <?php foreach ($fieldTypes as $k => $v): ?>
                             <option value="<?php echo h($k); ?>"><?php echo h($v); ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="col-md-8 form-group entries-actions">
+                <div class="col-md-9 form-group entries-actions">
+                    <div class="entries-action entries-action-scroll checkbox">
+                        <label><input type="checkbox"
+                               name="scroll"
+                               class="js-toggle-scroll"
+                               value="1"
+                               <?php if (empty($_COOKIE['scrollDisabled'])): ?>checked="checked"<?php endif; ?>
+                        ><?php echo t('Scroll down'); ?></label>
+                    </div>
                     <a href="#" class="entries-action js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t('Expand all'); ?></a>
                     <a href="#" class="entries-action js-collapse-all"><i class="fa fa-minus-square-o"></i> <?php echo t('Collapse all'); ?></a>
+                    <a href="#" class="entries-action entries-action-remove-all js-remove-all" data-group-handle="basic" data-confirm-text="<?php echo t('Are you sure?'); ?>"><i class="fa fa-times"></i> <?php echo t('Remove all'); ?></a>
                 </div>
             </div>
 
@@ -214,16 +273,25 @@
         <div class="ccm-tab-content" id="ccm-tab-content-tab-repeatable-entries">
 
             <div class="row">
-                <div class="col-md-4 form-group">
+                <div class="col-md-3 form-group">
                     <select class="js-add-entry form-control" data-group-handle="entries">
                         <?php foreach ($fieldTypes as $k => $v): ?>
                             <option value="<?php echo h($k); ?>"><?php echo h($v); ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="col-md-8 form-group entries-actions">
+                <div class="col-md-9 form-group entries-actions">
+                    <div class="entries-action entries-action-scroll checkbox">
+                        <label><input type="checkbox"
+                               name="scroll"
+                               class="js-toggle-scroll"
+                               value="1"
+                               <?php if (empty($_COOKIE['scrollDisabled'])): ?>checked="checked"<?php endif; ?>
+                        ><?php echo t('Scroll down'); ?></label>
+                    </div>
                     <a href="#" class="entries-action js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t('Expand all'); ?></a>
                     <a href="#" class="entries-action js-collapse-all"><i class="fa fa-minus-square-o"></i> <?php echo t('Collapse all'); ?></a>
+                    <a href="#" class="entries-action entries-action-remove-all js-remove-all" data-group-handle="entries" data-confirm-text="<?php echo t('Are you sure?'); ?>"><i class="fa fa-times"></i> <?php echo t('Remove all'); ?></a>
                 </div>
             </div>
 
@@ -232,16 +300,25 @@
             </div>
 
             <div class="row">
-                <div class="col-md-4 form-group">
+                <div class="col-md-3 form-group">
                     <select class="js-add-entry form-control" data-group-handle="entries">
                         <?php foreach ($fieldTypes as $k => $v): ?>
                             <option value="<?php echo h($k); ?>"><?php echo h($v); ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="col-md-8 form-group entries-actions">
+                <div class="col-md-9 form-group entries-actions">
+                    <div class="entries-action entries-action-scroll checkbox">
+                        <label><input type="checkbox"
+                               name="scroll"
+                               class="js-toggle-scroll"
+                               value="1"
+                               <?php if (empty($_COOKIE['scrollDisabled'])): ?>checked="checked"<?php endif; ?>
+                        ><?php echo t('Scroll down'); ?></label>
+                    </div>
                     <a href="#" class="entries-action js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t('Expand all'); ?></a>
                     <a href="#" class="entries-action js-collapse-all"><i class="fa fa-minus-square-o"></i> <?php echo t('Collapse all'); ?></a>
+                    <a href="#" class="entries-action entries-action-remove-all js-remove-all" data-group-handle="entries" data-confirm-text="<?php echo t('Are you sure?'); ?>"><i class="fa fa-times"></i> <?php echo t('Remove all'); ?></a>
                 </div>
             </div>
 
@@ -341,7 +418,7 @@
                     </div>
                 </div>
 
-                <% if (fieldType != 'text_field') { %>
+                <% if (fieldType != 'text_field' && fieldType != 'link') { %>
 
                     <hr class="entry-hr"/>
 
@@ -438,6 +515,15 @@
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox"
+                                           name="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowEndingField]"
+                                           id="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowEndingField]"
+                                           value="1"
+                                    <% if (parseInt(linkFromFileManagerShowEndingField)) { %> checked="checked" <% } %>
+                                    ><?php echo t('Show "Custom string at the end of URL" field'); ?></label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"
                                            name="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowTextField]"
                                            id="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowTextField]"
                                            value="1"
@@ -456,6 +542,15 @@
                         <% } %>
 
                         <% if (fieldType == 'external_link') { %>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"
+                                           name="<%=groupHandle%>[<%=counter%>][externalLinkShowEndingField]"
+                                           id="<%=groupHandle%>[<%=counter%>][externalLinkShowEndingField]"
+                                           value="1"
+                                    <% if (parseInt(externalLinkShowEndingField)) { %> checked="checked" <% } %>
+                                    ><?php echo t('Show "Custom string at the end of URL" field'); ?></label>
+                            </div>
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox"
@@ -600,6 +695,21 @@
                                     />
                                     <span class="input-group-addon">px</span>
                                 </div>
+                            </div>
+                        <% } %>
+
+                        <% if (fieldType == 'date_picker') { %>
+                            <div class="<% if (error['datePickerPattern']!=undefined) { %>has-error<% } %>">
+                                <label for="<%=groupHandle%>[<%=counter%>][datePickerPattern]" class="control-label"><?php echo t('PHP Date Pattern'); ?></label>
+                                <p class="small text-muted">
+                                    <?php echo t('Check %sphp manual%s for available formats. Examples: <code>d.m.Y</code>, <code>d-m-Y</code>, <code>Y-m-d</code>, <code>m-d-Y</code>, <code>m/d/Y</code>', '<a href="https://www.php.net/manual/en/function.date.php" target="_blank" rel="noopener noreferrer">','</a>'); ?>
+                                </p>
+                                <input type="text"
+                                       id="<%=groupHandle%>[<%=counter%>][datePickerPattern]"
+                                       name="<%=groupHandle%>[<%=counter%>][datePickerPattern]"
+                                       class="form-control"
+                                       value="<%=datePickerPattern%>"
+                                />
                             </div>
                         <% } %>
 

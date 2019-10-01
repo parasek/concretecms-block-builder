@@ -134,6 +134,7 @@
 
 .ccm-ui .entry.well.entry-has-error {
     border-color: #a94442;
+    background: #fff1f1;
 }
 
 .ccm-ui .entry-header {

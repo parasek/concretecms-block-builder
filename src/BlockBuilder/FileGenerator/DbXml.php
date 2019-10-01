@@ -145,6 +145,10 @@ class DbXml
                     $code .= BlockBuilderUtility::tab(2).'<field name="'.$v['handle'].'" type="C" size="255"></field>'.PHP_EOL.PHP_EOL;
                 }
 
+                if ($v['fieldType']=='link') {
+                    $code .= BlockBuilderUtility::tab(2).'<field name="'.$v['handle'].'" type="X2"></field>'.PHP_EOL.PHP_EOL;
+                }
+
                 if ($v['fieldType']=='link_from_sitemap') {
                     $code .= BlockBuilderUtility::tab(2).'<field name="'.$v['handle'].'" type="I">'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3).'<default value="0"/>'.PHP_EOL;
