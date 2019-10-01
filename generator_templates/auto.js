@@ -7,7 +7,6 @@ $(function() {
         var entriesContainer   = formContainer.find('#entries-'+uniqueID);
         var maxNumberOfEntries = parseInt(formContainer.find('.js-max-number-of-entries').text());
 
-
         function activateEditors(parentContainer) {
 
             var editors = parentContainer.find('.js-editor-content');
