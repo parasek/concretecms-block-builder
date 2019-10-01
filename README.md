@@ -28,9 +28,11 @@ This addon is made for developers. It allows you to quickly create skeleton for 
   - Textarea
   - WYSIWYG Editor
   - Select field
+  - Link with Type Selection
   - Link from Sitemap
   - Link from File Manager
   - External Link
   - Image
   - HTML Editor
+  - Date Picker
 - You can create blocks based on configuration of previously created blocks
