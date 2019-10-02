@@ -2,9 +2,10 @@ $(function() {
 
     Concrete.event.bind('open.block.[[[BLOCK_HANDLE_DASHED]]]', function(e, data) {
 
-        var uniqueID         = data.uniqueID;
-        var formContainer    = $('#form-container-'+uniqueID);
-        var entriesContainer = formContainer.find('#entries-'+uniqueID);
+        var uniqueID           = data.uniqueID;
+        var formContainer      = $('#form-container-'+uniqueID);
+        var entriesContainer   = formContainer.find('#entries-'+uniqueID);
+        var maxNumberOfEntries = parseInt(formContainer.find('.js-max-number-of-entries').text());
 
         function activateEditors(parentContainer) {
 
@@ -52,6 +53,44 @@ $(function() {
 
         }
 
+        function activateDatePickers(parentContainer) {
+
+            var datePickers = parentContainer.find('.js-entry-date-displayed');
+            datePickers.each(function(i, item) {
+                var position = $(item).attr('data-position');
+                var dateFormat = $(item).attr('data-date-format');
+                var targetField = $(item).attr('data-target-field');
+                $(item).datepicker({
+                    dateFormat: dateFormat,
+                    altFormat: 'yy-mm-dd',
+                    altField: '.js-entry-'+targetField+'-'+position,
+                    changeYear: true,
+                    showAnim: 'fadeIn',
+                    yearRange: 'c-100:c+10',
+                    onClose: function(dateText, inst) {
+                        if(!dateText) {
+                            $(inst.settings.altField).val('');
+                        }
+                    }
+                });
+            });
+
+        }
+
+        function updateCounter(numberOfEntries) {
+
+            if (numberOfEntries<=maxNumberOfEntries) {
+                formContainer.find('.js-number-of-entries').text(numberOfEntries);
+            }
+
+            if (numberOfEntries>=maxNumberOfEntries) {
+                formContainer.find('.js-add-entry').attr('disabled', true);
+            } else {
+                formContainer.find('.js-add-entry').removeAttr('disabled');
+            }
+
+        }
+
         function countEntries(parentContainer) {
 
             var numberOfEntries = parentContainer.children().length;
@@ -89,6 +128,10 @@ $(function() {
         activateFileSelectors(formContainer);
 
         activateHtmlEditors(formContainer);
+
+        activateDatePickers(formContainer);
+
+        updateCounter(countEntries(entriesContainer));
 
         // Add entry
         formContainer.on('click', '.js-add-entry', function(e) {
@@ -130,6 +173,10 @@ $(function() {
 
             activateHtmlEditors(newEntry);
 
+            activateDatePickers(newEntry);
+
+            updateCounter(countEntries(entriesContainer));
+
             // Smooth scroll
             $(this).closest('.ui-dialog-content').animate({
                 scrollTop: formContainer.find('.js-entry[data-position="'+position+'"]').position().top + $(this).closest('.ui-dialog-content').scrollTop()
@@ -166,6 +213,9 @@ $(function() {
                     entriesContainer.append(templateNoEntries());
 
                 }
+
+                updateCounter(countEntries(entriesContainer));
+
             }
 
         });
