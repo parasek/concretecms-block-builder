@@ -148,7 +148,7 @@ class ControllerPhp
 
                 if ($v['fieldType']=='link') {
                     $code .= BlockBuilderUtility::tab(2).'// '.addslashes($v['label']).' ('.$v['handle'].') - Link'.PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(2).'$this->'.$v['handle'].' = json_decode($this->'.$v['handle'].', true);'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2).'$this->'.$v['handle'].' = is_array($this->'.$v['handle'].') ? $this->'.$v['handle'].' : json_decode($this->'.$v['handle'].', true);'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(2).'$this->set(\''.$v['handle'].'\', $this->'.$v['handle'].');'.PHP_EOL.PHP_EOL;
                 }
 
