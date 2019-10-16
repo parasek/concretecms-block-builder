@@ -126,7 +126,7 @@ class ViewPhp
 
                 if ($v['fieldType']=='external_link') {
 
-                    $code .= '<?php if (!empty($'.$v['handle'].')): ?>'.PHP_EOL;
+                    $code .= '<?php if (!empty($'.$v['handle'].'_link)): ?>'.PHP_EOL;
 
                     $code .= BlockBuilderUtility::tab(1).'<a href="<?php echo $'.$v['handle'].'_link; ?>';
                     if (!empty($v['externalLinkShowEndingField'])) {
@@ -320,7 +320,7 @@ class ViewPhp
 
                 if ($v['fieldType']=='external_link') {
 
-                    $code .= BlockBuilderUtility::tab(2).'<?php if (!empty($entry[\''.$v['handle'].'\'])): ?>'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2).'<?php if (!empty($entry[\''.$v['handle'].'_link\'])): ?>'.PHP_EOL;
 
                     $code .= BlockBuilderUtility::tab(3).'<a href="<?php echo $entry[\''.$v['handle'].'_link\']; ?>';
                     if (!empty($v['externalLinkShowEndingField'])) {
