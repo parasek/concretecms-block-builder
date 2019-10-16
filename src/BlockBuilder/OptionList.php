@@ -14,8 +14,18 @@ class OptionList
 
         $blockTypeSets = BlockTypeSet::getList();
 
+        // Those should be listed here manually, so translations will work
+        $translations = [
+            t('Basic'),
+            t('Navigation'),
+            t('Forms'),
+            t('Express'),
+            t('Social Networking'),
+            t('Multimedia'),
+        ];
+
         foreach ($blockTypeSets as $blockTypeSet) {
-            $options[$blockTypeSet->btsHandle] = $blockTypeSet->btsName;
+            $options[$blockTypeSet->btsHandle] = t($blockTypeSet->btsName);
         }
 
         return $options;

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-10-16 09:09+0200\n"
-"PO-Revision-Date: 2019-10-16 09:09+0200\n"
+"POT-Creation-Date: 2019-10-16 12:36+0200\n"
+"PO-Revision-Date: 2019-10-16 12:36+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pl_PL\n"
@@ -153,21 +153,21 @@ msgstr "Tekst alternatywny"
 #: controllers/single_page/dashboard/blocks/block_builder.php:144
 #: single_pages/dashboard/blocks/block_builder.php:193
 #: single_pages/dashboard/blocks/block_builder.php:194
-#: src/BlockBuilder/OptionList.php:44
+#: src/BlockBuilder/OptionList.php:54
 msgid "Link from Sitemap"
 msgstr "Link z mapy strony"
 
 #: controllers/single_page/dashboard/blocks/block_builder.php:145
 #: single_pages/dashboard/blocks/block_builder.php:198
 #: single_pages/dashboard/blocks/block_builder.php:199
-#: src/BlockBuilder/OptionList.php:45
+#: src/BlockBuilder/OptionList.php:55
 msgid "Link from File Manager"
 msgstr "Link z menedżera plików"
 
 #: controllers/single_page/dashboard/blocks/block_builder.php:146
 #: single_pages/dashboard/blocks/block_builder.php:203
 #: single_pages/dashboard/blocks/block_builder.php:204
-#: src/BlockBuilder/OptionList.php:46
+#: src/BlockBuilder/OptionList.php:56
 msgid "External Link"
 msgstr "Link zewnętrzny"
 
@@ -194,14 +194,14 @@ msgstr "Otwórz w nowym oknie"
 #: single_pages/dashboard/blocks/block_builder.php:224
 #: single_pages/dashboard/blocks/block_builder.php:671
 #: single_pages/dashboard/blocks/block_builder.php:719
-#: src/BlockBuilder/OptionList.php:29 src/BlockBuilder/OptionList.php:70
+#: src/BlockBuilder/OptionList.php:39 src/BlockBuilder/OptionList.php:80
 msgid "Yes"
 msgstr "Tak"
 
 #: controllers/single_page/dashboard/blocks/block_builder.php:151
 #: single_pages/dashboard/blocks/block_builder.php:228
 #: single_pages/dashboard/blocks/block_builder.php:229
-#: src/BlockBuilder/OptionList.php:28 src/BlockBuilder/OptionList.php:69
+#: src/BlockBuilder/OptionList.php:38 src/BlockBuilder/OptionList.php:79
 msgid "No"
 msgstr "Nie"
 
@@ -537,12 +537,12 @@ msgstr "Znaleziono pliki konfiguracyjne następujących bloków:"
 msgid "No blocks created by Block Builder have been found."
 msgstr "Nie znaleziono żadnych bloków zbudowanych za pomocą \"Blok Buildera\"."
 
-#: src/BlockBuilder/FileGenerator/FormPhp.php:701
-#: src/BlockBuilder/FileGenerator/FormPhp.php:789
+#: src/BlockBuilder/FileGenerator/FormPhp.php:705
+#: src/BlockBuilder/FileGenerator/FormPhp.php:793
 msgid "Choose File"
 msgstr "Wybierz plik"
 
-#: src/BlockBuilder/FileGenerator/FormPhp.php:893
+#: src/BlockBuilder/FileGenerator/FormPhp.php:897
 msgid "Choose Image"
 msgstr "Wybierz obraz"
 
@@ -560,51 +560,75 @@ msgstr ""
 msgid "None"
 msgstr "Żaden"
 
-#: src/BlockBuilder/OptionList.php:38
+#: src/BlockBuilder/OptionList.php:19
+msgid "Basic"
+msgstr "Podstawowe"
+
+#: src/BlockBuilder/OptionList.php:20
+msgid "Navigation"
+msgstr "Nawigacja"
+
+#: src/BlockBuilder/OptionList.php:21
+msgid "Forms"
+msgstr "Formularze"
+
+#: src/BlockBuilder/OptionList.php:22
+msgid "Express"
+msgstr "Ekspres"
+
+#: src/BlockBuilder/OptionList.php:23
+msgid "Social Networking"
+msgstr "Sieci społecznościowe"
+
+#: src/BlockBuilder/OptionList.php:24
+msgid "Multimedia"
+msgstr "Multimedia"
+
+#: src/BlockBuilder/OptionList.php:48
 msgid "+ Add new field type"
 msgstr "+ Dodaj nowy typ pola"
 
-#: src/BlockBuilder/OptionList.php:39
+#: src/BlockBuilder/OptionList.php:49
 msgid "Text field"
 msgstr "Pole tekstowe"
 
-#: src/BlockBuilder/OptionList.php:40
+#: src/BlockBuilder/OptionList.php:50
 msgid "Textarea"
 msgstr "Obszar tekstu"
 
-#: src/BlockBuilder/OptionList.php:41
+#: src/BlockBuilder/OptionList.php:51
 msgid "WYSIWYG Editor"
 msgstr "Edytor WYSIWYG"
 
-#: src/BlockBuilder/OptionList.php:42
+#: src/BlockBuilder/OptionList.php:52
 msgid "Select field"
 msgstr "Pole wyboru"
 
-#: src/BlockBuilder/OptionList.php:43
+#: src/BlockBuilder/OptionList.php:53
 msgid "Link with Type Selection"
 msgstr "Link z wyborem typu"
 
-#: src/BlockBuilder/OptionList.php:47
+#: src/BlockBuilder/OptionList.php:57
 msgid "Image"
 msgstr "Obraz"
 
-#: src/BlockBuilder/OptionList.php:48
+#: src/BlockBuilder/OptionList.php:58
 msgid "HTML Editor"
 msgstr "Edytor HTML"
 
-#: src/BlockBuilder/OptionList.php:49
+#: src/BlockBuilder/OptionList.php:59
 msgid "Date Picker"
 msgstr "Wybór daty"
 
-#: src/BlockBuilder/OptionList.php:58
+#: src/BlockBuilder/OptionList.php:68
 msgid "Only if the field type consists of more than 1 element (default)"
 msgstr "Tylko, jeśli typ pola zawiera więcej niż jeden element (standardowe)"
 
-#: src/BlockBuilder/OptionList.php:59
+#: src/BlockBuilder/OptionList.php:69
 msgid "Always"
 msgstr "Zawsze"
 
-#: src/BlockBuilder/OptionList.php:60
+#: src/BlockBuilder/OptionList.php:70
 msgid "Never"
 msgstr "Nigdy"
 
