@@ -1,15 +1,17 @@
     private function prepareForViewLinkFromFileManager($type, $fields) {
 
         $keys = array_keys($fields);
-        $fileIDFieldName = $keys[0];
-        $endingFieldName = $keys[1];
-        $textFieldName   = $keys[2];
-        $titleFieldName  = $keys[3];
+        $fileIDFieldName    = $keys[0];
+        $endingFieldName    = $keys[1];
+        $textFieldName      = $keys[2];
+        $titleFieldName     = $keys[3];
+        $newWindowFieldName = $keys[4];
 
-        $fileID = $fields[$fileIDFieldName];
-        $ending = $fields[$endingFieldName];
-        $text   = $fields[$textFieldName];
-        $title  = $fields[$titleFieldName];
+        $fileID    = $fields[$fileIDFieldName];
+        $ending    = $fields[$endingFieldName];
+        $text      = $fields[$textFieldName];
+        $title     = $fields[$titleFieldName];
+        $newWindow = !empty($fields[$newWindowFieldName]) ? 'target="_blank" rel="noopener"' : '';
 
         $fileObject = false;
         $filename   = '';
@@ -44,6 +46,7 @@
             $this->set($endingFieldName, $ending);
             $this->set($textFieldName, $text);
             $this->set($titleFieldName, $title);
+            $this->set($newWindowFieldName, $newWindow);
 
             // Additional data
             $this->set($fileIDFieldName.'_object', $fileObject);
@@ -55,10 +58,11 @@
             $entry = [];
 
             // Fields from database
-            $entry[$fileIDFieldName] = $fileID;
-            $entry[$endingFieldName] = $ending;
-            $entry[$textFieldName]   = $text;
-            $entry[$titleFieldName]  = $title;
+            $entry[$fileIDFieldName]    = $fileID;
+            $entry[$endingFieldName]    = $ending;
+            $entry[$textFieldName]      = $text;
+            $entry[$titleFieldName]     = $title;
+            $entry[$newWindowFieldName] = $newWindow;
 
             // Additional data
             // $entry[$fileIDFieldName.'_object']   = $fileObject;

@@ -214,6 +214,21 @@
                 <?php echo $form->text('hideAdditionalFieldsLabel', $hideAdditionalFieldsLabel, ['data-translated-text'=>t('Hide additional fields'), 'data-untranslated-text'=>'Hide additional fields']); ?>
             </div>
 
+            <div class="form-group <?php in_array('newWindowLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('newWindowLabel', t('Open in new window')); ?>
+                <?php echo $form->text('newWindowLabel', $newWindowLabel, ['data-translated-text'=>t('Open in new window'), 'data-untranslated-text'=>'Open in new window']); ?>
+            </div>
+
+            <div class="form-group <?php in_array('yesLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('yesLabel', t('Yes')); ?>
+                <?php echo $form->text('yesLabel', $yesLabel, ['data-translated-text'=>t('Yes'), 'data-untranslated-text'=>'Yes']); ?>
+            </div>
+
+            <div class="form-group <?php in_array('noLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('noLabel', t('No')); ?>
+                <?php echo $form->text('noLabel', $noLabel, ['data-translated-text'=>t('No'), 'data-untranslated-text'=>'No']); ?>
+            </div>
+
         </div>
 
         <div class="ccm-tab-content" id="ccm-tab-content-tab-basic-information">
@@ -509,6 +524,15 @@
                                     <% if (parseInt(linkFromSitemapShowTitleField)) { %> checked="checked" <% } %>
                                     ><?php echo t('Show "Title" field'); ?></label>
                             </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"
+                                           name="<%=groupHandle%>[<%=counter%>][linkFromSitemapShowNewWindowField]"
+                                           id="<%=groupHandle%>[<%=counter%>][linkFromSitemapShowNewWindowField]"
+                                           value="1"
+                                    <% if (parseInt(linkFromSitemapShowNewWindowField)) { %> checked="checked" <% } %>
+                                    ><?php echo t('Show "Open in new window" field'); ?></label>
+                            </div>
                         <% } %>
 
                         <% if (fieldType == 'link_from_file_manager') { %>
@@ -539,6 +563,15 @@
                                     <% if (parseInt(linkFromFileManagerShowTitleField)) { %> checked="checked" <% } %>
                                     ><?php echo t('Show "Title" field'); ?></label>
                             </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"
+                                           name="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowNewWindowField]"
+                                           id="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowNewWindowField]"
+                                           value="1"
+                                    <% if (parseInt(linkFromFileManagerShowNewWindowField)) { %> checked="checked" <% } %>
+                                    ><?php echo t('Show "Open in new window" field'); ?></label>
+                            </div>
                         <% } %>
 
                         <% if (fieldType == 'external_link') { %>
@@ -568,6 +601,15 @@
                                            value="1"
                                     <% if (parseInt(externalLinkShowTitleField)) { %> checked="checked" <% } %>
                                     ><?php echo t('Show "Title" field'); ?></label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"
+                                           name="<%=groupHandle%>[<%=counter%>][externalLinkShowNewWindowField]"
+                                           id="<%=groupHandle%>[<%=counter%>][externalLinkShowNewWindowField]"
+                                           value="1"
+                                    <% if (parseInt(externalLinkShowNewWindowField)) { %> checked="checked" <% } %>
+                                    ><?php echo t('Show "Open in new window" field'); ?></label>
                             </div>
                         <% } %>
 

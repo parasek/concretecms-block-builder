@@ -61,12 +61,15 @@ class FormPhp
                         !empty($v['linkFromSitemapShowEndingField']) OR
                         !empty($v['linkFromSitemapShowTextField']) OR
                         !empty($v['linkFromSitemapShowTitleField']) OR
+                        !empty($v['linkFromSitemapShowNewWindowField']) OR
                         !empty($v['linkFromFileManagerShowEndingField']) OR
                         !empty($v['linkFromFileManagerShowTextField']) OR
                         !empty($v['linkFromFileManagerShowTitleField']) OR
+                        !empty($v['linkFromFileManagerShowNewWindowField']) OR
                         !empty($v['externalLinkShowEndingField']) OR
                         !empty($v['externalLinkShowTextField']) OR
                         !empty($v['externalLinkShowTitleField']) OR
+                        !empty($v['externalLinkShowNewWindowField']) OR
                         !empty($v['imageShowAltTextField']) OR
                         ($v['fieldType']=='link')
                     ) {
@@ -296,6 +299,13 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(2) . '</div>' . PHP_EOL . PHP_EOL;
                     }
 
+                    if ( ! empty($v['linkFromSitemapShowNewWindowField'])) {
+                        $code .= BlockBuilderUtility::tab(2) . '<div class="form-group">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '_new_window\'), t(\'' . addslashes($postData['newWindowLabel']) . '\')); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '<?php echo $form->select($view->field(\'' . $v['handle'] . '_new_window\'), [\'0\'=>t(\''.addslashes($postData['noLabel']).'\'), \'1\'=>t(\''.addslashes($postData['yesLabel']).'\')], $' . $v['handle'] . '_new_window); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '</div>' . PHP_EOL . PHP_EOL;
+                    }
+
                 }
 
                 if ($v['fieldType'] == 'link_from_file_manager') {
@@ -327,6 +337,13 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(2) . '<div class="form-group">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(3) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '_title\'), t(\'' . addslashes($postData['titleLabel']) . '\')); ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(3) . '<?php echo $form->text($view->field(\'' . $v['handle'] . '_title\'), $' . $v['handle'] . '_title, [\'maxlength\'=>\'255\']); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '</div>' . PHP_EOL . PHP_EOL;
+                    }
+
+                    if ( ! empty($v['linkFromFileManagerShowNewWindowField'])) {
+                        $code .= BlockBuilderUtility::tab(2) . '<div class="form-group">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '_new_window\'), t(\'' . addslashes($postData['newWindowLabel']) . '\')); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '<?php echo $form->select($view->field(\'' . $v['handle'] . '_new_window\'), [\'0\'=>t(\''.addslashes($postData['noLabel']).'\'), \'1\'=>t(\''.addslashes($postData['yesLabel']).'\')], $' . $v['handle'] . '_new_window); ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(2) . '</div>' . PHP_EOL . PHP_EOL;
                     }
 
@@ -382,6 +399,13 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(2) . '<div class="form-group">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(3) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '_title\'), t(\'' . addslashes($postData['titleLabel']) . '\')); ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(3) . '<?php echo $form->text($view->field(\'' . $v['handle'] . '_title\'), $' . $v['handle'] . '_title, [\'maxlength\'=>\'255\']); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '</div>' . PHP_EOL . PHP_EOL;
+                    }
+
+                    if ( ! empty($v['externalLinkShowNewWindowField'])) {
+                        $code .= BlockBuilderUtility::tab(2) . '<div class="form-group">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '_new_window\'), t(\'' . addslashes($postData['newWindowLabel']) . '\')); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '<?php echo $form->select($view->field(\'' . $v['handle'] . '_new_window\'), [\'0\'=>t(\''.addslashes($postData['noLabel']).'\'), \'1\'=>t(\''.addslashes($postData['yesLabel']).'\')], $' . $v['handle'] . '_new_window); ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(2) . '</div>' . PHP_EOL . PHP_EOL;
                     }
 
@@ -545,12 +569,15 @@ class FormPhp
                         !empty($v['linkFromSitemapShowEndingField']) OR
                         !empty($v['linkFromSitemapShowTextField']) OR
                         !empty($v['linkFromSitemapShowTitleField']) OR
+                        !empty($v['linkFromSitemapShowNewWindowField']) OR
                         !empty($v['linkFromFileManagerShowEndingField']) OR
                         !empty($v['linkFromFileManagerShowTextField']) OR
                         !empty($v['linkFromFileManagerShowTitleField']) OR
+                        !empty($v['linkFromFileManagerShowNewWindowField']) OR
                         !empty($v['externalLinkShowEndingField']) OR
                         !empty($v['externalLinkShowTextField']) OR
                         !empty($v['externalLinkShowTitleField']) OR
+                        !empty($v['externalLinkShowNewWindowField']) OR
                         !empty($v['imageShowAltTextField']) OR
                         ($v['fieldType']=='link')
                     ) {
@@ -739,6 +766,16 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL . PHP_EOL;
                     }
 
+                    if ( ! empty($v['linkFromSitemapShowNewWindowField'])) {
+                        $code .= BlockBuilderUtility::tab(5) . '<div class="form-group">'. PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=position%>][' . $v['handle'] . '_new_window]" class="control-label"><?php echo t(\'' . addslashes($postData['newWindowLabel']) . '\'); ?></label>'. PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '<select id="<?php echo $view->field(\'entry\'); ?>[<%=position%>][' . $v['handle'] . '_new_window]" name="<?php echo $view->field(\'entry\'); ?>[<%=position%>][' . $v['handle'] . '_new_window]" class="form-control">'. PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '<option value="0" <% if (!' . $v['handle'] . '_new_window) { %>selected="selected"<% } %>><?php echo t(\''.addslashes($postData['noLabel']).'\'); ?></option>'. PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '<option value="1" <% if (' . $v['handle'] . '_new_window==1) { %>selected="selected"<% } %>><?php echo t(\''.addslashes($postData['yesLabel']).'\'); ?></option>'. PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '</select>'. PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL . PHP_EOL;
+                    }
+
                 }
 
                 if ($v['fieldType'] == 'link_from_file_manager') {
@@ -774,6 +811,16 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(5) . '<div class="form-group">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(6) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=position%>][' . $v['handle'] . '_title]" class="control-label"><?php echo t(\'' . addslashes($postData['titleLabel']) . '\'); ?></label>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(6) . '<input type="text" id="<?php echo $view->field(\'entry\'); ?>[<%=position%>][' . $v['handle'] . '_title]" name="<?php echo $view->field(\'entry\'); ?>[<%=position%>][' . $v['handle'] . '_title]" value="<%=' . $v['handle'] . '_title%>" class="form-control" maxlength="255" />' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL . PHP_EOL;
+                    }
+
+                    if ( ! empty($v['linkFromFileManagerShowNewWindowField'])) {
+                        $code .= BlockBuilderUtility::tab(5) . '<div class="form-group">'. PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=position%>][' . $v['handle'] . '_new_window]" class="control-label"><?php echo t(\'' . addslashes($postData['newWindowLabel']) . '\'); ?></label>'. PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '<select id="<?php echo $view->field(\'entry\'); ?>[<%=position%>][' . $v['handle'] . '_new_window]" name="<?php echo $view->field(\'entry\'); ?>[<%=position%>][' . $v['handle'] . '_new_window]" class="form-control">'. PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '<option value="0" <% if (!' . $v['handle'] . '_new_window) { %>selected="selected"<% } %>><?php echo t(\''.addslashes($postData['noLabel']).'\'); ?></option>'. PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '<option value="1" <% if (' . $v['handle'] . '_new_window==1) { %>selected="selected"<% } %>><?php echo t(\''.addslashes($postData['yesLabel']).'\'); ?></option>'. PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '</select>'. PHP_EOL;
                         $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL . PHP_EOL;
                     }
 
@@ -820,6 +867,16 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(5) . '<div class="form-group">'. PHP_EOL;
                         $code .= BlockBuilderUtility::tab(6) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=position%>][' . $v['handle'] . '_title]" class="control-label"><?php echo t(\'' . addslashes($postData['titleLabel']) . '\'); ?></label>'. PHP_EOL;
                         $code .= BlockBuilderUtility::tab(6) . '<input type="text" id="<?php echo $view->field(\'entry\'); ?>[<%=position%>][' . $v['handle'] . '_title]" name="<?php echo $view->field(\'entry\'); ?>[<%=position%>][' . $v['handle'] . '_title]" value="<%=' . $v['handle'] . '_title%>" class="form-control" maxlength="255" />'. PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL . PHP_EOL;
+                    }
+
+                    if ( ! empty($v['externalLinkShowNewWindowField'])) {
+                        $code .= BlockBuilderUtility::tab(5) . '<div class="form-group">'. PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=position%>][' . $v['handle'] . '_new_window]" class="control-label"><?php echo t(\'' . addslashes($postData['newWindowLabel']) . '\'); ?></label>'. PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '<select id="<?php echo $view->field(\'entry\'); ?>[<%=position%>][' . $v['handle'] . '_new_window]" name="<?php echo $view->field(\'entry\'); ?>[<%=position%>][' . $v['handle'] . '_new_window]" class="form-control">'. PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '<option value="0" <% if (!' . $v['handle'] . '_new_window) { %>selected="selected"<% } %>><?php echo t(\''.addslashes($postData['noLabel']).'\'); ?></option>'. PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '<option value="1" <% if (' . $v['handle'] . '_new_window==1) { %>selected="selected"<% } %>><?php echo t(\''.addslashes($postData['yesLabel']).'\'); ?></option>'. PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '</select>'. PHP_EOL;
                         $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL . PHP_EOL;
                     }
 

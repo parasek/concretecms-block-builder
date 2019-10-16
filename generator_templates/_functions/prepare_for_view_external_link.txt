@@ -1,17 +1,19 @@
     private function prepareForViewExternalLink($type, $fields) {
 
         $keys = array_keys($fields);
-        $linkFieldName     = $keys[0];
-        $protocolFieldName = $keys[1];
-        $endingFieldName   = $keys[2];
-        $textFieldName     = $keys[3];
-        $titleFieldName    = $keys[4];
+        $linkFieldName      = $keys[0];
+        $protocolFieldName  = $keys[1];
+        $endingFieldName    = $keys[2];
+        $textFieldName      = $keys[3];
+        $titleFieldName     = $keys[4];
+        $newWindowFieldName = $keys[5];
 
-        $link     = $fields[$linkFieldName];
-        $protocol = $fields[$protocolFieldName];
-        $ending   = $fields[$endingFieldName];
-        $text     = $fields[$textFieldName];
-        $title    = $fields[$titleFieldName];
+        $link      = $fields[$linkFieldName];
+        $protocol  = $fields[$protocolFieldName];
+        $ending    = $fields[$endingFieldName];
+        $text      = $fields[$textFieldName];
+        $title     = $fields[$titleFieldName];
+        $newWindow = !empty($fields[$newWindowFieldName]) ? 'target="_blank" rel="noopener"' : '';
 
         if ($type == 'view') {
 
@@ -21,6 +23,7 @@
             $this->set($endingFieldName, $ending);
             $this->set($textFieldName, $text);
             $this->set($titleFieldName, $title);
+            $this->set($newWindowFieldName, $newWindow);
 
             // Additional data
             if (!empty($link) AND $protocol!='other' AND $protocol!='BASE_URL') {
@@ -40,11 +43,12 @@
             $entry = [];
 
             // Fields from database
-            $entry[$linkFieldName]     = $link;
-            $entry[$protocolFieldName] = $protocol;
-            $entry[$endingFieldName]   = $ending;
-            $entry[$textFieldName]     = $text;
-            $entry[$titleFieldName]    = $title;
+            $entry[$linkFieldName]      = $link;
+            $entry[$protocolFieldName]  = $protocol;
+            $entry[$endingFieldName]    = $ending;
+            $entry[$textFieldName]      = $text;
+            $entry[$titleFieldName]     = $title;
+            $entry[$newWindowFieldName] = $newWindow;
 
             // Additional data
             if (!empty($link) AND $protocol!='other' AND $protocol!='BASE_URL') {
