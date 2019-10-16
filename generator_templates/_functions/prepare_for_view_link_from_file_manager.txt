@@ -52,6 +52,7 @@
             $this->set($fileIDFieldName.'_object', $fileObject);
             $this->set($fileIDFieldName.'_filename', $filename);
             $this->set($fileIDFieldName.'_link', $link);
+            $this->set($fileIDFieldName.'_link_type', 'link_from_file_manager');
 
         } elseif ($type == 'entry') {
 
@@ -65,9 +66,10 @@
             $entry[$newWindowFieldName] = $newWindow;
 
             // Additional data
-            // $entry[$fileIDFieldName.'_object']   = $fileObject;
-            $entry[$fileIDFieldName.'_filename'] = $filename;
-            $entry[$fileIDFieldName.'_link']     = $link;
+            // $entry[$fileIDFieldName.'_object']    = $fileObject;
+            $entry[$fileIDFieldName.'_filename']  = $filename;
+            $entry[$fileIDFieldName.'_link']      = $link;
+            $entry[$fileIDFieldName.'_link_type'] = 'link_from_file_manager';
 
             return $entry;
 

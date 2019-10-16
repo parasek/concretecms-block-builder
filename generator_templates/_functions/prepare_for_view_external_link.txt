@@ -37,6 +37,7 @@
                 $link = BASE_URL.$separator.$link;
             }
             $this->set($linkFieldName.'_link', $link);
+            $this->set($linkFieldName.'_link_type', 'external_link');
 
         } elseif ($type == 'entry') {
 
@@ -61,7 +62,8 @@
                 }
                 $link = BASE_URL.$separator.$link;
             }
-            $entry[$linkFieldName.'_link'] = $link;
+            $entry[$linkFieldName.'_link']      = $link;
+            $entry[$linkFieldName.'_link_type'] = 'external_link';
 
             return $entry;
 

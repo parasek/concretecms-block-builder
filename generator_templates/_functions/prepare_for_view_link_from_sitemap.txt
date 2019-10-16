@@ -50,6 +50,7 @@
             $this->set($pageIDFieldName.'_object', $pageObject);
             $this->set($pageIDFieldName.'_name', $name);
             $this->set($pageIDFieldName.'_link', $link);
+            $this->set($pageIDFieldName.'_link_type', 'link_from_sitemap');
 
         } elseif ($type == 'entry') {
 
@@ -63,9 +64,10 @@
             $entry[$newWindowFieldName] = $newWindow;
 
             // Additional data
-            // $entry[$pageIDFieldName.'_object'] = $pageObject;
-            $entry[$pageIDFieldName.'_name']   = $name;
-            $entry[$pageIDFieldName.'_link']   = $link;
+            // $entry[$pageIDFieldName.'_object']    = $pageObject;
+            $entry[$pageIDFieldName.'_name']      = $name;
+            $entry[$pageIDFieldName.'_link']      = $link;
+            $entry[$pageIDFieldName.'_link_type'] = 'link_from_sitemap';
 
             return $entry;
 
