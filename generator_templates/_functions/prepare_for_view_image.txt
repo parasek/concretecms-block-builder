@@ -12,8 +12,8 @@
         $defaultOptions['fullscreenCrop']   = false;
 
         $defaultOptions['thumbnail']        = false;
-        $defaultOptions['thumbnailWidth']   = 600;
-        $defaultOptions['thumbnailHeight']  = 450;
+        $defaultOptions['thumbnailWidth']   = 480;
+        $defaultOptions['thumbnailHeight']  = 270;
         $defaultOptions['thumbnailCrop']    = true;
 
         $options = array_merge($defaultOptions, $options);
