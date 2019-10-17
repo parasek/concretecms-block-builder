@@ -1,3 +1,11 @@
+#1.2.0
+- Added optional target="_blank" rel="noopener" to all Link fields
+- Fixed json_decode error when copied block is added to page
+- Fixed edge case when smart horizontal line was not added
+- Fixed missing translations
+- Fixed missing 'link_type' variable in view() for Link with Type Selection fields
+- Fixed External Link variable typo in generated view.php
+
 #1.1.0
 - Added "Date Picker" field
 - Added "Link with Type Selection" field ("Link from Sitemap", "Link from File Manager" and "External Link" combined together)
