@@ -1,3 +1,6 @@
+#1.2.1
+- Fixed missing escape functions in generated blocks
+
 #1.2.0
 - Added optional target="_blank" rel="noopener" to all Link fields
 - Fixed json_decode error when copied block is added to page
