@@ -138,7 +138,7 @@ class ControllerPhp
                     foreach ($tempOptions as $tempOption) {
                         $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options[\''.$tempOption['key'].'\'] ';
                         $code .= BlockBuilderUtility::arrayGap($maxKeyLength, $tempOption['keyLength']);
-                        $code .= '= t(\''.$tempOption['value'].'\');'.PHP_EOL;
+                        $code .= '= h(t(\''.$tempOption['value'].'\'));'.PHP_EOL;
                     }
 
                     $code .= PHP_EOL;
