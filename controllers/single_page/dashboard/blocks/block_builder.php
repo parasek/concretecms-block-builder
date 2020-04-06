@@ -233,23 +233,21 @@ class BlockBuilder extends DashboardPageController
         $al->register('css', 'bb/styles', 'css_files/styles.css', [], $pkg);
         $this->requireAsset('css', 'bb/styles');
 
-        $blockTypeHandles = scandir(DIR_FILES_BLOCK_TYPES);
+        $blockTypePaths = glob(DIR_FILES_BLOCK_TYPES . DIRECTORY_SEPARATOR . '*', GLOB_ONLYDIR);
 
         $blockTypes = [];
         $i=0;
 
-        if (is_array($blockTypeHandles)) {
+        if (is_array($blockTypePaths)) {
 
-            unset($blockTypeHandles[0]); // .
-            unset($blockTypeHandles[1]); // ..
+            foreach ($blockTypePaths as $blockTypePath) {
 
-            foreach ($blockTypeHandles as $blockTypeHandle) {
+                $blockTypeHandle = basename($blockTypePath);
+                $configPath = DIR_FILES_BLOCK_TYPES . DIRECTORY_SEPARATOR . $blockTypeHandle . DIRECTORY_SEPARATOR . 'config-bb.json';
 
-                $blockTypePath = DIR_FILES_BLOCK_TYPES . DIRECTORY_SEPARATOR . $blockTypeHandle . DIRECTORY_SEPARATOR . 'config-bb.json';
+                if (file_exists($configPath)) {
 
-                if (file_exists($blockTypePath)) {
-
-                    $configJson = file_get_contents($blockTypePath);
+                    $configJson = file_get_contents($configPath);
                     $config = json_decode($configJson, true);
 
                     $blockTypes[$i]['handle'] = $blockTypeHandle;
