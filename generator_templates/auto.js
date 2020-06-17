@@ -1,16 +1,21 @@
-$(function() {
+$(function () {
 
-    Concrete.event.bind('open.block.[[[BLOCK_HANDLE_DASHED]]]', function(e, data) {
+    Concrete.event.bind('open.block.[[[BLOCK_HANDLE_DASHED]]]', function (e, data) {
 
-        var uniqueID           = data.uniqueID;
-        var formContainer      = $('#form-container-'+uniqueID);
-        var entriesContainer   = formContainer.find('#entries-'+uniqueID);
+        var uniqueID = data.uniqueID;
+        var formContainer = $('#form-container-' + uniqueID);
+        var entriesContainer = formContainer.find('#entries-' + uniqueID);
         var maxNumberOfEntries = parseInt(formContainer.find('.js-max-number-of-entries').text());
+        var entryColumnNames = JSON.parse(entriesContainer.attr('data-column-names'));
+        var entries = JSON.parse(entriesContainer.attr('data-entries'));
+        var position = entries != null ? entries.length : 0;
+        var template = _.template(formContainer.find('.js-entry-template').html());
+        var templateNoEntries = _.template(formContainer.find('.js-template-no-entries').html());
 
         function activateEditors(parentContainer) {
 
             var editors = parentContainer.find('.js-editor-content');
-            editors.each(function(i, item) {
+            editors.each(function (i, item) {
                 activateEditor(item);
             });
 
@@ -19,7 +24,7 @@ $(function() {
         function activatePageSelectors(parentContainer) {
 
             var pageSelectors = parentContainer.find('.js-page-selector');
-            pageSelectors.each(function(i, item) {
+            pageSelectors.each(function (i, item) {
                 var inputName = $(item).attr('data-input-name');
                 var cID = parseInt($(item).attr('data-collection-id'));
                 $(item).concretePageSelector({'inputName': inputName, 'cID': cID});
@@ -30,7 +35,7 @@ $(function() {
         function activateFileSelectors(parentContainer) {
 
             var fileSelectors = parentContainer.find('.js-file-selector');
-            fileSelectors.each(function(i, item) {
+            fileSelectors.each(function (i, item) {
                 var chooseText = $(item).attr('data-choose-text');
                 var inputName = $(item).attr('data-input-name');
                 var fID = parseInt($(item).attr('data-file-id'));
@@ -42,11 +47,11 @@ $(function() {
         function activateHtmlEditors(parentContainer) {
 
             var htmlEditors = parentContainer.find('.js-html-editor');
-            htmlEditors.each(function(i, item) {
+            htmlEditors.each(function (i, item) {
                 var htmlEditorEntry = ace.edit($(item).attr('id'));
                 htmlEditorEntry.setTheme('ace/theme/eclipse');
                 htmlEditorEntry.getSession().setMode('ace/mode/html');
-                htmlEditorEntry.getSession().on('change', function() {
+                htmlEditorEntry.getSession().on('change', function () {
                     $(item).next().val(htmlEditorEntry.getValue());
                 });
             });
@@ -56,19 +61,19 @@ $(function() {
         function activateDatePickers(parentContainer) {
 
             var datePickers = parentContainer.find('.js-entry-date-displayed');
-            datePickers.each(function(i, item) {
+            datePickers.each(function (i, item) {
                 var position = $(item).attr('data-position');
                 var dateFormat = $(item).attr('data-date-format');
                 var targetField = $(item).attr('data-target-field');
                 $(item).datepicker({
                     dateFormat: dateFormat,
                     altFormat: 'yy-mm-dd',
-                    altField: '.js-entry-'+targetField+'-'+position,
+                    altField: '.js-entry-' + targetField + '-' + position,
                     changeYear: true,
                     showAnim: 'fadeIn',
                     yearRange: 'c-100:c+10',
-                    onClose: function(dateText, inst) {
-                        if(!dateText) {
+                    onClose: function (dateText, inst) {
+                        if (!dateText) {
                             $(inst.settings.altField).val('');
                         }
                     }
@@ -77,16 +82,38 @@ $(function() {
 
         }
 
+        function activateSpecialFields(container) {
+
+            activateEditors(container);
+
+            activatePageSelectors(container);
+
+            activateFileSelectors(container);
+
+            activateHtmlEditors(container);
+
+            activateDatePickers(container);
+
+        }
+
         function updateCounter(numberOfEntries) {
 
-            if (numberOfEntries<=maxNumberOfEntries) {
+            if (numberOfEntries <= maxNumberOfEntries) {
                 formContainer.find('.js-number-of-entries').text(numberOfEntries);
             }
 
-            if (numberOfEntries>=maxNumberOfEntries) {
+            if (numberOfEntries >= maxNumberOfEntries) {
                 formContainer.find('.js-add-entry').attr('disabled', true);
+                formContainer.find('.js-copy-last-entry').attr('disabled', true);
+                formContainer.find('.js-duplicate-entry').attr('disabled', true);
             } else {
                 formContainer.find('.js-add-entry').removeAttr('disabled');
+                formContainer.find('.js-copy-last-entry').removeAttr('disabled');
+                formContainer.find('.js-duplicate-entry').removeAttr('disabled');
+            }
+
+            if (numberOfEntries==0) {
+                formContainer.find('.js-copy-last-entry').attr('disabled', true);
             }
 
         }
@@ -105,55 +132,28 @@ $(function() {
 
         }
 
-        // Populate form with existing entries
-        var entries = JSON.parse(entriesContainer.attr('data-entries'));
-
-        var position = entries!=null ? entries.length : 0;
-        var template = _.template(formContainer.find('.js-entry-template').html());
-        var templateNoEntries = _.template(formContainer.find('.js-template-no-entries').html());
-
-        if (entries && entries.length) {
-            $.each(entries, function (index, item) {
-                entriesContainer.append(template(item));
-            });
-        } else {
-            entriesContainer.append(templateNoEntries());
-        }
-
-        // Activate c5 tools/editors
-        activateEditors(formContainer);
-
-        activatePageSelectors(formContainer);
-
-        activateFileSelectors(formContainer);
-
-        activateHtmlEditors(formContainer);
-
-        activateDatePickers(formContainer);
-
-        updateCounter(countEntries(entriesContainer));
-
-        // Add entry
-        formContainer.on('click', '.js-add-entry', function(e) {
+        function addEntry(action, sourceEntry = false) {
 
             position++;
 
-            if (countEntries(entriesContainer)==0) {
+            if (countEntries(entriesContainer) == 0) {
                 entriesContainer.html('');
             }
 
             // Append/prepend entry with default values
-            var entryColumnNames  = JSON.parse(entriesContainer.attr('data-column-names'));
             var templateData = [];
             templateData['position'] = position;
-            $.each(entryColumnNames, function(key, value) {
-                templateData[value] = '';
+            $.each(entryColumnNames, function (key, value) {
+                if (sourceEntry) {
+                    templateData[value] = sourceEntry.find('[name="entry['+sourceEntry.attr('data-position')+']['+value+']"]').val();
+                } else {
+                    templateData[value] = '';
+                }
             });
 
-            var action = $(this).attr('data-action');
             var newEntry = false;
 
-            if (action=='prepend') {
+            if (action == 'prepend') {
                 entriesContainer.prepend(template(templateData));
                 newEntry = entriesContainer.children(':first');
             } else {
@@ -161,31 +161,72 @@ $(function() {
                 newEntry = entriesContainer.children(':last');
             }
 
-            // Highlight newly added entry
-            newEntry.effect('highlight', {}, 1500);
-
             // Activate c5 tools/editors
-            activateEditors(newEntry);
-
-            activatePageSelectors(newEntry);
-
-            activateFileSelectors(newEntry);
-
-            activateHtmlEditors(newEntry);
-
-            activateDatePickers(newEntry);
+            activateSpecialFields(newEntry);
 
             updateCounter(countEntries(entriesContainer));
 
+            // Highlight newly added entry
+            newEntry.effect('highlight', {}, 1500);
+
             // Smooth scroll
-            $(this).closest('.ui-dialog-content').animate({
-                scrollTop: formContainer.find('.js-entry[data-position="'+position+'"]').position().top + $(this).closest('.ui-dialog-content').scrollTop()
-            });
+            formContainer.closest('.ui-dialog-content').animate({
+                scrollTop: formContainer.find('.js-entry[data-position="' + position + '"]').position().top + formContainer.closest('.ui-dialog-content').scrollTop()
+            }, 1000);
+
+        }
+
+        function loadEntriesAtStart() {
+
+            // Populate form with existing entries
+            if (entries && entries.length) {
+                $.each(entries, function (index, item) {
+                    entriesContainer.append(template(item));
+                });
+            } else {
+                entriesContainer.append(templateNoEntries());
+            }
+
+            // Activate c5 tools/editors
+            activateSpecialFields(formContainer);
+
+            updateCounter(countEntries(entriesContainer));
+
+        }
+
+        loadEntriesAtStart();
+
+        // Add entry
+        formContainer.on('click', '.js-add-entry', function (e) {
+
+            addEntry($(this).attr('data-action'));
+
+        });
+
+        // Duplicate entry
+        entriesContainer.on('click', '.js-duplicate-entry', function (e2) {
+
+            e2.preventDefault();
+
+            var sourceEntry = $(this).closest('.js-entry');
+
+            addEntry('append', sourceEntry);
+
+        });
+
+        // Copy last entry
+        formContainer.on('click', '.js-copy-last-entry', function (e2) {
+
+            e2.preventDefault();
+
+            var sourceEntry = entriesContainer.children(':last');
+
+            addEntry('append', sourceEntry);
 
         });
 
         // Delete entry
-        entriesContainer.on('click', '.js-remove-entry', function(e2) {
+        entriesContainer.on('click', '.js-remove-entry', function (e2) {
 
             e2.preventDefault();
 
@@ -197,7 +238,7 @@ $(function() {
 
                 var editorIDs = $(this).closest('.js-entry').find('.js-editor-content');
 
-                editorIDs.each(function(i, item) {
+                editorIDs.each(function (i, item) {
 
                     var editorID = $(item).attr('id');
                     if (typeof CKEDITOR === 'object' && typeof CKEDITOR.instances[editorID] != 'undefined') {
@@ -208,7 +249,7 @@ $(function() {
 
                 $(this).closest('.js-entry').remove();
 
-                if (countEntries(entriesContainer)==0) {
+                if (countEntries(entriesContainer) == 0) {
 
                     entriesContainer.append(templateNoEntries());
 
@@ -221,12 +262,12 @@ $(function() {
         });
 
         // Change header title on input change
-        entriesContainer.on('input', '.js-entry-title-source', function() {
+        entriesContainer.on('input', '.js-entry-title-source', function () {
 
             var title = $(this).val();
 
             if (!title) {
-                title = '#'+$(this).closest('.js-entry').attr('data-position');
+                title = '#' + $(this).closest('.js-entry').attr('data-position');
             }
 
             $(this).closest('.js-entry')
@@ -236,7 +277,7 @@ $(function() {
         });
 
         // Expand all entries
-        formContainer.on('click', '.js-expand-all', function(e2) {
+        formContainer.on('click', '.js-expand-all', function (e2) {
 
             e2.preventDefault();
 
@@ -252,7 +293,7 @@ $(function() {
         });
 
         // Collapse all entries
-        formContainer.on('click', '.js-collapse-all', function(e2) {
+        formContainer.on('click', '.js-collapse-all', function (e2) {
 
             e2.preventDefault();
 
@@ -268,15 +309,15 @@ $(function() {
         });
 
         // Toggle entry
-        entriesContainer.on('click', '.js-toggle-entry', function(e2) {
+        entriesContainer.on('click', '.js-toggle-entry', function (e2) {
 
             e2.preventDefault();
 
             var position = $(this).closest('.js-entry').attr('data-position');
 
-            entriesContainer.find('.js-entry[data-position="'+position+'"] .js-entry-content').toggle();
+            entriesContainer.find('.js-entry[data-position="' + position + '"] .js-entry-content').toggle();
 
-            if ($(this).attr('data-action')=='collapse') {
+            if ($(this).attr('data-action') == 'collapse') {
 
                 $(this).find('i').removeClass('fa-minus-square-o');
                 $(this).find('i').addClass('fa-plus-square-o');
@@ -296,16 +337,16 @@ $(function() {
         entriesContainer.sortable({
             handle: '.js-move-entry',
             cursor: 'move',
-            stop: function(event,ui){
+            stop: function (event, ui) {
                 $('.sortable').removeClass('hover');
             },
-            over: function(event,ui){
+            over: function (event, ui) {
                 $('.ui-sortable-placeholder').parents('.sortable').addClass('hover');
             },
-            out: function(event,ui){
+            out: function (event, ui) {
                 $('.ui-sortable-placeholder').parents('.sortable').removeClass('hover');
             },
-            change: function(event, ui) {
+            change: function (event, ui) {
                 $('.ui-sortable-placeholder').css({
                     visibility: 'visible',
                     background: '#eee'
@@ -314,7 +355,7 @@ $(function() {
         });
 
         // Change external link protocol
-        entriesContainer.on('keyup change', '.js-external-link-url', function(e) {
+        entriesContainer.on('keyup change', '.js-external-link-url', function (e) {
 
             var url = $(this).val();
 
@@ -329,7 +370,7 @@ $(function() {
         });
 
         // Change link type
-        entriesContainer.on('change', '.js-link-type', function() {
+        entriesContainer.on('change', '.js-link-type', function () {
 
             var linkWrapper = $(this).closest('.js-link-wrapper');
             var linkType = linkWrapper.find('.js-link-type').val();
@@ -339,10 +380,10 @@ $(function() {
             linkWrapper.find('.js-link-type-wrapper').hide();
             linkWrapper.find('.js-additional-fields-wrapper').hide();
 
-            if (linkType!=0) {
+            if (linkType != 0) {
                 linkWrapper.find('.js-toggle-additional-fields').show();
-                linkWrapper.find('.js-link-type-wrapper-'+linkType).show();
-                if (toggleAdditionalFieldsValue==1) {
+                linkWrapper.find('.js-link-type-wrapper-' + linkType).show();
+                if (toggleAdditionalFieldsValue == 1) {
                     linkWrapper.find('.js-additional-fields-wrapper').show();
                 }
             }
@@ -350,7 +391,7 @@ $(function() {
         });
 
         // Change link type - Show additional fields
-        entriesContainer.on('click', '.js-toggle-additional-fields', function() {
+        entriesContainer.on('click', '.js-toggle-additional-fields', function () {
 
             var linkWrapper = $(this).closest('.js-link-wrapper');
             var showText = linkWrapper.find('.js-toggle-additional-fields').attr('data-show-text');

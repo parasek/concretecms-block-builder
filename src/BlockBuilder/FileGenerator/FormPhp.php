@@ -504,6 +504,7 @@ class FormPhp
             $code .= BlockBuilderUtility::tab(2) . '<div class="form-group entries-actions">' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(3) . '<button type="button" class="btn btn-primary entries-action-button js-add-entry" data-action="prepend"><?php echo t(\''.addslashes($postData['addAtTheTopLabel']).'\'); ?></button>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(3) . '<button type="button" class="btn btn-primary entries-action-button js-add-entry" data-action="append"><?php echo t(\''.addslashes($postData['addAtTheBottomLabel']).'\'); ?></button>' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(3) . '<button type="button" class="btn btn-primary entries-action-button js-copy-last-entry" data-action="append"><?php echo t(\''.addslashes($postData['copyLastEntryLabel']).'\'); ?></button>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(3) . '<span class="entries-actions-links">' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(4) . '<a href="#" class="entries-action-link js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t(\''.addslashes($postData['expandAllLabel']).'\'); ?></a>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(4) . '<a href="#" class="entries-action-link js-collapse-all"><i class="fa fa-minus-square-o"></i> <?php echo t(\''.addslashes($postData['collapseAllLabel']).'\'); ?></a>' . PHP_EOL;
@@ -518,6 +519,7 @@ class FormPhp
             $code .= BlockBuilderUtility::tab(2) . '<div class="form-group entries-actions">' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(3) . '<button type="button" class="btn btn-primary entries-action-button js-add-entry" data-action="prepend"><?php echo t(\''.addslashes($postData['addAtTheTopLabel']).'\'); ?></button>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(3) . '<button type="button" class="btn btn-primary entries-action-button js-add-entry" data-action="append"><?php echo t(\''.addslashes($postData['addAtTheBottomLabel']).'\'); ?></button>' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(3) . '<button type="button" class="btn btn-primary entries-action-button js-copy-last-entry" data-action="append"><?php echo t(\''.addslashes($postData['copyLastEntryLabel']).'\'); ?></button>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(3) . '<span class="entries-actions-links">' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(4) . '<a href="#" class="entries-action-link js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t(\''.addslashes($postData['expandAllLabel']).'\'); ?></a>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(4) . '<a href="#" class="entries-action-link js-collapse-all"><i class="fa fa-minus-square-o"></i> <?php echo t(\''.addslashes($postData['collapseAllLabel']).'\'); ?></a>' . PHP_EOL;
@@ -536,7 +538,8 @@ class FormPhp
             $code .= BlockBuilderUtility::tab(3) . '<div class="well entry js-entry" data-position="<%=_.escape(position)%>">' . PHP_EOL . PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(4) . '<div class="entry-header">' . PHP_EOL;
-            $code .= BlockBuilderUtility::tab(5) . '<div class="entry-header-action entry-header-remove-entry js-remove-entry" data-confirm-text="<?php echo t(\'Are you sure?\'); ?>"><i class="fa fa-times"></i></div>' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(5) . '<button type="button" class="entry-header-action entry-header-duplicate-entry js-duplicate-entry" title="<?php echo t(\''.addslashes($postData['duplicateEntryLabel']).'\'); ?>"><i class="fa fa-clone"></i></button>' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(5) . '<div class="entry-header-action entry-header-remove-entry js-remove-entry" data-confirm-text="<?php echo t(\''.addslashes($postData['areYouSureLabel']).'\'); ?>"  title="<?php echo t(\''.addslashes($postData['removeEntryLabel']).'\'); ?>"><i class="fa fa-times"></i></div>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(5) . '<div class="entry-header-action entry-header-move-entry js-move-entry"><i class="fa fa-arrows"></i></div>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(5) . '<div class="entry-header-action entry-header-toggle-entry js-toggle-entry" data-action="collapse"><i class="fa fa-minus-square-o"></i></div>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(5) . '<div class="entry-header-title">' . PHP_EOL;
