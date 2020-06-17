@@ -134,6 +134,11 @@
                 <?php echo $form->text('addAtTheBottomLabel', $addAtTheBottomLabel, ['data-translated-text'=>t('Add at the bottom'), 'data-untranslated-text'=>'Add at the bottom']); ?>
             </div>
 
+            <div class="form-group <?php in_array('copyLastEntryLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('copyLastEntryLabel', t('Copy last entry')); ?>
+                <?php echo $form->text('copyLastEntryLabel', $copyLastEntryLabel, ['data-translated-text'=>t('Copy last entry'), 'data-untranslated-text'=>'Copy last entry']); ?>
+            </div>
+
             <div class="form-group <?php in_array('collapseAllLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
                 <?php echo $form->label('collapseAllLabel', t('Collapse all')); ?>
                 <?php echo $form->text('collapseAllLabel', $collapseAllLabel, ['data-translated-text'=>t('Collapse all'), 'data-untranslated-text'=>'Collapse all']); ?>
@@ -152,6 +157,16 @@
             <div class="form-group <?php in_array('maxNumberOfEntriesLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
                 <?php echo $form->label('maxNumberOfEntriesLabel', t('Max. number of entries')); ?>
                 <?php echo $form->text('maxNumberOfEntriesLabel', $maxNumberOfEntriesLabel, ['data-translated-text'=>t('Max. number of entries'), 'data-untranslated-text'=>'Max. number of entries']); ?>
+            </div>
+
+            <div class="form-group <?php in_array('removeEntryLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('removeEntryLabel', t('Remove entry')); ?>
+                <?php echo $form->text('removeEntryLabel', $removeEntryLabel, ['data-translated-text'=>t('Remove entry'), 'data-untranslated-text'=>'Remove entry']); ?>
+            </div>
+
+            <div class="form-group <?php in_array('duplicateEntryLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('duplicateEntryLabel', t('Duplicate entry')); ?>
+                <?php echo $form->text('duplicateEntryLabel', $duplicateEntryLabel, ['data-translated-text'=>t('Duplicate entry'), 'data-untranslated-text'=>'Duplicate entry']); ?>
             </div>
 
             <div class="form-group <?php in_array('areYouSureLabel', $fieldsWithError) ? print 'has-error' : false; ?>">

@@ -121,7 +121,7 @@ class BlockBuilder extends DashboardPageController
         $this->set('installBlockOptions', $installBlockOptions);
 
         // Default values
-        $this->set('blockWidth', 800);
+        $this->set('blockWidth', 850);
         $this->set('blockHeight', 650);
         $this->set('installBlock', 1);
         $this->set('maxNumberOfEntries', 0);
@@ -130,10 +130,13 @@ class BlockBuilder extends DashboardPageController
         $this->set('entriesLabel', t('Entries'));
         $this->set('addAtTheTopLabel', t('Add at the top'));
         $this->set('addAtTheBottomLabel', t('Add at the bottom'));
+        $this->set('copyLastEntryLabel', t('Copy last entry'));
         $this->set('collapseAllLabel', t('Collapse all'));
         $this->set('expandAllLabel', t('Expand all'));
         $this->set('noEntriesFoundLabel', t('No entries found.'));
         $this->set('maxNumberOfEntriesLabel', t('Max. number of entries'));
+        $this->set('removeEntryLabel', t('Remove entry'));
+        $this->set('duplicateEntryLabel', t('Duplicate entry'));
         $this->set('areYouSureLabel', t('Are you sure?'));
         $this->set('requiredFieldsLabel', t('Required fields'));
         $this->set('urlEndingLabel', t('Custom string at the end of URL'));
