@@ -674,7 +674,7 @@
                                         <span class="input-group-addon">px</span>
                                     </div>
                                 </div>
-                                <div class="col-md-4 form-group">
+                                <div class="col-md-2 form-group">
                                     <label class="control-label"><?php echo t('Crop'); ?></label>
                                     <div class="checkbox">
                                         <label>
@@ -683,6 +683,18 @@
                                                    id="<%=groupHandle%>[<%=counter%>][imageThumbnailCrop]"
                                                    value="1"
                                             <% if (parseInt(imageThumbnailCrop)) { %> checked="checked" <% } %>
+                                            ><?php echo t('Yes'); ?></label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 form-group">
+                                    <label class="control-label"><?php echo t('Editable'); ?></label>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"
+                                                   name="<%=groupHandle%>[<%=counter%>][imageThumbnailEditable]"
+                                                   id="<%=groupHandle%>[<%=counter%>][imageThumbnailEditable]"
+                                                   value="1"
+                                            <% if (parseInt(imageThumbnailEditable)) { %> checked="checked" <% } %>
                                             ><?php echo t('Yes'); ?></label>
                                     </div>
                                 </div>
@@ -722,7 +734,7 @@
                                         <span class="input-group-addon">px</span>
                                     </div>
                                 </div>
-                                <div class="col-md-4 form-group">
+                                <div class="col-md-2 form-group">
                                     <label class="control-label"><?php echo t('Crop'); ?></label>
                                     <div class="checkbox">
                                         <label>
@@ -731,6 +743,18 @@
                                                    id="<%=groupHandle%>[<%=counter%>][imageFullscreenCrop]"
                                                    value="1"
                                             <% if (parseInt(imageFullscreenCrop)) { %> checked="checked" <% } %>
+                                            ><?php echo t('Yes'); ?></label>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 form-group">
+                                    <label class="control-label"><?php echo t('Editable'); ?></label>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"
+                                                   name="<%=groupHandle%>[<%=counter%>][imageFullscreenEditable]"
+                                                   id="<%=groupHandle%>[<%=counter%>][imageFullscreenEditable]"
+                                                   value="1"
+                                            <% if (parseInt(imageFullscreenEditable)) { %> checked="checked" <% } %>
                                             ><?php echo t('Yes'); ?></label>
                                     </div>
                                 </div>
