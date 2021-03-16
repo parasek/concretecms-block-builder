@@ -156,7 +156,7 @@ $(function() {
                 templateData['externalLinkShowNewWindowField'] = 0;
 
                 // image
-                templateData['imageShowAltTextField']      = 0;
+                templateData['imageShowAltTextField']      = 1;
                 templateData['imageCreateFullscreenImage'] = 1;
                 templateData['imageCreateThumbnailImage']  = 1;
 
