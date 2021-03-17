@@ -170,7 +170,7 @@ $(function() {
                 templateData['imageFullscreenWidth']       = 1920;
                 templateData['imageFullscreenHeight']      = 1080;
                 templateData['imageFullscreenCrop']        = 0;
-                templateData['imageFullscreenEditable']    = 0;
+                templateData['imageFullscreenEditable']    = 1;
 
                 // html_editor
                 templateData['htmlEditorHeight'] = '';

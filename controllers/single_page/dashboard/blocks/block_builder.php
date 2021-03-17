@@ -152,6 +152,12 @@ class BlockBuilder extends DashboardPageController
         $this->set('newWindowLabel', t('Open in new window'));
         $this->set('yesLabel', t('Yes'));
         $this->set('noLabel', t('No'));
+        $this->set('overrideThumbnailDimensionsLabel', t('Override Thumbnail dimensions'));
+        $this->set('overrideFullscreenImageDimensionsLabel', t('Override Fullscreen Image dimensions'));
+        $this->set('widthLabel', t('Width'));
+        $this->set('heightLabel', t('Height'));
+        $this->set('cropLabel', t('Crop'));
+        $this->set('pxLabel', t('px'));
 
         // Get rid of keys in repeatable entries (for json manipulation in js)
         if (is_array($basic)) {

@@ -38,6 +38,35 @@
     transform: rotate(90deg);
 }
 
+/* Image */
+.ccm-ui .toggle-additional-image-fields:focus,
+.ccm-ui .toggle-additional-image-fields:active {
+    background: #fff;
+}
+
+.ccm-ui .toggle-additional-image-fields:hover {
+    background: transparent;
+}
+
+.ccm-ui .toggle-additional-image-fields i {
+    margin-right: 10px;
+    transition: .2s;
+}
+
+.ccm-ui .toggle-additional-image-fields-active {
+    background-color: #efefef;
+}
+
+.ccm-ui .toggle-additional-image-fields-active:focus,
+.ccm-ui .toggle-additional-image-fields-active:active,
+.ccm-ui .toggle-additional-image-fields-active:hover {
+    background: #efefef;
+}
+
+.ccm-ui .toggle-additional-image-fields-active i {
+    transform: rotate(90deg);
+}
+
 /* Entries - buttons and links */
 .ccm-ui .entries-actions {
     margin-bottom: 15px;

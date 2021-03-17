@@ -244,6 +244,36 @@
                 <?php echo $form->text('noLabel', $noLabel, ['data-translated-text'=>t('No'), 'data-untranslated-text'=>'No']); ?>
             </div>
 
+            <div class="form-group <?php in_array('overrideThumbnailDimensionsLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('overrideThumbnailDimensionsLabel', t('Override Thumbnail dimensions')); ?>
+                <?php echo $form->text('overrideThumbnailDimensionsLabel', $overrideThumbnailDimensionsLabel, ['data-translated-text'=>t('Override Thumbnail dimensions'), 'data-untranslated-text'=>'Override Thumbnail dimensions']); ?>
+            </div>
+
+            <div class="form-group <?php in_array('overrideFullscreenImageDimensionsLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('overrideFullscreenImageDimensionsLabel', t('Override Fullscreen Image dimensions')); ?>
+                <?php echo $form->text('overrideFullscreenImageDimensionsLabel', $overrideFullscreenImageDimensionsLabel, ['data-translated-text'=>t('Override Fullscreen Image dimensions'), 'data-untranslated-text'=>'Override Fullscreen Image dimensions']); ?>
+            </div>
+
+            <div class="form-group <?php in_array('widthLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('widthLabel', t('Width')); ?>
+                <?php echo $form->text('widthLabel', $widthLabel, ['data-translated-text'=>t('Width'), 'data-untranslated-text'=>'Width']); ?>
+            </div>
+
+            <div class="form-group <?php in_array('heightLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('heightLabel', t('Height')); ?>
+                <?php echo $form->text('heightLabel', $heightLabel, ['data-translated-text'=>t('Height'), 'data-untranslated-text'=>'Height']); ?>
+            </div>
+
+            <div class="form-group <?php in_array('cropLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('cropLabel', t('Crop')); ?>
+                <?php echo $form->text('cropLabel', $cropLabel, ['data-translated-text'=>t('Crop'), 'data-untranslated-text'=>'Crop']); ?>
+            </div>
+
+            <div class="form-group <?php in_array('pxLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('pxLabel', t('px')); ?>
+                <?php echo $form->text('pxLabel', $pxLabel, ['data-translated-text'=>t('px'), 'data-untranslated-text'=>'px']); ?>
+            </div>
+
         </div>
 
         <div class="ccm-tab-content" id="ccm-tab-content-tab-basic-information">
