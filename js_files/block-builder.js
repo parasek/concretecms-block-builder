@@ -65,6 +65,8 @@ $(function() {
                     item.imageCreateThumbnailImage  = item.imageCreateThumbnailImage==undefined ? 0 : 1;
                     item.imageThumbnailCrop         = item.imageThumbnailCrop==undefined ? 0 : 1;
                     item.imageFullscreenCrop        = item.imageFullscreenCrop==undefined ? 0 : 1;
+                    item.imageThumbnailEditable     = item.imageThumbnailEditable==undefined ? 0 : 1;
+                    item.imageFullscreenEditable    = item.imageFullscreenEditable==undefined ? 0 : 1;
 
                     $(id).append(template(item));
 
@@ -156,17 +158,19 @@ $(function() {
                 templateData['externalLinkShowNewWindowField'] = 0;
 
                 // image
-                templateData['imageShowAltTextField']      = 0;
-                templateData['imageCreateFullscreenImage'] = 1;
-                templateData['imageCreateThumbnailImage']  = 1;
+                templateData['imageShowAltTextField']       = 1;
+                templateData['imageCreateFullscreenImage']  = 1;
+                templateData['imageCreateThumbnailImage']   = 1;
 
                 templateData['imageThumbnailWidth']        = 480;
                 templateData['imageThumbnailHeight']       = 270;
                 templateData['imageThumbnailCrop']         = 1;
+                templateData['imageThumbnailEditable']     = 1;
 
                 templateData['imageFullscreenWidth']       = 1920;
                 templateData['imageFullscreenHeight']      = 1080;
                 templateData['imageFullscreenCrop']        = 0;
+                templateData['imageFullscreenEditable']    = 1;
 
                 // html_editor
                 templateData['htmlEditorHeight'] = '';

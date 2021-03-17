@@ -421,19 +421,118 @@ class FormPhp
 
                 if ($v['fieldType'] == 'image') {
 
-                    $code .= BlockBuilderUtility::tab(2) . '<div class="form-group">' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(3) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '\'), t(\'' . addslashes($v['label']) . '\')'.$required.'); ?>' . PHP_EOL;
-                    if ( ! empty($v['helpText'])) {
-                        $code .= BlockBuilderUtility::tab(3) . '<p class="small text-muted"><?php echo t(\''.addslashes($v['helpText']).'\'); ?></p>'.PHP_EOL;
-                    }
-                    $code .= BlockBuilderUtility::tab(3) . '<?php echo $app->make(\'helper/concrete/asset_library\')->image(\'' . $v['handle'] . '-\'.$uniqueID, $view->field(\'' . $v['handle'] . '\'), t(\'Choose Image\'), !empty($' . $v['handle'] . ') ? File::getByID($' . $v['handle'] . ') : null); ?>' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(2) . '</div>' . PHP_EOL . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2).'<div class="form-group js-image-wrapper">'.PHP_EOL.PHP_EOL;
 
-                    if ( ! empty($v['imageShowAltTextField'])) {
-                        $code .= BlockBuilderUtility::tab(2) . '<div class="form-group">' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(3) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '_alt\'), t(\'' . addslashes($postData['altTextLabel']) . '\')); ?>' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(3) . '<?php echo $form->text($view->field(\'' . $v['handle'] . '_alt\'), $' . $v['handle'] . '_alt, [\'maxlength\'=>\'255\']); ?>' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(2) . '</div>' . PHP_EOL . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3).'<div class="row margin-bottom">'.PHP_EOL;
+
+                    $code .= BlockBuilderUtility::tab(4).'<div class="col-xs-12">'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5).'<?php echo $form->label($view->field(\'' . $v['handle'] . '\'), t(\'' . addslashes($v['label']) . '\')'.$required.'); ?>' . PHP_EOL;
+                    if ( ! empty($v['helpText'])) {
+                        $code .= BlockBuilderUtility::tab(5).'<p class="small text-muted"><?php echo t(\''.addslashes($v['helpText']).'\'); ?></p>'.PHP_EOL;
+                    }
+                    $code .= BlockBuilderUtility::tab(4).'</div>'.PHP_EOL;
+
+                    $code .= BlockBuilderUtility::tab(4).'<div class="col-xs-12 col-md-'.((!empty($v['imageShowAltTextField']) or (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable'])) ) ? 6 : 12).' margin-bottom-on-mobile">'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5).'<?php echo $app->make(\'helper/concrete/asset_library\')->image(\'' . $v['handle'] . '-\'.$uniqueID, $view->field(\'' . $v['handle'] . '\'), t(\'Choose Image\'), !empty($' . $v['handle'] . ') ? File::getByID($' . $v['handle'] . ') : null); ?>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4).'</div>'.PHP_EOL;
+
+                    if (!empty($v['imageShowAltTextField']) or (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable'])) ) {
+                        $code .= BlockBuilderUtility::tab(4) . '<div class="col-xs-12 col-md-6">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '<span class="toggle-additional-image-fields <?php if ($' . $v['handle'] . '_data[\'show_additional_fields\']): ?>toggle-additional-image-fields-active<?php endif; ?> btn btn-default js-toggle-additional-image-fields-' . $v['handle'] . '-<?php echo $uniqueID; ?>"' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . 'data-show-text="<?php echo t(\'' . addslashes($postData['showAdditionalFieldsLabel']) . '\'); ?>"' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . 'data-hide-text="<?php echo t(\'' . addslashes($postData['hideAdditionalFieldsLabel']) . '\'); ?>"' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '><i class="fa fa-caret-right"></i> <span class="js-toggle-additional-image-fields-text-' . $v['handle'] . '-<?php echo $uniqueID; ?>"><?php if ($' . $v['handle'] . '_data[\'show_additional_fields\']): ?><?php echo t(\'' . addslashes($postData['hideAdditionalFieldsLabel']) . '\'); ?><?php else: ?><?php echo t(\'' . addslashes($postData['showAdditionalFieldsLabel']) . '\'); ?><?php endif; ?></span></span>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '<?php echo $form->hidden($view->field(\'' . $v['handle'] . '_show_additional_fields\'), $' . $v['handle'] . '_data[\'show_additional_fields\'], [\'class\'=>\'js-toggle-additional-image-fields-value-' . $v['handle'] . '-\'.$uniqueID, \'maxlength\'=>\'255\']); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(4) . '</div>' . PHP_EOL;
+                    }
+
+                    $code .= BlockBuilderUtility::tab(3).'</div>'.PHP_EOL.PHP_EOL;
+
+                    if (!empty($v['imageShowAltTextField']) or (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable'])) ) {
+
+                        $code .= BlockBuilderUtility::tab(3) . '<div class="js-additional-image-fields-wrapper-' . $v['handle'] . '-<?php echo $uniqueID; ?>" <?php if (empty($' . $v['handle'] . '_data[\'show_additional_fields\'])): ?>style="display: none;"<?php endif; ?>>' . PHP_EOL . PHP_EOL;
+
+                        if (!empty($v['imageShowAltTextField'])) {
+                            $code .= BlockBuilderUtility::tab(4) . '<div class="form-group">' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(5) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '_alt\'), t(\'' . addslashes($postData['altTextLabel']) . '\')); ?>' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(5) . '<?php echo $form->text($view->field(\'' . $v['handle'] . '_alt\'), $' . $v['handle'] . '_alt, [\'maxlength\'=>\'255\']); ?>' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(4) . '</div>' . PHP_EOL . PHP_EOL;
+                        }
+
+                        if (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable'])) {
+                            $code .= BlockBuilderUtility::tab(4) . '<div class="row margin-bottom">' . PHP_EOL;
+
+                            $code .= BlockBuilderUtility::tab(5) . '<div class="col-xs-12">' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(6) . '<div class="checkbox" style="margin-top: 0; margin-bottom: 20px;">' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(7) . '<label><?php echo $form->checkbox($view->field(\'' . $v['handle'] . '_override_dimensions\'), \'1\', $' . $v['handle'] . '_data[\'override_dimensions\'], [\'class\' => \'js-toggle-override-dimensions-\'.$uniqueID]); ?> <?php echo t(\'' . addslashes($postData['overrideThumbnailDimensionsLabel']) . '\'); ?></label>' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL;
+
+                            $code .= BlockBuilderUtility::tab(5) . '<div class="js-override-dimensions-wrapper-<?php echo $uniqueID; ?>" <?php if (empty($' . $v['handle'] . '_data[\'override_dimensions\'])): ?>style="display: none;"<?php endif; ?>>' . PHP_EOL;
+
+                            $code .= BlockBuilderUtility::tab(6) . '<div class="col-xs-12 col-md-4 margin-bottom-on-mobile">' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(7) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '_custom_width\'), t(\'' . addslashes($postData['widthLabel']) . '\')); ?>' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(7) . '<div class="input-group">' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(8) . '<?php echo $form->number($view->field(\'' . $v['handle'] . '_custom_width\'), !empty($' . $v['handle'] . '_data[\'custom_width\']) ? $' . $v['handle'] . '_data[\'custom_width\'] : \'\'); ?>' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(8) . '<span class="input-group-addon"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL;
+
+                            $code .= BlockBuilderUtility::tab(6) . '<div class="col-xs-12 col-md-4 margin-bottom-on-mobile">' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(7) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '_custom_height\'), t(\'' . addslashes($postData['heightLabel']) . '\')); ?>' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(7) . '<div class="input-group">' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(8) . '<?php echo $form->number($view->field(\'' . $v['handle'] . '_custom_height\'), !empty($' . $v['handle'] . '_data[\'custom_height\']) ? $' . $v['handle'] . '_data[\'custom_height\'] : \'\'); ?>' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(8) . '<span class="input-group-addon"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL;
+
+                            $code .= BlockBuilderUtility::tab(6) . '<div class="col-xs-12 col-md-4">' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(7) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '_custom_crop\'), t(\'' . addslashes($postData['cropLabel']) . '\')); ?>' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(7) . '<?php echo $form->select($view->field(\'' . $v['handle'] . '_custom_crop\'), [\'0\'=>t(\'' . addslashes($postData['noLabel']) . '\'), \'1\'=>t(\'' . addslashes($postData['yesLabel']) . '\')], $' . $v['handle'] . '_data[\'custom_crop\']); ?>' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL;
+
+                            $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL;
+
+                            $code .= BlockBuilderUtility::tab(4) . '</div>' . PHP_EOL . PHP_EOL;
+                        }
+
+                        $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL;
+
+                        $code .= BlockBuilderUtility::tab(3) . '<script>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(4) . '$(function() {' . PHP_EOL;
+
+                        $code .= BlockBuilderUtility::tab(5) . '$(\'.js-toggle-additional-image-fields-' . $v['handle'] . '-<?php echo $uniqueID; ?>\').on(\'click\', function() {' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . 'var toggleAdditionalFieldsValue = parseInt($(\'.js-toggle-additional-image-fields-value-' . $v['handle'] . '-<?php echo $uniqueID; ?>\').val());' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . 'var showText = $(\'.js-toggle-additional-image-fields-' . $v['handle'] . '-<?php echo $uniqueID; ?>\').attr(\'data-show-text\');' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . 'var hideText = $(\'.js-toggle-additional-image-fields-' . $v['handle'] . '-<?php echo $uniqueID; ?>\').attr(\'data-hide-text\');' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . 'if (toggleAdditionalFieldsValue) {' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '$(\'.js-additional-image-fields-wrapper-' . $v['handle'] . '-<?php echo $uniqueID; ?>\').hide();' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '$(\'.js-toggle-additional-image-fields-' . $v['handle'] . '-<?php echo $uniqueID; ?>\').removeClass(\'toggle-additional-image-fields-active\');' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '$(\'.js-toggle-additional-image-fields-value-' . $v['handle'] . '-<?php echo $uniqueID; ?>\').val(0);' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '$(\'.js-toggle-additional-image-fields-text-' . $v['handle'] . '-<?php echo $uniqueID; ?>\').text(showText);' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '} else {' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '$(\'.js-additional-image-fields-wrapper-' . $v['handle'] . '-<?php echo $uniqueID; ?>\').show();' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '$(\'.js-toggle-additional-image-fields-' . $v['handle'] . '-<?php echo $uniqueID; ?>\').addClass(\'toggle-additional-image-fields-active\');' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '$(\'.js-toggle-additional-image-fields-value-' . $v['handle'] . '-<?php echo $uniqueID; ?>\').val(1);' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '$(\'.js-toggle-additional-image-fields-text-' . $v['handle'] . '-<?php echo $uniqueID; ?>\').text(hideText);' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '}' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '});' . PHP_EOL;
+
+                        if (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable'])) {
+                            $code .= BlockBuilderUtility::tab(5) . '$(\'.js-toggle-override-dimensions-<?php echo $uniqueID; ?>\').on(\'change\', function() {' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(6) . 'if ($(this).is(\':checked\')) {' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(7) . '$(\'.js-override-dimensions-wrapper-<?php echo $uniqueID; ?>\').show();' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(6) . '} else {' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(7) . '$(\'.js-override-dimensions-wrapper-<?php echo $uniqueID; ?>\').hide();' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(6) . '}' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(5) . '});' . PHP_EOL;
+                        }
+
+                        $code .= BlockBuilderUtility::tab(4) . '});' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '</script>' . PHP_EOL . PHP_EOL;
+
+                        $code .= BlockBuilderUtility::tab(2) . '</div><?php // .js-image-wrapper ?>' . PHP_EOL . PHP_EOL;
+
                     }
 
                 }

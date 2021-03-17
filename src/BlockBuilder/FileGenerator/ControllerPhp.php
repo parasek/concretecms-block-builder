@@ -146,6 +146,12 @@ class ControllerPhp
 
                 }
 
+                if ($v['fieldType']=='image' and $v['imageThumbnailEditable']) {
+                    $code .= BlockBuilderUtility::tab(2).'// '.addslashes($v['label']).' ('.$v['handle'].'_data) - Additional fields for Image'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2).'$this->'.$v['handle'].'_data = is_array($this->'.$v['handle'].'_data) ? $this->'.$v['handle'].'_data : json_decode($this->'.$v['handle'].'_data, true);'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2).'$this->set(\''.$v['handle'].'_data\', $this->'.$v['handle'].'_data);'.PHP_EOL.PHP_EOL;
+                }
+
                 if ($v['fieldType']=='link') {
                     $code .= BlockBuilderUtility::tab(2).'// '.addslashes($v['label']).' ('.$v['handle'].') - Link'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(2).'$this->'.$v['handle'].' = is_array($this->'.$v['handle'].') ? $this->'.$v['handle'].' : json_decode($this->'.$v['handle'].', true);'.PHP_EOL;
@@ -486,16 +492,19 @@ class ControllerPhp
                     $thumbnailWidth  = 'false';
                     $thumbnailHeight = 'false';
                     $thumbnailCrop   = 'false';
-                    if ( ! empty($v['imageCreateThumbnailImage']) ) {
+                    if ( ! empty($v['imageCreateThumbnailImage'])) {
                         $thumbnail = 'true';
-                        if ( ! empty($v['imageThumbnailWidth']) ) {
-                            $thumbnailWidth = $v['imageThumbnailWidth'];
-                        }
-                        if ( ! empty($v['imageThumbnailHeight']) ) {
-                            $thumbnailHeight = $v['imageThumbnailHeight'];
-                        }
-                        if ( ! empty($v['imageThumbnailCrop']) ) {
-                            $thumbnailCrop = 'true';
+                        if ($v['imageThumbnailEditable']) {
+                            $imageThumbnailWidthDefault = !empty($v['imageThumbnailWidth']) ? $v['imageThumbnailWidth'] : 'false';
+                            $thumbnailWidth = '!empty($this->'.$v['handle'].'_data[\'override_dimensions\']) ? (!empty($this->'.$v['handle'].'_data[\'custom_width\']) ? $this->'.$v['handle'].'_data[\'custom_width\'] : false) : '.$imageThumbnailWidthDefault;
+                            $imageThumbnailHeightDefault = !empty($v['imageThumbnailHeight']) ? $v['imageThumbnailHeight'] : 'false';
+                            $thumbnailHeight = '!empty($this->'.$v['handle'].'_data[\'override_dimensions\']) ? (!empty($this->'.$v['handle'].'_data[\'custom_height\']) ? $this->'.$v['handle'].'_data[\'custom_height\'] : false) : '.$imageThumbnailHeightDefault;
+                            $imageThumbnailCropDefault = !empty($v['imageThumbnailCrop']) ? $v['imageThumbnailCrop'] : 'false';
+                            $thumbnailCrop = '!empty($this->'.$v['handle'].'_data[\'override_dimensions\']) ? (!empty($this->'.$v['handle'].'_data[\'custom_crop\']) ? true : false) : '.$imageThumbnailCropDefault;
+                        } else {
+                            if (!empty($v['imageThumbnailWidth'])) $thumbnailWidth = $v['imageThumbnailWidth'];
+                            if (!empty($v['imageThumbnailHeight'])) $thumbnailHeight = $v['imageThumbnailHeight'];
+                            if (!empty($v['imageThumbnailCrop'])) $thumbnailCrop = 'true';
                         }
                     }
 
@@ -668,6 +677,17 @@ class ControllerPhp
             }
 
             foreach ($postData['basic'] as $k => $v) {
+                if ($v['fieldType']=='image' and $v['imageThumbnailEditable']) {
+                    $code .= PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2) . '// '.addslashes($v['label']).' ('.$v['handle'].') - Additional fields for Image'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2) . '$args[\''.$v['handle'].'_data\'] = json_encode(['.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '\'show_additional_fields\' => intval($args[\''.$v['handle'].'_show_additional_fields\']),'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '\'override_dimensions\'    => intval($args[\''.$v['handle'].'_override_dimensions\']),'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '\'custom_width\'           => intval($args[\''.$v['handle'].'_custom_width\']),'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '\'custom_height\'          => intval($args[\''.$v['handle'].'_custom_height\']),'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '\'custom_crop\'            => ($args[\''.$v['handle'].'_custom_crop\']===\'1\' and (!(bool)$args[\''.$v['handle'].'_custom_width\'] or !(bool)$args[\''.$v['handle'].'_custom_height\'])) ? false : intval($args[\''.$v['handle'].'_custom_crop\']), // do not crop without width and height filled'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2) . ']);'.PHP_EOL;
+                }
                 if ($v['fieldType']=='link') {
                     $code .= PHP_EOL;
                     $code .= BlockBuilderUtility::tab(2) . '// '.addslashes($v['label']).' ('.$v['handle'].') - Link'.PHP_EOL;
