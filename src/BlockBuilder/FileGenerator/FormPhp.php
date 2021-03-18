@@ -464,7 +464,7 @@ class FormPhp
 
                             $code .= BlockBuilderUtility::tab(5) . '<div class="col-xs-12">' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(6) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '_override_dimensions\'), t(\'' . addslashes($postData['overrideThumbnailDimensionsLabel']) . '\')); ?>' . PHP_EOL;
-                            $code .= BlockBuilderUtility::tab(6) . '<div class="checkbox" style="margin-bottom: 20px;">' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(6) . '<div class="checkbox">' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(7) . '<label><?php echo $form->checkbox($view->field(\'' . $v['handle'] . '_override_dimensions\'), \'1\', $' . $v['handle'] . '_data[\'override_dimensions\'], [\'class\' => \'js-toggle-override-dimensions-\'.$uniqueID]); ?> <?php echo t(\'' . addslashes($postData['yesLabel']) . '\'); ?></label>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL;
@@ -502,7 +502,7 @@ class FormPhp
 
                             $code .= BlockBuilderUtility::tab(5) . '<div class="col-xs-12">' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(6) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '_override_fullscreen_dimensions\'), t(\'' . addslashes($postData['overrideFullscreenImageDimensionsLabel']) . '\')); ?>' . PHP_EOL;
-                            $code .= BlockBuilderUtility::tab(6) . '<div class="checkbox" style="margin-bottom: 20px;">' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(6) . '<div class="checkbox">' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(7) . '<label><?php echo $form->checkbox($view->field(\'' . $v['handle'] . '_override_fullscreen_dimensions\'), \'1\', $' . $v['handle'] . '_data[\'override_fullscreen_dimensions\'], [\'class\' => \'js-toggle-override-fullscreen-dimensions-\'.$uniqueID]); ?> <?php echo t(\'' . addslashes($postData['yesLabel']) . '\'); ?></label>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL;
