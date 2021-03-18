@@ -70,8 +70,8 @@ class FormPhp
                         !empty($v['externalLinkShowTextField']) OR
                         !empty($v['externalLinkShowTitleField']) OR
                         !empty($v['externalLinkShowNewWindowField']) OR
-                        !empty($v['imageShowAltTextField']) OR
-                        ($v['fieldType']=='link')
+                        ($v['fieldType']=='link') OR
+                        ($v['fieldType']=='image')
                     ) {
                         if ($i!=1) {
                             $code .= BlockBuilderUtility::tab(2) . '<hr/>' . PHP_EOL . PHP_EOL;
