@@ -445,8 +445,10 @@ $(function () {
 
             if (checked) {
                 wrapper.find('.js-override-image-dimensions-wrapper').show();
+                $(this).val(1); // fix for duplicate entry bug
             } else {
                 wrapper.find('.js-override-image-dimensions-wrapper').hide();
+                $(this).val(0); // fix for duplicate entry bug
             }
 
         });
@@ -459,8 +461,10 @@ $(function () {
 
             if (checked) {
                 wrapper.find('.js-override-fullscreen-image-dimensions-wrapper').show();
+                $(this).val(1); // fix for duplicate entry bug
             } else {
                 wrapper.find('.js-override-fullscreen-image-dimensions-wrapper').hide();
+                $(this).val(0); // fix for duplicate entry bug
             }
 
         });
