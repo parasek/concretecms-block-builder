@@ -369,7 +369,7 @@ $(function () {
 
         });
 
-        // Change link type
+        // Link - change type
         entriesContainer.on('change', '.js-link-type', function () {
 
             var linkWrapper = $(this).closest('.js-link-wrapper');
@@ -390,7 +390,7 @@ $(function () {
 
         });
 
-        // Change link type - Show additional fields
+        // Link - Toggle additional fields
         entriesContainer.on('click', '.js-toggle-additional-fields', function () {
 
             var linkWrapper = $(this).closest('.js-link-wrapper');
@@ -409,6 +409,57 @@ $(function () {
                 linkWrapper.find('.js-toggle-additional-fields-value').val(1);
                 linkWrapper.find('.js-toggle-additional-fields-text').text(hideText);
 
+            }
+
+        });
+
+        // Image - Toggle additional fields
+        entriesContainer.on('click', '.js-toggle-additional-image-fields', function () {
+
+            var linkWrapper = $(this).closest('.js-image-wrapper');
+            var showText = linkWrapper.find('.js-toggle-additional-image-fields').attr('data-show-text');
+            var hideText = linkWrapper.find('.js-toggle-additional-image-fields').attr('data-hide-text');
+            var toggleAdditionalFieldsValue = parseInt(linkWrapper.find('.js-toggle-additional-image-fields-value').val());
+
+            if (toggleAdditionalFieldsValue) {
+                linkWrapper.find('.js-additional-image-fields-wrapper').hide();
+                linkWrapper.find('.js-toggle-additional-image-fields').removeClass('toggle-additional-image-fields-active');
+                linkWrapper.find('.js-toggle-additional-image-fields-value').val(0);
+                linkWrapper.find('.js-toggle-additional-image-fields-text').text(showText);
+            } else {
+                linkWrapper.find('.js-additional-image-fields-wrapper').show();
+                linkWrapper.find('.js-toggle-additional-image-fields').addClass('toggle-additional-image-fields-active');
+                linkWrapper.find('.js-toggle-additional-image-fields-value').val(1);
+                linkWrapper.find('.js-toggle-additional-image-fields-text').text(hideText);
+
+            }
+
+        });
+
+        // Image - toggle override thumbnail
+        entriesContainer.on('change', '.js-toggle-override-image-dimensions', function () {
+
+            var linkWrapper = $(this).closest('.js-image-wrapper');
+            var checked = linkWrapper.find('.js-toggle-override-image-dimensions').is(':checked');
+
+            if (checked) {
+                linkWrapper.find('.js-override-image-dimensions-wrapper').show();
+            } else {
+                linkWrapper.find('.js-override-image-dimensions-wrapper').hide();
+            }
+
+        });
+
+        // Image - toggle override fullscreen-image
+        entriesContainer.on('change', '.js-toggle-override-fullscreen-image-dimensions', function () {
+
+            var linkWrapper = $(this).closest('.js-image-wrapper');
+            var checked = linkWrapper.find('.js-toggle-override-fullscreen-image-dimensions').is(':checked');
+
+            if (checked) {
+                linkWrapper.find('.js-override-fullscreen-image-dimensions-wrapper').show();
+            } else {
+                linkWrapper.find('.js-override-fullscreen-image-dimensions-wrapper').hide();
             }
 
         });

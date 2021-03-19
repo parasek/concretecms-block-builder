@@ -282,10 +282,10 @@ class ControllerPhp
             }
 
             if ($postDataSummary['linkUsed_entry']) {
-                $code .= PHP_EOL;
-                $code .= BlockBuilderUtility::tab(2).'// ' . addslashes($v['label']) . ' (' . $v['handle'] . ') - Fields that don\'t exist in database, but are required in repeatable entry'.PHP_EOL;
                 foreach ($postData['entries'] as $k => $v) {
                     if ($v['fieldType'] == 'link') {
+                        $code .= PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2).'// ' . addslashes($v['label']) . ' (' . $v['handle'] . ') - Fields that don\'t exist in database, but are required in repeatable entry (link)'.PHP_EOL;
                         $code .= BlockBuilderUtility::tab(2) . '$entryColumnNames[] = \'' . $v['handle'] . '_link_type\';' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(2) . '$entryColumnNames[] = \'' . $v['handle'] . '_show_additional_fields\';' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(2) . '$entryColumnNames[] = \'' . $v['handle'] . '_link_from_sitemap\';' . PHP_EOL;
@@ -296,6 +296,36 @@ class ControllerPhp
                         $code .= BlockBuilderUtility::tab(2) . '$entryColumnNames[] = \'' . $v['handle'] . '_text\';' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(2) . '$entryColumnNames[] = \'' . $v['handle'] . '_title\';' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(2) . '$entryColumnNames[] = \'' . $v['handle'] . '_new_window\';' . PHP_EOL;
+                    }
+                }
+            }
+
+            if ($postDataSummary['imageUsed_entry']) {
+                foreach ($postData['entries'] as $k => $v) {
+                    if ($v['fieldType'] == 'image') {
+                        if (
+                            ( !empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable']) )
+                            or
+                            ( !empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']) )
+                            or
+                            ( !empty($v['imageShowAltTextField']) )
+                        ) {
+                            $code .= PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(2).'// ' . addslashes($v['label']) . ' (' . $v['handle'] . ') - Fields that don\'t exist in database, but are required in repeatable entry (image)'.PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(2) . '$entryColumnNames[] = \'' . $v['handle'] . '_show_additional_fields\';' . PHP_EOL;
+                            if ( !empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable']) ) {
+                                $code .= BlockBuilderUtility::tab(2) . '$entryColumnNames[] = \'' . $v['handle'] . '_override_dimensions\';' . PHP_EOL;
+                                $code .= BlockBuilderUtility::tab(2) . '$entryColumnNames[] = \'' . $v['handle'] . '_custom_width\';' . PHP_EOL;
+                                $code .= BlockBuilderUtility::tab(2) . '$entryColumnNames[] = \'' . $v['handle'] . '_custom_height\';' . PHP_EOL;
+                                $code .= BlockBuilderUtility::tab(2) . '$entryColumnNames[] = \'' . $v['handle'] . '_custom_crop\';' . PHP_EOL;
+                            }
+                            if ( !empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']) ) {
+                                $code .= BlockBuilderUtility::tab(2) . '$entryColumnNames[] = \'' . $v['handle'] . '_override_fullscreen_dimensions\';' . PHP_EOL;
+                                $code .= BlockBuilderUtility::tab(2) . '$entryColumnNames[] = \'' . $v['handle'] . '_custom_fullscreen_width\';' . PHP_EOL;
+                                $code .= BlockBuilderUtility::tab(2) . '$entryColumnNames[] = \'' . $v['handle'] . '_custom_fullscreen_height\';' . PHP_EOL;
+                                $code .= BlockBuilderUtility::tab(2) . '$entryColumnNames[] = \'' . $v['handle'] . '_custom_fullscreen_crop\';' . PHP_EOL;
+                            }
+                        }
                     }
                 }
             }
@@ -877,6 +907,36 @@ class ControllerPhp
                 }
             }
 
+            foreach ($postData['entries'] as $k => $v) {
+                if ($v['fieldType']=='image') {
+                    if (
+                        ( !empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable']) )
+                        or
+                        ( !empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']) )
+                        or
+                        ( !empty($v['imageShowAltTextField']) )
+                    ) {
+                        $code .= PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(4) . '// ' . addslashes($v['label']) . ' (' . $v['handle'] . ') - Image' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '_data\'] = json_encode([' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '\'show_additional_fields\'         => intval($entry[\'' . $v['handle'] . '_show_additional_fields\']),' . PHP_EOL;
+                        if ( !empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable']) ) {
+                            $code .= BlockBuilderUtility::tab(5) . '\'override_dimensions\'            => intval($entry[\'' . $v['handle'] . '_override_dimensions\']),' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(5) . '\'custom_width\'                   => intval($entry[\'' . $v['handle'] . '_custom_width\']),' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(5) . '\'custom_height\'                  => intval($entry[\'' . $v['handle'] . '_custom_height\']),' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(5) . '\'custom_crop\'                    => ($entry[\'' . $v['handle'] . '_custom_crop\']===\'1\' and (!(bool)$entry[\'' . $v['handle'] . '_custom_width\'] or !(bool)$entry[\'' . $v['handle'] . '_custom_height\'])) ? false : intval($entry[\'' . $v['handle'] . '_custom_crop\']), // do not crop without width and height filled' . PHP_EOL;
+                        }
+                        if ( !empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']) ) {
+                            $code .= BlockBuilderUtility::tab(5) . '\'override_fullscreen_dimensions\' => intval($entry[\'' . $v['handle'] . '_override_fullscreen_dimensions\']),' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(5) . '\'custom_fullscreen_width\'        => intval($entry[\'' . $v['handle'] . '_custom_fullscreen_width\']),' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(5) . '\'custom_fullscreen_height\'       => intval($entry[\'' . $v['handle'] . '_custom_fullscreen_height\']),' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(5) . '\'custom_fullscreen_crop\'         => ($entry[\'' . $v['handle'] . '_custom_fullscreen_crop\']===\'1\' and (!(bool)$entry[\'' . $v['handle'] . '_custom_fullscreen_width\'] or !(bool)$entry[\'' . $v['handle'] . '_custom_fullscreen_height\'])) ? false : intval($entry[\'' . $v['handle'] . '_custom_fullscreen_crop\']), // do not crop without width and height filled' . PHP_EOL;
+                        }
+                        $code .= BlockBuilderUtility::tab(4) . ']);' . PHP_EOL;
+                    }
+                }
+            }
+
             $code .= PHP_EOL;
             $code .= BlockBuilderUtility::tab(4).'$db->insert(\''.$postDataSummary['blockTableNameEntries'].'\', $data);'.PHP_EOL.PHP_EOL;
 
@@ -1153,6 +1213,31 @@ class ControllerPhp
                 if ($v['fieldType'] == 'image' OR $v['fieldType'] == 'link_from_file_manager') {
                     $code .= BlockBuilderUtility::tab(3).'$entry[\''.$v['handle'].'\'] = (is_object(File::getByID($entry[\''.$v['handle'].'\']))) ? $entry[\''.$v['handle'].'\'] : 0;'.PHP_EOL;
                 }
+                if ($v['fieldType'] == 'image') {
+                    if (
+                        ( !empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable']) )
+                        or
+                        ( !empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']) )
+                        or
+                        ( !empty($v['imageShowAltTextField']) )
+                    ) {
+                        $code .= BlockBuilderUtility::tab(3) . '// ' . addslashes($v['label']) . ' (' . $v['handle'] . ') - Image' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '$' . $v['handle'] . 'Array = json_decode($entry[\'' . $v['handle'] . '_data\'], true);' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '$entry[\'' . $v['handle'] . '_show_additional_fields\']         = $' . $v['handle'] . 'Array[\'show_additional_fields\'];' . PHP_EOL;
+                        if ( !empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable']) ) {
+                            $code .= BlockBuilderUtility::tab(3) . '$entry[\'' . $v['handle'] . '_override_dimensions\']            = $' . $v['handle'] . 'Array[\'override_dimensions\'];' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(3) . '$entry[\'' . $v['handle'] . '_custom_width\']                   = $' . $v['handle'] . 'Array[\'custom_width\'];' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(3) . '$entry[\'' . $v['handle'] . '_custom_height\']                  = $' . $v['handle'] . 'Array[\'custom_height\'];' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(3) . '$entry[\'' . $v['handle'] . '_custom_crop\']                    = $' . $v['handle'] . 'Array[\'custom_crop\'];' . PHP_EOL;
+                        }
+                        if ( !empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']) ) {
+                            $code .= BlockBuilderUtility::tab(3) . '$entry[\'' . $v['handle'] . '_override_fullscreen_dimensions\'] = $' . $v['handle'] . 'Array[\'override_fullscreen_dimensions\'];' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(3) . '$entry[\'' . $v['handle'] . '_custom_fullscreen_width\']        = $' . $v['handle'] . 'Array[\'custom_fullscreen_width\'];' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(3) . '$entry[\'' . $v['handle'] . '_custom_fullscreen_height\']       = $' . $v['handle'] . 'Array[\'custom_fullscreen_height\'];' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(3) . '$entry[\'' . $v['handle'] . '_custom_fullscreen_crop\']         = $' . $v['handle'] . 'Array[\'custom_fullscreen_crop\'];' . PHP_EOL;
+                        }
+                    }
+                }
             }
             foreach ($postData['entries'] as $k => $v) {
                 if ($v['fieldType'] == 'date_picker') {
@@ -1412,14 +1497,17 @@ class ControllerPhp
                     $thumbnailCrop = 'false';
                     if (!empty($v['imageCreateThumbnailImage'])) {
                         $thumbnail = 'true';
-                        if (!empty($v['imageThumbnailWidth'])) {
-                            $thumbnailWidth = $v['imageThumbnailWidth'];
-                        }
-                        if (!empty($v['imageThumbnailHeight'])) {
-                            $thumbnailHeight = $v['imageThumbnailHeight'];
-                        }
-                        if (!empty($v['imageThumbnailCrop'])) {
-                            $thumbnailCrop = 'true';
+                        if ($v['imageThumbnailEditable']) {
+                            $imageThumbnailWidthDefault = !empty($v['imageThumbnailWidth']) ? $v['imageThumbnailWidth'] : 'false';
+                            $thumbnailWidth = '!empty($entry[\''.$v['handle'].'_override_dimensions\']) ? (!empty($entry[\''.$v['handle'].'_custom_width\']) ? $entry[\''.$v['handle'].'_custom_width\'] : false) : '.$imageThumbnailWidthDefault;
+                            $imageThumbnailHeightDefault = !empty($v['imageThumbnailHeight']) ? $v['imageThumbnailHeight'] : 'false';
+                            $thumbnailHeight = '!empty($entry[\''.$v['handle'].'_override_dimensions\']) ? (!empty($entry[\''.$v['handle'].'_custom_height\']) ? $entry[\''.$v['handle'].'_custom_height\'] : false) : '.$imageThumbnailHeightDefault;
+                            $imageThumbnailCropDefault = !empty($v['imageThumbnailCrop']) ? $v['imageThumbnailCrop'] : 'false';
+                            $thumbnailCrop = '!empty($entry[\''.$v['handle'].'_override_dimensions\']) ? (!empty($entry[\''.$v['handle'].'_custom_crop\']) ? true : false) : '.$imageThumbnailCropDefault;
+                        } else {
+                            if (!empty($v['imageThumbnailWidth'])) $thumbnailWidth = $v['imageThumbnailWidth'];
+                            if (!empty($v['imageThumbnailHeight'])) $thumbnailHeight = $v['imageThumbnailHeight'];
+                            if (!empty($v['imageThumbnailCrop'])) $thumbnailCrop = 'true';
                         }
                     }
 
@@ -1429,14 +1517,17 @@ class ControllerPhp
                     $fullscreenCrop = 'false';
                     if (!empty($v['imageCreateFullscreenImage'])) {
                         $fullscreen = 'true';
-                        if (!empty($v['imageFullscreenWidth'])) {
-                            $fullscreenWidth = $v['imageFullscreenWidth'];
-                        }
-                        if (!empty($v['imageFullscreenHeight'])) {
-                            $fullscreenHeight = $v['imageFullscreenHeight'];
-                        }
-                        if (!empty($v['imageFullscreenCrop'])) {
-                            $fullscreenCrop = 'true';
+                        if ($v['imageFullscreenEditable']) {
+                            $imageFullscreenWidthDefault = !empty($v['imageFullscreenWidth']) ? $v['imageFullscreenWidth'] : 'false';
+                            $fullscreenWidth = '!empty($entry[\''.$v['handle'].'_override_fullscreen_dimensions\']) ? (!empty($entry[\''.$v['handle'].'_custom_fullscreen_width\']) ? $entry[\''.$v['handle'].'_custom_fullscreen_width\'] : false) : '.$imageFullscreenWidthDefault;
+                            $imageFullscreenHeightDefault = !empty($v['imageFullscreenHeight']) ? $v['imageFullscreenHeight'] : 'false';
+                            $fullscreenHeight = '!empty($entry[\''.$v['handle'].'_override_fullscreen_dimensions\']) ? (!empty($entry[\''.$v['handle'].'_custom_fullscreen_height\']) ? $entry[\''.$v['handle'].'_custom_fullscreen_height\'] : false) : '.$imageFullscreenHeightDefault;
+                            $imageFullscreenCropDefault = !empty($v['imageFullscreenCrop']) ? $v['imageFullscreenCrop'] : 'false';
+                            $fullscreenCrop = '!empty($entry[\''.$v['handle'].'_override_fullscreen_dimensions\']) ? (!empty($entry[\''.$v['handle'].'_custom_fullscreen_crop\']) ? true : false) : '.$imageFullscreenCropDefault;
+                        } else {
+                            if (!empty($v['imageFullscreenWidth'])) $fullscreenWidth = $v['imageFullscreenWidth'];
+                            if (!empty($v['imageFullscreenHeight'])) $fullscreenHeight = $v['imageFullscreenHeight'];
+                            if (!empty($v['imageFullscreenCrop'])) $fullscreenCrop = 'true';
                         }
                     }
 
