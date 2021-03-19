@@ -1321,7 +1321,7 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(3) . '<div class="row margin-bottom">' . PHP_EOL;
 
                         $code .= BlockBuilderUtility::tab(4) . '<div class="col-xs-12">' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(5) . '<?php echo $form->label($view->field(\'settings['.$v['handle'].'_override_fullscreen_dimensions]\'), \''.$v['label'].'\' . \' - \' . t(\'' . addslashes($postData['overrideThumbnailDimensionsLabel']) . '\')); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '<?php echo $form->label($view->field(\'settings['.$v['handle'].'_override_fullscreen_dimensions]\'), \''.$v['label'].'\' . \' - \' . t(\'' . addslashes($postData['overrideFullscreenImageDimensionsLabel']) . '\')); ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(5) . '<div class="checkbox">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(6) . '<label><?php echo $form->checkbox($view->field(\'settings['.$v['handle'].'_override_fullscreen_dimensions]\'), \'1\', $settings[\''.$v['handle'].'_override_fullscreen_dimensions\'], [\'class\' => \'js-toggle-override-all-fullscreen-dimensions\']); ?> <?php echo t(\'' . addslashes($postData['yesLabel']) . '\'); ?></label>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL;
