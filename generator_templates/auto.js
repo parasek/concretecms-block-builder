@@ -5,6 +5,7 @@ $(function () {
         var uniqueID = data.uniqueID;
         var formContainer = $('#form-container-' + uniqueID);
         var entriesContainer = formContainer.find('#entries-' + uniqueID);
+        var settingsContainer = formContainer.find('#ccm-tab-content-settings-' + uniqueID);
         var maxNumberOfEntries = parseInt(formContainer.find('.js-max-number-of-entries').text());
         var entryColumnNames = JSON.parse(entriesContainer.attr('data-column-names'));
         var entries = JSON.parse(entriesContainer.attr('data-entries'));
@@ -369,7 +370,7 @@ $(function () {
 
         });
 
-        // Change link type
+        // Link - change type
         entriesContainer.on('change', '.js-link-type', function () {
 
             var linkWrapper = $(this).closest('.js-link-wrapper');
@@ -390,7 +391,7 @@ $(function () {
 
         });
 
-        // Change link type - Show additional fields
+        // Link - Toggle additional fields
         entriesContainer.on('click', '.js-toggle-additional-fields', function () {
 
             var linkWrapper = $(this).closest('.js-link-wrapper');
@@ -409,6 +410,89 @@ $(function () {
                 linkWrapper.find('.js-toggle-additional-fields-value').val(1);
                 linkWrapper.find('.js-toggle-additional-fields-text').text(hideText);
 
+            }
+
+        });
+
+        // Image - Toggle additional fields
+        entriesContainer.on('click', '.js-toggle-additional-image-fields', function () {
+
+            var wrapper = $(this).closest('.js-image-wrapper');
+            var showText = wrapper.find('.js-toggle-additional-image-fields').attr('data-show-text');
+            var hideText = wrapper.find('.js-toggle-additional-image-fields').attr('data-hide-text');
+            var toggleAdditionalFieldsValue = parseInt(wrapper.find('.js-toggle-additional-image-fields-value').val());
+
+            if (toggleAdditionalFieldsValue) {
+                wrapper.find('.js-additional-image-fields-wrapper').hide();
+                wrapper.find('.js-toggle-additional-image-fields').removeClass('toggle-additional-image-fields-active');
+                wrapper.find('.js-toggle-additional-image-fields-value').val(0);
+                wrapper.find('.js-toggle-additional-image-fields-text').text(showText);
+            } else {
+                wrapper.find('.js-additional-image-fields-wrapper').show();
+                wrapper.find('.js-toggle-additional-image-fields').addClass('toggle-additional-image-fields-active');
+                wrapper.find('.js-toggle-additional-image-fields-value').val(1);
+                wrapper.find('.js-toggle-additional-image-fields-text').text(hideText);
+
+            }
+
+        });
+
+        // Image - toggle override thumbnail
+        entriesContainer.on('change', '.js-toggle-override-image-dimensions', function () {
+
+            var wrapper = $(this).closest('.js-image-wrapper');
+            var checked = wrapper.find('.js-toggle-override-image-dimensions').is(':checked');
+
+            if (checked) {
+                wrapper.find('.js-override-image-dimensions-wrapper').show();
+                $(this).val(1); // fix for duplicate entry bug
+            } else {
+                wrapper.find('.js-override-image-dimensions-wrapper').hide();
+                $(this).val(0); // fix for duplicate entry bug
+            }
+
+        });
+
+        // Image - toggle override fullscreen-image
+        entriesContainer.on('change', '.js-toggle-override-fullscreen-image-dimensions', function () {
+
+            var wrapper = $(this).closest('.js-image-wrapper');
+            var checked = wrapper.find('.js-toggle-override-fullscreen-image-dimensions').is(':checked');
+
+            if (checked) {
+                wrapper.find('.js-override-fullscreen-image-dimensions-wrapper').show();
+                $(this).val(1); // fix for duplicate entry bug
+            } else {
+                wrapper.find('.js-override-fullscreen-image-dimensions-wrapper').hide();
+                $(this).val(0); // fix for duplicate entry bug
+            }
+
+        });
+
+        // Settings / Repeatable image - toggle override thumbnail
+        settingsContainer.on('change', '.js-toggle-override-all-dimensions', function () {
+
+            var wrapper = $(this).closest('.js-image-settings-wrapper');
+            var checked = wrapper.find('.js-toggle-override-all-dimensions').is(':checked');
+
+            if (checked) {
+                wrapper.find('.js-override-all-dimensions-wrapper').show();
+            } else {
+                wrapper.find('.js-override-all-dimensions-wrapper').hide();
+            }
+
+        });
+
+        // Settings / Repeatable image - toggle override fullscreen
+        settingsContainer.on('change', '.js-toggle-override-all-fullscreen-dimensions', function () {
+
+            var wrapper = $(this).closest('.js-fullscreen-image-settings-wrapper');
+            var checked = wrapper.find('.js-toggle-override-all-fullscreen-dimensions').is(':checked');
+
+            if (checked) {
+                wrapper.find('.js-override-all-fullscreen-dimensions-wrapper').show();
+            } else {
+                wrapper.find('.js-override-all-fullscreen-dimensions-wrapper').hide();
             }
 
         });
