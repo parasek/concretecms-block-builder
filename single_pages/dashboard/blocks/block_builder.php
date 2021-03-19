@@ -124,6 +124,12 @@
                 <?php echo $form->text('entriesLabel', $entriesLabel, ['data-translated-text'=>t('Entries'), 'data-untranslated-text'=>'Entries']); ?>
             </div>
 
+            <div class="form-group <?php in_array('settingsLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('settingsLabel', t('Settings')); ?>
+                <p class="small text-muted"><?php echo t('Displayed name of "Settings" tab'); ?></p>
+                <?php echo $form->text('settingsLabel', $settingsLabel, ['data-translated-text'=>t('Settings'), 'data-untranslated-text'=>'Settings']); ?>
+            </div>
+
             <div class="form-group <?php in_array('addAtTheTopLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
                 <?php echo $form->label('addAtTheTopLabel', t('Add at the top')); ?>
                 <?php echo $form->text('addAtTheTopLabel', $addAtTheTopLabel, ['data-translated-text'=>t('Add at the top'), 'data-untranslated-text'=>'Add at the top']); ?>

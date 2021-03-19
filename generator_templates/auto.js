@@ -5,6 +5,7 @@ $(function () {
         var uniqueID = data.uniqueID;
         var formContainer = $('#form-container-' + uniqueID);
         var entriesContainer = formContainer.find('#entries-' + uniqueID);
+        var settingsContainer = formContainer.find('#ccm-tab-content-settings-' + uniqueID);
         var maxNumberOfEntries = parseInt(formContainer.find('.js-max-number-of-entries').text());
         var entryColumnNames = JSON.parse(entriesContainer.attr('data-column-names'));
         var entries = JSON.parse(entriesContainer.attr('data-entries'));
@@ -416,21 +417,21 @@ $(function () {
         // Image - Toggle additional fields
         entriesContainer.on('click', '.js-toggle-additional-image-fields', function () {
 
-            var linkWrapper = $(this).closest('.js-image-wrapper');
-            var showText = linkWrapper.find('.js-toggle-additional-image-fields').attr('data-show-text');
-            var hideText = linkWrapper.find('.js-toggle-additional-image-fields').attr('data-hide-text');
-            var toggleAdditionalFieldsValue = parseInt(linkWrapper.find('.js-toggle-additional-image-fields-value').val());
+            var wrapper = $(this).closest('.js-image-wrapper');
+            var showText = wrapper.find('.js-toggle-additional-image-fields').attr('data-show-text');
+            var hideText = wrapper.find('.js-toggle-additional-image-fields').attr('data-hide-text');
+            var toggleAdditionalFieldsValue = parseInt(wrapper.find('.js-toggle-additional-image-fields-value').val());
 
             if (toggleAdditionalFieldsValue) {
-                linkWrapper.find('.js-additional-image-fields-wrapper').hide();
-                linkWrapper.find('.js-toggle-additional-image-fields').removeClass('toggle-additional-image-fields-active');
-                linkWrapper.find('.js-toggle-additional-image-fields-value').val(0);
-                linkWrapper.find('.js-toggle-additional-image-fields-text').text(showText);
+                wrapper.find('.js-additional-image-fields-wrapper').hide();
+                wrapper.find('.js-toggle-additional-image-fields').removeClass('toggle-additional-image-fields-active');
+                wrapper.find('.js-toggle-additional-image-fields-value').val(0);
+                wrapper.find('.js-toggle-additional-image-fields-text').text(showText);
             } else {
-                linkWrapper.find('.js-additional-image-fields-wrapper').show();
-                linkWrapper.find('.js-toggle-additional-image-fields').addClass('toggle-additional-image-fields-active');
-                linkWrapper.find('.js-toggle-additional-image-fields-value').val(1);
-                linkWrapper.find('.js-toggle-additional-image-fields-text').text(hideText);
+                wrapper.find('.js-additional-image-fields-wrapper').show();
+                wrapper.find('.js-toggle-additional-image-fields').addClass('toggle-additional-image-fields-active');
+                wrapper.find('.js-toggle-additional-image-fields-value').val(1);
+                wrapper.find('.js-toggle-additional-image-fields-text').text(hideText);
 
             }
 
@@ -439,13 +440,13 @@ $(function () {
         // Image - toggle override thumbnail
         entriesContainer.on('change', '.js-toggle-override-image-dimensions', function () {
 
-            var linkWrapper = $(this).closest('.js-image-wrapper');
-            var checked = linkWrapper.find('.js-toggle-override-image-dimensions').is(':checked');
+            var wrapper = $(this).closest('.js-image-wrapper');
+            var checked = wrapper.find('.js-toggle-override-image-dimensions').is(':checked');
 
             if (checked) {
-                linkWrapper.find('.js-override-image-dimensions-wrapper').show();
+                wrapper.find('.js-override-image-dimensions-wrapper').show();
             } else {
-                linkWrapper.find('.js-override-image-dimensions-wrapper').hide();
+                wrapper.find('.js-override-image-dimensions-wrapper').hide();
             }
 
         });
@@ -453,13 +454,41 @@ $(function () {
         // Image - toggle override fullscreen-image
         entriesContainer.on('change', '.js-toggle-override-fullscreen-image-dimensions', function () {
 
-            var linkWrapper = $(this).closest('.js-image-wrapper');
-            var checked = linkWrapper.find('.js-toggle-override-fullscreen-image-dimensions').is(':checked');
+            var wrapper = $(this).closest('.js-image-wrapper');
+            var checked = wrapper.find('.js-toggle-override-fullscreen-image-dimensions').is(':checked');
 
             if (checked) {
-                linkWrapper.find('.js-override-fullscreen-image-dimensions-wrapper').show();
+                wrapper.find('.js-override-fullscreen-image-dimensions-wrapper').show();
             } else {
-                linkWrapper.find('.js-override-fullscreen-image-dimensions-wrapper').hide();
+                wrapper.find('.js-override-fullscreen-image-dimensions-wrapper').hide();
+            }
+
+        });
+
+        // Settings / Repeatable image - toggle override thumbnail
+        settingsContainer.on('change', '.js-toggle-override-all-dimensions', function () {
+
+            var wrapper = $(this).closest('.js-image-settings-wrapper');
+            var checked = wrapper.find('.js-toggle-override-all-dimensions').is(':checked');
+
+            if (checked) {
+                wrapper.find('.js-override-all-dimensions-wrapper').show();
+            } else {
+                wrapper.find('.js-override-all-dimensions-wrapper').hide();
+            }
+
+        });
+
+        // Settings / Repeatable image - toggle override fullscreen
+        settingsContainer.on('change', '.js-toggle-override-all-fullscreen-dimensions', function () {
+
+            var wrapper = $(this).closest('.js-fullscreen-image-settings-wrapper');
+            var checked = wrapper.find('.js-toggle-override-all-fullscreen-dimensions').is(':checked');
+
+            if (checked) {
+                wrapper.find('.js-override-all-fullscreen-dimensions-wrapper').show();
+            } else {
+                wrapper.find('.js-override-all-fullscreen-dimensions-wrapper').hide();
             }
 
         });

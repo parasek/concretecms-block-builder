@@ -41,6 +41,8 @@ class Generator
         $postDataSummary['requiredFields']      = [];
         $postDataSummary['requiredEntryFields'] = [];
 
+        $postDataSummary['settingsTab'] = false;
+
         $postDataSummary['wysiwygEditorUsed']       = false;
         $postDataSummary['htmlEditorUsed']          = false;
         $postDataSummary['linkUsed']                = false;
@@ -152,6 +154,17 @@ class Generator
                 if ( ! empty($v['required'])) {
                     if (!in_array($v['handle'], $postDataSummary['requiredEntryFields'])) {
                         $postDataSummary['requiredEntryFields'][] = $v['handle'];
+                    }
+                }
+
+                // Check if Settings tab should be created
+                if ($v['fieldType']=='image') {
+                    if (
+                        ( !empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable']) )
+                        or
+                        ( !empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']) )
+                    ) {
+                        $postDataSummary['settingsTab'] = true;
                     }
                 }
 

@@ -128,6 +128,7 @@ class BlockBuilder extends DashboardPageController
 
         $this->set('basicLabel', t('Basic information'));
         $this->set('entriesLabel', t('Entries'));
+        $this->set('settingsLabel', t('Settings'));
         $this->set('addAtTheTopLabel', t('Add at the top'));
         $this->set('addAtTheBottomLabel', t('Add at the bottom'));
         $this->set('copyLastEntryLabel', t('Copy last entry'));

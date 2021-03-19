@@ -22,10 +22,13 @@ class FormPhp
             $code .= BlockBuilderUtility::tab(1).'echo $app->make(\'helper/concrete/ui\')->tabs(['.PHP_EOL;
             if (!empty($postData['entriesAsFirstTab'])) {
             $code .= BlockBuilderUtility::tab(2).'[\'entries-\'.$uniqueID, t(\''.addslashes($postData['entriesLabel']).'\'), true],'.PHP_EOL;
-            $code .= BlockBuilderUtility::tab(2).'[\'basic-information-\'.$uniqueID, t(\''.addslashes($postData['basicLabel']).'\')]'.PHP_EOL;
+            $code .= BlockBuilderUtility::tab(2).'[\'basic-information-\'.$uniqueID, t(\''.addslashes($postData['basicLabel']).'\')],'.PHP_EOL;
             } else {
             $code .= BlockBuilderUtility::tab(2).'[\'basic-information-\'.$uniqueID, t(\''.addslashes($postData['basicLabel']).'\'), true],'.PHP_EOL;
-            $code .= BlockBuilderUtility::tab(2).'[\'entries-\'.$uniqueID, t(\''.addslashes($postData['entriesLabel']).'\')]'.PHP_EOL;
+            $code .= BlockBuilderUtility::tab(2).'[\'entries-\'.$uniqueID, t(\''.addslashes($postData['entriesLabel']).'\')],'.PHP_EOL;
+            }
+            if ($postDataSummary['settingsTab']) {
+            $code .= BlockBuilderUtility::tab(2).'[\'settings-\'.$uniqueID, t(\''.addslashes($postData['settingsLabel']).'\')],'.PHP_EOL;
             }
             $code .= BlockBuilderUtility::tab(1).']);'.PHP_EOL;
             $code .= BlockBuilderUtility::tab(1).'?>'.PHP_EOL.PHP_EOL;
@@ -636,7 +639,8 @@ class FormPhp
             $code .= BlockBuilderUtility::tab(1).'</div>'.PHP_EOL.PHP_EOL;
         }
 
-
+        ///////////////////////////////////////////////////////////////////////////
+        // Entries
         ///////////////////////////////////////////////////////////////////////////
 
         if ( ! empty($postData['entries'])) {
@@ -1228,7 +1232,6 @@ class FormPhp
 
         }
 
-
         if ( ! empty($postData['entries'])) {
 
             $code .= BlockBuilderUtility::tab(2) . '<script type="text/template" class="js-template-no-entries">' . PHP_EOL . PHP_EOL;
@@ -1258,6 +1261,112 @@ class FormPhp
         if ( ! empty($postData['entries'])) {
             $code .= BlockBuilderUtility::tab(1).'</div>'.PHP_EOL.PHP_EOL;
         }
+
+        ///////////////////////////////////////////////////////////////////////////
+        /// Settings tab
+        ///////////////////////////////////////////////////////////////////////////
+
+        if ($postDataSummary['settingsTab']) {
+
+            $code .= BlockBuilderUtility::tab(1) . '<div class="js-tab-content ccm-tab-content" id="ccm-tab-content-settings-<?php echo $uniqueID; ?>">' . PHP_EOL . PHP_EOL;
+
+            foreach ($postData['entries'] as $k => $v) {
+
+                if ($v['fieldType'] == 'image') {
+
+                    if ( !empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable']) ) {
+
+                        $code .= BlockBuilderUtility::tab(2) . '<div class="form-group js-image-settings-wrapper">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '<div class="row margin-bottom">' . PHP_EOL;
+
+                        $code .= BlockBuilderUtility::tab(4) . '<div class="col-xs-12">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '<?php echo $form->label($view->field(\'settings['.$v['handle'].'_override_dimensions]\'), \''.$v['label'].'\' . \' - \' . t(\'' . addslashes($postData['overrideThumbnailDimensionsLabel']) . '\')); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '<div class="checkbox">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '<label><?php echo $form->checkbox($view->field(\'settings['.$v['handle'].'_override_dimensions]\'), \'1\', $settings[\''.$v['handle'].'_override_dimensions\'], [\'class\' => \'js-toggle-override-all-dimensions\']); ?> <?php echo t(\'' . addslashes($postData['yesLabel']) . '\'); ?></label>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(4) . '</div>' . PHP_EOL;
+
+                        $code .= BlockBuilderUtility::tab(4) . '<div class="js-override-all-dimensions-wrapper" <?php if (empty($settings[\''.$v['handle'].'_override_dimensions\'])): ?>style="display: none;"<?php endif; ?>>' . PHP_EOL;
+
+                        $code .= BlockBuilderUtility::tab(5) . '<div class="col-xs-12 col-md-4 margin-bottom-on-mobile">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '<?php echo $form->label($view->field(\'settings['.$v['handle'].'_custom_width]\'), t(\'' . addslashes($postData['widthLabel']) . '\')); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '<div class="input-group">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '<?php echo $form->number($view->field(\'settings['.$v['handle'].'_custom_width]\'), !empty($settings[\''.$v['handle'].'_custom_width\']) ? $settings[\''.$v['handle'].'_custom_width\'] : \'\'); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '<span class="input-group-addon"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL;
+
+                        $code .= BlockBuilderUtility::tab(5) . '<div class="col-xs-12 col-md-4 margin-bottom-on-mobile">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '<?php echo $form->label($view->field(\'settings['.$v['handle'].'_custom_height]\'), t(\'' . addslashes($postData['heightLabel']) . '\')); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '<div class="input-group">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '<?php echo $form->number($view->field(\'settings['.$v['handle'].'_custom_height]\'), !empty($settings[\''.$v['handle'].'_custom_height\']) ? $settings[\''.$v['handle'].'_custom_height\'] : \'\'); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '<span class="input-group-addon"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL;
+
+                        $code .= BlockBuilderUtility::tab(5) . '<div class="col-xs-12 col-md-4">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '<?php echo $form->label($view->field(\'settings['.$v['handle'].'_custom_crop]\'), t(\'' . addslashes($postData['cropLabel']) . '\')); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '<?php echo $form->select($view->field(\'settings['.$v['handle'].'_custom_crop]\'), [\'0\'=>t(\'' . addslashes($postData['noLabel']) . '\'), \'1\'=>t(\'' . addslashes($postData['yesLabel']) . '\')], $settings[\''.$v['handle'].'_custom_crop\']); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL;
+
+                        $code .= BlockBuilderUtility::tab(4) . '</div>' . PHP_EOL;
+
+                        $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL; // .row margin-bottom
+                        $code .= BlockBuilderUtility::tab(2) . '</div>' . PHP_EOL . PHP_EOL; // .js-image-settings-wrapper
+                    }
+
+                    if ( !empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']) ) {
+
+                        $code .= BlockBuilderUtility::tab(2) . '<div class="form-group js-fullscreen-image-settings-wrapper">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '<div class="row margin-bottom">' . PHP_EOL;
+
+                        $code .= BlockBuilderUtility::tab(4) . '<div class="col-xs-12">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '<?php echo $form->label($view->field(\'settings['.$v['handle'].'_override_fullscreen_dimensions]\'), \''.$v['label'].'\' . \' - \' . t(\'' . addslashes($postData['overrideThumbnailDimensionsLabel']) . '\')); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '<div class="checkbox">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '<label><?php echo $form->checkbox($view->field(\'settings['.$v['handle'].'_override_fullscreen_dimensions]\'), \'1\', $settings[\''.$v['handle'].'_override_fullscreen_dimensions\'], [\'class\' => \'js-toggle-override-all-fullscreen-dimensions\']); ?> <?php echo t(\'' . addslashes($postData['yesLabel']) . '\'); ?></label>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(4) . '</div>' . PHP_EOL;
+
+                        $code .= BlockBuilderUtility::tab(4) . '<div class="js-override-all-fullscreen-dimensions-wrapper" <?php if (empty($settings[\''.$v['handle'].'_override_fullscreen_dimensions\'])): ?>style="display: none;"<?php endif; ?>>' . PHP_EOL;
+
+                        $code .= BlockBuilderUtility::tab(5) . '<div class="col-xs-12 col-md-4 margin-bottom-on-mobile">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '<?php echo $form->label($view->field(\'settings['.$v['handle'].'_custom_fullscreen_width]\'), t(\'' . addslashes($postData['widthLabel']) . '\')); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '<div class="input-group">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '<?php echo $form->number($view->field(\'settings['.$v['handle'].'_custom_fullscreen_width]\'), !empty($settings[\''.$v['handle'].'_custom_fullscreen_width\']) ? $settings[\''.$v['handle'].'_custom_fullscreen_width\'] : \'\'); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '<span class="input-group-addon"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL;
+
+                        $code .= BlockBuilderUtility::tab(5) . '<div class="col-xs-12 col-md-4 margin-bottom-on-mobile">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '<?php echo $form->label($view->field(\'settings['.$v['handle'].'_custom_fullscreen_height]\'), t(\'' . addslashes($postData['heightLabel']) . '\')); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '<div class="input-group">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '<?php echo $form->number($view->field(\'settings['.$v['handle'].'_custom_fullscreen_height]\'), !empty($settings[\''.$v['handle'].'_custom_fullscreen_height\']) ? $settings[\''.$v['handle'].'_custom_fullscreen_height\'] : \'\'); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '<span class="input-group-addon"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL;
+
+                        $code .= BlockBuilderUtility::tab(5) . '<div class="col-xs-12 col-md-4">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '<?php echo $form->label($view->field(\'settings['.$v['handle'].'_custom_fullscreen_crop]\'), t(\'' . addslashes($postData['cropLabel']) . '\')); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '<?php echo $form->select($view->field(\'settings['.$v['handle'].'_custom_fullscreen_crop]\'), [\'0\'=>t(\'' . addslashes($postData['noLabel']) . '\'), \'1\'=>t(\'' . addslashes($postData['yesLabel']) . '\')], $settings[\''.$v['handle'].'_custom_fullscreen_crop\']); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL;
+
+                        $code .= BlockBuilderUtility::tab(4) . '</div>' . PHP_EOL;
+
+                        $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL; // .row margin-bottom
+                        $code .= BlockBuilderUtility::tab(2) . '</div>' . PHP_EOL . PHP_EOL; // .js-fullscreen-image-settings-wrapper
+                    }
+
+                }
+
+            }
+
+            $code .= BlockBuilderUtility::tab(1) . '</div>' . PHP_EOL . PHP_EOL; // .js-tab-content
+
+        }
+
+        ///////////////////////////////////////////////////////////////////////////
+        /// Footer
+        ///////////////////////////////////////////////////////////////////////////
 
         if ( ! empty($postData['requiredFieldsLabel']) AND (!empty($postDataSummary['requiredFields']) OR !empty($postDataSummary['requiredEntryFields']))) {
             $code .= BlockBuilderUtility::tab(1) . '<hr/>' . PHP_EOL . PHP_EOL;

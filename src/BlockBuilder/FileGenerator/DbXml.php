@@ -23,6 +23,10 @@ class DbXml
         $code .= BlockBuilderUtility::tab(3).'<unsigned/>'.PHP_EOL;
         $code .= BlockBuilderUtility::tab(2).'</field>'.PHP_EOL.PHP_EOL;
 
+        if ($postDataSummary['settingsTab']) {
+             $code .= BlockBuilderUtility::tab(2).'<field name="settings" type="X2"></field>'.PHP_EOL.PHP_EOL;
+        }
+
         if ( ! empty($postData['basic'])) {
 
             foreach ($postData['basic'] as $k => $v) {
