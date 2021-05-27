@@ -8,12 +8,13 @@
 <?php if (is_array($blockTypes) AND count($blockTypes)): ?>
 
     <div class="form-group">
+        <p><?php echo t('Current package version:'); ?> <?php echo $pkgVersion ?></p>
         <p><?php echo t('We have found configuration file in blocks listed below:'); ?></p>
     </div>
 
     <?php foreach ($blockTypes as $blockType): ?>
 
-        <a href="<?php echo $app->make('url/manager')->resolve(['/dashboard/blocks/block_builder/config/'.$blockType['handle']]); ?>" class="block-type"><?php echo $blockType['name']; ?></a>
+        <a href="<?php echo $app->make('url/manager')->resolve(['/dashboard/blocks/block_builder/config/'.$blockType['handle']]); ?>" class="block-type"><?php echo h($blockType['name']); ?>&nbsp;&nbsp;<?php if ($blockType['version']): ?>(<?php echo h($blockType['version']); ?>)<?php endif; ?></a>
 
     <?php endforeach; ?>
 
