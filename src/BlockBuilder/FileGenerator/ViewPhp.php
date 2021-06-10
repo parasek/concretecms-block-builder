@@ -209,7 +209,7 @@ class ViewPhp
 
             $code .= PHP_EOL.'<?php // Repeatable entries ?>'.PHP_EOL.PHP_EOL;
 
-            $code .= '<?php if (count($entries)): ?>'.PHP_EOL.PHP_EOL;
+            $code .= '<?php if (is_array($entries) AND count($entries)): ?>'.PHP_EOL.PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(1).'<?php foreach ($entries as $entry): ?>'.PHP_EOL.PHP_EOL.PHP_EOL;
 
