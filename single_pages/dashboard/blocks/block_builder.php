@@ -175,6 +175,11 @@
                 <?php echo $form->text('duplicateEntryLabel', $duplicateEntryLabel, ['data-translated-text'=>t('Duplicate entry'), 'data-untranslated-text'=>'Duplicate entry']); ?>
             </div>
 
+            <div class="form-group <?php in_array('duplicateEntryAndAddAtTheEndLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('duplicateEntryAndAddAtTheEndLabel', t('Duplicate entry and add at the end')); ?>
+                <?php echo $form->text('duplicateEntryAndAddAtTheEndLabel', $duplicateEntryAndAddAtTheEndLabel, ['data-translated-text'=>t('Duplicate entry and add at the end'), 'data-untranslated-text'=>'Duplicate entry and add at the end']); ?>
+            </div>
+
             <div class="form-group <?php in_array('areYouSureLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
                 <?php echo $form->label('areYouSureLabel', t('Are you sure?')); ?>
                 <?php echo $form->text('areYouSureLabel', $areYouSureLabel, ['data-translated-text'=>t('Are you sure?'), 'data-untranslated-text'=>'Are you sure?']); ?>

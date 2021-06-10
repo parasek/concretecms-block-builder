@@ -690,6 +690,7 @@ class FormPhp
             $code .= BlockBuilderUtility::tab(3) . '<div class="well entry js-entry" data-position="<%=_.escape(position)%>">' . PHP_EOL . PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(4) . '<div class="entry-header">' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(5) . '<button type="button" class="entry-header-action entry-header-duplicate-entry-and-add-at-the-end js-duplicate-entry-and-add-at-the-end" title="<?php echo t(\''.addslashes($postData['duplicateEntryAndAddAtTheEndLabel']).'\'); ?>"><i class="fa fa-paste"></i></button>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(5) . '<button type="button" class="entry-header-action entry-header-duplicate-entry js-duplicate-entry" title="<?php echo t(\''.addslashes($postData['duplicateEntryLabel']).'\'); ?>"><i class="fa fa-clone"></i></button>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(5) . '<div class="entry-header-action entry-header-remove-entry js-remove-entry" data-confirm-text="<?php echo t(\''.addslashes($postData['areYouSureLabel']).'\'); ?>"  title="<?php echo t(\''.addslashes($postData['removeEntryLabel']).'\'); ?>"><i class="fa fa-times"></i></div>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(5) . '<div class="entry-header-action entry-header-move-entry js-move-entry"><i class="fa fa-arrows"></i></div>' . PHP_EOL;
