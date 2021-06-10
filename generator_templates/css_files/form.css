@@ -141,6 +141,15 @@
     background: transparent;
 }
 
+.ccm-ui .entry-header-duplicate-entry-and-add-at-the-end {
+    right: 64px;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: transparent;
+}
+
 .ccm-ui .entry-header-duplicate-entry:focus {
     outline: none !important;
 }

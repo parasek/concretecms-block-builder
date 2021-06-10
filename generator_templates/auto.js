@@ -157,9 +157,12 @@ $(function () {
             if (action == 'prepend') {
                 entriesContainer.prepend(template(templateData));
                 newEntry = entriesContainer.children(':first');
-            } else {
+            } else if (action == 'append') {
                 entriesContainer.append(template(templateData));
                 newEntry = entriesContainer.children(':last');
+            } else {
+                sourceEntry.after(template(templateData));
+                newEntry = entriesContainer.children('.js-entry').eq((parseInt(action)+1));
             }
 
             // Activate c5 tools/editors
@@ -206,6 +209,18 @@ $(function () {
 
         // Duplicate entry
         entriesContainer.on('click', '.js-duplicate-entry', function (e2) {
+
+            e2.preventDefault();
+
+            var sourceEntry = $(this).closest('.js-entry');
+            var index = sourceEntry.index();
+
+            addEntry(index, sourceEntry);
+
+        });
+
+        // Duplicate entry and add at the end
+        entriesContainer.on('click', '.js-duplicate-entry-and-add-at-the-end', function (e2) {
 
             e2.preventDefault();
 

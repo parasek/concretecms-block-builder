@@ -142,6 +142,7 @@ class BlockBuilder extends DashboardPageController
         $this->set('maxNumberOfEntriesLabel', t('Max. number of entries'));
         $this->set('removeEntryLabel', t('Remove entry'));
         $this->set('duplicateEntryLabel', t('Duplicate entry'));
+        $this->set('duplicateEntryAndAddAtTheEndLabel', t('Duplicate entry and add at the end'));
         $this->set('areYouSureLabel', t('Are you sure?'));
         $this->set('requiredFieldsLabel', t('Required fields'));
         $this->set('urlEndingLabel', t('Custom string at the end of URL'));
