@@ -80,7 +80,7 @@ class ControllerPhp
                 $code .= BlockBuilderUtility::tab(2) . '$content[] = $this->'.$v.';'.PHP_EOL;
             }
 
-            if (count($postDataSummary['searchableEntryFields'])) {
+            if (is_array($postDataSummary['searchableEntryFields']) and count($postDataSummary['searchableEntryFields'])) {
                 $code .= PHP_EOL;
                 $code .= BlockBuilderUtility::tab(2).'$entries = $this->getEntries(\'edit\');'.PHP_EOL;
                 $code .= BlockBuilderUtility::tab(2).'foreach ($entries as $entry) {'.PHP_EOL;
@@ -811,7 +811,7 @@ class ControllerPhp
             $code .= BlockBuilderUtility::tab(2).'// Delete existing entries of current block\'s version'.PHP_EOL;
             $code .= BlockBuilderUtility::tab(2).'$db->delete(\''.$postDataSummary['blockTableNameEntries'].'\', [\'bID\' => $this->bID]);'.PHP_EOL.PHP_EOL;
 
-            $code .= BlockBuilderUtility::tab(2).'if (count($args[\'entry\'])) {'.PHP_EOL.PHP_EOL;
+            $code .= BlockBuilderUtility::tab(2).'if (is_array($args[\'entry\']) AND count($args[\'entry\'])) {'.PHP_EOL.PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(3).'$i = 1;'.PHP_EOL.PHP_EOL;
 
@@ -1134,7 +1134,7 @@ class ControllerPhp
 
             $code .= BlockBuilderUtility::tab(4).'}'.PHP_EOL.PHP_EOL;
 
-            $code .= BlockBuilderUtility::tab(4).'if (count($emptyEntries) AND in_array($requiredEntryFieldHandle, $emptyEntries)) {'.PHP_EOL;
+            $code .= BlockBuilderUtility::tab(4).'if (is_array($emptyEntries) AND count($emptyEntries) AND in_array($requiredEntryFieldHandle, $emptyEntries)) {'.PHP_EOL;
             $code .= BlockBuilderUtility::tab(5).'$error->add(t(\'Field "%s" is required in every entry.\', $requiredEntryFieldLabel));'.PHP_EOL;
             $code .= BlockBuilderUtility::tab(4).'}'.PHP_EOL.PHP_EOL;
 
@@ -1176,7 +1176,7 @@ class ControllerPhp
 
             $code .= BlockBuilderUtility::tab(4).'}'.PHP_EOL.PHP_EOL;
 
-            $code .= BlockBuilderUtility::tab(4).'if (count($emptyEntries) AND in_array($requiredEntryLinkFieldHandle, $emptyEntries)) {'.PHP_EOL;
+            $code .= BlockBuilderUtility::tab(4).'if (is_array($emptyEntries) AND count($emptyEntries) AND in_array($requiredEntryLinkFieldHandle, $emptyEntries)) {'.PHP_EOL;
             $code .= BlockBuilderUtility::tab(5).'$error->add(t(\'Field "%s" is required in every entry.\', $requiredEntryLinkFieldLabel));'.PHP_EOL;
             $code .= BlockBuilderUtility::tab(4).'}'.PHP_EOL.PHP_EOL;
 
@@ -1386,7 +1386,7 @@ class ControllerPhp
 
             $code .= BlockBuilderUtility::tab(2).'$entriesForView = [];'.PHP_EOL.PHP_EOL;
 
-            $code .= BlockBuilderUtility::tab(2).'if (count($entries)) {'.PHP_EOL.PHP_EOL;
+            $code .= BlockBuilderUtility::tab(2).'if (is_array($entries) AND count($entries)) {'.PHP_EOL.PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(3).'foreach ($entries as $key => $entry) {'.PHP_EOL.PHP_EOL;
 

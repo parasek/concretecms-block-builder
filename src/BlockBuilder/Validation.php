@@ -553,17 +553,17 @@ class Validation
         $validation = [];
 
         $validation['errors'] = [];
-        if (count($errors)) {
+        if (is_array($errors) AND count($errors)) {
             $validation['errors'] = $errors;
         }
 
         $validation['tabsWithError'] = [];
-        if (count($tabsWithError)) {
+        if (is_array($tabsWithError) AND count($tabsWithError)) {
             $validation['tabsWithError'] = $tabsWithError;
         }
 
         $validation['fieldsWithError'] = [];
-        if (count($fieldsWithError)) {
+        if (is_array($fieldsWithError) AND count($fieldsWithError)) {
             $validation['fieldsWithError'] = $fieldsWithError;
         }
 
