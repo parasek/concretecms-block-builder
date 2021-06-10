@@ -1,3 +1,15 @@
+#1.3.0
+- Added package version to config-bb.json file
+- "Image" field type has been greatly improved. Now, during block creation you can check option that let your site editors enter custom dimensions for every thumbnail/fullscreen image (both single and repeatable)
+- Added button in generated block to duplicate entry and place it just after current
+- $app is now available in generated view.php by default
+- Text fields for all link types are textareas now
+- Added CURRENT_PAGE option to external links
+- Fixed "Duplicate entry" bug, which was causing revealing hidden options/fields
+- Fixed: https://www.concrete5.org/marketplace/addons/block-builder/support/bug-report-errorexception-in-load-config/
+- Removed h() function around $new_window variable in generated files
+- Fixed count() bug in generated blocks when using higher php versions
+
 #1.2.1
 - Fixed missing escape functions in generated blocks
 
