@@ -218,7 +218,7 @@ class FormPhp
                     $code .= BlockBuilderUtility::tab(4).'</div>'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4).'<div class="col-xs-12 margin-bottom">'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5).'<?php echo $form->label($view->field(\''.$v['handle'].'_text\'), t(\''.addslashes($postData['textLabel']).'\')); ?>'.PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(5).'<?php echo $form->text($view->field(\''.$v['handle'].'_text\'), $'.$v['handle'].'[\'text\'], [\'maxlength\'=>\'255\']); ?>'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5).'<?php echo $form->textarea($view->field(\''.$v['handle'].'_text\'), $'.$v['handle'].'[\'text\'], [\'maxlength\'=>\'255\']); ?>'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4).'</div>'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4).'<div class="col-xs-12 margin-bottom">'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5).'<?php echo $form->label($view->field(\''.$v['handle'].'_title\'), t(\''.addslashes($postData['titleLabel']).'\')); ?>'.PHP_EOL;
@@ -299,7 +299,7 @@ class FormPhp
                     if ( ! empty($v['linkFromSitemapShowTextField'])) {
                         $code .= BlockBuilderUtility::tab(2) . '<div class="form-group">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(3) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '_text\'), t(\'' . addslashes($postData['textLabel']) . '\')); ?>' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(3) . '<?php echo $form->text($view->field(\'' . $v['handle'] . '_text\'), $' . $v['handle'] . '_text, [\'maxlength\'=>\'255\']); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '<?php echo $form->textarea($view->field(\'' . $v['handle'] . '_text\'), $' . $v['handle'] . '_text, [\'maxlength\'=>\'255\']); ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(2) . '</div>' . PHP_EOL . PHP_EOL;
                     }
 
@@ -340,7 +340,7 @@ class FormPhp
                     if ( ! empty($v['linkFromFileManagerShowTextField'])) {
                         $code .= BlockBuilderUtility::tab(2) . '<div class="form-group">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(3) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '_text\'), t(\'' . addslashes($postData['textLabel']) . '\')); ?>' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(3) . '<?php echo $form->text($view->field(\'' . $v['handle'] . '_text\'), $' . $v['handle'] . '_text, [\'maxlength\'=>\'255\']); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '<?php echo $form->textarea($view->field(\'' . $v['handle'] . '_text\'), $' . $v['handle'] . '_text, [\'maxlength\'=>\'255\']); ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(2) . '</div>' . PHP_EOL . PHP_EOL;
                     }
 
@@ -402,7 +402,7 @@ class FormPhp
                     if ( ! empty($v['externalLinkShowTextField'])) {
                         $code .= BlockBuilderUtility::tab(2) . '<div class="form-group">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(3) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '_text\'), t(\'' . addslashes($postData['textLabel']) . '\')); ?>' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(3) . '<?php echo $form->text($view->field(\'' . $v['handle'] . '_text\'), $' . $v['handle'] . '_text, [\'maxlength\'=>\'255\']); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '<?php echo $form->textarea($view->field(\'' . $v['handle'] . '_text\'), $' . $v['handle'] . '_text, [\'maxlength\'=>\'255\']); ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(2) . '</div>' . PHP_EOL . PHP_EOL;
                     }
 
@@ -891,7 +891,7 @@ class FormPhp
                     $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '<div class="col-xs-12 margin-bottom">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(8) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].'_text]" class="control-label"><?php echo t(\''.addslashes($postData['textLabel']).'\'); ?></label>' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(8) . '<input type="text" id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].'_text]" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].'_text]" value="<%=_.escape('.$v['handle'].'_text)%>" class="form-control" maxlength="255" />' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(8) . '<textarea id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].'_text]" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].'_text]" class="form-control" maxlength="255"><%=_.escape('.$v['handle'].'_text)%></textarea>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '<div class="col-xs-12 margin-bottom">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(8) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].'_title]" class="control-label"><?php echo t(\''.addslashes($postData['titleLabel']).'\'); ?></label>' . PHP_EOL;
@@ -930,7 +930,7 @@ class FormPhp
                     if ( ! empty($v['linkFromSitemapShowTextField'])) {
                         $code .= BlockBuilderUtility::tab(5) . '<div class="form-group">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(6) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_text]" class="control-label"><?php echo t(\'' . addslashes($postData['textLabel']) . '\'); ?></label>' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(6) . '<input type="text" id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_text]" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_text]" value="<%=_.escape(' . $v['handle'] . '_text)%>" class="form-control" maxlength="255" />' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '<textarea id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_text]" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_text]" class="form-control" maxlength="255"><%=_.escape(' . $v['handle'] . '_text)%></textarea>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL . PHP_EOL;
                     }
 
@@ -978,7 +978,7 @@ class FormPhp
                     if ( ! empty($v['linkFromFileManagerShowTextField'])) {
                         $code .= BlockBuilderUtility::tab(5) . '<div class="form-group">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(6) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_text]" class="control-label"><?php echo t(\'' . addslashes($postData['textLabel']) . '\'); ?></label>' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(6) . '<input type="text" id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_text]" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_text]" value="<%=_.escape(' . $v['handle'] . '_text)%>" class="form-control" maxlength="255" />' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '<textarea id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_text]" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_text]" class="form-control" maxlength="255"><%=_.escape(' . $v['handle'] . '_text)%></textarea>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL . PHP_EOL;
                     }
 
@@ -1034,7 +1034,7 @@ class FormPhp
                     if ( ! empty($v['externalLinkShowTextField'])) {
                         $code .= BlockBuilderUtility::tab(5) . '<div class="form-group">'. PHP_EOL;
                         $code .= BlockBuilderUtility::tab(6) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_text]" class="control-label"><?php echo t(\'' . addslashes($postData['textLabel']) . '\'); ?></label>'. PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(6) . '<input type="text" id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_text]" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_text]" value="<%=_.escape(' . $v['handle'] . '_text)%>" class="form-control" maxlength="255" />'. PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '<textarea id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_text]" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_text]" class="form-control" maxlength="255"><%=_.escape(' . $v['handle'] . '_text)%></textarea>'. PHP_EOL;
                         $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL . PHP_EOL;
                     }
 
