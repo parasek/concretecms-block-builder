@@ -382,6 +382,9 @@ class ControllerPhp
         // 7. view()
         $code .= BlockBuilderUtility::tab(1).'public function view() {'.PHP_EOL.PHP_EOL;
 
+        $code .= BlockBuilderUtility::tab(2).'// Make $app available in view'.PHP_EOL;
+        $code .= BlockBuilderUtility::tab(2).'$this->set(\'app\', $this->app);'.PHP_EOL.PHP_EOL;
+
         if ($postDataSummary['wysiwygEditorUsed']) {
             $code .= BlockBuilderUtility::tab(2).'// Wysiwyg editors'.PHP_EOL;
             if ( ! empty($postData['basic'])) {
