@@ -65,7 +65,7 @@ class ViewPhp
                     $code .= '<?php if (!empty($'.$v['handle'].'_link)): ?>'.PHP_EOL;
 
                     $code .= BlockBuilderUtility::tab(1).'<a href="<?php echo $'.$v['handle'].'_link; ?><?php echo $'.$v['handle'].'_ending; ?>" title="<?php echo h($'.$v['handle'].'_title); ?>" <?php echo $'.$v['handle'].'_new_window; ?>>'.PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(2).'<?php echo h($'.$v['handle'].'_text); ?>'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2).'<?php echo nl2br(h($'.$v['handle'].'_text)); ?>'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(1).'</a>'.PHP_EOL;
 
                     $code .= '<?php endif; ?>'.PHP_EOL.PHP_EOL.PHP_EOL;
@@ -89,7 +89,7 @@ class ViewPhp
                     }
                     $code .= '>';
                     if (!empty($v['linkFromSitemapShowTextField'])) {
-                        $code .= PHP_EOL.BlockBuilderUtility::tab(2).'<?php echo h($'.$v['handle'].'_text); ?>'.PHP_EOL;
+                        $code .= PHP_EOL.BlockBuilderUtility::tab(2).'<?php echo nl2br(h($'.$v['handle'].'_text)); ?>'.PHP_EOL;
                         $code .= BlockBuilderUtility::tab(1);
                     }
                     $code .= '</a>'.PHP_EOL;
@@ -115,7 +115,7 @@ class ViewPhp
                     }
                     $code .= '>';
                     if (!empty($v['linkFromFileManagerShowTextField'])) {
-                        $code .= PHP_EOL.BlockBuilderUtility::tab(2) . '<?php echo h($' . $v['handle'] . '_text); ?>' . PHP_EOL;
+                        $code .= PHP_EOL.BlockBuilderUtility::tab(2) . '<?php echo nl2br(h($' . $v['handle'] . '_text)); ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(1);
                     }
                     $code .= '</a>'.PHP_EOL;
@@ -141,7 +141,7 @@ class ViewPhp
                     }
                     $code .= '>';
                     if (!empty($v['externalLinkShowTextField'])) {
-                        $code .= PHP_EOL.BlockBuilderUtility::tab(2) . '<?php echo h($' . $v['handle'] . '_text); ?>' . PHP_EOL;
+                        $code .= PHP_EOL.BlockBuilderUtility::tab(2) . '<?php echo nl2br(h($' . $v['handle'] . '_text)); ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(1);
                     }
                     $code .= '</a>'.PHP_EOL;
@@ -260,7 +260,7 @@ class ViewPhp
 
                     $code .= BlockBuilderUtility::tab(2).'<?php if (!empty($entry[\''.$v['handle'].'_link\'])): ?>'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3).'<a href="<?php echo $entry[\''.$v['handle'].'_link\']; ?><?php echo $entry[\''.$v['handle'].'_ending\']; ?>" title="<?php echo h($entry[\''.$v['handle'].'_title\']); ?>" <?php echo $entry[\''.$v['handle'].'_new_window\']; ?>>'.PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(4).'<?php echo h($entry[\''.$v['handle'].'_text\']); ?>'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4).'<?php echo nl2br(h($entry[\''.$v['handle'].'_text\'])); ?>'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3).'</a>'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(2).'<?php endif; ?>'.PHP_EOL.PHP_EOL.PHP_EOL;
 
@@ -283,7 +283,7 @@ class ViewPhp
                     }
                     $code .= '>';
                     if (!empty($v['linkFromSitemapShowTextField'])) {
-                        $code .= PHP_EOL . BlockBuilderUtility::tab(4) . '<?php echo h($entry[\'' . $v['handle'] . '_text\']); ?>' . PHP_EOL;
+                        $code .= PHP_EOL . BlockBuilderUtility::tab(4) . '<?php echo nl2br(h($entry[\'' . $v['handle'] . '_text\'])); ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(3);
                     }
                     $code .= '</a>'.PHP_EOL;
@@ -309,7 +309,7 @@ class ViewPhp
                     }
                     $code .= '>';
                     if (!empty($v['linkFromFileManagerShowTextField'])) {
-                        $code .= PHP_EOL . BlockBuilderUtility::tab(4) . '<?php echo h($entry[\'' . $v['handle'] . '_text\']); ?>' . PHP_EOL;
+                        $code .= PHP_EOL . BlockBuilderUtility::tab(4) . '<?php echo nl2br(h($entry[\'' . $v['handle'] . '_text\'])); ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(3);
                     }
                     $code .= '</a>'.PHP_EOL;
@@ -335,7 +335,7 @@ class ViewPhp
                     }
                     $code .= '>';
                     if (!empty($v['externalLinkShowTextField'])) {
-                        $code .= PHP_EOL . BlockBuilderUtility::tab(4) . '<?php echo h($entry[\'' . $v['handle'] . '_text\']); ?>' . PHP_EOL;
+                        $code .= PHP_EOL . BlockBuilderUtility::tab(4) . '<?php echo nl2br(h($entry[\'' . $v['handle'] . '_text\'])); ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(3);
                     }
                     $code .= '</a>'.PHP_EOL;
