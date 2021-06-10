@@ -125,7 +125,7 @@ class BlockBuilder extends DashboardPageController
         $this->set('installBlockOptions', $installBlockOptions);
 
         // Default values
-        $this->set('blockWidth', 850);
+        $this->set('blockWidth', 900);
         $this->set('blockHeight', 650);
         $this->set('installBlock', 1);
         $this->set('maxNumberOfEntries', 0);
