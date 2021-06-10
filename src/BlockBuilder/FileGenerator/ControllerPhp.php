@@ -352,6 +352,7 @@ class ControllerPhp
             $code .= BlockBuilderUtility::tab(3).'\'http://\'  => \'http://\',' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(3).'\'https://\' => \'https://\',' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(3).'\'BASE_URL\' => \'BASE_URL\',' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(3).'\'CURRENT_PAGE\' => \'CURRENT_PAGE\',' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(3).'\'other\'    => \'----\'' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(2).'];' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(2).'$this->set(\'externalLinkProtocols\', $externalLinkProtocols);' . PHP_EOL . PHP_EOL;
