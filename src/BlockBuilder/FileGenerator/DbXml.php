@@ -99,7 +99,7 @@ class DbXml
 
                 if ($v['fieldType']=='external_link') {
                     $code .= BlockBuilderUtility::tab(2).'<field name="'.$v['handle'].'" type="C" size="255"></field>'.PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(2).'<field name="'.$v['handle'].'_protocol" type="C" size="10"></field>'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2).'<field name="'.$v['handle'].'_protocol" type="C" size="20"></field>'.PHP_EOL;
                     if ( ! empty($v['externalLinkShowEndingField'])) {
                         $code .= BlockBuilderUtility::tab(2).'<field name="'.$v['handle'].'_ending" type="C" size="255"></field>'.PHP_EOL;
                     }
@@ -242,7 +242,7 @@ class DbXml
 
                 if ($v['fieldType']=='external_link') {
                     $code .= BlockBuilderUtility::tab(2).'<field name="'.$v['handle'].'" type="C" size="255"></field>'.PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(2).'<field name="'.$v['handle'].'_protocol" type="C" size="10"></field>'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2).'<field name="'.$v['handle'].'_protocol" type="C" size="20"></field>'.PHP_EOL;
                     if ( ! empty($v['externalLinkShowEndingField'])) {
                         $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '_ending" type="C" size="255"></field>' . PHP_EOL;
                     }

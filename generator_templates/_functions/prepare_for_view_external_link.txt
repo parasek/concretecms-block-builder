@@ -26,7 +26,7 @@
             $this->set($newWindowFieldName, $newWindow);
 
             // Additional data
-            if (!empty($link) AND $protocol!='other' AND $protocol!='BASE_URL') {
+            if (!empty($link) AND in_array($protocol, ['http://', 'https://'])) {
                 $link = $protocol.$link;
             }
             if (!empty($link) AND $protocol=='BASE_URL') {
@@ -35,6 +35,13 @@
                     $separator = '/';
                 }
                 $link = BASE_URL.$separator.$link;
+            }
+            if (!empty($link) AND $protocol=='CURRENT_PAGE') {
+                $separator = '';
+                if (substr($link, 0, 1)!='/') {
+                    $separator = '/';
+                }
+                $link = Page::getCurrentPage()->getCollectionLink().$separator.$link;
             }
             $this->set($linkFieldName.'_link', $link);
             $this->set($linkFieldName.'_link_type', 'external_link');
@@ -52,7 +59,7 @@
             $entry[$newWindowFieldName] = $newWindow;
 
             // Additional data
-            if (!empty($link) AND $protocol!='other' AND $protocol!='BASE_URL') {
+            if (!empty($link) AND in_array($protocol, ['http://', 'https://'])) {
                 $link = $protocol.$link;
             }
             if (!empty($link) AND $protocol=='BASE_URL') {
@@ -61,6 +68,13 @@
                     $separator = '/';
                 }
                 $link = BASE_URL.$separator.$link;
+            }
+            if (!empty($link) AND $protocol=='CURRENT_PAGE') {
+                $separator = '';
+                if (substr($link, 0, 1)!='/') {
+                    $separator = '/';
+                }
+                $link = Page::getCurrentPage()->getCollectionLink().$separator.$link;
             }
             $entry[$linkFieldName.'_link']      = $link;
             $entry[$linkFieldName.'_link_type'] = 'external_link';
