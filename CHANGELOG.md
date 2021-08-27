@@ -1,3 +1,6 @@
+#1.3.1
+- Fixed svg behaviour in generated image field types
+
 #1.3.0
 - Added package version to config-bb.json file
 - "Image" field type has been greatly improved. Now, during block creation you can check option that let your site editors enter custom dimensions for every thumbnail/fullscreen image (both single and repeatable)
