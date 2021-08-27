@@ -26,8 +26,10 @@
         $fileID = $fields[$fileIDFieldName];
         $alt    = $fields[$altFieldName];
 
-        $fileObject = false;
-        $filename   = '';
+        $fileObject   = false;
+        $filename     = '';
+        $relativePath = '';
+        $fileType     = '';
 
         $link   = '';
         $width  = '';
@@ -47,7 +49,9 @@
 
             if (is_object($fileObject)) {
 
-                $filename = $fileObject->getFileName();
+                $filename     = $fileObject->getFileName();
+                $fileType     = $fileObject->getType();
+                $relativePath = $fileObject->getRelativePath();
 
                 if (empty($alt)) {
                     $alt = $filename;
@@ -55,52 +59,56 @@
 
                 // Original image
                 $link   = $fileObject->getURL();
-                $width  = $fileObject->getAttribute('width');
-                $height = $fileObject->getAttribute('height');
+                $width  = $fileObject->canEdit() ? $fileObject->getAttribute('width') : $options['thumbnailWidth'];
+                $height = $fileObject->canEdit() ? $fileObject->getAttribute('height') : $options['thumbnailHeight'];
 
-                // Fullscreen image
-                if (!empty($options['fullscreen'])) {
+                if ($fileObject->canEdit()) {
 
-                    $fullscreenWidth  = $options['fullscreenWidth'];
-                    $fullscreenHeight = $options['fullscreenHeight'];
-                    $fullscreenCrop   = $options['fullscreenCrop'];
+                    // Fullscreen image
+                    if (!empty($options['fullscreen'])) {
 
-                    if ($fileObject->canEdit() AND (($width > $fullscreenWidth AND $fullscreenWidth!=false) OR ($height > $fullscreenHeight AND $fullscreenHeight!=false))) {
+                        $fullscreenWidth  = $options['fullscreenWidth'];
+                        $fullscreenHeight = $options['fullscreenHeight'];
+                        $fullscreenCrop   = $options['fullscreenCrop'];
 
-                        $fullscreen       = $this->app->make('helper/image')->getThumbnail($fileObject, $fullscreenWidth, $fullscreenHeight, $fullscreenCrop);
-                        $fullscreenLink   = $fullscreen->src;
-                        $fullscreenWidth  = $fullscreen->width;
-                        $fullscreenHeight = $fullscreen->height;
+                        if ($fileObject->canEdit() AND (($width > $fullscreenWidth AND $fullscreenWidth!=false) OR ($height > $fullscreenHeight AND $fullscreenHeight!=false))) {
 
-                    } else {
+                            $fullscreen       = $this->app->make('helper/image')->getThumbnail($fileObject, $fullscreenWidth, $fullscreenHeight, $fullscreenCrop);
+                            $fullscreenLink   = $fullscreen->src;
+                            $fullscreenWidth  = $fullscreen->width;
+                            $fullscreenHeight = $fullscreen->height;
 
-                        $fullscreenLink   = $link;
-                        $fullscreenWidth  = $width;
-                        $fullscreenHeight = $height;
+                        } else {
+
+                            $fullscreenLink   = $link;
+                            $fullscreenWidth  = $width;
+                            $fullscreenHeight = $height;
+
+                        }
 
                     }
 
-                }
+                    // Thumbnail image
+                    if (!empty($options['thumbnail'])) {
 
-                // Thumbnail image
-                if (!empty($options['thumbnail'])) {
+                        $thumbnailWidth  = $options['thumbnailWidth'];
+                        $thumbnailHeight = $options['thumbnailHeight'];
+                        $thumbnailCrop   = $options['thumbnailCrop'];
 
-                    $thumbnailWidth  = $options['thumbnailWidth'];
-                    $thumbnailHeight = $options['thumbnailHeight'];
-                    $thumbnailCrop   = $options['thumbnailCrop'];
+                        if ($fileObject->canEdit() AND (($width > $thumbnailWidth AND $thumbnailWidth!=false) OR ($height > $thumbnailHeight AND $thumbnailHeight!=false))) {
 
-                    if ($fileObject->canEdit() AND (($width > $thumbnailWidth AND $thumbnailWidth!=false) OR ($height > $thumbnailHeight AND $thumbnailHeight!=false))) {
+                            $thumbnail       = $this->app->make('helper/image')->getThumbnail($fileObject, $thumbnailWidth, $thumbnailHeight, $thumbnailCrop);
+                            $thumbnailLink   = $thumbnail->src;
+                            $thumbnailWidth  = $thumbnail->width;
+                            $thumbnailHeight = $thumbnail->height;
 
-                        $thumbnail       = $this->app->make('helper/image')->getThumbnail($fileObject, $thumbnailWidth, $thumbnailHeight, $thumbnailCrop);
-                        $thumbnailLink   = $thumbnail->src;
-                        $thumbnailWidth  = $thumbnail->width;
-                        $thumbnailHeight = $thumbnail->height;
+                        } else {
 
-                    } else {
+                            $thumbnailLink   = $link;
+                            $thumbnailWidth  = $width;
+                            $thumbnailHeight = $height;
 
-                        $thumbnailLink   = $link;
-                        $thumbnailWidth  = $width;
-                        $thumbnailHeight = $height;
+                        }
 
                     }
 
@@ -119,6 +127,8 @@
             // Additional data
             $this->set($fileIDFieldName.'_object', $fileObject);
             $this->set($fileIDFieldName.'_filename', $filename);
+            $this->set($fileIDFieldName.'_type', $fileType);
+            $this->set($fileIDFieldName.'_relativePath', $relativePath);
 
             $this->set($fileIDFieldName.'_link', $link);
             $this->set($fileIDFieldName.'_width', $width);
@@ -141,8 +151,10 @@
             $entry[$altFieldName]    = $alt;
 
             // Additional data
-            // $entry[$fileIDFieldName.'_object']   = $fileObject;
-            $entry[$fileIDFieldName.'_filename'] = $filename;
+            // $entry[$fileIDFieldName.'_object']    = $fileObject;
+            $entry[$fileIDFieldName.'_filename']     = $filename;
+            $entry[$fileIDFieldName.'_type']         = $fileType;
+            $entry[$fileIDFieldName.'_relativePath'] = $relativePath;
 
             $entry[$fileIDFieldName.'_link']   = $link;
             $entry[$fileIDFieldName.'_width']  = $width;
