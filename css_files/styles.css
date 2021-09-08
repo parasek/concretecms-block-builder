@@ -102,9 +102,15 @@
 }
 
 .ccm-ui .entries-action {
-    margin: 0 20px 0 0;
+    margin: 10px 20px 0 0;
     width: 100%;
     color: #555555;
+}
+
+@media only screen and (min-width: 768px) {
+    .ccm-ui .entries-action {
+        margin-top: 0;
+    }
 }
 
 .ccm-ui .checkbox.entries-action-scroll {

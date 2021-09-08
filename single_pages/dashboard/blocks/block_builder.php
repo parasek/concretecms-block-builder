@@ -297,7 +297,7 @@
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="col-lg-9 form-group entries-actions d-flex align-items-center">
+                <div class="col-lg-9 form-group entries-actions d-flex flex-column flex-md-row align-items-md-center">
                     <div class="entries-action entries-action-scroll form-check-inline">
                         <input type="checkbox"
                                name="scroll"
@@ -326,7 +326,7 @@
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="col-lg-9 form-group entries-actions d-flex align-items-center">
+                <div class="col-lg-9 form-group entries-actions d-flex flex-column flex-md-row align-items-md-center">
                     <div class="entries-action entries-action-scroll form-check-inline">
                         <input type="checkbox"
                                name="scroll"
@@ -355,7 +355,7 @@
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="col-lg-9 form-group entries-actions d-flex align-items-center">
+                <div class="col-lg-9 form-group entries-actions d-flex flex-column flex-md-row align-items-md-center">
                     <div class="entries-action entries-action-scroll form-check-inline">
                         <input type="checkbox"
                                name="scroll"
@@ -384,7 +384,7 @@
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="col-lg-9 form-group entries-actions d-flex align-items-center">
+                <div class="col-lg-9 form-group entries-actions d-flex flex-column flex-md-row align-items-md-center">
                     <div class="entries-action entries-action-scroll form-check-inline">
                         <input type="checkbox"
                                name="scroll"
