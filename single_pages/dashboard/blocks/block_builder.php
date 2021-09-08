@@ -37,13 +37,13 @@
             <div class="row">
                 <div class="col-lg-6 form-group <?php in_array('blockName', $fieldsWithError) ? print 'has-error' : false; ?>">
                     <?php echo $form->label('blockName', t('Block name').' *'); ?>
-                    <p class="small text-muted"><?php echo t('Human-readable name e.g. "Example block"'); ?></p>
                     <?php echo $form->text('blockName', $blockName, ['maxlength' => '100']); ?>
+                    <div class="form-text"><?php echo t('Human-readable name e.g. "Example block"'); ?></div>
                 </div>
                 <div class="col-lg-6 form-group <?php in_array('blockHandle', $fieldsWithError) ? print 'has-error' : false; ?>">
                     <?php echo $form->label('blockHandle', t('Block handle').' *'); ?>
-                    <p class="small text-muted"><?php echo t('Lowercase letters and underscores only e.g. "example_block"'); ?></p>
                     <?php echo $form->text('blockHandle', $blockHandle, ['maxlength' => '50']); ?>
+                    <div class="form-text"><?php echo t('Lowercase letters and underscores only e.g. "example_block"'); ?></div>
                 </div>
             </div>
 
@@ -63,14 +63,14 @@
                     <?php echo $form->label('blockWidth', t('Block width').' *'); ?>
                     <div class="input-group">
                         <?php echo $form->text('blockWidth', $blockWidth); ?>
-                        <span class="input-group-addon">px</span>
+                        <span class="input-group-text">px</span>
                     </div>
                 </div>
                 <div class="col-lg-4 form-group <?php in_array('blockHeight', $fieldsWithError) ? print 'has-error' : false; ?>">
                     <?php echo $form->label('blockHeight', t('Block height').' *'); ?>
                     <div class="input-group">
                         <?php echo $form->text('blockHeight', $blockHeight); ?>
-                        <span class="input-group-addon">px</span>
+                        <span class="input-group-text">px</span>
                     </div>
                 </div>
                 <div class="col-lg-4 form-group <?php in_array('blockTypeSet', $fieldsWithError) ? print 'has-error' : false; ?>">
@@ -114,20 +114,20 @@
 
             <div class="form-group <?php in_array('basicLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
                 <?php echo $form->label('basicLabel', t('Basic information')); ?>
-                <p class="small text-muted"><?php echo t('Displayed name of "Basic information" tab'); ?></p>
                 <?php echo $form->text('basicLabel', $basicLabel, ['data-translated-text'=>t('Basic information'), 'data-untranslated-text'=>'Basic information']); ?>
+                <div class="form-text"><?php echo t('Displayed name of "Basic information" tab'); ?></div>
             </div>
 
             <div class="form-group <?php in_array('entriesLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
                 <?php echo $form->label('entriesLabel', t('Entries')); ?>
-                <p class="small text-muted"><?php echo t('Displayed name of "Repeatable entries" tab'); ?></p>
                 <?php echo $form->text('entriesLabel', $entriesLabel, ['data-translated-text'=>t('Entries'), 'data-untranslated-text'=>'Entries']); ?>
+                <div class="form-text"><?php echo t('Displayed name of "Repeatable entries" tab'); ?></div>
             </div>
 
             <div class="form-group <?php in_array('settingsLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
                 <?php echo $form->label('settingsLabel', t('Settings')); ?>
-                <p class="small text-muted"><?php echo t('Displayed name of "Settings" tab'); ?></p>
                 <?php echo $form->text('settingsLabel', $settingsLabel, ['data-translated-text'=>t('Settings'), 'data-untranslated-text'=>'Settings']); ?>
+                <div class="form-text"><?php echo t('Displayed name of "Settings" tab'); ?></div>
             </div>
 
             <div class="form-group <?php in_array('addAtTheTopLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
@@ -291,20 +291,22 @@
 
             <div class="row">
                 <div class="col-lg-3 form-group">
-                    <select class="js-add-entry form-control" data-group-handle="basic">
+                    <select class="js-add-entry form-select" data-group-handle="basic">
                         <?php foreach ($fieldTypes as $k => $v): ?>
                             <option value="<?php echo h($k); ?>"><?php echo h($v); ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="col-lg-9 form-group entries-actions">
-                    <div class="entries-action entries-action-scroll checkbox">
-                        <label><input type="checkbox"
+                    <div class="entries-action entries-action-scroll form-check-inline">
+                        <input type="checkbox"
                                name="scroll"
-                               class="js-toggle-scroll"
+                               class="js-toggle-scroll form-check-input"
                                value="1"
+                               id="scroll-down-1"
                                <?php if (empty($app->make('cookie')->get('scrollDisabled'))): ?>checked="checked"<?php endif; ?>
-                        ><?php echo t('Scroll down'); ?></label>
+                        >
+                        <label for="scroll-down-1" class="form-check-label"><?php echo t('Scroll down'); ?></label>
                     </div>
                     <a href="#" class="entries-action js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t('Expand all'); ?></a>
                     <a href="#" class="entries-action js-collapse-all"><i class="fa fa-minus-square-o"></i> <?php echo t('Collapse all'); ?></a>
@@ -318,20 +320,22 @@
 
             <div class="row">
                 <div class="col-lg-3 form-group">
-                    <select class="js-add-entry form-control" data-group-handle="basic">
+                    <select class="js-add-entry form-select" data-group-handle="basic">
                         <?php foreach ($fieldTypes as $k => $v): ?>
                             <option value="<?php echo h($k); ?>"><?php echo h($v); ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="col-lg-9 form-group entries-actions">
-                    <div class="entries-action entries-action-scroll checkbox">
-                        <label><input type="checkbox"
+                    <div class="entries-action entries-action-scroll form-check-inline">
+                        <input type="checkbox"
                                name="scroll"
-                               class="js-toggle-scroll"
+                               class="js-toggle-scroll form-check-input"
                                value="1"
+                               id="scroll-down-2"
                                <?php if (empty($app->make('cookie')->get('scrollDisabled'))): ?>checked="checked"<?php endif; ?>
-                        ><?php echo t('Scroll down'); ?></label>
+                        >
+                        <label for="scroll-down-2" class="form-check-label"><?php echo t('Scroll down'); ?></label>
                     </div>
                     <a href="#" class="entries-action js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t('Expand all'); ?></a>
                     <a href="#" class="entries-action js-collapse-all"><i class="fa fa-minus-square-o"></i> <?php echo t('Collapse all'); ?></a>
@@ -345,20 +349,22 @@
 
             <div class="row">
                 <div class="col-lg-3 form-group">
-                    <select class="js-add-entry form-control" data-group-handle="entries">
+                    <select class="js-add-entry form-select" data-group-handle="entries">
                         <?php foreach ($fieldTypes as $k => $v): ?>
                             <option value="<?php echo h($k); ?>"><?php echo h($v); ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="col-lg-9 form-group entries-actions">
-                    <div class="entries-action entries-action-scroll checkbox">
-                        <label><input type="checkbox"
+                    <div class="entries-action entries-action-scroll form-check-inline">
+                        <input type="checkbox"
                                name="scroll"
-                               class="js-toggle-scroll"
+                               class="js-toggle-scroll form-check-input"
                                value="1"
+                               id="scroll-down-3"
                                <?php if (empty($app->make('cookie')->get('scrollDisabled'))): ?>checked="checked"<?php endif; ?>
-                        ><?php echo t('Scroll down'); ?></label>
+                        >
+                        <label for="scroll-down-3" class="form-check-label"><?php echo t('Scroll down'); ?></label>
                     </div>
                     <a href="#" class="entries-action js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t('Expand all'); ?></a>
                     <a href="#" class="entries-action js-collapse-all"><i class="fa fa-minus-square-o"></i> <?php echo t('Collapse all'); ?></a>
@@ -372,20 +378,22 @@
 
             <div class="row">
                 <div class="col-lg-3 form-group">
-                    <select class="js-add-entry form-control" data-group-handle="entries">
+                    <select class="js-add-entry form-select" data-group-handle="entries">
                         <?php foreach ($fieldTypes as $k => $v): ?>
                             <option value="<?php echo h($k); ?>"><?php echo h($v); ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="col-lg-9 form-group entries-actions">
-                    <div class="entries-action entries-action-scroll checkbox">
-                        <label><input type="checkbox"
+                    <div class="entries-action entries-action-scroll form-check-inline">
+                        <input type="checkbox"
                                name="scroll"
-                               class="js-toggle-scroll"
+                               class="js-toggle-scroll form-check-input"
                                value="1"
+                               id="scroll-down-4"
                                <?php if (empty($app->make('cookie')->get('scrollDisabled'))): ?>checked="checked"<?php endif; ?>
-                        ><?php echo t('Scroll down'); ?></label>
+                        >
+                        <label for="scroll-down-4" class="form-check-label"><?php echo t('Scroll down'); ?></label>
                     </div>
                     <a href="#" class="entries-action js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t('Expand all'); ?></a>
                     <a href="#" class="entries-action js-collapse-all"><i class="fa fa-minus-square-o"></i> <?php echo t('Collapse all'); ?></a>
@@ -431,18 +439,17 @@
 
                 <div class="row">
                     <div class="col-lg-6 form-group <% if (error['label']!=undefined) { %>has-error<% } %>">
-                        <label for="<%=groupHandle%>[<%=counter%>][label]" class="control-label"><?php echo t('Label'); ?> *</label>
-                        <p class="small text-muted"><?php echo t('Human-readable name e.g. "Product name"'); ?></p>
+                        <label for="<%=groupHandle%>[<%=counter%>][label]" class="form-label"><?php echo t('Label'); ?> *</label>
                         <input type="text"
                                id="<%=groupHandle%>[<%=counter%>][label]"
                                name="<%=groupHandle%>[<%=counter%>][label]"
                                class="form-control js-entry-title-source"
                                value="<%=label%>"
                         />
+                        <div class="form-text"><?php echo t('Human-readable name e.g. "Product name"'); ?></div>
                     </div>
                     <div class="col-lg-6 form-group <% if (error['handle']!=undefined) { %>has-error<% } %>">
-                        <label for="<%=groupHandle%>[<%=counter%>][handle]" class="control-label"><?php echo t('Handle'); ?> *</label>
-                        <p class="small text-muted"><?php echo t('a-zA-Z_ characters only e.g. "productName" or "product_name"'); ?></p>
+                        <label for="<%=groupHandle%>[<%=counter%>][handle]" class="form-label"><?php echo t('Handle'); ?> *</label>
                         <input type="text"
                                id="<%=groupHandle%>[<%=counter%>][handle]"
                                name="<%=groupHandle%>[<%=counter%>][handle]"
@@ -450,42 +457,44 @@
                                value="<%=handle%>"
                                maxlength="50"
                         />
+                        <div class="form-text"><?php echo t('a-zA-Z_ characters only e.g. "productName" or "product_name"'); ?></p>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-lg-6 form-group">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox"
-                                       name="<%=groupHandle%>[<%=counter%>][required]"
-                                       id="<%=groupHandle%>[<%=counter%>][required]"
-                                       value="1"
-                                       <% if (parseInt(required)) { %> checked="checked" <% } %>
-                                ><?php echo t('Required'); ?></label>
+                        <div class="form-check">
+                            <input type="checkbox"
+                                   class="form-check-input"
+                                   name="<%=groupHandle%>[<%=counter%>][required]"
+                                   id="<%=groupHandle%>[<%=counter%>][required]"
+                                   value="1"
+                                   <% if (parseInt(required)) { %> checked="checked" <% } %>
+                            >
+                            <label for="<%=groupHandle%>[<%=counter%>][required]" class="form-check-label"><?php echo t('Required'); ?></label>
                         </div>
                         <% if (groupHandle=='entries' && (fieldType == 'text_field' || fieldType == 'textarea')) { %>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"
-                                           name="<%=groupHandle%>[<%=counter%>][titleSource]"
-                                           id="<%=groupHandle%>[<%=counter%>][titleSource]"
-                                           class="js-use-field-as-title-in-repeatable-entries"
-                                           value="1"
-                                           <% if (parseInt(titleSource)) { %> checked="checked" <% } %>
-                                    ><?php echo t('Use this field as title in repeatable entries'); ?></label>
+                            <div class="form-check">
+                                <input type="checkbox"
+                                       name="<%=groupHandle%>[<%=counter%>][titleSource]"
+                                       id="<%=groupHandle%>[<%=counter%>][titleSource]"
+                                       class="form-check-input js-use-field-as-title-in-repeatable-entries"
+                                       value="1"
+                                       <% if (parseInt(titleSource)) { %> checked="checked" <% } %>
+                                >
+                                <label for="<%=groupHandle%>[<%=counter%>][titleSource]" class="form-check-label"><?php echo t('Use this field as title in repeatable entries'); ?></label>
                             </div>
                         <% } %>
                     </div>
                     <div class="col-lg-6 form-group">
-                        <label for="<%=groupHandle%>[<%=counter%>][helpText]" class="control-label"><?php echo t('Help text'); ?></label>
-                        <p class="small text-muted"><?php echo t('It will look exactly like this text'); ?></p>
+                        <label for="<%=groupHandle%>[<%=counter%>][helpText]" class="form-label"><?php echo t('Help text'); ?></label>
                         <input type="text"
                                id="<%=groupHandle%>[<%=counter%>][helpText]"
                                name="<%=groupHandle%>[<%=counter%>][helpText]"
                                class="form-control"
                                value="<%=helpText%>"
                         />
+                        <div class="form-text"><?php echo t('It will look exactly like this text'); ?></p>
                     </div>
                 </div>
 
@@ -497,43 +506,43 @@
 
                         <% if (fieldType == 'textarea') { %>
                             <div class="<% if (error['textareaHeight']!=undefined) { %>has-error<% } %>">
-                                <label for="<%=groupHandle%>[<%=counter%>][textareaHeight]" class="control-label"><?php echo t('Height'); ?></label>
-                                <p class="small text-muted">
-                                    <?php echo t('Default height: 62px.'); ?>
-                                </p>
-                                <div class="input-group col-lg-3">
-                                    <input type="text"
-                                           id="<%=groupHandle%>[<%=counter%>][textareaHeight]"
-                                           name="<%=groupHandle%>[<%=counter%>][textareaHeight]"
-                                           class="form-control"
-                                           value="<%=textareaHeight%>"
-                                    />
-                                    <span class="input-group-addon">px</span>
+                                <label for="<%=groupHandle%>[<%=counter%>][textareaHeight]" class="form-label"><?php echo t('Height'); ?></label>
+                                <div class="col-lg-3">
+                                    <div class="input-group">
+                                        <input type="text"
+                                               id="<%=groupHandle%>[<%=counter%>][textareaHeight]"
+                                               name="<%=groupHandle%>[<%=counter%>][textareaHeight]"
+                                               class="form-control"
+                                               value="<%=textareaHeight%>"
+                                        />
+                                        <span class="input-group-text">px</span>
+                                    </div>
                                 </div>
+                                <div class="form-text"><?php echo t('Default height: 62px.'); ?></div>
                             </div>
                         <% } %>
 
                         <% if (fieldType == 'wysiwyg_editor') { %>
                             <div class="<% if (error['wysiwygEditorHeight']!=undefined) { %>has-error<% } %>">
-                                <label for="<%=groupHandle%>[<%=counter%>][wysiwygEditorHeight]" class="control-label"><?php echo t('Height'); ?></label>
-                                <p class="small text-muted">
-                                    <?php echo t('Default height of editable area: 300px.'); ?><br/>
-                                </p>
-                                <div class="input-group col-lg-3">
-                                    <input type="text"
-                                           id="<%=groupHandle%>[<%=counter%>][wysiwygEditorHeight]"
-                                           name="<%=groupHandle%>[<%=counter%>][wysiwygEditorHeight]"
-                                           class="form-control"
-                                           value="<%=wysiwygEditorHeight%>"
-                                    />
-                                    <span class="input-group-addon">px</span>
+                                <label for="<%=groupHandle%>[<%=counter%>][wysiwygEditorHeight]" class="form-label"><?php echo t('Height'); ?></label>
+                                <div class="col-lg-3">
+                                    <div class="input-group">
+                                        <input type="text"
+                                               id="<%=groupHandle%>[<%=counter%>][wysiwygEditorHeight]"
+                                               name="<%=groupHandle%>[<%=counter%>][wysiwygEditorHeight]"
+                                               class="form-control"
+                                               value="<%=wysiwygEditorHeight%>"
+                                        />
+                                        <span class="input-group-text">px</span>
+                                    </div>
                                 </div>
+                                <div class="form-text"><?php echo t('Default height of editable area: 300px.'); ?></div>
                             </div>
                         <% } %>
 
                         <% if (fieldType == 'select_field') { %>
                             <div class="<% if (error['selectOptions']!=undefined) { %>has-error<% } %>">
-                                <label for="<%=groupHandle%>[<%=counter%>][selectOptions]" class="control-label"><?php echo t('Select options'); ?></label>
+                                <label for="<%=groupHandle%>[<%=counter%>][selectOptions]" class="form-label"><?php echo t('Select options'); ?></label>
                                 <p class="small text-muted">
                                     <?php echo t('Enter every option in new line, e.g.'); ?>
                                     <br/><code><?php echo t('Don\'t show'); ?></code>
@@ -553,146 +562,159 @@
                         <% } %>
 
                         <% if (fieldType == 'link_from_sitemap') { %>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"
-                                           name="<%=groupHandle%>[<%=counter%>][linkFromSitemapShowEndingField]"
-                                           id="<%=groupHandle%>[<%=counter%>][linkFromSitemapShowEndingField]"
-                                           value="1"
-                                    <% if (parseInt(linkFromSitemapShowEndingField)) { %> checked="checked" <% } %>
-                                    ><?php echo t('Show "Custom string at the end of URL" field'); ?></label>
+                            <div class="form-check">
+                                <input type="checkbox"
+                                       class="form-check-input"
+                                       name="<%=groupHandle%>[<%=counter%>][linkFromSitemapShowEndingField]"
+                                       id="<%=groupHandle%>[<%=counter%>][linkFromSitemapShowEndingField]"
+                                       value="1"
+                                <% if (parseInt(linkFromSitemapShowEndingField)) { %> checked="checked" <% } %>
+                                >
+                                <label for="<%=groupHandle%>[<%=counter%>][linkFromSitemapShowEndingField]" class="form-check-label"><?php echo t('Show "Custom string at the end of URL" field'); ?></label>
                             </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"
-                                           name="<%=groupHandle%>[<%=counter%>][linkFromSitemapShowTextField]"
-                                           id="<%=groupHandle%>[<%=counter%>][linkFromSitemapShowTextField]"
-                                           value="1"
-                                    <% if (parseInt(linkFromSitemapShowTextField)) { %> checked="checked" <% } %>
-                                    ><?php echo t('Show "Text" field'); ?></label>
+                            <div class="form-check">
+                                <input type="checkbox"
+                                       class="form-check-input"
+                                       name="<%=groupHandle%>[<%=counter%>][linkFromSitemapShowTextField]"
+                                       id="<%=groupHandle%>[<%=counter%>][linkFromSitemapShowTextField]"
+                                       value="1"
+                                <% if (parseInt(linkFromSitemapShowTextField)) { %> checked="checked" <% } %>
+                                >
+                                <label for="<%=groupHandle%>[<%=counter%>][linkFromSitemapShowTextField]" class="form-check-label"><?php echo t('Show "Text" field'); ?></label>
                             </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"
-                                           name="<%=groupHandle%>[<%=counter%>][linkFromSitemapShowTitleField]"
-                                           id="<%=groupHandle%>[<%=counter%>][linkFromSitemapShowTitleField]"
-                                           value="1"
-                                    <% if (parseInt(linkFromSitemapShowTitleField)) { %> checked="checked" <% } %>
-                                    ><?php echo t('Show "Title" field'); ?></label>
+                            <div class="form-check">
+                                <input type="checkbox"
+                                       class="form-check-input"
+                                       name="<%=groupHandle%>[<%=counter%>][linkFromSitemapShowTitleField]"
+                                       id="<%=groupHandle%>[<%=counter%>][linkFromSitemapShowTitleField]"
+                                       value="1"
+                                <% if (parseInt(linkFromSitemapShowTitleField)) { %> checked="checked" <% } %>
+                                >
+                                <label for="<%=groupHandle%>[<%=counter%>][linkFromSitemapShowTitleField]" class="form-check-label"><?php echo t('Show "Title" field'); ?></label>
                             </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"
-                                           name="<%=groupHandle%>[<%=counter%>][linkFromSitemapShowNewWindowField]"
-                                           id="<%=groupHandle%>[<%=counter%>][linkFromSitemapShowNewWindowField]"
-                                           value="1"
-                                    <% if (parseInt(linkFromSitemapShowNewWindowField)) { %> checked="checked" <% } %>
-                                    ><?php echo t('Show "Open in new window" field'); ?></label>
+                            <div class="form-check">
+                                <input type="checkbox"
+                                       class="form-check-input"
+                                       name="<%=groupHandle%>[<%=counter%>][linkFromSitemapShowNewWindowField]"
+                                       id="<%=groupHandle%>[<%=counter%>][linkFromSitemapShowNewWindowField]"
+                                       value="1"
+                                <% if (parseInt(linkFromSitemapShowNewWindowField)) { %> checked="checked" <% } %>
+                                >
+                                <label for="<%=groupHandle%>[<%=counter%>][linkFromSitemapShowNewWindowField]" class="form-check-label"><?php echo t('Show "Open in new window" field'); ?></label>
                             </div>
                         <% } %>
 
                         <% if (fieldType == 'link_from_file_manager') { %>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"
-                                           name="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowEndingField]"
-                                           id="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowEndingField]"
-                                           value="1"
-                                    <% if (parseInt(linkFromFileManagerShowEndingField)) { %> checked="checked" <% } %>
-                                    ><?php echo t('Show "Custom string at the end of URL" field'); ?></label>
+                            <div class="form-check">
+                                <input type="checkbox"
+                                       class="form-check-input"
+                                       name="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowEndingField]"
+                                       id="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowEndingField]"
+                                       value="1"
+                                <% if (parseInt(linkFromFileManagerShowEndingField)) { %> checked="checked" <% } %>
+                                >
+                                <label for="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowEndingField]" class="form-check-label"><?php echo t('Show "Custom string at the end of URL" field'); ?></label>
                             </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"
-                                           name="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowTextField]"
-                                           id="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowTextField]"
-                                           value="1"
-                                    <% if (parseInt(linkFromFileManagerShowTextField)) { %> checked="checked" <% } %>
-                                    ><?php echo t('Show "Text" field'); ?></label>
+                            <div class="form-check">
+                                <input type="checkbox"
+                                       class="form-check-input"
+                                       name="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowTextField]"
+                                       id="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowTextField]"
+                                       value="1"
+                                <% if (parseInt(linkFromFileManagerShowTextField)) { %> checked="checked" <% } %>
+                                >
+                                <label for="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowTextField]" class="form-check-label"><?php echo t('Show "Text" field'); ?></label>
                             </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"
-                                           name="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowTitleField]"
-                                           id="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowTitleField]"
-                                           value="1"
-                                    <% if (parseInt(linkFromFileManagerShowTitleField)) { %> checked="checked" <% } %>
-                                    ><?php echo t('Show "Title" field'); ?></label>
+                            <div class="form-check">
+                                <input type="checkbox"
+                                       class="form-check-input"
+                                       name="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowTitleField]"
+                                       id="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowTitleField]"
+                                       value="1"
+                                <% if (parseInt(linkFromFileManagerShowTitleField)) { %> checked="checked" <% } %>
+                                >
+                                <label for="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowTitleField]" class="form-check-label"><?php echo t('Show "Title" field'); ?></label>
                             </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"
-                                           name="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowNewWindowField]"
-                                           id="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowNewWindowField]"
-                                           value="1"
-                                    <% if (parseInt(linkFromFileManagerShowNewWindowField)) { %> checked="checked" <% } %>
-                                    ><?php echo t('Show "Open in new window" field'); ?></label>
+                            <div class="form-check">
+                                <input type="checkbox"
+                                       class="form-check-input"
+                                       name="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowNewWindowField]"
+                                       id="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowNewWindowField]"
+                                       value="1"
+                                <% if (parseInt(linkFromFileManagerShowNewWindowField)) { %> checked="checked" <% } %>
+                                >
+                                <label for="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowNewWindowField]" class="form-check-label"><?php echo t('Show "Open in new window" field'); ?></label>
                             </div>
                         <% } %>
 
                         <% if (fieldType == 'external_link') { %>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"
-                                           name="<%=groupHandle%>[<%=counter%>][externalLinkShowEndingField]"
-                                           id="<%=groupHandle%>[<%=counter%>][externalLinkShowEndingField]"
-                                           value="1"
-                                    <% if (parseInt(externalLinkShowEndingField)) { %> checked="checked" <% } %>
-                                    ><?php echo t('Show "Custom string at the end of URL" field'); ?></label>
+                            <div class="form-check">
+                                <input type="checkbox"
+                                       class="form-check-input"
+                                       name="<%=groupHandle%>[<%=counter%>][externalLinkShowEndingField]"
+                                       id="<%=groupHandle%>[<%=counter%>][externalLinkShowEndingField]"
+                                       value="1"
+                                <% if (parseInt(externalLinkShowEndingField)) { %> checked="checked" <% } %>
+                                >
+                                <label for="<%=groupHandle%>[<%=counter%>][externalLinkShowEndingField]" class="form-check-label"><?php echo t('Show "Custom string at the end of URL" field'); ?></label>
                             </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"
-                                           name="<%=groupHandle%>[<%=counter%>][externalLinkShowTextField]"
-                                           id="<%=groupHandle%>[<%=counter%>][externalLinkShowTextField]"
-                                           value="1"
-                                    <% if (parseInt(externalLinkShowTextField)) { %> checked="checked" <% } %>
-                                    ><?php echo t('Show "Text" field'); ?></label>
+                            <div class="form-check">
+                                <input type="checkbox"
+                                       class="form-check-input"
+                                       name="<%=groupHandle%>[<%=counter%>][externalLinkShowTextField]"
+                                       id="<%=groupHandle%>[<%=counter%>][externalLinkShowTextField]"
+                                       value="1"
+                                <% if (parseInt(externalLinkShowTextField)) { %> checked="checked" <% } %>
+                                >
+                                <label for="<%=groupHandle%>[<%=counter%>][externalLinkShowTextField]" class="form-check-label"><?php echo t('Show "Text" field'); ?></label>
                             </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"
-                                           name="<%=groupHandle%>[<%=counter%>][externalLinkShowTitleField]"
-                                           id="<%=groupHandle%>[<%=counter%>][externalLinkShowTitleField]"
-                                           value="1"
-                                    <% if (parseInt(externalLinkShowTitleField)) { %> checked="checked" <% } %>
-                                    ><?php echo t('Show "Title" field'); ?></label>
+                            <div class="form-check">
+                                <input type="checkbox"
+                                       class="form-check-input"
+                                       name="<%=groupHandle%>[<%=counter%>][externalLinkShowTitleField]"
+                                       id="<%=groupHandle%>[<%=counter%>][externalLinkShowTitleField]"
+                                       value="1"
+                                <% if (parseInt(externalLinkShowTitleField)) { %> checked="checked" <% } %>
+                                >
+                                <label for="<%=groupHandle%>[<%=counter%>][externalLinkShowTitleField]" class="form-check-label"><?php echo t('Show "Title" field'); ?></label>
                             </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"
-                                           name="<%=groupHandle%>[<%=counter%>][externalLinkShowNewWindowField]"
-                                           id="<%=groupHandle%>[<%=counter%>][externalLinkShowNewWindowField]"
-                                           value="1"
-                                    <% if (parseInt(externalLinkShowNewWindowField)) { %> checked="checked" <% } %>
-                                    ><?php echo t('Show "Open in new window" field'); ?></label>
+                            <div class="form-check">
+                                <input type="checkbox"
+                                       class="form-check-input"
+                                       name="<%=groupHandle%>[<%=counter%>][externalLinkShowNewWindowField]"
+                                       id="<%=groupHandle%>[<%=counter%>][externalLinkShowNewWindowField]"
+                                       value="1"
+                                <% if (parseInt(externalLinkShowNewWindowField)) { %> checked="checked" <% } %>
+                                >
+                                <label for="<%=groupHandle%>[<%=counter%>][externalLinkShowNewWindowField]" class="form-check-label"><?php echo t('Show "Open in new window" field'); ?></label>
                             </div>
                         <% } %>
 
                         <% if (fieldType == 'image') { %>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"
-                                           name="<%=groupHandle%>[<%=counter%>][imageShowAltTextField]"
-                                           id="<%=groupHandle%>[<%=counter%>][imageShowAltTextField]"
-                                           value="1"
-                                    <% if (parseInt(imageShowAltTextField)) { %> checked="checked" <% } %>
-                                    ><?php echo t('Show "Alt text" field'); ?></label>
+                            <div class="form-check">
+                                <input type="checkbox"
+                                       class="form-check-input"
+                                       name="<%=groupHandle%>[<%=counter%>][imageShowAltTextField]"
+                                       id="<%=groupHandle%>[<%=counter%>][imageShowAltTextField]"
+                                       value="1"
+                                <% if (parseInt(imageShowAltTextField)) { %> checked="checked" <% } %>
+                                >
+                                <label for="<%=groupHandle%>[<%=counter%>][imageShowAltTextField]" class="form-check-label"><?php echo t('Show "Alt text" field'); ?></label>
                             </div>
                             <div class="row" style="display: none;"></div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"
-                                           name="<%=groupHandle%>[<%=counter%>][imageCreateThumbnailImage]"
-                                           id="<%=groupHandle%>[<%=counter%>][imageCreateThumbnailImage]"
-                                           value="1"
-                                           class="js-image-create-thumbnail-image"
-                                    <% if (parseInt(imageCreateThumbnailImage)) { %> checked="checked" <% } %>
-                                    ><?php echo t('Generate thumbnail using image helper (if original image is bigger than specified dimensions)'); ?></label>
+                            <div class="form-check">
+                                <input type="checkbox"
+                                       name="<%=groupHandle%>[<%=counter%>][imageCreateThumbnailImage]"
+                                       id="<%=groupHandle%>[<%=counter%>][imageCreateThumbnailImage]"
+                                       value="1"
+                                       class="form-check-input js-image-create-thumbnail-image"
+                                <% if (parseInt(imageCreateThumbnailImage)) { %> checked="checked" <% } %>
+                                >
+                                <label for="<%=groupHandle%>[<%=counter%>][imageCreateThumbnailImage]" class="form-check-label"><?php echo t('Generate thumbnail using image helper (if original image is bigger than specified dimensions)'); ?></label>
                             </div>
                             <div class="row js-image-create-thumbnail-image-wrapper <% if (error['imageThumbnailOptions']!=undefined) { %>has-error<% } %>" <% if (!parseInt(imageCreateThumbnailImage)) { %> style="display: none;" <% } %>>
                                 <div class="col-lg-4 form-group <% if (error['imageThumbnailWidth']!=undefined) { %>has-error<% } %>">
-                                    <label for="<%=groupHandle%>[<%=counter%>][imageThumbnailWidth]" class="control-label"><?php echo t('Width'); ?></label>
+                                    <label for="<%=groupHandle%>[<%=counter%>][imageThumbnailWidth]" class="form-label"><?php echo t('Width'); ?></label>
                                     <div class="input-group">
                                         <input type="text"
                                                id="<%=groupHandle%>[<%=counter%>][imageThumbnailWidth]"
@@ -700,11 +722,11 @@
                                                class="form-control"
                                                value="<%=imageThumbnailWidth%>"
                                         />
-                                        <span class="input-group-addon">px</span>
+                                        <span class="input-group-text">px</span>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 form-group <% if (error['imageThumbnailHeight']!=undefined) { %>has-error<% } %>">
-                                    <label for="<%=groupHandle%>[<%=counter%>][imageThumbnailHeight]" class="control-label"><?php echo t('Height'); ?></label>
+                                    <label for="<%=groupHandle%>[<%=counter%>][imageThumbnailHeight]" class="form-label"><?php echo t('Height'); ?></label>
                                     <div class="input-group">
                                         <input type="text"
                                                id="<%=groupHandle%>[<%=counter%>][imageThumbnailHeight]"
@@ -712,47 +734,49 @@
                                                class="form-control"
                                                value="<%=imageThumbnailHeight%>"
                                         />
-                                        <span class="input-group-addon">px</span>
+                                        <span class="input-group-text">px</span>
                                     </div>
                                 </div>
                                 <div class="col-lg-2 form-group">
-                                    <label class="control-label"><?php echo t('Crop'); ?></label>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox"
-                                                   name="<%=groupHandle%>[<%=counter%>][imageThumbnailCrop]"
-                                                   id="<%=groupHandle%>[<%=counter%>][imageThumbnailCrop]"
-                                                   value="1"
-                                            <% if (parseInt(imageThumbnailCrop)) { %> checked="checked" <% } %>
-                                            ><?php echo t('Yes'); ?></label>
+                                    <label class="form-label"><?php echo t('Crop'); ?></label>
+                                    <div class="form-check">
+                                        <input type="checkbox"
+                                               class="form-check-input"
+                                               name="<%=groupHandle%>[<%=counter%>][imageThumbnailCrop]"
+                                               id="<%=groupHandle%>[<%=counter%>][imageThumbnailCrop]"
+                                               value="1"
+                                        <% if (parseInt(imageThumbnailCrop)) { %> checked="checked" <% } %>
+                                        >
+                                        <label for="<%=groupHandle%>[<%=counter%>][imageThumbnailCrop]" class="form-check-label"><?php echo t('Yes'); ?></label>
                                     </div>
                                 </div>
                                 <div class="col-lg-2 form-group">
-                                    <label class="control-label"><?php echo t('Editable'); ?></label>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox"
-                                                   name="<%=groupHandle%>[<%=counter%>][imageThumbnailEditable]"
-                                                   id="<%=groupHandle%>[<%=counter%>][imageThumbnailEditable]"
-                                                   value="1"
-                                            <% if (parseInt(imageThumbnailEditable)) { %> checked="checked" <% } %>
-                                            ><?php echo t('Yes'); ?></label>
+                                    <label class="form-label"><?php echo t('Editable'); ?></label>
+                                    <div class="form-check">
+                                        <input type="checkbox"
+                                               class="form-check-input"
+                                               name="<%=groupHandle%>[<%=counter%>][imageThumbnailEditable]"
+                                               id="<%=groupHandle%>[<%=counter%>][imageThumbnailEditable]"
+                                               value="1"
+                                        <% if (parseInt(imageThumbnailEditable)) { %> checked="checked" <% } %>
+                                        >
+                                        <label for="<%=groupHandle%>[<%=counter%>][imageThumbnailEditable]" class="form-check-label"><?php echo t('Yes'); ?></label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"
-                                           name="<%=groupHandle%>[<%=counter%>][imageCreateFullscreenImage]"
-                                           id="<%=groupHandle%>[<%=counter%>][imageCreateFullscreenImage]"
-                                           value="1"
-                                           class="js-image-create-fullscreen-image"
-                                    <% if (parseInt(imageCreateFullscreenImage)) { %> checked="checked" <% } %>
-                                    ><?php echo t('Generate fullscreen image using image helper (if original image is bigger than specified dimensions)'); ?></label>
+                            <div class="form-check">
+                                <input type="checkbox"
+                                       name="<%=groupHandle%>[<%=counter%>][imageCreateFullscreenImage]"
+                                       id="<%=groupHandle%>[<%=counter%>][imageCreateFullscreenImage]"
+                                       value="1"
+                                       class="form-check-input js-image-create-fullscreen-image"
+                                <% if (parseInt(imageCreateFullscreenImage)) { %> checked="checked" <% } %>
+                                >
+                                <label for="<%=groupHandle%>[<%=counter%>][imageCreateFullscreenImage]" class="form-check-label"><?php echo t('Generate fullscreen image using image helper (if original image is bigger than specified dimensions)'); ?></label>
                             </div>
                             <div class="row js-image-create-fullscreen-image-wrapper <% if (error['imageFullscreenOptions']!=undefined) { %>has-error<% } %>" <% if (!parseInt(imageCreateFullscreenImage)) { %> style="display: none;" <% } %>>
                                 <div class="col-lg-4 form-group <% if (error['imageFullscreenWidth']!=undefined) { %>has-error<% } %>">
-                                    <label for="<%=groupHandle%>[<%=counter%>][imageFullscreenWidth]" class="control-label"><?php echo t('Width'); ?></label>
+                                    <label for="<%=groupHandle%>[<%=counter%>][imageFullscreenWidth]" class="form-label"><?php echo t('Width'); ?></label>
                                     <div class="input-group">
                                         <input type="text"
                                                id="<%=groupHandle%>[<%=counter%>][imageFullscreenWidth]"
@@ -760,11 +784,11 @@
                                                class="form-control"
                                                value="<%=imageFullscreenWidth%>"
                                         />
-                                        <span class="input-group-addon">px</span>
+                                        <span class="input-group-text">px</span>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 form-group <% if (error['imageFullscreenHeight']!=undefined) { %>has-error<% } %>">
-                                    <label for="<%=groupHandle%>[<%=counter%>][imageFullscreenHeight]" class="control-label"><?php echo t('Height'); ?></label>
+                                    <label for="<%=groupHandle%>[<%=counter%>][imageFullscreenHeight]" class="form-label"><?php echo t('Height'); ?></label>
                                     <div class="input-group">
                                         <input type="text"
                                                id="<%=groupHandle%>[<%=counter%>][imageFullscreenHeight]"
@@ -772,31 +796,33 @@
                                                class="form-control"
                                                value="<%=imageFullscreenHeight%>"
                                         />
-                                        <span class="input-group-addon">px</span>
+                                        <span class="input-group-text">px</span>
                                     </div>
                                 </div>
                                 <div class="col-lg-2 form-group">
-                                    <label class="control-label"><?php echo t('Crop'); ?></label>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox"
-                                                   name="<%=groupHandle%>[<%=counter%>][imageFullscreenCrop]"
-                                                   id="<%=groupHandle%>[<%=counter%>][imageFullscreenCrop]"
-                                                   value="1"
-                                            <% if (parseInt(imageFullscreenCrop)) { %> checked="checked" <% } %>
-                                            ><?php echo t('Yes'); ?></label>
+                                    <label class="form-label"><?php echo t('Crop'); ?></label>
+                                    <div class="form-check">
+                                        <input type="checkbox"
+                                               class="form-check-input"
+                                               name="<%=groupHandle%>[<%=counter%>][imageFullscreenCrop]"
+                                               id="<%=groupHandle%>[<%=counter%>][imageFullscreenCrop]"
+                                               value="1"
+                                        <% if (parseInt(imageFullscreenCrop)) { %> checked="checked" <% } %>
+                                        >
+                                        <label for="<%=groupHandle%>[<%=counter%>][imageFullscreenCrop]" class="form-check-label"><?php echo t('Yes'); ?></label>
                                     </div>
                                 </div>
                                 <div class="col-lg-2 form-group">
-                                    <label class="control-label"><?php echo t('Editable'); ?></label>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox"
-                                                   name="<%=groupHandle%>[<%=counter%>][imageFullscreenEditable]"
-                                                   id="<%=groupHandle%>[<%=counter%>][imageFullscreenEditable]"
-                                                   value="1"
-                                            <% if (parseInt(imageFullscreenEditable)) { %> checked="checked" <% } %>
-                                            ><?php echo t('Yes'); ?></label>
+                                    <label class="form-label"><?php echo t('Editable'); ?></label>
+                                    <div class="form-check">
+                                        <input type="checkbox"
+                                               class="form-check-input"
+                                               name="<%=groupHandle%>[<%=counter%>][imageFullscreenEditable]"
+                                               id="<%=groupHandle%>[<%=counter%>][imageFullscreenEditable]"
+                                               value="1"
+                                        <% if (parseInt(imageFullscreenEditable)) { %> checked="checked" <% } %>
+                                        >
+                                        <label for="<%=groupHandle%>[<%=counter%>][imageFullscreenEditable]" class="form-check-label"><?php echo t('Yes'); ?></label>
                                     </div>
                                 </div>
                             </div>
@@ -804,7 +830,7 @@
 
                         <% if (fieldType == 'html_editor') { %>
                             <div class="<% if (error['htmlEditorHeight']!=undefined) { %>has-error<% } %>">
-                                <label for="<%=groupHandle%>[<%=counter%>][htmlEditorHeight]" class="control-label"><?php echo t('Height'); ?></label>
+                                <label for="<%=groupHandle%>[<%=counter%>][htmlEditorHeight]" class="form-label"><?php echo t('Height'); ?></label>
                                 <p class="small text-muted">
                                     <?php echo t('Default height: 250px.'); ?><br/>
                                 </p>
@@ -815,14 +841,14 @@
                                            class="form-control"
                                            value="<%=htmlEditorHeight%>"
                                     />
-                                    <span class="input-group-addon">px</span>
+                                    <span class="input-group-text">px</span>
                                 </div>
                             </div>
                         <% } %>
 
                         <% if (fieldType == 'date_picker') { %>
                             <div class="<% if (error['datePickerPattern']!=undefined) { %>has-error<% } %>">
-                                <label for="<%=groupHandle%>[<%=counter%>][datePickerPattern]" class="control-label"><?php echo t('PHP Date Pattern'); ?></label>
+                                <label for="<%=groupHandle%>[<%=counter%>][datePickerPattern]" class="form-label"><?php echo t('PHP Date Pattern'); ?></label>
                                 <p class="small text-muted">
                                     <?php echo t('Check %sphp manual%s for available formats. Examples: <code>d.m.Y</code>, <code>d-m-Y</code>, <code>Y-m-d</code>, <code>m-d-Y</code>, <code>m/d/Y</code>', '<a href="https://www.php.net/manual/en/function.date.php" target="_blank" rel="noopener noreferrer">','</a>'); ?>
                                 </p>
