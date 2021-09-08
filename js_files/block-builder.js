@@ -179,9 +179,9 @@ $(function() {
                 templateData['datePickerPattern'] = 'd.m.Y';
 
                 entriesContainer.append(template(templateData));
-                var newField = entriesContainer.children(':last');
 
-                newField.effect('highlight', {}, 1500);
+                //var newField = entriesContainer.children(':last');
+                //newField.effect('highlight', {}, 1500);
 
                 selectedFieldType.val('');
 
@@ -189,7 +189,7 @@ $(function() {
                 if ( ! $.cookie('scrollDisabled')) {
                     $('html').animate({
                         scrollTop: entriesContainer.find('.js-entry[data-counter="'+counter+'"]').position().top-50 + entriesContainer.scrollTop()
-                    });
+                    }, 0);
                 }
 
             }
