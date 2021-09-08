@@ -297,7 +297,7 @@
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="col-lg-9 form-group entries-actions">
+                <div class="col-lg-9 form-group entries-actions d-flex align-items-center">
                     <div class="entries-action entries-action-scroll form-check-inline">
                         <input type="checkbox"
                                name="scroll"
@@ -326,7 +326,7 @@
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="col-lg-9 form-group entries-actions">
+                <div class="col-lg-9 form-group entries-actions d-flex align-items-center">
                     <div class="entries-action entries-action-scroll form-check-inline">
                         <input type="checkbox"
                                name="scroll"
@@ -355,7 +355,7 @@
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="col-lg-9 form-group entries-actions">
+                <div class="col-lg-9 form-group entries-actions d-flex align-items-center">
                     <div class="entries-action entries-action-scroll form-check-inline">
                         <input type="checkbox"
                                name="scroll"
@@ -384,7 +384,7 @@
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="col-lg-9 form-group entries-actions">
+                <div class="col-lg-9 form-group entries-actions d-flex align-items-center">
                     <div class="entries-action entries-action-scroll form-check-inline">
                         <input type="checkbox"
                                name="scroll"
@@ -712,7 +712,7 @@
                                 >
                                 <label for="<%=groupHandle%>[<%=counter%>][imageCreateThumbnailImage]" class="form-check-label"><?php echo t('Generate thumbnail using image helper (if original image is bigger than specified dimensions)'); ?></label>
                             </div>
-                            <div class="row js-image-create-thumbnail-image-wrapper <% if (error['imageThumbnailOptions']!=undefined) { %>has-error<% } %>" <% if (!parseInt(imageCreateThumbnailImage)) { %> style="display: none;" <% } %>>
+                            <div class="row mt-2 js-image-create-thumbnail-image-wrapper <% if (error['imageThumbnailOptions']!=undefined) { %>has-error<% } %>" <% if (!parseInt(imageCreateThumbnailImage)) { %> style="display: none;" <% } %>>
                                 <div class="col-lg-4 form-group <% if (error['imageThumbnailWidth']!=undefined) { %>has-error<% } %>">
                                     <label for="<%=groupHandle%>[<%=counter%>][imageThumbnailWidth]" class="form-label"><?php echo t('Width'); ?></label>
                                     <div class="input-group">
@@ -774,7 +774,7 @@
                                 >
                                 <label for="<%=groupHandle%>[<%=counter%>][imageCreateFullscreenImage]" class="form-check-label"><?php echo t('Generate fullscreen image using image helper (if original image is bigger than specified dimensions)'); ?></label>
                             </div>
-                            <div class="row js-image-create-fullscreen-image-wrapper <% if (error['imageFullscreenOptions']!=undefined) { %>has-error<% } %>" <% if (!parseInt(imageCreateFullscreenImage)) { %> style="display: none;" <% } %>>
+                            <div class="row mt-2 js-image-create-fullscreen-image-wrapper <% if (error['imageFullscreenOptions']!=undefined) { %>has-error<% } %>" <% if (!parseInt(imageCreateFullscreenImage)) { %> style="display: none;" <% } %>>
                                 <div class="col-lg-4 form-group <% if (error['imageFullscreenWidth']!=undefined) { %>has-error<% } %>">
                                     <label for="<%=groupHandle%>[<%=counter%>][imageFullscreenWidth]" class="form-label"><?php echo t('Width'); ?></label>
                                     <div class="input-group">
@@ -831,9 +831,6 @@
                         <% if (fieldType == 'html_editor') { %>
                             <div class="<% if (error['htmlEditorHeight']!=undefined) { %>has-error<% } %>">
                                 <label for="<%=groupHandle%>[<%=counter%>][htmlEditorHeight]" class="form-label"><?php echo t('Height'); ?></label>
-                                <p class="small text-muted">
-                                    <?php echo t('Default height: 250px.'); ?><br/>
-                                </p>
                                 <div class="input-group col-lg-3">
                                     <input type="text"
                                            id="<%=groupHandle%>[<%=counter%>][htmlEditorHeight]"
@@ -843,21 +840,24 @@
                                     />
                                     <span class="input-group-text">px</span>
                                 </div>
+                                <div class="form-text">
+                                    <?php echo t('Default height: 250px.'); ?><br/>
+                                </div>
                             </div>
                         <% } %>
 
                         <% if (fieldType == 'date_picker') { %>
                             <div class="<% if (error['datePickerPattern']!=undefined) { %>has-error<% } %>">
                                 <label for="<%=groupHandle%>[<%=counter%>][datePickerPattern]" class="form-label"><?php echo t('PHP Date Pattern'); ?></label>
-                                <p class="small text-muted">
-                                    <?php echo t('Check %sphp manual%s for available formats. Examples: <code>d.m.Y</code>, <code>d-m-Y</code>, <code>Y-m-d</code>, <code>m-d-Y</code>, <code>m/d/Y</code>', '<a href="https://www.php.net/manual/en/function.date.php" target="_blank" rel="noopener noreferrer">','</a>'); ?>
-                                </p>
                                 <input type="text"
                                        id="<%=groupHandle%>[<%=counter%>][datePickerPattern]"
                                        name="<%=groupHandle%>[<%=counter%>][datePickerPattern]"
                                        class="form-control"
                                        value="<%=datePickerPattern%>"
                                 />
+                                <div class="form-text">
+                                    <?php echo t('Check %sphp manual%s for available formats. Examples: <code>d.m.Y</code>, <code>d-m-Y</code>, <code>Y-m-d</code>, <code>m-d-Y</code>, <code>m/d/Y</code>', '<a href="https://www.php.net/manual/en/function.date.php" target="_blank" rel="noopener noreferrer">','</a>'); ?>
+                                </div>
                             </div>
                         <% } %>
 
