@@ -518,7 +518,7 @@
                                         <span class="input-group-text">px</span>
                                     </div>
                                 </div>
-                                <div class="form-text"><?php echo t('Default height: 62px.'); ?></div>
+                                <div class="form-text"><?php echo t('Default height: %s.', '68px'); ?></div>
                             </div>
                         <% } %>
 
@@ -536,7 +536,7 @@
                                         <span class="input-group-text">px</span>
                                     </div>
                                 </div>
-                                <div class="form-text"><?php echo t('Default height of editable area: 300px.'); ?></div>
+                                <div class="form-text"><?php echo t('Default height of editable area: %s.', '40px'); ?><br/><?php echo t('Editor auto-grow will be enabled if you leave this field empty.'); ?></div>
                             </div>
                         <% } %>
 
@@ -841,7 +841,7 @@
                                     <span class="input-group-text">px</span>
                                 </div>
                                 <div class="form-text">
-                                    <?php echo t('Default height: 250px.'); ?><br/>
+                                    <?php echo t('Default height: %s.', '250px'); ?><br/>
                                 </div>
                             </div>
                         <% } %>
