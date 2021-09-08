@@ -62,7 +62,7 @@
     color: #4290be;
     text-align: center;
 }
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 992px) {
     .ccm-ui .navigation-tabs li {
         float: left;
         width: auto;

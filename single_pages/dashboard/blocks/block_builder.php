@@ -35,12 +35,12 @@
         <div class="ccm-tab-content active" id="ccm-tab-content-block-settings" style="display: none;">
 
             <div class="row">
-                <div class="col-md-6 form-group <?php in_array('blockName', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <div class="col-lg-6 form-group <?php in_array('blockName', $fieldsWithError) ? print 'has-error' : false; ?>">
                     <?php echo $form->label('blockName', t('Block name').' *'); ?>
                     <p class="small text-muted"><?php echo t('Human-readable name e.g. "Example block"'); ?></p>
                     <?php echo $form->text('blockName', $blockName, ['maxlength' => '100']); ?>
                 </div>
-                <div class="col-md-6 form-group <?php in_array('blockHandle', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <div class="col-lg-6 form-group <?php in_array('blockHandle', $fieldsWithError) ? print 'has-error' : false; ?>">
                     <?php echo $form->label('blockHandle', t('Block handle').' *'); ?>
                     <p class="small text-muted"><?php echo t('Lowercase letters and underscores only e.g. "example_block"'); ?></p>
                     <?php echo $form->text('blockHandle', $blockHandle, ['maxlength' => '50']); ?>
@@ -48,43 +48,43 @@
             </div>
 
             <div class="row">
-                <div class="col-md-6 form-group <?php in_array('blockDescription', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <div class="col-lg-6 form-group <?php in_array('blockDescription', $fieldsWithError) ? print 'has-error' : false; ?>">
                     <?php echo $form->label('blockDescription', t('Block description')); ?>
                     <?php echo $form->textarea('blockDescription', $blockDescription, ['maxlength' => '100']); ?>
                 </div>
-                <div class="col-md-6 form-group <?php in_array('installBlock', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <div class="col-lg-6 form-group <?php in_array('installBlock', $fieldsWithError) ? print 'has-error' : false; ?>">
                     <?php echo $form->label('installBlock', t('Install block after creation')); ?>
                     <?php echo $form->select('installBlock', $installBlockOptions, $installBlock); ?>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-md-4 form-group <?php in_array('blockWidth', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <div class="col-lg-4 form-group <?php in_array('blockWidth', $fieldsWithError) ? print 'has-error' : false; ?>">
                     <?php echo $form->label('blockWidth', t('Block width').' *'); ?>
                     <div class="input-group">
                         <?php echo $form->text('blockWidth', $blockWidth); ?>
                         <span class="input-group-addon">px</span>
                     </div>
                 </div>
-                <div class="col-md-4 form-group <?php in_array('blockHeight', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <div class="col-lg-4 form-group <?php in_array('blockHeight', $fieldsWithError) ? print 'has-error' : false; ?>">
                     <?php echo $form->label('blockHeight', t('Block height').' *'); ?>
                     <div class="input-group">
                         <?php echo $form->text('blockHeight', $blockHeight); ?>
                         <span class="input-group-addon">px</span>
                     </div>
                 </div>
-                <div class="col-md-4 form-group <?php in_array('blockTypeSet', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <div class="col-lg-4 form-group <?php in_array('blockTypeSet', $fieldsWithError) ? print 'has-error' : false; ?>">
                     <?php echo $form->label('blockTypeSet', t('Block type set')); ?>
                     <?php echo $form->select('blockTypeSet', $blockTypeSets, $blockTypeSet); ?>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-md-6 form-group <?php in_array('entriesAsFirstTab', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <div class="col-lg-6 form-group <?php in_array('entriesAsFirstTab', $fieldsWithError) ? print 'has-error' : false; ?>">
                     <?php echo $form->label('entriesAsFirstTab', t('Entries as first tab')); ?>
                     <?php echo $form->select('entriesAsFirstTab', $entriesAsFirstTabOptions, $entriesAsFirstTab); ?>
                 </div>
-                <div class="col-md-6 form-group <?php in_array('maxNumberOfEntries', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <div class="col-lg-6 form-group <?php in_array('maxNumberOfEntries', $fieldsWithError) ? print 'has-error' : false; ?>">
                     <?php echo $form->label('maxNumberOfEntries', t('Max. number of entries').' '.t('(0 for unlimited)')); ?>
                     <?php echo $form->number('maxNumberOfEntries', $maxNumberOfEntries); ?>
                 </div>
@@ -290,14 +290,14 @@
         <div class="ccm-tab-content" id="ccm-tab-content-tab-basic-information" style="display: none;">
 
             <div class="row">
-                <div class="col-md-3 form-group">
+                <div class="col-lg-3 form-group">
                     <select class="js-add-entry form-control" data-group-handle="basic">
                         <?php foreach ($fieldTypes as $k => $v): ?>
                             <option value="<?php echo h($k); ?>"><?php echo h($v); ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="col-md-9 form-group entries-actions">
+                <div class="col-lg-9 form-group entries-actions">
                     <div class="entries-action entries-action-scroll checkbox">
                         <label><input type="checkbox"
                                name="scroll"
@@ -317,14 +317,14 @@
             </div>
 
             <div class="row">
-                <div class="col-md-3 form-group">
+                <div class="col-lg-3 form-group">
                     <select class="js-add-entry form-control" data-group-handle="basic">
                         <?php foreach ($fieldTypes as $k => $v): ?>
                             <option value="<?php echo h($k); ?>"><?php echo h($v); ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="col-md-9 form-group entries-actions">
+                <div class="col-lg-9 form-group entries-actions">
                     <div class="entries-action entries-action-scroll checkbox">
                         <label><input type="checkbox"
                                name="scroll"
@@ -344,14 +344,14 @@
         <div class="ccm-tab-content" id="ccm-tab-content-tab-repeatable-entries" style="display: none;">
 
             <div class="row">
-                <div class="col-md-3 form-group">
+                <div class="col-lg-3 form-group">
                     <select class="js-add-entry form-control" data-group-handle="entries">
                         <?php foreach ($fieldTypes as $k => $v): ?>
                             <option value="<?php echo h($k); ?>"><?php echo h($v); ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="col-md-9 form-group entries-actions">
+                <div class="col-lg-9 form-group entries-actions">
                     <div class="entries-action entries-action-scroll checkbox">
                         <label><input type="checkbox"
                                name="scroll"
@@ -371,14 +371,14 @@
             </div>
 
             <div class="row">
-                <div class="col-md-3 form-group">
+                <div class="col-lg-3 form-group">
                     <select class="js-add-entry form-control" data-group-handle="entries">
                         <?php foreach ($fieldTypes as $k => $v): ?>
                             <option value="<?php echo h($k); ?>"><?php echo h($v); ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="col-md-9 form-group entries-actions">
+                <div class="col-lg-9 form-group entries-actions">
                     <div class="entries-action entries-action-scroll checkbox">
                         <label><input type="checkbox"
                                name="scroll"
@@ -430,7 +430,7 @@
                 <input type="hidden" id="<%=groupHandle%>[<%=counter%>][fieldType]" name="<%=groupHandle%>[<%=counter%>][fieldType]" value="<%=fieldType%>" />
 
                 <div class="row">
-                    <div class="col-md-6 form-group <% if (error['label']!=undefined) { %>has-error<% } %>">
+                    <div class="col-lg-6 form-group <% if (error['label']!=undefined) { %>has-error<% } %>">
                         <label for="<%=groupHandle%>[<%=counter%>][label]" class="control-label"><?php echo t('Label'); ?> *</label>
                         <p class="small text-muted"><?php echo t('Human-readable name e.g. "Product name"'); ?></p>
                         <input type="text"
@@ -440,7 +440,7 @@
                                value="<%=label%>"
                         />
                     </div>
-                    <div class="col-md-6 form-group <% if (error['handle']!=undefined) { %>has-error<% } %>">
+                    <div class="col-lg-6 form-group <% if (error['handle']!=undefined) { %>has-error<% } %>">
                         <label for="<%=groupHandle%>[<%=counter%>][handle]" class="control-label"><?php echo t('Handle'); ?> *</label>
                         <p class="small text-muted"><?php echo t('a-zA-Z_ characters only e.g. "productName" or "product_name"'); ?></p>
                         <input type="text"
@@ -454,7 +454,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6 form-group">
+                    <div class="col-lg-6 form-group">
                         <div class="checkbox">
                             <label>
                                 <input type="checkbox"
@@ -477,7 +477,7 @@
                             </div>
                         <% } %>
                     </div>
-                    <div class="col-md-6 form-group">
+                    <div class="col-lg-6 form-group">
                         <label for="<%=groupHandle%>[<%=counter%>][helpText]" class="control-label"><?php echo t('Help text'); ?></label>
                         <p class="small text-muted"><?php echo t('It will look exactly like this text'); ?></p>
                         <input type="text"
@@ -501,7 +501,7 @@
                                 <p class="small text-muted">
                                     <?php echo t('Default height: 62px.'); ?>
                                 </p>
-                                <div class="input-group col-md-3">
+                                <div class="input-group col-lg-3">
                                     <input type="text"
                                            id="<%=groupHandle%>[<%=counter%>][textareaHeight]"
                                            name="<%=groupHandle%>[<%=counter%>][textareaHeight]"
@@ -519,7 +519,7 @@
                                 <p class="small text-muted">
                                     <?php echo t('Default height of editable area: 300px.'); ?><br/>
                                 </p>
-                                <div class="input-group col-md-3">
+                                <div class="input-group col-lg-3">
                                     <input type="text"
                                            id="<%=groupHandle%>[<%=counter%>][wysiwygEditorHeight]"
                                            name="<%=groupHandle%>[<%=counter%>][wysiwygEditorHeight]"
@@ -691,7 +691,7 @@
                                     ><?php echo t('Generate thumbnail using image helper (if original image is bigger than specified dimensions)'); ?></label>
                             </div>
                             <div class="row js-image-create-thumbnail-image-wrapper <% if (error['imageThumbnailOptions']!=undefined) { %>has-error<% } %>" <% if (!parseInt(imageCreateThumbnailImage)) { %> style="display: none;" <% } %>>
-                                <div class="col-md-4 form-group <% if (error['imageThumbnailWidth']!=undefined) { %>has-error<% } %>">
+                                <div class="col-lg-4 form-group <% if (error['imageThumbnailWidth']!=undefined) { %>has-error<% } %>">
                                     <label for="<%=groupHandle%>[<%=counter%>][imageThumbnailWidth]" class="control-label"><?php echo t('Width'); ?></label>
                                     <div class="input-group">
                                         <input type="text"
@@ -703,7 +703,7 @@
                                         <span class="input-group-addon">px</span>
                                     </div>
                                 </div>
-                                <div class="col-md-4 form-group <% if (error['imageThumbnailHeight']!=undefined) { %>has-error<% } %>">
+                                <div class="col-lg-4 form-group <% if (error['imageThumbnailHeight']!=undefined) { %>has-error<% } %>">
                                     <label for="<%=groupHandle%>[<%=counter%>][imageThumbnailHeight]" class="control-label"><?php echo t('Height'); ?></label>
                                     <div class="input-group">
                                         <input type="text"
@@ -715,7 +715,7 @@
                                         <span class="input-group-addon">px</span>
                                     </div>
                                 </div>
-                                <div class="col-md-2 form-group">
+                                <div class="col-lg-2 form-group">
                                     <label class="control-label"><?php echo t('Crop'); ?></label>
                                     <div class="checkbox">
                                         <label>
@@ -727,7 +727,7 @@
                                             ><?php echo t('Yes'); ?></label>
                                     </div>
                                 </div>
-                                <div class="col-md-2 form-group">
+                                <div class="col-lg-2 form-group">
                                     <label class="control-label"><?php echo t('Editable'); ?></label>
                                     <div class="checkbox">
                                         <label>
@@ -751,7 +751,7 @@
                                     ><?php echo t('Generate fullscreen image using image helper (if original image is bigger than specified dimensions)'); ?></label>
                             </div>
                             <div class="row js-image-create-fullscreen-image-wrapper <% if (error['imageFullscreenOptions']!=undefined) { %>has-error<% } %>" <% if (!parseInt(imageCreateFullscreenImage)) { %> style="display: none;" <% } %>>
-                                <div class="col-md-4 form-group <% if (error['imageFullscreenWidth']!=undefined) { %>has-error<% } %>">
+                                <div class="col-lg-4 form-group <% if (error['imageFullscreenWidth']!=undefined) { %>has-error<% } %>">
                                     <label for="<%=groupHandle%>[<%=counter%>][imageFullscreenWidth]" class="control-label"><?php echo t('Width'); ?></label>
                                     <div class="input-group">
                                         <input type="text"
@@ -763,7 +763,7 @@
                                         <span class="input-group-addon">px</span>
                                     </div>
                                 </div>
-                                <div class="col-md-4 form-group <% if (error['imageFullscreenHeight']!=undefined) { %>has-error<% } %>">
+                                <div class="col-lg-4 form-group <% if (error['imageFullscreenHeight']!=undefined) { %>has-error<% } %>">
                                     <label for="<%=groupHandle%>[<%=counter%>][imageFullscreenHeight]" class="control-label"><?php echo t('Height'); ?></label>
                                     <div class="input-group">
                                         <input type="text"
@@ -775,7 +775,7 @@
                                         <span class="input-group-addon">px</span>
                                     </div>
                                 </div>
-                                <div class="col-md-2 form-group">
+                                <div class="col-lg-2 form-group">
                                     <label class="control-label"><?php echo t('Crop'); ?></label>
                                     <div class="checkbox">
                                         <label>
@@ -787,7 +787,7 @@
                                             ><?php echo t('Yes'); ?></label>
                                     </div>
                                 </div>
-                                <div class="col-md-2 form-group">
+                                <div class="col-lg-2 form-group">
                                     <label class="control-label"><?php echo t('Editable'); ?></label>
                                     <div class="checkbox">
                                         <label>
@@ -808,7 +808,7 @@
                                 <p class="small text-muted">
                                     <?php echo t('Default height: 250px.'); ?><br/>
                                 </p>
-                                <div class="input-group col-md-3">
+                                <div class="input-group col-lg-3">
                                     <input type="text"
                                            id="<%=groupHandle%>[<%=counter%>][htmlEditorHeight]"
                                            name="<%=groupHandle%>[<%=counter%>][htmlEditorHeight]"
