@@ -144,6 +144,9 @@
     background: #fff;
     box-shadow: none;
     margin-bottom: 25px;
+    border-radius: .25rem;
+    padding: 19px;
+    border: 1px solid #e3e3e3;
 }
 
 .ccm-ui .entry.well.state-newly-added-entry {
