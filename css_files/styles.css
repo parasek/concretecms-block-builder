@@ -244,3 +244,8 @@
 .ccm-ui .bb-container textarea {
     resize: vertical;
 }
+
+.ccm-ui .has-error .form-control {
+    border-color: #a94442;
+    border-width: 1px;
+}
