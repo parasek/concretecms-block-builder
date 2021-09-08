@@ -457,7 +457,7 @@
                                value="<%=handle%>"
                                maxlength="50"
                         />
-                        <div class="form-text"><?php echo t('a-zA-Z_ characters only e.g. "productName" or "product_name"'); ?></p>
+                        <div class="form-text"><?php echo t('a-zA-Z_ characters only e.g. "productName" or "product_name"'); ?></div>
                     </div>
                 </div>
 
