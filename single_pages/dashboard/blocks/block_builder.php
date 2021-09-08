@@ -1,8 +1,8 @@
 <?php defined('C5_EXECUTE') or die('Access Denied.'); ?>
 
 <?php if (!empty($errors)): ?>
-    <div class="alert alert-danger">
-        <button type="button" class="close" data-dismiss="alert">×</button>
+    <div class="alert alert-danger alert-dismissible">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         <?php foreach ($errors as $errorEntry): ?>
             <div><?php echo $errorEntry; ?></div>
         <?php endforeach; ?>
