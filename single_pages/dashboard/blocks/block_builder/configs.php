@@ -1,7 +1,7 @@
 <?php defined('C5_EXECUTE') or die('Access Denied.'); ?>
 
 <div class="ccm-dashboard-header-buttons">
-    <a href="<?php echo $app->make('url/manager')->resolve(['dashboard/blocks/block_builder']); ?>" class="btn btn-default"><i class="fa fa-angle-double-left"></i> <?php echo t('Go back'); ?></a>
+    <a href="<?php echo $app->make('url/manager')->resolve(['dashboard/blocks/block_builder']); ?>" class="btn btn-secondary"><i class="fa fa-angle-double-left"></i> <?php echo t('Go back'); ?></a>
 </div>
 
 

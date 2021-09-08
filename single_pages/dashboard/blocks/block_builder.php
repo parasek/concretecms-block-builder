@@ -26,10 +26,10 @@
         <?php echo $this->controller->token->output('csrfToken')?>
 
         <ul class="navigation-tabs mb-4" id="navigation-tabs">
-            <li><a href="#" data-tab="block-settings"         class="btn btn-default <?php in_array('block-settings', $tabsWithError) ? print 'has-error' : false; ?>"><?php echo t('Block settings'); ?></a></li>
-            <li><a href="#" data-tab="texts"                  class="btn btn-default <?php in_array('texts', $tabsWithError) ? print 'has-error' : false; ?>"><?php echo t('Texts for translation'); ?></a></li>
-            <li><a href="#" data-tab="tab-basic-information"  class="btn btn-default <?php in_array('tab-basic-information', $tabsWithError) ? print 'has-error' : false; ?>"><?php echo t('Tab: Basic information'); ?></a></li>
-            <li><a href="#" data-tab="tab-repeatable-entries" class="btn btn-default <?php in_array('tab-repeatable-entries', $tabsWithError) ? print 'has-error' : false; ?>"><?php echo t('Tab: Repeatable entries'); ?></a></li>
+            <li><a href="#" data-tab="block-settings"         class="btn btn-secondary <?php in_array('block-settings', $tabsWithError) ? print 'has-error' : false; ?>"><?php echo t('Block settings'); ?></a></li>
+            <li><a href="#" data-tab="texts"                  class="btn btn-secondary <?php in_array('texts', $tabsWithError) ? print 'has-error' : false; ?>"><?php echo t('Texts for translation'); ?></a></li>
+            <li><a href="#" data-tab="tab-basic-information"  class="btn btn-secondary <?php in_array('tab-basic-information', $tabsWithError) ? print 'has-error' : false; ?>"><?php echo t('Tab: Basic information'); ?></a></li>
+            <li><a href="#" data-tab="tab-repeatable-entries" class="btn btn-secondary <?php in_array('tab-repeatable-entries', $tabsWithError) ? print 'has-error' : false; ?>"><?php echo t('Tab: Repeatable entries'); ?></a></li>
         </ul>
 
         <div class="ccm-tab-content active" id="ccm-tab-content-block-settings" style="display: none;">
@@ -408,7 +408,7 @@
 
         <div class="ccm-dashboard-form-actions-wrapper">
             <div class="ccm-dashboard-form-actions">
-                <input type="submit" class="btn btn-primary pull-right" value="<?php echo t('Build your block now!'); ?>" id="ccm-submit-url-form" name="ccm-submit-url-form">
+                <input type="submit" class="btn btn-primary float-end" value="<?php echo t('Build your block now!'); ?>" id="ccm-submit-url-form" name="ccm-submit-url-form">
             </div>
         </div>
 
