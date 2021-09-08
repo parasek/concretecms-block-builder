@@ -308,8 +308,8 @@
                         >
                         <label for="scroll-down-1" class="form-check-label"><?php echo t('Scroll down'); ?></label>
                     </div>
-                    <a href="#" class="entries-action js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t('Expand all'); ?></a>
-                    <a href="#" class="entries-action js-collapse-all"><i class="fa fa-minus-square-o"></i> <?php echo t('Collapse all'); ?></a>
+                    <a href="#" class="entries-action js-expand-all"><i class="far fa-plus-square"></i> <?php echo t('Expand all'); ?></a>
+                    <a href="#" class="entries-action js-collapse-all"><i class="far fa-minus-square"></i> <?php echo t('Collapse all'); ?></a>
                     <a href="#" class="entries-action entries-action-remove-all js-remove-all" data-group-handle="basic" data-confirm-text="<?php echo t('Are you sure?'); ?>"><i class="fa fa-times"></i> <?php echo t('Remove all'); ?></a>
                 </div>
             </div>
@@ -337,8 +337,8 @@
                         >
                         <label for="scroll-down-2" class="form-check-label"><?php echo t('Scroll down'); ?></label>
                     </div>
-                    <a href="#" class="entries-action js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t('Expand all'); ?></a>
-                    <a href="#" class="entries-action js-collapse-all"><i class="fa fa-minus-square-o"></i> <?php echo t('Collapse all'); ?></a>
+                    <a href="#" class="entries-action js-expand-all"><i class="far fa-plus-square"></i> <?php echo t('Expand all'); ?></a>
+                    <a href="#" class="entries-action js-collapse-all"><i class="far fa-minus-square"></i> <?php echo t('Collapse all'); ?></a>
                     <a href="#" class="entries-action entries-action-remove-all js-remove-all" data-group-handle="basic" data-confirm-text="<?php echo t('Are you sure?'); ?>"><i class="fa fa-times"></i> <?php echo t('Remove all'); ?></a>
                 </div>
             </div>
@@ -366,8 +366,8 @@
                         >
                         <label for="scroll-down-3" class="form-check-label"><?php echo t('Scroll down'); ?></label>
                     </div>
-                    <a href="#" class="entries-action js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t('Expand all'); ?></a>
-                    <a href="#" class="entries-action js-collapse-all"><i class="fa fa-minus-square-o"></i> <?php echo t('Collapse all'); ?></a>
+                    <a href="#" class="entries-action js-expand-all"><i class="far fa-plus-square"></i> <?php echo t('Expand all'); ?></a>
+                    <a href="#" class="entries-action js-collapse-all"><i class="far fa-minus-square"></i> <?php echo t('Collapse all'); ?></a>
                     <a href="#" class="entries-action entries-action-remove-all js-remove-all" data-group-handle="entries" data-confirm-text="<?php echo t('Are you sure?'); ?>"><i class="fa fa-times"></i> <?php echo t('Remove all'); ?></a>
                 </div>
             </div>
@@ -395,8 +395,8 @@
                         >
                         <label for="scroll-down-4" class="form-check-label"><?php echo t('Scroll down'); ?></label>
                     </div>
-                    <a href="#" class="entries-action js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t('Expand all'); ?></a>
-                    <a href="#" class="entries-action js-collapse-all"><i class="fa fa-minus-square-o"></i> <?php echo t('Collapse all'); ?></a>
+                    <a href="#" class="entries-action js-expand-all"><i class="far fa-plus-square"></i> <?php echo t('Expand all'); ?></a>
+                    <a href="#" class="entries-action js-collapse-all"><i class="far fa-minus-square"></i> <?php echo t('Collapse all'); ?></a>
                     <a href="#" class="entries-action entries-action-remove-all js-remove-all" data-group-handle="entries" data-confirm-text="<?php echo t('Are you sure?'); ?>"><i class="fa fa-times"></i> <?php echo t('Remove all'); ?></a>
                 </div>
             </div>
@@ -420,8 +420,8 @@
 
             <div class="entry-header">
                 <div class="entry-header-action entry-header-remove-entry js-remove-entry" data-confirm-text="<?php echo t('Are you sure?'); ?>"><i class="fa fa-times"></i></div>
-                <div class="entry-header-action entry-header-move-entry js-move-entry"><i class="fa fa-arrows"></i></div>
-                <div class="entry-header-action entry-header-toggle-entry js-toggle-entry" data-action="collapse"><i class="fa fa-minus-square-o"></i></div>
+                <div class="entry-header-action entry-header-move-entry js-move-entry"><i class="fas fa-arrows-alt"></i></div>
+                <div class="entry-header-action entry-header-toggle-entry js-toggle-entry" data-action="collapse"><i class="far fa-minus-square"></i></div>
                 <div class="entry-header-title">
                     <span class="js-entry-title">
                         <% if (label) { %>
