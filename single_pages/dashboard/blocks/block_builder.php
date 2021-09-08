@@ -32,7 +32,7 @@
             <li><a href="#" data-tab="tab-repeatable-entries" class="btn btn-default <?php in_array('tab-repeatable-entries', $tabsWithError) ? print 'has-error' : false; ?>"><?php echo t('Tab: Repeatable entries'); ?></a></li>
         </ul>
 
-        <div class="ccm-tab-content" id="ccm-tab-content-block-settings">
+        <div class="ccm-tab-content active" id="ccm-tab-content-block-settings" style="display: none;">
 
             <div class="row">
                 <div class="col-md-6 form-group <?php in_array('blockName', $fieldsWithError) ? print 'has-error' : false; ?>">
@@ -102,7 +102,7 @@
 
         </div>
 
-        <div class="ccm-tab-content" id="ccm-tab-content-texts">
+        <div class="ccm-tab-content" id="ccm-tab-content-texts" style="display: none;">
 
             <div class="form-group populate-translation-fields">
                 <i class="fa fa-book"></i> <?php echo t('Populate fields with'); ?>
@@ -287,7 +287,7 @@
 
         </div>
 
-        <div class="ccm-tab-content" id="ccm-tab-content-tab-basic-information">
+        <div class="ccm-tab-content" id="ccm-tab-content-tab-basic-information" style="display: none;">
 
             <div class="row">
                 <div class="col-md-3 form-group">
@@ -341,7 +341,7 @@
 
         </div>
 
-        <div class="ccm-tab-content" id="ccm-tab-content-tab-repeatable-entries">
+        <div class="ccm-tab-content" id="ccm-tab-content-tab-repeatable-entries" style="display: none;">
 
             <div class="row">
                 <div class="col-md-3 form-group">
