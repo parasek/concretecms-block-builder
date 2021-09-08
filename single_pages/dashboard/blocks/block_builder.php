@@ -25,7 +25,7 @@
 
         <?php echo $this->controller->token->output('csrfToken')?>
 
-        <ul class="navigation-tabs" id="navigation-tabs">
+        <ul class="navigation-tabs mb-4" id="navigation-tabs">
             <li><a href="#" data-tab="block-settings"         class="btn btn-default <?php in_array('block-settings', $tabsWithError) ? print 'has-error' : false; ?>"><?php echo t('Block settings'); ?></a></li>
             <li><a href="#" data-tab="texts"                  class="btn btn-default <?php in_array('texts', $tabsWithError) ? print 'has-error' : false; ?>"><?php echo t('Texts for translation'); ?></a></li>
             <li><a href="#" data-tab="tab-basic-information"  class="btn btn-default <?php in_array('tab-basic-information', $tabsWithError) ? print 'has-error' : false; ?>"><?php echo t('Tab: Basic information'); ?></a></li>

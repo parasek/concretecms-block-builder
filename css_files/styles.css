@@ -27,6 +27,7 @@
 .ccm-ui .navigation-tabs > li a {
     border-radius: 0;
     color: #555555;
+    border: 1px solid #ebebeb;
 }
 
 .ccm-ui .navigation-tabs > li:first-child a {
@@ -53,7 +54,7 @@
 
 .ccm-ui .navigation-tabs li a.btn.navigation-tabs-active:after {
     content: "\f0d7";
-    font-family: FontAwesome;
+    font-family: 'Font Awesome 5 Free';
     position: absolute;
     bottom: -13px;
     left: 0;
