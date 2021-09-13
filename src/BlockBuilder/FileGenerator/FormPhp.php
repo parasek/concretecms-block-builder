@@ -34,10 +34,16 @@ class FormPhp
             $code .= BlockBuilderUtility::tab(1).'?>'.PHP_EOL.PHP_EOL;
         }
 
+        $code .= BlockBuilderUtility::tab(1).'<div class="tab-content">'.PHP_EOL.PHP_EOL;
+
         if ( ! empty($postData['basic'])) {
-            $code .= BlockBuilderUtility::tab(1) . '<div class="js-tab-content';
+            $code .= BlockBuilderUtility::tab(1) . '<div class="js-tab-pane';
             if ( ! empty($postData['basic']) AND ! empty($postData['entries'])) {
-                $code .= ' ccm-tab-content" id="ccm-tab-content-basic-information-<?php echo $uniqueID; ?>';
+                $code .= ' tab-pane';
+                if (empty($postData['entriesAsFirstTab'])) {
+                    $code .= ' show active';
+                }
+                $code .= '" id="basic-information-<?php echo $uniqueID; ?>';
             }
             $code .= '">' . PHP_EOL . PHP_EOL;
         }
@@ -644,9 +650,13 @@ class FormPhp
         ///////////////////////////////////////////////////////////////////////////
 
         if ( ! empty($postData['entries'])) {
-            $code .= BlockBuilderUtility::tab(1) . '<div class="js-tab-content';
+            $code .= BlockBuilderUtility::tab(1) . '<div class="js-tab-pane';
             if ( ! empty($postData['basic']) AND ! empty($postData['entries'])) {
-                $code .= ' ccm-tab-content" id="ccm-tab-content-entries-<?php echo $uniqueID; ?>';
+                $code .= ' tab-pane';
+                if (!empty($postData['entriesAsFirstTab'])) {
+                    $code .= ' show active';
+                }
+                $code .= '" id="entries-<?php echo $uniqueID; ?>';
             }
             $code .= '">' . PHP_EOL . PHP_EOL;
         }
@@ -829,7 +839,7 @@ class FormPhp
                 }
 
                 if ($v['fieldType'] == 'link') {
-                    
+
                     $code .= BlockBuilderUtility::tab(5) . '<div class="form-group js-link-wrapper">' . PHP_EOL . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(6) . '<div class="row margin-bottom">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '<div class="col-xs-12">' . PHP_EOL;
@@ -857,19 +867,19 @@ class FormPhp
                     $code .= BlockBuilderUtility::tab(9) . 'value="<%=_.escape('.$v['handle'].'_show_additional_fields)%>">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
-                    
+
                     $code .= BlockBuilderUtility::tab(6) . '<div class="row margin-bottom js-link-type-wrapper js-link-type-wrapper-link_from_sitemap" <% if ('.$v['handle'].'_link_type!=\'link_from_sitemap\') { %>style="display: none;"<% } %>>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '<div class="col-xs-12">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(8) . '<div class="js-page-selector" data-input-name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].'_link_from_sitemap]" data-collection-id="<%=_.escape('.$v['handle'].'_link_from_sitemap)%>"></div>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
-                    
+
                     $code .= BlockBuilderUtility::tab(6) . '<div class="row margin-bottom js-link-type-wrapper js-link-type-wrapper-link_from_file_manager" <% if ('.$v['handle'].'_link_type!=\'link_from_file_manager\') { %>style="display: none;"<% } %>>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '<div class="col-xs-12">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(8) . '<div class="ccm-file-selector js-file-selector" data-choose-text="'.t('Choose File').'" data-input-name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].'_link_from_file_manager]" data-file-id="<%=_.escape('.$v['handle'].'_link_from_file_manager)%>"></div>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
-                    
+
                     $code .= BlockBuilderUtility::tab(6) . '<div class="row margin-bottom js-link-type-wrapper js-link-type-wrapper-external_link" <% if ('.$v['handle'].'_link_type!=\'external_link\') { %>style="display: none;"<% } %>>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '<div class="col-xs-12 col-md-3 margin-bottom-on-mobile">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(8) . '<select id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].'_protocol]" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].'_protocol]" class="form-control js-external-link-protocol">' . PHP_EOL;
@@ -882,7 +892,7 @@ class FormPhp
                     $code .= BlockBuilderUtility::tab(8) . '<input type="text" id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].'_external_link]" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].'_external_link]" value="<%=_.escape('.$v['handle'].'_external_link)%>" class="form-control js-external-link-url" maxlength="255" />' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
-                    
+
                     $code .= BlockBuilderUtility::tab(6) . '<div class="row js-additional-fields-wrapper" <% if (!'.$v['handle'].'_link_type || !parseInt('.$v['handle'].'_show_additional_fields)) { %>style="display: none;"<% } %>>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '<div class="col-xs-12 margin-bottom">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(8) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].'_ending]" class="control-label"><?php echo t(\''.addslashes($postData['urlEndingLabel']).'\'); ?></label>' . PHP_EOL;
@@ -906,7 +916,7 @@ class FormPhp
                     $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5) . '</div><?php // .js-link-wrapper ?>' . PHP_EOL . PHP_EOL;
-                    
+
                 }
 
                 if ($v['fieldType'] == 'link_from_sitemap') {
@@ -1269,7 +1279,7 @@ class FormPhp
 
         if ($postDataSummary['settingsTab']) {
 
-            $code .= BlockBuilderUtility::tab(1) . '<div class="js-tab-content ccm-tab-content" id="ccm-tab-content-settings-<?php echo $uniqueID; ?>">' . PHP_EOL . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(1) . '<div class="js-tab-pane tab-pane" id="settings-<?php echo $uniqueID; ?>">' . PHP_EOL . PHP_EOL;
 
             foreach ($postData['entries'] as $k => $v) {
 
@@ -1361,7 +1371,7 @@ class FormPhp
 
             }
 
-            $code .= BlockBuilderUtility::tab(1) . '</div>' . PHP_EOL . PHP_EOL; // .js-tab-content
+            $code .= BlockBuilderUtility::tab(1) . '</div>' . PHP_EOL . PHP_EOL; // .js-tab-pane
 
         }
 
@@ -1373,7 +1383,10 @@ class FormPhp
             $code .= BlockBuilderUtility::tab(1) . '<hr/>' . PHP_EOL . PHP_EOL;
             $code .= BlockBuilderUtility::tab(1) . '<p class="small text-muted">* <?php echo t(\''.addslashes($postData['requiredFieldsLabel']).'\'); ?></p>' . PHP_EOL . PHP_EOL;
         }
-        $code .= '</div>';
+
+
+        $code .= BlockBuilderUtility::tab(1).'</div>'.PHP_EOL.PHP_EOL; // .tab-content
+        $code .= '</div>'; // #form-container-x
 
 
         $fileService = new FileService();

@@ -297,7 +297,7 @@ $(function () {
 
             e2.preventDefault();
 
-            var formContainer = $(this).closest('.js-tab-content');
+            var formContainer = $(this).closest('.js-tab-pane');
 
             formContainer.find('.js-entry-content').show();
 
@@ -313,7 +313,7 @@ $(function () {
 
             e2.preventDefault();
 
-            var formContainer = $(this).closest('.js-tab-content');
+            var formContainer = $(this).closest('.js-tab-pane');
 
             formContainer.find('.js-entry-content').hide();
 
