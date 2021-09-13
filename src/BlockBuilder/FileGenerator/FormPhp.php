@@ -22,21 +22,21 @@ class FormPhp
             $code .= BlockBuilderUtility::tab(1).'echo $app->make(\'helper/concrete/ui\')->tabs(['.PHP_EOL;
             if (!empty($postData['entriesAsFirstTab'])) {
                 if (!empty($postData['entries'])) {
-                    $code .= BlockBuilderUtility::tab(2).'[\'entries-\'.$uniqueID, t(\''.addslashes($postData['entriesLabel']).'\'), true],'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2).'[\'entries-tab-\'.$uniqueID, t(\''.addslashes($postData['entriesLabel']).'\'), true],'.PHP_EOL;
                 }
                 if (!empty($postData['basic'])) {
-                    $code .= BlockBuilderUtility::tab(2).'[\'basic-information-\'.$uniqueID, t(\''.addslashes($postData['basicLabel']).'\')],'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2).'[\'basic-information-tab-\'.$uniqueID, t(\''.addslashes($postData['basicLabel']).'\')],'.PHP_EOL;
                 }
             } else {
                 if (!empty($postData['basic'])) {
-                    $code .= BlockBuilderUtility::tab(2).'[\'basic-information-\'.$uniqueID, t(\''.addslashes($postData['basicLabel']).'\'), true],'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2).'[\'basic-information-tab-\'.$uniqueID, t(\''.addslashes($postData['basicLabel']).'\'), true],'.PHP_EOL;
                 }
                 if (!empty($postData['entries'])) {
-                    $code .= BlockBuilderUtility::tab(2).'[\'entries-\'.$uniqueID, t(\''.addslashes($postData['entriesLabel']).'\')],'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2).'[\'entries-tab-\'.$uniqueID, t(\''.addslashes($postData['entriesLabel']).'\')],'.PHP_EOL;
                 }
             }
             if (!empty($postDataSummary['settingsTab'])) {
-                $code .= BlockBuilderUtility::tab(2).'[\'settings-\'.$uniqueID, t(\''.addslashes($postData['settingsLabel']).'\')],'.PHP_EOL;
+                $code .= BlockBuilderUtility::tab(2).'[\'settings-tab-\'.$uniqueID, t(\''.addslashes($postData['settingsLabel']).'\')],'.PHP_EOL;
             }
             $code .= BlockBuilderUtility::tab(1).']);'.PHP_EOL;
             $code .= BlockBuilderUtility::tab(1).'?>'.PHP_EOL.PHP_EOL;
@@ -51,7 +51,7 @@ class FormPhp
                 if (empty($postData['entriesAsFirstTab'])) {
                     $code .= ' show active';
                 }
-                $code .= '" id="basic-information-<?php echo $uniqueID; ?>';
+                $code .= '" id="basic-information-tab-<?php echo $uniqueID; ?>';
             }
             $code .= '">' . PHP_EOL . PHP_EOL;
         }
@@ -664,7 +664,7 @@ class FormPhp
                 if (!empty($postData['entriesAsFirstTab'])) {
                     $code .= ' show active';
                 }
-                $code .= '" id="entries-<?php echo $uniqueID; ?>';
+                $code .= '" id="entries-tab-<?php echo $uniqueID; ?>';
             }
             $code .= '">' . PHP_EOL . PHP_EOL;
         }
@@ -1287,7 +1287,7 @@ class FormPhp
 
         if (!empty($postDataSummary['settingsTab'])) {
 
-            $code .= BlockBuilderUtility::tab(2) . '<div class="js-tab-pane tab-pane" id="settings-<?php echo $uniqueID; ?>">' . PHP_EOL . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(2) . '<div class="js-tab-pane tab-pane" id="settings-tab-<?php echo $uniqueID; ?>">' . PHP_EOL . PHP_EOL;
 
             foreach ($postData['entries'] as $k => $v) {
 
