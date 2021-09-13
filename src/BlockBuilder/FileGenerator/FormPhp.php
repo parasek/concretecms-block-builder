@@ -17,18 +17,26 @@ class FormPhp
 
         $code .= '<div id="form-container-<?php echo $uniqueID; ?>">'.PHP_EOL.PHP_EOL;
 
-        if ( ! empty($postData['basic']) AND ! empty($postData['entries'])) {
+        if ((!empty($postData['basic']) AND !empty($postData['entries'])) OR !empty($postDataSummary['settingsTab'])) {
             $code .= BlockBuilderUtility::tab(1).'<?php'.PHP_EOL;
             $code .= BlockBuilderUtility::tab(1).'echo $app->make(\'helper/concrete/ui\')->tabs(['.PHP_EOL;
             if (!empty($postData['entriesAsFirstTab'])) {
-            $code .= BlockBuilderUtility::tab(2).'[\'entries-\'.$uniqueID, t(\''.addslashes($postData['entriesLabel']).'\'), true],'.PHP_EOL;
-            $code .= BlockBuilderUtility::tab(2).'[\'basic-information-\'.$uniqueID, t(\''.addslashes($postData['basicLabel']).'\')],'.PHP_EOL;
+                if (!empty($postData['entries'])) {
+                    $code .= BlockBuilderUtility::tab(2).'[\'entries-\'.$uniqueID, t(\''.addslashes($postData['entriesLabel']).'\'), true],'.PHP_EOL;
+                }
+                if (!empty($postData['basic'])) {
+                    $code .= BlockBuilderUtility::tab(2).'[\'basic-information-\'.$uniqueID, t(\''.addslashes($postData['basicLabel']).'\')],'.PHP_EOL;
+                }
             } else {
-            $code .= BlockBuilderUtility::tab(2).'[\'basic-information-\'.$uniqueID, t(\''.addslashes($postData['basicLabel']).'\'), true],'.PHP_EOL;
-            $code .= BlockBuilderUtility::tab(2).'[\'entries-\'.$uniqueID, t(\''.addslashes($postData['entriesLabel']).'\')],'.PHP_EOL;
+                if (!empty($postData['basic'])) {
+                    $code .= BlockBuilderUtility::tab(2).'[\'basic-information-\'.$uniqueID, t(\''.addslashes($postData['basicLabel']).'\'), true],'.PHP_EOL;
+                }
+                if (!empty($postData['entries'])) {
+                    $code .= BlockBuilderUtility::tab(2).'[\'entries-\'.$uniqueID, t(\''.addslashes($postData['entriesLabel']).'\')],'.PHP_EOL;
+                }
             }
-            if ($postDataSummary['settingsTab']) {
-            $code .= BlockBuilderUtility::tab(2).'[\'settings-\'.$uniqueID, t(\''.addslashes($postData['settingsLabel']).'\')],'.PHP_EOL;
+            if (!empty($postDataSummary['settingsTab'])) {
+                $code .= BlockBuilderUtility::tab(2).'[\'settings-\'.$uniqueID, t(\''.addslashes($postData['settingsLabel']).'\')],'.PHP_EOL;
             }
             $code .= BlockBuilderUtility::tab(1).']);'.PHP_EOL;
             $code .= BlockBuilderUtility::tab(1).'?>'.PHP_EOL.PHP_EOL;
@@ -36,9 +44,9 @@ class FormPhp
 
         $code .= BlockBuilderUtility::tab(1).'<div class="tab-content">'.PHP_EOL.PHP_EOL;
 
-        if ( ! empty($postData['basic'])) {
+        if (!empty($postData['basic'])) {
             $code .= BlockBuilderUtility::tab(2) . '<div class="js-tab-pane';
-            if ( ! empty($postData['basic']) AND ! empty($postData['entries'])) {
+            if (!empty($postData['entries'])) {
                 $code .= ' tab-pane';
                 if (empty($postData['entriesAsFirstTab'])) {
                     $code .= ' show active';
@@ -649,9 +657,9 @@ class FormPhp
         // Entries
         ///////////////////////////////////////////////////////////////////////////
 
-        if ( ! empty($postData['entries'])) {
+        if (!empty($postData['entries'])) {
             $code .= BlockBuilderUtility::tab(2) . '<div class="js-tab-pane';
-            if ( ! empty($postData['basic']) AND ! empty($postData['entries'])) {
+            if (!empty($postData['basic']) or !empty($postDataSummary['settingsTab'])) {
                 $code .= ' tab-pane';
                 if (!empty($postData['entriesAsFirstTab'])) {
                     $code .= ' show active';
@@ -1277,7 +1285,7 @@ class FormPhp
         /// Settings tab
         ///////////////////////////////////////////////////////////////////////////
 
-        if ($postDataSummary['settingsTab']) {
+        if (!empty($postDataSummary['settingsTab'])) {
 
             $code .= BlockBuilderUtility::tab(2) . '<div class="js-tab-pane tab-pane" id="settings-<?php echo $uniqueID; ?>">' . PHP_EOL . PHP_EOL;
 
