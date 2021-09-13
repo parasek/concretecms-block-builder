@@ -154,8 +154,10 @@
     outline: none !important;
 }
 
-.ccm-ui .entry-header-duplicate-entry:disabled {
+.ccm-ui .entry-header-duplicate-entry:disabled,
+.ccm-ui .entry-header-duplicate-entry-and-add-at-the-end:disabled {
     color: #737272;
+    cursor: not-allowed;
 }
 
 .ccm-ui .entry-header-move-entry  {

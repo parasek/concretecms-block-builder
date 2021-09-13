@@ -109,10 +109,12 @@ $(function () {
                 formContainer.find('.js-add-entry').attr('disabled', true);
                 formContainer.find('.js-copy-last-entry').attr('disabled', true);
                 formContainer.find('.js-duplicate-entry').attr('disabled', true);
+                formContainer.find('.js-duplicate-entry-and-add-at-the-end').attr('disabled', true);
             } else {
                 formContainer.find('.js-add-entry').removeAttr('disabled');
                 formContainer.find('.js-copy-last-entry').removeAttr('disabled');
                 formContainer.find('.js-duplicate-entry').removeAttr('disabled');
+                formContainer.find('.js-duplicate-entry-and-add-at-the-end').removeAttr('disabled');
             }
 
             if (numberOfEntries==0) {
