@@ -1269,10 +1269,14 @@ class FormPhp
                 $code .= BlockBuilderUtility::tab(4) . 'var CCM_EDITOR_SECURITY_TOKEN = \'<?php echo $app->make(\'helper/validation/token\')->generate(\'editor\'); ?>\';' . PHP_EOL . PHP_EOL;
                 $code .= BlockBuilderUtility::tab(4) . 'var activateEditor = <?php echo $app->make(\'editor\')->outputStandardEditorInitJSFunction(); ?>;' . PHP_EOL . PHP_EOL;
             }
-            $code .= BlockBuilderUtility::tab(4) . 'Concrete.event.publish(\'open.block.'.$postDataSummary['blockHandleDashed'].'\', {' . PHP_EOL;
-            $code .= BlockBuilderUtility::tab(5) . '\'uniqueID\' : \'<?php echo $uniqueID; ?>\'' . PHP_EOL;
-            $code .= BlockBuilderUtility::tab(4) . '});' . PHP_EOL . PHP_EOL;
 
+            $code .= BlockBuilderUtility::tab(4) . '$(function () {' . PHP_EOL . PHP_EOL;
+
+            $code .= BlockBuilderUtility::tab(5) . 'Concrete.event.publish(\'open.block.'.$postDataSummary['blockHandleDashed'].'\', {' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(6) . '\'uniqueID\' : \'<?php echo $uniqueID; ?>\'' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(5) . '});' . PHP_EOL . PHP_EOL;
+
+            $code .= BlockBuilderUtility::tab(4) . '});' . PHP_EOL . PHP_EOL;
             $code .= BlockBuilderUtility::tab(3) . '</script>' . PHP_EOL . PHP_EOL;
 
         }
