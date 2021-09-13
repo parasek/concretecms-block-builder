@@ -1255,7 +1255,7 @@ class FormPhp
                     $code .= BlockBuilderUtility::tab(8) . '<input type="text" id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" value="<%=_.escape(' . $v['handle'] . ')%>" class="form-control js-entry-' . $v['handle'] . '-<%=_.escape(position)%>" style="display: none;"/>'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(8) . '<input type="text" id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_displayed]" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_displayed]" value="<%=_.escape(' . $v['handle'] . '_displayed)%>" class="form-control js-entry-date-displayed" data-date-format="<?php echo $app->make(\'helper/date\')->getJQueryUIDatePickerFormat(\'' . addslashes($v['datePickerPattern']) . '\'); ?>" data-target-field="' . $v['handle'] . '" data-position="<%=_.escape(position)%>" />'.PHP_EOL;
                     if ( ! empty($v['helpText'])) {
-                        $code .= BlockBuilderUtility::tab(7) . '<div class="form-text"><?php echo t(\''.addslashes($v['helpText']).'\'); ?></div>'.PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . '<div class="form-text"><?php echo t(\''.addslashes($v['helpText']).'\'); ?></div>'.PHP_EOL;
                     }
                     $code .= BlockBuilderUtility::tab(7) . '</div>'.PHP_EOL;
 
