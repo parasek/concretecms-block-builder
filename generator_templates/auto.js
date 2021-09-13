@@ -5,7 +5,7 @@ $(function () {
         var uniqueID = data.uniqueID;
         var formContainer = $('#form-container-' + uniqueID);
         var entriesContainer = formContainer.find('#entries-' + uniqueID);
-        var settingsContainer = formContainer.find('#ccm-tab-content-settings-' + uniqueID);
+        var settingsContainer = formContainer.find('#settings-tab-' + uniqueID);
         var maxNumberOfEntries = parseInt(formContainer.find('.js-max-number-of-entries').text());
         var entryColumnNames = JSON.parse(entriesContainer.attr('data-column-names'));
         var entries = JSON.parse(entriesContainer.attr('data-entries'));
