@@ -884,7 +884,12 @@ class FormPhp
 
                     $code .= BlockBuilderUtility::tab(7) . '<div class="row margin-bottom js-link-type-wrapper js-link-type-wrapper-link_from_file_manager" <% if ('.$v['handle'].'_link_type!=\'link_from_file_manager\') { %>style="display: none;"<% } %>>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(8) . '<div class="col-xs-12">' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(9) . '<div class="ccm-file-selector js-file-selector" data-choose-text="'.t('Choose File').'" data-input-name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].'_link_from_file_manager]" data-file-id="<%=_.escape('.$v['handle'].'_link_from_file_manager)%>"></div>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(9) . '<div data-concrete-file-input="js-file-selector">' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(10) . '<concrete-file-input :file-id="<%= '.$v['handle'].' ? _.escape('.$v['handle'].') : \'0\' %>"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(11) . 'choose-text="<?php echo t(\'Choose File\'); ?>"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(11) . 'input-name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].']"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(10) . '></concrete-file-input>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(9) . '</div>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(8) . '</div>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL . PHP_EOL;
 
@@ -978,11 +983,13 @@ class FormPhp
                     if ( ! empty($v['helpText'])) {
                         $code .= BlockBuilderUtility::tab(7) . '<p class="small text-muted"><?php echo t(\''.addslashes($v['helpText']).'\'); ?></p>'.PHP_EOL;
                     }
-                    $code .= BlockBuilderUtility::tab(7) . '<div class="ccm-file-selector js-file-selector"' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(8) . 'data-choose-text="'.t('Choose File').'"' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(8) . 'data-input-name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']"' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(8) . 'data-file-id="<%=_.escape(' . $v['handle'] . ')%>"' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(7) . '></div>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(7) . '<div data-concrete-file-input="js-file-selector">' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(8) . '<concrete-file-input :file-id="<%= '.$v['handle'].' ? _.escape('.$v['handle'].') : \'0\' %>"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(9) . 'choose-text="<?php echo t(\'Choose File\'); ?>"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(9) . 'input-name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].']"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(8) . '></concrete-file-input>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL;
+
                     $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
 
                     if ( ! empty($v['linkFromFileManagerShowEndingField'])) {
@@ -1089,11 +1096,14 @@ class FormPhp
                     $code .= BlockBuilderUtility::tab(8) . '</div>' . PHP_EOL;
 
                     $code .= BlockBuilderUtility::tab(8) . '<div class="col-xs-12 col-md-'.((!empty($v['imageShowAltTextField']) or (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable'])) or (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable'])) ) ? 6 : 12).' margin-bottom-on-mobile">'.PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(9) . '<div class="ccm-file-selector js-file-selector"' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(10) . 'data-choose-text="'.t('Choose Image').'"' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(10) . 'data-input-name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']"' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(10) . 'data-file-id="<%=_.escape(' . $v['handle'] . ')%>"' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(9) . '></div>' . PHP_EOL;
+
+                    $code .= BlockBuilderUtility::tab(9) . '<div data-concrete-file-input="js-file-selector">' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(10) . '<concrete-file-input :file-id="<%= '.$v['handle'].' ? _.escape('.$v['handle'].') : \'0\' %>"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(11) . 'choose-text="<?php echo t(\'Choose File\'); ?>"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(11) . 'input-name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].']"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(10) . '></concrete-file-input>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(9) . '</div>' . PHP_EOL;
+
                     $code .= BlockBuilderUtility::tab(8) . '</div>' . PHP_EOL;
 
                     if (!empty($v['imageShowAltTextField']) or (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable'])) or (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable'])) ) {

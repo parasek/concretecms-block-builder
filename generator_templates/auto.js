@@ -35,12 +35,14 @@ $(function () {
 
         function activateFileSelectors(parentContainer) {
 
-            var fileSelectors = parentContainer.find('.js-file-selector');
+            var fileSelectors = parentContainer.find('[data-concrete-file-input="js-file-selector"]');
             fileSelectors.each(function (i, item) {
-                var chooseText = $(item).attr('data-choose-text');
-                var inputName = $(item).attr('data-input-name');
-                var fID = parseInt($(item).attr('data-file-id'));
-                $(item).concreteFileSelector({'chooseText': chooseText, 'inputName': inputName, 'filters': [], 'fID': fID});
+                Concrete.Vue.activateContext('cms', function (Vue, config) {
+                    new Vue({
+                        el: item,
+                        components: config.components
+                    })
+                })
             });
 
         }
