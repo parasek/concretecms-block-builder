@@ -170,9 +170,6 @@ $(function () {
 
             updateCounter(countEntries(entriesContainer));
 
-            // Highlight newly added entry
-            newEntry.effect('highlight', {}, 1500);
-
             // Smooth scroll
             formContainer.closest('.ui-dialog-content').animate({
                 scrollTop: formContainer.find('.js-entry[data-position="' + position + '"]').position().top + formContainer.closest('.ui-dialog-content').scrollTop()
