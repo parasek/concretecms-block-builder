@@ -84,9 +84,9 @@ div.ccm-ui .toggle-additional-image-fields-active i {
 .ccm-ui .entry.well {
     background: #fff;
     box-shadow: none;
-    padding: 25px;
+    padding: 20px;
     border: 1px solid #dedede;
-    border-radius: 5px;
+    border-radius: .25rem;
     margin-bottom: 20px;
 }
 
@@ -155,7 +155,7 @@ div.ccm-ui .toggle-additional-image-fields-active i {
 
 .ccm-ui .entry-content {
     border-top: 1px solid #e3e3e3;
-    margin-top: 15px;
+    margin-top: 19px;
     padding-top: 30px;
 }
 
