@@ -303,8 +303,8 @@ $(function () {
             formContainer.find('.js-entry-content').show();
 
             var toggleButtons = formContainer.find('.js-toggle-entry');
-            toggleButtons.find('i').removeClass('fa-plus-square-o');
-            toggleButtons.find('i').addClass('fa-minus-square-o');
+            toggleButtons.find('i').removeClass('fa-plus-square');
+            toggleButtons.find('i').addClass('fa-minus-square');
             toggleButtons.attr('data-action', 'collapse');
 
         });
@@ -319,8 +319,8 @@ $(function () {
             formContainer.find('.js-entry-content').hide();
 
             var toggleButtons = formContainer.find('.js-toggle-entry');
-            toggleButtons.find('i').removeClass('fa-minus-square-o');
-            toggleButtons.find('i').addClass('fa-plus-square-o');
+            toggleButtons.find('i').removeClass('fa-minus-square');
+            toggleButtons.find('i').addClass('fa-plus-square');
             toggleButtons.attr('data-action', 'expand');
 
         });
@@ -336,14 +336,14 @@ $(function () {
 
             if ($(this).attr('data-action') == 'collapse') {
 
-                $(this).find('i').removeClass('fa-minus-square-o');
-                $(this).find('i').addClass('fa-plus-square-o');
+                $(this).find('i').removeClass('fa-minus-square');
+                $(this).find('i').addClass('fa-plus-square');
                 $(this).attr('data-action', 'expand');
 
             } else {
 
-                $(this).find('i').removeClass('fa-plus-square-o');
-                $(this).find('i').addClass('fa-minus-square-o');
+                $(this).find('i').removeClass('fa-plus-square');
+                $(this).find('i').addClass('fa-minus-square');
                 $(this).attr('data-action', 'collapse');
 
             }
