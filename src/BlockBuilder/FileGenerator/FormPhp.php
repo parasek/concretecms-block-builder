@@ -489,13 +489,13 @@ class FormPhp
                             $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL;
 
-                            $code .= BlockBuilderUtility::tab(6) . '<div class="js-override-dimensions-wrapper-<?php echo $uniqueID; ?>" <?php if (empty($' . $v['handle'] . '_data[\'override_dimensions\'])): ?>style="display: none;"<?php endif; ?>>' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(6) . '<div class="row mt-3 js-override-dimensions-wrapper-<?php echo $uniqueID; ?>" <?php if (empty($' . $v['handle'] . '_data[\'override_dimensions\'])): ?>style="display: none;"<?php endif; ?>>' . PHP_EOL;
 
                             $code .= BlockBuilderUtility::tab(7) . '<div class="col-12 col-lg-4 margin-bottom-on-mobile">' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(8) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '_custom_width\'), t(\'' . addslashes($postData['widthLabel']) . '\')); ?>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(8) . '<div class="input-group">' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(9) . '<?php echo $form->number($view->field(\'' . $v['handle'] . '_custom_width\'), !empty($' . $v['handle'] . '_data[\'custom_width\']) ? $' . $v['handle'] . '_data[\'custom_width\'] : \'\'); ?>' . PHP_EOL;
-                            $code .= BlockBuilderUtility::tab(9) . '<span class="input-group-addon"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(9) . '<span class="input-group-text"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(8) . '</div>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL;
 
@@ -503,7 +503,7 @@ class FormPhp
                             $code .= BlockBuilderUtility::tab(8) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '_custom_height\'), t(\'' . addslashes($postData['heightLabel']) . '\')); ?>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(8) . '<div class="input-group">' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(9) . '<?php echo $form->number($view->field(\'' . $v['handle'] . '_custom_height\'), !empty($' . $v['handle'] . '_data[\'custom_height\']) ? $' . $v['handle'] . '_data[\'custom_height\'] : \'\'); ?>' . PHP_EOL;
-                            $code .= BlockBuilderUtility::tab(9) . '<span class="input-group-addon"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(9) . '<span class="input-group-text"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(8) . '</div>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL;
 
@@ -528,13 +528,13 @@ class FormPhp
                             $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL;
 
-                            $code .= BlockBuilderUtility::tab(6) . '<div class="js-override-fullscreen-dimensions-wrapper-<?php echo $uniqueID; ?>" <?php if (empty($' . $v['handle'] . '_data[\'override_fullscreen_dimensions\'])): ?>style="display: none;"<?php endif; ?>>' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(6) . '<div class="row mt-3 js-override-fullscreen-dimensions-wrapper-<?php echo $uniqueID; ?>" <?php if (empty($' . $v['handle'] . '_data[\'override_fullscreen_dimensions\'])): ?>style="display: none;"<?php endif; ?>>' . PHP_EOL;
 
                             $code .= BlockBuilderUtility::tab(7) . '<div class="col-12 col-lg-4 margin-bottom-on-mobile">' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(8) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '_custom_fullscreen_width\'), t(\'' . addslashes($postData['widthLabel']) . '\')); ?>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(8) . '<div class="input-group">' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(9) . '<?php echo $form->number($view->field(\'' . $v['handle'] . '_custom_fullscreen_width\'), !empty($' . $v['handle'] . '_data[\'custom_fullscreen_width\']) ? $' . $v['handle'] . '_data[\'custom_fullscreen_width\'] : \'\'); ?>' . PHP_EOL;
-                            $code .= BlockBuilderUtility::tab(9) . '<span class="input-group-addon"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(9) . '<span class="input-group-text"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(8) . '</div>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL;
 
@@ -542,7 +542,7 @@ class FormPhp
                             $code .= BlockBuilderUtility::tab(8) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '_custom_fullscreen_height\'), t(\'' . addslashes($postData['heightLabel']) . '\')); ?>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(8) . '<div class="input-group">' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(9) . '<?php echo $form->number($view->field(\'' . $v['handle'] . '_custom_fullscreen_height\'), !empty($' . $v['handle'] . '_data[\'custom_fullscreen_height\']) ? $' . $v['handle'] . '_data[\'custom_fullscreen_height\'] : \'\'); ?>' . PHP_EOL;
-                            $code .= BlockBuilderUtility::tab(9) . '<span class="input-group-addon"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(9) . '<span class="input-group-text"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(8) . '</div>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL;
 
@@ -1150,13 +1150,13 @@ class FormPhp
                             $code .= BlockBuilderUtility::tab(10) . '</div>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(9) . '</div>' . PHP_EOL;
 
-                            $code .= BlockBuilderUtility::tab(9) . '<div class="js-override-image-dimensions-wrapper" <% if (!parseInt(' . $v['handle'] . '_override_dimensions)) { %>style="display: none;"<% } %>>' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(9) . '<div class="row mt-3 js-override-image-dimensions-wrapper" <% if (!parseInt(' . $v['handle'] . '_override_dimensions)) { %>style="display: none;"<% } %>>' . PHP_EOL;
 
                             $code .= BlockBuilderUtility::tab(10) . '<div class="col-12 col-lg-4 margin-bottom-on-mobile">' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(11) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].'_custom_width]" class="control-label"><?php echo t(\''.addslashes($postData['widthLabel']).'\'); ?></label>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(11) . '<div class="input-group">' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(12) . '<input type="number" id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].'_custom_width]" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].'_custom_width]" value="<% if (parseInt(' . $v['handle'] . '_custom_width)) { %><%=_.escape(' . $v['handle'] . '_custom_width)%><% } else { %><% } %>" class="form-control ccm-input-number" />' . PHP_EOL;
-                            $code .= BlockBuilderUtility::tab(12) . '<span class="input-group-addon"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(12) . '<span class="input-group-text"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(11) . '</div>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(10) . '</div>' . PHP_EOL;
 
@@ -1164,7 +1164,7 @@ class FormPhp
                             $code .= BlockBuilderUtility::tab(11) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].'_custom_height]" class="control-label"><?php echo t(\''.addslashes($postData['heightLabel']).'\'); ?></label>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(11) . '<div class="input-group">' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(12) . '<input type="number" id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].'_custom_height]" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].'_custom_height]" value="<% if (parseInt(' . $v['handle'] . '_custom_height)) { %><%=_.escape(' . $v['handle'] . '_custom_height)%><% } else { %><% } %>" class="form-control ccm-input-number" />' . PHP_EOL;
-                            $code .= BlockBuilderUtility::tab(12) . '<span class="input-group-addon"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(12) . '<span class="input-group-text"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(11) . '</div>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(10) . '</div>' . PHP_EOL;
 
@@ -1192,13 +1192,13 @@ class FormPhp
                             $code .= BlockBuilderUtility::tab(10) . '</div>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(9) . '</div>' . PHP_EOL;
 
-                            $code .= BlockBuilderUtility::tab(9) . '<div class="js-override-fullscreen-image-dimensions-wrapper" <% if (!parseInt(' . $v['handle'] . '_override_fullscreen_dimensions)) { %>style="display: none;"<% } %>>' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(9) . '<div class="row mt-3 js-override-fullscreen-image-dimensions-wrapper" <% if (!parseInt(' . $v['handle'] . '_override_fullscreen_dimensions)) { %>style="display: none;"<% } %>>' . PHP_EOL;
 
                             $code .= BlockBuilderUtility::tab(10) . '<div class="col-12 col-lg-4 margin-bottom-on-mobile">' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(11) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].'_custom_fullscreen_width]" class="control-label"><?php echo t(\''.addslashes($postData['widthLabel']).'\'); ?></label>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(11) . '<div class="input-group">' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(12) . '<input type="number" id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].'_custom_fullscreen_width]" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].'_custom_fullscreen_width]" value="<% if (parseInt(' . $v['handle'] . '_custom_fullscreen_width)) { %><%=_.escape(' . $v['handle'] . '_custom_fullscreen_width)%><% } else { %><% } %>" class="form-control ccm-input-number" />' . PHP_EOL;
-                            $code .= BlockBuilderUtility::tab(12) . '<span class="input-group-addon"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(12) . '<span class="input-group-text"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(11) . '</div>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(10) . '</div>' . PHP_EOL;
 
@@ -1206,7 +1206,7 @@ class FormPhp
                             $code .= BlockBuilderUtility::tab(11) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].'_custom_fullscreen_height]" class="control-label"><?php echo t(\''.addslashes($postData['heightLabel']).'\'); ?></label>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(11) . '<div class="input-group">' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(12) . '<input type="number" id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].'_custom_fullscreen_height]" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].'_custom_fullscreen_height]" value="<% if (parseInt(' . $v['handle'] . '_custom_fullscreen_height)) { %><%=_.escape(' . $v['handle'] . '_custom_fullscreen_height)%><% } else { %><% } %>" class="form-control ccm-input-number" />' . PHP_EOL;
-                            $code .= BlockBuilderUtility::tab(12) . '<span class="input-group-addon"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(12) . '<span class="input-group-text"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(11) . '</div>' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(10) . '</div>' . PHP_EOL;
 
@@ -1332,13 +1332,13 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL;
 
-                        $code .= BlockBuilderUtility::tab(5) . '<div class="js-override-all-dimensions-wrapper" <?php if (empty($settings[\''.$v['handle'].'_override_dimensions\'])): ?>style="display: none;"<?php endif; ?>>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '<div class="row mt-3 js-override-all-dimensions-wrapper" <?php if (empty($settings[\''.$v['handle'].'_override_dimensions\'])): ?>style="display: none;"<?php endif; ?>>' . PHP_EOL;
 
                         $code .= BlockBuilderUtility::tab(6) . '<div class="col-12 col-lg-4 margin-bottom-on-mobile">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . '<?php echo $form->label($view->field(\'settings['.$v['handle'].'_custom_width]\'), t(\'' . addslashes($postData['widthLabel']) . '\')); ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . '<div class="input-group">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(8) . '<?php echo $form->number($view->field(\'settings['.$v['handle'].'_custom_width]\'), !empty($settings[\''.$v['handle'].'_custom_width\']) ? $settings[\''.$v['handle'].'_custom_width\'] : \'\'); ?>' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(8) . '<span class="input-group-addon"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . '<span class="input-group-text"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL;
 
@@ -1346,7 +1346,7 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(7) . '<?php echo $form->label($view->field(\'settings['.$v['handle'].'_custom_height]\'), t(\'' . addslashes($postData['heightLabel']) . '\')); ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . '<div class="input-group">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(8) . '<?php echo $form->number($view->field(\'settings['.$v['handle'].'_custom_height]\'), !empty($settings[\''.$v['handle'].'_custom_height\']) ? $settings[\''.$v['handle'].'_custom_height\'] : \'\'); ?>' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(8) . '<span class="input-group-addon"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . '<span class="input-group-text"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL;
 
@@ -1374,13 +1374,13 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL;
 
-                        $code .= BlockBuilderUtility::tab(5) . '<div class="js-override-all-fullscreen-dimensions-wrapper" <?php if (empty($settings[\''.$v['handle'].'_override_fullscreen_dimensions\'])): ?>style="display: none;"<?php endif; ?>>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '<div class="row mt-3 js-override-all-fullscreen-dimensions-wrapper" <?php if (empty($settings[\''.$v['handle'].'_override_fullscreen_dimensions\'])): ?>style="display: none;"<?php endif; ?>>' . PHP_EOL;
 
                         $code .= BlockBuilderUtility::tab(6) . '<div class="col-12 col-lg-4 margin-bottom-on-mobile">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . '<?php echo $form->label($view->field(\'settings['.$v['handle'].'_custom_fullscreen_width]\'), t(\'' . addslashes($postData['widthLabel']) . '\')); ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . '<div class="input-group">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(8) . '<?php echo $form->number($view->field(\'settings['.$v['handle'].'_custom_fullscreen_width]\'), !empty($settings[\''.$v['handle'].'_custom_fullscreen_width\']) ? $settings[\''.$v['handle'].'_custom_fullscreen_width\'] : \'\'); ?>' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(8) . '<span class="input-group-addon"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . '<span class="input-group-text"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL;
 
@@ -1388,7 +1388,7 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(7) . '<?php echo $form->label($view->field(\'settings['.$v['handle'].'_custom_fullscreen_height]\'), t(\'' . addslashes($postData['heightLabel']) . '\')); ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . '<div class="input-group">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(8) . '<?php echo $form->number($view->field(\'settings['.$v['handle'].'_custom_fullscreen_height]\'), !empty($settings[\''.$v['handle'].'_custom_fullscreen_height\']) ? $settings[\''.$v['handle'].'_custom_fullscreen_height\'] : \'\'); ?>' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(8) . '<span class="input-group-addon"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . '<span class="input-group-text"><?php echo t(\'' . addslashes($postData['pxLabel']) . '\'); ?></span>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL;
 
