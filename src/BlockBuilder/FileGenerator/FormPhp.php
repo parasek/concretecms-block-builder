@@ -181,7 +181,7 @@ class FormPhp
                     }
                     $code .= BlockBuilderUtility::tab(5).'</div>'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5).'<div class="col-12 col-lg-6">'.PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(6).'<span class="toggle-additional-fields <?php if ($'.$v['handle'].'[\'show_additional_fields\']): ?>toggle-additional-fields-active<?php endif; ?> btn btn-default js-toggle-additional-fields-'.$v['handle'].'-<?php echo $uniqueID; ?>"'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(6).'<span class="toggle-additional-fields <?php if ($'.$v['handle'].'[\'show_additional_fields\']): ?>toggle-additional-fields-active<?php endif; ?> btn btn-secondary js-toggle-additional-fields-'.$v['handle'].'-<?php echo $uniqueID; ?>"'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7).'data-show-text="<?php echo t(\''.addslashes($postData['showAdditionalFieldsLabel']).'\'); ?>"'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7).'data-hide-text="<?php echo t(\''.addslashes($postData['hideAdditionalFieldsLabel']).'\'); ?>"'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7).'<?php if (!$'.$v['handle'].'[\'link_type\']): ?>style="display: none;"<?php endif; ?>'.PHP_EOL;
@@ -457,7 +457,7 @@ class FormPhp
 
                     if (!empty($v['imageShowAltTextField']) or (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable'])) or (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable'])) ) {
                         $code .= BlockBuilderUtility::tab(5) . '<div class="col-12 col-lg-6">' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(6) . '<span class="toggle-additional-image-fields <?php if ($' . $v['handle'] . '_data[\'show_additional_fields\']): ?>toggle-additional-image-fields-active<?php endif; ?> btn btn-default js-toggle-additional-image-fields-' . $v['handle'] . '-<?php echo $uniqueID; ?>"' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '<span class="toggle-additional-image-fields <?php if ($' . $v['handle'] . '_data[\'show_additional_fields\']): ?>toggle-additional-image-fields-active<?php endif; ?> btn btn-secondary js-toggle-additional-image-fields-' . $v['handle'] . '-<?php echo $uniqueID; ?>"' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . 'data-show-text="<?php echo t(\'' . addslashes($postData['showAdditionalFieldsLabel']) . '\'); ?>"' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . 'data-hide-text="<?php echo t(\'' . addslashes($postData['hideAdditionalFieldsLabel']) . '\'); ?>"' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(6) . '><i class="fa fa-caret-right"></i> <span class="js-toggle-additional-image-fields-text-' . $v['handle'] . '-<?php echo $uniqueID; ?>"><?php if ($' . $v['handle'] . '_data[\'show_additional_fields\']): ?><?php echo t(\'' . addslashes($postData['hideAdditionalFieldsLabel']) . '\'); ?><?php else: ?><?php echo t(\'' . addslashes($postData['showAdditionalFieldsLabel']) . '\'); ?><?php endif; ?></span></span>' . PHP_EOL;
@@ -871,7 +871,7 @@ class FormPhp
                     }
                     $code .= BlockBuilderUtility::tab(8) . '</div>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(8) . '<div class="col-12 col-lg-6">' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(9) . '<span class="toggle-additional-fields <% if (parseInt('.$v['handle'].'_show_additional_fields)) { %>toggle-additional-fields-active<% } %> btn btn-default js-toggle-additional-fields"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(9) . '<span class="toggle-additional-fields <% if (parseInt('.$v['handle'].'_show_additional_fields)) { %>toggle-additional-fields-active<% } %> btn btn-secondary js-toggle-additional-fields"' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(10) . 'data-show-text="<?php echo t(\''.addslashes($postData['showAdditionalFieldsLabel']).'\'); ?>"' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(10) . 'data-hide-text="<?php echo t(\''.addslashes($postData['hideAdditionalFieldsLabel']).'\'); ?>"' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(10) . '<% if (!'.$v['handle'].'_link_type) { %>style="display: none;"<% } %>' . PHP_EOL;
@@ -1118,7 +1118,7 @@ class FormPhp
 
                     if (!empty($v['imageShowAltTextField']) or (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable'])) or (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable'])) ) {
                         $code .= BlockBuilderUtility::tab(8) . '<div class="col-12 col-lg-6">' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(9) . '<span class="toggle-additional-image-fields <% if (parseInt(' . $v['handle'] . '_show_additional_fields)) { %>toggle-additional-image-fields-active<% } %> btn btn-default js-toggle-additional-image-fields"' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(9) . '<span class="toggle-additional-image-fields <% if (parseInt(' . $v['handle'] . '_show_additional_fields)) { %>toggle-additional-image-fields-active<% } %> btn btn-secondary js-toggle-additional-image-fields"' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(10) . 'data-show-text="<?php echo t(\'' . addslashes($postData['showAdditionalFieldsLabel']) . '\'); ?>"' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(10) . 'data-hide-text="<?php echo t(\'' . addslashes($postData['hideAdditionalFieldsLabel']) . '\'); ?>"' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(9) . '><i class="fa fa-caret-right"></i> <span class="js-toggle-additional-image-fields-text"><% if (parseInt(' . $v['handle'] . '_show_additional_fields)) { %><?php echo t(\'' . addslashes($postData['hideAdditionalFieldsLabel']) . '\'); ?><% } else { %><?php echo t(\'' . addslashes($postData['showAdditionalFieldsLabel']) . '\'); ?><% } %></span></span>' . PHP_EOL;
