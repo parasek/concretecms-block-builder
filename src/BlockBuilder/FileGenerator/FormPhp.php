@@ -185,7 +185,7 @@ class FormPhp
                     $code .= BlockBuilderUtility::tab(7).'data-show-text="<?php echo t(\''.addslashes($postData['showAdditionalFieldsLabel']).'\'); ?>"'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7).'data-hide-text="<?php echo t(\''.addslashes($postData['hideAdditionalFieldsLabel']).'\'); ?>"'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7).'<?php if (!$'.$v['handle'].'[\'link_type\']): ?>style="display: none;"<?php endif; ?>'.PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(6).'><i class="fa fa-caret-right"></i> <span class="js-toggle-additional-fields-text-'.$v['handle'].'-<?php echo $uniqueID; ?>"><?php if ($'.$v['handle'].'[\'show_additional_fields\']): ?><?php echo t(\''.addslashes($postData['hideAdditionalFieldsLabel']).'\'); ?><?php else: ?><?php echo t(\''.addslashes($postData['showAdditionalFieldsLabel']).'\'); ?><?php endif; ?></span></span>'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(6).'><i class="fas fa-caret-right"></i> <span class="js-toggle-additional-fields-text-'.$v['handle'].'-<?php echo $uniqueID; ?>"><?php if ($'.$v['handle'].'[\'show_additional_fields\']): ?><?php echo t(\''.addslashes($postData['hideAdditionalFieldsLabel']).'\'); ?><?php else: ?><?php echo t(\''.addslashes($postData['showAdditionalFieldsLabel']).'\'); ?><?php endif; ?></span></span>'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(6).'<?php echo $form->hidden($view->field(\''.$v['handle'].'_show_additional_fields\'), $'.$v['handle'].'[\'show_additional_fields\'], [\'class\'=>\'js-toggle-additional-fields-value-'.$v['handle'].'-\'.$uniqueID, \'maxlength\'=>\'255\']); ?>'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5).'</div>'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4).'</div>'.PHP_EOL.PHP_EOL;
@@ -460,7 +460,7 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(6) . '<span class="toggle-additional-image-fields <?php if ($' . $v['handle'] . '_data[\'show_additional_fields\']): ?>toggle-additional-image-fields-active<?php endif; ?> btn btn-secondary js-toggle-additional-image-fields-' . $v['handle'] . '-<?php echo $uniqueID; ?>"' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . 'data-show-text="<?php echo t(\'' . addslashes($postData['showAdditionalFieldsLabel']) . '\'); ?>"' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . 'data-hide-text="<?php echo t(\'' . addslashes($postData['hideAdditionalFieldsLabel']) . '\'); ?>"' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(6) . '><i class="fa fa-caret-right"></i> <span class="js-toggle-additional-image-fields-text-' . $v['handle'] . '-<?php echo $uniqueID; ?>"><?php if ($' . $v['handle'] . '_data[\'show_additional_fields\']): ?><?php echo t(\'' . addslashes($postData['hideAdditionalFieldsLabel']) . '\'); ?><?php else: ?><?php echo t(\'' . addslashes($postData['showAdditionalFieldsLabel']) . '\'); ?><?php endif; ?></span></span>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '><i class="fas fa-caret-right"></i> <span class="js-toggle-additional-image-fields-text-' . $v['handle'] . '-<?php echo $uniqueID; ?>"><?php if ($' . $v['handle'] . '_data[\'show_additional_fields\']): ?><?php echo t(\'' . addslashes($postData['hideAdditionalFieldsLabel']) . '\'); ?><?php else: ?><?php echo t(\'' . addslashes($postData['showAdditionalFieldsLabel']) . '\'); ?><?php endif; ?></span></span>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(6) . '<?php echo $form->hidden($view->field(\'' . $v['handle'] . '_show_additional_fields\'), $' . $v['handle'] . '_data[\'show_additional_fields\'], [\'class\'=>\'js-toggle-additional-image-fields-value-' . $v['handle'] . '-\'.$uniqueID, \'maxlength\'=>\'255\']); ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL;
                     }
@@ -680,11 +680,11 @@ class FormPhp
             $code .= BlockBuilderUtility::tab(4) . '<button type="button" class="btn btn-primary entries-action-button js-add-entry" data-action="append"><?php echo t(\''.addslashes($postData['addAtTheBottomLabel']).'\'); ?></button>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(4) . '<button type="button" class="btn btn-primary entries-action-button js-copy-last-entry" data-action="append"><?php echo t(\''.addslashes($postData['copyLastEntryLabel']).'\'); ?></button>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(4) . '<span class="entries-actions-links">' . PHP_EOL;
-            $code .= BlockBuilderUtility::tab(5) . '<a href="#" class="entries-action-link js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t(\''.addslashes($postData['expandAllLabel']).'\'); ?></a>' . PHP_EOL;
-            $code .= BlockBuilderUtility::tab(5) . '<a href="#" class="entries-action-link js-collapse-all"><i class="fa fa-minus-square-o"></i> <?php echo t(\''.addslashes($postData['collapseAllLabel']).'\'); ?></a>' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(5) . '<a href="#" class="entries-action-link js-expand-all"><i class="far fa-plus-square"></i> <?php echo t(\''.addslashes($postData['expandAllLabel']).'\'); ?></a>' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(5) . '<a href="#" class="entries-action-link js-collapse-all"><i class="far fa-minus-square"></i> <?php echo t(\''.addslashes($postData['collapseAllLabel']).'\'); ?></a>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(4) . '</span>' . PHP_EOL;
             if (!empty($postData['maxNumberOfEntries'])) {
-                $code .= BlockBuilderUtility::tab(4) . '<span class="entries-actions-counter"><i class="fa fa-question-circle" title="<?php echo t(\''.addslashes($postData['maxNumberOfEntriesLabel']).'\'); ?>"></i> <span class="js-number-of-entries">0</span>/<span class="js-max-number-of-entries">'.$postData['maxNumberOfEntries'].'</span></span>' . PHP_EOL;
+                $code .= BlockBuilderUtility::tab(4) . '<span class="entries-actions-counter"><i class="fas fa-question-circle" title="<?php echo t(\''.addslashes($postData['maxNumberOfEntriesLabel']).'\'); ?>"></i> <span class="js-number-of-entries">0</span>/<span class="js-max-number-of-entries">'.$postData['maxNumberOfEntries'].'</span></span>' . PHP_EOL;
             }
             $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL;
 
@@ -695,11 +695,11 @@ class FormPhp
             $code .= BlockBuilderUtility::tab(4) . '<button type="button" class="btn btn-primary entries-action-button js-add-entry" data-action="append"><?php echo t(\''.addslashes($postData['addAtTheBottomLabel']).'\'); ?></button>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(4) . '<button type="button" class="btn btn-primary entries-action-button js-copy-last-entry" data-action="append"><?php echo t(\''.addslashes($postData['copyLastEntryLabel']).'\'); ?></button>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(4) . '<span class="entries-actions-links">' . PHP_EOL;
-            $code .= BlockBuilderUtility::tab(5) . '<a href="#" class="entries-action-link js-expand-all"><i class="fa fa-plus-square-o"></i> <?php echo t(\''.addslashes($postData['expandAllLabel']).'\'); ?></a>' . PHP_EOL;
-            $code .= BlockBuilderUtility::tab(5) . '<a href="#" class="entries-action-link js-collapse-all"><i class="fa fa-minus-square-o"></i> <?php echo t(\''.addslashes($postData['collapseAllLabel']).'\'); ?></a>' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(5) . '<a href="#" class="entries-action-link js-expand-all"><i class="far fa-plus-square"></i> <?php echo t(\''.addslashes($postData['expandAllLabel']).'\'); ?></a>' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(5) . '<a href="#" class="entries-action-link js-collapse-all"><i class="far fa-minus-square"></i> <?php echo t(\''.addslashes($postData['collapseAllLabel']).'\'); ?></a>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(4) . '</span>' . PHP_EOL;
             if (!empty($postData['maxNumberOfEntries'])) {
-                $code .= BlockBuilderUtility::tab(4) . '<span class="entries-actions-counter"><i class="fa fa-question-circle" title="<?php echo t(\''.addslashes($postData['maxNumberOfEntriesLabel']).'\'); ?>"></i> <span class="js-number-of-entries">0</span>/<span>'.$postData['maxNumberOfEntries'].'</span></span>' . PHP_EOL;
+                $code .= BlockBuilderUtility::tab(4) . '<span class="entries-actions-counter"><i class="fas fa-question-circle" title="<?php echo t(\''.addslashes($postData['maxNumberOfEntriesLabel']).'\'); ?>"></i> <span class="js-number-of-entries">0</span>/<span>'.$postData['maxNumberOfEntries'].'</span></span>' . PHP_EOL;
             }
             $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL;
 
@@ -712,11 +712,11 @@ class FormPhp
             $code .= BlockBuilderUtility::tab(4) . '<div class="well entry js-entry" data-position="<%=_.escape(position)%>">' . PHP_EOL . PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(5) . '<div class="entry-header">' . PHP_EOL;
-            $code .= BlockBuilderUtility::tab(6) . '<button type="button" class="entry-header-action entry-header-duplicate-entry-and-add-at-the-end js-duplicate-entry-and-add-at-the-end" title="<?php echo t(\''.addslashes($postData['duplicateEntryAndAddAtTheEndLabel']).'\'); ?>"><i class="fa fa-paste"></i></button>' . PHP_EOL;
-            $code .= BlockBuilderUtility::tab(6) . '<button type="button" class="entry-header-action entry-header-duplicate-entry js-duplicate-entry" title="<?php echo t(\''.addslashes($postData['duplicateEntryLabel']).'\'); ?>"><i class="fa fa-clone"></i></button>' . PHP_EOL;
-            $code .= BlockBuilderUtility::tab(6) . '<div class="entry-header-action entry-header-remove-entry js-remove-entry" data-confirm-text="<?php echo t(\''.addslashes($postData['areYouSureLabel']).'\'); ?>"  title="<?php echo t(\''.addslashes($postData['removeEntryLabel']).'\'); ?>"><i class="fa fa-times"></i></div>' . PHP_EOL;
-            $code .= BlockBuilderUtility::tab(6) . '<div class="entry-header-action entry-header-move-entry js-move-entry"><i class="fa fa-arrows"></i></div>' . PHP_EOL;
-            $code .= BlockBuilderUtility::tab(6) . '<div class="entry-header-action entry-header-toggle-entry js-toggle-entry" data-action="collapse"><i class="fa fa-minus-square-o"></i></div>' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(6) . '<button type="button" class="entry-header-action entry-header-duplicate-entry-and-add-at-the-end js-duplicate-entry-and-add-at-the-end" title="<?php echo t(\''.addslashes($postData['duplicateEntryAndAddAtTheEndLabel']).'\'); ?>"><i class="fas fa-paste"></i></button>' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(6) . '<button type="button" class="entry-header-action entry-header-duplicate-entry js-duplicate-entry" title="<?php echo t(\''.addslashes($postData['duplicateEntryLabel']).'\'); ?>"><i class="fas fa-clone"></i></button>' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(6) . '<div class="entry-header-action entry-header-remove-entry js-remove-entry" data-confirm-text="<?php echo t(\''.addslashes($postData['areYouSureLabel']).'\'); ?>"  title="<?php echo t(\''.addslashes($postData['removeEntryLabel']).'\'); ?>"><i class="fas fa-times"></i></div>' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(6) . '<div class="entry-header-action entry-header-move-entry js-move-entry"><i class="fas fa-arrows-alt"></i></div>' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(6) . '<div class="entry-header-action entry-header-toggle-entry js-toggle-entry" data-action="collapse"><i class="far fa-minus-square"></i></div>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(6) . '<div class="entry-header-title">' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(7) . '<span class="js-entry-title">' . PHP_EOL;
             if ($postDataSummary['entryTitleSource']) {
@@ -875,7 +875,7 @@ class FormPhp
                     $code .= BlockBuilderUtility::tab(10) . 'data-show-text="<?php echo t(\''.addslashes($postData['showAdditionalFieldsLabel']).'\'); ?>"' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(10) . 'data-hide-text="<?php echo t(\''.addslashes($postData['hideAdditionalFieldsLabel']).'\'); ?>"' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(10) . '<% if (!'.$v['handle'].'_link_type) { %>style="display: none;"<% } %>' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(9) . '><i class="fa fa-caret-right"></i> <span class="js-toggle-additional-fields-text"><% if (parseInt('.$v['handle'].'_show_additional_fields)) { %><?php echo t(\''.addslashes($postData['hideAdditionalFieldsLabel']).'\'); ?><% } else { %><?php echo t(\''.addslashes($postData['showAdditionalFieldsLabel']).'\'); ?><% } %></span></span>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(9) . '><i class="fas fa-caret-right"></i> <span class="js-toggle-additional-fields-text"><% if (parseInt('.$v['handle'].'_show_additional_fields)) { %><?php echo t(\''.addslashes($postData['hideAdditionalFieldsLabel']).'\'); ?><% } else { %><?php echo t(\''.addslashes($postData['showAdditionalFieldsLabel']).'\'); ?><% } %></span></span>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(9) . '<input type="hidden"' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(10) . 'class="js-toggle-additional-fields-value"' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(10) . 'name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].'_show_additional_fields]"' . PHP_EOL;
@@ -1121,7 +1121,7 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(9) . '<span class="toggle-additional-image-fields <% if (parseInt(' . $v['handle'] . '_show_additional_fields)) { %>toggle-additional-image-fields-active<% } %> btn btn-secondary js-toggle-additional-image-fields"' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(10) . 'data-show-text="<?php echo t(\'' . addslashes($postData['showAdditionalFieldsLabel']) . '\'); ?>"' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(10) . 'data-hide-text="<?php echo t(\'' . addslashes($postData['hideAdditionalFieldsLabel']) . '\'); ?>"' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(9) . '><i class="fa fa-caret-right"></i> <span class="js-toggle-additional-image-fields-text"><% if (parseInt(' . $v['handle'] . '_show_additional_fields)) { %><?php echo t(\'' . addslashes($postData['hideAdditionalFieldsLabel']) . '\'); ?><% } else { %><?php echo t(\'' . addslashes($postData['showAdditionalFieldsLabel']) . '\'); ?><% } %></span></span>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(9) . '><i class="fas fa-caret-right"></i> <span class="js-toggle-additional-image-fields-text"><% if (parseInt(' . $v['handle'] . '_show_additional_fields)) { %><?php echo t(\'' . addslashes($postData['hideAdditionalFieldsLabel']) . '\'); ?><% } else { %><?php echo t(\'' . addslashes($postData['showAdditionalFieldsLabel']) . '\'); ?><% } %></span></span>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(9) . '<input type="hidden" class="js-toggle-additional-image-fields-value" id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_show_additional_fields]" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_show_additional_fields]" value="<%=_.escape(' . $v['handle'] . '_show_additional_fields)%>" maxlength="255" />' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(8) . '</div>' . PHP_EOL;
                     }

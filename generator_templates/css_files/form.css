@@ -66,7 +66,6 @@ div.ccm-ui .toggle-additional-image-fields-active i {
 }
 
 .ccm-ui .entries-action-link {
-    color: #555555;
     margin-right: 15px;
 }
 
@@ -109,6 +108,7 @@ div.ccm-ui .toggle-additional-image-fields-active i {
     margin: 0;
     border: none;
     background: transparent;
+    color: #4c4f56;
 }
 
 .ccm-ui .entry-header-duplicate-entry-and-add-at-the-end {
@@ -118,6 +118,7 @@ div.ccm-ui .toggle-additional-image-fields-active i {
     margin: 0;
     border: none;
     background: transparent;
+    color: #4c4f56;
 }
 
 .ccm-ui .entry-header-duplicate-entry:focus {
@@ -126,21 +127,19 @@ div.ccm-ui .toggle-additional-image-fields-active i {
 
 .ccm-ui .entry-header-duplicate-entry:disabled,
 .ccm-ui .entry-header-duplicate-entry-and-add-at-the-end:disabled {
-    color: #737272;
+    color: #909090;
     cursor: not-allowed;
 }
 
 .ccm-ui .entry-header-move-entry  {
     left: 0;
     cursor: move;
-    color: #737272;
 }
 
 .ccm-ui .entry-header-toggle-entry  {
     left: 30px;
     font-size: 17px;
     cursor: pointer;
-    color: #737272;
 }
 
 .ccm-ui .entry-header-title {
