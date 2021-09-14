@@ -80,6 +80,13 @@ div.ccm-ui .toggle-additional-image-fields-active i {
     }
 }
 
+.ccm-ui .entries-action-link-remove-all {
+    float: right;
+    margin-top: 9px;
+    margin-right: 0;
+    color: #c34d52;
+}
+
 /* Well */
 .ccm-ui .entry.well {
     background: #fff;

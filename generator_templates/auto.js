@@ -325,6 +325,27 @@ $(function () {
 
         });
 
+        // Remove all entries
+        formContainer.on('click', '.js-remove-all', function (e2) {
+
+            e2.preventDefault();
+
+            var dataConfirmText = $(this).attr('data-confirm-text');
+
+            var confirmQuestion = confirm(dataConfirmText);
+
+            if (confirmQuestion == true) {
+
+                entriesContainer.html('');
+
+                entriesContainer.append(templateNoEntries());
+
+                updateCounter(countEntries(entriesContainer));
+
+            }
+
+        });
+
         // Toggle entry
         entriesContainer.on('click', '.js-toggle-entry', function (e2) {
 

@@ -686,6 +686,7 @@ class FormPhp
             if (!empty($postData['maxNumberOfEntries'])) {
                 $code .= BlockBuilderUtility::tab(4) . '<span class="entries-actions-counter"><i class="fas fa-question-circle" title="<?php echo t(\''.addslashes($postData['maxNumberOfEntriesLabel']).'\'); ?>"></i> <span class="js-number-of-entries">0</span>/<span class="js-max-number-of-entries">'.$postData['maxNumberOfEntries'].'</span></span>' . PHP_EOL;
             }
+            $code .= BlockBuilderUtility::tab(4) . '<a href="#" class="entries-action-link entries-action-link-remove-all js-remove-all" data-confirm-text="<?php echo t(\''.addslashes($postData['areYouSureLabel']).'\'); ?>"  title="<?php echo t(\''.addslashes($postData['removeAllLabel']).'\'); ?>"><i class="fas fa-times-circle"></i></a>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(3) . '<div class="entries" id="entries-<?php echo $uniqueID; ?>" data-entries="<?php echo htmlspecialchars(json_encode($entries)); ?>" data-column-names="<?php echo h(json_encode($entryColumnNames)); ?>"></div>' . PHP_EOL . PHP_EOL;
@@ -701,6 +702,7 @@ class FormPhp
             if (!empty($postData['maxNumberOfEntries'])) {
                 $code .= BlockBuilderUtility::tab(4) . '<span class="entries-actions-counter"><i class="fas fa-question-circle" title="<?php echo t(\''.addslashes($postData['maxNumberOfEntriesLabel']).'\'); ?>"></i> <span class="js-number-of-entries">0</span>/<span>'.$postData['maxNumberOfEntries'].'</span></span>' . PHP_EOL;
             }
+            $code .= BlockBuilderUtility::tab(4) . '<a href="#" class="entries-action-link entries-action-link-remove-all js-remove-all" data-confirm-text="<?php echo t(\''.addslashes($postData['areYouSureLabel']).'\'); ?>"  title="<?php echo t(\''.addslashes($postData['removeAllLabel']).'\'); ?>"><i class="fas fa-times-circle"></i></a>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL;
 
         }
