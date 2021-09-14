@@ -84,6 +84,10 @@ div.ccm-ui .toggle-additional-image-fields-active i {
 .ccm-ui .entry.well {
     background: #fff;
     box-shadow: none;
+    padding: 25px;
+    border: 1px solid #dedede;
+    border-radius: 5px;
+    margin-bottom: 20px;
 }
 
 .ccm-ui .entry-header {
