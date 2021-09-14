@@ -82,10 +82,16 @@ div.ccm-ui .toggle-additional-image-fields-active i {
 }
 
 .ccm-ui .entries-action-link-remove-all {
-    float: right;
-    margin-top: 9px;
-    margin-right: 0;
     color: #c34d52;
+    margin-left: 9px;
+}
+
+@media only screen and (min-width: 768px) {
+    .ccm-ui .entries-action-link-remove-all {
+        float: right;
+        margin-top: 6px;
+        margin-right: 0;
+    }
 }
 
 /* Well */
