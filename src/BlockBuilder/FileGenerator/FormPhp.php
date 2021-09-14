@@ -705,6 +705,29 @@ class FormPhp
             $code .= BlockBuilderUtility::tab(4) . '<a href="#" class="entries-action-link entries-action-link-remove-all js-remove-all" data-confirm-text="<?php echo t(\''.addslashes($postData['areYouSureLabel']).'\'); ?>"  title="<?php echo t(\''.addslashes($postData['removeAllLabel']).'\'); ?>"><i class="fas fa-times-circle"></i></a>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL;
 
+            $code .= BlockBuilderUtility::tab(3) . '<div class="mb-3">' . PHP_EOL;
+
+            $code .= BlockBuilderUtility::tab(4) . '<div class="form-check-inline">' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(5) . '<input type="checkbox"' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(6) . 'name="<?php echo $view->field(\'disableSmoothScroll\'); ?>"' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(6) . 'class="form-check-input js-disable-smooth-scroll"' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(6) . 'value="1"' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(6) . 'id="<?php echo $view->field(\'disableSmoothScroll\'); ?>"' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(5) . '/>' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(5) . '<label for="<?php echo $view->field(\'disableSmoothScroll\'); ?>" class="form-check-label"><?php echo t(\''.addslashes($postData['disableSmoothScrollLabel']).'\'); ?></label>' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(4) . '</div>' . PHP_EOL; // .form-check-inline
+
+            $code .= BlockBuilderUtility::tab(4) . '<div class="form-check-inline">' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(5) . '<input type="checkbox"' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(6) . 'name="<?php echo $view->field(\'keepAddedEntryCollapsed\'); ?>"' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(6) . 'class="form-check-input js-keep-added-entry-collapsed"' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(6) . 'value="1"' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(6) . 'id="<?php echo $view->field(\'keepAddedEntryCollapsed\'); ?>"' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(5) . '/>' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(5) . '<label for="<?php echo $view->field(\'keepAddedEntryCollapsed\'); ?>" class="form-check-label"><?php echo t(\''.addslashes($postData['keepAddedEntryCollapsedLabel']).'\'); ?></label>' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(4) . '</div>' . PHP_EOL; // .form-check-inline
+
+            $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL; // .mb-3
         }
 
         if ( ! empty($postData['entries'])) {
@@ -734,7 +757,7 @@ class FormPhp
             $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL . PHP_EOL;
 
-            $code .= BlockBuilderUtility::tab(5) . '<div class="entry-content js-entry-content">' . PHP_EOL . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(5) . '<div class="entry-content js-entry-content" <% if (keepAddedEntryCollapsed) { %>style="display: none;"<% } %>>' . PHP_EOL . PHP_EOL;
 
 
             $previousFieldTypeHadMultipleFields = false;

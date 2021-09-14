@@ -148,6 +148,7 @@ $(function () {
             // Append/prepend entry with default values
             var templateData = [];
             templateData['position'] = position;
+            templateData['keepAddedEntryCollapsed'] = formContainer.find('.js-keep-added-entry-collapsed').is(':checked');
             $.each(entryColumnNames, function (key, value) {
                 if (sourceEntry) {
                     templateData[value] = sourceEntry.find('[name="entry['+sourceEntry.attr('data-position')+']['+value+']"]').val();
@@ -175,9 +176,12 @@ $(function () {
             updateCounter(countEntries(entriesContainer));
 
             // Smooth scroll
-            formContainer.closest('.ui-dialog-content').animate({
-                scrollTop: formContainer.find('.js-entry[data-position="' + position + '"]').position().top + formContainer.closest('.ui-dialog-content').scrollTop() - formContainer.closest('.ui-dialog').find('.ui-dialog-titlebar').outerHeight()
-            }, 1000);
+            var disableSmoothScroll = formContainer.find('.js-disable-smooth-scroll').is(':checked');
+            if (!disableSmoothScroll) {
+                formContainer.closest('.ui-dialog-content').animate({
+                    scrollTop: formContainer.find('.js-entry[data-position="' + position + '"]').position().top + formContainer.closest('.ui-dialog-content').scrollTop() - formContainer.closest('.ui-dialog').find('.ui-dialog-titlebar').outerHeight()
+                }, 1000);
+            }
 
         }
 

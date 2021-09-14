@@ -139,6 +139,8 @@ class BlockBuilder extends DashboardPageController
         $this->set('collapseAllLabel', t('Collapse all'));
         $this->set('expandAllLabel', t('Expand all'));
         $this->set('removeAllLabel', t('Remove all'));
+        $this->set('disableSmoothScrollLabel', t('Disable smooth scroll'));
+        $this->set('keepAddedEntryCollapsedLabel', t('Keep added/copied entry collapsed'));
         $this->set('noEntriesFoundLabel', t('No entries found.'));
         $this->set('maxNumberOfEntriesLabel', t('Max. number of entries'));
         $this->set('removeEntryLabel', t('Remove entry'));

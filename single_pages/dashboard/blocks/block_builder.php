@@ -160,6 +160,16 @@
                 <?php echo $form->text('removeAllLabel', $removeAllLabel, ['data-translated-text'=>t('Remove all'), 'data-untranslated-text'=>'Remove all']); ?>
             </div>
 
+            <div class="mb-4 <?php in_array('disableSmoothScrollLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('disableSmoothScrollLabel', t('Disable smooth scroll')); ?>
+                <?php echo $form->text('disableSmoothScrollLabel', $disableSmoothScrollLabel, ['data-translated-text'=>t('Disable smooth scroll'), 'data-untranslated-text'=>'Disable smooth scroll']); ?>
+            </div>
+
+            <div class="mb-4 <?php in_array('keepAddedEntryCollapsedLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('keepAddedEntryCollapsedLabel', t('Keep added/copied entry collapsed')); ?>
+                <?php echo $form->text('keepAddedEntryCollapsedLabel', $keepAddedEntryCollapsedLabel, ['data-translated-text'=>t('Keep added/copied entry collapsed'), 'data-untranslated-text'=>'Keep added/copied entry collapsed']); ?>
+            </div>
+
             <div class="mb-4 <?php in_array('noEntriesFoundLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
                 <?php echo $form->label('noEntriesFoundLabel', t('No entries found.')); ?>
                 <?php echo $form->text('noEntriesFoundLabel', $noEntriesFoundLabel, ['data-translated-text'=>t('No entries found.'), 'data-untranslated-text'=>'No entries found.']); ?>
