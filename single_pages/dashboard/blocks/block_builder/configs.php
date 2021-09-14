@@ -7,7 +7,7 @@
 
 <?php if (is_array($blockTypes) AND count($blockTypes)): ?>
 
-    <div class="form-group">
+    <div class="mb-4">
         <p><?php echo t('Current package version:'); ?> <?php echo $pkgVersion ?></p>
         <p><?php echo t('We have found configuration file in blocks listed below:'); ?></p>
     </div>
