@@ -50,6 +50,7 @@ div.ccm-ui .toggle-additional-image-fields-active i {
 @media only screen and (min-width: 768px) {
     .ccm-ui .entries-action-button {
         width: auto;
+        margin-bottom: 0;
     }
 }
 
@@ -94,7 +95,7 @@ div.ccm-ui .toggle-additional-image-fields-active i {
     padding: 20px;
     border: 1px solid #dedede;
     border-radius: .25rem;
-    margin-bottom: 20px;
+    margin-bottom: 1rem;
 }
 
 .ccm-ui .entry-header {

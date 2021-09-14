@@ -42,7 +42,7 @@ class FormPhp
             $code .= BlockBuilderUtility::tab(1).'?>'.PHP_EOL.PHP_EOL;
         }
 
-        $code .= BlockBuilderUtility::tab(1).'<div class="tab-content">'.PHP_EOL.PHP_EOL;
+        $code .= BlockBuilderUtility::tab(1).'<div class="tab-content mt-4">'.PHP_EOL.PHP_EOL;
 
         if (!empty($postData['basic'])) {
             $code .= BlockBuilderUtility::tab(2) . '<div class="js-tab-pane';
@@ -675,7 +675,7 @@ class FormPhp
 
         if ( ! empty($postData['entries'])) {
 
-            $code .= BlockBuilderUtility::tab(3) . '<div class="mb-4 entries-actions">' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(3) . '<div class="mb-3 entries-actions">' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(4) . '<button type="button" class="btn btn-primary entries-action-button js-add-entry" data-action="prepend"><?php echo t(\''.addslashes($postData['addAtTheTopLabel']).'\'); ?></button>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(4) . '<button type="button" class="btn btn-primary entries-action-button js-add-entry" data-action="append"><?php echo t(\''.addslashes($postData['addAtTheBottomLabel']).'\'); ?></button>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(4) . '<button type="button" class="btn btn-primary entries-action-button js-copy-last-entry" data-action="append"><?php echo t(\''.addslashes($postData['copyLastEntryLabel']).'\'); ?></button>' . PHP_EOL;
@@ -691,7 +691,7 @@ class FormPhp
 
             $code .= BlockBuilderUtility::tab(3) . '<div class="entries" id="entries-<?php echo $uniqueID; ?>" data-entries="<?php echo htmlspecialchars(json_encode($entries)); ?>" data-column-names="<?php echo h(json_encode($entryColumnNames)); ?>"></div>' . PHP_EOL . PHP_EOL;
 
-            $code .= BlockBuilderUtility::tab(3) . '<div class="mb-4 entries-actions">' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(3) . '<div class="mb-3 entries-actions">' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(4) . '<button type="button" class="btn btn-primary entries-action-button js-add-entry" data-action="prepend"><?php echo t(\''.addslashes($postData['addAtTheTopLabel']).'\'); ?></button>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(4) . '<button type="button" class="btn btn-primary entries-action-button js-add-entry" data-action="append"><?php echo t(\''.addslashes($postData['addAtTheBottomLabel']).'\'); ?></button>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(4) . '<button type="button" class="btn btn-primary entries-action-button js-copy-last-entry" data-action="append"><?php echo t(\''.addslashes($postData['copyLastEntryLabel']).'\'); ?></button>' . PHP_EOL;
