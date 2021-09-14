@@ -176,7 +176,7 @@ $(function () {
 
             // Smooth scroll
             formContainer.closest('.ui-dialog-content').animate({
-                scrollTop: formContainer.find('.js-entry[data-position="' + position + '"]').position().top + formContainer.closest('.ui-dialog-content').scrollTop()
+                scrollTop: formContainer.find('.js-entry[data-position="' + position + '"]').position().top + formContainer.closest('.ui-dialog-content').scrollTop() - formContainer.closest('.ui-dialog').find('.ui-dialog-titlebar').outerHeight()
             }, 1000);
 
         }
