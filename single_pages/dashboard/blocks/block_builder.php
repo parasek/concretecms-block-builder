@@ -105,7 +105,7 @@
         <div class="ccm-tab-content" id="ccm-tab-content-texts" style="display: none;">
 
             <div class="form-group populate-translation-fields">
-                <i class="fa fa-book"></i> <?php echo t('Populate fields with'); ?>
+                <i class="fas fa-book"></i> <?php echo t('Populate fields with'); ?>
                 <a href="#" class="js-populate-translation-fields" data-type="translated"><?php echo t('translated'); ?></a>
                 or
                 <a href="#" class="js-populate-translation-fields" data-type="untranslated"><?php echo t('untranslated'); ?></a>
@@ -310,7 +310,7 @@
                     </div>
                     <a href="#" class="entries-action js-expand-all"><i class="far fa-plus-square"></i> <?php echo t('Expand all'); ?></a>
                     <a href="#" class="entries-action js-collapse-all"><i class="far fa-minus-square"></i> <?php echo t('Collapse all'); ?></a>
-                    <a href="#" class="entries-action entries-action-remove-all js-remove-all" data-group-handle="basic" data-confirm-text="<?php echo t('Are you sure?'); ?>"><i class="fa fa-times"></i> <?php echo t('Remove all'); ?></a>
+                    <a href="#" class="entries-action entries-action-remove-all js-remove-all" data-group-handle="basic" data-confirm-text="<?php echo t('Are you sure?'); ?>"><i class="fas fa-times"></i> <?php echo t('Remove all'); ?></a>
                 </div>
             </div>
 
@@ -339,7 +339,7 @@
                     </div>
                     <a href="#" class="entries-action js-expand-all"><i class="far fa-plus-square"></i> <?php echo t('Expand all'); ?></a>
                     <a href="#" class="entries-action js-collapse-all"><i class="far fa-minus-square"></i> <?php echo t('Collapse all'); ?></a>
-                    <a href="#" class="entries-action entries-action-remove-all js-remove-all" data-group-handle="basic" data-confirm-text="<?php echo t('Are you sure?'); ?>"><i class="fa fa-times"></i> <?php echo t('Remove all'); ?></a>
+                    <a href="#" class="entries-action entries-action-remove-all js-remove-all" data-group-handle="basic" data-confirm-text="<?php echo t('Are you sure?'); ?>"><i class="fas fa-times"></i> <?php echo t('Remove all'); ?></a>
                 </div>
             </div>
 
@@ -368,7 +368,7 @@
                     </div>
                     <a href="#" class="entries-action js-expand-all"><i class="far fa-plus-square"></i> <?php echo t('Expand all'); ?></a>
                     <a href="#" class="entries-action js-collapse-all"><i class="far fa-minus-square"></i> <?php echo t('Collapse all'); ?></a>
-                    <a href="#" class="entries-action entries-action-remove-all js-remove-all" data-group-handle="entries" data-confirm-text="<?php echo t('Are you sure?'); ?>"><i class="fa fa-times"></i> <?php echo t('Remove all'); ?></a>
+                    <a href="#" class="entries-action entries-action-remove-all js-remove-all" data-group-handle="entries" data-confirm-text="<?php echo t('Are you sure?'); ?>"><i class="fas fa-times"></i> <?php echo t('Remove all'); ?></a>
                 </div>
             </div>
 
@@ -397,7 +397,7 @@
                     </div>
                     <a href="#" class="entries-action js-expand-all"><i class="far fa-plus-square"></i> <?php echo t('Expand all'); ?></a>
                     <a href="#" class="entries-action js-collapse-all"><i class="far fa-minus-square"></i> <?php echo t('Collapse all'); ?></a>
-                    <a href="#" class="entries-action entries-action-remove-all js-remove-all" data-group-handle="entries" data-confirm-text="<?php echo t('Are you sure?'); ?>"><i class="fa fa-times"></i> <?php echo t('Remove all'); ?></a>
+                    <a href="#" class="entries-action entries-action-remove-all js-remove-all" data-group-handle="entries" data-confirm-text="<?php echo t('Are you sure?'); ?>"><i class="fas fa-times"></i> <?php echo t('Remove all'); ?></a>
                 </div>
             </div>
 
@@ -419,7 +419,7 @@
         <div class="well entry js-entry <% if (error) { %>entry-has-error<% } %>" data-counter="<%=counter%>">
 
             <div class="entry-header">
-                <div class="entry-header-action entry-header-remove-entry js-remove-entry" data-confirm-text="<?php echo t('Are you sure?'); ?>"><i class="fa fa-times"></i></div>
+                <div class="entry-header-action entry-header-remove-entry js-remove-entry" data-confirm-text="<?php echo t('Are you sure?'); ?>"><i class="fas fa-times"></i></div>
                 <div class="entry-header-action entry-header-move-entry js-move-entry"><i class="fas fa-arrows-alt"></i></div>
                 <div class="entry-header-action entry-header-toggle-entry js-toggle-entry" data-action="collapse"><i class="far fa-minus-square"></i></div>
                 <div class="entry-header-title">
