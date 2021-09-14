@@ -207,7 +207,7 @@ class FormPhp
                     $code .= BlockBuilderUtility::tab(6).'<?php echo $form->select($view->field(\''.$v['handle'].'_protocol\'), $externalLinkProtocols, $'.$v['handle'].'[\'protocol\'] ? $'.$v['handle'].'[\'protocol\'] : \'http://\', [\'class\'=>\'form-select js-external-link-protocol-'.$v['handle'].'-\'.$uniqueID]); ?>'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5).'</div>'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5).'<div class="col-12 col-lg-9">'.PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(6).'<?php echo $form->text($view->field(\''.$v['handle'].'_external_link\'), $'.$v['handle'].'[\'external_link\'], [\'maxlength\'=>\'255\', \'class\'=>\'js-external-link-url-'.$v['handle'].'-\'.$uniqueID]); ?>'.PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(6).'<?php echo $form->text($view->field(\''.$v['handle'].'_external_link\'), $'.$v['handle'].'[\'external_link\'], [\'maxlength\'=>\'255\', \'class\'=>\'form-control js-external-link-url-'.$v['handle'].'-\'.$uniqueID]); ?>'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5).'</div>'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5).'<script>'.PHP_EOL;
                     $code .= BlockBuilderUtility::tab(6).'$(function() {'.PHP_EOL;
@@ -385,7 +385,7 @@ class FormPhp
                     $code .= BlockBuilderUtility::tab(6) . '<?php echo $form->select($view->field(\'' . $v['handle'] . '_protocol\'), $externalLinkProtocols, $' . $v['handle'] . '_protocol ? $' . $v['handle'] . '_protocol : \'http://\', [\'class\'=>\'form-select js-external-link-protocol-' . $v['handle'] . '-\'.$uniqueID]); ?>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5) . '<div class="col-12 col-lg-9">' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(6) . '<?php echo $form->text($view->field(\'' . $v['handle'] . '\'), $' . $v['handle'] . ', [\'maxlength\'=>\'255\', \'class\'=>\'js-external-link-url-' . $v['handle'] . '-\'.$uniqueID]); ?>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(6) . '<?php echo $form->text($view->field(\'' . $v['handle'] . '\'), $' . $v['handle'] . ', [\'maxlength\'=>\'255\', \'class\'=>\'form-control js-external-link-url-' . $v['handle'] . '-\'.$uniqueID]); ?>' . PHP_EOL;
                     if ( ! empty($v['helpText'])) {
                         $code .= BlockBuilderUtility::tab(6) . '<div class="form-text"><?php echo t(\''.addslashes($v['helpText']).'\'); ?></div>'.PHP_EOL;
                     }
