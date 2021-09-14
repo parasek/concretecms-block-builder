@@ -112,7 +112,7 @@ class Validation
                         $urlEnding = '/inspect/'.$blockType->getBlockTypeID();
                     }
 
-                    $errors[] = t('Block with that handle is already installed. <a href="%s" target="_blank" rel="noopener">Uninstall it</a> first and then build block again or use another handle (%s).',  $this->resolverManager->resolve(['dashboard/blocks/types'.$urlEnding]), t('Block settings'));
+                    $errors[] = t('Block with that handle is already installed. %sUninstall it%s first and then build block again. Alternatively you can use different handle (%s).',  '<a href="'.$this->resolverManager->resolve(['dashboard/blocks/types'.$urlEnding]).'" target="_blank" rel="noopener" class="btn btn-primary btn-sm"><i class="fas fa-external-link-alt"></i> ', '</a>', t('Block settings'));
                     $fieldsWithError[] = 'blockHandle';
                     $tabsWithError[] = 'block-settings';
 
@@ -120,7 +120,7 @@ class Validation
 
                     if ($this->blockTypeFolderExists($postData['blockHandle'])) {
 
-                        $errors[] = t('Block folder named "%s" already exists. <a href="#" class="js-delete-block-type-folder">Permanently delete that folder</a> or use another handle. (%s).', $postData['blockHandle'], t('Block settings'));
+                        $errors[] = t('Block folder named %s already exists. %sPermanently delete that folder%s or use different handle (%s).', '"'.$postData['blockHandle'].'"', '<a href="#" class="btn btn-danger btn-sm js-delete-block-type-folder"><i class="far fa-trash-alt"></i> ', '</a>', t('Block settings'));
                         $fieldsWithError[] = 'blockHandle';
                         $tabsWithError[] = 'block-settings';
 
