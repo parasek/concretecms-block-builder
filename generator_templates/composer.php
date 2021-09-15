@@ -17,12 +17,14 @@
     div#ccm-panel-detail-page-composer div.ccm-panel-detail-content .controls-custom ul.nav-tabs {
         padding-left: 0;
     }
+
     div#ccm-panel-detail-page-composer .controls-custom {
         background: #fff;
         padding: 9px 20px 17px;
         border: 1px solid #eaeaea;
         margin-bottom: 30px;
     }
+
     div#ccm-panel-detail-page-composer .controls-custom fieldset {
         margin-left: 0;
         margin-right: 0;
@@ -30,6 +32,7 @@
         padding-right: 0;
         border-radius: 2px;
     }
+
     div#ccm-panel-detail-page-composer .controls-custom fieldset legend {
         background: #eaeaea;
         text-align: center;
@@ -39,6 +42,7 @@
         font-size: 20px;
         border-radius: 3px;
     }
+
     div.ccm-panel-detail .controls-custom hr {
         margin-left: 0;
         margin-right: 0;

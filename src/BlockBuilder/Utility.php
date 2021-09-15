@@ -5,7 +5,8 @@ defined('C5_EXECUTE') or die('Access Denied.');
 class Utility
 {
 
-    public static function tab($numberOfTabs = 1) {
+    public static function tab($numberOfTabs = 1)
+    {
 
         $spaces = '';
         for ($i = 1; $i <= $numberOfTabs; $i++) {
@@ -16,10 +17,11 @@ class Utility
 
     }
 
-    public static function arrayGap($maxKeyLength, $keyLength = 0) {
+    public static function arrayGap($maxKeyLength, $keyLength = 0)
+    {
 
         $spaces = '';
-        $numberOfSpaces = $maxKeyLength-$keyLength;
+        $numberOfSpaces = $maxKeyLength - $keyLength;
         for ($i = 1; $i <= $numberOfSpaces; $i++) {
             $spaces .= ' ';
         }
@@ -28,7 +30,8 @@ class Utility
 
     }
 
-    public static function convertHandleToNamespace($handle) {
+    public static function convertHandleToNamespace($handle)
+    {
 
         $handleParts = explode('_', $handle);
 
@@ -48,7 +51,8 @@ class Utility
 
     }
 
-    public static function convertHandleToDashed($handle) {
+    public static function convertHandleToDashed($handle)
+    {
 
         $handle = str_replace('_', '-', $handle);
 

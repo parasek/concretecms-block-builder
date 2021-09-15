@@ -15,21 +15,25 @@ class Controller extends Package
         'src/BlockBuilder' => 'BlockBuilder'
     ];
 
-    public function getPackageName() {
+    public function getPackageName()
+    {
         return t('Block Builder');
     }
 
-    public function getPackageDescription() {
+    public function getPackageDescription()
+    {
         return t('Build your custom c5 blocks (with optional set of repeatable entries).');
     }
 
-    public function on_start() {
+    public function on_start()
+    {
 
         $this->app->make('Concrete\Core\Routing\RouterInterface')->register('ajax/delete-block-type-folder', 'Concrete\Package\BlockBuilder\Controller\Ajax::deleteBlockTypeFolder');
 
     }
 
-    public function install() {
+    public function install()
+    {
 
         $pkg = parent::install();
 

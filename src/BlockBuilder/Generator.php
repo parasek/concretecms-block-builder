@@ -15,65 +15,66 @@ defined('C5_EXECUTE') or die('Access Denied.');
 class Generator
 {
 
-    public function generateBlock($postData) {
+    public function generateBlock($postData)
+    {
 
         unset($postData['ccm_token']);
         unset($postData['ccm-submit-url-form']);
-        
+
         $postDataSummary = [];
 
-        $postDataSummary['blockHandle']           = $postData['blockHandle'];
-        $postDataSummary['blockHandleDashed']     = BlockBuilderUtility::convertHandleToDashed($postDataSummary['blockHandle']);
-        $postDataSummary['blockNamespace']        = BlockBuilderUtility::convertHandleToNamespace($postDataSummary['blockHandle']);
-        $postDataSummary['blockTableName']        = 'bt'.BlockBuilderUtility::convertHandleToNamespace($postDataSummary['blockHandle']);
-        $postDataSummary['blockTableNameEntries'] = 'bt'.BlockBuilderUtility::convertHandleToNamespace($postDataSummary['blockHandle']).'Entries';
+        $postDataSummary['blockHandle'] = $postData['blockHandle'];
+        $postDataSummary['blockHandleDashed'] = BlockBuilderUtility::convertHandleToDashed($postDataSummary['blockHandle']);
+        $postDataSummary['blockNamespace'] = BlockBuilderUtility::convertHandleToNamespace($postDataSummary['blockHandle']);
+        $postDataSummary['blockTableName'] = 'bt' . BlockBuilderUtility::convertHandleToNamespace($postDataSummary['blockHandle']);
+        $postDataSummary['blockTableNameEntries'] = 'bt' . BlockBuilderUtility::convertHandleToNamespace($postDataSummary['blockHandle']) . 'Entries';
 
-        $postDataSummary['blockPath']    = DIR_FILES_BLOCK_TYPES . DIRECTORY_SEPARATOR . $postDataSummary['blockHandle'];
-        $postDataSummary['templatePath'] = DIR_BASE . DIRECTORY_SEPARATOR . DIRNAME_PACKAGES . DIRECTORY_SEPARATOR . 'block_builder'. DIRECTORY_SEPARATOR .'generator_templates';
+        $postDataSummary['blockPath'] = DIR_FILES_BLOCK_TYPES . DIRECTORY_SEPARATOR . $postDataSummary['blockHandle'];
+        $postDataSummary['templatePath'] = DIR_BASE . DIRECTORY_SEPARATOR . DIRNAME_PACKAGES . DIRECTORY_SEPARATOR . 'block_builder' . DIRECTORY_SEPARATOR . 'generator_templates';
 
         // Crawl through settings/entries
         $postDataSummary['exportPageColumns'] = [];
         $postDataSummary['exportFileColumns'] = [];
 
-        $postDataSummary['searchableFields']      = [];
+        $postDataSummary['searchableFields'] = [];
         $postDataSummary['searchableEntryFields'] = [];
 
-        $postDataSummary['requiredFields']      = [];
+        $postDataSummary['requiredFields'] = [];
         $postDataSummary['requiredEntryFields'] = [];
 
         $postDataSummary['settingsTab'] = false;
 
-        $postDataSummary['wysiwygEditorUsed']       = false;
-        $postDataSummary['htmlEditorUsed']          = false;
-        $postDataSummary['linkUsed']                = false;
-        $postDataSummary['linkFromSitemapUsed']     = false;
+        $postDataSummary['wysiwygEditorUsed'] = false;
+        $postDataSummary['htmlEditorUsed'] = false;
+        $postDataSummary['linkUsed'] = false;
+        $postDataSummary['linkFromSitemapUsed'] = false;
         $postDataSummary['linkFromFileManagerUsed'] = false;
-        $postDataSummary['externalLinkUsed']        = false;
-        $postDataSummary['imageUsed']               = false;
+        $postDataSummary['externalLinkUsed'] = false;
+        $postDataSummary['imageUsed'] = false;
 
-        $postDataSummary['wysiwygEditorUsed_entry']       = false;
-        $postDataSummary['htmlEditorUsed_entry']          = false;
-        $postDataSummary['linkUsed_entry']                = false;
-        $postDataSummary['linkFromSitemapUsed_entry']     = false;
+        $postDataSummary['wysiwygEditorUsed_entry'] = false;
+        $postDataSummary['htmlEditorUsed_entry'] = false;
+        $postDataSummary['linkUsed_entry'] = false;
+        $postDataSummary['linkFromSitemapUsed_entry'] = false;
         $postDataSummary['linkFromFileManagerUsed_entry'] = false;
-        $postDataSummary['externalLinkUsed_entry']        = false;
-        $postDataSummary['imageUsed_entry']               = false;
-        $postDataSummary['datePickerUsed_entry']          = false;
+        $postDataSummary['externalLinkUsed_entry'] = false;
+        $postDataSummary['imageUsed_entry'] = false;
+        $postDataSummary['datePickerUsed_entry'] = false;
 
         $postDataSummary['entryTitleSource'] = false;
 
-        if ( ! empty($postData['basic'])) {
+        if (!empty($postData['basic'])) {
 
             foreach ($postData['basic'] as $k => $v) {
 
                 // Export fields
-                if ($v['fieldType']=='link_from_sitemap') {
+                if ($v['fieldType'] == 'link_from_sitemap') {
                     if (!in_array($v['handle'], $postDataSummary['exportPageColumns'])) {
                         $postDataSummary['exportPageColumns'][] = $v['handle'];
                     }
                 }
 
-                if ($v['fieldType']=='link_from_file_manager' OR $v['fieldType']=='image') {
+                if ($v['fieldType'] == 'link_from_file_manager' or $v['fieldType'] == 'image') {
                     if (!in_array($v['handle'], $postDataSummary['exportFileColumns'])) {
                         $postDataSummary['exportFileColumns'][] = $v['handle'];
                     }
@@ -87,38 +88,38 @@ class Generator
                 }
 
                 // Required fields
-                if ( ! empty($v['required'])) {
+                if (!empty($v['required'])) {
                     if (!in_array($v['handle'], $postDataSummary['requiredFields'])) {
                         $postDataSummary['requiredFields'][] = $v['handle'];
                     }
                 }
 
                 // Check if given field is used
-                if ($v['fieldType']=='wysiwyg_editor') {
+                if ($v['fieldType'] == 'wysiwyg_editor') {
                     $postDataSummary['wysiwygEditorUsed'] = true;
                 }
 
-                if ($v['fieldType']=='html_editor') {
+                if ($v['fieldType'] == 'html_editor') {
                     $postDataSummary['htmlEditorUsed'] = true;
                 }
 
-                if ($v['fieldType']=='link') {
+                if ($v['fieldType'] == 'link') {
                     $postDataSummary['linkUsed'] = true;
                 }
 
-                if ($v['fieldType']=='link_from_sitemap') {
+                if ($v['fieldType'] == 'link_from_sitemap') {
                     $postDataSummary['linkFromSitemapUsed'] = true;
                 }
 
-                if ($v['fieldType']=='link_from_file_manager') {
+                if ($v['fieldType'] == 'link_from_file_manager') {
                     $postDataSummary['linkFromFileManagerUsed'] = true;
                 }
 
-                if ($v['fieldType']=='external_link') {
+                if ($v['fieldType'] == 'external_link') {
                     $postDataSummary['externalLinkUsed'] = true;
                 }
 
-                if ($v['fieldType']=='image') {
+                if ($v['fieldType'] == 'image') {
                     $postDataSummary['imageUsed'] = true;
                 }
 
@@ -126,18 +127,18 @@ class Generator
 
         }
 
-        if ( ! empty($postData['entries'])) {
+        if (!empty($postData['entries'])) {
 
             foreach ($postData['entries'] as $k => $v) {
 
                 // Export fields
-                if ($v['fieldType']=='link_from_sitemap') {
+                if ($v['fieldType'] == 'link_from_sitemap') {
                     if (!in_array($v['handle'], $postDataSummary['exportPageColumns'])) {
                         $postDataSummary['exportPageColumns'][] = $v['handle'];
                     }
                 }
 
-                if ($v['fieldType']=='link_from_file_manager' OR $v['fieldType']=='image') {
+                if ($v['fieldType'] == 'link_from_file_manager' or $v['fieldType'] == 'image') {
                     if (!in_array($v['handle'], $postDataSummary['exportFileColumns'])) {
                         $postDataSummary['exportFileColumns'][] = $v['handle'];
                     }
@@ -151,58 +152,58 @@ class Generator
                 }
 
                 // Required fields
-                if ( ! empty($v['required'])) {
+                if (!empty($v['required'])) {
                     if (!in_array($v['handle'], $postDataSummary['requiredEntryFields'])) {
                         $postDataSummary['requiredEntryFields'][] = $v['handle'];
                     }
                 }
 
                 // Check if Settings tab should be created
-                if ($v['fieldType']=='image') {
+                if ($v['fieldType'] == 'image') {
                     if (
-                        ( !empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable']) )
+                        (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable']))
                         or
-                        ( !empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']) )
+                        (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']))
                     ) {
                         $postDataSummary['settingsTab'] = true;
                     }
                 }
 
                 // Check if given field is used
-                if ($v['fieldType']=='wysiwyg_editor') {
+                if ($v['fieldType'] == 'wysiwyg_editor') {
                     $postDataSummary['wysiwygEditorUsed_entry'] = true;
                 }
 
-                if ($v['fieldType']=='html_editor') {
+                if ($v['fieldType'] == 'html_editor') {
                     $postDataSummary['htmlEditorUsed_entry'] = true;
                 }
 
-                if ($v['fieldType']=='link') {
+                if ($v['fieldType'] == 'link') {
                     $postDataSummary['linkUsed_entry'] = true;
                 }
 
-                if ($v['fieldType']=='link_from_sitemap') {
+                if ($v['fieldType'] == 'link_from_sitemap') {
                     $postDataSummary['linkFromSitemapUsed_entry'] = true;
                 }
 
-                if ($v['fieldType']=='link_from_file_manager') {
+                if ($v['fieldType'] == 'link_from_file_manager') {
                     $postDataSummary['linkFromFileManagerUsed_entry'] = true;
                 }
 
-                if ($v['fieldType']=='external_link') {
+                if ($v['fieldType'] == 'external_link') {
                     $postDataSummary['externalLinkUsed_entry'] = true;
                 }
 
-                if ($v['fieldType']=='image') {
+                if ($v['fieldType'] == 'image') {
                     $postDataSummary['imageUsed_entry'] = true;
                 }
 
-                if ($v['fieldType']=='date_picker') {
+                if ($v['fieldType'] == 'date_picker') {
                     $postDataSummary['datePickerUsed_entry'] = true;
                 }
 
                 // entryTitleSource
-                if ( ! empty($v['titleSource'])) {
+                if (!empty($v['titleSource'])) {
                     $postDataSummary['entryTitleSource'] = $v['handle'];
                 }
 
@@ -229,7 +230,7 @@ class Generator
                 $this->generateDbXml($postData, $postDataSummary);
                 $this->generateFormCss(false, $postDataSummary);
 
-                if (!empty($postData['basic']) OR !empty($postData['entries'])) {
+                if (!empty($postData['basic']) or !empty($postData['entries'])) {
                     $this->generateAddPhp(false, $postDataSummary);
                     $this->generateEditPhp(false, $postDataSummary);
                     $this->generateFormPhp($postData, $postDataSummary);
@@ -277,7 +278,8 @@ class Generator
 
     }
 
-    private function generateIconPng($postData, $postDataSummary) {
+    private function generateIconPng($postData, $postDataSummary)
+    {
 
         $filename = 'icon.png';
 
@@ -285,7 +287,8 @@ class Generator
 
     }
 
-    private function generateAddPhp($postData, $postDataSummary) {
+    private function generateAddPhp($postData, $postDataSummary)
+    {
 
         $filename = 'add.php';
 
@@ -293,7 +296,8 @@ class Generator
 
     }
 
-    private function generateComposerPhp($postData, $postDataSummary) {
+    private function generateComposerPhp($postData, $postDataSummary)
+    {
 
         $filename = 'composer.php';
 
@@ -301,7 +305,8 @@ class Generator
 
     }
 
-    private function generateEditPhp($postData, $postDataSummary) {
+    private function generateEditPhp($postData, $postDataSummary)
+    {
 
         $filename = 'edit.php';
 
@@ -309,7 +314,8 @@ class Generator
 
     }
 
-    private function generateScrapbookPhp($postData, $postDataSummary) {
+    private function generateScrapbookPhp($postData, $postDataSummary)
+    {
 
         $filename = 'scrapbook.php';
 
@@ -317,7 +323,8 @@ class Generator
 
     }
 
-    private function generateFormCss($postData, $postDataSummary) {
+    private function generateFormCss($postData, $postDataSummary)
+    {
 
         $filename = 'form.css';
 
@@ -327,7 +334,8 @@ class Generator
 
     }
 
-    private function generateConfigBbJson($postData, $postDataSummary) {
+    private function generateConfigBbJson($postData, $postDataSummary)
+    {
 
         $filename = 'config-bb.json';
 
@@ -336,7 +344,8 @@ class Generator
 
     }
 
-    private function generateAutoJs($postData, $postDataSummary) {
+    private function generateAutoJs($postData, $postDataSummary)
+    {
 
         $filename = 'auto.js';
 
@@ -348,28 +357,32 @@ class Generator
 
     }
 
-    private function generateControllerPhp($postData, $postDataSummary) {
+    private function generateControllerPhp($postData, $postDataSummary)
+    {
 
         $fileGeneratorControllerPhp = new FileGeneratorControllerPhp();
         $fileGeneratorControllerPhp->generate($postDataSummary, $postData);
 
     }
 
-    private function generateViewPhp($postData, $postDataSummary) {
+    private function generateViewPhp($postData, $postDataSummary)
+    {
 
         $fileGeneratorViewPhp = new FileGeneratorViewPhp();
         $fileGeneratorViewPhp->generate($postDataSummary, $postData);
 
     }
 
-    private function generateDbXml($postData, $postDataSummary) {
+    private function generateDbXml($postData, $postDataSummary)
+    {
 
         $fileGeneratorDbXml = new FileGeneratorDbXml();
         $fileGeneratorDbXml->generate($postDataSummary, $postData);
 
     }
 
-    private function generateFormPhp($postData, $postDataSummary) {
+    private function generateFormPhp($postData, $postDataSummary)
+    {
 
         $fileGeneratorFormPhp = new FileGeneratorFormPhp();
         $fileGeneratorFormPhp->generate($postDataSummary, $postData);

@@ -108,12 +108,12 @@ div.ccm-ui .toggle-additional-image-fields-active i {
     position: relative;
 }
 
-.ccm-ui .entry-header-action  {
+.ccm-ui .entry-header-action {
     position: absolute;
     top: 0;
 }
 
-.ccm-ui .entry-header-remove-entry  {
+.ccm-ui .entry-header-remove-entry {
     right: 0;
     color: #c34d52;
     cursor: pointer;
@@ -149,12 +149,12 @@ div.ccm-ui .toggle-additional-image-fields-active i {
     cursor: not-allowed;
 }
 
-.ccm-ui .entry-header-move-entry  {
+.ccm-ui .entry-header-move-entry {
     left: 0;
     cursor: move;
 }
 
-.ccm-ui .entry-header-toggle-entry  {
+.ccm-ui .entry-header-toggle-entry {
     left: 30px;
     font-size: 17px;
     cursor: pointer;

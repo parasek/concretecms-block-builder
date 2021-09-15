@@ -12,7 +12,8 @@ defined('C5_EXECUTE') or die('Access Denied.');
 class Ajax extends Controller
 {
 
-    public function deleteBlockTypeFolder() {
+    public function deleteBlockTypeFolder()
+    {
 
         $response = [];
 
@@ -21,10 +22,10 @@ class Ajax extends Controller
 
         $p = new Permissions(Page::getByID(1)); // Check if user can edit Homepage
 
-        if ( !$u->IsLoggedIn() OR !$p->canWrite()) {
+        if (!$u->IsLoggedIn() or !$p->canWrite()) {
 
-            $response['status']  = 'error';
-            $response['code']    = 400;
+            $response['status'] = 'error';
+            $response['code'] = 400;
             $response['message'] = t('Oops! Something went wrong...');
 
             echo $this->app->make('helper/json')->encode($response);
@@ -33,10 +34,10 @@ class Ajax extends Controller
         }
 
         // Permit only $_POST actions
-        if ( ! $this->post()) {
+        if (!$this->post()) {
 
-            $response['status']  = 'error';
-            $response['code']    = 400;
+            $response['status'] = 'error';
+            $response['code'] = 400;
             $response['message'] = t('Oops! Something went wrong...');
 
             echo $this->app->make('helper/json')->encode($response);
@@ -47,10 +48,10 @@ class Ajax extends Controller
         // Check against CSRF attacks
         $token = new Token();
 
-        if ( ! $token->validate('ajax_csrf_token', $this->post('ajaxCsrfToken'))) {
+        if (!$token->validate('ajax_csrf_token', $this->post('ajaxCsrfToken'))) {
 
-            $response['status']  = 'error';
-            $response['code']    = 400;
+            $response['status'] = 'error';
+            $response['code'] = 400;
             $response['message'] = t('Oops! Something went wrong...');
 
             echo $this->app->make('helper/json')->encode($response);
@@ -63,8 +64,8 @@ class Ajax extends Controller
 
         if ($blockBuilderValidation->isBlockInstalled($this->post('handle'))) {
 
-            $response['status']  = 'error';
-            $response['code']    = 400;
+            $response['status'] = 'error';
+            $response['code'] = 400;
             $response['message'] = t('Uninstall block type before deleting folder.');
             echo $this->app->make('helper/json')->encode($response);
             exit;
@@ -74,17 +75,17 @@ class Ajax extends Controller
         $blockTypePath = DIR_FILES_BLOCK_TYPES . DIRECTORY_SEPARATOR . $this->post('handle');
         $fileService = new FileService();
 
-        if (!is_dir($blockTypePath) OR !$fileService->removeAll($blockTypePath, true)) {
-            $response['status']  = 'error';
-            $response['code']    = 400;
+        if (!is_dir($blockTypePath) or !$fileService->removeAll($blockTypePath, true)) {
+            $response['status'] = 'error';
+            $response['code'] = 400;
             $response['message'] = t('Block type folder couldn\'t be deleted.');
             echo $this->app->make('helper/json')->encode($response);
             exit;
         }
 
         // Return success message
-        $response['status']  = 'success';
-        $response['code']    = 200;
+        $response['status'] = 'success';
+        $response['code'] = 200;
         $response['message'] = t('Block type folder has been deleted.');
         echo $this->app->make('helper/json')->encode($response);
         exit;
