@@ -24,11 +24,14 @@ $(function () {
 
         function activatePageSelectors(parentContainer) {
 
-            var pageSelectors = parentContainer.find('.js-page-selector');
+            var pageSelectors = parentContainer.find('[data-concrete-page-input="js-page-selector"]');
             pageSelectors.each(function (i, item) {
-                var inputName = $(item).attr('data-input-name');
-                var cID = parseInt($(item).attr('data-collection-id'));
-                $(item).concretePageSelector({'inputName': inputName, 'cID': cID});
+                Concrete.Vue.activateContext('cms', function (Vue, config) {
+                    new Vue({
+                        el: item,
+                        components: config.components
+                    })
+                })
             });
 
         }
@@ -117,7 +120,7 @@ $(function () {
                 formContainer.find('.js-duplicate-entry-and-add-at-the-end').removeAttr('disabled');
             }
 
-            if (numberOfEntries==0) {
+            if (numberOfEntries == 0) {
                 formContainer.find('.js-copy-last-entry').attr('disabled', true);
             }
 
@@ -151,7 +154,7 @@ $(function () {
             templateData['keepAddedEntryCollapsed'] = formContainer.find('.js-keep-added-entry-collapsed').is(':checked');
             $.each(entryColumnNames, function (key, value) {
                 if (sourceEntry) {
-                    templateData[value] = sourceEntry.find('[name="entry['+sourceEntry.attr('data-position')+']['+value+']"]').val();
+                    templateData[value] = sourceEntry.find('[name="entry[' + sourceEntry.attr('data-position') + '][' + value + ']"]').val();
                 } else {
                     templateData[value] = '';
                 }
@@ -167,7 +170,7 @@ $(function () {
                 newEntry = entriesContainer.children(':last');
             } else {
                 sourceEntry.after(template(templateData));
-                newEntry = entriesContainer.children('.js-entry').eq((parseInt(action)+1));
+                newEntry = entriesContainer.children('.js-entry').eq((parseInt(action) + 1));
             }
 
             // Activate c5 tools/editors

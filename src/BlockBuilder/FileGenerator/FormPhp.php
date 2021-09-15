@@ -910,7 +910,14 @@ class FormPhp
 
                     $code .= BlockBuilderUtility::tab(7) . '<div class="row margin-bottom js-link-type-wrapper js-link-type-wrapper-link_from_sitemap" <% if ('.$v['handle'].'_link_type!=\'link_from_sitemap\') { %>style="display: none;"<% } %>>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(8) . '<div class="col-12">' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(9) . '<div class="js-page-selector" data-input-name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].'_link_from_sitemap]" data-collection-id="<%=_.escape('.$v['handle'].'_link_from_sitemap)%>"></div>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(9) . '<div data-concrete-page-input="js-page-selector">' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(10) . '<concrete-page-input :page-id="<%= '.$v['handle'].'_link_from_sitemap ? _.escape('.$v['handle'].'_link_from_sitemap) : false %>"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(11) . 'input-name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>]['.$v['handle'].'_link_from_sitemap]"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(11) . 'choose-text="<?php echo t(\'Choose Page\'); ?>"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(11) . ':include-system-pages="false"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(11) . ':ask-include-system-pages="false"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(10) . '></concrete-page-input>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(9) . '</div>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(8) . '</div>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL . PHP_EOL;
 
@@ -968,7 +975,14 @@ class FormPhp
 
                     $code .= BlockBuilderUtility::tab(6) . '<div class="mb-4">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" class="form-label"><?php echo t(\''.addslashes($v['label']).'\'); ?>' . $required . '</label>' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(7) . '<div class="js-page-selector" data-input-name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" data-collection-id="<%=_.escape(' . $v['handle'] . ')%>"></div>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(7) . '<div data-concrete-page-input="js-page-selector">' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(8) . '<concrete-page-input :page-id="<%= ' . $v['handle'] . ' ? _.escape(' . $v['handle'] . ') : false %>"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(9) . 'input-name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(9) . 'choose-text="<?php echo t(\'Choose Page\'); ?>"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(9) . ':include-system-pages="false"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(9) . ':ask-include-system-pages="false"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(8) . '></concrete-page-input>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL;
                     if ( ! empty($v['helpText'])) {
                         $code .= BlockBuilderUtility::tab(7) . '<div class="form-text"><?php echo t(\''.addslashes($v['helpText']).'\'); ?></div>'.PHP_EOL;
                     }
