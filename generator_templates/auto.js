@@ -206,6 +206,19 @@ $(function () {
 
         }
 
+        function destroyEditors(editorIDs) {
+
+            editorIDs.each(function (i, item) {
+
+                var editorID = $(item).attr('id');
+                if (typeof CKEDITOR === 'object' && typeof CKEDITOR.instances[editorID] != 'undefined') {
+                    CKEDITOR.instances[editorID].destroy();
+                }
+
+            });
+
+        }
+
         loadEntriesAtStart();
 
         // Add entry
@@ -260,16 +273,7 @@ $(function () {
 
             if (confirmQuestion == true) {
 
-                var editorIDs = $(this).closest('.js-entry').find('.js-editor-content');
-
-                editorIDs.each(function (i, item) {
-
-                    var editorID = $(item).attr('id');
-                    if (typeof CKEDITOR === 'object' && typeof CKEDITOR.instances[editorID] != 'undefined') {
-                        CKEDITOR.instances[editorID].destroy();
-                    }
-
-                });
+                destroyEditors($(this).closest('.js-entry').find('.js-editor-content'));
 
                 $(this).closest('.js-entry').remove();
 
@@ -342,6 +346,8 @@ $(function () {
             var confirmQuestion = confirm(dataConfirmText);
 
             if (confirmQuestion == true) {
+
+                destroyEditors(entriesContainer.find('.js-editor-content'));
 
                 entriesContainer.html('');
 
