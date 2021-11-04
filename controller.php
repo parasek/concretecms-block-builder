@@ -8,8 +8,8 @@ defined('C5_EXECUTE') or die('Access Denied.');
 class Controller extends Package
 {
     protected $pkgHandle = 'block_builder';
-    protected $appVersionRequired = '8.2.1';
-    protected $pkgVersion = '1.3.1';
+    protected $appVersionRequired = '9.0.0';
+    protected $pkgVersion = '2.0.0';
 
     protected $pkgAutoloaderRegistries = [
         'src/BlockBuilder' => 'BlockBuilder'

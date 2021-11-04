@@ -4,9 +4,9 @@ Block Builder is a Concrete5 addon that lets you easily create your own custom b
 
 # Requirements
 
-Min. Concrete5 version: 5.8.2.1
+Latest version of Block Builder requires concrete5 version 9.0.0 or higher.
 
-PHP 5.5.9+ (PHP7+ is recommended)
+For concrete5 8.2.1+ use the highest version of 1.x.x branch.
 
 Concrete5 Marketplace: [https://www.concrete5.org/marketplace/addons/block-builder](https://www.concrete5.org/marketplace/addons/block-builder)
 
