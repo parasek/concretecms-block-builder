@@ -1,0 +1,26 @@
+{
+  "name": "parasek/concretecms-block-builder",
+  "description": "Block Builder is a Concrete CMS addon that lets you easily create your own custom blocks (with one optional set of repeatable entries).",
+  "type": "concrete5-package",
+  "require": {
+    "php": ">=7.0"
+  },
+  "keywords": [
+    "concrete cms",
+    "concrete5",
+    "concretecms",
+    "c5"
+  ],
+  "homepage": "https://github.com/parasek/concretecms-block-builder",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Sławek Radomski",
+      "role": "Developer"
+    },
+    {
+      "name": "Jarosław Radomski",
+      "role": "Developer"
+    }
+  ]
+}
