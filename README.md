@@ -15,9 +15,13 @@ GitHub: [https://github.com/parasek/c5-block-builder](https://github.com/parasek
 If you are looking for version suited for Concrete5.7, check [Block Builder Legacy](https://github.com/parasek/c5-block-builder-legacy).
 It has almost the same functionality but uses pre-8.0 code/api.
 
-# Install using Composer
+# Install with Composer
 
 `composer require parasek/block_builder`
+
+When using Concrete5.8 type
+
+`composer require parasek/block_builder:^1.4.0`
 
 # Features
 

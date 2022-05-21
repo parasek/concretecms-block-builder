@@ -1,3 +1,6 @@
+##### 2.1.2
+- Bump minimum version of Concrete CMS to 9.1.0
+
 ##### 2.1.1
 - Fix installing path in composer.json
 
