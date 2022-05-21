@@ -15,6 +15,10 @@ GitHub: [https://github.com/parasek/c5-block-builder](https://github.com/parasek
 If you are looking for version suited for Concrete5.7, check [Block Builder Legacy](https://github.com/parasek/c5-block-builder-legacy).
 It has almost the same functionality but uses pre-8.0 code/api.
 
+# Install using Composer
+
+`composer require parasek/concretecms-block-builder "^1.4.0"`
+
 # Features
 
 This addon is made for developers. It allows you to quickly create skeleton for your block, but you still need to manually add some custom css/html code in view.php.

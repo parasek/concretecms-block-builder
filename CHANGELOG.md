@@ -1,3 +1,6 @@
+#1.4.0
+- You can now install Block Builder using Composer. Check README.md for more information.
+
 #1.3.1
 - Fixed svg behaviour in generated image field types
 
