@@ -17,7 +17,7 @@ It has almost the same functionality but uses pre-8.0 code/api.
 
 # Install using Composer
 
-`composer require parasek/concretecms-block-builder`
+`composer require parasek/block_builder`
 
 # Features
 

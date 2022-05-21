@@ -1,3 +1,6 @@
+##### 2.1.1
+- Fix installing path in composer.json
+
 ##### 2.1.0
 - You can now install Block Builder using Composer. Check README.md for more information.
 
