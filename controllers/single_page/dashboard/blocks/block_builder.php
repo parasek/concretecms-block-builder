@@ -127,6 +127,23 @@ class BlockBuilder extends DashboardPageController
         $this->set('installBlockOptions', $installBlockOptions);
 
         // Default values
+        $this->set('blockName', '');
+        $this->set('blockHandle', '');
+        $this->set('blockDescription', '');
+        $this->set('blockTypeSet', '');
+        $this->set('entriesAsFirstTab', '');
+        $this->set('fieldsDivider', '');
+        $this->set('entryFieldsDivider', '');
+        $this->set('basic', '');
+        $this->set('entries', '');
+        $this->set('cccccccc', '');
+        $this->set('cccccccc', '');
+        $this->set('cccccccc', '');
+        $this->set('cccccccc', '');
+        $this->set('cccccccc', '');
+        $this->set('cccccccc', '');
+        $this->set('cccccccc', '');
+
         $this->set('blockWidth', 1000);
         $this->set('blockHeight', 650);
         $this->set('installBlock', 1);

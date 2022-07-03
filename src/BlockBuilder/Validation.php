@@ -182,13 +182,13 @@ class Validation
             $tabsWithError[] = 'texts';
         }
 
-        if ((is_array($postData['basic']) and count($postData['basic'])) and (is_array($postData['entries']) and count($postData['entries'])) and !$postData['basicLabel']) {
+        if (isset($postData['basic']) and (is_array($postData['basic']) and count($postData['basic'])) and (isset($postData['entries']) and is_array($postData['entries']) and count($postData['entries'])) and !$postData['basicLabel']) {
             $errors[] = t('Label for "%s" is required (%s).', t('Basic information'), t('Texts for translation'));
             $fieldsWithError[] = 'basicLabel';
             $tabsWithError[] = 'texts';
         }
 
-        if ((is_array($postData['entries']) and count($postData['entries'])) and (is_array($postData['basic']) and count($postData['basic'])) and !$postData['entriesLabel']) {
+        if (isset($postData['entries']) and (is_array($postData['entries']) and count($postData['entries'])) and (is_array($postData['basic']) and count($postData['basic'])) and !$postData['entriesLabel']) {
             $errors[] = t('Label for "%s" is required (%s).', t('Entries'), t('Texts for translation'));
             $fieldsWithError[] = 'entriesLabel';
             $tabsWithError[] = 'texts';
@@ -196,8 +196,8 @@ class Validation
 
 
         // 3. Basic information + Repeatable entries
-        $basicData = $this->validateRepeatableEntries($postData['basic'], 'basic-information', t('Tab: Basic information'));
-        $entriesData = $this->validateRepeatableEntries($postData['entries'], 'repeatable-entries', t('Tab: Repeatable entries'));
+        $basicData = $this->validateRepeatableEntries($postData['basic'] ?? [], 'basic-information', t('Tab: Basic information'));
+        $entriesData = $this->validateRepeatableEntries($postData['entries'] ?? [], 'repeatable-entries', t('Tab: Repeatable entries'));
 
         // Combine everything
         $validation = [];
@@ -307,7 +307,7 @@ class Validation
 
 
                 // textarea
-                if ($entry['textareaHeight'] != '' and (!ctype_digit($entry['textareaHeight']) or $entry['textareaHeight'] < 40 or $entry['textareaHeight'] > 2000)) {
+                if (isset($entry['textareaHeight']) and $entry['textareaHeight'] != '' and (!ctype_digit($entry['textareaHeight']) or $entry['textareaHeight'] < 40 or $entry['textareaHeight'] > 2000)) {
 
                     $postData[$counter]['error']['textareaHeight'] = 1;
                     $fieldsWithError[] = $handle . '|textareaHeight|invalid_number';
@@ -316,7 +316,7 @@ class Validation
                 }
 
                 // wysiwyg_editor
-                if ($entry['wysiwygEditorHeight'] != '' and (!ctype_digit($entry['wysiwygEditorHeight']) or $entry['wysiwygEditorHeight'] < 40 or $entry['wysiwygEditorHeight'] > 2000)) {
+                if (isset($entry['wysiwygEditorHeight']) and $entry['wysiwygEditorHeight'] != '' and (!ctype_digit($entry['wysiwygEditorHeight']) or $entry['wysiwygEditorHeight'] < 40 or $entry['wysiwygEditorHeight'] > 2000)) {
 
                     $postData[$counter]['error']['wysiwygEditorHeight'] = 1;
                     $fieldsWithError[] = $handle . '|wysiwygEditorHeight|invalid_number';
@@ -333,7 +333,7 @@ class Validation
 
                 } else {
 
-                    $options = explode('<br />', nl2br($entry['selectOptions']));
+                    $options = isset($entry['selectOptions']) ? explode('<br />', nl2br($entry['selectOptions'])) : [];
 
                     $invalidKey = 0;
 
@@ -445,7 +445,7 @@ class Validation
                 }
 
                 // html_editor
-                if ($entry['htmlEditorHeight'] != '' and (!ctype_digit($entry['htmlEditorHeight']) or $entry['htmlEditorHeight'] < 40 or $entry['htmlEditorHeight'] > 2000)) {
+                if (isset($entry['htmlEditorHeight']) and $entry['htmlEditorHeight'] != '' and (!ctype_digit($entry['htmlEditorHeight']) or $entry['htmlEditorHeight'] < 40 or $entry['htmlEditorHeight'] > 2000)) {
 
                     $postData[$counter]['error']['htmlEditorHeight'] = 1;
                     $fieldsWithError[] = $handle . '|htmlEditorHeight|invalid_number';
