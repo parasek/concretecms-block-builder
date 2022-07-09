@@ -60,6 +60,10 @@ class ControllerPhp
 
         $code .= BlockBuilderUtility::tab(1) . 'protected $btDefaultSet = \'' . $postData['blockTypeSet'] . '\'; // basic, navigation, form, express, social, multimedia' . PHP_EOL . PHP_EOL;
 
+        if (!empty($postDataSummary['settingsTab'])) {
+            $code .= BlockBuilderUtility::tab(1) . 'protected $settings;'. PHP_EOL . PHP_EOL;
+        }
+
         if (!empty($postData['basic'])) {
             foreach ($postData['basic'] as $k => $v) {
                 $code .= BlockBuilderUtility::tab(1) . 'protected $' . $v['handle'] . ';' . PHP_EOL;
@@ -295,7 +299,8 @@ class ControllerPhp
 
         // 4. add()
         $code .= BlockBuilderUtility::tab(1) . 'public function add() {' . PHP_EOL . PHP_EOL;
-        $code .= BlockBuilderUtility::tab(2) . '$this->addEdit();' . PHP_EOL . PHP_EOL;
+        $code .= BlockBuilderUtility::tab(2) . '$this->addEdit();' . PHP_EOL;
+        $code .= BlockBuilderUtility::tab(2) . '$this->set(\'entries\', []);' . PHP_EOL . PHP_EOL;
         $code .= BlockBuilderUtility::tab(1) . '}' . PHP_EOL . PHP_EOL;
 
 
@@ -954,7 +959,7 @@ class ControllerPhp
             $code .= BlockBuilderUtility::tab(2) . '// Delete existing entries of current block\'s version' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(2) . '$db->delete(\'' . $postDataSummary['blockTableNameEntries'] . '\', [\'bID\' => $this->bID]);' . PHP_EOL . PHP_EOL;
 
-            $code .= BlockBuilderUtility::tab(2) . 'if (is_array($args[\'entry\']) AND count($args[\'entry\'])) {' . PHP_EOL . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(2) . 'if (isset($args[\'entry\']) AND is_array($args[\'entry\']) AND count($args[\'entry\'])) {' . PHP_EOL . PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(3) . '$i = 1;' . PHP_EOL . PHP_EOL;
 
@@ -1008,6 +1013,8 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= intval($entry[\'' . $v['handle'] . '\']);' . PHP_EOL;
                 } else if ($v['fieldType'] == 'date_picker') {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($entry[\'' . $v['handle'] . '\']) ? $this->app->make(\'helper/form/date_time\')->translate(\'' . $v['handle'] . '\', $entry) : null;' . PHP_EOL;
+                } else if ($v['fieldType'] == 'link') {
+                    $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($entry[\'' . $v['handle'] . '\']) ? trim($entry[\'' . $v['handle'] . '\']) : null;' . PHP_EOL;
                 } else {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= trim($entry[\'' . $v['handle'] . '\']);' . PHP_EOL;
                 }
@@ -1075,7 +1082,7 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(5) . '\'link_type\'              => trim($entry[\'' . $v['handle'] . '_link_type\']),' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5) . '\'show_additional_fields\' => intval($entry[\'' . $v['handle'] . '_show_additional_fields\']),' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5) . '\'link_from_sitemap\'      => intval($entry[\'' . $v['handle'] . '_link_from_sitemap\']),' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(5) . '\'link_from_file_manager\' => intval($entry[\'' . $v['handle'] . '_link_from_file_manager\']),' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5) . '\'link_from_file_manager\' => !empty($entry[\'' . $v['handle'] . '_link_from_file_manager\']) ? intval($entry[\'' . $v['handle'] . '_link_from_file_manager\']) : 0,' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5) . '\'protocol\'               => trim($entry[\'' . $v['handle'] . '_protocol\']),' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5) . '\'external_link\'          => trim($entry[\'' . $v['handle'] . '_external_link\']),' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5) . '\'ending\'                 => trim($entry[\'' . $v['handle'] . '_ending\']),' . PHP_EOL;
@@ -1100,13 +1107,13 @@ class ControllerPhp
                         $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '_data\'] = json_encode([' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(5) . '\'show_additional_fields\'         => intval($entry[\'' . $v['handle'] . '_show_additional_fields\']),' . PHP_EOL;
                         if (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable'])) {
-                            $code .= BlockBuilderUtility::tab(5) . '\'override_dimensions\'            => intval($entry[\'' . $v['handle'] . '_override_dimensions\']),' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(5) . '\'override_dimensions\'            => !empty($entry[\'' . $v['handle'] . '_override_dimensions\']) ? intval($entry[\'' . $v['handle'] . '_override_dimensions\']) : 0,' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(5) . '\'custom_width\'                   => intval($entry[\'' . $v['handle'] . '_custom_width\']),' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(5) . '\'custom_height\'                  => intval($entry[\'' . $v['handle'] . '_custom_height\']),' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(5) . '\'custom_crop\'                    => ($entry[\'' . $v['handle'] . '_custom_crop\']===\'1\' and (!(bool)$entry[\'' . $v['handle'] . '_custom_width\'] or !(bool)$entry[\'' . $v['handle'] . '_custom_height\'])) ? false : intval($entry[\'' . $v['handle'] . '_custom_crop\']), // do not crop without width and height filled' . PHP_EOL;
                         }
                         if (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable'])) {
-                            $code .= BlockBuilderUtility::tab(5) . '\'override_fullscreen_dimensions\' => intval($entry[\'' . $v['handle'] . '_override_fullscreen_dimensions\']),' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(5) . '\'override_fullscreen_dimensions\' => !empty($entry[\'' . $v['handle'] . '_override_fullscreen_dimensions\']) ? intval($entry[\'' . $v['handle'] . '_override_fullscreen_dimensions\']) : 0,' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(5) . '\'custom_fullscreen_width\'        => intval($entry[\'' . $v['handle'] . '_custom_fullscreen_width\']),' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(5) . '\'custom_fullscreen_height\'       => intval($entry[\'' . $v['handle'] . '_custom_fullscreen_height\']),' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(5) . '\'custom_fullscreen_crop\'         => ($entry[\'' . $v['handle'] . '_custom_fullscreen_crop\']===\'1\' and (!(bool)$entry[\'' . $v['handle'] . '_custom_fullscreen_width\'] or !(bool)$entry[\'' . $v['handle'] . '_custom_fullscreen_height\'])) ? false : intval($entry[\'' . $v['handle'] . '_custom_fullscreen_crop\']), // do not crop without width and height filled' . PHP_EOL;

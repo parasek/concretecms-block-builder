@@ -1367,7 +1367,7 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(5) . '<div class="col-12">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(6) . '<?php echo $form->label(\'\', \'' . $v['label'] . '\' . \' - \' . t(\'' . addslashes($postData['overrideThumbnailDimensionsLabel']) . '\')); ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(6) . '<div class="form-check">' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(7) . '<?php echo $form->checkbox($view->field(\'settings[' . $v['handle'] . '_override_dimensions]\'), \'1\', $settings[\'' . $v['handle'] . '_override_dimensions\'], [\'class\' => \'form-check-input js-toggle-override-all-dimensions\']); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '<?php echo $form->checkbox($view->field(\'settings[' . $v['handle'] . '_override_dimensions]\'), \'1\', $settings[\'' . $v['handle'] . '_override_dimensions\'] ?? null, [\'class\' => \'form-check-input js-toggle-override-all-dimensions\']); ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . '<label for="<?php echo $view->field(\'settings[' . $v['handle'] . '_override_dimensions]\'); ?>" class="form-check-label"><?php echo t(\'' . addslashes($postData['yesLabel']) . '\'); ?></label>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL;
@@ -1392,7 +1392,7 @@ class FormPhp
 
                         $code .= BlockBuilderUtility::tab(6) . '<div class="col-12 col-lg-4">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . '<?php echo $form->label($view->field(\'settings[' . $v['handle'] . '_custom_crop]\'), t(\'' . addslashes($postData['cropLabel']) . '\')); ?>' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(7) . '<?php echo $form->select($view->field(\'settings[' . $v['handle'] . '_custom_crop]\'), [\'0\'=>t(\'' . addslashes($postData['noLabel']) . '\'), \'1\'=>t(\'' . addslashes($postData['yesLabel']) . '\')], $settings[\'' . $v['handle'] . '_custom_crop\']); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '<?php echo $form->select($view->field(\'settings[' . $v['handle'] . '_custom_crop]\'), [\'0\'=>t(\'' . addslashes($postData['noLabel']) . '\'), \'1\'=>t(\'' . addslashes($postData['yesLabel']) . '\')], $settings[\'' . $v['handle'] . '_custom_crop\'] ?? null); ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL;
 
                         $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL;
@@ -1409,7 +1409,7 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(5) . '<div class="col-12">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(6) . '<?php echo $form->label(\'\', \'' . $v['label'] . '\' . \' - \' . t(\'' . addslashes($postData['overrideFullscreenImageDimensionsLabel']) . '\')); ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(6) . '<div class="form-check">' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(7) . '<?php echo $form->checkbox($view->field(\'settings[' . $v['handle'] . '_override_fullscreen_dimensions]\'), \'1\', $settings[\'' . $v['handle'] . '_override_fullscreen_dimensions\'], [\'class\' => \'form-check-input js-toggle-override-all-fullscreen-dimensions\']); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '<?php echo $form->checkbox($view->field(\'settings[' . $v['handle'] . '_override_fullscreen_dimensions]\'), \'1\', $settings[\'' . $v['handle'] . '_override_fullscreen_dimensions\'] ?? null, [\'class\' => \'form-check-input js-toggle-override-all-fullscreen-dimensions\']); ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . '<label for="<?php echo $view->field(\'settings[' . $v['handle'] . '_override_fullscreen_dimensions]\'); ?>" class="form-check-label"><?php echo t(\'' . addslashes($postData['yesLabel']) . '\'); ?></label>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL;
@@ -1434,7 +1434,7 @@ class FormPhp
 
                         $code .= BlockBuilderUtility::tab(6) . '<div class="col-12 col-lg-4">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . '<?php echo $form->label($view->field(\'settings[' . $v['handle'] . '_custom_fullscreen_crop]\'), t(\'' . addslashes($postData['cropLabel']) . '\')); ?>' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(7) . '<?php echo $form->select($view->field(\'settings[' . $v['handle'] . '_custom_fullscreen_crop]\'), [\'0\'=>t(\'' . addslashes($postData['noLabel']) . '\'), \'1\'=>t(\'' . addslashes($postData['yesLabel']) . '\')], $settings[\'' . $v['handle'] . '_custom_fullscreen_crop\']); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '<?php echo $form->select($view->field(\'settings[' . $v['handle'] . '_custom_fullscreen_crop]\'), [\'0\'=>t(\'' . addslashes($postData['noLabel']) . '\'), \'1\'=>t(\'' . addslashes($postData['yesLabel']) . '\')], $settings[\'' . $v['handle'] . '_custom_fullscreen_crop\'] ?? null); ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL;
 
                         $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL;
