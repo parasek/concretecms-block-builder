@@ -188,7 +188,7 @@ class Validation
             $tabsWithError[] = 'texts';
         }
 
-        if (isset($postData['entries']) and (is_array($postData['entries']) and count($postData['entries'])) and (is_array($postData['basic']) and count($postData['basic'])) and !$postData['entriesLabel']) {
+        if (isset($postData['entries']) and is_array($postData['entries']) and count($postData['entries']) and isset($postData['basic']) and is_array($postData['basic']) and count($postData['basic']) and !$postData['entriesLabel']) {
             $errors[] = t('Label for "%s" is required (%s).', t('Entries'), t('Texts for translation'));
             $fieldsWithError[] = 'entriesLabel';
             $tabsWithError[] = 'texts';
