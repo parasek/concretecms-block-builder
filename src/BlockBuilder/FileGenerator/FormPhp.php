@@ -927,9 +927,9 @@ class FormPhp
                     $code .= BlockBuilderUtility::tab(7) . '<div class="row margin-bottom js-link-type-wrapper js-link-type-wrapper-link_from_file_manager" <% if (' . $v['handle'] . '_link_type!=\'link_from_file_manager\') { %>style="display: none;"<% } %>>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(8) . '<div class="col-12">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(9) . '<div data-concrete-file-input="js-file-selector">' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(10) . '<concrete-file-input :file-id="<%= ' . $v['handle'] . ' ? _.escape(' . $v['handle'] . ') : \'0\' %>"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(10) . '<concrete-file-input :file-id="<%= ' . $v['handle'] . '_link_from_file_manager ? _.escape(' . $v['handle'] . '_link_from_file_manager) : \'0\' %>"' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(11) . 'choose-text="<?php echo t(\'Choose File\'); ?>"' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(11) . 'input-name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(11) . 'input-name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_link_from_file_manager]"' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(10) . '></concrete-file-input>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(9) . '</div>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(8) . '</div>' . PHP_EOL;
