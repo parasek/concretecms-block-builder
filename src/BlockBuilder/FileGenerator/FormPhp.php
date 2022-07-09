@@ -26,14 +26,16 @@ class FormPhp
                     $code .= BlockBuilderUtility::tab(2) . '[\'entries-tab-\'.$uniqueID, t(\'' . addslashes($postData['entriesLabel']) . '\'), true],' . PHP_EOL;
                 }
                 if (!empty($postData['basic'])) {
-                    $code .= BlockBuilderUtility::tab(2) . '[\'basic-information-tab-\'.$uniqueID, t(\'' . addslashes($postData['basicLabel']) . '\')],' . PHP_EOL;
+                    $activeTab = empty($postData['entries']) ? ', true' : '';
+                    $code .= BlockBuilderUtility::tab(2) . '[\'basic-information-tab-\'.$uniqueID, t(\'' . addslashes($postData['basicLabel']) . '\')' . $activeTab . '],' . PHP_EOL;
                 }
             } else {
                 if (!empty($postData['basic'])) {
                     $code .= BlockBuilderUtility::tab(2) . '[\'basic-information-tab-\'.$uniqueID, t(\'' . addslashes($postData['basicLabel']) . '\'), true],' . PHP_EOL;
                 }
                 if (!empty($postData['entries'])) {
-                    $code .= BlockBuilderUtility::tab(2) . '[\'entries-tab-\'.$uniqueID, t(\'' . addslashes($postData['entriesLabel']) . '\')],' . PHP_EOL;
+                    $activeTab = empty($postData['basic']) ? ', true' : '';
+                    $code .= BlockBuilderUtility::tab(2) . '[\'entries-tab-\'.$uniqueID, t(\'' . addslashes($postData['entriesLabel']) . '\')' . $activeTab . '],' . PHP_EOL;
                 }
             }
             if (!empty($postDataSummary['settingsTab'])) {
@@ -666,7 +668,7 @@ class FormPhp
             $code .= BlockBuilderUtility::tab(2) . '<div class="js-tab-pane';
             if (!empty($postData['basic']) or !empty($postDataSummary['settingsTab'])) {
                 $code .= ' tab-pane';
-                if (!empty($postData['entriesAsFirstTab'])) {
+                if (!empty($postData['entriesAsFirstTab']) or (empty($postData['entriesAsFirstTab']) and empty($postData['basic']))) {
                     $code .= ' show active';
                 }
                 $code .= '" id="entries-tab-<?php echo $uniqueID; ?>';
