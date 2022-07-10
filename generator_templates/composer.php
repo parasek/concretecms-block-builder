@@ -1,12 +1,19 @@
 <?php defined('C5_EXECUTE') or die('Access Denied.'); ?>
 
-<div class="control-group">
-    <label class="control-label"><?php echo $label; ?></label>
+<div class="form-group">
+    <label class="form-label"><?php echo $label; ?></label>
     <?php if ($description): ?>
         <i class="fas fa-question-circle launch-tooltip" title="" data-original-title="<?php echo $description; ?>"></i>
     <?php endif; ?>
     <div class="controls controls-custom">
-        <div class="ccm-ui">
+        <?php
+        $pageTypeComposerFormLayoutSetControlID = '';
+        $pageTypeComposerFormLayoutSetControlObject = $view->getPageTypeComposerFormLayoutSetControlObject();
+        if (is_object($pageTypeComposerFormLayoutSetControlObject)) {
+            $pageTypeComposerFormLayoutSetControlID = $pageTypeComposerFormLayoutSetControlObject->getPageTypeComposerFormLayoutSetControlID();
+        }
+        ?>
+        <div class="ccm-ui" data-page-type-composer-form-layout-set-control-id="<?php echo $pageTypeComposerFormLayoutSetControlID; ?>">
             <?php echo $view->inc('form.php', ['view' => $view]); ?>
         </div>
     </div>
@@ -20,8 +27,9 @@
 
     div#ccm-panel-detail-page-composer .controls-custom {
         background: #fff;
-        padding: 9px 20px 17px;
-        border: 1px solid #eaeaea;
+        padding: 25px 20px 17px;
+        border: 1px solid #ebebeb;
+        border-radius: 4px;
         margin-bottom: 30px;
     }
 

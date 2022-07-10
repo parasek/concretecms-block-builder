@@ -774,13 +774,13 @@ class ControllerPhp
                     if ($v['fieldType'] == 'image') {
 
                         if (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable'])) {
-                            $code .= BlockBuilderUtility::tab(2) . 'if ($args[\'settings\'][\'' . $v['handle'] . '_custom_crop\']===\'1\' and (empty($args[\'settings\'][\'' . $v['handle'] . '_custom_width\']) or empty($args[\'settings\'][\'' . $v['handle'] . '_custom_height\']))) {' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(2) . 'if (isset($args[\'settings\']) and $args[\'settings\'][\'' . $v['handle'] . '_custom_crop\']===\'1\' and (empty($args[\'settings\'][\'' . $v['handle'] . '_custom_width\']) or empty($args[\'settings\'][\'' . $v['handle'] . '_custom_height\']))) {' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(3) . '$args[\'settings\'][\'' . $v['handle'] . '_custom_crop\'] = 0; // Crop should be disabled if width or height is missing' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(2) . '}' . PHP_EOL;
                         }
 
                         if (!empty($v['imageFullscreenEditable']) and !empty($v['imageCreateFullscreenImage'])) {
-                            $code .= BlockBuilderUtility::tab(2) . 'if ($args[\'settings\'][\'' . $v['handle'] . '_custom_fullscreen_crop\']===\'1\' and (empty($args[\'settings\'][\'' . $v['handle'] . '_custom_fullscreen_width\']) or empty($args[\'settings\'][\'' . $v['handle'] . '_custom_fullscreen_height\']))) {' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(2) . 'if (isset($args[\'settings\']) and $args[\'settings\'][\'' . $v['handle'] . '_custom_fullscreen_crop\']===\'1\' and (empty($args[\'settings\'][\'' . $v['handle'] . '_custom_fullscreen_width\']) or empty($args[\'settings\'][\'' . $v['handle'] . '_custom_fullscreen_height\']))) {' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(3) . '$args[\'settings\'][\'' . $v['handle'] . '_custom_fullscreen_crop\'] = 0; // Crop should be disabled if width or height is missing' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(2) . '}' . PHP_EOL;
                         }
@@ -791,7 +791,7 @@ class ControllerPhp
 
             }
 
-            $code .= BlockBuilderUtility::tab(2) . '$args[\'settings\'] = json_encode($args[\'settings\'] );' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(2) . '$args[\'settings\'] = isset($args[\'settings\']) ? json_encode($args[\'settings\']) : null;' . PHP_EOL;
         }
 
         if (!empty($postData['basic'])) {
