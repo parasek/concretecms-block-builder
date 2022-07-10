@@ -1,20 +1,30 @@
-##### 2.1.2
-- Bump minimum version of Concrete CMS to 9.1.0
+# 2.2.0
+- Package and generated blocks are now compatible with PHP 8
+- Fixed bug when tabs were not displaying under certain conditions
+- Fixed "Link with type selection" file field in repeatable entries
+- Fixed errors when using generated blocks in Concrete Composer
 
-##### 2.1.1
-- Fix installing path in composer.json
+# 2.1.2
+- Bumped minimum version of Concrete CMS to 9.1.0
 
-##### 2.1.0
+# 2.1.1
+- Fixed installing path in composer.json
+
+# 2.1.0
 - You can now install Block Builder using Composer. Check README.md for more information.
 
-##### 2.0.0
+# 2.0.0
 - Package updated for version 9.0.0
 - Minimum required c5 version is 9.0.0, use previous version of package when using c5.8
+- Package has been updated to concrete5.9 (minimum version is 9.0.0). When using c5.7 or c5.8 use older version of package.
+- "Remove all" button has been added to repeatable entries in generated blocks.
+- "Disable smooth scroll" and "Keep added/copied entry collapsed" checkboxes have been added to repeatable entries in generated blocks to smooth editing experience.
+- Fixed some small ui/functionality errors from previous versions.
 
-#1.3.1
+# 1.3.1
 - Fixed svg behaviour in generated image field types
 
-#1.3.0
+# 1.3.0
 - Added package version to config-bb.json file
 - "Image" field type has been greatly improved. Now, during block creation you can check option that let your site editors enter custom dimensions for every thumbnail/fullscreen image (both single and repeatable)
 - Added button in generated block to duplicate entry and place it just after current
@@ -26,10 +36,10 @@
 - Removed h() function around $new_window variable in generated files
 - Fixed count() bug in generated blocks when using higher php versions
 
-#1.2.1
+# 1.2.1
 - Fixed missing escape functions in generated blocks
 
-#1.2.0
+# 1.2.0
 - Added optional target="_blank" rel="noopener" to all Link fields
 - Fixed json_decode error when copied block is added to page
 - Fixed edge case when smart horizontal line was not added
@@ -37,7 +47,7 @@
 - Fixed missing 'link_type' variable in view() for Link with Type Selection fields
 - Fixed External Link variable typo in generated view.php
 
-#1.1.0
+# 1.1.0
 - Added "Date Picker" field
 - Added "Link with Type Selection" field ("Link from Sitemap", "Link from File Manager" and "External Link" combined together)
 - Added option to have Entries as first/active tab
@@ -48,25 +58,25 @@
 - Fixed some missing addslashes() when creating block
 - Multiple minor fixes
 
-#1.0.4
+# 1.0.4
 - Added more info in README.md
 
-#1.0.3
+# 1.0.3
 - Block Builder is now free. License changed to MIT.
 
-#1.0.2	
+# 1.0.2
 - Fixed: Now in generated block, when image thumbnail is smaller than constraints, we use original url instead from cache
 
-#1.0.1	
+# 1.0.1
 - Fixed: Check if file exists in repeatable entries when editing block
 - Fixed: Disappearing entries when changing block template
 - Fixed: Removed duplicated .js-entry-title
 - Field type "Textarea" has option "Use this field as title in repeatable entries" available now
 
-#1.0.0
+# 1.0.0
 - Marketplace release
 
-#0.9.2
+# 0.9.2
 - Replaced php array() with [] in all files
 - Replaced $_GET with $this->get()
 - Added ability to use _ in field handles
@@ -76,11 +86,11 @@
 - Few minor bugfixes/code formatting fixes
 - Improved documentation
 
-#0.9.1
+# 0.9.1
 - Added maxlength to some inputs to prevent errors in STRICT_MODE, when string was too long
 - Better ui for blocks put in composer
 - Fixes/changes required for marketplace + some class refactoring + remove deprecated/unnecessary code
 - Increased min. version to c5.8.2.1
 
-#0.9.0
+# 0.9.0
 - Submission to marketplace
