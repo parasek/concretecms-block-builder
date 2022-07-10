@@ -140,7 +140,7 @@ $(function () {
 
         }
 
-        function addEntry(action, sourceEntry = false) {
+        function addEntry(actionOrIndex, sourceEntry = false) {
 
             position++;
 
@@ -154,7 +154,12 @@ $(function () {
             templateData['keepAddedEntryCollapsed'] = formContainer.find('.js-keep-added-entry-collapsed').is(':checked');
             $.each(entryColumnNames, function (key, value) {
                 if (sourceEntry) {
-                    templateData[value] = sourceEntry.find('[name="entry[' + sourceEntry.attr('data-position') + '][' + value + ']"]').val();
+                    var pageTypeComposerFormLayoutSetControlID = sourceEntry.closest('[data-page-type-composer-form-layout-set-control-id]').attr('data-page-type-composer-form-layout-set-control-id');
+                    if (pageTypeComposerFormLayoutSetControlID) {
+                        templateData[value] = sourceEntry.find('[name="ptComposer[' + pageTypeComposerFormLayoutSetControlID + '][entry][' + sourceEntry.attr('data-position') + '][' + value + ']"]').val();
+                    } else {
+                        templateData[value] = sourceEntry.find('[name="entry[' + sourceEntry.attr('data-position') + '][' + value + ']"]').val();
+                    }
                 } else {
                     templateData[value] = '';
                 }
@@ -162,15 +167,15 @@ $(function () {
 
             var newEntry = false;
 
-            if (action == 'prepend') {
+            if (actionOrIndex == 'prepend') {
                 entriesContainer.prepend(template(templateData));
                 newEntry = entriesContainer.children(':first');
-            } else if (action == 'append') {
+            } else if (actionOrIndex == 'append') {
                 entriesContainer.append(template(templateData));
                 newEntry = entriesContainer.children(':last');
             } else {
                 sourceEntry.after(template(templateData));
-                newEntry = entriesContainer.children('.js-entry').eq((parseInt(action) + 1));
+                newEntry = entriesContainer.children('.js-entry').eq((parseInt(actionOrIndex) + 1));
             }
 
             // Activate c5 tools/editors
@@ -193,6 +198,7 @@ $(function () {
             // Populate form with existing entries
             if (entries && entries.length) {
                 $.each(entries, function (index, item) {
+                    item['keepAddedEntryCollapsed'] = false;
                     entriesContainer.append(template(item));
                 });
             } else {

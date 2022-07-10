@@ -533,7 +533,7 @@
                                     <span class="input-group-text">px</span>
                                 </div>
                             </div>
-                            <div class="form-text"><?php echo t('Default height: %s.', '68px'); ?></div>
+                            <div class="form-text"><?php echo t('Default height: %s.', '66px'); ?></div>
                         </div>
                         <% } %>
 
