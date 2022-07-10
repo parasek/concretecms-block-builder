@@ -631,7 +631,7 @@ class FormPhp
                     $code .= BlockBuilderUtility::tab(6) . 'htmlEditor.setTheme(\'ace/theme/eclipse\');' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(6) . 'htmlEditor.getSession().setMode(\'ace/mode/html\');' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(6) . 'htmlEditor.getSession().on(\'change\', function() {' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(7) . '$(\'#<?php echo $view->field(\'' . $v['handle'] . '\'); ?>\').val(htmlEditor.getValue());' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(7) . '$("#<?php echo str_replace([\'[\', \']\'], [\'\\\\\\\\[\', \'\\\\\\\\]\'], $view->field(\'' . $v['handle'] . '\')); ?>").val(htmlEditor.getValue());' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(6) . '});' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5) . '});' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '</script>' . PHP_EOL . PHP_EOL;

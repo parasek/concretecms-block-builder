@@ -834,69 +834,69 @@ class ControllerPhp
 
                 // Basic fields
                 if ($v['fieldType'] == 'wysiwyg_editor') {
-                    $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= LinkAbstractor::translateTo($args[\'' . $v['handle'] . '\']);' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? LinkAbstractor::translateTo($args[\'' . $v['handle'] . '\']) : null;' . PHP_EOL;
                 } else if ($v['fieldType'] == 'html_editor') {
-                    $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= $args[\'' . $v['handle'] . '\'];' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? $args[\'' . $v['handle'] . '\'] : null;' . PHP_EOL;
                 } else if (in_array($v['fieldType'], ['link_from_sitemap', 'link_from_file_manager', 'image'])) {
-                    $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= intval($args[\'' . $v['handle'] . '\']);' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? intval($args[\'' . $v['handle'] . '\']) : 0;' . PHP_EOL;
                 } else if ($v['fieldType'] == 'date_picker') {
-                    $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? $this->app->make(\'helper/form/date_time\')->translate(\'' . $v['handle'] . '\') : null;' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? $args[\'' . $v['handle'] . '\'] : null;' . PHP_EOL;
                 } else if ($v['fieldType'] == 'link') {
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? trim($args[\'' . $v['handle'] . '\']) : null;' . PHP_EOL;
                 } else {
-                    $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= trim($args[\'' . $v['handle'] . '\']);' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? trim($args[\'' . $v['handle'] . '\']) : null;' . PHP_EOL;
                 }
 
                 // Additional fields
                 if ($v['fieldType'] == 'link_from_sitemap') {
                     if (!empty($v['linkFromSitemapShowEndingField'])) {
-                        $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '_ending\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 7) . '= trim($args[\'' . $v['handle'] . '_ending\']);' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '_ending\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 7) . '= !empty($args[\'' . $v['handle'] . '_ending\']) ? trim($args[\'' . $v['handle'] . '_ending\']) : null;' . PHP_EOL;
                     }
                     if (!empty($v['linkFromSitemapShowTextField'])) {
-                        $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '_text\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 5) . '= trim($args[\'' . $v['handle'] . '_text\']);' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '_text\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 5) . '= !empty($args[\'' . $v['handle'] . '_text\']) ? trim($args[\'' . $v['handle'] . '_text\']) : null;' . PHP_EOL;
                     }
                     if (!empty($v['linkFromSitemapShowTitleField'])) {
-                        $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '_title\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 6) . '= trim($args[\'' . $v['handle'] . '_title\']);' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '_title\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 6) . '= !empty($args[\'' . $v['handle'] . '_title\']) ? trim($args[\'' . $v['handle'] . '_title\']) : null;' . PHP_EOL;
                     }
                     if (!empty($v['linkFromSitemapShowNewWindowField'])) {
-                        $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '_new_window\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 11) . '= intval($args[\'' . $v['handle'] . '_new_window\']);' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '_new_window\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 11) . '= !empty($args[\'' . $v['handle'] . '_new_window\']) ? intval($args[\'' . $v['handle'] . '_new_window\']) : 0;' . PHP_EOL;
                     }
                 }
 
                 if ($v['fieldType'] == 'link_from_file_manager') {
                     if (!empty($v['linkFromFileManagerShowEndingField'])) {
-                        $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '_ending\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 7) . '= trim($args[\'' . $v['handle'] . '_ending\']);' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '_ending\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 7) . '= !empty($args[\'' . $v['handle'] . '_ending\']) ? trim($args[\'' . $v['handle'] . '_ending\']) : null;' . PHP_EOL;
                     }
                     if (!empty($v['linkFromFileManagerShowTextField'])) {
-                        $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '_text\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 5) . '= trim($args[\'' . $v['handle'] . '_text\']);' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '_text\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 5) . '= !empty($args[\'' . $v['handle'] . '_text\']) ? trim($args[\'' . $v['handle'] . '_text\']) : null;' . PHP_EOL;
                     }
                     if (!empty($v['linkFromFileManagerShowTitleField'])) {
-                        $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '_title\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 6) . '= trim($args[\'' . $v['handle'] . '_title\']);' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '_title\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 6) . '= !empty($args[\'' . $v['handle'] . '_title\']) ? trim($args[\'' . $v['handle'] . '_title\']) : null;' . PHP_EOL;
                     }
                     if (!empty($v['linkFromFileManagerShowNewWindowField'])) {
-                        $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '_new_window\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 11) . '= intval($args[\'' . $v['handle'] . '_new_window\']);' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '_new_window\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 11) . '= !empty($args[\'' . $v['handle'] . '_new_window\']) ? intval($args[\'' . $v['handle'] . '_new_window\']) : 0;' . PHP_EOL;
                     }
                 }
 
                 if ($v['fieldType'] == 'external_link') {
-                    $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '_protocol\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 9) . '= trim($args[\'' . $v['handle'] . '_protocol\']);' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '_protocol\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 9) . '= !empty($args[\'' . $v['handle'] . '_protocol\']) ? trim($args[\'' . $v['handle'] . '_protocol\']) : null;' . PHP_EOL;
                     if (!empty($v['externalLinkShowEndingField'])) {
-                        $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '_ending\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 7) . '= trim($args[\'' . $v['handle'] . '_ending\']);' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '_ending\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 7) . '= !empty($args[\'' . $v['handle'] . '_ending\']) ? trim($args[\'' . $v['handle'] . '_ending\']) : null;' . PHP_EOL;
                     }
                     if (!empty($v['externalLinkShowTextField'])) {
-                        $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '_text\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 5) . '= trim($args[\'' . $v['handle'] . '_text\']);' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '_text\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 5) . '= !empty($args[\'' . $v['handle'] . '_text\']) ? trim($args[\'' . $v['handle'] . '_text\']) : null;' . PHP_EOL;
                     }
                     if (!empty($v['externalLinkShowTitleField'])) {
-                        $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '_title\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 6) . '= trim($args[\'' . $v['handle'] . '_title\']);' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '_title\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 6) . '= !empty($args[\'' . $v['handle'] . '_title\']) ? trim($args[\'' . $v['handle'] . '_title\']) : null;' . PHP_EOL;
                     }
                     if (!empty($v['externalLinkShowNewWindowField'])) {
-                        $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '_new_window\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 11) . '= intval($args[\'' . $v['handle'] . '_new_window\']);' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '_new_window\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 11) . '= !empty($args[\'' . $v['handle'] . '_new_window\']) ? intval($args[\'' . $v['handle'] . '_new_window\']) : 0;' . PHP_EOL;
                     }
                 }
 
                 if ($v['fieldType'] == 'image') {
                     if (!empty($v['imageShowAltTextField'])) {
-                        $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '_alt\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 4) . '= trim($args[\'' . $v['handle'] . '_alt\']);' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '_alt\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 4) . '= !empty($args[\'' . $v['handle'] . '_alt\']) ? trim($args[\'' . $v['handle'] . '_alt\']) : null;' . PHP_EOL;
                     }
                 }
             }
@@ -913,18 +913,18 @@ class ControllerPhp
                         $code .= PHP_EOL;
                         $code .= BlockBuilderUtility::tab(2) . '// ' . addslashes($v['label']) . ' (' . $v['handle'] . ') - Additional fields for Image' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '_data\'] = json_encode([' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(3) . '\'show_additional_fields\'         => intval($args[\'' . $v['handle'] . '_show_additional_fields\']),' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '\'show_additional_fields\'         => !empty($args[\'' . $v['handle'] . '_show_additional_fields\']) ? intval($args[\'' . $v['handle'] . '_show_additional_fields\']) : 0,' . PHP_EOL;
                         if (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable'])) {
                             $code .= BlockBuilderUtility::tab(3) . '\'override_dimensions\'            => !empty($args[\'' . $v['handle'] . '_override_dimensions\']) ? intval($args[\'' . $v['handle'] . '_override_dimensions\']) : 0,' . PHP_EOL;
-                            $code .= BlockBuilderUtility::tab(3) . '\'custom_width\'                   => intval($args[\'' . $v['handle'] . '_custom_width\']),' . PHP_EOL;
-                            $code .= BlockBuilderUtility::tab(3) . '\'custom_height\'                  => intval($args[\'' . $v['handle'] . '_custom_height\']),' . PHP_EOL;
-                            $code .= BlockBuilderUtility::tab(3) . '\'custom_crop\'                    => ($args[\'' . $v['handle'] . '_custom_crop\']===\'1\' and (!(bool)$args[\'' . $v['handle'] . '_custom_width\'] or !(bool)$args[\'' . $v['handle'] . '_custom_height\'])) ? false : intval($args[\'' . $v['handle'] . '_custom_crop\']), // do not crop without width and height filled' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(3) . '\'custom_width\'                   => !empty($args[\'' . $v['handle'] . '_custom_width\']) ? intval($args[\'' . $v['handle'] . '_custom_width\']) : 0,' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(3) . '\'custom_height\'                  => !empty($args[\'' . $v['handle'] . '_custom_height\']) ? intval($args[\'' . $v['handle'] . '_custom_height\']) : 0,' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(3) . '\'custom_crop\'                    => (!empty($args[\'' . $v['handle'] . '_custom_crop\']) and $args[\'' . $v['handle'] . '_custom_crop\']===\'1\' and (!(bool)$args[\'' . $v['handle'] . '_custom_width\'] or !(bool)$args[\'' . $v['handle'] . '_custom_height\'])) ? false : (isset($args[\'' . $v['handle'] . '_custom_crop\']) ? intval($args[\'' . $v['handle'] . '_custom_crop\']) : 0), // do not crop without width and height filled' . PHP_EOL;
                         }
                         if (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable'])) {
                             $code .= BlockBuilderUtility::tab(3) . '\'override_fullscreen_dimensions\' => !empty($args[\'' . $v['handle'] . '_override_fullscreen_dimensions\']) ? intval($args[\'' . $v['handle'] . '_override_fullscreen_dimensions\']) : 0,' . PHP_EOL;
-                            $code .= BlockBuilderUtility::tab(3) . '\'custom_fullscreen_width\'        => intval($args[\'' . $v['handle'] . '_custom_fullscreen_width\']),' . PHP_EOL;
-                            $code .= BlockBuilderUtility::tab(3) . '\'custom_fullscreen_height\'       => intval($args[\'' . $v['handle'] . '_custom_fullscreen_height\']),' . PHP_EOL;
-                            $code .= BlockBuilderUtility::tab(3) . '\'custom_fullscreen_crop\'         => ($args[\'' . $v['handle'] . '_custom_fullscreen_crop\']===\'1\' and (!(bool)$args[\'' . $v['handle'] . '_custom_fullscreen_width\'] or !(bool)$args[\'' . $v['handle'] . '_custom_fullscreen_height\'])) ? false : intval($args[\'' . $v['handle'] . '_custom_fullscreen_crop\']), // do not crop without width and height filled' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(3) . '\'custom_fullscreen_width\'        => !empty($args[\'' . $v['handle'] . '_custom_fullscreen_width\']) ? intval($args[\'' . $v['handle'] . '_custom_fullscreen_width\']) : 0,' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(3) . '\'custom_fullscreen_height\'       => !empty($args[\'' . $v['handle'] . '_custom_fullscreen_height\']) ? intval($args[\'' . $v['handle'] . '_custom_fullscreen_height\']) : 0,' . PHP_EOL;
+                            $code .= BlockBuilderUtility::tab(3) . '\'custom_fullscreen_crop\'         => (!empty($args[\'' . $v['handle'] . '_custom_fullscreen_crop\']) and $args[\'' . $v['handle'] . '_custom_fullscreen_crop\']===\'1\' and (!(bool)$args[\'' . $v['handle'] . '_custom_fullscreen_width\'] or !(bool)$args[\'' . $v['handle'] . '_custom_fullscreen_height\'])) ? false : (isset($args[\'' . $v['handle'] . '_custom_fullscreen_crop\']) ? intval($args[\'' . $v['handle'] . '_custom_fullscreen_crop\']) : 0), // do not crop without width and height filled' . PHP_EOL;
                         }
                         $code .= BlockBuilderUtility::tab(2) . ']);' . PHP_EOL;
                     }
@@ -933,16 +933,16 @@ class ControllerPhp
                     $code .= PHP_EOL;
                     $code .= BlockBuilderUtility::tab(2) . '// ' . addslashes($v['label']) . ' (' . $v['handle'] . ') - Link' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] = json_encode([' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(3) . '\'link_type\'              => trim($args[\'' . $v['handle'] . '_link_type\']),' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(3) . '\'show_additional_fields\' => intval($args[\'' . $v['handle'] . '_show_additional_fields\']),' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(3) . '\'link_from_sitemap\'      => intval($args[\'' . $v['handle'] . '_link_from_sitemap\']),' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(3) . '\'link_from_file_manager\' => intval($args[\'' . $v['handle'] . '_link_from_file_manager\']),' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(3) . '\'protocol\'               => trim($args[\'' . $v['handle'] . '_protocol\']),' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(3) . '\'external_link\'          => trim($args[\'' . $v['handle'] . '_external_link\']),' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(3) . '\'ending\'                 => trim($args[\'' . $v['handle'] . '_ending\']),' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(3) . '\'text\'                   => trim($args[\'' . $v['handle'] . '_text\']),' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(3) . '\'title\'                  => trim($args[\'' . $v['handle'] . '_title\']),' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(3) . '\'new_window\'             => intval($args[\'' . $v['handle'] . '_new_window\'])' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '\'link_type\'              => !empty($args[\'' . $v['handle'] . '_link_type\']) ? trim($args[\'' . $v['handle'] . '_link_type\']) : null,' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '\'show_additional_fields\' => !empty($args[\'' . $v['handle'] . '_show_additional_fields\']) ? intval($args[\'' . $v['handle'] . '_show_additional_fields\']) : 0,' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '\'link_from_sitemap\'      => !empty($args[\'' . $v['handle'] . '_link_from_sitemap\']) ? intval($args[\'' . $v['handle'] . '_link_from_sitemap\']) : 0,' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '\'link_from_file_manager\' => !empty($args[\'' . $v['handle'] . '_link_from_file_manager\']) ? intval($args[\'' . $v['handle'] . '_link_from_file_manager\']) : 0,' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '\'protocol\'               => !empty($args[\'' . $v['handle'] . '_protocol\']) ? trim($args[\'' . $v['handle'] . '_protocol\']) : null,' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '\'external_link\'          => !empty($args[\'' . $v['handle'] . '_external_link\']) ? trim($args[\'' . $v['handle'] . '_external_link\']) : null,' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '\'ending\'                 => !empty($args[\'' . $v['handle'] . '_ending\']) ? trim($args[\'' . $v['handle'] . '_ending\']) : null,' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '\'text\'                   => !empty($args[\'' . $v['handle'] . '_text\']) ? trim($args[\'' . $v['handle'] . '_text\']) : null,' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '\'title\'                  => !empty($args[\'' . $v['handle'] . '_title\']) ? trim($args[\'' . $v['handle'] . '_title\']) : null,' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '\'new_window\'             => !empty($args[\'' . $v['handle'] . '_new_window\']) ? intval($args[\'' . $v['handle'] . '_new_window\']) : 0' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(2) . ']);' . PHP_EOL;
                 }
             }
