@@ -177,3 +177,12 @@ div.ui-dialog .ui-dialog-content .entries hr {
     margin-left: 0;
     margin-right: 0;
 }
+
+/* Bootstrap select fix */
+.ccm-ui .bootstrap-select .dropdown-toggle .bs-select-clear-selected span {
+    font-size: 24px;
+    line-height: 0;
+    top: 4px;
+    right: 5px;
+    font-weight: normal;
+}

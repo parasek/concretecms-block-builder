@@ -300,6 +300,26 @@
                 <?php echo $form->text('pxLabel', $pxLabel, ['data-translated-text' => t('px'), 'data-untranslated-text' => 'px']); ?>
             </div>
 
+            <div class="mb-4 <?php in_array('nothingSelectedLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('nothingSelectedLabel', t('Nothing selected')); ?>
+                <?php echo $form->text('nothingSelectedLabel', $nothingSelectedLabel, ['data-translated-text' => t('Nothing selected'), 'data-untranslated-text' => 'Nothing selected']); ?>
+            </div>
+
+            <div class="mb-4 <?php in_array('noResultsMatchedLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('noResultsMatchedLabel', t('No results matched {0}')); ?>
+                <?php echo $form->text('noResultsMatchedLabel', $noResultsMatchedLabel, ['data-translated-text' => t('No results matched {0}'), 'data-untranslated-text' => 'No results matched {0}']); ?>
+            </div>
+
+            <div class="mb-4 <?php in_array('selectAllLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('selectAllLabel', t('Select All')); ?>
+                <?php echo $form->text('selectAllLabel', $selectAllLabel, ['data-translated-text' => t('Select All'), 'data-untranslated-text' => 'Select All']); ?>
+            </div>
+
+            <div class="mb-4 <?php in_array('deselectAllLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('deselectAllLabel', t('Deselect All')); ?>
+                <?php echo $form->text('deselectAllLabel', $deselectAllLabel, ['data-translated-text' => t('Deselect All'), 'data-untranslated-text' => 'Deselect All']); ?>
+            </div>
+
         </div>
 
         <div class="ccm-tab-content" id="ccm-tab-content-tab-basic-information" style="display: none;">
@@ -556,6 +576,21 @@
                         <% } %>
 
                         <% if (fieldType == 'select_field') { %>
+                        <div class="mb-4">
+                            <label for="<%=groupHandle%>[<%=counter%>][selectType]" class="form-label"><?php echo t('Type'); ?></label>
+                            <select name="<%=groupHandle%>[<%=counter%>][selectType]"
+                                    id="<%=groupHandle%>[<%=counter%>][selectType]"
+                                    class="form-select"
+                            >
+                                <?php foreach ($selectFieldTypes as $k => $optgroup): ?>
+                                    <optgroup label="<?php echo h($optgroup['label']); ?>">
+                                        <?php foreach ($optgroup['options'] as $k => $v): ?>
+                                            <option value="<?php echo h($k); ?>" <% if (selectType === '<?php echo h($k); ?>') { %>selected<% } %>><?php echo h($v); ?></option>
+                                        <?php endforeach; ?>
+                                    </optgroup>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
                         <div class="<% if (error['selectOptions']!=undefined) { %>has-error<% } %>">
                             <label for="<%=groupHandle%>[<%=counter%>][selectOptions]" class="form-label"><?php echo t('Select options'); ?></label>
                             <p class="small text-muted">

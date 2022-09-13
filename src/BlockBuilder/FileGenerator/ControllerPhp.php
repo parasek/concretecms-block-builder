@@ -213,7 +213,9 @@ class ControllerPhp
 
                     // Generate actual code
                     $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options ' . BlockBuilderUtility::arrayGap($maxKeyLength + 4) . '= [];' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options[] ' . BlockBuilderUtility::arrayGap($maxKeyLength + 2) . '= \'----\';' . PHP_EOL;
+                    if ($v['selectType'] === 'default_select' or empty($v['selectType'])) {
+                        $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options[] ' . BlockBuilderUtility::arrayGap($maxKeyLength + 2) . '= \'----\';' . PHP_EOL;
+                    }
                     foreach ($tempOptions as $tempOption) {
                         $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options[\'' . $tempOption['key'] . '\'] ';
                         $code .= BlockBuilderUtility::arrayGap($maxKeyLength, $tempOption['keyLength']);
@@ -278,7 +280,9 @@ class ControllerPhp
 
                     // Generate actual code
                     $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options ' . BlockBuilderUtility::arrayGap($maxKeyLength + 4) . '= [];' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options[] ' . BlockBuilderUtility::arrayGap($maxKeyLength + 2) . '= \'----\';' . PHP_EOL;
+                    if ($v['selectType'] === 'default_multiselect' or empty($v['selectType'])) {
+                        $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options[] ' . BlockBuilderUtility::arrayGap($maxKeyLength + 2) . '= \'----\';' . PHP_EOL;
+                    }
                     foreach ($tempOptions as $tempOption) {
                         $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options[\'' . $tempOption['key'] . '\'] ';
                         $code .= BlockBuilderUtility::arrayGap($maxKeyLength, $tempOption['keyLength']);
@@ -843,6 +847,8 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? $args[\'' . $v['handle'] . '\'] : null;' . PHP_EOL;
                 } else if ($v['fieldType'] == 'link') {
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? trim($args[\'' . $v['handle'] . '\']) : null;' . PHP_EOL;
+                } else if ($v['fieldType'] == 'select_field') {
+                    $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? trim($args[\'' . $v['handle'] . '\']) : \'\';' . PHP_EOL;
                 } else {
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? trim($args[\'' . $v['handle'] . '\']) : null;' . PHP_EOL;
                 }
@@ -1015,6 +1021,8 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($entry[\'' . $v['handle'] . '\']) ? $this->app->make(\'helper/form/date_time\')->translate(\'' . $v['handle'] . '\', $entry) : null;' . PHP_EOL;
                 } else if ($v['fieldType'] == 'link') {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($entry[\'' . $v['handle'] . '\']) ? trim($entry[\'' . $v['handle'] . '\']) : null;' . PHP_EOL;
+                } else if ($v['fieldType'] == 'select_field') {
+                    $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($entry[\'' . $v['handle'] . '\']) ? trim($entry[\'' . $v['handle'] . '\']) : \'\';' . PHP_EOL;
                 } else {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= trim($entry[\'' . $v['handle'] . '\']);' . PHP_EOL;
                 }

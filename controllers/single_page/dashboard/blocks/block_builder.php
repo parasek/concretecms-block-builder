@@ -126,6 +126,9 @@ class BlockBuilder extends DashboardPageController
         $installBlockOptions = $blockBuilderOptionList->getInstallBlockOptions();
         $this->set('installBlockOptions', $installBlockOptions);
 
+        $selectFieldTypes = $blockBuilderOptionList->getSelectFieldTypes();
+        $this->set('selectFieldTypes', $selectFieldTypes);
+
         // Default values
         $this->set('blockName', '');
         $this->set('blockHandle', '');
@@ -136,13 +139,6 @@ class BlockBuilder extends DashboardPageController
         $this->set('entryFieldsDivider', '');
         $this->set('basic', '');
         $this->set('entries', '');
-        $this->set('cccccccc', '');
-        $this->set('cccccccc', '');
-        $this->set('cccccccc', '');
-        $this->set('cccccccc', '');
-        $this->set('cccccccc', '');
-        $this->set('cccccccc', '');
-        $this->set('cccccccc', '');
 
         $this->set('blockWidth', 1000);
         $this->set('blockHeight', 650);
@@ -186,6 +182,10 @@ class BlockBuilder extends DashboardPageController
         $this->set('heightLabel', t('Height'));
         $this->set('cropLabel', t('Crop'));
         $this->set('pxLabel', t('px'));
+        $this->set('nothingSelectedLabel', t('Nothing selected'));
+        $this->set('noResultsMatchedLabel', t('No results matched {0}'));
+        $this->set('selectAllLabel', t('Select All'));
+        $this->set('deselectAllLabel', t('Deselect All'));
 
         // Get rid of keys in repeatable entries (for json manipulation in js)
         if (is_array($basic)) {

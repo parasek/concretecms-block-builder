@@ -135,6 +135,7 @@ $(function () {
 
                 // select_field
                 templateData['selectOptions'] = '';
+                templateData['selectType'] = '';
 
                 // link
                 templateData['link'] = 0;

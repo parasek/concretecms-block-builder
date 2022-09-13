@@ -88,6 +88,22 @@ $(function () {
 
         }
 
+        function activateEnhancedSelectFields(parentContainer) {
+
+            var fields = parentContainer.find('.js-enhanced-select');
+            fields.each(function (i, item) {
+                $(item).selectpicker({
+                    liveSearch: true,
+                    width: 'auto',
+                    allowClear: true,
+                    title: item.title,
+                    noneSelectedText: item.dataset.noneSelectedText,
+                    noneResultsText: item.dataset.noneResultsText,
+                });
+            });
+
+        }
+
         function activateSpecialFields(container) {
 
             activateEditors(container);
@@ -99,6 +115,8 @@ $(function () {
             activateHtmlEditors(container);
 
             activateDatePickers(container);
+
+            activateEnhancedSelectFields(container);
 
         }
 
@@ -156,9 +174,14 @@ $(function () {
                 if (sourceEntry) {
                     var pageTypeComposerFormLayoutSetControlID = sourceEntry.closest('[data-page-type-composer-form-layout-set-control-id]').attr('data-page-type-composer-form-layout-set-control-id');
                     if (pageTypeComposerFormLayoutSetControlID) {
-                        templateData[value] = sourceEntry.find('[name="ptComposer[' + pageTypeComposerFormLayoutSetControlID + '][entry][' + sourceEntry.attr('data-position') + '][' + value + ']"]').val();
+                        var sourceEntryElement = sourceEntry.find('[name="ptComposer[' + pageTypeComposerFormLayoutSetControlID + '][entry][' + sourceEntry.attr('data-position') + '][' + value + ']"]');
                     } else {
-                        templateData[value] = sourceEntry.find('[name="entry[' + sourceEntry.attr('data-position') + '][' + value + ']"]').val();
+                        var sourceEntryElement = sourceEntry.find('[name="entry[' + sourceEntry.attr('data-position') + '][' + value + ']"]');
+                    }
+                    if (sourceEntryElement.attr('type') == 'radio') {
+                        templateData[value] = sourceEntryElement.filter(':checked').val();
+                    } else {
+                        templateData[value] = sourceEntryElement.val();
                     }
                 } else {
                     templateData[value] = '';

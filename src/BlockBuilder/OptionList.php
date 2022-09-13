@@ -88,4 +88,30 @@ class OptionList
 
     }
 
+    public function getSelectFieldTypes()
+    {
+
+        $options = [
+            [
+                'label' => t('Single choice'),
+                'options' => [
+                    'default_select' => t('Default Select Field'),
+                    'enhanced_select' => t('Enhanced Select Field'),
+                    'radio_list' => t('Radio List'),
+                ],
+            ],
+            [
+                'label' => t('Multiple choice'),
+                'options' => [
+                    'default_multiselect' => t('Default Multiselect Field'),
+                    'enhanced_multiselect' => t('Enhanced Multiselect Field'),
+                    'checkbox_list' => t('Checkbox List'),
+                ],
+            ],
+        ];
+
+        return $options;
+
+    }
+
 }
