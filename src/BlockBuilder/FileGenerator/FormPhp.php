@@ -161,8 +161,56 @@ class FormPhp
                     $code .= BlockBuilderUtility::tab(3) . '<div class="mb-4">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '\'), t(\'' . addslashes($v['label']) . '\')' . $required . '); ?>' . PHP_EOL;
 
-                    if ($v['selectType'] === 'default_select' or empty($v['selectType'])) {
+                    if (empty($v['selectType']) or $v['selectType'] === 'default_select') {
                         $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->select($view->field(\'' . $v['handle'] . '\'), $' . $v['handle'] . '_options, $' . $v['handle'] . '); ?>' . PHP_EOL;
+                    } elseif ($v['selectType'] === 'enhanced_select') {
+                        $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->select($view->field(\'' . $v['handle'] . '\'), $' . $v['handle'] . '_options, $' . $v['handle'] . ', [\'class\' => \'form-control\']); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(4) . '<script type="text/javascript">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '$(function() {' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '$(\'#<?php echo $view->field(\'' . $v['handle'] . '\'); ?>\').selectpicker({' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . 'liveSearch: true,' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . 'width: \'auto\',' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . 'allowClear: true,' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . 'title: \'<?php echo t(\'' . addslashes($postData['nothingSelectedLabel']) . '\'); ?>\',' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . 'noneSelectedText: \'<?php echo t(\'' . addslashes($postData['nothingSelectedLabel']) . '\'); ?>\',' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . 'noneResultsText: \'<?php echo t(\'' . addslashes($postData['noResultsMatchedLabel']) . '\'); ?>\',' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '});' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '});' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(4) . '</script>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(4) . '<style>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '.ccm-ui .bootstrap-select [name="<?php echo $view->field(\'' . $v['handle'] . '\'); ?>"] + .dropdown-toggle .bs-select-clear-selected span {' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . 'font-size: 24px;' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . 'line-height: 0;' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . 'top: 4px;' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . 'right: 5px;' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . 'font-weight: normal;' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '}' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(4) . '</style>' . PHP_EOL;
+                    } elseif ($v['selectType'] === 'radio_list') {
+                        $code .= BlockBuilderUtility::tab(4) . '<?php $selectFieldIndex = 0; ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(4) . '<?php foreach ($' . $v['handle'] . '_options as $' . $v['handle'] . '_key => $' . $v['handle'] . '_value): ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '<?php $selectFieldIndex++; ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '<div class="form-check">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '<?php echo $form->radio($view->field(\'' . $v['handle'] . '\'), $' . $v['handle'] . '_key, $' . $v['handle'] . ' == $' . $v['handle'] . '_key, [\'id\' => \'' . $v['handle'] . '\' . $selectFieldIndex]); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '\' . $selectFieldIndex), t($' . $v['handle'] . '_value), [\'class\' => \'form-check-label\']); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(4) . '<?php endforeach; ?>' . PHP_EOL;
+                    }
+
+                    if (!empty($v['helpText'])) {
+                        $code .= BlockBuilderUtility::tab(4) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
+                    }
+                    $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL;
+
+                }
+
+                if ($v['fieldType'] == 'select_multiple_field') {
+
+                    $code .= BlockBuilderUtility::tab(3) . '<div class="mb-4">' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '\'), t(\'' . addslashes($v['label']) . '\')' . $required . '); ?>' . PHP_EOL;
+
+                    if (empty($v['selectType']) or $v['selectType'] === 'default_select') {
+                        $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->selectMultiple($view->field(\'' . $v['handle'] . '\'), $' . $v['handle'] . '_options, explode(\'|\', $' . $v['handle'] . ')); ?>' . PHP_EOL;
                     } elseif ($v['selectType'] === 'enhanced_select') {
                         $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->select($view->field(\'' . $v['handle'] . '\'), $' . $v['handle'] . '_options, $' . $v['handle'] . ', [\'class\' => \'form-control\']); ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(4) . '<script type="text/javascript">' . PHP_EOL;
@@ -903,10 +951,46 @@ class FormPhp
                     $code .= BlockBuilderUtility::tab(6) . '<div class="mb-4">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" class="form-label"><?php echo t(\'' . addslashes($v['label']) . '\'); ?>' . $required . '</label>' . PHP_EOL;
 
-                    if ($v['selectType'] === 'default_select' or empty($v['selectType'])) {
+                    if (empty($v['selectType']) or $v['selectType'] === 'default_select') {
                         $code .= BlockBuilderUtility::tab(7) . '<select id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" class="form-select">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(8) . '<?php foreach ($entry_' . $v['handle'] . '_options as $k => $v): ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(9) . '<option value="<?php echo $k; ?>" <% if (' . $v['handle'] . '==\'<?php echo $k; ?>\') { %>selected="selected"<% } %> ><?php echo h($v); ?></option>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . '<?php endforeach; ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '</select>' . PHP_EOL;
+                    } elseif ($v['selectType'] === 'enhanced_select') {
+                        $code .= BlockBuilderUtility::tab(7) . '<select id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" class="form-select form-control js-enhanced-select">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . '<?php foreach ($entry_' . $v['handle'] . '_options as $k => $v): ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(9) . '<option value="<?php echo $k; ?>" <% if (' . $v['handle'] . '==\'<?php echo $k; ?>\') { %>selected="selected"<% } %> ><?php echo h($v); ?></option>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . '<?php endforeach; ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '</select>' . PHP_EOL;
+                    } elseif ($v['selectType'] === 'radio_list') {
+                        $code .= BlockBuilderUtility::tab(7) . '<?php $radioIndex = 0; ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '<?php foreach ($entry_' . $v['handle'] . '_options as $k => $v): ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . '<?php $radioIndex++; ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . '<div class="form-check">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(9) . '<label for="<?php echo $view->field(\'entry\' . h($radioIndex)); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" class="form-check-label"><?php echo h($v); ?></label>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(9) . '<input type="radio" id="<?php echo $view->field(\'entry\' . h($radioIndex)); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" value="<?php echo $k; ?>" class="form-check-input" <% if (' . $v['handle'] . '==\'<?php echo $k; ?>\') { %>checked<% } %>>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . '</div>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '<?php endforeach; ?>' . PHP_EOL;
+                    }
+                    if (!empty($v['helpText'])) {
+                        $code .= BlockBuilderUtility::tab(7) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
+                    }
+                    $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
+
+                }
+
+                if ($v['fieldType'] == 'select_multiple_field') {
+
+                    $code .= BlockBuilderUtility::tab(6) . '<div class="mb-4">' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(7) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" class="form-label"><?php echo t(\'' . addslashes($v['label']) . '\'); ?>' . $required . '</label>' . PHP_EOL;
+
+                    if (empty($v['selectType']) or $v['selectType'] === 'default_multiselect') {
+                        $code .= BlockBuilderUtility::tab(7) . '<% var ' . $v['handle'] . '_exploded_items = ' . $v['handle'] . ' ? ' . $v['handle'] . '.split(\'|\') : []; %>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '<input type="hidden" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" value="">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '<select multiple id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '][]" class="form-select">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . '<?php foreach ($entry_' . $v['handle'] . '_options as $k => $v): ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(9) . '<option value="<?php echo $k; ?>" <% if (' . $v['handle'] . '.includes(\'<?php echo $k; ?>\')) { %>selected="selected"<% } %> ><?php echo h($v); ?></option>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(8) . '<?php endforeach; ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . '</select>' . PHP_EOL;
                     } elseif ($v['selectType'] === 'enhanced_select') {

@@ -196,6 +196,7 @@ class Validation
 
 
         // 3. Basic information + Repeatable entries
+//        echo '<pre>' . var_export($postData, true) . '</pre>';exit;
         $basicData = $this->validateRepeatableEntries($postData['basic'] ?? [], 'basic-information', t('Tab: Basic information'));
         $entriesData = $this->validateRepeatableEntries($postData['entries'] ?? [], 'repeatable-entries', t('Tab: Repeatable entries'));
 
@@ -371,6 +372,53 @@ class Validation
 
                 }
 
+                // select_multiple_field
+                if (isset($entry['selectMultipleOptions']) and !$entry['selectMultipleOptions']) {
+
+                    $postData[$counter]['error']['selectMultipleOptions'] = 1;
+                    $fieldsWithError[] = $handle . '|selectMultipleOptions|empty';
+                    $tabsWithError[] = 'tab-' . $handle;
+
+                } else {
+
+                    $options = isset($entry['selectMultipleOptions']) ? explode('<br />', nl2br($entry['selectMultipleOptions'])) : [];
+
+                    $invalidKey = 0;
+
+                    if (is_array($options)) {
+
+                        foreach ($options as $option) {
+
+                            $explodedOption = explode('::', $option);
+
+                            if (is_array($explodedOption) and count($explodedOption) == 2) {
+
+                                $key = $explodedOption[0];
+
+                                if (!preg_match('/^[a-zA-Z0-9_]+$/', trim($key))) {
+                                    $invalidKey++;
+                                }
+
+                                if (mb_substr(trim($key), 0, 1, 'utf-8') == '_') {
+                                    $invalidKey++;
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                    if ($invalidKey > 0) {
+
+                        $postData[$counter]['error']['selectMultipleOptions'] = 1;
+                        $fieldsWithError[] = $handle . '|selectMultipleOptions|invalid_data';
+                        $tabsWithError[] = 'tab-' . $handle;
+
+                    }
+
+                }
+
                 // image
                 if (!empty($entry['imageCreateThumbnailImage'])) {
 
@@ -515,10 +563,18 @@ class Validation
 
         // select_field
         if (in_array($handle . '|selectOptions|empty', $fieldsWithError)) {
-            $errors[] = t('There are some empty "Select field/Select options" fields (%s).', $label);
+            $errors[] = t('There are some empty "Single Choice Field/Select options" fields (%s).', $label);
         }
         if (in_array($handle . '|selectOptions|invalid_data', $fieldsWithError)) {
-            $errors[] = t('Invalid entry in one of "Select field/Select options" fields (%s).', $label);
+            $errors[] = t('Invalid entry in one of "Single Choice Field/Select options" fields (%s).', $label);
+        }
+
+        // select_multiple_field
+        if (in_array($handle . '|selectMultipleOptions|empty', $fieldsWithError)) {
+            $errors[] = t('There are some empty "Multiple Choice Field/Select options" fields (%s).', $label);
+        }
+        if (in_array($handle . '|selectMultipleOptions|invalid_data', $fieldsWithError)) {
+            $errors[] = t('Invalid entry in one of "Multiple Choice Field/Select options" fields (%s).', $label);
         }
 
         // image

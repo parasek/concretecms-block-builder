@@ -174,12 +174,14 @@ $(function () {
                 if (sourceEntry) {
                     var pageTypeComposerFormLayoutSetControlID = sourceEntry.closest('[data-page-type-composer-form-layout-set-control-id]').attr('data-page-type-composer-form-layout-set-control-id');
                     if (pageTypeComposerFormLayoutSetControlID) {
-                        var sourceEntryElement = sourceEntry.find('[name="ptComposer[' + pageTypeComposerFormLayoutSetControlID + '][entry][' + sourceEntry.attr('data-position') + '][' + value + ']"]');
+                        var sourceEntryElement = sourceEntry.find('[id="ptComposer[' + pageTypeComposerFormLayoutSetControlID + '][entry][' + sourceEntry.attr('data-position') + '][' + value + ']"]');
                     } else {
-                        var sourceEntryElement = sourceEntry.find('[name="entry[' + sourceEntry.attr('data-position') + '][' + value + ']"]');
+                        var sourceEntryElement = sourceEntry.find('[id="entry[' + sourceEntry.attr('data-position') + '][' + value + ']"]');
                     }
                     if (sourceEntryElement.attr('type') == 'radio') {
                         templateData[value] = sourceEntryElement.filter(':checked').val();
+                    } else if (sourceEntryElement.prop('tagName').toLowerCase() == 'select' && sourceEntryElement.attr('multiple')) {
+                        templateData[value] = sourceEntryElement.val().join('|');
                     } else {
                         templateData[value] = sourceEntryElement.val();
                     }

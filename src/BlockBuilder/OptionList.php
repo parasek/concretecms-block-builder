@@ -49,10 +49,11 @@ class OptionList
 
         $options = [];
         $options[''] = t('+ Add new field type');
-        $options['text_field'] = t('Text field');
+        $options['text_field'] = t('Text');
         $options['textarea'] = t('Textarea');
         $options['wysiwyg_editor'] = t('WYSIWYG Editor');
-        $options['select_field'] = t('Select field');
+        $options['select_field'] = t('Single Choice Field');
+        $options['select_multiple_field'] = t('Multiple Choice Field');
         $options['link'] = t('Link with Type Selection');
         $options['link_from_sitemap'] = t('Link from Sitemap');
         $options['link_from_file_manager'] = t('Link from File Manager');
@@ -92,22 +93,22 @@ class OptionList
     {
 
         $options = [
-            [
-                'label' => t('Single choice'),
-                'options' => [
-                    'default_select' => t('Default Select Field'),
-                    'enhanced_select' => t('Enhanced Select Field'),
-                    'radio_list' => t('Radio List'),
-                ],
-            ],
-            [
-                'label' => t('Multiple choice'),
-                'options' => [
-                    'default_multiselect' => t('Default Multiselect Field'),
-                    'enhanced_multiselect' => t('Enhanced Multiselect Field'),
-                    'checkbox_list' => t('Checkbox List'),
-                ],
-            ],
+            'default_select' => t('Default Select Field'),
+            'enhanced_select' => t('Enhanced Select Field'),
+            'radio_list' => t('Radio List'),
+        ];
+
+        return $options;
+
+    }
+
+    public function getSelectMultipleFieldTypes()
+    {
+
+        $options = [
+            'default_multiselect' => t('Default Multiselect Field'),
+            'enhanced_multiselect' => t('Enhanced Multiselect Field'),
+            'checkbox_list' => t('Checkbox List'),
         ];
 
         return $options;

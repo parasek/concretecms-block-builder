@@ -129,6 +129,9 @@ class BlockBuilder extends DashboardPageController
         $selectFieldTypes = $blockBuilderOptionList->getSelectFieldTypes();
         $this->set('selectFieldTypes', $selectFieldTypes);
 
+        $selectMultipleFieldTypes = $blockBuilderOptionList->getSelectMultipleFieldTypes();
+        $this->set('selectMultipleFieldTypes', $selectMultipleFieldTypes);
+
         // Default values
         $this->set('blockName', '');
         $this->set('blockHandle', '');

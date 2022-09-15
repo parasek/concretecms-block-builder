@@ -582,12 +582,8 @@
                                     id="<%=groupHandle%>[<%=counter%>][selectType]"
                                     class="form-select"
                             >
-                                <?php foreach ($selectFieldTypes as $k => $optgroup): ?>
-                                    <optgroup label="<?php echo h($optgroup['label']); ?>">
-                                        <?php foreach ($optgroup['options'] as $k => $v): ?>
-                                            <option value="<?php echo h($k); ?>" <% if (selectType === '<?php echo h($k); ?>') { %>selected<% } %>><?php echo h($v); ?></option>
-                                        <?php endforeach; ?>
-                                    </optgroup>
+                                <?php foreach ($selectFieldTypes as $k => $v): ?>
+                                    <option value="<?php echo h($k); ?>" <% if (selectType === '<?php echo h($k); ?>') { %>selected<% } %>><?php echo h($v); ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -608,6 +604,38 @@
                                       class="form-control"
                                       rows="4"
                             ><%=selectOptions%></textarea>
+                        </div>
+                        <% } %>
+
+                        <% if (fieldType == 'select_multiple_field') { %>
+                        <div class="mb-4">
+                            <label for="<%=groupHandle%>[<%=counter%>][selectMultipleType]" class="form-label"><?php echo t('Type'); ?></label>
+                            <select name="<%=groupHandle%>[<%=counter%>][selectMultipleType]"
+                                    id="<%=groupHandle%>[<%=counter%>][selectMultipleType]"
+                                    class="form-select"
+                            >
+                                <?php foreach ($selectMultipleFieldTypes as $k => $v): ?>
+                                    <option value="<?php echo h($k); ?>" <% if (selectType === '<?php echo h($k); ?>') { %>selected<% } %>><?php echo h($v); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="<% if (error['selectMultipleOptions']!=undefined) { %>has-error<% } %>">
+                            <label for="<%=groupHandle%>[<%=counter%>][selectMultipleOptions]" class="form-label"><?php echo t('Select options'); ?></label>
+                            <p class="small text-muted">
+                                <?php echo t('Enter every option in new line, e.g.'); ?>
+                                <br/><code><?php echo t('Don\'t show'); ?></code>
+                                <br/><code><?php echo t('Show'); ?></code>
+                            </p>
+                            <p class="small text-muted">
+                                <?php echo t('You can also use double colon to specify key (value saved in database, only a-zA-Z0-9_ characters are permitted) and value (displayed text), e.g.'); ?>
+                                <br/><code><?php echo t('no :: Don\'t show'); ?></code>
+                                <br/><code><?php echo t('yes :: Show'); ?></code>
+                            </p>
+                            <textarea name="<%=groupHandle%>[<%=counter%>][selectMultipleOptions]"
+                                      id="<%=groupHandle%>[<%=counter%>][selectMultipleOptions]"
+                                      class="form-control"
+                                      rows="4"
+                            ><%=selectMultipleOptions%></textarea>
                         </div>
                         <% } %>
 
