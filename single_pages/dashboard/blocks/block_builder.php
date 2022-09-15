@@ -615,7 +615,7 @@
                                     class="form-select"
                             >
                                 <?php foreach ($selectMultipleFieldTypes as $k => $v): ?>
-                                    <option value="<?php echo h($k); ?>" <% if (selectType === '<?php echo h($k); ?>') { %>selected<% } %>><?php echo h($v); ?></option>
+                                    <option value="<?php echo h($k); ?>" <% if (selectMultipleType === '<?php echo h($k); ?>') { %>selected<% } %>><?php echo h($v); ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
