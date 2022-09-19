@@ -196,7 +196,6 @@ class Validation
 
 
         // 3. Basic information + Repeatable entries
-//        echo '<pre>' . var_export($postData, true) . '</pre>';exit;
         $basicData = $this->validateRepeatableEntries($postData['basic'] ?? [], 'basic-information', t('Tab: Basic information'));
         $entriesData = $this->validateRepeatableEntries($postData['entries'] ?? [], 'repeatable-entries', t('Tab: Repeatable entries'));
 
@@ -415,6 +414,13 @@ class Validation
                         $fieldsWithError[] = $handle . '|selectMultipleOptions|invalid_data';
                         $tabsWithError[] = 'tab-' . $handle;
 
+                    }
+
+                    // Do not use | (vertical line), because it is used as separator in database when saving options
+                    if (isset($entry['selectMultipleOptions']) and strpos($entry['selectMultipleOptions'], '|') !== false) {
+                        $postData[$counter]['error']['selectMultipleOptions'] = 1;
+                        $fieldsWithError[] = $handle . '|selectMultipleOptions|invalid_data';
+                        $tabsWithError[] = 'tab-' . $handle;
                     }
 
                 }
