@@ -210,18 +210,23 @@ class BlockBuilder extends DashboardPageController
 
     }
 
-    public function config($configBlockHandle)
+    public function config($type, $configBlockHandle)
     {
 
         $this->view();
 
         // Replace some variables when loading config
-        $this->set('formAction', $this->action('config', $configBlockHandle));
+        $this->set('formAction', $this->action('config', $type, $configBlockHandle));
 
         // Load values from config (only for non-post)
         if (!$this->post()) {
 
-            $configPath = DIR_FILES_BLOCK_TYPES . DIRECTORY_SEPARATOR . $configBlockHandle . DIRECTORY_SEPARATOR . 'config-bb.json';
+            if ($type === 'predefined') {
+                $pkg = Package::getByHandle('block_builder');
+                $configPath = DIR_PACKAGES . DIRECTORY_SEPARATOR . $pkg->getPackageHandle() . DIRECTORY_SEPARATOR . 'predefined_configs' . DIRECTORY_SEPARATOR . $configBlockHandle . '.json';
+            } else {
+                $configPath = DIR_FILES_BLOCK_TYPES . DIRECTORY_SEPARATOR . $configBlockHandle . DIRECTORY_SEPARATOR . 'config-bb.json';
+            }
 
             if (file_exists($configPath)) {
 
@@ -291,6 +296,7 @@ class BlockBuilder extends DashboardPageController
         $al->register('css', 'bb/styles', 'css_files/styles.css', [], $pkg);
         $this->requireAsset('css', 'bb/styles');
 
+        // Configs from block types
         $blockTypePaths = glob(DIR_FILES_BLOCK_TYPES . DIRECTORY_SEPARATOR . '*', GLOB_ONLYDIR);
 
         $blockTypes = [];
@@ -310,6 +316,7 @@ class BlockBuilder extends DashboardPageController
 
                     $blockTypes[$i]['handle'] = $blockTypeHandle;
                     $blockTypes[$i]['name'] = $config['blockName'];
+                    $blockTypes[$i]['description'] = $config['blockDescription'];
                     $blockTypes[$i]['version'] = $config['version'];
 
                     $i++;
@@ -320,6 +327,26 @@ class BlockBuilder extends DashboardPageController
         }
 
         $this->set('blockTypes', $blockTypes);
+
+        // Predefined configs
+        $predefinedConfigPaths = glob(DIR_PACKAGES . DIRECTORY_SEPARATOR . $pkg->getPackageHandle() . DIRECTORY_SEPARATOR . 'predefined_configs' . DIRECTORY_SEPARATOR .  '*');
+
+        $predefinedConfigs = [];
+        $i = 0;
+
+        if (is_array($predefinedConfigPaths)) {
+            foreach ($predefinedConfigPaths as $predefinedConfigPath) {
+                $configJson = file_get_contents($predefinedConfigPath);
+                $config = json_decode($configJson, true);
+
+                $predefinedConfigs[$i]['handle'] = $config['blockHandle'];
+                $predefinedConfigs[$i]['name'] = $config['blockName'];
+                $predefinedConfigs[$i]['description'] = $config['blockDescription'];
+                $predefinedConfigs[$i]['version'] = $config['version'];
+                $i++;
+            }
+        }
+        $this->set('predefinedConfigs', $predefinedConfigs);
 
         $this->render('dashboard/blocks/block_builder/configs');
 
