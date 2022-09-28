@@ -88,6 +88,37 @@ $(function () {
 
         }
 
+        function activateEnhancedSelectFields(parentContainer) {
+
+            var fields = parentContainer.find('.js-enhanced-select');
+            fields.each(function (i, item) {
+                if ($(item).attr('multiple')) {
+                    $(item).selectpicker({
+                        liveSearch: true,
+                        actionsBox: true,
+                        width: 'auto',
+                        allowClear: true,
+                        title: item.title,
+                        noneSelectedText: item.dataset.noneSelectedText,
+                        noneResultsText: item.dataset.noneResultsText,
+                        selectAllText: item.dataset.selectAllText,
+                        deselectAllText: item.dataset.deselectAllText,
+                    });
+                } else {
+                    $(item).selectpicker({
+                        liveSearch: true,
+                        width: 'auto',
+                        allowClear: true,
+                        title: item.title,
+                        noneSelectedText: item.dataset.noneSelectedText,
+                        noneResultsText: item.dataset.noneResultsText,
+                        deselectAllText: item.dataset.deselectAllText,
+                    });
+                }
+            });
+
+        }
+
         function activateSpecialFields(container) {
 
             activateEditors(container);
@@ -99,6 +130,8 @@ $(function () {
             activateHtmlEditors(container);
 
             activateDatePickers(container);
+
+            activateEnhancedSelectFields(container);
 
         }
 
@@ -155,10 +188,40 @@ $(function () {
             $.each(entryColumnNames, function (key, value) {
                 if (sourceEntry) {
                     var pageTypeComposerFormLayoutSetControlID = sourceEntry.closest('[data-page-type-composer-form-layout-set-control-id]').attr('data-page-type-composer-form-layout-set-control-id');
+                    // Fields named as array (square brackets at the end) like: name="entry[something][1][]
+                    // Checkbox list, Select with multiple attribute (default and enhanced)
+                    // Those should be checked before "standard" fields
                     if (pageTypeComposerFormLayoutSetControlID) {
-                        templateData[value] = sourceEntry.find('[name="ptComposer[' + pageTypeComposerFormLayoutSetControlID + '][entry][' + sourceEntry.attr('data-position') + '][' + value + ']"]').val();
+                        var sourceEntryElement = sourceEntry.find('[name="ptComposer[' + pageTypeComposerFormLayoutSetControlID + '][entry][' + sourceEntry.attr('data-position') + '][' + value + '][]"]');
                     } else {
-                        templateData[value] = sourceEntry.find('[name="entry[' + sourceEntry.attr('data-position') + '][' + value + ']"]').val();
+                        var sourceEntryElement = sourceEntry.find('[name="entry[' + sourceEntry.attr('data-position') + '][' + value + '][]"]');
+                    }
+                    // "Standard" fields
+                    if (!sourceEntryElement.length) {
+                        if (pageTypeComposerFormLayoutSetControlID) {
+                            var sourceEntryElement = sourceEntry.find('[name="ptComposer[' + pageTypeComposerFormLayoutSetControlID + '][entry][' + sourceEntry.attr('data-position') + '][' + value + ']"]');
+                        } else {
+                            var sourceEntryElement = sourceEntry.find('[name="entry[' + sourceEntry.attr('data-position') + '][' + value + ']"]');
+                        }
+                    }
+                    if (sourceEntryElement.length > 1) {
+                        // Checkbox list (Multiple choice)
+                        var selectedCheckboxes = [];
+                        sourceEntryElement.each(function(index, element) {
+                            if ($(element).is(':checked')) {
+                                selectedCheckboxes.push($(element).val());
+                            }
+                        });
+                        templateData[value] = selectedCheckboxes.join('|');
+                    } else if (sourceEntryElement.attr('type') == 'radio') {
+                        // Radio list (Single choice)
+                        templateData[value] = sourceEntryElement.filter(':checked').val();
+                    } else if (sourceEntryElement.prop('tagName').toLowerCase() == 'select' && sourceEntryElement.attr('multiple')) {
+                        // Select with multiple attribute (default and enhanced)
+                        templateData[value] = sourceEntryElement.val().join('|');
+                    } else {
+                        // Rest of fields
+                        templateData[value] = sourceEntryElement.val();
                     }
                 } else {
                     templateData[value] = '';

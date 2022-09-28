@@ -48,6 +48,10 @@ class DbXml
                     $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '" type="C" size="255"></field>' . PHP_EOL . PHP_EOL;
                 }
 
+                if ($v['fieldType'] == 'select_multiple_field') {
+                    $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '" type="C" size="255"></field>' . PHP_EOL . PHP_EOL;
+                }
+
                 if ($v['fieldType'] == 'link') {
                     $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '" type="X2"></field>' . PHP_EOL . PHP_EOL;
                 }
@@ -188,6 +192,10 @@ class DbXml
                 }
 
                 if ($v['fieldType'] == 'select_field') {
+                    $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '" type="C" size="255"></field>' . PHP_EOL . PHP_EOL;
+                }
+
+                if ($v['fieldType'] == 'select_multiple_field') {
                     $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '" type="C" size="255"></field>' . PHP_EOL . PHP_EOL;
                 }
 

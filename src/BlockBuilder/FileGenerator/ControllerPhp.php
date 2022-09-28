@@ -213,11 +213,49 @@ class ControllerPhp
 
                     // Generate actual code
                     $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options ' . BlockBuilderUtility::arrayGap($maxKeyLength + 4) . '= [];' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options[] ' . BlockBuilderUtility::arrayGap($maxKeyLength + 2) . '= \'----\';' . PHP_EOL;
+                    if (empty($v['selectType']) or $v['selectType'] === 'default_select') {
+                        $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options[] ' . BlockBuilderUtility::arrayGap($maxKeyLength + 2) . '= \'----\';' . PHP_EOL;
+                    }
                     foreach ($tempOptions as $tempOption) {
                         $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options[\'' . $tempOption['key'] . '\'] ';
                         $code .= BlockBuilderUtility::arrayGap($maxKeyLength, $tempOption['keyLength']);
-                        $code .= '= h(t(\'' . $tempOption['value'] . '\'));' . PHP_EOL;
+                        $code .= '= t(\'' . $tempOption['value'] . '\');' . PHP_EOL;
+                    }
+
+                    $code .= PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2) . '$this->set(\'' . $v['handle'] . '_options\', $' . $v['handle'] . '_options);' . PHP_EOL . PHP_EOL;
+
+                }
+
+                if ($v['fieldType'] == 'select_multiple_field') {
+
+                    $code .= BlockBuilderUtility::tab(2) . '// ' . addslashes($v['label']) . ' (' . $v['handle'] . ') options' . PHP_EOL;
+
+                    $maxKeyLength = 0;
+                    $tempOptions = [];
+                    if (!empty($v['selectMultipleOptions'])) {
+                        $options = explode('<br />', nl2br($v['selectMultipleOptions']));
+                        if (is_array($options)) {
+                            $i = 0;
+                            foreach ($options as $k2 => $v2) {
+                                $i++;
+                                $option = explode('::', $v2);
+                                $optionKey = !empty($option[1]) ? addslashes(trim($option[0])) : $i;
+                                $optionValue = !empty($option[1]) ? addslashes(trim($option[1])) : addslashes(trim($option[0]));
+
+                                $keyLength = mb_strlen($optionKey);
+                                $maxKeyLength = $keyLength > $maxKeyLength ? $keyLength : $maxKeyLength;
+                                $tempOptions[] = ['key' => $optionKey, 'value' => $optionValue, 'keyLength' => $keyLength];
+                            }
+                        }
+                    }
+
+                    // Generate actual code
+                    $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options ' . BlockBuilderUtility::arrayGap($maxKeyLength + 4) . '= [];' . PHP_EOL;
+                    foreach ($tempOptions as $tempOption) {
+                        $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options[\'' . $tempOption['key'] . '\'] ';
+                        $code .= BlockBuilderUtility::arrayGap($maxKeyLength, $tempOption['keyLength']);
+                        $code .= '= t(\'' . $tempOption['value'] . '\');' . PHP_EOL;
                     }
 
                     $code .= PHP_EOL;
@@ -278,7 +316,45 @@ class ControllerPhp
 
                     // Generate actual code
                     $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options ' . BlockBuilderUtility::arrayGap($maxKeyLength + 4) . '= [];' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options[] ' . BlockBuilderUtility::arrayGap($maxKeyLength + 2) . '= \'----\';' . PHP_EOL;
+                    if (empty($v['selectType']) or $v['selectType'] === 'default_select') {
+                        $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options[] ' . BlockBuilderUtility::arrayGap($maxKeyLength + 2) . '= \'----\';' . PHP_EOL;
+                    }
+                    foreach ($tempOptions as $tempOption) {
+                        $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options[\'' . $tempOption['key'] . '\'] ';
+                        $code .= BlockBuilderUtility::arrayGap($maxKeyLength, $tempOption['keyLength']);
+                        $code .= '= t(\'' . $tempOption['value'] . '\');' . PHP_EOL;
+                    }
+
+                    $code .= PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2) . '$this->set(\'entry_' . $v['handle'] . '_options\', $entry_' . $v['handle'] . '_options);' . PHP_EOL . PHP_EOL;
+
+                }
+
+                if ($v['fieldType'] == 'select_multiple_field') {
+
+                    $code .= BlockBuilderUtility::tab(2) . '// Entry / ' . addslashes($v['label']) . ' (' . $v['handle'] . ') options' . PHP_EOL;
+
+                    $maxKeyLength = 0;
+                    $tempOptions = [];
+                    if (!empty($v['selectMultipleOptions'])) {
+                        $options = explode('<br />', nl2br($v['selectMultipleOptions']));
+                        if (is_array($options)) {
+                            $i = 0;
+                            foreach ($options as $k2 => $v2) {
+                                $i++;
+                                $option = explode('::', $v2);
+                                $optionKey = !empty($option[1]) ? addslashes(trim($option[0])) : $i;
+                                $optionValue = !empty($option[1]) ? addslashes(trim($option[1])) : addslashes(trim($option[0]));
+
+                                $keyLength = mb_strlen($optionKey);
+                                $maxKeyLength = $keyLength > $maxKeyLength ? $keyLength : $maxKeyLength;
+                                $tempOptions[] = ['key' => $optionKey, 'value' => $optionValue, 'keyLength' => $keyLength];
+                            }
+                        }
+                    }
+
+                    // Generate actual code
+                    $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options ' . BlockBuilderUtility::arrayGap($maxKeyLength + 4) . '= [];' . PHP_EOL;
                     foreach ($tempOptions as $tempOption) {
                         $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options[\'' . $tempOption['key'] . '\'] ';
                         $code .= BlockBuilderUtility::arrayGap($maxKeyLength, $tempOption['keyLength']);
@@ -843,6 +919,10 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? $args[\'' . $v['handle'] . '\'] : null;' . PHP_EOL;
                 } else if ($v['fieldType'] == 'link') {
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? trim($args[\'' . $v['handle'] . '\']) : null;' . PHP_EOL;
+                } else if ($v['fieldType'] == 'select_field') {
+                    $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? trim($args[\'' . $v['handle'] . '\']) : \'\';' . PHP_EOL;
+                } else if ($v['fieldType'] == 'select_multiple_field') {
+                    $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? trim(implode(\'|\', $args[\'' . $v['handle'] . '\'])) : \'\';' . PHP_EOL;
                 } else {
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? trim($args[\'' . $v['handle'] . '\']) : null;' . PHP_EOL;
                 }
@@ -1015,6 +1095,10 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($entry[\'' . $v['handle'] . '\']) ? $this->app->make(\'helper/form/date_time\')->translate(\'' . $v['handle'] . '\', $entry) : null;' . PHP_EOL;
                 } else if ($v['fieldType'] == 'link') {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($entry[\'' . $v['handle'] . '\']) ? trim($entry[\'' . $v['handle'] . '\']) : null;' . PHP_EOL;
+                } else if ($v['fieldType'] == 'select_field') {
+                    $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($entry[\'' . $v['handle'] . '\']) ? trim($entry[\'' . $v['handle'] . '\']) : \'\';' . PHP_EOL;
+                } else if ($v['fieldType'] == 'select_multiple_field') {
+                    $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($entry[\'' . $v['handle'] . '\']) ? implode(\'|\', $entry[\'' . $v['handle'] . '\']) : \'\';' . PHP_EOL;
                 } else {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= trim($entry[\'' . $v['handle'] . '\']);' . PHP_EOL;
                 }

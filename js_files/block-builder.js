@@ -36,6 +36,13 @@ $(function () {
                     item.fieldTypeName = $('.js-add-entry').first().find('option[value="' + item.fieldType + '"]').text();
                     item.error = item.error == undefined ? '' : item.error;
 
+                    // New fields
+                    // Those fields don't exist in older .json files.
+                    // We would get javascript undefined error when trying to
+                    // load .json file created by older version of package.
+                    item.selectType = item.selectType == undefined ? 'default_select' : item.selectType;
+                    item.selectMultipleType = item.selectMultipleType == undefined ? 'default_multiselect' : item.selectMultipleType;
+
                     // All checkboxes need to be here (because $_POST doesn't have non-checked ones)
 
                     item.required = item.required == undefined ? 0 : 1;
@@ -135,6 +142,11 @@ $(function () {
 
                 // select_field
                 templateData['selectOptions'] = '';
+                templateData['selectType'] = '';
+
+                // select_multiple_field
+                templateData['selectMultipleOptions'] = '';
+                templateData['selectMultipleType'] = '';
 
                 // link
                 templateData['link'] = 0;
