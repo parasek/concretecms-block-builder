@@ -14,20 +14,29 @@
 
     <?php foreach ($blockTypes as $blockType): ?>
 
-        <a href="<?php echo $app->make('url/manager')->resolve(['/dashboard/blocks/block_builder/config/block/' . $blockType['handle']]); ?>"
-           class="block-type">
-            <?php echo h($blockType['name']); ?> / <?php echo h($blockType['handle']); ?>
+        <div class="block-type">
+            <a href="<?php echo $app->make('url/manager')->resolve(['/dashboard/blocks/block_builder/config/block/' . $blockType['handle']]); ?>"
+               class="block-type-build">
+                <strong class="me-2"><?php echo h($blockType['name']); ?></strong>
+                <span class="small badge rounded-pill bg-secondary"><?php echo h($blockType['handle']); ?></span>
 
-            <?php if ($blockType['description']): ?>
-                <br/>
-                <small class="text-muted"><?php echo h($blockType['description']); ?></small>
-            <?php endif; ?>
+                <?php if ($blockType['description']): ?>
+                    <br/>
+                    <small class="text-muted"><?php echo h($blockType['description']); ?></small>
+                <?php endif; ?>
 
-            <?php if ($blockType['version']): ?>
-                <br/>
-                <small class="text-muted"><?php echo t('Version'); ?>: <?php echo h($blockType['version']); ?></small>
-            <?php endif; ?>
-        </a>
+                <?php if ($blockType['version']): ?>
+                    <br/>
+                    <small class="text-muted"><?php echo t('Version'); ?>: <?php echo h($blockType['version']); ?></small>
+                <?php endif; ?>
+            </a>
+            <a href="<?php echo $app->make('url/manager')->resolve(['/dashboard/blocks/block_builder/config/refresh/' . $blockType['handle']]); ?>"
+                class="block-type-refresh"
+            >
+                <i class="fas fa-hammer me-2"></i> <?php echo t('Rebuild and refresh'); ?><br/>
+                <?php echo t('(experimental)'); ?>
+            </a>
+        </div>
 
     <?php endforeach; ?>
 
@@ -43,22 +52,25 @@
 
 <?php foreach ($predefinedConfigs as $predefinedConfig): ?>
 
-    <a href="<?php echo $app->make('url/manager')->resolve(['/dashboard/blocks/block_builder/config/predefined/' . $predefinedConfig['handle']]); ?>"
-       class="block-type"
-    >
-        <?php echo h($predefinedConfig['name']); ?> / <?php echo h($predefinedConfig['handle']); ?>
+    <div class="block-type">
+        <a href="<?php echo $app->make('url/manager')->resolve(['/dashboard/blocks/block_builder/config/predefined/' . $predefinedConfig['handle']]); ?>"
+           class="block-type-build block-type-build-single"
+        >
+            <strong class="me-2"><?php echo h($predefinedConfig['name']); ?></strong>
+            <span class="small badge rounded-pill bg-secondary"><?php echo h($predefinedConfig['handle']); ?></span>
 
-        <br/>
+            <br/>
 
-        <?php if ($predefinedConfig['description']): ?>
-            <small class="text-muted"><?php echo h($predefinedConfig['description']); ?></small>
-        <?php endif; ?>
+            <?php if ($predefinedConfig['description']): ?>
+                <small class="text-muted"><?php echo h($predefinedConfig['description']); ?></small>
+            <?php endif; ?>
 
-        <br/>
+            <br/>
 
-        <?php if ($predefinedConfig['version']): ?>
-            <small class="text-muted"><?php echo t('Version'); ?>: <?php echo h($predefinedConfig['version']); ?></small>
-        <?php endif; ?>
-    </a>
+            <?php if ($predefinedConfig['version']): ?>
+                <small class="text-muted"><?php echo t('Version'); ?>: <?php echo h($predefinedConfig['version']); ?></small>
+            <?php endif; ?>
+        </a>
+    </div>
 
 <?php endforeach; ?>

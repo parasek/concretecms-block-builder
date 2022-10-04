@@ -99,40 +99,51 @@ class Validation
                 $tabsWithError[] = 'block-settings';
             }
 
-            if ($this->blockTypeFolderExists($postData['blockHandle'], true)) {
+            if (!empty($postData['refresh_block'])) {
 
-                $errors[] = t('Concrete5 already uses same name as your handle for one of its blocks. Use different handle. (%s).', t('Block settings'));
-                $fieldsWithError[] = 'blockHandle';
-                $tabsWithError[] = 'block-settings';
+                if (!$this->blockTypeFolderExists($postData['blockHandle'], false)) {
+                    $errors[] = t('Block with that handle does not exist. You should build your block instead.');
+                    $fieldsWithError[] = 'blockHandle';
+                    $tabsWithError[] = 'block-settings';
+                }
 
             } else {
 
-                if ($this->isBlockInstalled($postData['blockHandle'])) {
+                if ($this->blockTypeFolderExists($postData['blockHandle'], true)) {
 
-                    $blockType = BlockType::getByHandle($postData['blockHandle']);
-
-                    $urlEnding = '';
-                    if (is_object($blockType)) {
-                        $urlEnding = '/inspect/' . $blockType->getBlockTypeID();
-                    }
-
-                    $errors[] = t('Block with that handle is already installed. %sUninstall it%s first and then build block again. Alternatively you can use different handle (%s).', '<a href="' . $this->resolverManager->resolve(['dashboard/blocks/types' . $urlEnding]) . '" target="_blank" rel="noopener" class="btn btn-primary btn-sm"><i class="fas fa-external-link-alt"></i> ', '</a>', t('Block settings'));
+                    $errors[] = t('Concrete5 already uses same name as your handle for one of its blocks. Use different handle. (%s).', t('Block settings'));
                     $fieldsWithError[] = 'blockHandle';
                     $tabsWithError[] = 'block-settings';
 
                 } else {
 
-                    if ($this->blockTypeFolderExists($postData['blockHandle'])) {
+                    if ($this->isBlockInstalled($postData['blockHandle'])) {
 
-                        $errors[] = t('Block folder named %s already exists. %sPermanently delete that folder%s or use different handle (%s).', '"' . $postData['blockHandle'] . '"', '<a href="#" class="btn btn-danger btn-sm js-delete-block-type-folder"><i class="far fa-trash-alt"></i> ', '</a>', t('Block settings'));
+                        $blockType = BlockType::getByHandle($postData['blockHandle']);
+
+                        $urlEnding = '';
+                        if (is_object($blockType)) {
+                            $urlEnding = '/inspect/' . $blockType->getBlockTypeID();
+                        }
+
+                        $errors[] = t('Block with that handle is already installed. %sUninstall it%s first and then build block again. Alternatively you can use different handle (%s).', '<a href="' . $this->resolverManager->resolve(['dashboard/blocks/types' . $urlEnding]) . '" target="_blank" rel="noopener" class="btn btn-primary btn-sm"><i class="fas fa-external-link-alt"></i> ', '</a>', t('Block settings'));
                         $fieldsWithError[] = 'blockHandle';
                         $tabsWithError[] = 'block-settings';
 
+                    } else {
+
+                        if ($this->blockTypeFolderExists($postData['blockHandle'])) {
+
+                            $errors[] = t('Block folder named %s already exists. %sPermanently delete that folder%s or use different handle (%s).', '"' . $postData['blockHandle'] . '"', '<a href="#" class="btn btn-danger btn-sm js-delete-block-type-folder"><i class="far fa-trash-alt"></i> ', '</a>', t('Block settings'));
+                            $fieldsWithError[] = 'blockHandle';
+                            $tabsWithError[] = 'block-settings';
+
+                        }
+
                     }
-
                 }
-            }
 
+            }
 
             if (!$this->validateForbiddenBlockHandles($postData['blockHandle'])) {
                 $errors[] = t('Your "%s" is forbidden word, use different phrase (%s).', t('Block handle'), t('Block settings'));
