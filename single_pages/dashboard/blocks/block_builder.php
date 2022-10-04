@@ -457,7 +457,7 @@
         <div class="ccm-dashboard-form-actions-wrapper">
             <div class="ccm-dashboard-form-actions">
                 <input type="submit" class="btn btn-primary float-end" value="<?php echo t('Build your block now!'); ?>" id="ccm-submit-url-form" name="ccm-submit-url-form">
-                <?php if (!empty($type) and $type === 'refresh'): ?>
+                <?php if (!empty($type) and in_array($type, ['refresh', 'predefined'])): ?>
                     <input type="submit" class="btn btn-secondary float-end me-4" value="<?php echo t('Rebuild and refresh block'); ?> <?php echo t('(experimental)'); ?>" id="ccm-submit-url-form-refresh" name="refresh_block">
                 <?php endif; ?>
             </div>
