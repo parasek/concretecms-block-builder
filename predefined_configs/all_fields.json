@@ -1,0 +1,292 @@
+{
+    "version": "2.2.0",
+    "blockName": "All Fields",
+    "blockHandle": "all_fields",
+    "blockDescription": "All types of Fields (Basic + Repeatable)",
+    "installBlock": "1",
+    "blockWidth": "1000",
+    "blockHeight": "650",
+    "blockTypeSet": "basic",
+    "entriesAsFirstTab": "0",
+    "maxNumberOfEntries": "0",
+    "fieldsDivider": "smart",
+    "entryFieldsDivider": "smart",
+    "basicLabel": "Basic information",
+    "entriesLabel": "Entries",
+    "settingsLabel": "Settings",
+    "addAtTheTopLabel": "Add at the top",
+    "addAtTheBottomLabel": "Add at the bottom",
+    "copyLastEntryLabel": "Copy last entry",
+    "collapseAllLabel": "Collapse all",
+    "expandAllLabel": "Expand all",
+    "removeAllLabel": "Remove all",
+    "disableSmoothScrollLabel": "Disable smooth scroll",
+    "keepAddedEntryCollapsedLabel": "Keep added\/copied entry collapsed",
+    "noEntriesFoundLabel": "No entries found.",
+    "maxNumberOfEntriesLabel": "Max. number of entries",
+    "removeEntryLabel": "Remove entry",
+    "duplicateEntryLabel": "Duplicate entry",
+    "duplicateEntryAndAddAtTheEndLabel": "Duplicate entry and add at the end",
+    "areYouSureLabel": "Are you sure?",
+    "requiredFieldsLabel": "Required fields",
+    "urlEndingLabel": "Custom string at the end of URL",
+    "urlEndingHelpText": "(e.g. #contact-form or ?ccm_paging_p=2)",
+    "textLabel": "Text",
+    "titleLabel": "Title",
+    "altTextLabel": "Alt text",
+    "linkFromSitemapLabel": "Link from Sitemap",
+    "linkFromFileManagerLabel": "Link from File Manager",
+    "externalLinkLabel": "External Link",
+    "showAdditionalFieldsLabel": "Show additional fields",
+    "hideAdditionalFieldsLabel": "Hide additional fields",
+    "newWindowLabel": "Open in new window",
+    "yesLabel": "Yes",
+    "noLabel": "No",
+    "overrideThumbnailDimensionsLabel": "Override Thumbnail dimensions",
+    "overrideFullscreenImageDimensionsLabel": "Override Fullscreen Image dimensions",
+    "widthLabel": "Width",
+    "heightLabel": "Height",
+    "cropLabel": "Crop",
+    "pxLabel": "px",
+    "nothingSelectedLabel": "Nothing selected",
+    "noResultsMatchedLabel": "No results matched {0}",
+    "selectAllLabel": "Select All",
+    "deselectAllLabel": "Deselect All",
+    "scroll": "1",
+    "basic": {
+        "1": {
+            "fieldType": "text_field",
+            "label": "Basic Text 1",
+            "handle": "basic_text_first",
+            "helpText": ""
+        },
+        "3": {
+            "fieldType": "textarea",
+            "label": "Basic Textarea 1",
+            "handle": "basic_textarea_first",
+            "helpText": "",
+            "textareaHeight": ""
+        },
+        "5": {
+            "fieldType": "wysiwyg_editor",
+            "label": "Basic WYSIWYG Editor 1",
+            "handle": "basic_wysiwyg_editor_first",
+            "helpText": "",
+            "wysiwygEditorHeight": ""
+        },
+        "7": {
+            "fieldType": "select_field",
+            "label": "Basic Single Choice Field Default 1",
+            "handle": "basic_single_choice_field_default_first",
+            "helpText": "",
+            "selectType": "default_select",
+            "selectOptions": "dont_show :: Don't show\r\nshow :: Show"
+        },
+        "9": {
+            "fieldType": "select_field",
+            "label": "Basic Single Choice Field Enhanced 1",
+            "handle": "basic_single_choice_field_enhanced_first",
+            "helpText": "",
+            "selectType": "enhanced_select",
+            "selectOptions": "Don't show\r\nShow"
+        },
+        "11": {
+            "fieldType": "select_field",
+            "label": "Basic Single Choice Field Radio List 1",
+            "handle": "basic_single_choice_field_radio_list_first",
+            "helpText": "",
+            "selectType": "radio_list",
+            "selectOptions": "example::Example\r\nsome_data::Some data"
+        },
+        "13": {
+            "fieldType": "select_multiple_field",
+            "label": "Basic Multiple Choice Field Default 1",
+            "handle": "basic_multiple_choice_field_default_first",
+            "helpText": "",
+            "selectMultipleType": "default_multiselect",
+            "selectMultipleOptions": "Don't show\r\nShow"
+        },
+        "15": {
+            "fieldType": "select_multiple_field",
+            "label": "Basic Multiple Choice Field Enhanced 1",
+            "handle": "basic_multiple_choice_field_enhanced_first",
+            "helpText": "",
+            "selectMultipleType": "checkbox_list",
+            "selectMultipleOptions": "1:: Don't show\r\n2 :: Show"
+        },
+        "17": {
+            "fieldType": "select_multiple_field",
+            "label": "Basic Multiple Choice Field Checkbox List 1",
+            "handle": "basic_multiple_choice_field_checkbox_list_first",
+            "helpText": "",
+            "selectMultipleType": "checkbox_list",
+            "selectMultipleOptions": "example::Example\r\nsome_data::Some data"
+        },
+        "19": {
+            "fieldType": "link",
+            "label": "Basic Link with Type Selection 1",
+            "handle": "basic_link_with_type_selection_first",
+            "helpText": ""
+        },
+        "21": {
+            "fieldType": "link_from_sitemap",
+            "label": "Basic Link from Sitemap 1",
+            "handle": "basic_link_from_sitemap_first",
+            "helpText": ""
+        },
+        "23": {
+            "fieldType": "link_from_file_manager",
+            "label": "Basic Link from File Manager 1",
+            "handle": "basic_link_from_file_manager_first",
+            "helpText": ""
+        },
+        "25": {
+            "fieldType": "external_link",
+            "label": "Basic External Link 1",
+            "handle": "basic_external_link_first",
+            "helpText": ""
+        },
+        "27": {
+            "fieldType": "image",
+            "label": "Basic Image 1",
+            "handle": "basic_image_first",
+            "helpText": "",
+            "imageThumbnailWidth": "480",
+            "imageThumbnailHeight": "270",
+            "imageFullscreenWidth": "1920",
+            "imageFullscreenHeight": "1080"
+        },
+        "29": {
+            "fieldType": "html_editor",
+            "label": "Basic HTML Editor 1",
+            "handle": "basic_html_editor_first",
+            "helpText": "",
+            "htmlEditorHeight": ""
+        },
+        "31": {
+            "fieldType": "date_picker",
+            "label": "Basic Date Picker 1",
+            "handle": "basic_date_picker_first",
+            "helpText": "",
+            "datePickerPattern": "d.m.Y"
+        }
+    },
+    "entries": {
+        "1": {
+            "fieldType": "text_field",
+            "label": "Repeatable Text 1",
+            "handle": "repeatable_text_first",
+            "helpText": ""
+        },
+        "3": {
+            "fieldType": "textarea",
+            "label": "Repeatable Textarea 1",
+            "handle": "repeatable_textarea_first",
+            "helpText": "",
+            "textareaHeight": ""
+        },
+        "5": {
+            "fieldType": "wysiwyg_editor",
+            "label": "Repeatable WYSIWYG Editor 1",
+            "handle": "repeatable_wysiwyg_editor_first",
+            "helpText": "",
+            "wysiwygEditorHeight": ""
+        },
+        "7": {
+            "fieldType": "select_field",
+            "label": "Repeatable Single Choice Field Default 1",
+            "handle": "repeatable_single_choice_field_default_first",
+            "helpText": "",
+            "selectType": "default_select",
+            "selectOptions": "aaa :: Don't show\r\nbbb :: Show"
+        },
+        "9": {
+            "fieldType": "select_field",
+            "label": "Repeatable Single Choice Field Enhanced 1",
+            "handle": "repeatable_single_choice_field_enhanced_first",
+            "helpText": "",
+            "selectType": "enhanced_select",
+            "selectOptions": "example2::Example\r\nsome_data2::Some data"
+        },
+        "11": {
+            "fieldType": "select_field",
+            "label": "Repeatable Single Choice Field Radio List 1",
+            "handle": "repeatable_single_choice_field_radio_list_first",
+            "helpText": "",
+            "selectType": "radio_list",
+            "selectOptions": "Don't show\r\nShow"
+        },
+        "13": {
+            "fieldType": "select_multiple_field",
+            "label": "Repeatable Multiple Choice Field Default 1",
+            "handle": "repeatable_multiple_choice_field_default_first",
+            "helpText": "",
+            "selectMultipleType": "default_multiselect",
+            "selectMultipleOptions": "1::Yes\r\n2:: No"
+        },
+        "15": {
+            "fieldType": "select_multiple_field",
+            "label": "Repeatable Multiple Choice Field Enhanced 1",
+            "handle": "repeatable_multiple_choice_field_enhanced_first",
+            "helpText": "",
+            "selectMultipleType": "enhanced_multiselect",
+            "selectMultipleOptions": "Don't show\r\nShow"
+        },
+        "17": {
+            "fieldType": "select_multiple_field",
+            "label": "Repeatable Multiple Choice Field Checkbox List 1",
+            "handle": "repeatable_multiple_choice_field_checkbox_first",
+            "helpText": "",
+            "selectMultipleType": "checkbox_list",
+            "selectMultipleOptions": "no :: Don't show\r\nyes :: Show"
+        },
+        "19": {
+            "fieldType": "link",
+            "label": "Repeatable Link with Type Selection 1",
+            "handle": "repeatable_link_with_type_selection_first",
+            "helpText": ""
+        },
+        "21": {
+            "fieldType": "link_from_sitemap",
+            "label": "Repeatable Link from Sitemap 1",
+            "handle": "repeatable_link_from_sitemap_first",
+            "helpText": ""
+        },
+        "23": {
+            "fieldType": "link_from_file_manager",
+            "label": "Repeatable Link from File Manager 1",
+            "handle": "repeatable_link_from_file_manager_first",
+            "helpText": ""
+        },
+        "25": {
+            "fieldType": "external_link",
+            "label": "Repeatable External Link 1",
+            "handle": "repeatable_external_link_first",
+            "helpText": ""
+        },
+        "27": {
+            "fieldType": "image",
+            "label": "Repeatable Image 1",
+            "handle": "repeatable_image_first",
+            "helpText": "",
+            "imageThumbnailWidth": "480",
+            "imageThumbnailHeight": "270",
+            "imageFullscreenWidth": "1920",
+            "imageFullscreenHeight": "1080"
+        },
+        "29": {
+            "fieldType": "html_editor",
+            "label": "Repeatable HTML Editor 1",
+            "handle": "repeatable_html_editor_first",
+            "helpText": "",
+            "htmlEditorHeight": ""
+        },
+        "31": {
+            "fieldType": "date_picker",
+            "label": "Repeatable Date Picker 1",
+            "handle": "repeatable_date_picker_first",
+            "helpText": "",
+            "datePickerPattern": "d.m.Y"
+        }
+    }
+}
