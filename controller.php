@@ -22,7 +22,7 @@ class Controller extends Package
 
     public function getPackageDescription()
     {
-        return t('Build your custom c5 blocks (with optional set of repeatable entries).');
+        return t('Build your custom Concrete CMS blocks (with optional set of repeatable entries).');
     }
 
     public function on_start()

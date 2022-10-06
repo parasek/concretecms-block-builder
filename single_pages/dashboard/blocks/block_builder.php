@@ -14,7 +14,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             <div>
                 <strong><?php echo t('Warning'); ?>:</strong>
-                <?php echo t('Rebuilding and refreshing block (without uninstalling it first) can break your site. Backup your database and files before proceeding.'); ?>
+                <?php echo t('Rebuilding and refreshing block (without uninstalling it first) can potentially break your site. Backup your database and files before proceeding.'); ?>
                 <a href="<?php echo $app->make('url/manager')->resolve(['dashboard/blocks/block_builder/refresh_warning']); ?>" target="_blank" rel="noopener" class="btn btn-primary btn-sm">
                     <i class="fas fa-external-link-alt"></i> <?php echo t('Read more'); ?>
                 </a>

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-10-04 16:07+0200\n"
-"PO-Revision-Date: 2022-10-04 16:08+0200\n"
+"POT-Creation-Date: 2022-10-06 16:41+0200\n"
+"PO-Revision-Date: 2022-10-06 16:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pl_PL\n"
@@ -21,9 +21,12 @@ msgid "Block Builder"
 msgstr "Block Builder"
 
 #: controller.php:25
-msgid "Build your custom c5 blocks (with optional set of repeatable entries)."
+msgid ""
+"Build your custom Concrete CMS blocks (with optional set of repeatable "
+"entries)."
 msgstr ""
-"Buduj niestandardowe bloki c5 (z opcjonalnym zestawem powtarzalnych wpisów)."
+"Twórz własne bloki Concrete CMS (z opcjonalnym zestawem powtarzalnych "
+"wpisów)."
 
 #: controllers/ajax.php:29 controllers/ajax.php:41 controllers/ajax.php:55
 #: src/BlockBuilder/Generator.php:292
@@ -45,14 +48,14 @@ msgstr "Folder typu bloku został usunięty."
 #: controllers/single_page/dashboard/blocks/block_builder.php:164
 #: single_pages/dashboard/blocks/block_builder.php:129
 #: single_pages/dashboard/blocks/block_builder.php:130
-#: src/BlockBuilder/Validation.php:197
+#: src/BlockBuilder/Validation.php:203
 msgid "Basic information"
 msgstr "Podstawowe informacje"
 
 #: controllers/single_page/dashboard/blocks/block_builder.php:165
 #: single_pages/dashboard/blocks/block_builder.php:135
 #: single_pages/dashboard/blocks/block_builder.php:136
-#: src/BlockBuilder/Validation.php:203
+#: src/BlockBuilder/Validation.php:209
 msgid "Entries"
 msgstr "Wpisy"
 
@@ -372,12 +375,13 @@ msgstr "Ostrzeżenie"
 
 #: single_pages/dashboard/blocks/block_builder.php:17
 msgid ""
-"Rebuilding and refreshing block (without uninstalling it first) can break "
-"your site. Backup your database and files before proceeding."
+"Rebuilding and refreshing block (without uninstalling it first) can "
+"potentially break your site. Backup your database and files before "
+"proceeding."
 msgstr ""
-"Przebudowa i odświeżenie bloku (bez jego odinstalowania) może zepsuć twoją "
-"stronę. Wykonaj kopię zapasową bazy danych i plików zanim przystąpisz do "
-"dalszych działań."
+"Przebudowa i odświeżenie bloku (bez jego odinstalowania) może potencjalnie "
+"zepsuć twoją stronę. Wykonaj kopię zapasową bazy danych i plików zanim "
+"przystąpisz do dalszych działań."
 
 #: single_pages/dashboard/blocks/block_builder.php:19
 msgid "Read more"
@@ -400,27 +404,27 @@ msgstr "Wciśnij przycisk Zbuduj blok! raz jeszcze."
 #: src/BlockBuilder/Validation.php:55 src/BlockBuilder/Validation.php:62
 #: src/BlockBuilder/Validation.php:72 src/BlockBuilder/Validation.php:79
 #: src/BlockBuilder/Validation.php:85 src/BlockBuilder/Validation.php:91
-#: src/BlockBuilder/Validation.php:97 src/BlockBuilder/Validation.php:114
-#: src/BlockBuilder/Validation.php:129 src/BlockBuilder/Validation.php:137
-#: src/BlockBuilder/Validation.php:149 src/BlockBuilder/Validation.php:159
-#: src/BlockBuilder/Validation.php:166 src/BlockBuilder/Validation.php:175
-#: src/BlockBuilder/Validation.php:182
+#: src/BlockBuilder/Validation.php:97 src/BlockBuilder/Validation.php:120
+#: src/BlockBuilder/Validation.php:135 src/BlockBuilder/Validation.php:143
+#: src/BlockBuilder/Validation.php:155 src/BlockBuilder/Validation.php:165
+#: src/BlockBuilder/Validation.php:172 src/BlockBuilder/Validation.php:181
+#: src/BlockBuilder/Validation.php:188
 msgid "Block settings"
 msgstr "Ustawienia bloku"
 
 #: single_pages/dashboard/blocks/block_builder.php:43
-#: src/BlockBuilder/Validation.php:191 src/BlockBuilder/Validation.php:197
-#: src/BlockBuilder/Validation.php:203
+#: src/BlockBuilder/Validation.php:197 src/BlockBuilder/Validation.php:203
+#: src/BlockBuilder/Validation.php:209
 msgid "Texts for translation"
 msgstr "Teksty do tłumaczenia"
 
 #: single_pages/dashboard/blocks/block_builder.php:44
-#: src/BlockBuilder/Validation.php:210
+#: src/BlockBuilder/Validation.php:216
 msgid "Tab: Basic information"
 msgstr "Zakładka: Podstawowe informacje"
 
 #: single_pages/dashboard/blocks/block_builder.php:45
-#: src/BlockBuilder/Validation.php:211
+#: src/BlockBuilder/Validation.php:217
 msgid "Tab: Repeatable entries"
 msgstr "Zakładka: Powtarzalne wpisy"
 
@@ -436,7 +440,7 @@ msgstr "Nazwa zrozumiała dla człowieka, np. \"Przykładowy blok\""
 #: single_pages/dashboard/blocks/block_builder.php:57
 #: src/BlockBuilder/Validation.php:72 src/BlockBuilder/Validation.php:79
 #: src/BlockBuilder/Validation.php:85 src/BlockBuilder/Validation.php:91
-#: src/BlockBuilder/Validation.php:97 src/BlockBuilder/Validation.php:149
+#: src/BlockBuilder/Validation.php:97 src/BlockBuilder/Validation.php:155
 msgid "Block handle"
 msgstr "Identyfikator bloku"
 
@@ -454,13 +458,13 @@ msgid "Install block after creation"
 msgstr "Zainstaluj blok po jego wygenerowaniu"
 
 #: single_pages/dashboard/blocks/block_builder.php:76
-#: src/BlockBuilder/Validation.php:159 src/BlockBuilder/Validation.php:166
-#: src/BlockBuilder/Validation.php:182
+#: src/BlockBuilder/Validation.php:165 src/BlockBuilder/Validation.php:172
+#: src/BlockBuilder/Validation.php:188
 msgid "Block width"
 msgstr "Szerokość bloku"
 
 #: single_pages/dashboard/blocks/block_builder.php:83
-#: src/BlockBuilder/Validation.php:175
+#: src/BlockBuilder/Validation.php:181
 msgid "Block height"
 msgstr "Wysokość bloku"
 
@@ -730,8 +734,8 @@ msgstr "Przebudowa i odświeżenie bloków"
 
 #: single_pages/dashboard/blocks/block_builder/refresh_warning.php:10
 msgid ""
-"This is an experimental feature, but should work flawlessly in most common "
-"situations."
+"This is an experimental feature, but it should work without much problems in "
+"most common situations."
 msgstr ""
 "To jest eksperymentalna funkcja, ale powinna działać bezproblemowo w "
 "większości typowych sytuacji."
@@ -739,56 +743,61 @@ msgstr ""
 #: single_pages/dashboard/blocks/block_builder/refresh_warning.php:12
 msgid ""
 "By default, when block is already installed, Block Builder will require you "
-"to uninstall it and confirm removing folder."
+"to uninstall it and confirm to remove folder."
 msgstr ""
-"Standardowo, kiedy blok jest zainstalowany, Block Builder będzie wymagał od "
-"Ciebie odinstalowania go i potwierdzenia usunięcia folderu."
+"Standardowo, kiedy blok jest już zainstalowany, Block Builder będzie wymagał "
+"od Ciebie odinstalowania go i potwierdzenia usunięcia folderu."
 
 #: single_pages/dashboard/blocks/block_builder/refresh_warning.php:14
 msgid ""
-"Rebuilding/refreshing will skip those steps (and will not delete existing "
-"data from database) - but this comes with some caveats."
+"Albeit all data will be lost, this workflow guarantees that your custom "
+"block will be installed as new/fresh block."
 msgstr ""
-"Przebudowa/odświeżenie pominie te kroki (i dodatkowo nie usunie istniejących "
-"informacji z bazy danych) - lecz wiąże się to z pewnymi zastrzeżeniami."
+"Chociaż wszystkie informacje zostaną stracone, ten schemat działań "
+"gwarantuje, że twój niestandardowy blok zostanie poprawnie zainstalowany "
+"jako nowy/świeży blok."
 
-#: single_pages/dashboard/blocks/block_builder/refresh_warning.php:17
+#: single_pages/dashboard/blocks/block_builder/refresh_warning.php:16
+msgid ""
+"Rebuilding/refreshing will skip all those steps (and importantly it will not "
+"delete existing data) - but this comes with some caveats."
+msgstr ""
+"Przebudowa/odświeżenie pominie wszystkie te kroki (i co najważniejsze nie "
+"usunie istniejących informacji) - lecz wiąże się to z pewnymi zastrzeżeniami."
+
+#: single_pages/dashboard/blocks/block_builder/refresh_warning.php:19
 msgid "Before you rebuild and refresh block:"
 msgstr "Zanim przebudujesz i odświeżysz blok:"
 
-#: single_pages/dashboard/blocks/block_builder/refresh_warning.php:19
+#: single_pages/dashboard/blocks/block_builder/refresh_warning.php:21
 msgid "Backup your database in case something went wrong."
 msgstr "Zrób kopię zapasową bazy danych, na wypadek gdyby coś poszło nie tak."
 
-#: single_pages/dashboard/blocks/block_builder/refresh_warning.php:20
+#: single_pages/dashboard/blocks/block_builder/refresh_warning.php:22
 msgid "Backup your files in case something went wrong."
 msgstr "Zrób kopię zapasową plików, na wypadek gdyby coś poszło nie tak."
 
-#: single_pages/dashboard/blocks/block_builder/refresh_warning.php:22
+#: single_pages/dashboard/blocks/block_builder/refresh_warning.php:24
 msgid "What can you do:"
 msgstr "Co możesz robić:"
 
-#: single_pages/dashboard/blocks/block_builder/refresh_warning.php:24
+#: single_pages/dashboard/blocks/block_builder/refresh_warning.php:26
 msgid "You can add new Field Types."
 msgstr "Możesz dodawać nowe Typy pól."
 
-#: single_pages/dashboard/blocks/block_builder/refresh_warning.php:25
+#: single_pages/dashboard/blocks/block_builder/refresh_warning.php:27
 msgid "You can remove existing Field Types."
 msgstr "Możesz usuwać istniejące Typy pól."
 
-#: single_pages/dashboard/blocks/block_builder/refresh_warning.php:26
-msgid "You can change Labels/Help texts."
-msgstr "Możesz zmieniać Etykiety/Teksty pomocy."
+#: single_pages/dashboard/blocks/block_builder/refresh_warning.php:28
+msgid "You can modify all options including Labels/Help texts etc."
+msgstr "Możesz zmieniać wszyskie opcje, wliczając Etykiety/Teksty pomocy itd."
 
-#: single_pages/dashboard/blocks/block_builder/refresh_warning.php:27
-msgid "You can modify different options of Field Types."
-msgstr "Możesz modyfikować różne opcje Typów pól."
-
-#: single_pages/dashboard/blocks/block_builder/refresh_warning.php:30
+#: single_pages/dashboard/blocks/block_builder/refresh_warning.php:31
 msgid "What you shouldn't do:"
 msgstr "Czego nie powinieneś robić:"
 
-#: single_pages/dashboard/blocks/block_builder/refresh_warning.php:33
+#: single_pages/dashboard/blocks/block_builder/refresh_warning.php:34
 msgid ""
 "You should not remove Field type and then add different Field type with the "
 "same handle."
@@ -796,21 +805,44 @@ msgstr ""
 "Nie powinieneś usuwać Typu pola i dodawać inny Typ pola z tym samym "
 "identyfikatorem."
 
-#: single_pages/dashboard/blocks/block_builder/refresh_warning.php:34
+#: single_pages/dashboard/blocks/block_builder/refresh_warning.php:35
 msgid "Block Builder is not designed to handle those situations."
 msgstr "Block Builder nie został zaprojektowany dla tego typu sytuacji."
 
-#: single_pages/dashboard/blocks/block_builder/refresh_warning.php:38
+#: single_pages/dashboard/blocks/block_builder/refresh_warning.php:36
+msgid ""
+"Data already saved in database won't be magically converted by this package "
+"or Concrete CMS."
+msgstr ""
+"Informacje już zapisane w bazie danych nie zostaną magicznie "
+"przekonwertowane przez tę paczkę albo Concrete CMS."
+
+#: single_pages/dashboard/blocks/block_builder/refresh_warning.php:37
+msgid "So most of the time it is not a good idea."
+msgstr "Więc w większości przypadków, to nie jest dobry pomysł."
+
+#: single_pages/dashboard/blocks/block_builder/refresh_warning.php:41
 msgid "Other things to keep in mind:"
 msgstr "Inne rzeczy, o których należy pamiętać:"
 
-#: single_pages/dashboard/blocks/block_builder/refresh_warning.php:41
+#: single_pages/dashboard/blocks/block_builder/refresh_warning.php:44
 msgid ""
 "Changing handle of Field type will create new column in database, so data "
 "from old column/field will be deleted/lost."
 msgstr ""
 "Zmiana identyfikatora Typu pola utworzy nową kolumnę w bazie danych, więc "
 "informacje ze starej kolumny/pola zostaną usunięte/bezpowrotnie stracone."
+
+#: single_pages/dashboard/blocks/block_builder/refresh_warning.php:46
+msgid ""
+"It is a good idea to check all occurrences of rebuild/refreshed block on "
+"your site. I have tried to thoroughly test it, but some edge cases could "
+"slip through testing process."
+msgstr ""
+"Jest dobrym pomysłem, by sprawdzić wszystkie wystąpienia przebudowanego/"
+"odswieżonego bloku w twojej witrynie. Strarałem się to wszystko dokładnie "
+"przetestować, ale niektóre brzegowe przypadki mogły prześlizgnąć się przez "
+"proces testowania."
 
 #: src/BlockBuilder/Generator.php:282
 msgid "Folder couldn't be created. Check your write permissions."
@@ -923,7 +955,7 @@ msgid "Checkbox List"
 msgstr "Lista wyboru checkbox"
 
 #: src/BlockBuilder/Validation.php:55 src/BlockBuilder/Validation.php:72
-#: src/BlockBuilder/Validation.php:159 src/BlockBuilder/Validation.php:175
+#: src/BlockBuilder/Validation.php:165 src/BlockBuilder/Validation.php:181
 #, php-format
 msgid "Field \"%s\" is required (%s)."
 msgstr "Pole \"%s\" jest wymagane (%s)."
@@ -958,21 +990,31 @@ msgstr ""
 
 #: src/BlockBuilder/Validation.php:105
 msgid ""
-"Block with that handle does not exist. You should build your block instead."
+"Block folder named after chosen handle does not exist. You should build your "
+"block instead."
 msgstr ""
-"Blok z podanymym identyfikatorem nie istnieje. Powinieneś najpierw go "
-"zbudować."
+"Folder bloku nazwany po wybranym przez ciebie identyfikatorze nie istnieje. "
+"Powinieneś najpierw go zbudować."
 
-#: src/BlockBuilder/Validation.php:114
+#: src/BlockBuilder/Validation.php:110
 #, php-format
 msgid ""
-"Concrete5 already uses same name as your handle for one of its blocks. Use "
-"different handle. (%s)."
+"You can not rebuild and refresh block that is awaiting installation. Visit "
+"%sBlock Types%s and install it first."
 msgstr ""
-"Concrete5 używa już podanej przez ciebie nazwy jako identyfikatora dla "
-"jednego ze swoich bloków. Użyj innego wyrazu. (%s)."
+"Nie możesz przebudować i odświeżyć bloku, który oczekuje na instalację. "
+"Odwiedź %sTypy bloków%s i najpierw go zainstaluj."
 
-#: src/BlockBuilder/Validation.php:129
+#: src/BlockBuilder/Validation.php:120
+#, php-format
+msgid ""
+"Concrete CMS already uses the same name as your handle for one of its "
+"blocks. Use different handle. (%s)."
+msgstr ""
+"Concrete CMS używa już podanej przez ciebie nazwy jako identyfikatora dla "
+"jednego ze swoich bloków. Użyj innego identyfikatora. (%s)."
+
+#: src/BlockBuilder/Validation.php:135
 #, php-format
 msgid ""
 "Block with that handle is already installed. %sUninstall it%s first and then "
@@ -982,7 +1024,7 @@ msgstr ""
 "najpierw a potem ponownie zbuduj blok. Alternatywnie możesz użyć innego "
 "identyfikatora (%s)."
 
-#: src/BlockBuilder/Validation.php:137
+#: src/BlockBuilder/Validation.php:143
 #, php-format
 msgid ""
 "Block folder named %s already exists. %sPermanently delete that folder%s or "
@@ -991,17 +1033,17 @@ msgstr ""
 "Folder bloku o nazwie %s już istnieje. %sBezpowrotnie usuń ten folder%s albo "
 "użyj innego identyfikatora (%s)."
 
-#: src/BlockBuilder/Validation.php:149
+#: src/BlockBuilder/Validation.php:155
 #, php-format
 msgid "Your \"%s\" is forbidden word, use different phrase (%s)."
 msgstr "\"%s\" jest zabronioną nazwą, użyj innej frazy (%s)."
 
-#: src/BlockBuilder/Validation.php:166 src/BlockBuilder/Validation.php:182
+#: src/BlockBuilder/Validation.php:172 src/BlockBuilder/Validation.php:188
 #, php-format
 msgid "Field \"%s\" should be a number between %s and %s (%s)."
 msgstr "Pole \"%s\" powinno być liczbą pomiędzy %s a %s (%s)."
 
-#: src/BlockBuilder/Validation.php:191
+#: src/BlockBuilder/Validation.php:197
 #, php-format
 msgid ""
 "At least one label for buttons (\"Add at the top\" or \"Add at the bottom\") "
@@ -1010,17 +1052,17 @@ msgstr ""
 "Przynajmniej jedna etykieta dla przycisków (\"Dodaj na górze\" lub \"Dodaj "
 "na dole\") jest wymagana (%s)."
 
-#: src/BlockBuilder/Validation.php:197 src/BlockBuilder/Validation.php:203
+#: src/BlockBuilder/Validation.php:203 src/BlockBuilder/Validation.php:209
 #, php-format
 msgid "Label for \"%s\" is required (%s)."
 msgstr "Etykieta dla pola \"%s\" jest wymagana (%s)."
 
-#: src/BlockBuilder/Validation.php:527
+#: src/BlockBuilder/Validation.php:533
 #, php-format
 msgid "There are some empty \"Label\" fields (%s)."
 msgstr "Niektóre z pól \"Etykieta\" są puste (%s)."
 
-#: src/BlockBuilder/Validation.php:531
+#: src/BlockBuilder/Validation.php:537
 #, php-format
 msgid ""
 "There are some \"Label\" fields which consist of less than %s characters "
@@ -1029,12 +1071,12 @@ msgstr ""
 "Niektóre z pól \"Etykieta\" składają się z mniejszej liczby znaków niż %s "
 "(%s)."
 
-#: src/BlockBuilder/Validation.php:536
+#: src/BlockBuilder/Validation.php:542
 #, php-format
 msgid "There are some empty \"Handle\" fields (%s)."
 msgstr "Niektóre z pól \"Identyfikator\" są puste (%s)."
 
-#: src/BlockBuilder/Validation.php:540
+#: src/BlockBuilder/Validation.php:546
 #, php-format
 msgid ""
 "There are some \"Handle\" fields which consist of less than %s characters "
@@ -1043,7 +1085,7 @@ msgstr ""
 "Niektóre z pól \"Identyfikator\" składają się z mniejszej liczby znaków niż "
 "%s (%s)."
 
-#: src/BlockBuilder/Validation.php:544
+#: src/BlockBuilder/Validation.php:550
 #, php-format
 msgid ""
 "There are some \"Handle\" fields which consist of more than %s characters "
@@ -1052,7 +1094,7 @@ msgstr ""
 "Niektóre z pól \"Identyfikator\" składają się z mniejszej liczby znaków niż "
 "%s (%s)."
 
-#: src/BlockBuilder/Validation.php:548
+#: src/BlockBuilder/Validation.php:554
 #, php-format
 msgid ""
 "There are some \"Handle\" fields which consist of characters other than a-zA-"
@@ -1060,7 +1102,7 @@ msgid ""
 msgstr ""
 "Niektóre z pól \"Identyfikator\" składają ze znaków innych niż a-zA-Z_ (%s)."
 
-#: src/BlockBuilder/Validation.php:552
+#: src/BlockBuilder/Validation.php:558
 #, php-format
 msgid ""
 "There are some \"Handle\" fields which start or end with underscore (%s)."
@@ -1068,7 +1110,7 @@ msgstr ""
 "Niektóre z pól \"Identyfikator\" zaczynają lub kończą się znakiem "
 "podkreślenia (%s)."
 
-#: src/BlockBuilder/Validation.php:556
+#: src/BlockBuilder/Validation.php:562
 #, php-format
 msgid ""
 "There are some \"Handle\" fields which consist of two or more consecutive "
@@ -1077,23 +1119,23 @@ msgstr ""
 "Niektóre z pól \"Identyfikator\" składają się z dwóch lub więcej "
 "następujących po sobie znakach dolnego podkreślenia (%s)."
 
-#: src/BlockBuilder/Validation.php:560
+#: src/BlockBuilder/Validation.php:566
 #, php-format
 msgid ""
 "There are some \"Handle\" fields which start with uppercase character (%s)."
 msgstr "Niektóre z pól \"Identyfikator\" zaczynają się od dużej litery (%s)."
 
-#: src/BlockBuilder/Validation.php:564
+#: src/BlockBuilder/Validation.php:570
 #, php-format
 msgid "There are some \"Handle\" fields which are forbidden words (%s)."
 msgstr "Niektóre z pól \"Identyfikator\" używają zabronionych fraz (%s)."
 
-#: src/BlockBuilder/Validation.php:568
+#: src/BlockBuilder/Validation.php:574
 #, php-format
 msgid "All \"Handle\" fields should be unique (%s)."
 msgstr "Wszystkie pola \"Identyfikator\" powinny być unikatowe (%s)."
 
-#: src/BlockBuilder/Validation.php:573
+#: src/BlockBuilder/Validation.php:579
 #, php-format
 msgid ""
 "Invalid entry in one of \"Textarea/Height\" fields, should be a number "
@@ -1102,7 +1144,7 @@ msgstr ""
 "Nieprawidłowa wartość w jednym z pól \"Pole tekstowe/Wysokość\", powinny one "
 "być liczbą z zakresu %s-%s albo być puste (%s)."
 
-#: src/BlockBuilder/Validation.php:578
+#: src/BlockBuilder/Validation.php:584
 #, php-format
 msgid ""
 "Invalid entry in one of \"WYSIWYG Editor/Height\" fields, should be a number "
@@ -1111,14 +1153,14 @@ msgstr ""
 "Nieprawidłowa wartość w jednym z pól \"Edytor WYSIWYG/Wysokość\", powinny "
 "one być liczbą z zakresu %s-%s albo być puste (%s)."
 
-#: src/BlockBuilder/Validation.php:583
+#: src/BlockBuilder/Validation.php:589
 #, php-format
 msgid ""
 "There are some empty \"Single Choice Field/Select options\" fields (%s)."
 msgstr ""
 "Niektóre z pól \"Pole jednokrotnego wyboru/Opcje wyboru\" są puste (%s)."
 
-#: src/BlockBuilder/Validation.php:586
+#: src/BlockBuilder/Validation.php:592
 #, php-format
 msgid ""
 "Invalid entry in one of \"Single Choice Field/Select options\" fields (%s)."
@@ -1126,14 +1168,14 @@ msgstr ""
 "Nieprawidłowa wartość w jednym z pól \"Pole jednokrotnego wyboru/Opcje wyboru"
 "\" (%s)."
 
-#: src/BlockBuilder/Validation.php:591
+#: src/BlockBuilder/Validation.php:597
 #, php-format
 msgid ""
 "There are some empty \"Multiple Choice Field/Select options\" fields (%s)."
 msgstr ""
 "Niektóre z pól \"Pole wielokrotnego wyboru/Opcje wyboru\" są puste (%s)."
 
-#: src/BlockBuilder/Validation.php:594
+#: src/BlockBuilder/Validation.php:600
 #, php-format
 msgid ""
 "Invalid entry in one of \"Multiple Choice Field/Select options\" fields (%s)."
@@ -1141,7 +1183,7 @@ msgstr ""
 "Nieprawidłowa wartość w jednym z pól \"Pole wielokrotnego wyboru/Opcje wyboru"
 "\" (%s)."
 
-#: src/BlockBuilder/Validation.php:599
+#: src/BlockBuilder/Validation.php:605
 #, php-format
 msgid ""
 "Invalid entry in one of \"Image/Generate thumbnail\" fields, you should "
@@ -1150,7 +1192,7 @@ msgstr ""
 "Nieprawidłowa wartość w jednym z pól \"Obraz/Wygeneruj miniaturę\", "
 "powinieneś podać szerokość, wysokość albo obydwie te wartości (%s)."
 
-#: src/BlockBuilder/Validation.php:602
+#: src/BlockBuilder/Validation.php:608
 #, php-format
 msgid ""
 "Invalid entry in one of \"Image/Generate thumbnail\" fields, you should "
@@ -1159,7 +1201,7 @@ msgstr ""
 "Nieprawidłowa wartość w jednym z pól \"Obraz/Wygeneruj miniaturę\", "
 "powinieneś podać szerokość i wysokość jeśli chcesz przyciąć obraz (%s)."
 
-#: src/BlockBuilder/Validation.php:605
+#: src/BlockBuilder/Validation.php:611
 #, php-format
 msgid ""
 "Invalid entry in one of \"Image/Generate thumbnail/Width\" fields, should be "
@@ -1168,7 +1210,7 @@ msgstr ""
 "Nieprawidłowa wartość w jednym z pól \"Obraz/Wygeneruj miniaturę/Szerokość"
 "\", powinne one być liczbami większymi od 0 lub pozostać puste (%s)."
 
-#: src/BlockBuilder/Validation.php:608
+#: src/BlockBuilder/Validation.php:614
 #, php-format
 msgid ""
 "Invalid entry in one of \"Image/Generate thumbnail/Height\" fields, should "
@@ -1177,7 +1219,7 @@ msgstr ""
 "Nieprawidłowa wartość w jednym z pól \"Obraz/Wygeneruj miniaturę/Wysokość\", "
 "powinne one być liczbami większymi od 0 lub pozostać puste (%s)."
 
-#: src/BlockBuilder/Validation.php:612
+#: src/BlockBuilder/Validation.php:618
 #, php-format
 msgid ""
 "Invalid entry in one of \"Image/Generate fullscreen thumbnail\" fields, you "
@@ -1186,7 +1228,7 @@ msgstr ""
 "Nieprawidłowa wartość w jednym z pól \"Obraz/Wygeneruj obraz pełnoekranowy"
 "\", powinieneś podać szerokość, wysokość albo obydwie te wartości (%s)."
 
-#: src/BlockBuilder/Validation.php:615
+#: src/BlockBuilder/Validation.php:621
 #, php-format
 msgid ""
 "Invalid entry in one of \"Image/Generate fullscreen thumbnail\" fields, you "
@@ -1195,7 +1237,7 @@ msgstr ""
 "Nieprawidłowa wartość w jednym z pól \"Obraz/Wygeneruj obraz pełnoekranowy"
 "\", powinieneś podać szerokość i wysokość jeśli chcesz przyciąć obraz (%s)."
 
-#: src/BlockBuilder/Validation.php:618
+#: src/BlockBuilder/Validation.php:624
 #, php-format
 msgid ""
 "Invalid entry in one of \"Image/Generate fullscreen thumbnail/Width\" "
@@ -1204,7 +1246,7 @@ msgstr ""
 "Nieprawidłowa wartość w jednym z pól \"Obraz/Wygeneruj obraz pełnoekranowy/"
 "Szerokość\", powinne one być liczbami większymi od 0 lub pozostać puste (%s)."
 
-#: src/BlockBuilder/Validation.php:621
+#: src/BlockBuilder/Validation.php:627
 #, php-format
 msgid ""
 "Invalid entry in one of \"Image/Generate fullscreen thumbnail/Height\" "
@@ -1213,7 +1255,7 @@ msgstr ""
 "Nieprawidłowa wartość w jednym z pól \"Obraz/Wygeneruj obraz pełnoekranowy/"
 "Wysokość\", powinne one być liczbami większymi od 0 lub pozostać puste (%s)."
 
-#: src/BlockBuilder/Validation.php:626
+#: src/BlockBuilder/Validation.php:632
 #, php-format
 msgid ""
 "Invalid entry in one of \"HTML Editor/Height\" fields, should be a number "
@@ -1221,6 +1263,9 @@ msgid ""
 msgstr ""
 "Nieprawidłowa wartość w jednym z pól \"Edytor HTML/Wysokość\", powinny one "
 "być liczbą z zakresu %s-%s albo być puste (%s)."
+
+#~ msgid "You can modify different options of Field Types."
+#~ msgstr "Możesz modyfikować różne opcje Typów pól."
 
 #~ msgid "We have found configuration file in blocks listed below:"
 #~ msgstr "Znaleziono pliki konfiguracyjne następujących bloków:"

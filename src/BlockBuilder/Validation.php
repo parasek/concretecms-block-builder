@@ -117,7 +117,7 @@ class Validation
 
                 if ($this->blockTypeFolderExists($postData['blockHandle'], true)) {
 
-                    $errors[] = t('Concrete5 already uses same name as your handle for one of its blocks. Use different handle. (%s).', t('Block settings'));
+                    $errors[] = t('Concrete CMS already uses the same name as your handle for one of its blocks. Use different handle. (%s).', t('Block settings'));
                     $fieldsWithError[] = 'blockHandle';
                     $tabsWithError[] = 'block-settings';
 
