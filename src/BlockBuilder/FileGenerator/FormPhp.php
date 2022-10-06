@@ -1002,7 +1002,7 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(7) . '<input type="hidden" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" value="">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . '<select multiple id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '][]" class="form-select">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(8) . '<?php foreach ($entry_' . $v['handle'] . '_options as $k => $v): ?>' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(9) . '<option value="<?php echo $k; ?>" <% if (' . $v['handle'] . '.includes(\'<?php echo $k; ?>\')) { %>selected="selected"<% } %> ><?php echo h($v); ?></option>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(9) . '<option value="<?php echo $k; ?>" <% if (' . $v['handle'] . ' != null && ' . $v['handle'] . '.includes(\'<?php echo $k; ?>\')) { %>selected="selected"<% } %> ><?php echo h($v); ?></option>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(8) . '<?php endforeach; ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . '</select>' . PHP_EOL;
                     } elseif ($v['selectMultipleType'] === 'enhanced_multiselect') {
@@ -1017,7 +1017,7 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(8) . 'data-deselect-all-text="<?php echo t(\'' . addslashes($postData['deselectAllLabel']) . '\'); ?>"' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . '>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(8) . '<?php foreach ($entry_' . $v['handle'] . '_options as $k => $v): ?>' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(9) . '<option value="<?php echo $k; ?>" <% if (' . $v['handle'] . '.includes(\'<?php echo $k; ?>\')) { %>selected="selected"<% } %> ><?php echo h($v); ?></option>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(9) . '<option value="<?php echo $k; ?>" <% if (' . $v['handle'] . ' != null && ' . $v['handle'] . '.includes(\'<?php echo $k; ?>\')) { %>selected="selected"<% } %> ><?php echo h($v); ?></option>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(8) . '<?php endforeach; ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . '</select>' . PHP_EOL;
                     } elseif ($v['selectMultipleType'] === 'checkbox_list') {
@@ -1027,7 +1027,7 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(8) . '<?php $checkboxIndex++; ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(8) . '<div class="form-check">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(9) . '<label for="<?php echo $view->field(\'entry\' . $checkboxIndex); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" class="form-check-label"><?php echo h($v); ?></label>' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(9) . '<input type="checkbox" id="<?php echo $view->field(\'entry\' . $checkboxIndex); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '][]" value="<?php echo $k; ?>" class="form-check-input" <% if (' . $v['handle'] . '.split(\'|\').includes(\'<?php echo $k; ?>\')) { %>checked<% } %>>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(9) . '<input type="checkbox" id="<?php echo $view->field(\'entry\' . $checkboxIndex); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '][]" value="<?php echo $k; ?>" class="form-check-input" <% if (' . $v['handle'] . ' != null && ' . $v['handle'] . '.split(\'|\').includes(\'<?php echo $k; ?>\')) { %>checked<% } %>>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(8) . '</div>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . '<?php endforeach; ?>' . PHP_EOL;
                     }

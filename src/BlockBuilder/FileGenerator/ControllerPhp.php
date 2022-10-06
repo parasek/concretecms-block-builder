@@ -628,7 +628,7 @@ class ControllerPhp
 
                     $code .= BlockBuilderUtility::tab(2) . '// ' . addslashes($v['label']) . ' (' . $v['handle'] . ') - Link' . PHP_EOL;
 
-                    $code .= BlockBuilderUtility::tab(2) . 'if ($this->' . $v['handle'] . '[\'link_type\'] == \'link_from_sitemap\') {' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2) . 'if (!empty($this->' . $v['handle'] . ') and $this->' . $v['handle'] . '[\'link_type\'] == \'link_from_sitemap\') {' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '$this->prepareForViewLinkFromSitemap(\'view\', [' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '\'' . $v['handle'] . '\'            => $this->' . $v['handle'] . '[\'link_from_sitemap\'],' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '\'' . $v['handle'] . '_ending\'     => $this->' . $v['handle'] . '[\'ending\'],' . PHP_EOL;
@@ -637,7 +637,7 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(4) . '\'' . $v['handle'] . '_new_window\' => $this->' . $v['handle'] . '[\'new_window\']' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . ']);' . PHP_EOL;
 
-                    $code .= BlockBuilderUtility::tab(2) . '} elseif ($this->' . $v['handle'] . '[\'link_type\'] == \'link_from_file_manager\') {' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2) . '} elseif (!empty($this->' . $v['handle'] . ') and $this->' . $v['handle'] . '[\'link_type\'] == \'link_from_file_manager\') {' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '$this->prepareForViewLinkFromFileManager(\'view\', [' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '\'' . $v['handle'] . '\'            => $this->' . $v['handle'] . '[\'link_from_file_manager\'],' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '\'' . $v['handle'] . '_ending\'     => $this->' . $v['handle'] . '[\'ending\'],' . PHP_EOL;
@@ -646,7 +646,7 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(4) . '\'' . $v['handle'] . '_new_window\' => $this->' . $v['handle'] . '[\'new_window\']' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . ']);' . PHP_EOL;
 
-                    $code .= BlockBuilderUtility::tab(2) . '} elseif ($this->' . $v['handle'] . '[\'link_type\'] == \'external_link\') {' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2) . '} elseif (!empty($this->' . $v['handle'] . ') and $this->' . $v['handle'] . '[\'link_type\'] == \'external_link\') {' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '$this->prepareForViewExternalLink(\'view\', [' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '\'' . $v['handle'] . '\'            => $this->' . $v['handle'] . '[\'external_link\'],' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '\'' . $v['handle'] . '_protocol\'   => $this->' . $v['handle'] . '[\'protocol\'],' . PHP_EOL;
@@ -1518,16 +1518,16 @@ class ControllerPhp
                 if ($v['fieldType'] == 'link') {
                     $code .= BlockBuilderUtility::tab(3) . '// ' . addslashes($v['label']) . ' (' . $v['handle'] . ') - Link' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '$' . $v['handle'] . 'Array = json_decode($entry[\'' . $v['handle'] . '\'], true);' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(3) . '$entry[\'' . $v['handle'] . '_link_type\']              = $' . $v['handle'] . 'Array[\'link_type\'];' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(3) . '$entry[\'' . $v['handle'] . '_show_additional_fields\'] = $' . $v['handle'] . 'Array[\'show_additional_fields\'];' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(3) . '$entry[\'' . $v['handle'] . '_link_from_sitemap\']      = $' . $v['handle'] . 'Array[\'link_from_sitemap\'];' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(3) . '$entry[\'' . $v['handle'] . '_link_from_file_manager\'] = (is_object(File::getByID($' . $v['handle'] . 'Array[\'link_from_file_manager\']))) ? $' . $v['handle'] . 'Array[\'link_from_file_manager\'] : 0;' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(3) . '$entry[\'' . $v['handle'] . '_protocol\']               = $' . $v['handle'] . 'Array[\'protocol\'];' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(3) . '$entry[\'' . $v['handle'] . '_external_link\']          = $' . $v['handle'] . 'Array[\'external_link\'];' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(3) . '$entry[\'' . $v['handle'] . '_ending\']                 = $' . $v['handle'] . 'Array[\'ending\'];' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(3) . '$entry[\'' . $v['handle'] . '_text\']                   = $' . $v['handle'] . 'Array[\'text\'];' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(3) . '$entry[\'' . $v['handle'] . '_title\']                  = $' . $v['handle'] . 'Array[\'title\'];' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(3) . '$entry[\'' . $v['handle'] . '_new_window\']             = $' . $v['handle'] . 'Array[\'new_window\'];' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '$entry[\'' . $v['handle'] . '_link_type\']              = $' . $v['handle'] . 'Array[\'link_type\'] ?? \'\';' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '$entry[\'' . $v['handle'] . '_show_additional_fields\'] = $' . $v['handle'] . 'Array[\'show_additional_fields\'] ?? \'\';' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '$entry[\'' . $v['handle'] . '_link_from_sitemap\']      = $' . $v['handle'] . 'Array[\'link_from_sitemap\'] ?? 0;' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '$entry[\'' . $v['handle'] . '_link_from_file_manager\'] = (!empty($' . $v['handle'] . 'Array[\'link_from_file_manager\']) and is_object(File::getByID($' . $v['handle'] . 'Array[\'link_from_file_manager\']))) ? $' . $v['handle'] . 'Array[\'link_from_file_manager\'] : 0;' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '$entry[\'' . $v['handle'] . '_protocol\']               = $' . $v['handle'] . 'Array[\'protocol\'] ?? \'\';' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '$entry[\'' . $v['handle'] . '_external_link\']          = $' . $v['handle'] . 'Array[\'external_link\'] ?? \'\';' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '$entry[\'' . $v['handle'] . '_ending\']                 = $' . $v['handle'] . 'Array[\'ending\'] ?? \'\';' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '$entry[\'' . $v['handle'] . '_text\']                   = $' . $v['handle'] . 'Array[\'text\'] ?? \'\';' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '$entry[\'' . $v['handle'] . '_title\']                  = $' . $v['handle'] . 'Array[\'title\'] ?? \'\';' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '$entry[\'' . $v['handle'] . '_new_window\']             = $' . $v['handle'] . 'Array[\'new_window\'] ?? 0;' . PHP_EOL;
                 }
             }
             $code .= BlockBuilderUtility::tab(3) . PHP_EOL;
