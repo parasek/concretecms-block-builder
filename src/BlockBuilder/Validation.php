@@ -102,9 +102,15 @@ class Validation
             if (!empty($postData['refresh_block'])) {
 
                 if (!$this->blockTypeFolderExists($postData['blockHandle'], false)) {
-                    $errors[] = t('Block with that handle does not exist. You should build your block instead.');
+                    $errors[] = t('Block folder named after chosen handle does not exist. You should build your block instead.');
                     $fieldsWithError[] = 'blockHandle';
                     $tabsWithError[] = 'block-settings';
+                } else {
+                    if (!$this->isBlockInstalled($postData['blockHandle'])) {
+                        $errors[] = t('You can not rebuild and refresh block that is awaiting installation. Visit %sBlock Types%s and install it first.', '<a href="' . $this->resolverManager->resolve(['dashboard/blocks/types']) . '" target="_blank" rel="noopener" class="btn btn-primary btn-sm"><i class="fas fa-external-link-alt"></i> ', '</a>');
+                        $fieldsWithError[] = 'blockHandle';
+                        $tabsWithError[] = 'block-settings';
+                    }
                 }
 
             } else {
@@ -184,12 +190,6 @@ class Validation
                 $tabsWithError[] = 'block-settings';
             }
 
-        }
-
-        if (!empty($postData['refresh_block']) and !$this->isBlockInstalled($postData['blockHandle'])) {
-            $errors[] = t('You can not rebuild and refresh block that is awaiting installation. Visit %sBlock Types%s and install it first', '<a href="' . $this->resolverManager->resolve(['dashboard/blocks/types']) . '" target="_blank" rel="noopener" class="btn btn-primary btn-sm"><i class="fas fa-external-link-alt"></i> ', '</a>');
-            $fieldsWithError[] = 'blockHandle';
-            $tabsWithError[] = 'block-settings';
         }
 
         // 2. Texts
