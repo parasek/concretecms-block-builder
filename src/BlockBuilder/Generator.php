@@ -354,6 +354,8 @@ class Generator
 
         $filename = 'config-bb.json';
 
+        unset($postData['refresh_block']);
+
         $fileService = new FileService();
         $fileService->append($postDataSummary['blockPath'] . DIRECTORY_SEPARATOR . $filename, json_encode($postData));
 
