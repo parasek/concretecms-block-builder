@@ -1,6 +1,8 @@
 <?php namespace BlockBuilder;
 
 use Concrete\Core\Block\BlockType\BlockType;
+use Concrete\Core\Entity\Block\BlockType\BlockType as BlockTypeEntity;
+use Concrete\Core\Error\UserMessageException;
 use Concrete\Core\File\Service\File as FileService;
 use Concrete\Core\Foundation\Environment;
 use Concrete\Core\Permission\Checker as Permissions;
@@ -9,6 +11,7 @@ use BlockBuilder\FileGenerator\ViewPhp as FileGeneratorViewPhp;
 use BlockBuilder\FileGenerator\DbXml as FileGeneratorDbXml;
 use BlockBuilder\FileGenerator\FormPhp as FileGeneratorFormPhp;
 use BlockBuilder\Utility as BlockBuilderUtility;
+use Doctrine\ORM\EntityManagerInterface;
 
 defined('C5_EXECUTE') or die('Access Denied.');
 
@@ -240,8 +243,20 @@ class Generator
                     $this->generateAutoJs(false, $postDataSummary);
                 }
 
-                // 4. Install block (if selected)
-                if ($postData['installBlock']) {
+                // 4. Refresh (if clicked) or Install block (if selected)
+                if (!empty($postData['refresh_block'])) {
+                    $blockType = BlockType::getByHandle($postData['blockHandle']);
+                    $app = \Concrete\Core\Support\Facade\Application::getFacadeApplication();
+                    $em = $app->make(EntityManagerInterface::class);
+                    $bt = $em->find(BlockTypeEntity::class, $blockType->getBlockTypeID());
+                    try {
+                        $bt->refresh();
+                        return ['handle' => $postData['blockName'], 'blockInstalled' => false, 'blockRefreshed' => true];
+                    } catch (UserMessageException $e) {
+                        $this->flash('error', $e->getMessage());
+                    }
+
+                } elseif ($postData['installBlock']) {
 
                     try {
 
@@ -250,7 +265,7 @@ class Generator
 
                         BlockType::installBlockType($postDataSummary['blockHandle']);
 
-                        return ['handle' => $postData['blockName'], 'blockInstalled' => true];
+                        return ['handle' => $postData['blockName'], 'blockInstalled' => true, 'blockRefreshed' => false];
 
                     } catch (\Exception $e) {
                         return t($e->getMessage());
@@ -258,7 +273,7 @@ class Generator
 
                 } else {
 
-                    return ['handle' => $postData['blockName'], 'blockInstalled' => false];
+                    return ['handle' => $postData['blockName'], 'blockInstalled' => false, 'blockRefreshed' => false];
 
                 }
 
@@ -338,6 +353,8 @@ class Generator
     {
 
         $filename = 'config-bb.json';
+
+        unset($postData['refresh_block']);
 
         $fileService = new FileService();
         $fileService->append($postDataSummary['blockPath'] . DIRECTORY_SEPARATOR . $filename, json_encode($postData));

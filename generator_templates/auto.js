@@ -216,7 +216,7 @@ $(function () {
                     } else if (sourceEntryElement.attr('type') == 'radio') {
                         // Radio list (Single choice)
                         templateData[value] = sourceEntryElement.filter(':checked').val();
-                    } else if (sourceEntryElement.prop('tagName').toLowerCase() == 'select' && sourceEntryElement.attr('multiple')) {
+                    } else if (sourceEntryElement.prop('tagName') != undefined && sourceEntryElement.prop('tagName').toLowerCase() == 'select' && sourceEntryElement.attr('multiple')) {
                         // Select with multiple attribute (default and enhanced)
                         templateData[value] = sourceEntryElement.val().join('|');
                     } else {

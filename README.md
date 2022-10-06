@@ -33,7 +33,7 @@ When using Concrete5.8
 
 This addon is made for developers and site builders. It allows you to quickly create skeleton for your block, but you still need to manually add some custom css/html code in view.php.
 
-- Build custom Concrete5 blocks in your dashboard using user-friendly interface
+- Build custom Concrete CMS blocks in your dashboard using user-friendly interface
 - Generated blocks can have up to 2 tabs:
   - Basic information (non-repeatable fields)
   - Repeatable entries (one set of repeatable fields)

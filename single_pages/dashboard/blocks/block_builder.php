@@ -9,6 +9,19 @@
     </div>
 <?php endif; ?>
 
+<?php if (!empty($type) and $type === 'refresh'): ?>
+    <div class="alert alert-warning alert-dismissible">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <div>
+                <strong><?php echo t('Warning'); ?>:</strong>
+                <?php echo t('Rebuilding and refreshing block (without uninstalling it first) can potentially break your site. Backup your database and files before proceeding.'); ?>
+                <a href="<?php echo $app->make('url/manager')->resolve(['dashboard/blocks/block_builder/refresh_warning']); ?>" target="_blank" rel="noopener" class="btn btn-primary btn-sm">
+                    <i class="fas fa-external-link-alt"></i> <?php echo t('Read more'); ?>
+                </a>
+            </div>
+    </div>
+<?php endif; ?>
+
 <div id="bb-container" class="bb-container">
 
     <div class="mb-4 small text-muted">
@@ -444,6 +457,9 @@
         <div class="ccm-dashboard-form-actions-wrapper">
             <div class="ccm-dashboard-form-actions">
                 <input type="submit" class="btn btn-primary float-end" value="<?php echo t('Build your block now!'); ?>" id="ccm-submit-url-form" name="ccm-submit-url-form">
+                <?php if (!empty($type) and in_array($type, ['refresh', 'predefined'])): ?>
+                    <input type="submit" class="btn btn-secondary float-end me-4" value="<?php echo t('Rebuild and refresh block'); ?> <?php echo t('(experimental)'); ?>" id="ccm-submit-url-form-refresh" name="refresh_block">
+                <?php endif; ?>
             </div>
         </div>
 

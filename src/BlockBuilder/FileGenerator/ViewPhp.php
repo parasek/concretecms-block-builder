@@ -55,7 +55,7 @@ class ViewPhp
                     $code .= '<?php if (!empty($' . $v['handle'] . ')): ?>' . PHP_EOL;
 
                     $code .= BlockBuilderUtility::tab(1) . 'Key: <?php echo $' . $v['handle'] . '; ?><br/>' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(1) . 'Value: <?php echo h($' . $v['handle'] . '_options[$' . $v['handle'] . ']); ?>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(1) . 'Value: <?php echo h($' . $v['handle'] . '_options[$' . $v['handle'] . '] ?? \'\'); ?>' . PHP_EOL;
 
                     $code .= '<?php endif; ?>' . PHP_EOL . PHP_EOL . PHP_EOL;
 
@@ -68,7 +68,7 @@ class ViewPhp
                     $code .= BlockBuilderUtility::tab(1) . '<?php $' . $v['handle'] . '_exploded_items = explode(\'|\', $' . $v['handle'] . '); ?>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(1) . 'Selected keys/values: <br/>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(1) . '<?php foreach ($' . $v['handle'] . '_exploded_items as $' . $v['handle'] . '_exploded_item): ?>' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(2) . '<?php echo h($' . $v['handle'] . '_exploded_item); ?>: <?php echo h($' . $v['handle'] . '_options[$' . $v['handle'] . '_exploded_item]); ?><br/>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2) . '<?php echo h($' . $v['handle'] . '_exploded_item); ?>: <?php echo h($' . $v['handle'] . '_options[$' . $v['handle'] . '_exploded_item] ?? \'\'); ?><br/>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(1) . '<?php endforeach; ?>' . PHP_EOL;
 
                     $code .= '<?php endif; ?>' . PHP_EOL . PHP_EOL . PHP_EOL;
@@ -265,7 +265,7 @@ class ViewPhp
                     $code .= BlockBuilderUtility::tab(2) . '<?php if (!empty($entry[\'' . $v['handle'] . '\'])): ?>' . PHP_EOL;
 
                     $code .= BlockBuilderUtility::tab(3) . 'Key: <?php echo $entry[\'' . $v['handle'] . '\']; ?><br/>' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(3) . 'Value: <?php echo h($entry_' . $v['handle'] . '_options[$entry[\'' . $v['handle'] . '\']]); ?>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . 'Value: <?php echo h($entry_' . $v['handle'] . '_options[$entry[\'' . $v['handle'] . '\']] ?? \'\'); ?>' . PHP_EOL;
 
                     $code .= BlockBuilderUtility::tab(2) . '<?php endif; ?>' . PHP_EOL . PHP_EOL . PHP_EOL;
 
@@ -278,7 +278,7 @@ class ViewPhp
                     $code .= BlockBuilderUtility::tab(3) . '<?php $entry_' . $v['handle'] . '_exploded_items = explode(\'|\', $entry[\'' . $v['handle'] . '\']); ?>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . 'Selected keys/values: <br/>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '<?php foreach ($entry_' . $v['handle'] . '_exploded_items as $entry_' . $v['handle'] . '_exploded_item): ?>' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(4) . '<?php echo h($entry_' . $v['handle'] . '_exploded_item); ?>: <?php echo h($entry_' . $v['handle'] . '_options[$entry_' . $v['handle'] . '_exploded_item]); ?><br/>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4) . '<?php echo h($entry_' . $v['handle'] . '_exploded_item); ?>: <?php echo h($entry_' . $v['handle'] . '_options[$entry_' . $v['handle'] . '_exploded_item] ?? \'\'); ?><br/>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '<?php endforeach; ?>' . PHP_EOL;
 
                     $code .= BlockBuilderUtility::tab(2) . '<?php endif; ?>' . PHP_EOL . PHP_EOL . PHP_EOL;
