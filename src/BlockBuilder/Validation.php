@@ -34,7 +34,7 @@ class Validation
     public function getForbiddenHandles()
     {
 
-        $forbiddenWords = ['id', 'bID', 'position'];
+        $forbiddenWords = ['id', 'bID', 'position', 'class'];
 
         return $forbiddenWords;
 
