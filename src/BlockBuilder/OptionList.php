@@ -59,6 +59,7 @@ class OptionList
         $options['link_from_file_manager'] = t('Link from File Manager');
         $options['external_link'] = t('External Link');
         $options['image'] = t('Image');
+        $options['express'] = t('Express');
         $options['html_editor'] = t('HTML Editor');
         $options['date_picker'] = t('Date Picker');
 

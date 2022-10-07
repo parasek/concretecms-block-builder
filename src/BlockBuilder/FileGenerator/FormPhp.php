@@ -699,6 +699,27 @@ class FormPhp
 
                 }
 
+                if ($v['fieldType'] == 'express') {
+
+                    $code .= BlockBuilderUtility::tab(3) . '<div class="mb-4">' . PHP_EOL;
+
+                    $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '\'), t(\'' . addslashes($v['label']) . '\')); ?>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4) . '<?php' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4) . '$entity = \Express::getObjectByHandle(\'' . $v['expressHandle'] . '\');' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4) . '$entry = \Express::getEntry($' . $v['handle'] . ');' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4) . '?>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4) . '<?php if (isset($entity) && $entity instanceof Concrete\Core\Entity\Express\Entity): ?>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5) . '<?php echo $app->make(\'form/express/entry_selector\')->selectEntry($entity, \'' . $v['handle'] . '\', $entry); ?>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4) . '<?php endif; ?>' . PHP_EOL;
+
+                    if (!empty($v['helpText'])) {
+                        $code .= BlockBuilderUtility::tab(4) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL . PHP_EOL;
+                    }
+
+                    $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL;
+
+                }
+
                 if ($v['fieldType'] == 'html_editor') {
 
                     $height = !empty($v['htmlEditorHeight']) ? $v['htmlEditorHeight'] : 250;

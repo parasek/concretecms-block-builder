@@ -1,0 +1,147 @@
+<?php if (!empty($[[[HANDLE]]])): ?>
+    <?php
+    $[[[EXPRESS_HANDLE]]] = \Express::getEntry($[[[HANDLE]]]);
+    /** @var Concrete\Core\Entity\Express\Entry $[[[EXPRESS_HANDLE]]] */
+    ?>
+    <?php if (is_object($[[[EXPRESS_HANDLE]]])): ?>
+
+        <?php
+        // These are examples how to display different attributes from Express object
+        // Delete unnecessary attributes/modify handles to match your Express object
+        ?>
+
+        <p style="background: #dadada;">Text:</p>
+        <?php if (!empty($[[[EXPRESS_HANDLE]]]->getAttribute('example_text'))): ?>
+            <?php echo h($[[[EXPRESS_HANDLE]]]->getAttribute('example_text')); ?>
+        <?php endif; ?>
+
+        <p style="background: #dadada;">Duration:</p>
+        <?php if (!empty($[[[EXPRESS_HANDLE]]]->getAttribute('example_duration'))): ?>
+            <?php echo h($[[[EXPRESS_HANDLE]]]->getAttribute('example_duration')); ?>
+        <?php endif; ?>
+
+        <p style="background: #dadada;">Text Area:</p>
+        <?php if (!empty($[[[EXPRESS_HANDLE]]]->getAttribute('example_text_area'))): ?>
+            <p>Plain Text:</p>
+            <?php echo nl2br(h($[[[EXPRESS_HANDLE]]]->getAttribute('example_text_area'))); ?>
+            <p>------------------------------------------------------------</p>
+            <p>Rich Text - Default Setting:</p>
+            <?php echo $[[[EXPRESS_HANDLE]]]->getAttribute('example_text_area'); ?>
+        <?php endif; ?>
+
+        <p style="background: #dadada;">Checkbox:</p>
+        <?php if (!empty($[[[EXPRESS_HANDLE]]]->getAttribute('example_checkbox'))): ?>
+            <?php echo h($[[[EXPRESS_HANDLE]]]->getAttribute('example_checkbox')); ?>
+            <p>------------------------------------------------------------</p>
+            <p>Label:</p>
+            <?php
+            $key = $[[[EXPRESS_HANDLE]]]->getAttributeValueObject('example_checkbox')->getAttributeKey();
+            $type = $key->getAttributeKeySettings();
+            /** @var \Concrete\Core\Entity\Attribute\Key\Settings\BooleanSettings $type */
+            $label = $type->getCheckboxLabel();
+            ?>
+            <?php echo h($label); ?>
+        <?php endif; ?>
+
+        <p style="background: #dadada;">Date/Time:</p>
+        <?php if (!empty($[[[EXPRESS_HANDLE]]]->getAttribute('example_date_time'))): ?>
+            <p>Default Date (honours multilingual settings or use "Custom format"):</p>
+            <?php echo h($[[[EXPRESS_HANDLE]]]->getAttribute('example_date_time', 'display')); ?>
+            <p>------------------------------------------------------------</p>
+            <p>Custom format:</p>
+            <?php echo h(date('d.m.Y H:i:s', strtotime($[[[EXPRESS_HANDLE]]]->getAttributeValueObject('example_date_time')->getPlainTextValue()))); ?>
+        <?php endif; ?>
+
+        <p style="background: #dadada;">Image/File:</p>
+        <?php if (!empty($[[[EXPRESS_HANDLE]]]->getAttribute('example_image_file'))): ?>
+            <?php
+            $file = \Concrete\Core\File\File::getByID($[[[EXPRESS_HANDLE]]]->getAttribute('example_image_file'));
+            /** @var \Concrete\Core\Entity\File\Version $file */
+            ?>
+            <p>Basic info:</p>
+            <?php if (is_object($file)): ?>
+                <?php
+                echo 'File ID: ' . $file->getFileID() . '<br>';
+                echo 'File Name: ' . $file->getFileName() . '<br>';
+
+                echo 'Full URL: ' . $file->getURL() . '<br>';
+                echo 'Tracked URL: ' . $file->getDownloadURL() . '<br>';
+                echo 'Relative Path: ' . $file->getRelativePath() . '<br>';
+                echo 'Full Relative Path: ' . $_SERVER['DOCUMENT_ROOT'] . $file->getRelativePath() . '<br>';
+
+                echo 'Title: ' . $file->getTitle() . '<br>';
+                echo 'Description: ' . $file->getDescription() . '<br>';
+                echo 'Tags (string): ' . $file->getTags() . '<br>';
+                echo 'Tags (array): ' . '<br>';
+                var_dump($file->getTagsList());
+                echo '<br>';
+
+                echo 'File Size: ' . $file->getSize() . '<br>';
+                echo 'Full File Size: ' . $file->getFullSize() . '<br>';
+                echo 'Extension: ' . $file->getExtension() . '<br>';
+                echo 'Type: ' . $file->getType() . '<br>';
+                echo 'Mime: ' . $file->getMimeType() . '<br>';
+                echo 'Display Type: ' . $file->getDisplayType() . '<br>';
+                echo 'Generic Type Text: ' . $file->getGenericTypeText() . '<br>';
+
+                echo 'Width: ' . $file->getAttribute('width') . '<br>';
+                echo 'Height: ' . $file->getAttribute('height') . '<br>';
+                echo 'Duration: ' . $file->getAttribute('duration') . '<br>';
+                ?>
+            <?php endif; ?>
+            <p>------------------------------------------------------------</p>
+            <p>Thumbnail from Image Helper:</p>
+            <?php if (is_object($file) and $file->canEdit()): ?>
+                <?php
+                $thumbnail = $app->make('helper/image')->getThumbnail($file, 100, 75, true);
+                ?>
+                <img src="<?php echo h($thumbnail->src); ?>"
+                     width="<?php echo h($thumbnail->width); ?>"
+                     height="<?php echo h($thumbnail->height); ?>"
+                     alt="<?php echo h($file->getTitle()); ?>"
+                >
+            <?php endif; ?>
+            <p>------------------------------------------------------------</p>
+            <p>Default picture tag:</p>
+            <?php echo $app->make('html/image', ['f' => $file])->getTag(); ?>
+            <p>------------------------------------------------------------</p>
+            <p>Concrete Thumbnail (Dashboard / System & Settings / Files / Thumbnails):</p>
+            <?php
+            $type = \Concrete\Core\File\Image\Thumbnail\Type\Type::getByHandle('file_manager_listing'); ?>
+            <?php if (is_object($file) and $type instanceof \Concrete\Core\Entity\File\Image\Thumbnail\Type\Type): ?>
+                <?php
+                $src = $file->getThumbnailURL($type->getBaseVersion()); // or $type->getDoubledVersion()
+                ?>
+                <img src="<?php echo h($src); ?>"
+                     width="<?php echo h($type->getWidth()); ?>"
+                     height="<?php echo h($type->getHeight()); ?>"
+                     alt="<?php echo h($file->getTitle()); ?>"
+                >
+            <?php endif; ?>
+        <?php endif; ?>
+
+        <p style="background: #dadada;">Option List:</p>
+        <?php if (!empty($[[[EXPRESS_HANDLE]]]->getAttribute('example_option_list'))): ?>
+            <?php foreach ($[[[EXPRESS_HANDLE]]]->getAttribute('example_option_list') as $item): ?>
+                <?php echo h($item); ?><br>
+            <?php endforeach; ?>
+        <?php endif; ?>
+
+        <p style="background: #dadada;">Page Selector:</p>
+        <?php if (!empty($[[[EXPRESS_HANDLE]]]->getAttribute('example_page_selector'))): ?>
+            <p>Default Date (honours multilingual settings or use "Custom format"):</p>
+            <?php $page = \Concrete\Core\Page\Page::getByID($[[[EXPRESS_HANDLE]]]->getAttribute('example_page_selector')) ?>
+            <?php if (is_object($page) and !$page->isError() and !$page->isInTrash()): ?>
+                <?php
+                echo 'Page ID: ' . $page->getCollectionID() . '<br>';
+                echo 'Name: ' . $page->getCollectionName() . '<br>';
+                echo 'Description: ' . $page->getCollectionDescription() . '<br>';
+                echo 'Link: ' . $page->getCollectionLink() . '<br>';
+                echo 'Handle: ' . $page->getCollectionHandle() . '<br>';
+                echo 'Example Page Attribute: ' . $page->getAttribute('page_attribute_handle') . '<br>';
+                ?>
+            <?php endif; ?>
+        <?php endif; ?>
+
+    <?php endif; ?>
+<?php endif; ?>

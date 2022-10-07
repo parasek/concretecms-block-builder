@@ -924,6 +924,19 @@
                 </div>
                 <% } %>
 
+                <% if (fieldType == 'express') { %>
+                <div class="<% if (error['expressHandle']!=undefined) { %>has-error<% } %>">
+                    <label for="<%=groupHandle%>[<%=counter%>][expressHandle]" class="form-label"><?php echo t('Express object handle'); ?> *</label>
+
+                        <input type="text"
+                               id="<%=groupHandle%>[<%=counter%>][expressHandle]"
+                               name="<%=groupHandle%>[<%=counter%>][expressHandle]"
+                               class="form-control"
+                               value="<%=expressHandle%>"
+                        />
+                </div>
+                <% } %>
+
                 <% if (fieldType == 'html_editor') { %>
                 <div class="<% if (error['htmlEditorHeight']!=undefined) { %>has-error<% } %>">
                     <label for="<%=groupHandle%>[<%=counter%>][htmlEditorHeight]" class="form-label"><?php echo t('Height'); ?></label>
