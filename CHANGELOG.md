@@ -1,3 +1,22 @@
+# 2.3.0
+- "Select field" has been renamed to "Single Choice Field".
+- "Single Choice Field" has been enhanced and can be added to blocks as:
+  - Default Select Field
+  - Enhanced Select Field (using select2 for UI)
+  - Radio List
+- "Multiple Choice Field" has been added and can be added to blocks as:
+  - Default Multiselect Field
+  - Enhanced Multiselect Field (using select2 for UI)
+  - Checkbox List
+- "Express" field type has been added
+  <br>Example code (how to display data from Express) will be generated view.php.
+- You can now rebuild/refresh existing blocks without uninstalling them - check "Load configuration" page.
+  <br>You can read more information on designated page, go to "Load configuration" page -> Rebuild and refresh -> follow link in the yellow message.
+  <br>This is still an experimental feature, so be sure to backup database/files first.
+- You can load predefined json configs in "Load configuration" page to fast-test/preview different Field types.
+  <br>This is mostly done for my internal development/testing process, but still can be used as "showcase" block.
+- Some smaller fixes has been implemented.
+
 # 2.2.0
 - Package and generated blocks are now compatible with PHP 8
 - Fixed bug when tabs were not displaying under certain conditions

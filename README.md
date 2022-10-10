@@ -38,15 +38,17 @@ This addon is made for developers and site builders. It allows you to quickly cr
   - Basic information (non-repeatable fields)
   - Repeatable entries (one set of repeatable fields)
 - Multiple field types available:
-  - Text field
+  - Text
   - Textarea
   - WYSIWYG Editor
-  - Select field
+  - Single Choice Field
+  - Multiple Choice Field
   - Link with Type Selection
   - Link from Sitemap
   - Link from File Manager
   - External Link
   - Image
+  - Express
   - HTML Editor
   - Date Picker
 - You can create blocks based on configuration of previously created blocks
