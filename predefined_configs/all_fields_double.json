@@ -278,27 +278,41 @@
             "imageFullscreenEditable": "1"
         },
         "29": {
+            "fieldType": "express",
+            "label": "Basic Express 1",
+            "handle": "basic_express_first",
+            "helpText": "",
+            "expressHandle": "teacher"
+        },
+        "30": {
+            "fieldType": "express",
+            "label": "Basic Express 2",
+            "handle": "basic_express_second",
+            "helpText": "",
+            "expressHandle": "worker"
+        },
+        "31": {
             "fieldType": "html_editor",
             "label": "Basic HTML Editor 1",
             "handle": "basic_html_editor_first",
             "helpText": "",
             "htmlEditorHeight": ""
         },
-        "30": {
+        "32": {
             "fieldType": "html_editor",
             "label": "Basic HTML Editor 2",
             "handle": "basic_html_editor_second",
             "helpText": "",
             "htmlEditorHeight": "400"
         },
-        "31": {
+        "33": {
             "fieldType": "date_picker",
             "label": "Basic Date Picker 1",
             "handle": "basic_date_picker_first",
             "helpText": "",
             "datePickerPattern": "d.m.Y"
         },
-        "32": {
+        "34": {
             "fieldType": "date_picker",
             "label": "Basic Date Picker 2",
             "handle": "basic_date_picker_second",
@@ -532,27 +546,41 @@
             "imageFullscreenEditable": "1"
         },
         "29": {
+            "fieldType": "express",
+            "label": "Repeatable Express 1",
+            "handle": "repeatable_express_first",
+            "helpText": "",
+            "expressHandle": "teacher"
+        },
+        "30": {
+            "fieldType": "express",
+            "label": "Repeatable Express 2",
+            "handle": "repeatable_express_second",
+            "helpText": "",
+            "expressHandle": "worker"
+        },
+        "31": {
             "fieldType": "html_editor",
             "label": "Repeatable HTML Editor 1",
             "handle": "repeatable_html_editor_first",
             "helpText": "",
             "htmlEditorHeight": ""
         },
-        "30": {
+        "32": {
             "fieldType": "html_editor",
             "label": "Repeatable HTML Editor 2",
             "handle": "repeatable_html_editor_second",
             "helpText": "",
             "htmlEditorHeight": "400"
         },
-        "31": {
+        "33": {
             "fieldType": "date_picker",
             "label": "Repeatable Date Picker 1",
             "handle": "repeatable_date_picker_first",
             "helpText": "",
             "datePickerPattern": "d.m.Y"
         },
-        "32": {
+        "34": {
             "fieldType": "date_picker",
             "label": "Repeatable Date Picker 2",
             "handle": "repeatable_date_picker_second",

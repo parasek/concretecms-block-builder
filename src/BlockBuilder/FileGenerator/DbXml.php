@@ -143,6 +143,13 @@ class DbXml
                     $code .= PHP_EOL;
                 }
 
+                if ($v['fieldType'] == 'express') {
+                    $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '" type="I">' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '<default value="0"/>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '<unsigned/>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2) . '</field>' . PHP_EOL;
+                }
+
                 if ($v['fieldType'] == 'html_editor') {
                     $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '" type="X2"></field>' . PHP_EOL . PHP_EOL;
                 }
@@ -287,6 +294,14 @@ class DbXml
                     ) {
                         $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '_data" type="X2"></field>' . PHP_EOL;
                     }
+                    $code .= PHP_EOL;
+                }
+
+                if ($v['fieldType'] == 'express') {
+                    $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '" type="I">' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '<default value="0"/>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '<unsigned/>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2) . '</field>' . PHP_EOL;
                     $code .= PHP_EOL;
                 }
 

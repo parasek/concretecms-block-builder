@@ -157,13 +157,20 @@
             "imageFullscreenHeight": "1080"
         },
         "15": {
+            "fieldType": "express",
+            "label": "Basic Express 1",
+            "handle": "basic_express_first",
+            "helpText": "",
+            "expressHandle": "teacher"
+        },
+        "16": {
             "fieldType": "html_editor",
             "label": "Basic HTML Editor 1",
             "handle": "basic_html_editor_first",
             "helpText": "",
             "htmlEditorHeight": ""
         },
-        "16": {
+        "17": {
             "fieldType": "date_picker",
             "label": "Basic Date Picker 1",
             "handle": "basic_date_picker_first",
@@ -275,13 +282,20 @@
             "imageFullscreenHeight": "1080"
         },
         "15": {
+            "fieldType": "express",
+            "label": "Repeatable Express 1",
+            "handle": "repeatable_express_first",
+            "helpText": "",
+            "expressHandle": "teacher"
+        },
+        "16": {
             "fieldType": "html_editor",
             "label": "Repeatable HTML Editor 1",
             "handle": "repeatable_html_editor_first",
             "helpText": "",
             "htmlEditorHeight": ""
         },
-        "16": {
+        "17": {
             "fieldType": "date_picker",
             "label": "Repeatable Date Picker 1",
             "handle": "repeatable_date_picker_first",

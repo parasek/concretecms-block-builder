@@ -62,6 +62,7 @@ class Generator
         $postDataSummary['linkFromFileManagerUsed_entry'] = false;
         $postDataSummary['externalLinkUsed_entry'] = false;
         $postDataSummary['imageUsed_entry'] = false;
+        $postDataSummary['expressUsed_entry'] = false;
         $postDataSummary['datePickerUsed_entry'] = false;
 
         $postDataSummary['entryTitleSource'] = false;
@@ -199,6 +200,10 @@ class Generator
 
                 if ($v['fieldType'] == 'image') {
                     $postDataSummary['imageUsed_entry'] = true;
+                }
+
+                if ($v['fieldType'] == 'express') {
+                    $postDataSummary['expressUsed_entry'] = true;
                 }
 
                 if ($v['fieldType'] == 'date_picker') {

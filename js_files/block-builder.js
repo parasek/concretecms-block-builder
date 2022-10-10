@@ -184,6 +184,9 @@ $(function () {
                 templateData['imageFullscreenCrop'] = 0;
                 templateData['imageFullscreenEditable'] = 1;
 
+                // express
+                templateData['expressHandle'] = '';
+
                 // html_editor
                 templateData['htmlEditorHeight'] = '';
 

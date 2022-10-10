@@ -332,6 +332,15 @@ class Validation
 
                 }
 
+                // express
+                if (isset($entry['expressHandle']) and !$entry['expressHandle']) {
+
+                    $postData[$counter]['error']['expressHandle'] = 1;
+                    $fieldsWithError[] = $handle . '|expressHandle|empty';
+                    $tabsWithError[] = 'tab-' . $handle;
+
+                }
+
                 // wysiwyg_editor
                 if (isset($entry['wysiwygEditorHeight']) and $entry['wysiwygEditorHeight'] != '' and (!ctype_digit($entry['wysiwygEditorHeight']) or $entry['wysiwygEditorHeight'] < 40 or $entry['wysiwygEditorHeight'] > 2000)) {
 
@@ -577,6 +586,11 @@ class Validation
         // textarea
         if (in_array($handle . '|textareaHeight|invalid_number', $fieldsWithError)) {
             $errors[] = t('Invalid entry in one of "Textarea/Height" fields, should be a number between %s and %s or empty (%s).', 40, 2000, $label);
+        }
+
+        // express
+        if (in_array($handle . '|expressHandle|empty', $fieldsWithError)) {
+            $errors[] = t('There are some empty "Express object handle" fields (%s).', $label);
         }
 
         // wysiwyg_editor

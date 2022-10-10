@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-10-06 16:41+0200\n"
-"PO-Revision-Date: 2022-10-06 16:41+0200\n"
+"POT-Creation-Date: 2022-10-07 14:26+0200\n"
+"PO-Revision-Date: 2022-10-07 14:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pl_PL\n"
@@ -252,14 +252,14 @@ msgstr "Otwórz w nowym oknie"
 #: single_pages/dashboard/blocks/block_builder.php:858
 #: single_pages/dashboard/blocks/block_builder.php:908
 #: single_pages/dashboard/blocks/block_builder.php:921
-#: src/BlockBuilder/OptionList.php:41 src/BlockBuilder/OptionList.php:86
+#: src/BlockBuilder/OptionList.php:41 src/BlockBuilder/OptionList.php:87
 msgid "Yes"
 msgstr "Tak"
 
 #: controllers/single_page/dashboard/blocks/block_builder.php:194
 #: single_pages/dashboard/blocks/block_builder.php:282
 #: single_pages/dashboard/blocks/block_builder.php:283
-#: src/BlockBuilder/OptionList.php:40 src/BlockBuilder/OptionList.php:85
+#: src/BlockBuilder/OptionList.php:40 src/BlockBuilder/OptionList.php:86
 msgid "No"
 msgstr "Nie"
 
@@ -290,7 +290,7 @@ msgstr "Szerokość"
 #: single_pages/dashboard/blocks/block_builder.php:578
 #: single_pages/dashboard/blocks/block_builder.php:824
 #: single_pages/dashboard/blocks/block_builder.php:887
-#: single_pages/dashboard/blocks/block_builder.php:929
+#: single_pages/dashboard/blocks/block_builder.php:942
 msgid "Height"
 msgstr "Wysokość"
 
@@ -570,7 +570,7 @@ msgid "It will look exactly like this text"
 msgstr "Będzie on wyglądać dokładnie jak niniejsze zdanie"
 
 #: single_pages/dashboard/blocks/block_builder.php:572
-#: single_pages/dashboard/blocks/block_builder.php:940
+#: single_pages/dashboard/blocks/block_builder.php:953
 #, php-format
 msgid "Default height: %s."
 msgstr "Standardowa wysokość: %s."
@@ -679,11 +679,15 @@ msgstr ""
 "Wygeneruj obraz pełnoekranowy za pomocą \"image helpera\" (jeśli oryginalny "
 "obraz jest większy niż podane wymiary)"
 
-#: single_pages/dashboard/blocks/block_builder.php:947
+#: single_pages/dashboard/blocks/block_builder.php:929
+msgid "Express object handle"
+msgstr "Identyfikator obiektu Express"
+
+#: single_pages/dashboard/blocks/block_builder.php:960
 msgid "PHP Date Pattern"
 msgstr "Wzorzec PHP daty"
 
-#: single_pages/dashboard/blocks/block_builder.php:955
+#: single_pages/dashboard/blocks/block_builder.php:968
 #, php-format
 msgid ""
 "Check %sphp manual%s for available formats. Examples: <code>d.m.Y</code>, "
@@ -694,7 +698,7 @@ msgstr ""
 "code>, <code>d-m-Y</code>, <code>Y-m-d</code>, <code>m-d-Y</code>, <code>m/d/"
 "Y</code>"
 
-#: single_pages/dashboard/blocks/block_builder.php:972
+#: single_pages/dashboard/blocks/block_builder.php:985
 msgid "You haven't added any field types yet."
 msgstr "Nie dodałeś jeszcze żadnych typów pól."
 
@@ -870,7 +874,7 @@ msgstr "Nawigacja"
 msgid "Forms"
 msgstr "Formularze"
 
-#: src/BlockBuilder/OptionList.php:23
+#: src/BlockBuilder/OptionList.php:23 src/BlockBuilder/OptionList.php:62
 msgid "Express"
 msgstr "Ekspres"
 
@@ -910,47 +914,47 @@ msgstr "Link z wyborem typu"
 msgid "Image"
 msgstr "Obraz"
 
-#: src/BlockBuilder/OptionList.php:62
+#: src/BlockBuilder/OptionList.php:63
 msgid "HTML Editor"
 msgstr "Edytor HTML"
 
-#: src/BlockBuilder/OptionList.php:63
+#: src/BlockBuilder/OptionList.php:64
 msgid "Date Picker"
 msgstr "Wybór daty"
 
-#: src/BlockBuilder/OptionList.php:73
+#: src/BlockBuilder/OptionList.php:74
 msgid "Only if the field type consists of more than 1 element (default)"
 msgstr "Tylko, jeśli typ pola zawiera więcej niż jeden element (standardowe)"
 
-#: src/BlockBuilder/OptionList.php:74
+#: src/BlockBuilder/OptionList.php:75
 msgid "Always"
 msgstr "Zawsze"
 
-#: src/BlockBuilder/OptionList.php:75
+#: src/BlockBuilder/OptionList.php:76
 msgid "Never"
 msgstr "Nigdy"
 
-#: src/BlockBuilder/OptionList.php:96
+#: src/BlockBuilder/OptionList.php:97
 msgid "Default Select Field"
 msgstr "Standardowe pole wyboru"
 
-#: src/BlockBuilder/OptionList.php:97
+#: src/BlockBuilder/OptionList.php:98
 msgid "Enhanced Select Field"
 msgstr "Ulepszone pole wyboru"
 
-#: src/BlockBuilder/OptionList.php:98
+#: src/BlockBuilder/OptionList.php:99
 msgid "Radio List"
 msgstr "Lista wyboru radio"
 
-#: src/BlockBuilder/OptionList.php:109
+#: src/BlockBuilder/OptionList.php:110
 msgid "Default Multiselect Field"
 msgstr "Standardowe pole multiselect"
 
-#: src/BlockBuilder/OptionList.php:110
+#: src/BlockBuilder/OptionList.php:111
 msgid "Enhanced Multiselect Field"
 msgstr "Ulepszone pole multiselect"
 
-#: src/BlockBuilder/OptionList.php:111
+#: src/BlockBuilder/OptionList.php:112
 msgid "Checkbox List"
 msgstr "Lista wyboru checkbox"
 
@@ -1057,12 +1061,12 @@ msgstr ""
 msgid "Label for \"%s\" is required (%s)."
 msgstr "Etykieta dla pola \"%s\" jest wymagana (%s)."
 
-#: src/BlockBuilder/Validation.php:533
+#: src/BlockBuilder/Validation.php:542
 #, php-format
 msgid "There are some empty \"Label\" fields (%s)."
 msgstr "Niektóre z pól \"Etykieta\" są puste (%s)."
 
-#: src/BlockBuilder/Validation.php:537
+#: src/BlockBuilder/Validation.php:546
 #, php-format
 msgid ""
 "There are some \"Label\" fields which consist of less than %s characters "
@@ -1071,12 +1075,12 @@ msgstr ""
 "Niektóre z pól \"Etykieta\" składają się z mniejszej liczby znaków niż %s "
 "(%s)."
 
-#: src/BlockBuilder/Validation.php:542
+#: src/BlockBuilder/Validation.php:551
 #, php-format
 msgid "There are some empty \"Handle\" fields (%s)."
 msgstr "Niektóre z pól \"Identyfikator\" są puste (%s)."
 
-#: src/BlockBuilder/Validation.php:546
+#: src/BlockBuilder/Validation.php:555
 #, php-format
 msgid ""
 "There are some \"Handle\" fields which consist of less than %s characters "
@@ -1085,7 +1089,7 @@ msgstr ""
 "Niektóre z pól \"Identyfikator\" składają się z mniejszej liczby znaków niż "
 "%s (%s)."
 
-#: src/BlockBuilder/Validation.php:550
+#: src/BlockBuilder/Validation.php:559
 #, php-format
 msgid ""
 "There are some \"Handle\" fields which consist of more than %s characters "
@@ -1094,7 +1098,7 @@ msgstr ""
 "Niektóre z pól \"Identyfikator\" składają się z mniejszej liczby znaków niż "
 "%s (%s)."
 
-#: src/BlockBuilder/Validation.php:554
+#: src/BlockBuilder/Validation.php:563
 #, php-format
 msgid ""
 "There are some \"Handle\" fields which consist of characters other than a-zA-"
@@ -1102,7 +1106,7 @@ msgid ""
 msgstr ""
 "Niektóre z pól \"Identyfikator\" składają ze znaków innych niż a-zA-Z_ (%s)."
 
-#: src/BlockBuilder/Validation.php:558
+#: src/BlockBuilder/Validation.php:567
 #, php-format
 msgid ""
 "There are some \"Handle\" fields which start or end with underscore (%s)."
@@ -1110,7 +1114,7 @@ msgstr ""
 "Niektóre z pól \"Identyfikator\" zaczynają lub kończą się znakiem "
 "podkreślenia (%s)."
 
-#: src/BlockBuilder/Validation.php:562
+#: src/BlockBuilder/Validation.php:571
 #, php-format
 msgid ""
 "There are some \"Handle\" fields which consist of two or more consecutive "
@@ -1119,23 +1123,23 @@ msgstr ""
 "Niektóre z pól \"Identyfikator\" składają się z dwóch lub więcej "
 "następujących po sobie znakach dolnego podkreślenia (%s)."
 
-#: src/BlockBuilder/Validation.php:566
+#: src/BlockBuilder/Validation.php:575
 #, php-format
 msgid ""
 "There are some \"Handle\" fields which start with uppercase character (%s)."
 msgstr "Niektóre z pól \"Identyfikator\" zaczynają się od dużej litery (%s)."
 
-#: src/BlockBuilder/Validation.php:570
+#: src/BlockBuilder/Validation.php:579
 #, php-format
 msgid "There are some \"Handle\" fields which are forbidden words (%s)."
 msgstr "Niektóre z pól \"Identyfikator\" używają zabronionych fraz (%s)."
 
-#: src/BlockBuilder/Validation.php:574
+#: src/BlockBuilder/Validation.php:583
 #, php-format
 msgid "All \"Handle\" fields should be unique (%s)."
 msgstr "Wszystkie pola \"Identyfikator\" powinny być unikatowe (%s)."
 
-#: src/BlockBuilder/Validation.php:579
+#: src/BlockBuilder/Validation.php:588
 #, php-format
 msgid ""
 "Invalid entry in one of \"Textarea/Height\" fields, should be a number "
@@ -1144,7 +1148,12 @@ msgstr ""
 "Nieprawidłowa wartość w jednym z pól \"Pole tekstowe/Wysokość\", powinny one "
 "być liczbą z zakresu %s-%s albo być puste (%s)."
 
-#: src/BlockBuilder/Validation.php:584
+#: src/BlockBuilder/Validation.php:593
+#, php-format
+msgid "There are some empty \"Express object handle\" fields (%s)."
+msgstr "Niektóre z pól \"Identyfikator obiektu Express\" są puste (%s)."
+
+#: src/BlockBuilder/Validation.php:598
 #, php-format
 msgid ""
 "Invalid entry in one of \"WYSIWYG Editor/Height\" fields, should be a number "
@@ -1153,14 +1162,14 @@ msgstr ""
 "Nieprawidłowa wartość w jednym z pól \"Edytor WYSIWYG/Wysokość\", powinny "
 "one być liczbą z zakresu %s-%s albo być puste (%s)."
 
-#: src/BlockBuilder/Validation.php:589
+#: src/BlockBuilder/Validation.php:603
 #, php-format
 msgid ""
 "There are some empty \"Single Choice Field/Select options\" fields (%s)."
 msgstr ""
 "Niektóre z pól \"Pole jednokrotnego wyboru/Opcje wyboru\" są puste (%s)."
 
-#: src/BlockBuilder/Validation.php:592
+#: src/BlockBuilder/Validation.php:606
 #, php-format
 msgid ""
 "Invalid entry in one of \"Single Choice Field/Select options\" fields (%s)."
@@ -1168,14 +1177,14 @@ msgstr ""
 "Nieprawidłowa wartość w jednym z pól \"Pole jednokrotnego wyboru/Opcje wyboru"
 "\" (%s)."
 
-#: src/BlockBuilder/Validation.php:597
+#: src/BlockBuilder/Validation.php:611
 #, php-format
 msgid ""
 "There are some empty \"Multiple Choice Field/Select options\" fields (%s)."
 msgstr ""
 "Niektóre z pól \"Pole wielokrotnego wyboru/Opcje wyboru\" są puste (%s)."
 
-#: src/BlockBuilder/Validation.php:600
+#: src/BlockBuilder/Validation.php:614
 #, php-format
 msgid ""
 "Invalid entry in one of \"Multiple Choice Field/Select options\" fields (%s)."
@@ -1183,7 +1192,7 @@ msgstr ""
 "Nieprawidłowa wartość w jednym z pól \"Pole wielokrotnego wyboru/Opcje wyboru"
 "\" (%s)."
 
-#: src/BlockBuilder/Validation.php:605
+#: src/BlockBuilder/Validation.php:619
 #, php-format
 msgid ""
 "Invalid entry in one of \"Image/Generate thumbnail\" fields, you should "
@@ -1192,7 +1201,7 @@ msgstr ""
 "Nieprawidłowa wartość w jednym z pól \"Obraz/Wygeneruj miniaturę\", "
 "powinieneś podać szerokość, wysokość albo obydwie te wartości (%s)."
 
-#: src/BlockBuilder/Validation.php:608
+#: src/BlockBuilder/Validation.php:622
 #, php-format
 msgid ""
 "Invalid entry in one of \"Image/Generate thumbnail\" fields, you should "
@@ -1201,7 +1210,7 @@ msgstr ""
 "Nieprawidłowa wartość w jednym z pól \"Obraz/Wygeneruj miniaturę\", "
 "powinieneś podać szerokość i wysokość jeśli chcesz przyciąć obraz (%s)."
 
-#: src/BlockBuilder/Validation.php:611
+#: src/BlockBuilder/Validation.php:625
 #, php-format
 msgid ""
 "Invalid entry in one of \"Image/Generate thumbnail/Width\" fields, should be "
@@ -1210,7 +1219,7 @@ msgstr ""
 "Nieprawidłowa wartość w jednym z pól \"Obraz/Wygeneruj miniaturę/Szerokość"
 "\", powinne one być liczbami większymi od 0 lub pozostać puste (%s)."
 
-#: src/BlockBuilder/Validation.php:614
+#: src/BlockBuilder/Validation.php:628
 #, php-format
 msgid ""
 "Invalid entry in one of \"Image/Generate thumbnail/Height\" fields, should "
@@ -1219,7 +1228,7 @@ msgstr ""
 "Nieprawidłowa wartość w jednym z pól \"Obraz/Wygeneruj miniaturę/Wysokość\", "
 "powinne one być liczbami większymi od 0 lub pozostać puste (%s)."
 
-#: src/BlockBuilder/Validation.php:618
+#: src/BlockBuilder/Validation.php:632
 #, php-format
 msgid ""
 "Invalid entry in one of \"Image/Generate fullscreen thumbnail\" fields, you "
@@ -1228,7 +1237,7 @@ msgstr ""
 "Nieprawidłowa wartość w jednym z pól \"Obraz/Wygeneruj obraz pełnoekranowy"
 "\", powinieneś podać szerokość, wysokość albo obydwie te wartości (%s)."
 
-#: src/BlockBuilder/Validation.php:621
+#: src/BlockBuilder/Validation.php:635
 #, php-format
 msgid ""
 "Invalid entry in one of \"Image/Generate fullscreen thumbnail\" fields, you "
@@ -1237,7 +1246,7 @@ msgstr ""
 "Nieprawidłowa wartość w jednym z pól \"Obraz/Wygeneruj obraz pełnoekranowy"
 "\", powinieneś podać szerokość i wysokość jeśli chcesz przyciąć obraz (%s)."
 
-#: src/BlockBuilder/Validation.php:624
+#: src/BlockBuilder/Validation.php:638
 #, php-format
 msgid ""
 "Invalid entry in one of \"Image/Generate fullscreen thumbnail/Width\" "
@@ -1246,7 +1255,7 @@ msgstr ""
 "Nieprawidłowa wartość w jednym z pól \"Obraz/Wygeneruj obraz pełnoekranowy/"
 "Szerokość\", powinne one być liczbami większymi od 0 lub pozostać puste (%s)."
 
-#: src/BlockBuilder/Validation.php:627
+#: src/BlockBuilder/Validation.php:641
 #, php-format
 msgid ""
 "Invalid entry in one of \"Image/Generate fullscreen thumbnail/Height\" "
@@ -1255,7 +1264,7 @@ msgstr ""
 "Nieprawidłowa wartość w jednym z pól \"Obraz/Wygeneruj obraz pełnoekranowy/"
 "Wysokość\", powinne one być liczbami większymi od 0 lub pozostać puste (%s)."
 
-#: src/BlockBuilder/Validation.php:632
+#: src/BlockBuilder/Validation.php:646
 #, php-format
 msgid ""
 "Invalid entry in one of \"HTML Editor/Height\" fields, should be a number "
