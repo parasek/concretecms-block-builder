@@ -414,6 +414,16 @@ class ViewPhp
 
                 }
 
+                if ($v['fieldType'] == 'express') {
+
+                    $templateCode = file_get_contents($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . 'view' . DIRECTORY_SEPARATOR . 'express_repeatable.txt');
+                    $templateCode = str_replace('[[[HANDLE]]]', $v['handle'], $templateCode);
+                    $templateCode = str_replace('[[[EXPRESS_HANDLE]]]', $v['expressHandle'], $templateCode);
+
+                    $code .= $templateCode . PHP_EOL . PHP_EOL . PHP_EOL;
+
+                }
+
                 if ($v['fieldType'] == 'html_editor') {
 
                     $code .= BlockBuilderUtility::tab(2) . '<?php if (!empty($entry[\'' . $v['handle'] . '\'])): ?>' . PHP_EOL;

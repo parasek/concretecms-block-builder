@@ -557,6 +557,20 @@ class ControllerPhp
             $code .= PHP_EOL;
             $code .= BlockBuilderUtility::tab(2) . '$this->set(\'entryColumnNames\', $entryColumnNames);' . PHP_EOL . PHP_EOL;
 
+            if ($postDataSummary['expressUsed_entry']) {
+                $code .= BlockBuilderUtility::tab(2) . '// Repeatable Express Entities' . PHP_EOL;
+                $code .= BlockBuilderUtility::tab(2) . '$expressEntity = [];' . PHP_EOL . PHP_EOL;
+                foreach ($postData['entries'] as $k => $v) {
+                    if ($v['fieldType'] == 'express') {
+                        $code .= BlockBuilderUtility::tab(2) . '$' . $v['expressHandle'] . 'Entity = \Express::getObjectByHandle(\'' . $v['expressHandle'] . '\');' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '$expressEntity[\'' . $v['handle'] . '\'] = [' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '\'entity_handle\' => \'' . $v['expressHandle'] . '\',' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '\'entity_id\' => is_object($' . $v['expressHandle'] . 'Entity) ? $' . $v['expressHandle'] . 'Entity->getID() : 0,' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '];' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '$this->set(\'expressEntity\', $expressEntity);' . PHP_EOL . PHP_EOL;
+                    }
+                }
+            }
         }
 
         $code .= BlockBuilderUtility::tab(2) . '// Load form.css' . PHP_EOL;
@@ -1089,7 +1103,7 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= LinkAbstractor::translateTo($entry[\'' . $v['handle'] . '\']);' . PHP_EOL;
                 } else if ($v['fieldType'] == 'html_editor') {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= $entry[\'' . $v['handle'] . '\'];' . PHP_EOL;
-                } else if (in_array($v['fieldType'], ['link_from_sitemap', 'link_from_file_manager', 'image'])) {
+                } else if (in_array($v['fieldType'], ['link_from_sitemap', 'link_from_file_manager', 'image', 'express'])) {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= intval($entry[\'' . $v['handle'] . '\']);' . PHP_EOL;
                 } else if ($v['fieldType'] == 'date_picker') {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($entry[\'' . $v['handle'] . '\']) ? $this->app->make(\'helper/form/date_time\')->translate(\'' . $v['handle'] . '\', $entry) : null;' . PHP_EOL;

@@ -50,6 +50,20 @@ $(function () {
 
         }
 
+        function activateExpressEntrySelectors(parentContainer) {
+
+            var expressEntrySelectors = parentContainer.find('[data-concrete-express-entry-input="js-express-entry-selector"]');
+            expressEntrySelectors.each(function (i, item) {
+                Concrete.Vue.activateContext('cms', function (Vue, config) {
+                    new Vue({
+                        el: item,
+                        components: config.components
+                    })
+                })
+            });
+
+        }
+
         function activateHtmlEditors(parentContainer) {
 
             var htmlEditors = parentContainer.find('.js-html-editor');
@@ -126,6 +140,8 @@ $(function () {
             activatePageSelectors(container);
 
             activateFileSelectors(container);
+
+            activateExpressEntrySelectors(container);
 
             activateHtmlEditors(container);
 

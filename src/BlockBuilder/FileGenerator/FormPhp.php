@@ -1256,6 +1256,28 @@ class FormPhp
 
                 }
 
+                if ($v['fieldType'] == 'express') {
+
+                    $code .= BlockBuilderUtility::tab(6) . '<div class="mb-4">' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(7) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" class="form-label"><?php echo t(\'' . addslashes($v['label']) . '\'); ?>' . $required . '</label>' . PHP_EOL;
+
+                    $code .= BlockBuilderUtility::tab(7) . '<div data-concrete-express-entry-input="js-express-entry-selector">' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(8) . '<concrete-express-entry-input' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(9) . 'entity-id="<?php echo h($expressEntity[\'' . $v['handle'] . '\'][\'entity_id\']); ?>"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(9) . 'entry-id="<%= ' . $v['handle'] . ' ? _.escape(' . $v['handle'] . ') : \'0\' %>"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(9) . 'input-name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(9) . 'choose-text="<?php echo t(\'Choose Entry\'); ?>"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(8) . '></concrete-express-entry-input>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL;
+
+                    if (!empty($v['helpText'])) {
+                        $code .= BlockBuilderUtility::tab(7) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
+                    }
+
+                    $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
+
+                }
+
                 if ($v['fieldType'] == 'external_link') {
 
                     $code .= BlockBuilderUtility::tab(6) . '<div class="mb-4">' . PHP_EOL;
