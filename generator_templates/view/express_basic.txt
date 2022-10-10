@@ -1,9 +1,11 @@
 <?php if (!empty($[[[HANDLE]]])): ?>
+
     <?php
-    $[[[EXPRESS_HANDLE]]] = \Express::getEntry($[[[HANDLE]]]);
-    /** @var Concrete\Core\Entity\Express\Entry $[[[EXPRESS_HANDLE]]] */
+    $[[[EXPRESS_HANDLE]]]_entry = \Express::getEntry($[[[HANDLE]]]);
+    /** @var Concrete\Core\Entity\Express\Entry $[[[EXPRESS_HANDLE]]]_entry */
     ?>
-    <?php if (is_object($[[[EXPRESS_HANDLE]]])): ?>
+
+    <?php if (is_object($[[[EXPRESS_HANDLE]]]_entry)): ?>
 
         <?php
         // These are examples how to display different attributes from Express object
@@ -11,31 +13,31 @@
         ?>
 
         <p style="background: #dadada;">Text:</p>
-        <?php if (!empty($[[[EXPRESS_HANDLE]]]->getAttribute('example_text'))): ?>
-            <?php echo h($[[[EXPRESS_HANDLE]]]->getAttribute('example_text')); ?>
+        <?php if (!empty($[[[EXPRESS_HANDLE]]]_entry->getAttribute('example_text'))): ?>
+            <?php echo h($[[[EXPRESS_HANDLE]]]_entry->getAttribute('example_text')); ?>
         <?php endif; ?>
 
         <p style="background: #dadada;">Duration:</p>
-        <?php if (!empty($[[[EXPRESS_HANDLE]]]->getAttribute('example_duration'))): ?>
-            <?php echo h($[[[EXPRESS_HANDLE]]]->getAttribute('example_duration')); ?>
+        <?php if (!empty($[[[EXPRESS_HANDLE]]]_entry->getAttribute('example_duration'))): ?>
+            <?php echo h($[[[EXPRESS_HANDLE]]]_entry->getAttribute('example_duration')); ?>
         <?php endif; ?>
 
         <p style="background: #dadada;">Text Area:</p>
-        <?php if (!empty($[[[EXPRESS_HANDLE]]]->getAttribute('example_text_area'))): ?>
+        <?php if (!empty($[[[EXPRESS_HANDLE]]]_entry->getAttribute('example_text_area'))): ?>
             <p>Plain Text:</p>
-            <?php echo nl2br(h($[[[EXPRESS_HANDLE]]]->getAttribute('example_text_area'))); ?>
+            <?php echo nl2br(h($[[[EXPRESS_HANDLE]]]_entry->getAttribute('example_text_area'))); ?>
             <p>------------------------------------------------------------</p>
             <p>Rich Text - Default Setting:</p>
-            <?php echo $[[[EXPRESS_HANDLE]]]->getAttribute('example_text_area'); ?>
+            <?php echo $[[[EXPRESS_HANDLE]]]_entry->getAttribute('example_text_area'); ?>
         <?php endif; ?>
 
         <p style="background: #dadada;">Checkbox:</p>
-        <?php if (!empty($[[[EXPRESS_HANDLE]]]->getAttribute('example_checkbox'))): ?>
-            <?php echo h($[[[EXPRESS_HANDLE]]]->getAttribute('example_checkbox')); ?>
+        <?php if (!empty($[[[EXPRESS_HANDLE]]]_entry->getAttribute('example_checkbox'))): ?>
+            <?php echo h($[[[EXPRESS_HANDLE]]]_entry->getAttribute('example_checkbox')); ?>
             <p>------------------------------------------------------------</p>
             <p>Label:</p>
             <?php
-            $key = $[[[EXPRESS_HANDLE]]]->getAttributeValueObject('example_checkbox')->getAttributeKey();
+            $key = $[[[EXPRESS_HANDLE]]]_entry->getAttributeValueObject('example_checkbox')->getAttributeKey();
             $type = $key->getAttributeKeySettings();
             /** @var \Concrete\Core\Entity\Attribute\Key\Settings\BooleanSettings $type */
             $label = $type->getCheckboxLabel();
@@ -44,18 +46,18 @@
         <?php endif; ?>
 
         <p style="background: #dadada;">Date/Time:</p>
-        <?php if (!empty($[[[EXPRESS_HANDLE]]]->getAttribute('example_date_time'))): ?>
+        <?php if (!empty($[[[EXPRESS_HANDLE]]]_entry->getAttribute('example_date_time'))): ?>
             <p>Default Date (honours multilingual settings or use "Custom format"):</p>
-            <?php echo h($[[[EXPRESS_HANDLE]]]->getAttribute('example_date_time', 'display')); ?>
+            <?php echo h($[[[EXPRESS_HANDLE]]]_entry->getAttribute('example_date_time', 'display')); ?>
             <p>------------------------------------------------------------</p>
             <p>Custom format:</p>
-            <?php echo h(date('d.m.Y H:i:s', strtotime($[[[EXPRESS_HANDLE]]]->getAttributeValueObject('example_date_time')->getPlainTextValue()))); ?>
+            <?php echo h(date('d.m.Y H:i:s', strtotime($[[[EXPRESS_HANDLE]]]_entry->getAttributeValueObject('example_date_time')->getPlainTextValue()))); ?>
         <?php endif; ?>
 
         <p style="background: #dadada;">Image/File:</p>
-        <?php if (!empty($[[[EXPRESS_HANDLE]]]->getAttribute('example_image_file'))): ?>
+        <?php if (!empty($[[[EXPRESS_HANDLE]]]_entry->getAttribute('example_image_file'))): ?>
             <?php
-            $file = \Concrete\Core\File\File::getByID($[[[EXPRESS_HANDLE]]]->getAttribute('example_image_file'));
+            $file = \Concrete\Core\File\File::getByID($[[[EXPRESS_HANDLE]]]_entry->getAttribute('example_image_file'));
             /** @var \Concrete\Core\Entity\File\Version $file */
             ?>
             <p>Basic info:</p>
@@ -121,16 +123,16 @@
         <?php endif; ?>
 
         <p style="background: #dadada;">Option List:</p>
-        <?php if (!empty($[[[EXPRESS_HANDLE]]]->getAttribute('example_option_list'))): ?>
-            <?php foreach ($[[[EXPRESS_HANDLE]]]->getAttribute('example_option_list') as $item): ?>
+        <?php if (!empty($[[[EXPRESS_HANDLE]]]_entry->getAttribute('example_option_list'))): ?>
+            <?php foreach ($[[[EXPRESS_HANDLE]]]_entry->getAttribute('example_option_list') as $item): ?>
                 <?php echo h($item); ?><br>
             <?php endforeach; ?>
         <?php endif; ?>
 
         <p style="background: #dadada;">Page Selector:</p>
-        <?php if (!empty($[[[EXPRESS_HANDLE]]]->getAttribute('example_page_selector'))): ?>
+        <?php if (!empty($[[[EXPRESS_HANDLE]]]_entry->getAttribute('example_page_selector'))): ?>
             <p>Default Date (honours multilingual settings or use "Custom format"):</p>
-            <?php $page = \Concrete\Core\Page\Page::getByID($[[[EXPRESS_HANDLE]]]->getAttribute('example_page_selector')) ?>
+            <?php $page = \Concrete\Core\Page\Page::getByID($[[[EXPRESS_HANDLE]]]_entry->getAttribute('example_page_selector')) ?>
             <?php if (is_object($page) and !$page->isError() and !$page->isInTrash()): ?>
                 <?php
                 echo 'Page ID: ' . $page->getCollectionID() . '<br>';
