@@ -566,10 +566,10 @@ class ControllerPhp
                         $code .= BlockBuilderUtility::tab(2) . '$expressEntity[\'' . $v['handle'] . '\'] = [' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(3) . '\'entity_handle\' => \'' . $v['expressHandle'] . '\',' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(3) . '\'entity_id\' => is_object($' . $v['expressHandle'] . 'Entity) ? $' . $v['expressHandle'] . 'Entity->getID() : 0,' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(2) . '];' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(2) . '$this->set(\'expressEntity\', $expressEntity);' . PHP_EOL . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '];' . PHP_EOL . PHP_EOL;
                     }
                 }
+                $code .= BlockBuilderUtility::tab(2) . '$this->set(\'expressEntity\', $expressEntity);' . PHP_EOL . PHP_EOL;
             }
         }
 
