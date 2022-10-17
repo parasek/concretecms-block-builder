@@ -27,14 +27,6 @@
                 $link     = $fileObject->getURL();
                 $filename = $fileObject->getFileName();
 
-                if (empty($text)) {
-                    $text = $filename;
-                }
-
-                if (empty($title)) {
-                    $title = $filename;
-                }
-
             }
 
         }

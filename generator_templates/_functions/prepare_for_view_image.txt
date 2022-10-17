@@ -54,7 +54,13 @@
                 $relativePath = $fileObject->getRelativePath();
 
                 if (empty($alt)) {
-                    $alt = $filename;
+                    $alt = $fileObject->getTitle();
+                    $removableExtensions = ['jpg', 'jpeg', 'png', 'tiff', 'svg', 'webp'];
+                    $extension = strtolower(pathinfo($alt, PATHINFO_EXTENSION));
+                    if (!empty($extension) and in_array($extension, $removableExtensions)) {
+                        $alt = pathinfo($alt, PATHINFO_FILENAME); // Remove extension
+                        $alt = preg_replace('/ - [0-9]*$/', '', $alt); // Remove counter at the end of file name, " - 001", " - 002" and so on.
+                    }
                 }
 
                 // Original image
