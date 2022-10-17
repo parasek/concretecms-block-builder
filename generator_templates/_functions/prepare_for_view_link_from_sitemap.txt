@@ -26,14 +26,6 @@
                 $link = $pageObject->getCollectionLink();
                 $name = $pageObject->getCollectionName();
 
-                if (empty($text)) {
-                    $text = $name;
-                }
-
-                if (empty($title)) {
-                    $title = $name;
-                }
-
             }
         }
 
