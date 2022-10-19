@@ -105,20 +105,24 @@
             <?php endif; ?>
             <p>------------------------------------------------------------</p>
             <p>Default picture tag:</p>
-            <?php echo $app->make('html/image', ['f' => $file])->getTag(); ?>
+            <?php if (is_object($file) and $file->canEdit()): ?>
+                <?php echo $app->make('html/image', ['f' => $file])->getTag(); ?>
+            <?php endif; ?>
             <p>------------------------------------------------------------</p>
             <p>Concrete Thumbnail (Dashboard / System & Settings / Files / Thumbnails):</p>
-            <?php
-            $type = \Concrete\Core\File\Image\Thumbnail\Type\Type::getByHandle('file_manager_listing'); ?>
-            <?php if (is_object($file) and $type instanceof \Concrete\Core\Entity\File\Image\Thumbnail\Type\Type): ?>
+            <?php if (is_object($file) and $file->canEdit()): ?>
                 <?php
-                $src = $file->getThumbnailURL($type->getBaseVersion()); // or $type->getDoubledVersion()
-                ?>
-                <img src="<?php echo h($src); ?>"
-                     width="<?php echo h($type->getWidth()); ?>"
-                     height="<?php echo h($type->getHeight()); ?>"
-                     alt="<?php echo h($file->getTitle()); ?>"
-                >
+                $type = \Concrete\Core\File\Image\Thumbnail\Type\Type::getByHandle('file_manager_listing'); ?>
+                <?php if (is_object($file) and $type instanceof \Concrete\Core\Entity\File\Image\Thumbnail\Type\Type): ?>
+                    <?php
+                    $src = $file->getThumbnailURL($type->getBaseVersion()); // or $type->getDoubledVersion()
+                    ?>
+                    <img src="<?php echo h($src); ?>"
+                         width="<?php echo h($type->getWidth()); ?>"
+                         height="<?php echo h($type->getHeight()); ?>"
+                         alt="<?php echo h($file->getTitle()); ?>"
+                    >
+                <?php endif; ?>
             <?php endif; ?>
         <?php endif; ?>
 

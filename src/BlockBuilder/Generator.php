@@ -54,6 +54,7 @@ class Generator
         $postDataSummary['linkFromFileManagerUsed'] = false;
         $postDataSummary['externalLinkUsed'] = false;
         $postDataSummary['imageUsed'] = false;
+        $postDataSummary['fileSetUsed'] = false;
 
         $postDataSummary['wysiwygEditorUsed_entry'] = false;
         $postDataSummary['htmlEditorUsed_entry'] = false;
@@ -63,6 +64,7 @@ class Generator
         $postDataSummary['externalLinkUsed_entry'] = false;
         $postDataSummary['imageUsed_entry'] = false;
         $postDataSummary['expressUsed_entry'] = false;
+        $postDataSummary['fileSetUsed_entry'] = false;
         $postDataSummary['datePickerUsed_entry'] = false;
 
         $postDataSummary['entryTitleSource'] = false;
@@ -125,6 +127,10 @@ class Generator
 
                 if ($v['fieldType'] == 'image') {
                     $postDataSummary['imageUsed'] = true;
+                }
+
+                if ($v['fieldType'] == 'file_set') {
+                    $postDataSummary['fileSetUsed'] = true;
                 }
 
             }
@@ -204,6 +210,10 @@ class Generator
 
                 if ($v['fieldType'] == 'express') {
                     $postDataSummary['expressUsed_entry'] = true;
+                }
+
+                if ($v['fieldType'] == 'file_set') {
+                    $postDataSummary['fileSetUsed_entry'] = true;
                 }
 
                 if ($v['fieldType'] == 'date_picker') {

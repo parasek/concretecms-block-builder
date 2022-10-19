@@ -1,5 +1,5 @@
 {
-    "version": "2.3.0",
+    "version": "2.4.0",
     "blockName": "All Fields",
     "blockHandle": "all_fields",
     "blockDescription": "All types of Fields (Basic + Repeatable)",
@@ -163,6 +163,13 @@
             "helpText": "",
             "expressHandle": "teacher"
         },
+        "18": {
+            "fieldType": "file_set",
+            "label": "Basic File Set 1",
+            "handle": "basic_file_set_first",
+            "helpText": "",
+            "fileSetPrefix": "Gallery - "
+        },
         "16": {
             "fieldType": "html_editor",
             "label": "Basic HTML Editor 1",
@@ -287,6 +294,13 @@
             "handle": "repeatable_express_first",
             "helpText": "",
             "expressHandle": "teacher"
+        },
+        "18": {
+            "fieldType": "file_set",
+            "label": "Repeatable File Set 1",
+            "handle": "repeatable_file_set_first",
+            "helpText": "",
+            "fileSetPrefix": ""
         },
         "16": {
             "fieldType": "html_editor",

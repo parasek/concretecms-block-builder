@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2022-10-19 13:43+0200\n"
-"PO-Revision-Date: 2022-10-19 13:45+0200\n"
+"POT-Creation-Date: 2022-10-19 20:41+0200\n"
+"PO-Revision-Date: 2022-10-19 20:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pl_PL\n"
@@ -29,7 +29,7 @@ msgstr ""
 "wpisów)."
 
 #: controllers/ajax.php:29 controllers/ajax.php:41 controllers/ajax.php:55
-#: src/BlockBuilder/Generator.php:297
+#: src/BlockBuilder/Generator.php:307
 msgid "Oops! Something went wrong..."
 msgstr "Uups! Coś poszło nie tak..."
 
@@ -252,14 +252,14 @@ msgstr "Otwórz w nowym oknie"
 #: single_pages/dashboard/blocks/block_builder.php:868
 #: single_pages/dashboard/blocks/block_builder.php:918
 #: single_pages/dashboard/blocks/block_builder.php:931
-#: src/BlockBuilder/OptionList.php:41 src/BlockBuilder/OptionList.php:87
+#: src/BlockBuilder/OptionList.php:41 src/BlockBuilder/OptionList.php:88
 msgid "Yes"
 msgstr "Tak"
 
 #: controllers/single_page/dashboard/blocks/block_builder.php:195
 #: single_pages/dashboard/blocks/block_builder.php:292
 #: single_pages/dashboard/blocks/block_builder.php:293
-#: src/BlockBuilder/OptionList.php:40 src/BlockBuilder/OptionList.php:86
+#: src/BlockBuilder/OptionList.php:40 src/BlockBuilder/OptionList.php:87
 msgid "No"
 msgstr "Nie"
 
@@ -290,7 +290,7 @@ msgstr "Szerokość"
 #: single_pages/dashboard/blocks/block_builder.php:588
 #: single_pages/dashboard/blocks/block_builder.php:834
 #: single_pages/dashboard/blocks/block_builder.php:897
-#: single_pages/dashboard/blocks/block_builder.php:952
+#: single_pages/dashboard/blocks/block_builder.php:965
 msgid "Height"
 msgstr "Wysokość"
 
@@ -599,7 +599,7 @@ msgid "It will look exactly like this text"
 msgstr "Będzie on wyglądać dokładnie jak niniejsze zdanie"
 
 #: single_pages/dashboard/blocks/block_builder.php:582
-#: single_pages/dashboard/blocks/block_builder.php:963
+#: single_pages/dashboard/blocks/block_builder.php:976
 #, php-format
 msgid "Default height: %s."
 msgstr "Standardowa wysokość: %s."
@@ -712,11 +712,15 @@ msgstr ""
 msgid "Express object handle"
 msgstr "Identyfikator obiektu Express"
 
-#: single_pages/dashboard/blocks/block_builder.php:970
+#: single_pages/dashboard/blocks/block_builder.php:952
+msgid "Restrict File Set selection to those starting with:"
+msgstr "Ogranicz wybór zestawów plików do tych zaczynających się od:"
+
+#: single_pages/dashboard/blocks/block_builder.php:983
 msgid "PHP Date Pattern"
 msgstr "Wzorzec PHP daty"
 
-#: single_pages/dashboard/blocks/block_builder.php:978
+#: single_pages/dashboard/blocks/block_builder.php:991
 #, php-format
 msgid ""
 "Check %sphp manual%s for available formats. Examples: <code>d.m.Y</code>, "
@@ -727,7 +731,7 @@ msgstr ""
 "code>, <code>d-m-Y</code>, <code>Y-m-d</code>, <code>m-d-Y</code>, <code>m/d/"
 "Y</code>"
 
-#: single_pages/dashboard/blocks/block_builder.php:995
+#: single_pages/dashboard/blocks/block_builder.php:1008
 msgid "You haven't added any field types yet."
 msgstr "Nie dodałeś jeszcze żadnych typów pól."
 
@@ -872,12 +876,12 @@ msgstr ""
 "przetestować, ale niektóre brzegowe przypadki mogły prześlizgnąć się przez "
 "proces testowania."
 
-#: src/BlockBuilder/Generator.php:287
+#: src/BlockBuilder/Generator.php:297
 msgid "Folder couldn't be created. Check your write permissions."
 msgstr ""
 "Folder nie mógł zostać utworzony. Sprawdź czy masz odpowiednie prawa zapisu."
 
-#: src/BlockBuilder/Generator.php:293
+#: src/BlockBuilder/Generator.php:303
 msgid "You do not have permission to install custom block types or add-ons."
 msgstr ""
 "Nie masz uprawnień by instalować niestandardowe typy bloków lub paczki."
@@ -939,46 +943,50 @@ msgid "Image"
 msgstr "Obraz"
 
 #: src/BlockBuilder/OptionList.php:63
+msgid "File Set"
+msgstr "Zestaw plików"
+
+#: src/BlockBuilder/OptionList.php:64
 msgid "HTML Editor"
 msgstr "Edytor HTML"
 
-#: src/BlockBuilder/OptionList.php:64
+#: src/BlockBuilder/OptionList.php:65
 msgid "Date Picker"
 msgstr "Wybór daty"
 
-#: src/BlockBuilder/OptionList.php:74
+#: src/BlockBuilder/OptionList.php:75
 msgid "Only if the field type consists of more than 1 element (default)"
 msgstr "Tylko, jeśli typ pola zawiera więcej niż jeden element (standardowe)"
 
-#: src/BlockBuilder/OptionList.php:75
+#: src/BlockBuilder/OptionList.php:76
 msgid "Always"
 msgstr "Zawsze"
 
-#: src/BlockBuilder/OptionList.php:76
+#: src/BlockBuilder/OptionList.php:77
 msgid "Never"
 msgstr "Nigdy"
 
-#: src/BlockBuilder/OptionList.php:97
+#: src/BlockBuilder/OptionList.php:98
 msgid "Default Select Field"
 msgstr "Standardowe pole wyboru"
 
-#: src/BlockBuilder/OptionList.php:98
+#: src/BlockBuilder/OptionList.php:99
 msgid "Enhanced Select Field"
 msgstr "Ulepszone pole wyboru"
 
-#: src/BlockBuilder/OptionList.php:99
+#: src/BlockBuilder/OptionList.php:100
 msgid "Radio List"
 msgstr "Lista wyboru radio"
 
-#: src/BlockBuilder/OptionList.php:110
+#: src/BlockBuilder/OptionList.php:111
 msgid "Default Multiselect Field"
 msgstr "Standardowe pole multiselect"
 
-#: src/BlockBuilder/OptionList.php:111
+#: src/BlockBuilder/OptionList.php:112
 msgid "Enhanced Multiselect Field"
 msgstr "Ulepszone pole multiselect"
 
-#: src/BlockBuilder/OptionList.php:112
+#: src/BlockBuilder/OptionList.php:113
 msgid "Checkbox List"
 msgstr "Lista wyboru checkbox"
 

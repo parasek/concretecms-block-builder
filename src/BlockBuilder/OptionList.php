@@ -60,6 +60,7 @@ class OptionList
         $options['external_link'] = t('External Link');
         $options['image'] = t('Image');
         $options['express'] = t('Express');
+        $options['file_set'] = t('File Set');
         $options['html_editor'] = t('HTML Editor');
         $options['date_picker'] = t('Date Picker');
 

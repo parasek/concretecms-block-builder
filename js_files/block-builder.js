@@ -187,6 +187,9 @@ $(function () {
                 // express
                 templateData['expressHandle'] = '';
 
+                // file_set
+                templateData['fileSetPrefix'] = '';
+
                 // html_editor
                 templateData['htmlEditorHeight'] = '';
 

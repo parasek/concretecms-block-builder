@@ -1,0 +1,21 @@
+    private function getFileSets($fileSetPrefix = null) {
+        $data = [];
+
+        $data[] = '----';
+
+        $list = new FileSetList();
+        if ($fileSetPrefix) {
+            $list->filter('fsName', $fileSetPrefix . '%', 'like');
+        }
+        $fileSets = $list->get();
+
+        foreach ($fileSets as $fileSet) {
+            $fileSetName = $fileSet->getFileSetName();
+            if ($fileSetPrefix) {
+                $fileSetName = preg_replace('/^' . $fileSetPrefix . '/', '', $fileSetName);
+            }
+            $data[$fileSet->getFileSetID()] = $fileSetName;
+        }
+
+        return $data;
+    }

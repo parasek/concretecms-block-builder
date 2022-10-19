@@ -1,5 +1,5 @@
 {
-    "version": "2.3.0",
+    "version": "2.4.0",
     "blockName": "Single\/Multiple Choice Field",
     "blockHandle": "single_multiple_choice_field",
     "blockDescription": "All types of Single\/Multiple Choice Fields (Basic + Repeatable)",

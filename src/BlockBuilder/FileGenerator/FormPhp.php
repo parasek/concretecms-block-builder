@@ -720,6 +720,29 @@ class FormPhp
 
                 }
 
+                if ($v['fieldType'] == 'file_set') {
+
+                    $code .= BlockBuilderUtility::tab(3) . '<div class="mb-4">' . PHP_EOL;
+
+                    $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '\'), t(\'' . addslashes($v['label']) . '\')' . $required . '); ?>' . PHP_EOL ;
+
+                    if (!empty($v['fileSetPrefix'])) {
+                        $code .= BlockBuilderUtility::tab(4) . '<div class="input-group">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '<span class="input-group-text">' . $v['fileSetPrefix'] . '</span>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '<?php echo $form->select($view->field(\'' . $v['handle'] . '\'), $' . $v['handle'] . '_fileSets, $' . $v['handle'] . '); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(4) . '</div>' . PHP_EOL;
+                    } else {
+                        $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->select($view->field(\'' . $v['handle'] . '\'), $' . $v['handle'] . '_fileSets, $' . $v['handle'] . '); ?>' . PHP_EOL;
+                    }
+
+                    if (!empty($v['helpText'])) {
+                        $code .= BlockBuilderUtility::tab(4) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
+                    }
+
+                    $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL;
+
+                }
+
                 if ($v['fieldType'] == 'html_editor') {
 
                     $height = !empty($v['htmlEditorHeight']) ? $v['htmlEditorHeight'] : 250;
@@ -1274,6 +1297,35 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(7) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
                     }
 
+                    $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
+
+                }
+
+                if ($v['fieldType'] == 'file_set') {
+
+                    $code .= BlockBuilderUtility::tab(6) . '<div class="mb-4">' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(7) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" class="form-label"><?php echo t(\'' . addslashes($v['label']) . '\'); ?>' . $required . '</label>' . PHP_EOL;
+
+                    if (!empty($v['fileSetPrefix'])) {
+                        $code .= BlockBuilderUtility::tab(7) . '<div class="input-group">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . '<span class="input-group-text">' . $v['fileSetPrefix'] . '</span>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . '<select id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" class="form-select">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(9) . '<?php foreach ($entry_' . $v['handle'] . '_fileSets as $k => $v): ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(10) . '<option value="<?php echo $k; ?>" <% if (' . $v['handle'] . '==\'<?php echo $k; ?>\') { %>selected="selected"<% } %> ><?php echo h($v); ?></option>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(9) . '<?php endforeach; ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . '</select>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL;
+                    } else {
+                        $code .= BlockBuilderUtility::tab(7) . '<select id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" class="form-select">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . '<?php foreach ($entry_' . $v['handle'] . '_fileSets as $k => $v): ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(9) . '<option value="<?php echo $k; ?>" <% if (' . $v['handle'] . '==\'<?php echo $k; ?>\') { %>selected="selected"<% } %> ><?php echo h($v); ?></option>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . '<?php endforeach; ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '</select>' . PHP_EOL;
+                    }
+
+                    if (!empty($v['helpText'])) {
+                        $code .= BlockBuilderUtility::tab(7) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
+                    }
                     $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
 
                 }
