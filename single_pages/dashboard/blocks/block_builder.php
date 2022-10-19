@@ -1,4 +1,8 @@
-<?php defined('C5_EXECUTE') or die('Access Denied.'); ?>
+<?php defined('C5_EXECUTE') or die('Access Denied.');
+
+use Concrete\Core\System\Info as SystemInfo;
+
+?>
 
 <?php if (!empty($errors)): ?>
     <div class="alert alert-danger alert-dismissible">
@@ -26,6 +30,12 @@
 
     <div class="mb-4 small text-muted">
         <?php echo t('Discard current changes and <a href="%s">create new block</a> from scratch or <a href="%s">load configuration</a> from existing blocks.', $this->action(''), $this->action('configs')); ?>
+    </div>
+
+    <div class="mb-4">
+        <span class="small badge rounded-pill bg-secondary"><?php echo t('Block Builder Version'); ?></span> <?php echo $systemInfo['block_builder_version'] ?? t('No info'); ?>
+        <span class="small badge rounded-pill bg-secondary ms-2"><?php echo t('Concrete Version'); ?></span> <?php echo $systemInfo['concrete_version'] ?? t('No info'); ?>
+        <span class="small badge rounded-pill bg-secondary ms-2"><?php echo t('PHP Version'); ?></span> <?php echo $systemInfo['php_version'] ?? t('No info'); ?>
     </div>
 
     <input type="hidden" id="ajaxCsrfToken" value="<?php echo $ajaxCsrfToken; ?>"/>

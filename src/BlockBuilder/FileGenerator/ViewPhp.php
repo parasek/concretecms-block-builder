@@ -170,7 +170,7 @@ class ViewPhp
                     $code .= '<?php if (!empty($' . $v['handle'] . '_link)): ?>' . PHP_EOL;
 
                     $code .= BlockBuilderUtility::tab(1) . '<?php // Original image ?>' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(1) . '<img src="<?php echo $' . $v['handle'] . '_link; ?>" alt="<?php echo h($' . $v['handle'] . '_alt); ?>" width="<?php echo $' . $v['handle'] . '_width; ?>" height="<?php echo $' . $v['handle'] . '_height; ?>" />' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(1) . '<img src="<?php echo $' . $v['handle'] . '_link; ?>" alt="<?php echo h($' . $v['handle'] . '_alt); ?>" width="<?php echo $' . $v['handle'] . '_width; ?>" height="<?php echo $' . $v['handle'] . '_height; ?>">' . PHP_EOL;
 
                     $code .= '<?php endif; ?>' . PHP_EOL . PHP_EOL;
 
@@ -178,7 +178,7 @@ class ViewPhp
                         $code .= '<?php if (!empty($' . $v['handle'] . '_fullscreenLink)): ?>' . PHP_EOL;
 
                         $code .= BlockBuilderUtility::tab(1) . '<?php // Fullscreen image ?>' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(1) . '<img src="<?php echo $' . $v['handle'] . '_fullscreenLink; ?>" alt="<?php echo h($' . $v['handle'] . '_alt); ?>" width="<?php echo $' . $v['handle'] . '_fullscreenWidth; ?>" height="<?php echo $' . $v['handle'] . '_fullscreenHeight; ?>" />' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(1) . '<img src="<?php echo $' . $v['handle'] . '_fullscreenLink; ?>" alt="<?php echo h($' . $v['handle'] . '_alt); ?>" width="<?php echo $' . $v['handle'] . '_fullscreenWidth; ?>" height="<?php echo $' . $v['handle'] . '_fullscreenHeight; ?>">' . PHP_EOL;
 
                         $code .= '<?php endif; ?>' . PHP_EOL . PHP_EOL;
                     }
@@ -187,7 +187,7 @@ class ViewPhp
                         $code .= '<?php if (!empty($' . $v['handle'] . '_thumbnailLink)): ?>' . PHP_EOL;
 
                         $code .= BlockBuilderUtility::tab(1) . '<?php // Thumbnail image ?>' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(1) . '<img src="<?php echo $' . $v['handle'] . '_thumbnailLink; ?>" alt="<?php echo h($' . $v['handle'] . '_alt); ?>" width="<?php echo $' . $v['handle'] . '_thumbnailWidth; ?>" height="<?php echo $' . $v['handle'] . '_thumbnailHeight; ?>" />' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(1) . '<img src="<?php echo $' . $v['handle'] . '_thumbnailLink; ?>" alt="<?php echo h($' . $v['handle'] . '_alt); ?>" width="<?php echo $' . $v['handle'] . '_thumbnailWidth; ?>" height="<?php echo $' . $v['handle'] . '_thumbnailHeight; ?>">' . PHP_EOL;
 
                         $code .= '<?php endif; ?>' . PHP_EOL . PHP_EOL;
                     }
@@ -388,7 +388,7 @@ class ViewPhp
                     $code .= BlockBuilderUtility::tab(2) . '<?php if (!empty($entry[\'' . $v['handle'] . '_link\'])): ?>' . PHP_EOL;
 
                     $code .= BlockBuilderUtility::tab(3) . '<?php // Original image ?>' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(3) . '<img src="<?php echo $entry[\'' . $v['handle'] . '_link\']; ?>" alt="<?php echo h($entry[\'' . $v['handle'] . '_alt\']); ?>" width="<?php echo $entry[\'' . $v['handle'] . '_width\']; ?>" height="<?php echo $entry[\'' . $v['handle'] . '_height\']; ?>" />' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '<img src="<?php echo $entry[\'' . $v['handle'] . '_link\']; ?>" alt="<?php echo h($entry[\'' . $v['handle'] . '_alt\']); ?>" width="<?php echo $entry[\'' . $v['handle'] . '_width\']; ?>" height="<?php echo $entry[\'' . $v['handle'] . '_height\']; ?>">' . PHP_EOL;
 
                     $code .= BlockBuilderUtility::tab(2) . '<?php endif; ?>' . PHP_EOL . PHP_EOL;
 
@@ -396,7 +396,7 @@ class ViewPhp
                         $code .= BlockBuilderUtility::tab(2) . '<?php if (!empty($entry[\'' . $v['handle'] . '_fullscreenLink\'])): ?>' . PHP_EOL;
 
                         $code .= BlockBuilderUtility::tab(3) . '<?php // Fullscreen image ?>' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(3) . '<img src="<?php echo $entry[\'' . $v['handle'] . '_fullscreenLink\']; ?>" alt="<?php echo h($entry[\'' . $v['handle'] . '_alt\']); ?>" width="<?php echo $entry[\'' . $v['handle'] . '_fullscreenWidth\']; ?>" height="<?php echo $entry[\'' . $v['handle'] . '_fullscreenHeight\']; ?>" />' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '<img src="<?php echo $entry[\'' . $v['handle'] . '_fullscreenLink\']; ?>" alt="<?php echo h($entry[\'' . $v['handle'] . '_alt\']); ?>" width="<?php echo $entry[\'' . $v['handle'] . '_fullscreenWidth\']; ?>" height="<?php echo $entry[\'' . $v['handle'] . '_fullscreenHeight\']; ?>">' . PHP_EOL;
 
                         $code .= BlockBuilderUtility::tab(2) . '<?php endif; ?>' . PHP_EOL . PHP_EOL;
                     }
@@ -405,7 +405,7 @@ class ViewPhp
                         $code .= BlockBuilderUtility::tab(2) . '<?php if (!empty($entry[\'' . $v['handle'] . '_thumbnailLink\'])): ?>' . PHP_EOL;
 
                         $code .= BlockBuilderUtility::tab(3) . '<?php // Thumbnail image ?>' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(3) . '<img src="<?php echo $entry[\'' . $v['handle'] . '_thumbnailLink\']; ?>" alt="<?php echo h($entry[\'' . $v['handle'] . '_alt\']); ?>" width="<?php echo $entry[\'' . $v['handle'] . '_thumbnailWidth\']; ?>" height="<?php echo $entry[\'' . $v['handle'] . '_thumbnailHeight\']; ?>" />' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '<img src="<?php echo $entry[\'' . $v['handle'] . '_thumbnailLink\']; ?>" alt="<?php echo h($entry[\'' . $v['handle'] . '_alt\']); ?>" width="<?php echo $entry[\'' . $v['handle'] . '_thumbnailWidth\']; ?>" height="<?php echo $entry[\'' . $v['handle'] . '_thumbnailHeight\']; ?>">' . PHP_EOL;
 
                         $code .= BlockBuilderUtility::tab(2) . '<?php endif; ?>' . PHP_EOL . PHP_EOL;
                     }

@@ -1,16 +1,24 @@
 <?php defined('C5_EXECUTE') or die('Access Denied.'); ?>
 
 <div class="ccm-dashboard-header-buttons">
-    <a href="<?php echo $app->make('url/manager')->resolve(['dashboard/blocks/block_builder']); ?>" class="btn btn-secondary"><i class="fas fa-angle-double-left"></i> <?php echo t('Go back'); ?></a>
+    <a href="<?php echo $app->make('url/manager')->resolve(['dashboard/blocks/block_builder']); ?>"
+       class="btn btn-secondary"><i class="fas fa-angle-double-left"></i> <?php echo t('Go back'); ?></a>
 </div>
 
+<div class="mb-4">
+    <span
+        class="small badge rounded-pill bg-secondary"><?php echo t('Block Builder Version'); ?></span> <?php echo $systemInfo['block_builder_version'] ?? t('No info'); ?>
+    <span
+        class="small badge rounded-pill bg-secondary ms-2"><?php echo t('Concrete Version'); ?></span> <?php echo $systemInfo['concrete_version'] ?? t('No info'); ?>
+    <span
+        class="small badge rounded-pill bg-secondary ms-2"><?php echo t('PHP Version'); ?></span> <?php echo $systemInfo['php_version'] ?? t('No info'); ?>
+</div>
+
+<div class="mb-4">
+    <p><?php echo t('Configuration files found in existing blocks:'); ?></p>
+</div>
 
 <?php if (is_array($blockTypes) and count($blockTypes)): ?>
-
-    <div class="mb-4">
-        <p><?php echo t('Current package version:'); ?> <?php echo $pkgVersion ?></p>
-        <p><?php echo t('Configuration files found in existing blocks:'); ?></p>
-    </div>
 
     <?php foreach ($blockTypes as $blockType): ?>
 
@@ -27,11 +35,12 @@
 
                 <?php if ($blockType['version']): ?>
                     <br/>
-                    <small class="text-muted"><?php echo t('Version'); ?>: <?php echo h($blockType['version']); ?></small>
+                    <small class="text-muted"><?php echo t('Version'); ?>
+                        : <?php echo h($blockType['version']); ?></small>
                 <?php endif; ?>
             </a>
             <a href="<?php echo $app->make('url/manager')->resolve(['/dashboard/blocks/block_builder/config/refresh/' . $blockType['handle']]); ?>"
-                class="block-type-refresh"
+               class="block-type-refresh"
             >
                 <i class="fas fa-hammer me-2"></i> <?php echo t('Rebuild and refresh'); ?><br/>
                 <?php echo t('(experimental)'); ?>
@@ -68,7 +77,8 @@
             <br/>
 
             <?php if ($predefinedConfig['version']): ?>
-                <small class="text-muted"><?php echo t('Version'); ?>: <?php echo h($predefinedConfig['version']); ?></small>
+                <small class="text-muted"><?php echo t('Block Builder Version'); ?>
+                    : <?php echo h($predefinedConfig['version']); ?></small>
             <?php endif; ?>
         </a>
     </div>
