@@ -3,6 +3,7 @@
 use Concrete\Core\Asset\AssetList;
 use Concrete\Core\Page\Controller\DashboardPageController;
 use Concrete\Core\Permission\Checker as Permissions;
+use Concrete\Core\System\Info as SystemInfo;
 use Concrete\Core\Validation\CSRF\Token;
 use Concrete\Core\Support\Facade\Package;
 use BlockBuilder\Generator as BlockBuilderGenerator;
@@ -221,6 +222,7 @@ class BlockBuilder extends DashboardPageController
         $this->requireAsset('css', 'bb/styles');
         $this->requireAsset('javascript', 'bb/scripts');
 
+        $this->set('systemInfo', $this->getSystemInfo());
     }
 
     public function config($type, $configBlockHandle)
@@ -352,7 +354,7 @@ class BlockBuilder extends DashboardPageController
         $this->set('blockTypes', $blockTypes);
 
         // Predefined configs
-        $predefinedConfigPaths = glob(DIR_PACKAGES . DIRECTORY_SEPARATOR . $pkg->getPackageHandle() . DIRECTORY_SEPARATOR . 'predefined_configs' . DIRECTORY_SEPARATOR .  '*');
+        $predefinedConfigPaths = glob(DIR_PACKAGES . DIRECTORY_SEPARATOR . $pkg->getPackageHandle() . DIRECTORY_SEPARATOR . 'predefined_configs' . DIRECTORY_SEPARATOR . '*');
 
         $predefinedConfigs = [];
         $i = 0;
@@ -371,6 +373,9 @@ class BlockBuilder extends DashboardPageController
         }
         $this->set('predefinedConfigs', $predefinedConfigs);
 
+        $this->set('pageTitle', t('Load existing configurations'));
+        $this->set('systemInfo', $this->getSystemInfo());
+
         $this->render('dashboard/blocks/block_builder/configs');
 
     }
@@ -380,7 +385,8 @@ class BlockBuilder extends DashboardPageController
         $this->render('dashboard/blocks/block_builder/refresh_warning');
     }
 
-    private function removeDirectory($dir) {
+    private function removeDirectory($dir)
+    {
         if (!file_exists($dir)) {
             return true;
         }
@@ -403,4 +409,14 @@ class BlockBuilder extends DashboardPageController
         return rmdir($dir);
     }
 
+    private function getSystemInfo()
+    {
+        $pkg = Package::getByHandle('block_builder');
+        $info = $this->app->make(SystemInfo::class);
+        return [
+            'block_builder_version' => $pkg->getPackageVersion(),
+            'concrete_version' => $this->app->make('config')->get('concrete.version'),
+            'php_version' => $info->getPhpVersion(),
+        ];
+    }
 }
