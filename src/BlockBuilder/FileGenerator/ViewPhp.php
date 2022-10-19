@@ -202,7 +202,16 @@ class ViewPhp
                     $templateCode = str_replace('[[[HANDLE]]]', $v['handle'], $templateCode);
                     $templateCode = str_replace('[[[EXPRESS_HANDLE]]]', $v['expressHandle'], $templateCode);
 
-                    $code .= $templateCode . PHP_EOL . PHP_EOL . PHP_EOL;
+                    $code .= $templateCode . PHP_EOL . PHP_EOL;
+
+                }
+
+                if ($v['fieldType'] == 'file_set') {
+
+                    $templateCode = file_get_contents($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . 'view' . DIRECTORY_SEPARATOR . 'file_set_basic.txt');
+                    $templateCode = str_replace('[[[HANDLE]]]', $v['handle'], $templateCode);
+
+                    $code .= $templateCode . PHP_EOL . PHP_EOL;
 
                 }
 
@@ -420,7 +429,16 @@ class ViewPhp
                     $templateCode = str_replace('[[[HANDLE]]]', $v['handle'], $templateCode);
                     $templateCode = str_replace('[[[EXPRESS_HANDLE]]]', $v['expressHandle'], $templateCode);
 
-                    $code .= $templateCode . PHP_EOL . PHP_EOL . PHP_EOL;
+                    $code .= $templateCode . PHP_EOL . PHP_EOL;
+
+                }
+
+                if ($v['fieldType'] == 'file_set') {
+
+                    $templateCode = file_get_contents($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . 'view' . DIRECTORY_SEPARATOR . 'file_set_repeatable.txt');
+                    $templateCode = str_replace('[[[HANDLE]]]', $v['handle'], $templateCode);
+
+                    $code .= $templateCode . PHP_EOL . PHP_EOL;
 
                 }
 

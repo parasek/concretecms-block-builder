@@ -1,5 +1,5 @@
 {
-    "version": "2.3.0",
+    "version": "2.4.0",
     "blockName": "All Fields x2",
     "blockHandle": "all_fields_double",
     "blockDescription": "All types of Fields (Basic + Repeatable) x2",
@@ -291,6 +291,20 @@
             "helpText": "",
             "expressHandle": "worker"
         },
+        "35": {
+            "fieldType": "file_set",
+            "label": "Basic File Set 1",
+            "handle": "basic_file_set_first",
+            "helpText": "",
+            "fileSetPrefix": ""
+        },
+        "36": {
+            "fieldType": "file_set",
+            "label": "Basic File Set 2",
+            "handle": "basic_file_set_second",
+            "helpText": "",
+            "fileSetPrefix": "Gallery - "
+        },
         "31": {
             "fieldType": "html_editor",
             "label": "Basic HTML Editor 1",
@@ -558,6 +572,20 @@
             "handle": "repeatable_express_second",
             "helpText": "",
             "expressHandle": "worker"
+        },
+        "35": {
+            "fieldType": "file_set",
+            "label": "Repeatable File Set 1",
+            "handle": "repeatable_file_set_first",
+            "helpText": "",
+            "fileSetPrefix": ""
+        },
+        "36": {
+            "fieldType": "file_set",
+            "label": "Repeatable File Set 2",
+            "handle": "repeatable_file_set_second",
+            "helpText": "",
+            "fileSetPrefix": "Gallery \/ "
         },
         "31": {
             "fieldType": "html_editor",

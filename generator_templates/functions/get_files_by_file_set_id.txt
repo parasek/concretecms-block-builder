@@ -1,0 +1,16 @@
+    protected function getFilesByFileSetID($fileSetID)
+    {
+        $files = [];
+
+        if (!empty($fileSetID)) {
+            $fileSet = FileSet::getByID($fileSetID);
+            if (is_object($fileSet)) {
+                $list = new FileList();
+                $list->filterBySet($fileSet);
+                $list->sortByFileSetDisplayOrder();
+                $files = $list->getResults();
+            }
+        }
+
+        return $files;
+    }

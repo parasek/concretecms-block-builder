@@ -26,6 +26,13 @@ class ControllerPhp
         if (!empty($postDataSummary['exportFileColumns']) or $postDataSummary['linkUsed'] or $postDataSummary['linkUsed_entry']) {
             $code .= 'use Concrete\Core\File\File;' . PHP_EOL;
         }
+
+        if (!empty($postDataSummary['fileSetUsed']) or $postDataSummary['fileSetUsed_entry']) {
+            $code .= 'use Concrete\Core\File\FileList;' . PHP_EOL;
+            $code .= 'use Concrete\Core\File\Set\SetList as FileSetList;' . PHP_EOL;
+            $code .= 'use Concrete\Core\File\Set\Set as FileSet;' . PHP_EOL;
+        }
+
         if (!empty($postDataSummary['exportPageColumns']) or $postDataSummary['linkUsed'] or $postDataSummary['linkUsed_entry']) {
             $code .= 'use Concrete\Core\Page\Page;' . PHP_EOL;
         }
@@ -61,7 +68,7 @@ class ControllerPhp
         $code .= BlockBuilderUtility::tab(1) . 'protected $btDefaultSet = \'' . $postData['blockTypeSet'] . '\'; // basic, navigation, form, express, social, multimedia' . PHP_EOL . PHP_EOL;
 
         if (!empty($postDataSummary['settingsTab'])) {
-            $code .= BlockBuilderUtility::tab(1) . 'protected $settings;'. PHP_EOL . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(1) . 'protected $settings;' . PHP_EOL . PHP_EOL;
         }
 
         if (!empty($postData['basic'])) {
@@ -578,6 +585,25 @@ class ControllerPhp
         $code .= BlockBuilderUtility::tab(2) . '$al->register(\'css\', \'' . $postDataSummary['blockHandleDashed'] . '/form\', \'blocks/' . $postDataSummary['blockHandle'] . '/css_files/form.css\', [], false);' . PHP_EOL;
         $code .= BlockBuilderUtility::tab(2) . '$this->requireAsset(\'css\', \'' . $postDataSummary['blockHandleDashed'] . '/form\');' . PHP_EOL . PHP_EOL;
 
+        if ($postDataSummary['fileSetUsed'] or $postDataSummary['fileSetUsed_entry']) {
+            $code .= BlockBuilderUtility::tab(2) . '// File Sets' . PHP_EOL;
+            if (!empty($postData['basic'])) {
+                foreach ($postData['basic'] as $k => $v) {
+                    if ($v['fieldType'] == 'file_set') {
+                        $code .= BlockBuilderUtility::tab(2) . '$this->set(\'' . $v['handle'] . '_fileSets\', $this->getFileSets(' . (!empty($v['fileSetPrefix']) ? '\'' . $v['fileSetPrefix'] . '\'' : null) . '));' . PHP_EOL;
+                    }
+                }
+            }
+            if (!empty($postData['entries'])) {
+                foreach ($postData['entries'] as $k => $v) {
+                    if ($v['fieldType'] == 'file_set') {
+                        $code .= BlockBuilderUtility::tab(2) . '$this->set(\'entry_' . $v['handle'] . '_fileSets\', $this->getFileSets(' . (!empty($v['fileSetPrefix']) ? '\'' . $v['fileSetPrefix'] . '\'' : null) . '));' . PHP_EOL;
+                    }
+                }
+            }
+            $code .= PHP_EOL;
+        }
+
         if ($postDataSummary['linkUsed'] or $postDataSummary['linkUsed_entry'] or $postDataSummary['externalLinkUsed'] or $postDataSummary['externalLinkUsed_entry']) {
             $code .= BlockBuilderUtility::tab(2) . '// External link protocols' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(2) . '$externalLinkProtocols = [' . PHP_EOL;
@@ -617,6 +643,18 @@ class ControllerPhp
 
         $code .= BlockBuilderUtility::tab(2) . '// Make $app available in view' . PHP_EOL;
         $code .= BlockBuilderUtility::tab(2) . '$this->set(\'app\', $this->app);' . PHP_EOL . PHP_EOL;
+
+        if ($postDataSummary['fileSetUsed']) {
+            $code .= BlockBuilderUtility::tab(2) . '// File Sets' . PHP_EOL;
+            if (!empty($postData['basic'])) {
+                foreach ($postData['basic'] as $k => $v) {
+                    if ($v['fieldType'] == 'file_set') {
+                        $code .= BlockBuilderUtility::tab(2) . '$this->set(\'' . $v['handle'] . '_files\', $this->getFilesByFileSetID($this->' . $v['handle'] . '));' . PHP_EOL;
+                    }
+                }
+            }
+            $code .= PHP_EOL;
+        }
 
         if ($postDataSummary['wysiwygEditorUsed']) {
             $code .= BlockBuilderUtility::tab(2) . '// Wysiwyg editors' . PHP_EOL;
@@ -839,7 +877,8 @@ class ControllerPhp
                 $postDataSummary['linkFromSitemapUsed_entry'] or
                 $postDataSummary['linkFromFileManagerUsed_entry'] or
                 $postDataSummary['externalLinkUsed_entry'] or
-                $postDataSummary['imageUsed_entry']
+                $postDataSummary['imageUsed_entry'] or
+                $postDataSummary['fileSetUsed_entry']
             ) {
                 $code .= BlockBuilderUtility::tab(2) . '$entries = $this->prepareEntriesForView($entries);' . PHP_EOL;
             }
@@ -927,7 +966,7 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? LinkAbstractor::translateTo($args[\'' . $v['handle'] . '\']) : \'\';' . PHP_EOL;
                 } else if ($v['fieldType'] == 'html_editor') {
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? $args[\'' . $v['handle'] . '\'] : \'\';' . PHP_EOL;
-                } else if (in_array($v['fieldType'], ['link_from_sitemap', 'link_from_file_manager', 'image', 'express'])) {
+                } else if (in_array($v['fieldType'], ['link_from_sitemap', 'link_from_file_manager', 'image', 'express', 'file_set'])) {
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? intval($args[\'' . $v['handle'] . '\']) : 0;' . PHP_EOL;
                 } else if ($v['fieldType'] == 'date_picker') {
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? $args[\'' . $v['handle'] . '\'] : null;' . PHP_EOL;
@@ -1103,7 +1142,7 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= LinkAbstractor::translateTo($entry[\'' . $v['handle'] . '\']);' . PHP_EOL;
                 } else if ($v['fieldType'] == 'html_editor') {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= $entry[\'' . $v['handle'] . '\'];' . PHP_EOL;
-                } else if (in_array($v['fieldType'], ['link_from_sitemap', 'link_from_file_manager', 'image', 'express'])) {
+                } else if (in_array($v['fieldType'], ['link_from_sitemap', 'link_from_file_manager', 'image', 'express', 'file_set'])) {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= intval($entry[\'' . $v['handle'] . '\']);' . PHP_EOL;
                 } else if ($v['fieldType'] == 'date_picker') {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($entry[\'' . $v['handle'] . '\']) ? $this->app->make(\'helper/form/date_time\')->translate(\'' . $v['handle'] . '\', $entry) : null;' . PHP_EOL;
@@ -1587,7 +1626,7 @@ class ControllerPhp
         // 16. prepareForViewLinkFromSitemap()
         if ($postDataSummary['linkUsed'] or $postDataSummary['linkUsed_entry'] or $postDataSummary['linkFromSitemapUsed'] or $postDataSummary['linkFromSitemapUsed_entry']) {
 
-            $code .= file_get_contents($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . '_functions' . DIRECTORY_SEPARATOR . 'prepare_for_view_link_from_sitemap.txt');
+            $code .= file_get_contents($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . 'functions' . DIRECTORY_SEPARATOR . 'prepare_for_view_link_from_sitemap.txt');
 
         }
 
@@ -1595,7 +1634,7 @@ class ControllerPhp
         // 17. prepareForViewLinkFromFileManager()
         if ($postDataSummary['linkUsed'] or $postDataSummary['linkUsed_entry'] or $postDataSummary['linkFromFileManagerUsed'] or $postDataSummary['linkFromFileManagerUsed_entry']) {
 
-            $code .= file_get_contents($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . '_functions' . DIRECTORY_SEPARATOR . 'prepare_for_view_link_from_file_manager.txt');
+            $code .= file_get_contents($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . 'functions' . DIRECTORY_SEPARATOR . 'prepare_for_view_link_from_file_manager.txt');
 
         }
 
@@ -1603,7 +1642,7 @@ class ControllerPhp
         // 18. prepareForViewExternalLink()
         if ($postDataSummary['linkUsed'] or $postDataSummary['linkUsed_entry'] or $postDataSummary['externalLinkUsed'] or $postDataSummary['externalLinkUsed_entry']) {
 
-            $code .= file_get_contents($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . '_functions' . DIRECTORY_SEPARATOR . 'prepare_for_view_external_link.txt');
+            $code .= file_get_contents($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . 'functions' . DIRECTORY_SEPARATOR . 'prepare_for_view_external_link.txt');
 
         }
 
@@ -1611,7 +1650,7 @@ class ControllerPhp
         // 19. prepareForViewImage()
         if ($postDataSummary['imageUsed'] or $postDataSummary['imageUsed_entry']) {
 
-            $code .= file_get_contents($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . '_functions' . DIRECTORY_SEPARATOR . 'prepare_for_view_image.txt');
+            $code .= file_get_contents($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . 'functions' . DIRECTORY_SEPARATOR . 'prepare_for_view_image.txt');
 
         }
 
@@ -1625,6 +1664,7 @@ class ControllerPhp
                 $postDataSummary['linkFromSitemapUsed_entry'] or
                 $postDataSummary['linkFromFileManagerUsed_entry'] or
                 $postDataSummary['externalLinkUsed_entry'] or
+                $postDataSummary['fileSetUsed_entry'] or
                 $postDataSummary['imageUsed_entry']
             )
         ) {
@@ -1884,6 +1924,17 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(4) . '$entry = array_merge($entry, $modifiedEntry);' . PHP_EOL . PHP_EOL;
                 }
 
+                if ($v['fieldType'] == 'file_set') {
+
+                    $code .= BlockBuilderUtility::tab(4) . '// ' . addslashes($v['label']) . ' (' . $v['handle'] . ') - File Set' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4) . '$modifiedEntry = [' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '\' => is_object(FileSet::getByID($entry[\'' . $v['handle'] . '\'])) ? $entry[\'' . $v['handle'] . '\'] : null,' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '_files\' => $this->getFilesByFileSetID($entry[\'' . $v['handle'] . '\']),' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4) . '];' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4) . '$entry = array_merge($entry, $modifiedEntry);' . PHP_EOL . PHP_EOL;
+
+                }
+
             }
 
             $code .= BlockBuilderUtility::tab(4) . '$entriesForView[] = $entry;' . PHP_EOL . PHP_EOL;
@@ -1898,6 +1949,21 @@ class ControllerPhp
 
         }
 
+        // 21. getFileSets()
+        if ($postDataSummary['fileSetUsed'] or $postDataSummary['fileSetUsed_entry']) {
+
+            $templateCode = file_get_contents($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . 'functions' . DIRECTORY_SEPARATOR . 'get_file_sets.txt');
+            $code .= $templateCode . PHP_EOL;
+
+        }
+
+        // 22. getFilesByFileSetID()
+        if ($postDataSummary['fileSetUsed'] or $postDataSummary['fileSetUsed_entry']) {
+
+            $templateCode = file_get_contents($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . 'functions' . DIRECTORY_SEPARATOR . 'get_files_by_file_set_id.txt');
+            $code .= $templateCode . PHP_EOL;
+
+        }
 
         // Class end
         $code .= '}';

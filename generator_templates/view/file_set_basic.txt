@@ -1,0 +1,75 @@
+<?php if (!empty($[[[HANDLE]]])): ?>
+    File Set ID: <?php echo h($[[[HANDLE]]]); ?>
+<?php endif; ?>
+<?php if (!empty($[[[HANDLE]]]_files)): ?>
+    <?php /** @var \Concrete\Core\Entity\File\Version $[[[HANDLE]]]_file */ ?>
+    <?php foreach ($[[[HANDLE]]]_files as $[[[HANDLE]]]_file): ?>
+        <?php
+        // These are examples how to display different attributes from File object
+        // Feel free to delete unnecessary code
+        ?>
+        <p>------------------------------------------------------------</p>
+        <p>Basic info:</p>
+        <?php
+        echo 'File ID: ' . $[[[HANDLE]]]_file->getFileID() . '<br>';
+        echo 'File Name: ' . $[[[HANDLE]]]_file->getFileName() . '<br>';
+
+        echo 'Full URL: ' . $[[[HANDLE]]]_file->getURL() . '<br>';
+        echo 'Tracked URL: ' . $[[[HANDLE]]]_file->getDownloadURL() . '<br>';
+        echo 'Relative Path: ' . $[[[HANDLE]]]_file->getRelativePath() . '<br>';
+        echo 'Full Relative Path: ' . $_SERVER['DOCUMENT_ROOT'] . $[[[HANDLE]]]_file->getRelativePath() . '<br>';
+
+        echo 'Title: ' . $[[[HANDLE]]]_file->getTitle() . '<br>';
+        echo 'Description: ' . $[[[HANDLE]]]_file->getDescription() . '<br>';
+        echo 'Tags (string): ' . $[[[HANDLE]]]_file->getTags() . '<br>';
+        echo 'Tags (array): ' . '<br>';
+        var_dump($[[[HANDLE]]]_file->getTagsList());
+        echo '<br>';
+
+        echo 'File Size: ' . $[[[HANDLE]]]_file->getSize() . '<br>';
+        echo 'Full File Size: ' . $[[[HANDLE]]]_file->getFullSize() . '<br>';
+        echo 'Extension: ' . $[[[HANDLE]]]_file->getExtension() . '<br>';
+        echo 'Type: ' . $[[[HANDLE]]]_file->getType() . '<br>';
+        echo 'Mime: ' . $[[[HANDLE]]]_file->getMimeType() . '<br>';
+        echo 'Display Type: ' . $[[[HANDLE]]]_file->getDisplayType() . '<br>';
+        echo 'Generic Type Text: ' . $[[[HANDLE]]]_file->getGenericTypeText() . '<br>';
+
+        echo 'Width: ' . $[[[HANDLE]]]_file->getAttribute('width') . '<br>';
+        echo 'Height: ' . $[[[HANDLE]]]_file->getAttribute('height') . '<br>';
+        echo 'Duration: ' . $[[[HANDLE]]]_file->getAttribute('duration') . '<br>';
+        ?>
+        <p>------------------------------------------------------------</p>
+        <p>Thumbnail from Image Helper:</p>
+        <?php if (is_object($[[[HANDLE]]]_file) and $[[[HANDLE]]]_file->canEdit()): ?>
+            <?php
+            $thumbnail = $app->make('helper/image')->getThumbnail($[[[HANDLE]]]_file, 100, 75, true);
+            ?>
+            <img src="<?php echo h($thumbnail->src); ?>"
+                 width="<?php echo h($thumbnail->width); ?>"
+                 height="<?php echo h($thumbnail->height); ?>"
+                 alt="<?php echo h($[[[HANDLE]]]_file->getTitle()); ?>"
+            >
+        <?php endif; ?>
+        <p>------------------------------------------------------------</p>
+        <p>Default picture tag:</p>
+        <?php if (is_object($[[[HANDLE]]]_file) and $[[[HANDLE]]]_file->canEdit()): ?>
+            <?php echo $app->make('html/image', ['f' => $[[[HANDLE]]]_file])->getTag(); ?>
+        <?php endif; ?>
+        <p>------------------------------------------------------------</p>
+        <p>Concrete Thumbnail (Dashboard / System & Settings / Files / Thumbnails):</p>
+        <?php if (is_object($[[[HANDLE]]]_file) and $[[[HANDLE]]]_file->canEdit()): ?>
+            <?php
+            $type = \Concrete\Core\File\Image\Thumbnail\Type\Type::getByHandle('file_manager_listing'); ?>
+            <?php if (is_object($[[[HANDLE]]]_file) and $type instanceof \Concrete\Core\Entity\File\Image\Thumbnail\Type\Type): ?>
+                <?php
+                $src = $[[[HANDLE]]]_file->getThumbnailURL($type->getBaseVersion()); // or $type->getDoubledVersion()
+                ?>
+                <img src="<?php echo h($src); ?>"
+                     width="<?php echo h($type->getWidth()); ?>"
+                     height="<?php echo h($type->getHeight()); ?>"
+                     alt="<?php echo h($[[[HANDLE]]]_file->getTitle()); ?>"
+                >
+            <?php endif; ?>
+        <?php endif; ?>
+    <?php endforeach; ?>
+<?php endif; ?>

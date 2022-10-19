@@ -1,0 +1,77 @@
+        <?php if (!empty($entry['[[[HANDLE]]]'])): ?>
+            File Set ID: <?php echo h($entry['[[[HANDLE]]]']); ?>
+        <?php endif; ?>
+        <?php if (!empty($entry['[[[HANDLE]]]_files'])): ?>
+            <?php
+            /** @var \Concrete\Core\Entity\File\Version $entry_[[[HANDLE]]]_file */
+            ?>
+            <?php foreach ($entry['[[[HANDLE]]]_files'] as $entry_[[[HANDLE]]]_file): ?>
+                <?php
+                // These are examples how to display different attributes from File object
+                // Feel free to delete unnecessary code
+                ?>
+                <p>------------------------------------------------------------</p>
+                <p>Basic info:</p>
+                <?php
+                echo 'File ID: ' . $entry_[[[HANDLE]]]_file->getFileID() . '<br>';
+                echo 'File Name: ' . $entry_[[[HANDLE]]]_file->getFileName() . '<br>';
+
+                echo 'Full URL: ' . $entry_[[[HANDLE]]]_file->getURL() . '<br>';
+                echo 'Tracked URL: ' . $entry_[[[HANDLE]]]_file->getDownloadURL() . '<br>';
+                echo 'Relative Path: ' . $entry_[[[HANDLE]]]_file->getRelativePath() . '<br>';
+                echo 'Full Relative Path: ' . $_SERVER['DOCUMENT_ROOT'] . $entry_[[[HANDLE]]]_file->getRelativePath() . '<br>';
+
+                echo 'Title: ' . $entry_[[[HANDLE]]]_file->getTitle() . '<br>';
+                echo 'Description: ' . $entry_[[[HANDLE]]]_file->getDescription() . '<br>';
+                echo 'Tags (string): ' . $entry_[[[HANDLE]]]_file->getTags() . '<br>';
+                echo 'Tags (array): ' . '<br>';
+                var_dump($entry_[[[HANDLE]]]_file->getTagsList());
+                echo '<br>';
+
+                echo 'File Size: ' . $entry_[[[HANDLE]]]_file->getSize() . '<br>';
+                echo 'Full File Size: ' . $entry_[[[HANDLE]]]_file->getFullSize() . '<br>';
+                echo 'Extension: ' . $entry_[[[HANDLE]]]_file->getExtension() . '<br>';
+                echo 'Type: ' . $entry_[[[HANDLE]]]_file->getType() . '<br>';
+                echo 'Mime: ' . $entry_[[[HANDLE]]]_file->getMimeType() . '<br>';
+                echo 'Display Type: ' . $entry_[[[HANDLE]]]_file->getDisplayType() . '<br>';
+                echo 'Generic Type Text: ' . $entry_[[[HANDLE]]]_file->getGenericTypeText() . '<br>';
+
+                echo 'Width: ' . $entry_[[[HANDLE]]]_file->getAttribute('width') . '<br>';
+                echo 'Height: ' . $entry_[[[HANDLE]]]_file->getAttribute('height') . '<br>';
+                echo 'Duration: ' . $entry_[[[HANDLE]]]_file->getAttribute('duration') . '<br>';
+                ?>
+                <p>------------------------------------------------------------</p>
+                <p>Thumbnail from Image Helper:</p>
+                <?php if (is_object( $entry_[[[HANDLE]]]_file) and $entry_[[[HANDLE]]]_file->canEdit()): ?>
+                    <?php
+                    $thumbnail = $app->make('helper/image')->getThumbnail( $entry_[[[HANDLE]]]_file, 100, 75, true);
+                    ?>
+                    <img src="<?php echo h($thumbnail->src); ?>"
+                         width="<?php echo h($thumbnail->width); ?>"
+                         height="<?php echo h($thumbnail->height); ?>"
+                         alt="<?php echo h( $entry_[[[HANDLE]]]_file->getTitle()); ?>"
+                    >
+                <?php endif; ?>
+                <p>------------------------------------------------------------</p>
+                <p>Default picture tag:</p>
+                <?php if (is_object( $entry_[[[HANDLE]]]_file) and $entry_[[[HANDLE]]]_file->canEdit()): ?>
+                    <?php echo $app->make('html/image', ['f' =>  $entry_[[[HANDLE]]]_file])->getTag(); ?>
+                <?php endif; ?>
+                <p>------------------------------------------------------------</p>
+                <p>Concrete Thumbnail (Dashboard / System & Settings / Files / Thumbnails):</p>
+                <?php if (is_object( $entry_[[[HANDLE]]]_file) and $entry_[[[HANDLE]]]_file->canEdit()): ?>
+                    <?php
+                    $type = \Concrete\Core\File\Image\Thumbnail\Type\Type::getByHandle('file_manager_listing'); ?>
+                    <?php if (is_object( $entry_[[[HANDLE]]]_file) and $type instanceof \Concrete\Core\Entity\File\Image\Thumbnail\Type\Type): ?>
+                        <?php
+                        $src =  $entry_[[[HANDLE]]]_file->getThumbnailURL($type->getBaseVersion()); // or $type->getDoubledVersion()
+                        ?>
+                        <img src="<?php echo h($src); ?>"
+                             width="<?php echo h($type->getWidth()); ?>"
+                             height="<?php echo h($type->getHeight()); ?>"
+                             alt="<?php echo h( $entry_[[[HANDLE]]]_file->getTitle()); ?>"
+                        >
+                    <?php endif; ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
