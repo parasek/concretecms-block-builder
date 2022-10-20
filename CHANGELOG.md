@@ -1,3 +1,10 @@
+# 2.4.0
+- Fixed bug in generated blocks, where you couldn't set empty value in several fields (null was changed to '' in save() method).
+- Fixed "trailing slashes" error on self-closing tags (W3C Validation).
+- Improved behaviour of "Alt" attribute for "Image" Field type ("Example title - 001.jpg" will be transformed to "Example title" etc.).
+- Improved behaviour of "Text" and "Title" for "Link from Sitemap"/"Link from File Manager" (html attributes will stay empty if respective fields were not filled).
+- Added new "File Set" Field type.
+
 # 2.3.0
 - "Select field" has been renamed to "Single Choice Field".
 - "Single Choice Field" has been enhanced and can be added to blocks as:

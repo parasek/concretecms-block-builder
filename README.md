@@ -49,6 +49,7 @@ This addon is made for developers and site builders. It allows you to quickly cr
   - External Link
   - Image
   - Express
+  - File Set
   - HTML Editor
   - Date Picker
 - You can create blocks based on configuration of previously created blocks
