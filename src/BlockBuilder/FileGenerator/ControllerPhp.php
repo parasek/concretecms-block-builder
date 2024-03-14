@@ -504,7 +504,7 @@ class ControllerPhp
 
             if ($postDataSummary['datePickerUsed_entry']) {
                 $code .= PHP_EOL;
-                $code .= BlockBuilderUtility::tab(2) . '// ' . addslashes($v['label']) . ' (' . $v['handle'] . ') - Fields that don\'t exist in database, but are required in repeatable entry' . PHP_EOL;
+                $code .= BlockBuilderUtility::tab(2) . '// Repeatable Date Picker - Fields that don\'t exist in database, but are required in repeatable entry' . PHP_EOL;
                 foreach ($postData['entries'] as $k => $v) {
                     if ($v['fieldType'] == 'date_picker') {
                         $code .= BlockBuilderUtility::tab(2) . '$entryColumnNames[] = \'' . $v['handle'] . '_displayed\';' . PHP_EOL;
