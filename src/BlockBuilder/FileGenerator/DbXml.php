@@ -165,6 +165,10 @@ class DbXml
                     $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '" type="T"></field>' . PHP_EOL . PHP_EOL;
                 }
 
+                if ($v['fieldType'] == 'color_picker') {
+                    $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '" type="C" size="255"></field>' . PHP_EOL . PHP_EOL;
+                }
+
             }
 
         }
@@ -326,6 +330,10 @@ class DbXml
 
                 if ($v['fieldType'] == 'date_picker') {
                     $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '" type="T"></field>' . PHP_EOL . PHP_EOL;
+                }
+
+                if ($v['fieldType'] == 'color_picker') {
+                    $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '" type="C" size="255"></field>' . PHP_EOL . PHP_EOL;
                 }
 
             }

@@ -163,26 +163,32 @@
             "helpText": "",
             "expressHandle": "teacher"
         },
-        "18": {
+        "16": {
             "fieldType": "file_set",
             "label": "Basic File Set 1",
             "handle": "basic_file_set_first",
             "helpText": "",
             "fileSetPrefix": "Gallery - "
         },
-        "16": {
+        "17": {
             "fieldType": "html_editor",
             "label": "Basic HTML Editor 1",
             "handle": "basic_html_editor_first",
             "helpText": "",
             "htmlEditorHeight": ""
         },
-        "17": {
+        "18": {
             "fieldType": "date_picker",
             "label": "Basic Date Picker 1",
             "handle": "basic_date_picker_first",
             "helpText": "",
             "datePickerPattern": "d.m.Y"
+        },
+        "19": {
+            "fieldType": "color_picker",
+            "label": "Basic Color Picker 1",
+            "handle": "basic_color_picker_first",
+            "helpText": ""
         }
     },
     "entries": {
@@ -295,26 +301,32 @@
             "helpText": "",
             "expressHandle": "teacher"
         },
-        "18": {
+        "16": {
             "fieldType": "file_set",
             "label": "Repeatable File Set 1",
             "handle": "repeatable_file_set_first",
             "helpText": "",
             "fileSetPrefix": ""
         },
-        "16": {
+        "17": {
             "fieldType": "html_editor",
             "label": "Repeatable HTML Editor 1",
             "handle": "repeatable_html_editor_first",
             "helpText": "",
             "htmlEditorHeight": ""
         },
-        "17": {
+        "18": {
             "fieldType": "date_picker",
             "label": "Repeatable Date Picker 1",
             "handle": "repeatable_date_picker_first",
             "helpText": "",
             "datePickerPattern": "d.m.Y"
+        },
+        "19": {
+            "fieldType": "color_picker",
+            "label": "Repeatable Color Picker 1",
+            "handle": "repeatable_color_picker_first",
+            "helpText": ""
         }
     }
 }

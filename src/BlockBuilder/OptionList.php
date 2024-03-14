@@ -63,6 +63,7 @@ class OptionList
         $options['file_set'] = t('File Set');
         $options['html_editor'] = t('HTML Editor');
         $options['date_picker'] = t('Date Picker');
+        $options['color_picker'] = t('Color Picker');
 
         return $options;
 

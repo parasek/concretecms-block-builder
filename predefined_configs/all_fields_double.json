@@ -291,47 +291,59 @@
             "helpText": "",
             "expressHandle": "worker"
         },
-        "35": {
+        "31": {
             "fieldType": "file_set",
             "label": "Basic File Set 1",
             "handle": "basic_file_set_first",
             "helpText": "",
             "fileSetPrefix": ""
         },
-        "36": {
+        "32": {
             "fieldType": "file_set",
             "label": "Basic File Set 2",
             "handle": "basic_file_set_second",
             "helpText": "",
             "fileSetPrefix": "Gallery - "
         },
-        "31": {
+        "33": {
             "fieldType": "html_editor",
             "label": "Basic HTML Editor 1",
             "handle": "basic_html_editor_first",
             "helpText": "",
             "htmlEditorHeight": ""
         },
-        "32": {
+        "34": {
             "fieldType": "html_editor",
             "label": "Basic HTML Editor 2",
             "handle": "basic_html_editor_second",
             "helpText": "",
             "htmlEditorHeight": "400"
         },
-        "33": {
+        "35": {
             "fieldType": "date_picker",
             "label": "Basic Date Picker 1",
             "handle": "basic_date_picker_first",
             "helpText": "",
             "datePickerPattern": "d.m.Y"
         },
-        "34": {
+        "36": {
             "fieldType": "date_picker",
             "label": "Basic Date Picker 2",
             "handle": "basic_date_picker_second",
             "helpText": "",
             "datePickerPattern": "Y-m-d"
+        },
+        "37": {
+            "fieldType": "color_picker",
+            "label": "Basic Color Picker 1",
+            "handle": "basic_color_picker_first",
+            "helpText": ""
+        },
+        "38": {
+            "fieldType": "color_picker",
+            "label": "Basic Color Picker 2",
+            "handle": "basic_color_picker_second",
+            "helpText": ""
         }
     },
     "entries": {
@@ -573,47 +585,59 @@
             "helpText": "",
             "expressHandle": "worker"
         },
-        "35": {
+        "31": {
             "fieldType": "file_set",
             "label": "Repeatable File Set 1",
             "handle": "repeatable_file_set_first",
             "helpText": "",
             "fileSetPrefix": ""
         },
-        "36": {
+        "32": {
             "fieldType": "file_set",
             "label": "Repeatable File Set 2",
             "handle": "repeatable_file_set_second",
             "helpText": "",
             "fileSetPrefix": "Gallery \/ "
         },
-        "31": {
+        "33": {
             "fieldType": "html_editor",
             "label": "Repeatable HTML Editor 1",
             "handle": "repeatable_html_editor_first",
             "helpText": "",
             "htmlEditorHeight": ""
         },
-        "32": {
+        "34": {
             "fieldType": "html_editor",
             "label": "Repeatable HTML Editor 2",
             "handle": "repeatable_html_editor_second",
             "helpText": "",
             "htmlEditorHeight": "400"
         },
-        "33": {
+        "35": {
             "fieldType": "date_picker",
             "label": "Repeatable Date Picker 1",
             "handle": "repeatable_date_picker_first",
             "helpText": "",
             "datePickerPattern": "d.m.Y"
         },
-        "34": {
+        "36": {
             "fieldType": "date_picker",
             "label": "Repeatable Date Picker 2",
             "handle": "repeatable_date_picker_second",
             "helpText": "",
             "datePickerPattern": "m\/d\/Y"
+        },
+        "37": {
+            "fieldType": "color_picker",
+            "label": "Repeatable Color Picker 1",
+            "handle": "repeatable_color_picker_first",
+            "helpText": ""
+        },
+        "38": {
+            "fieldType": "color_picker",
+            "label": "Repeatable Color Picker 2",
+            "handle": "repeatable_color_picker_second",
+            "helpText": ""
         }
     }
 }

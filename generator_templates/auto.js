@@ -102,6 +102,38 @@ $(function () {
 
         }
 
+        function activateColorPickers(parentContainer) {
+
+            var colorPickers = parentContainer.find('.js-color-picker');
+            colorPickers.each(function (i, item) {
+                var value = $(item).val();
+                var cancelText = $(item).attr('data-cancel-text');
+                var chooseText = $(item).attr('data-choose-text');
+                var togglePaletteMoreText = $(item).attr('data-toggle-palette-more-text');
+                var togglePaletteLessText = $(item).attr('data-toggle-palette-less-text');
+                var noColorSelectedText = $(item).attr('data-no-color-selected-text');
+                var clearText = $(item).attr('data-clear-text');
+                $(item).spectrum({
+                    'value': value,
+                    'type': 'color',
+                    'className': 'ccm-widget-colorpicker',
+                    'showInitial': true,
+                    'showInput': true,
+                    'allowEmpty': true,
+                    'cancelText': cancelText,
+                    'chooseText': chooseText,
+                    'togglePaletteMoreText': togglePaletteMoreText,
+                    'togglePaletteLessText': togglePaletteLessText,
+                    'noColorSelectedText': noColorSelectedText,
+                    'preferredFormat': 'rgb',
+                    'showAlpha': true,
+                    'clearText': clearText,
+                    'appendTo': '.ui-dialog'
+                });
+            });
+
+        }
+
         function activateEnhancedSelectFields(parentContainer) {
 
             var fields = parentContainer.find('.js-enhanced-select');
@@ -146,6 +178,8 @@ $(function () {
             activateHtmlEditors(container);
 
             activateDatePickers(container);
+
+            activateColorPickers(container);
 
             activateEnhancedSelectFields(container);
 

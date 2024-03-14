@@ -220,6 +220,10 @@ class Generator
                     $postDataSummary['datePickerUsed_entry'] = true;
                 }
 
+                if ($v['fieldType'] == 'color_picker') {
+                    $postDataSummary['colorPickerUsed_entry'] = true;
+                }
+
                 // entryTitleSource
                 if (!empty($v['titleSource'])) {
                     $postDataSummary['entryTitleSource'] = $v['handle'];

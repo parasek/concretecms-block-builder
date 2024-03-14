@@ -785,6 +785,20 @@ class FormPhp
 
                 }
 
+                if ($v['fieldType'] == 'color_picker') {
+
+                    $code .= BlockBuilderUtility::tab(3) . '<div class="mb-4">' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '\'), t(\'' . addslashes($v['label']) . '\')' . $required . '); ?>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4) . '<div>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5) . '<?php echo $app->make(\'helper/form/color\')->output($view->field(\'' . $v['handle'] . '\'), $' . $v['handle'] . ', [\'showAlpha\' => true]); ?>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4) . '</div>' . PHP_EOL;
+                    if (!empty($v['helpText'])) { // echo
+                        $code .= BlockBuilderUtility::tab(4) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
+                    }
+                    $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL;
+
+                }
+
             }
 
         }
@@ -1554,6 +1568,31 @@ class FormPhp
                     }
                     $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL;
 
+                    $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
+
+                }
+
+                if ($v['fieldType'] == 'color_picker') {
+
+                    $code .= BlockBuilderUtility::tab(6) . '<div class="mb-4">' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(7) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" class="form-label"><?php echo t(\'' . addslashes($v['label']) . '\'); ?>' . $required . '</label>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(7) . '<div>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(8) . '<input type="text"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(8) . '       id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(8) . '       name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(8) . '       value="<%=_.escape(' . $v['handle'] . ')%>"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(8) . '       class="js-color-picker"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(8) . '       data-cancel-text="<?php echo t(\'Cancel\'); ?>"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(8) . '       data-choose-text="<?php echo t(\'Choose\'); ?>"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(8) . '       data-toggle-palette-more-text="<?php echo t(\'more\'); ?>"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(8) . '       data-toggle-palette-less-text="<?php echo t(\'less\'); ?>"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(8) . '       data-no-color-selected-text="<?php echo t(\'No Color Selected\'); ?>"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(8) . '       data-clear-text="<?php echo t(\'Clear Color Selection\'); ?>"' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(8) . '/>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL;
+                    if (!empty($v['helpText'])) {
+                        $code .= BlockBuilderUtility::tab(7) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
+                    }
                     $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
 
                 }
