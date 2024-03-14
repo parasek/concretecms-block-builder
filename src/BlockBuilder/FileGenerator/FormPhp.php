@@ -164,29 +164,22 @@ class FormPhp
                     if (empty($v['selectType']) or $v['selectType'] === 'default_select') {
                         $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->select($view->field(\'' . $v['handle'] . '\'), $' . $v['handle'] . '_options, $' . $v['handle'] . '); ?>' . PHP_EOL;
                     } elseif ($v['selectType'] === 'enhanced_select') {
-                        $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->select($view->field(\'' . $v['handle'] . '\'), $' . $v['handle'] . '_options, $' . $v['handle'] . ', [\'class\' => \'form-control\']); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->select($view->field(\'' . $v['handle'] . '\'), $' . $v['handle'] . '_options, $' . $v['handle'] . ', [\'class\' => \'form-control\', \'data-enhanced-select\' => hash(\'md5\', $view->field(\'' . $v['handle'] . '\'))]); ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(4) . '<script type="text/javascript">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(5) . '$(function() {' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(6) . '$(\'#<?php echo $view->field(\'' . $v['handle'] . '\'); ?>\').selectpicker({' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(7) . 'liveSearch: true,' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(7) . 'width: \'auto\',' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(7) . 'allowClear: true,' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(7) . 'title: \'<?php echo t(\'' . addslashes($postData['nothingSelectedLabel']) . '\'); ?>\',' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(7) . 'noneSelectedText: \'<?php echo t(\'' . addslashes($postData['nothingSelectedLabel']) . '\'); ?>\',' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(7) . 'noneResultsText: \'<?php echo t(\'' . addslashes($postData['noResultsMatchedLabel']) . '\'); ?>\',' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(7) . 'deselectAllText: \'<?php echo t(\'' . addslashes($postData['deselectAllLabel']) . '\'); ?>\',' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . 'Concrete.Vue.activateContext(\'cms\', function(Vue, config) {' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . 'new Vue({' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . 'el: \'[data-enhanced-select="<?php echo h(hash(\'md5\', $view->field(\'' . $v['handle'] . '\'))); ?>"]\',' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . 'components: config.components,' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . 'mounted(){' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(9) . 'new TomSelect($(\'[data-enhanced-select="<?php echo h(hash(\'md5\', $view->field(\'' . $v['handle'] . '\'))); ?>"]\').get(0), {' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(10) . 'create: false' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(9) . '});' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . '},' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '});' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(6) . '});' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(5) . '});' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(4) . '</script>' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(4) . '<style>' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(5) . '.ccm-ui .bootstrap-select [name="<?php echo $view->field(\'' . $v['handle'] . '\'); ?>"] + .dropdown-toggle .bs-select-clear-selected span {' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(6) . 'font-size: 24px;' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(6) . 'line-height: 0;' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(6) . 'top: 4px;' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(6) . 'right: 5px;' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(6) . 'font-weight: normal;' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(5) . '}' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(4) . '</style>' . PHP_EOL;
                     } elseif ($v['selectType'] === 'radio_list') {
                         $code .= BlockBuilderUtility::tab(4) . '<?php $radioIndex = 0; ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(4) . '<?php foreach ($' . $v['handle'] . '_options as $' . $v['handle'] . '_key => $' . $v['handle'] . '_value): ?>' . PHP_EOL;
@@ -213,31 +206,22 @@ class FormPhp
                     if (empty($v['selectMultipleType']) or $v['selectMultipleType'] === 'default_multiselect') {
                         $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->selectMultiple($view->field(\'' . $v['handle'] . '\'), $' . $v['handle'] . '_options, explode(\'|\', $' . $v['handle'] . ')); ?>' . PHP_EOL;
                     } elseif ($v['selectMultipleType'] === 'enhanced_multiselect') {
-                        $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->selectMultiple($view->field(\'' . $v['handle'] . '\'), $' . $v['handle'] . '_options, explode(\'|\', $' . $v['handle'] . '), [\'class\' => \'form-control\']); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->selectMultiple($view->field(\'' . $v['handle'] . '\'), $' . $v['handle'] . '_options, explode(\'|\', $' . $v['handle'] . '), [\'class\' => \'form-control\', \'data-enhanced-select\' => hash(\'md5\', $view->field(\'' . $v['handle'] . '\'))]); ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(4) . '<script type="text/javascript">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(5) . '$(function() {' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(6) . '$(\'#<?php echo $view->field(\'' . $v['handle'] . '\'); ?>\').selectpicker({' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(7) . 'liveSearch: true,' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(7) . 'actionsBox: true,' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(7) . 'width: \'auto\',' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(7) . 'allowClear: true,' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(7) . 'title: \'<?php echo t(\'' . addslashes($postData['nothingSelectedLabel']) . '\'); ?>\',' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(7) . 'noneSelectedText: \'<?php echo t(\'' . addslashes($postData['nothingSelectedLabel']) . '\'); ?>\',' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(7) . 'noneResultsText: \'<?php echo t(\'' . addslashes($postData['noResultsMatchedLabel']) . '\'); ?>\',' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(7) . 'selectAllText: \'<?php echo t(\'' . addslashes($postData['selectAllLabel']) . '\'); ?>\',' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(7) . 'deselectAllText: \'<?php echo t(\'' . addslashes($postData['deselectAllLabel']) . '\'); ?>\',' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(6) . 'Concrete.Vue.activateContext(\'cms\', function(Vue, config) {' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . 'new Vue({' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . 'el: \'[data-enhanced-select="<?php echo h(hash(\'md5\', $view->field(\'' . $v['handle'] . '\'))); ?>"]\',' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . 'components: config.components,' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . 'mounted(){' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(9) . 'new TomSelect($(\'[data-enhanced-select="<?php echo h(hash(\'md5\', $view->field(\'' . $v['handle'] . '\'))); ?>"]\').get(0), {' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(10) . 'create: false' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(9) . '});' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . '},' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '});' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(6) . '});' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(5) . '});' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(4) . '</script>' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(4) . '<style>' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(5) . '.ccm-ui .bootstrap-select [name="<?php echo $view->field(\'' . $v['handle'] . '\'); ?>"] + .dropdown-toggle .bs-select-clear-selected span {' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(6) . 'font-size: 24px;' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(6) . 'line-height: 0;' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(6) . 'top: 4px;' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(6) . 'right: 5px;' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(6) . 'font-weight: normal;' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(5) . '}' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(4) . '</style>' . PHP_EOL;
                     } elseif ($v['selectMultipleType'] === 'checkbox_list') {
                         $code .= BlockBuilderUtility::tab(4) . '<?php $checkboxIndex = 0; ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(4) . '<?php foreach ($' . $v['handle'] . '_options as $' . $v['handle'] . '_key => $' . $v['handle'] . '_value): ?>' . PHP_EOL;
@@ -1052,11 +1036,8 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(7) . '</select>' . PHP_EOL;
                     } elseif ($v['selectType'] === 'enhanced_select') {
                         $code .= BlockBuilderUtility::tab(7) . '<select id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']"' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(7) . 'name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']"' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(7) . 'class="form-select form-control js-enhanced-select"' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(8) . 'data-none-selected-text="<?php echo t(\'' . addslashes($postData['nothingSelectedLabel']) . '\'); ?>"' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(8) . 'data-none-results-text="<?php echo t(\'' . addslashes($postData['noResultsMatchedLabel']) . '\'); ?>"' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(8) . 'data-deselect-all-text="<?php echo t(\'' . addslashes($postData['deselectAllLabel']) . '\'); ?>"' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '        name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']"' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '        class="form-select form-control js-enhanced-select"' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . '>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(8) . '<?php foreach ($entry_' . $v['handle'] . '_options as $k => $v): ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(9) . '<option value="<?php echo $k; ?>" <% if (' . $v['handle'] . '==\'<?php echo $k; ?>\') { %>selected="selected"<% } %> ><?php echo h($v); ?></option>' . PHP_EOL;
@@ -1096,13 +1077,9 @@ class FormPhp
                     } elseif ($v['selectMultipleType'] === 'enhanced_multiselect') {
                         $code .= BlockBuilderUtility::tab(7) . '<input type="hidden" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" value="">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . '<select id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']"' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(8) . 'name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '][]"' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(8) . 'class="form-select form-control js-enhanced-select"' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(8) . 'multiple' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(8) . 'data-none-selected-text="<?php echo t(\'' . addslashes($postData['nothingSelectedLabel']) . '\'); ?>"' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(8) . 'data-none-results-text="<?php echo t(\'' . addslashes($postData['noResultsMatchedLabel']) . '\'); ?>"' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(8) . 'data-select-all-text="<?php echo t(\'' . addslashes($postData['selectAllLabel']) . '\'); ?>"' . PHP_EOL;
-                        $code .= BlockBuilderUtility::tab(8) . 'data-deselect-all-text="<?php echo t(\'' . addslashes($postData['deselectAllLabel']) . '\'); ?>"' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '        name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '][]"' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '        class="form-select form-control js-enhanced-select"' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '        multiple' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . '>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(8) . '<?php foreach ($entry_' . $v['handle'] . '_options as $k => $v): ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(9) . '<option value="<?php echo $k; ?>" <% if (' . $v['handle'] . ' != null && ' . $v['handle'] . '.includes(\'<?php echo $k; ?>\')) { %>selected="selected"<% } %> ><?php echo h($v); ?></option>' . PHP_EOL;

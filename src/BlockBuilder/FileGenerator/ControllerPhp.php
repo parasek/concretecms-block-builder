@@ -220,7 +220,7 @@ class ControllerPhp
 
                     // Generate actual code
                     $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options ' . BlockBuilderUtility::arrayGap($maxKeyLength + 4) . '= [];' . PHP_EOL;
-                    if (empty($v['selectType']) or $v['selectType'] === 'default_select') {
+                    if (empty($v['selectType']) or $v['selectType'] === 'default_select' or $v['selectType'] === 'enhanced_select') {
                         $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options[] ' . BlockBuilderUtility::arrayGap($maxKeyLength + 2) . '= \'----\';' . PHP_EOL;
                     }
                     foreach ($tempOptions as $tempOption) {
@@ -323,7 +323,7 @@ class ControllerPhp
 
                     // Generate actual code
                     $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options ' . BlockBuilderUtility::arrayGap($maxKeyLength + 4) . '= [];' . PHP_EOL;
-                    if (empty($v['selectType']) or $v['selectType'] === 'default_select') {
+                    if (empty($v['selectType']) or $v['selectType'] === 'default_select' or $v['selectType'] === 'enhanced_select') {
                         $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options[] ' . BlockBuilderUtility::arrayGap($maxKeyLength + 2) . '= \'----\';' . PHP_EOL;
                     }
                     foreach ($tempOptions as $tempOption) {

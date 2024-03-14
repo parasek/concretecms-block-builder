@@ -151,30 +151,18 @@ $(function () {
         function activateEnhancedSelectFields(parentContainer) {
 
             var fields = parentContainer.find('.js-enhanced-select');
-            fields.each(function (i, item) {
-                if ($(item).attr('multiple')) {
-                    $(item).selectpicker({
-                        liveSearch: true,
-                        actionsBox: true,
-                        width: 'auto',
-                        allowClear: true,
-                        title: item.title,
-                        noneSelectedText: item.dataset.noneSelectedText,
-                        noneResultsText: item.dataset.noneResultsText,
-                        selectAllText: item.dataset.selectAllText,
-                        deselectAllText: item.dataset.deselectAllText,
+            fields.each(function(i, item) {
+                Concrete.Vue.activateContext('cms', function(Vue, config) {
+                    new Vue({
+                        el: item,
+                        components: config.components,
+                        mounted() {
+                            new TomSelect('.js-enhanced-select[name="'+item.getAttribute('name')+'"]', {
+                                create: false,
+                            });
+                        },
                     });
-                } else {
-                    $(item).selectpicker({
-                        liveSearch: true,
-                        width: 'auto',
-                        allowClear: true,
-                        title: item.title,
-                        noneSelectedText: item.dataset.noneSelectedText,
-                        noneResultsText: item.dataset.noneResultsText,
-                        deselectAllText: item.dataset.deselectAllText,
-                    });
-                }
+                });
             });
 
         }

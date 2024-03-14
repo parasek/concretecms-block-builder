@@ -111,7 +111,7 @@
             "label": "Basic Multiple Choice Field Enhanced 1",
             "handle": "basic_multiple_choice_field_enhanced_first",
             "helpText": "",
-            "selectMultipleType": "checkbox_list",
+            "selectMultipleType": "enhanced_multiselect",
             "selectMultipleOptions": "1:: Don't show\r\n2 :: Show"
         },
         "9": {
