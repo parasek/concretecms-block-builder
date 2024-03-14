@@ -43,6 +43,9 @@
 .ccm-ui .navigation-tabs li a.btn:hover,
 .ccm-ui .navigation-tabs li a.btn:focus {
     z-index: 2;
+    color: #fff;
+    border-color: #7c8088;
+    box-shadow: none;
 }
 
 .ccm-ui .navigation-tabs li a.btn.navigation-tabs-active {
