@@ -64,6 +64,7 @@ class OptionList
         $options['html_editor'] = t('HTML Editor');
         $options['date_picker'] = t('Date Picker');
         $options['color_picker'] = t('Color Picker');
+        $options['icon_picker'] = t('Icon Picker');
 
         return $options;
 

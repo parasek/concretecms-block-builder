@@ -55,6 +55,7 @@ class Generator
         $postDataSummary['externalLinkUsed'] = false;
         $postDataSummary['imageUsed'] = false;
         $postDataSummary['fileSetUsed'] = false;
+        $postDataSummary['iconPickerUsed'] = false;
 
         $postDataSummary['wysiwygEditorUsed_entry'] = false;
         $postDataSummary['htmlEditorUsed_entry'] = false;
@@ -66,6 +67,7 @@ class Generator
         $postDataSummary['expressUsed_entry'] = false;
         $postDataSummary['fileSetUsed_entry'] = false;
         $postDataSummary['datePickerUsed_entry'] = false;
+        $postDataSummary['iconPickerUsed_entry'] = false;
 
         $postDataSummary['entryTitleSource'] = false;
 
@@ -131,6 +133,10 @@ class Generator
 
                 if ($v['fieldType'] == 'file_set') {
                     $postDataSummary['fileSetUsed'] = true;
+                }
+
+                if ($v['fieldType'] == 'icon_picker') {
+                    $postDataSummary['iconPickerUsed'] = true;
                 }
 
             }
@@ -220,8 +226,8 @@ class Generator
                     $postDataSummary['datePickerUsed_entry'] = true;
                 }
 
-                if ($v['fieldType'] == 'color_picker') {
-                    $postDataSummary['colorPickerUsed_entry'] = true;
+                if ($v['fieldType'] == 'icon_picker') {
+                    $postDataSummary['iconPickerUsed_entry'] = true;
                 }
 
                 // entryTitleSource

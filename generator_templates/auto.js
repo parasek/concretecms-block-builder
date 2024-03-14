@@ -134,6 +134,20 @@ $(function () {
 
         }
 
+        function activateIconPickers(parentContainer) {
+
+            var iconPickers = parentContainer.find('.js-icon-picker');
+            iconPickers.each(function (i, item) {
+                Concrete.Vue.activateContext('cms', function (Vue, config) {
+                    new Vue({
+                        el: item,
+                        components: config.components
+                    })
+                })
+            });
+
+        }
+
         function activateEnhancedSelectFields(parentContainer) {
 
             var fields = parentContainer.find('.js-enhanced-select');
@@ -180,6 +194,8 @@ $(function () {
             activateDatePickers(container);
 
             activateColorPickers(container);
+
+            activateIconPickers(container);
 
             activateEnhancedSelectFields(container);
 

@@ -235,12 +235,21 @@ class ViewPhp
 
                 }
 
-
                 if ($v['fieldType'] == 'color_picker') {
 
                     $code .= '<?php if (!empty($' . $v['handle'] . ')): ?>' . PHP_EOL;
 
                     $code .= BlockBuilderUtility::tab(1) . '<?php echo h($' . $v['handle'] . '); ?>' . PHP_EOL;
+
+                    $code .= '<?php endif; ?>' . PHP_EOL . PHP_EOL . PHP_EOL;
+
+                }
+
+                if ($v['fieldType'] == 'icon_picker') {
+
+                    $code .= '<?php if (!empty($' . $v['handle'] . ')): ?>' . PHP_EOL;
+
+                    $code .= BlockBuilderUtility::tab(1) . '<i class="<?php echo h($' . $v['handle'] . '); ?>"></i>' . PHP_EOL;
 
                     $code .= '<?php endif; ?>' . PHP_EOL . PHP_EOL . PHP_EOL;
 
@@ -478,6 +487,16 @@ class ViewPhp
                     $code .= BlockBuilderUtility::tab(2) . '<?php if (!empty($entry[\'' . $v['handle'] . '\'])): ?>' . PHP_EOL;
 
                     $code .= BlockBuilderUtility::tab(3) . '<?php echo h($entry[\'' . $v['handle'] . '\']); ?>' . PHP_EOL;
+
+                    $code .= BlockBuilderUtility::tab(2) . '<?php endif; ?>' . PHP_EOL . PHP_EOL . PHP_EOL;
+
+                }
+
+                if ($v['fieldType'] == 'icon_picker') {
+
+                    $code .= BlockBuilderUtility::tab(2) . '<?php if (!empty($entry[\'' . $v['handle'] . '\'])): ?>' . PHP_EOL;
+
+                    $code .= BlockBuilderUtility::tab(3) . '<i class="<?php echo h($entry[\'' . $v['handle'] . '\']); ?>"></i>' . PHP_EOL;
 
                     $code .= BlockBuilderUtility::tab(2) . '<?php endif; ?>' . PHP_EOL . PHP_EOL . PHP_EOL;
 

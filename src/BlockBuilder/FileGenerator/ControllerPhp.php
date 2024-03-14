@@ -632,6 +632,11 @@ class ControllerPhp
             $code .= BlockBuilderUtility::tab(2) . '$this->requireAsset(\'ace\');' . PHP_EOL . PHP_EOL;
         }
 
+        if ($postDataSummary['iconPickerUsed'] or $postDataSummary['iconPickerUsed_entry']) {
+            $code .= BlockBuilderUtility::tab(2) . '// Load font-awesome icons' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(2) . '$this->requireAsset(\'css\', \'font-awesome\');' . PHP_EOL . PHP_EOL;
+        }
+
         $code .= BlockBuilderUtility::tab(2) . '// Make $app available in view' . PHP_EOL;
         $code .= BlockBuilderUtility::tab(2) . '$this->set(\'app\', $this->app);' . PHP_EOL . PHP_EOL;
 
@@ -972,6 +977,8 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? $args[\'' . $v['handle'] . '\'] : null;' . PHP_EOL;
                 } else if ($v['fieldType'] == 'color_picker') {
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? trim($args[\'' . $v['handle'] . '\']) : \'\';' . PHP_EOL;
+                } else if ($v['fieldType'] == 'icon_picker') {
+                    $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? trim($args[\'' . $v['handle'] . '\']) : \'\';' . PHP_EOL;
                 } else if ($v['fieldType'] == 'link') {
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? trim($args[\'' . $v['handle'] . '\']) : \'\';' . PHP_EOL;
                 } else if ($v['fieldType'] == 'select_field') {
@@ -1149,6 +1156,8 @@ class ControllerPhp
                 } else if ($v['fieldType'] == 'date_picker') {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($entry[\'' . $v['handle'] . '\']) ? $this->app->make(\'helper/form/date_time\')->translate(\'' . $v['handle'] . '\', $entry) : null;' . PHP_EOL;
                 } else if ($v['fieldType'] == 'color_picker') {
+                    $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($entry[\'' . $v['handle'] . '\']) ? trim($entry[\'' . $v['handle'] . '\']) : null;' . PHP_EOL;
+                } else if ($v['fieldType'] == 'icon_picker') {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($entry[\'' . $v['handle'] . '\']) ? trim($entry[\'' . $v['handle'] . '\']) : null;' . PHP_EOL;
                 } else if ($v['fieldType'] == 'link') {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($entry[\'' . $v['handle'] . '\']) ? trim($entry[\'' . $v['handle'] . '\']) : null;' . PHP_EOL;

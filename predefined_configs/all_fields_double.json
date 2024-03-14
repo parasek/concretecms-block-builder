@@ -344,6 +344,18 @@
             "label": "Basic Color Picker 2",
             "handle": "basic_color_picker_second",
             "helpText": ""
+        },
+        "39": {
+            "fieldType": "icon_picker",
+            "label": "Basic Icon Picker 1",
+            "handle": "basic_icon_picker_first",
+            "helpText": ""
+        },
+        "40": {
+            "fieldType": "icon_picker",
+            "label": "Basic Icon Picker 2",
+            "handle": "basic_icon_picker_second",
+            "helpText": ""
         }
     },
     "entries": {
@@ -637,6 +649,18 @@
             "fieldType": "color_picker",
             "label": "Repeatable Color Picker 2",
             "handle": "repeatable_color_picker_second",
+            "helpText": ""
+        },
+        "39": {
+            "fieldType": "icon_picker",
+            "label": "Repeatable Icon Picker 1",
+            "handle": "repeatable_icon_picker_first",
+            "helpText": ""
+        },
+        "40": {
+            "fieldType": "icon_picker",
+            "label": "Repeatable Icon Picker 2",
+            "handle": "repeatable_icon_picker_second",
             "helpText": ""
         }
     }
