@@ -53,18 +53,21 @@ $(function () {
                     item.linkFromSitemapShowTitleField = item.linkFromSitemapShowTitleField == undefined ? 0 : 1;
                     item.linkFromSitemapShowEndingField = item.linkFromSitemapShowEndingField == undefined ? 0 : 1;
                     item.linkFromSitemapShowNewWindowField = item.linkFromSitemapShowNewWindowField == undefined ? 0 : 1;
+                    item.linkFromSitemapShowNoFollowField = item.linkFromSitemapShowNoFollowField == undefined ? 0 : 1;
 
                     // link_from_file_manager
                     item.linkFromFileManagerShowTextField = item.linkFromFileManagerShowTextField == undefined ? 0 : 1;
                     item.linkFromFileManagerShowTitleField = item.linkFromFileManagerShowTitleField == undefined ? 0 : 1;
                     item.linkFromFileManagerShowEndingField = item.linkFromFileManagerShowEndingField == undefined ? 0 : 1;
                     item.linkFromFileManagerShowNewWindowField = item.linkFromFileManagerShowNewWindowField == undefined ? 0 : 1;
+                    item.linkFromFileManagerShowNoFollowField = item.linkFromFileManagerShowNoFollowField == undefined ? 0 : 1;
 
                     // external_link
                     item.externalLinkShowTextField = item.externalLinkShowTextField == undefined ? 0 : 1;
                     item.externalLinkShowTitleField = item.externalLinkShowTitleField == undefined ? 0 : 1;
                     item.externalLinkShowEndingField = item.externalLinkShowEndingField == undefined ? 0 : 1;
                     item.externalLinkShowNewWindowField = item.externalLinkShowNewWindowField == undefined ? 0 : 1;
+                    item.externalLinkShowNoFollowField = item.externalLinkShowNoFollowField == undefined ? 0 : 1;
 
                     // image
                     item.imageShowAltTextField = item.imageShowAltTextField == undefined ? 0 : 1;
@@ -156,18 +159,21 @@ $(function () {
                 templateData['linkFromSitemapShowTitleField'] = 0;
                 templateData['linkFromSitemapShowEndingField'] = 0;
                 templateData['linkFromSitemapShowNewWindowField'] = 0;
+                templateData['linkFromSitemapShowNoFollowField'] = 0;
 
                 // link_from_file_manager
                 templateData['linkFromFileManagerShowTextField'] = 0;
                 templateData['linkFromFileManagerShowTitleField'] = 0;
                 templateData['linkFromFileManagerShowEndingField'] = 0;
                 templateData['linkFromFileManagerShowNewWindowField'] = 0;
+                templateData['linkFromFileManagerShowNoFollowField'] = 0;
 
                 // external_link
                 templateData['externalLinkShowTextField'] = 0;
                 templateData['externalLinkShowTitleField'] = 0;
                 templateData['externalLinkShowEndingField'] = 0;
                 templateData['externalLinkShowNewWindowField'] = 0;
+                templateData['externalLinkShowNoFollowField'] = 0;
 
                 // image
                 templateData['imageShowAltTextField'] = 1;

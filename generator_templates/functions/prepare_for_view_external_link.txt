@@ -7,13 +7,15 @@
         $textFieldName      = $keys[3];
         $titleFieldName     = $keys[4];
         $newWindowFieldName = $keys[5];
+        $noFollowFieldName  = $keys[6];
 
         $link      = $fields[$linkFieldName];
         $protocol  = $fields[$protocolFieldName];
         $ending    = $fields[$endingFieldName];
         $text      = $fields[$textFieldName];
         $title     = $fields[$titleFieldName];
-        $newWindow = !empty($fields[$newWindowFieldName]) ? 'target="_blank" rel="noopener"' : '';
+        $newWindow = !empty($fields[$newWindowFieldName]) ? 'target="_blank"' : '';
+        $noFollow  = !empty($fields[$noFollowFieldName]) ? 'rel="nofollow"' : '';
 
         if ($type == 'view') {
 
@@ -24,6 +26,7 @@
             $this->set($textFieldName, $text);
             $this->set($titleFieldName, $title);
             $this->set($newWindowFieldName, $newWindow);
+            $this->set($noFollowFieldName, $noFollow);
 
             // Additional data
             if (!empty($link) AND in_array($protocol, ['http://', 'https://'])) {
@@ -57,6 +60,7 @@
             $entry[$textFieldName]      = $text;
             $entry[$titleFieldName]     = $title;
             $entry[$newWindowFieldName] = $newWindow;
+            $entry[$noFollowFieldName] = $noFollow;
 
             // Additional data
             if (!empty($link) AND in_array($protocol, ['http://', 'https://'])) {

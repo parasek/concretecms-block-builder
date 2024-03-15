@@ -76,6 +76,12 @@ class DbXml
                         $code .= BlockBuilderUtility::tab(3) . '<unsigned/>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(2) . '</field>' . PHP_EOL;
                     }
+                    if (!empty($v['linkFromSitemapShowNoFollowField'])) {
+                        $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '_no_follow" type="I">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '<default value="0"/>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '<unsigned/>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '</field>' . PHP_EOL;
+                    }
                     $code .= PHP_EOL;
                 }
 
@@ -99,6 +105,12 @@ class DbXml
                         $code .= BlockBuilderUtility::tab(3) . '<unsigned/>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(2) . '</field>' . PHP_EOL;
                     }
+                    if (!empty($v['linkFromFileManagerShowNoFollowField'])) {
+                        $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '_no_follow" type="I">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '<default value="0"/>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '<unsigned/>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '</field>' . PHP_EOL;
+                    }
                     $code .= PHP_EOL;
                 }
 
@@ -116,6 +128,12 @@ class DbXml
                     }
                     if (!empty($v['externalLinkShowNewWindowField'])) {
                         $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '_new_window" type="I">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '<default value="0"/>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '<unsigned/>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '</field>' . PHP_EOL;
+                    }
+                    if (!empty($v['externalLinkShowNoFollowField'])) {
+                        $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '_no_follow" type="I">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(3) . '<default value="0"/>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(3) . '<unsigned/>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(2) . '</field>' . PHP_EOL;
@@ -245,6 +263,12 @@ class DbXml
                         $code .= BlockBuilderUtility::tab(3) . '<unsigned/>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(2) . '</field>' . PHP_EOL;
                     }
+                    if (!empty($v['linkFromSitemapShowNoFollowField'])) {
+                        $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '_no_follow" type="I">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '<default value="0"/>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '<unsigned/>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '</field>' . PHP_EOL;
+                    }
                     $code .= PHP_EOL;
                 }
 
@@ -268,6 +292,12 @@ class DbXml
                         $code .= BlockBuilderUtility::tab(3) . '<unsigned/>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(2) . '</field>' . PHP_EOL;
                     }
+                    if (!empty($v['linkFromFileManagerShowNoFollowField'])) {
+                        $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '_no_follow" type="I">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '<default value="0"/>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '<unsigned/>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '</field>' . PHP_EOL;
+                    }
                     $code .= PHP_EOL;
                 }
 
@@ -285,6 +315,12 @@ class DbXml
                     }
                     if (!empty($v['externalLinkShowNewWindowField'])) {
                         $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '_new_window" type="I">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '<default value="0"/>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(3) . '<unsigned/>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '</field>' . PHP_EOL;
+                    }
+                    if (!empty($v['externalLinkShowNoFollowField'])) {
+                        $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '_no_follow" type="I">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(3) . '<default value="0"/>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(3) . '<unsigned/>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(2) . '</field>' . PHP_EOL;

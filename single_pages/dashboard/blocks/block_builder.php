@@ -288,6 +288,11 @@ use Concrete\Core\System\Info as SystemInfo;
                 <?php echo $form->text('newWindowLabel', $newWindowLabel, ['data-translated-text' => t('Open in new window'), 'data-untranslated-text' => 'Open in new window']); ?>
             </div>
 
+            <div class="mb-4 <?php in_array('noFollowLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('noFollowLabel', t('Add nofollow attribute')); ?>
+                <?php echo $form->text('noFollowLabel', $noFollowLabel, ['data-translated-text' => t('Add nofollow attribute'), 'data-untranslated-text' => 'Add nofollow attribute']); ?>
+            </div>
+
             <div class="mb-4 <?php in_array('yesLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
                 <?php echo $form->label('yesLabel', t('Yes')); ?>
                 <?php echo $form->text('yesLabel', $yesLabel, ['data-translated-text' => t('Yes'), 'data-untranslated-text' => 'Yes']); ?>
@@ -711,6 +716,16 @@ use Concrete\Core\System\Info as SystemInfo;
                             >
                             <label for="<%=groupHandle%>[<%=counter%>][linkFromSitemapShowNewWindowField]" class="form-check-label"><?php echo t('Show "Open in new window" field'); ?></label>
                         </div>
+                        <div class="form-check">
+                            <input type="checkbox"
+                                   class="form-check-input"
+                                   name="<%=groupHandle%>[<%=counter%>][linkFromSitemapShowNoFollowField]"
+                                   id="<%=groupHandle%>[<%=counter%>][linkFromSitemapShowNoFollowField]"
+                                   value="1"
+                            <% if (parseInt(linkFromSitemapShowNoFollowField)) { %> checked="checked" <% } %>
+                            >
+                            <label for="<%=groupHandle%>[<%=counter%>][linkFromSitemapShowNoFollowField]" class="form-check-label"><?php echo t('Show "Add nofollow attribute" field'); ?></label>
+                        </div>
                         <% } %>
 
                         <% if (fieldType == 'link_from_file_manager') { %>
@@ -754,6 +769,16 @@ use Concrete\Core\System\Info as SystemInfo;
                             >
                             <label for="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowNewWindowField]" class="form-check-label"><?php echo t('Show "Open in new window" field'); ?></label>
                         </div>
+                        <div class="form-check">
+                            <input type="checkbox"
+                                   class="form-check-input"
+                                   name="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowNoFollowField]"
+                                   id="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowNoFollowField]"
+                                   value="1"
+                            <% if (parseInt(linkFromFileManagerShowNoFollowField)) { %> checked="checked" <% } %>
+                            >
+                            <label for="<%=groupHandle%>[<%=counter%>][linkFromFileManagerShowNoFollowField]" class="form-check-label"><?php echo t('Show "Add nofollow attribute" field'); ?></label>
+                        </div>
                         <% } %>
 
                         <% if (fieldType == 'external_link') { %>
@@ -796,6 +821,16 @@ use Concrete\Core\System\Info as SystemInfo;
                             <% if (parseInt(externalLinkShowNewWindowField)) { %> checked="checked" <% } %>
                             >
                             <label for="<%=groupHandle%>[<%=counter%>][externalLinkShowNewWindowField]" class="form-check-label"><?php echo t('Show "Open in new window" field'); ?></label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox"
+                                   class="form-check-input"
+                                   name="<%=groupHandle%>[<%=counter%>][externalLinkShowNoFollowField]"
+                                   id="<%=groupHandle%>[<%=counter%>][externalLinkShowNoFollowField]"
+                                   value="1"
+                            <% if (parseInt(externalLinkShowNoFollowField)) { %> checked="checked" <% } %>
+                            >
+                            <label for="<%=groupHandle%>[<%=counter%>][externalLinkShowNoFollowField]" class="form-check-label"><?php echo t('Show "Add nofollow attribute" field'); ?></label>
                         </div>
                         <% } %>
 
