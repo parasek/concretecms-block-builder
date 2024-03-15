@@ -125,8 +125,8 @@
         },
         "10": {
             "fieldType": "link",
-            "label": "Basic Link with Type Selection 1",
-            "handle": "basic_link_with_type_selection_first",
+            "label": "Basic Flex Link 1",
+            "handle": "basic_flex_link_first",
             "helpText": ""
         },
         "11": {
@@ -289,8 +289,8 @@
         },
         "10": {
             "fieldType": "link",
-            "label": "Repeatable Link with Type Selection 1",
-            "handle": "repeatable_link_with_type_selection_first",
+            "label": "Repeatable Flex Link 1",
+            "handle": "repeatable_flex_link_first",
             "helpText": ""
         },
         "11": {

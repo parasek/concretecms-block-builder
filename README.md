@@ -43,7 +43,7 @@ This addon is made for developers and site builders. It allows you to quickly cr
   - WYSIWYG Editor
   - Single Choice Field
   - Multiple Choice Field
-  - Link with Type Selection
+  - Flex Link
   - Link from Sitemap
   - Link from File Manager
   - External Link
