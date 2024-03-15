@@ -41,6 +41,7 @@
     "showAdditionalFieldsLabel": "Show additional fields",
     "hideAdditionalFieldsLabel": "Hide additional fields",
     "newWindowLabel": "Open in new window",
+    "noFollowLabel": "Add nofollow attribute",
     "yesLabel": "Yes",
     "noLabel": "No",
     "overrideThumbnailDimensionsLabel": "Override Thumbnail dimensions",

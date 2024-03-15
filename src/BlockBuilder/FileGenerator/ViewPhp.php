@@ -102,6 +102,9 @@ class ViewPhp
                     if (!empty($v['linkFromSitemapShowNewWindowField'])) {
                         $code .= ' <?php echo $' . $v['handle'] . '_new_window; ?>';
                     }
+                    if (!empty($v['linkFromSitemapShowNoFollowField'])) {
+                        $code .= ' <?php echo $' . $v['handle'] . '_no_follow; ?>';
+                    }
                     $code .= '>';
                     if (!empty($v['linkFromSitemapShowTextField'])) {
                         $code .= PHP_EOL . BlockBuilderUtility::tab(2) . '<?php echo nl2br(h($' . $v['handle'] . '_text), false); ?>' . PHP_EOL;
@@ -128,6 +131,9 @@ class ViewPhp
                     if (!empty($v['linkFromFileManagerShowNewWindowField'])) {
                         $code .= ' <?php echo $' . $v['handle'] . '_new_window; ?>';
                     }
+                    if (!empty($v['linkFromFileManagerShowNoFollowField'])) {
+                        $code .= ' <?php echo $' . $v['handle'] . '_no_follow; ?>';
+                    }
                     $code .= '>';
                     if (!empty($v['linkFromFileManagerShowTextField'])) {
                         $code .= PHP_EOL . BlockBuilderUtility::tab(2) . '<?php echo nl2br(h($' . $v['handle'] . '_text), false); ?>' . PHP_EOL;
@@ -153,6 +159,9 @@ class ViewPhp
                     }
                     if (!empty($v['externalLinkShowNewWindowField'])) {
                         $code .= ' <?php echo $' . $v['handle'] . '_new_window; ?>';
+                    }
+                    if (!empty($v['externalLinkShowNoFollowField'])) {
+                        $code .= ' <?php echo $' . $v['handle'] . '_no_follow; ?>';
                     }
                     $code .= '>';
                     if (!empty($v['externalLinkShowTextField'])) {
@@ -349,6 +358,9 @@ class ViewPhp
                     if (!empty($v['linkFromSitemapShowNewWindowField'])) {
                         $code .= ' <?php echo $entry[\'' . $v['handle'] . '_new_window\']; ?>';
                     }
+                    if (!empty($v['linkFromSitemapShowNoFollowField'])) {
+                        $code .= ' <?php echo $entry[\'' . $v['handle'] . '_no_follow\']; ?>';
+                    }
                     $code .= '>';
                     if (!empty($v['linkFromSitemapShowTextField'])) {
                         $code .= PHP_EOL . BlockBuilderUtility::tab(4) . '<?php echo nl2br(h($entry[\'' . $v['handle'] . '_text\']), false); ?>' . PHP_EOL;
@@ -375,6 +387,9 @@ class ViewPhp
                     if (!empty($v['linkFromFileManagerShowNewWindowField'])) {
                         $code .= ' <?php echo $entry[\'' . $v['handle'] . '_new_window\']; ?>';
                     }
+                    if (!empty($v['linkFromFileManagerShowNoFollowField'])) {
+                        $code .= ' <?php echo $entry[\'' . $v['handle'] . '_no_follow\']; ?>';
+                    }
                     $code .= '>';
                     if (!empty($v['linkFromFileManagerShowTextField'])) {
                         $code .= PHP_EOL . BlockBuilderUtility::tab(4) . '<?php echo nl2br(h($entry[\'' . $v['handle'] . '_text\']), false); ?>' . PHP_EOL;
@@ -400,6 +415,9 @@ class ViewPhp
                     }
                     if (!empty($v['externalLinkShowNewWindowField'])) {
                         $code .= ' <?php echo $entry[\'' . $v['handle'] . '_new_window\']; ?>';
+                    }
+                    if (!empty($v['externalLinkShowNoFollowField'])) {
+                        $code .= ' <?php echo $entry[\'' . $v['handle'] . '_no_follow\']; ?>';
                     }
                     $code .= '>';
                     if (!empty($v['externalLinkShowTextField'])) {

@@ -1,5 +1,6 @@
 {
     "version": "2.4.0",
+    "createdAt": "2024-03-15 16:14:56",
     "blockName": "All Fields",
     "blockHandle": "all_fields",
     "blockDescription": "All types of Fields (Basic + Repeatable)",
@@ -41,6 +42,7 @@
     "showAdditionalFieldsLabel": "Show additional fields",
     "hideAdditionalFieldsLabel": "Hide additional fields",
     "newWindowLabel": "Open in new window",
+    "noFollowLabel": "Add nofollow attribute",
     "yesLabel": "Yes",
     "noLabel": "No",
     "overrideThumbnailDimensionsLabel": "Override Thumbnail dimensions",
@@ -137,7 +139,8 @@
             "linkFromSitemapShowEndingField": "1",
             "linkFromSitemapShowTextField": "1",
             "linkFromSitemapShowTitleField": "1",
-            "linkFromSitemapShowNewWindowField": "1"
+            "linkFromSitemapShowNewWindowField": "1",
+            "linkFromSitemapShowNoFollowField": "1"
         },
         "12": {
             "fieldType": "link_from_file_manager",
@@ -147,7 +150,8 @@
             "linkFromFileManagerShowEndingField": "1",
             "linkFromFileManagerShowTextField": "1",
             "linkFromFileManagerShowTitleField": "1",
-            "linkFromFileManagerShowNewWindowField": "1"
+            "linkFromFileManagerShowNewWindowField": "1",
+            "linkFromFileManagerShowNoFollowField": "1"
         },
         "13": {
             "fieldType": "external_link",
@@ -157,7 +161,8 @@
             "externalLinkShowEndingField": "1",
             "externalLinkShowTextField": "1",
             "externalLinkShowTitleField": "1",
-            "externalLinkShowNewWindowField": "1"
+            "externalLinkShowNewWindowField": "1",
+            "externalLinkShowNoFollowField": "1"
         },
         "14": {
             "fieldType": "image",
@@ -301,7 +306,8 @@
             "linkFromSitemapShowEndingField": "1",
             "linkFromSitemapShowTextField": "1",
             "linkFromSitemapShowTitleField": "1",
-            "linkFromSitemapShowNewWindowField": "1"
+            "linkFromSitemapShowNewWindowField": "1",
+            "linkFromSitemapShowNoFollowField": "1"
         },
         "12": {
             "fieldType": "link_from_file_manager",
@@ -311,7 +317,8 @@
             "linkFromFileManagerShowEndingField": "1",
             "linkFromFileManagerShowTextField": "1",
             "linkFromFileManagerShowTitleField": "1",
-            "linkFromFileManagerShowNewWindowField": "1"
+            "linkFromFileManagerShowNewWindowField": "1",
+            "linkFromFileManagerShowNoFollowField": "1"
         },
         "13": {
             "fieldType": "external_link",
@@ -321,7 +328,8 @@
             "externalLinkShowEndingField": "1",
             "externalLinkShowTextField": "1",
             "externalLinkShowTitleField": "1",
-            "externalLinkShowNewWindowField": "1"
+            "externalLinkShowNewWindowField": "1",
+            "externalLinkShowNoFollowField": "1"
         },
         "14": {
             "fieldType": "image",

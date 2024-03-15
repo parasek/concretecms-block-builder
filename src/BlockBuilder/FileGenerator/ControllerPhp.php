@@ -88,6 +88,9 @@ class ControllerPhp
                     if (!empty($v['linkFromSitemapShowNewWindowField'])) {
                         $code .= BlockBuilderUtility::tab(1) . 'protected $' . $v['handle'] . '_new_window;' . PHP_EOL;
                     }
+                    if (!empty($v['linkFromSitemapShowNoFollowField'])) {
+                        $code .= BlockBuilderUtility::tab(1) . 'protected $' . $v['handle'] . '_no_follow;' . PHP_EOL;
+                    }
                 }
 
                 if ($v['fieldType'] == 'link_from_file_manager') {
@@ -102,6 +105,9 @@ class ControllerPhp
                     }
                     if (!empty($v['linkFromFileManagerShowNewWindowField'])) {
                         $code .= BlockBuilderUtility::tab(1) . 'protected $' . $v['handle'] . '_new_window;' . PHP_EOL;
+                    }
+                    if (!empty($v['linkFromFileManagerShowNoFollowField'])) {
+                        $code .= BlockBuilderUtility::tab(1) . 'protected $' . $v['handle'] . '_no_follow;' . PHP_EOL;
                     }
                 }
 
@@ -118,6 +124,9 @@ class ControllerPhp
                     }
                     if (!empty($v['externalLinkShowNewWindowField'])) {
                         $code .= BlockBuilderUtility::tab(1) . 'protected $' . $v['handle'] . '_new_window;' . PHP_EOL;
+                    }
+                    if (!empty($v['externalLinkShowNoFollowField'])) {
+                        $code .= BlockBuilderUtility::tab(1) . 'protected $' . $v['handle'] . '_no_follow;' . PHP_EOL;
                     }
                 }
 
@@ -433,6 +442,9 @@ class ControllerPhp
                     if (!empty($v['linkFromSitemapShowNewWindowField'])) {
                         $code .= BlockBuilderUtility::tab(2) . '$this->set(\'' . $v['handle'] . '_new_window\', $this->' . $v['handle'] . '_new_window);' . PHP_EOL;
                     }
+                    if (!empty($v['linkFromSitemapShowNoFollowField'])) {
+                        $code .= BlockBuilderUtility::tab(2) . '$this->set(\'' . $v['handle'] . '_no_follow\', $this->' . $v['handle'] . '_no_follow);' . PHP_EOL;
+                    }
                 }
 
                 if ($v['fieldType'] == 'link_from_file_manager') {
@@ -447,6 +459,9 @@ class ControllerPhp
                     }
                     if (!empty($v['linkFromFileManagerShowNewWindowField'])) {
                         $code .= BlockBuilderUtility::tab(2) . '$this->set(\'' . $v['handle'] . '_new_window\', $this->' . $v['handle'] . '_new_window);' . PHP_EOL;
+                    }
+                    if (!empty($v['linkFromFileManagerShowNoFollowField'])) {
+                        $code .= BlockBuilderUtility::tab(2) . '$this->set(\'' . $v['handle'] . '_no_follow\', $this->' . $v['handle'] . '_no_follow);' . PHP_EOL;
                     }
                 }
 
@@ -463,6 +478,9 @@ class ControllerPhp
                     }
                     if (!empty($v['externalLinkShowNewWindowField'])) {
                         $code .= BlockBuilderUtility::tab(2) . '$this->set(\'' . $v['handle'] . '_new_window\', $this->' . $v['handle'] . '_new_window);' . PHP_EOL;
+                    }
+                    if (!empty($v['externalLinkShowNoFollowField'])) {
+                        $code .= BlockBuilderUtility::tab(2) . '$this->set(\'' . $v['handle'] . '_no_follow\', $this->' . $v['handle'] . '_no_follow);' . PHP_EOL;
                     }
                 }
 
@@ -722,6 +740,7 @@ class ControllerPhp
                     $text = 'false';
                     $title = 'false';
                     $newWindow = 'false';
+                    $noFollow = 'false';
                     if (!empty($v['linkFromSitemapShowEndingField'])) {
                         $ending = '$this->' . $v['handle'] . '_ending';
                     }
@@ -734,13 +753,17 @@ class ControllerPhp
                     if (!empty($v['linkFromSitemapShowNewWindowField'])) {
                         $newWindow = '$this->' . $v['handle'] . '_new_window';
                     }
+                    if (!empty($v['linkFromSitemapShowNoFollowField'])) {
+                        $noFollow = '$this->' . $v['handle'] . '_no_follow';
+                    }
 
                     $code .= BlockBuilderUtility::tab(2) . '$this->prepareForViewLinkFromSitemap(\'view\', [' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '\'            => $this->' . $v['handle'] . ',' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_ending\'     => ' . $ending . ',' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_text\'       => ' . $text . ',' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_title\'      => ' . $title . ',' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_new_window\' => ' . $newWindow . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_new_window\' => ' . $newWindow . ',' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_no_follow\' => ' . $noFollow . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(2) . ']);' . PHP_EOL . PHP_EOL;
 
                 }
@@ -751,6 +774,7 @@ class ControllerPhp
                     $text = 'false';
                     $title = 'false';
                     $newWindow = 'false';
+                    $noFollow = 'false';
                     if (!empty($v['linkFromFileManagerShowEndingField'])) {
                         $ending = '$this->' . $v['handle'] . '_ending';
                     }
@@ -763,13 +787,17 @@ class ControllerPhp
                     if (!empty($v['linkFromFileManagerShowNewWindowField'])) {
                         $newWindow = '$this->' . $v['handle'] . '_new_window';
                     }
+                    if (!empty($v['linkFromFileManagerShowNoFollowField'])) {
+                        $noFollow = '$this->' . $v['handle'] . '_no_follow';
+                    }
 
                     $code .= BlockBuilderUtility::tab(2) . '$this->prepareForViewLinkFromFileManager(\'view\', [' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '\'            => $this->' . $v['handle'] . ',' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_ending\'     => ' . $ending . ',' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_text\'       => ' . $text . ',' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_title\'      => ' . $title . ',' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_new_window\' => ' . $newWindow . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_new_window\' => ' . $newWindow . ',' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_no_follow\' => ' . $noFollow . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(2) . ']);' . PHP_EOL . PHP_EOL;
 
                 }
@@ -780,6 +808,7 @@ class ControllerPhp
                     $text = 'false';
                     $title = 'false';
                     $newWindow = 'false';
+                    $noFollow = 'false';
                     if (!empty($v['externalLinkShowEndingField'])) {
                         $ending = '$this->' . $v['handle'] . '_ending';
                     }
@@ -792,6 +821,9 @@ class ControllerPhp
                     if (!empty($v['externalLinkShowNewWindowField'])) {
                         $newWindow = '$this->' . $v['handle'] . '_new_window';
                     }
+                    if (!empty($v['externalLinkShowNoFollowField'])) {
+                        $noFollow = '$this->' . $v['handle'] . '_no_follow';
+                    }
 
                     $code .= BlockBuilderUtility::tab(2) . '$this->prepareForViewExternalLink(\'view\', [' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '\'            => $this->' . $v['handle'] . ',' . PHP_EOL;
@@ -799,7 +831,8 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_ending\'     => ' . $ending . ',' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_text\'       => ' . $text . ',' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_title\'      => ' . $title . ',' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_new_window\' => ' . $newWindow . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_new_window\' => ' . $newWindow . ',' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_no_follow\' => ' . $noFollow . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(2) . ']);' . PHP_EOL . PHP_EOL;
 
                 }
@@ -944,14 +977,17 @@ class ControllerPhp
                     !empty($v['linkFromSitemapShowTextField']) ? $additionalSpaces = 5 : false;
                     !empty($v['linkFromSitemapShowTitleField']) ? $additionalSpaces = 6 : false;
                     !empty($v['linkFromSitemapShowEndingField']) ? $additionalSpaces = 7 : false;
+                    !empty($v['linkFromSitemapShowNoFollowField']) ? $additionalSpaces = 10 : false;
                     !empty($v['linkFromSitemapShowNewWindowField']) ? $additionalSpaces = 11 : false;
                 } elseif ($v['fieldType'] == 'link_from_file_manager') {
                     !empty($v['linkFromFileManagerShowTextField']) ? $additionalSpaces = 5 : false;
                     !empty($v['linkFromFileManagerShowTitleField']) ? $additionalSpaces = 6 : false;
                     !empty($v['linkFromFileManagerShowEndingField']) ? $additionalSpaces = 7 : false;
+                    !empty($v['linkFromFileManagerShowNoFollowField']) ? $additionalSpaces = 10 : false;
                     !empty($v['linkFromFileManagerShowNewWindowField']) ? $additionalSpaces = 11 : false;
                 } else if ($v['fieldType'] == 'external_link') {
                     $additionalSpaces = 9; // string '_protocol' is always used
+                    !empty($v['externalLinkShowNoFollowField']) ? $additionalSpaces = 10 : false;
                     !empty($v['externalLinkShowNewWindowField']) ? $additionalSpaces = 11 : false;
                 } elseif ($v['fieldType'] == 'image') {
                     !empty($v['imageShowAltTextField']) ? $additionalSpaces = 4 : false;
@@ -1121,14 +1157,17 @@ class ControllerPhp
                     !empty($v['linkFromSitemapShowTextField']) ? $additionalSpaces = 5 : false;
                     !empty($v['linkFromSitemapShowTitleField']) ? $additionalSpaces = 6 : false;
                     !empty($v['linkFromSitemapShowEndingField']) ? $additionalSpaces = 7 : false;
+                    !empty($v['linkFromSitemapShowNoFollowField']) ? $additionalSpaces = 10 : false;
                     !empty($v['linkFromSitemapShowNewWindowField']) ? $additionalSpaces = 11 : false;
                 } elseif ($v['fieldType'] == 'link_from_file_manager') {
                     !empty($v['linkFromFileManagerShowTextField']) ? $additionalSpaces = 5 : false;
                     !empty($v['linkFromFileManagerShowTitleField']) ? $additionalSpaces = 6 : false;
                     !empty($v['linkFromFileManagerShowEndingField']) ? $additionalSpaces = 7 : false;
+                    !empty($v['linkFromFileManagerShowNoFollowField']) ? $additionalSpaces = 10 : false;
                     !empty($v['linkFromFileManagerShowNewWindowField']) ? $additionalSpaces = 11 : false;
                 } else if ($v['fieldType'] == 'external_link') {
                     $additionalSpaces = 9; // string '_protocol' is always used
+                    !empty($v['externalLinkShowNoFollowField']) ? $additionalSpaces = 10 : false;
                     !empty($v['externalLinkShowNewWindowField']) ? $additionalSpaces = 11 : false;
                 } elseif ($v['fieldType'] == 'image') {
                     !empty($v['imageShowAltTextField']) ? $additionalSpaces = 4 : false;
@@ -1183,6 +1222,9 @@ class ControllerPhp
                     if (!empty($v['linkFromSitemapShowNewWindowField'])) {
                         $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '_new_window\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 11) . '= intval($entry[\'' . $v['handle'] . '_new_window\']);' . PHP_EOL;
                     }
+                    if (!empty($v['linkFromSitemapShowNoFollowField'])) {
+                        $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '_no_follow\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 10) . '= intval($entry[\'' . $v['handle'] . '_no_follow\']);' . PHP_EOL;
+                    }
                 }
 
                 if ($v['fieldType'] == 'link_from_file_manager') {
@@ -1197,6 +1239,9 @@ class ControllerPhp
                     }
                     if (!empty($v['linkFromFileManagerShowNewWindowField'])) {
                         $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '_new_window\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 11) . '= intval($entry[\'' . $v['handle'] . '_new_window\']);' . PHP_EOL;
+                    }
+                    if (!empty($v['linkFromFileManagerShowNoFollowField'])) {
+                        $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '_no_follow\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 10) . '= intval($entry[\'' . $v['handle'] . '_no_follow\']);' . PHP_EOL;
                     }
                 }
 
@@ -1213,6 +1258,9 @@ class ControllerPhp
                     }
                     if (!empty($v['externalLinkShowNewWindowField'])) {
                         $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '_new_window\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 11) . '= intval($entry[\'' . $v['handle'] . '_new_window\']);' . PHP_EOL;
+                    }
+                    if (!empty($v['externalLinkShowNoFollowField'])) {
+                        $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '_no_follow\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 10) . '= intval($entry[\'' . $v['handle'] . '_no_follow\']);' . PHP_EOL;
                     }
                 }
 
@@ -1733,6 +1781,7 @@ class ControllerPhp
                     $text = 'false';
                     $title = 'false';
                     $newWindow = 'false';
+                    $noFollow = 'false';
                     if (!empty($v['linkFromSitemapShowEndingField'])) {
                         $ending = '$entry[\'' . $v['handle'] . '_ending\']';
                     }
@@ -1745,6 +1794,9 @@ class ControllerPhp
                     if (!empty($v['linkFromSitemapShowNewWindowField'])) {
                         $newWindow = '$entry[\'' . $v['handle'] . '_new_window\']';
                     }
+                    if (!empty($v['linkFromSitemapShowNoFollowField'])) {
+                        $noFollow = '$entry[\'' . $v['handle'] . '_no_follow\']';
+                    }
 
                     $code .= BlockBuilderUtility::tab(4) . '// ' . addslashes($v['label']) . ' (' . $v['handle'] . ') - Link from Sitemap' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '$modifiedEntry = $this->prepareForViewLinkFromSitemap(\'entry\', [' . PHP_EOL;
@@ -1752,7 +1804,8 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '_ending\'     => ' . $ending . ',' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '_text\'       => ' . $text . ',' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '_title\'      => ' . $title . ',' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '_new_window\' => ' . $newWindow . '' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '_new_window\' => ' . $newWindow . ',' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '_no_follow\'  => ' . $noFollow . '' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . ']);' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '$entry = array_merge($entry, $modifiedEntry);' . PHP_EOL . PHP_EOL;
 
@@ -1764,6 +1817,7 @@ class ControllerPhp
                     $text = 'false';
                     $title = 'false';
                     $newWindow = 'false';
+                    $noFollow = 'false';
                     if (!empty($v['linkFromFileManagerShowEndingField'])) {
                         $ending = '$entry[\'' . $v['handle'] . '_ending\']';
                     }
@@ -1776,6 +1830,9 @@ class ControllerPhp
                     if (!empty($v['linkFromFileManagerShowNewWindowField'])) {
                         $newWindow = '$entry[\'' . $v['handle'] . '_new_window\']';
                     }
+                    if (!empty($v['linkFromFileManagerShowNoFollowField'])) {
+                        $noFollow = '$entry[\'' . $v['handle'] . '_no_follow\']';
+                    }
 
                     $code .= BlockBuilderUtility::tab(4) . '// ' . addslashes($v['label']) . ' (' . $v['handle'] . ') - Link from File Manager' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '$modifiedEntry = $this->prepareForViewLinkFromFileManager(\'entry\', [' . PHP_EOL;
@@ -1783,7 +1840,8 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '_ending\'     => ' . $ending . ',' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '_text\'       => ' . $text . ',' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '_title\'      => ' . $title . ',' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '_new_window\' => ' . $newWindow . '' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '_new_window\' => ' . $newWindow . ',' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '_no_follow\'  => ' . $noFollow . '' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . ']);' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '$entry = array_merge($entry, $modifiedEntry);' . PHP_EOL . PHP_EOL;
 
@@ -1795,6 +1853,7 @@ class ControllerPhp
                     $text = 'false';
                     $title = 'false';
                     $newWindow = 'false';
+                    $noFollow = 'false';
                     if (!empty($v['externalLinkShowEndingField'])) {
                         $ending = '$entry[\'' . $v['handle'] . '_ending\']';
                     }
@@ -1807,6 +1866,9 @@ class ControllerPhp
                     if (!empty($v['externalLinkShowNewWindowField'])) {
                         $newWindow = '$entry[\'' . $v['handle'] . '_new_window\']';
                     }
+                    if (!empty($v['externalLinkShowNoFollowField'])) {
+                        $noFollow = '$entry[\'' . $v['handle'] . '_no_follow\']';
+                    }
 
                     $code .= BlockBuilderUtility::tab(4) . '// ' . addslashes($v['label']) . ' (' . $v['handle'] . ') - External Link' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '$modifiedEntry = $this->prepareForViewExternalLink(\'entry\', [' . PHP_EOL;
@@ -1815,7 +1877,8 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '_ending\'     => ' . $ending . ',' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '_text\'       => ' . $text . ',' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '_title\'      => ' . $title . ',' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '_new_window\' => ' . $newWindow . '' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '_new_window\' => ' . $newWindow . ',' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '_no_follow\'  => ' . $noFollow . '' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . ']);' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '$entry = array_merge($entry, $modifiedEntry);' . PHP_EOL . PHP_EOL;
 

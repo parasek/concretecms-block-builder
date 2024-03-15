@@ -6,12 +6,14 @@
         $textFieldName      = $keys[2];
         $titleFieldName     = $keys[3];
         $newWindowFieldName = $keys[4];
+        $noFollowFieldName  = $keys[5];
 
         $pageID    = $fields[$pageIDFieldName];
         $ending    = $fields[$endingFieldName];
         $text      = $fields[$textFieldName];
         $title     = $fields[$titleFieldName];
-        $newWindow = !empty($fields[$newWindowFieldName]) ? 'target="_blank" rel="noopener"' : '';
+        $newWindow = !empty($fields[$newWindowFieldName]) ? 'target="_blank"' : '';
+        $noFollow  = !empty($fields[$noFollowFieldName]) ? 'rel="nofollow"' : '';
 
         $pageObject = false;
         $name       = '';
@@ -37,6 +39,7 @@
             $this->set($textFieldName, $text);
             $this->set($titleFieldName, $title);
             $this->set($newWindowFieldName, $newWindow);
+            $this->set($noFollowFieldName, $noFollow);
 
             // Additional data
             $this->set($pageIDFieldName.'_object', $pageObject);
@@ -54,6 +57,7 @@
             $entry[$textFieldName]      = $text;
             $entry[$titleFieldName]     = $title;
             $entry[$newWindowFieldName] = $newWindow;
+            $entry[$noFollowFieldName]  = $noFollow;
 
             // Additional data
             // $entry[$pageIDFieldName.'_object']    = $pageObject;

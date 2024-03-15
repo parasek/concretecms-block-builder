@@ -198,6 +198,7 @@ class BlockBuilder extends DashboardPageController
         $this->set('showAdditionalFieldsLabel', t('Show additional fields'));
         $this->set('hideAdditionalFieldsLabel', t('Hide additional fields'));
         $this->set('newWindowLabel', t('Open in new window'));
+        $this->set('noFollowLabel', t('Add nofollow attribute'));
         $this->set('yesLabel', t('Yes'));
         $this->set('noLabel', t('No'));
         $this->set('overrideThumbnailDimensionsLabel', t('Override Thumbnail dimensions'));

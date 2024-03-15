@@ -82,14 +82,17 @@ class FormPhp
                         !empty($v['linkFromSitemapShowTextField']) or
                         !empty($v['linkFromSitemapShowTitleField']) or
                         !empty($v['linkFromSitemapShowNewWindowField']) or
+                        !empty($v['linkFromSitemapShowNoFollowField']) or
                         !empty($v['linkFromFileManagerShowEndingField']) or
                         !empty($v['linkFromFileManagerShowTextField']) or
                         !empty($v['linkFromFileManagerShowTitleField']) or
                         !empty($v['linkFromFileManagerShowNewWindowField']) or
+                        !empty($v['linkFromFileManagerShowNoFollowField']) or
                         !empty($v['externalLinkShowEndingField']) or
                         !empty($v['externalLinkShowTextField']) or
                         !empty($v['externalLinkShowTitleField']) or
                         !empty($v['externalLinkShowNewWindowField']) or
+                        !empty($v['externalLinkShowNoFollowField']) or
                         ($v['fieldType'] == 'link') or
                         ($v['fieldType'] == 'image')
                     ) {
@@ -380,7 +383,8 @@ class FormPhp
                         !empty($v['linkFromSitemapShowEndingField']) ||
                         !empty($v['linkFromSitemapShowTextField']) ||
                         !empty($v['linkFromSitemapShowTitleField']) ||
-                        !empty($v['linkFromSitemapShowNewWindowField']);
+                        !empty($v['linkFromSitemapShowNewWindowField']) ||
+                        !empty($v['linkFromSitemapShowNoFollowField']);
                     $fieldGroupHighlight = '';
                     if ($postData['highlightMultiElementFields'] && $hasMultipleElements) {
                         $fieldGroupHighlight = ' field-group-highlight mb-4';
@@ -425,6 +429,13 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(4) . '</div>' . PHP_EOL . PHP_EOL;
                     }
 
+                    if (!empty($v['linkFromSitemapShowNoFollowField'])) {
+                        $code .= BlockBuilderUtility::tab(4) . '<div class="mb-4">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '_no_follow\'), t(\'' . addslashes($postData['noFollowLabel']) . '\')); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '<?php echo $form->select($view->field(\'' . $v['handle'] . '_no_follow\'), [\'0\'=>t(\'' . addslashes($postData['noLabel']) . '\'), \'1\'=>t(\'' . addslashes($postData['yesLabel']) . '\')], $' . $v['handle'] . '_no_follow); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(4) . '</div>' . PHP_EOL . PHP_EOL;
+                    }
+
                     $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL;
 
                 }
@@ -434,8 +445,9 @@ class FormPhp
                     $hasMultipleElements =
                         !empty($v['linkFromFileManagerShowEndingField']) ||
                         !empty($v['linkFromFileManagerShowTextField']) ||
-                        !empty($v['linkFromFileManagerShowTextField']) ||
-                        !empty($v['linkFromFileManagerShowNewWindowField']);
+                        !empty($v['linkFromFileManagerShowTitleField']) ||
+                        !empty($v['linkFromFileManagerShowNewWindowField']) ||
+                        !empty($v['linkFromFileManagerShowNoFollowField']);
                     $fieldGroupHighlight = '';
                     if ($postData['highlightMultiElementFields'] && $hasMultipleElements) {
                         $fieldGroupHighlight = ' field-group-highlight mb-4';
@@ -480,6 +492,13 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(4) . '</div>' . PHP_EOL . PHP_EOL;
                     }
 
+                    if (!empty($v['linkFromFileManagerShowNoFollowField'])) {
+                        $code .= BlockBuilderUtility::tab(4) . '<div class="mb-4">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '_no_follow\'), t(\'' . addslashes($postData['noFollowLabel']) . '\')); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '<?php echo $form->select($view->field(\'' . $v['handle'] . '_no_follow\'), [\'0\'=>t(\'' . addslashes($postData['noLabel']) . '\'), \'1\'=>t(\'' . addslashes($postData['yesLabel']) . '\')], $' . $v['handle'] . '_no_follow); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(4) . '</div>' . PHP_EOL . PHP_EOL;
+                    }
+
                     $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL;
 
                 }
@@ -490,7 +509,8 @@ class FormPhp
                         !empty($v['externalLinkShowEndingField']) ||
                         !empty($v['externalLinkShowTextField']) ||
                         !empty($v['externalLinkShowTitleField']) ||
-                        !empty($v['externalLinkShowNewWindowField']);
+                        !empty($v['externalLinkShowNewWindowField']) ||
+                        !empty($v['externalLinkShowNoFollowField']);
                     $fieldGroupHighlight = '';
                     if ($postData['highlightMultiElementFields'] && $hasMultipleElements) {
                         $fieldGroupHighlight = ' field-group-highlight mb-4';
@@ -554,6 +574,13 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(4) . '<div class="mb-4">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(5) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '_new_window\'), t(\'' . addslashes($postData['newWindowLabel']) . '\')); ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(5) . '<?php echo $form->select($view->field(\'' . $v['handle'] . '_new_window\'), [\'0\'=>t(\'' . addslashes($postData['noLabel']) . '\'), \'1\'=>t(\'' . addslashes($postData['yesLabel']) . '\')], $' . $v['handle'] . '_new_window); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(4) . '</div>' . PHP_EOL . PHP_EOL;
+                    }
+
+                    if (!empty($v['externalLinkShowNoFollowField'])) {
+                        $code .= BlockBuilderUtility::tab(4) . '<div class="mb-4">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '_no_follow\'), t(\'' . addslashes($postData['noFollowLabel']) . '\')); ?>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(5) . '<?php echo $form->select($view->field(\'' . $v['handle'] . '_no_follow\'), [\'0\'=>t(\'' . addslashes($postData['noLabel']) . '\'), \'1\'=>t(\'' . addslashes($postData['yesLabel']) . '\')], $' . $v['handle'] . '_no_follow); ?>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(4) . '</div>' . PHP_EOL . PHP_EOL;
                     }
 
@@ -1001,14 +1028,17 @@ class FormPhp
                         !empty($v['linkFromSitemapShowTextField']) or
                         !empty($v['linkFromSitemapShowTitleField']) or
                         !empty($v['linkFromSitemapShowNewWindowField']) or
+                        !empty($v['linkFromSitemapShowNoFollowField']) or
                         !empty($v['linkFromFileManagerShowEndingField']) or
                         !empty($v['linkFromFileManagerShowTextField']) or
                         !empty($v['linkFromFileManagerShowTitleField']) or
                         !empty($v['linkFromFileManagerShowNewWindowField']) or
+                        !empty($v['linkFromFileManagerShowNoFollowField']) or
                         !empty($v['externalLinkShowEndingField']) or
                         !empty($v['externalLinkShowTextField']) or
                         !empty($v['externalLinkShowTitleField']) or
                         !empty($v['externalLinkShowNewWindowField']) or
+                        !empty($v['externalLinkShowNoFollowField']) or
                         ($v['fieldType'] == 'link') or
                         ($v['fieldType'] == 'image')
                     ) {
@@ -1264,6 +1294,7 @@ class FormPhp
                         !empty($v['linkFromSitemapShowEndingField']) ||
                         !empty($v['linkFromSitemapShowTextField']) ||
                         !empty($v['linkFromSitemapShowTitleField']) ||
+                        !empty($v['linkFromSitemapShowNoFollowField']) ||
                         !empty($v['linkFromSitemapShowNewWindowField']);
                     $fieldGroupHighlight = '';
                     if ($postData['highlightMultiElementFields'] && $hasMultipleElements) {
@@ -1319,6 +1350,16 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL . PHP_EOL;
                     }
 
+                    if (!empty($v['linkFromSitemapShowNoFollowField'])) {
+                        $code .= BlockBuilderUtility::tab(7) . '<div class="mb-4">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_no_follow]" class="form-label"><?php echo t(\'' . addslashes($postData['noFollowLabel']) . '\'); ?></label>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . '<select id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_no_follow]" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_no_follow]" class="form-select">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(9) . '<option value="0" <% if (!' . $v['handle'] . '_no_follow) { %>selected="selected"<% } %>><?php echo t(\'' . addslashes($postData['noLabel']) . '\'); ?></option>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(9) . '<option value="1" <% if (' . $v['handle'] . '_no_follow==1) { %>selected="selected"<% } %>><?php echo t(\'' . addslashes($postData['yesLabel']) . '\'); ?></option>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . '</select>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL . PHP_EOL;
+                    }
+
                     $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
 
                 }
@@ -1328,7 +1369,8 @@ class FormPhp
                     $hasMultipleElements =
                         !empty($v['linkFromFileManagerShowEndingField']) ||
                         !empty($v['linkFromFileManagerShowTextField']) ||
-                        !empty($v['linkFromFileManagerShowTextField']) ||
+                        !empty($v['linkFromFileManagerShowTitleField']) ||
+                        !empty($v['linkFromFileManagerShowNoFollowField']) ||
                         !empty($v['linkFromFileManagerShowNewWindowField']);
                     $fieldGroupHighlight = '';
                     if ($postData['highlightMultiElementFields'] && $hasMultipleElements) {
@@ -1381,6 +1423,16 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(8) . '<select id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_new_window]" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_new_window]" class="form-select">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(9) . '<option value="0" <% if (!' . $v['handle'] . '_new_window) { %>selected="selected"<% } %>><?php echo t(\'' . addslashes($postData['noLabel']) . '\'); ?></option>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(9) . '<option value="1" <% if (' . $v['handle'] . '_new_window==1) { %>selected="selected"<% } %>><?php echo t(\'' . addslashes($postData['yesLabel']) . '\'); ?></option>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . '</select>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL . PHP_EOL;
+                    }
+
+                    if (!empty($v['linkFromFileManagerShowNoFollowField'])) {
+                        $code .= BlockBuilderUtility::tab(7) . '<div class="mb-4">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_no_follow]" class="form-label"><?php echo t(\'' . addslashes($postData['noFollowLabel']) . '\'); ?></label>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . '<select id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_no_follow]" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_no_follow]" class="form-select">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(9) . '<option value="0" <% if (!' . $v['handle'] . '_no_follow) { %>selected="selected"<% } %>><?php echo t(\'' . addslashes($postData['noLabel']) . '\'); ?></option>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(9) . '<option value="1" <% if (' . $v['handle'] . '_no_follow==1) { %>selected="selected"<% } %>><?php echo t(\'' . addslashes($postData['yesLabel']) . '\'); ?></option>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(8) . '</select>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL . PHP_EOL;
                     }
@@ -1446,6 +1498,7 @@ class FormPhp
                         !empty($v['externalLinkShowEndingField']) ||
                         !empty($v['externalLinkShowTextField']) ||
                         !empty($v['externalLinkShowTitleField']) ||
+                        !empty($v['externalLinkShowNoFollowField']) ||
                         !empty($v['externalLinkShowNewWindowField']);
                     $fieldGroupHighlight = '';
                     if ($postData['highlightMultiElementFields'] && $hasMultipleElements) {
@@ -1502,6 +1555,16 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(8) . '<select id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_new_window]" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_new_window]" class="form-select">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(9) . '<option value="0" <% if (!' . $v['handle'] . '_new_window) { %>selected="selected"<% } %>><?php echo t(\'' . addslashes($postData['noLabel']) . '\'); ?></option>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(9) . '<option value="1" <% if (' . $v['handle'] . '_new_window==1) { %>selected="selected"<% } %>><?php echo t(\'' . addslashes($postData['yesLabel']) . '\'); ?></option>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . '</select>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL . PHP_EOL;
+                    }
+
+                    if (!empty($v['externalLinkShowNoFollowField'])) {
+                        $code .= BlockBuilderUtility::tab(7) . '<div class="mb-4">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_no_follow]" class="form-label"><?php echo t(\'' . addslashes($postData['noFollowLabel']) . '\'); ?></label>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(8) . '<select id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_no_follow]" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_no_follow]" class="form-select">' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(9) . '<option value="0" <% if (!' . $v['handle'] . '_no_follow) { %>selected="selected"<% } %>><?php echo t(\'' . addslashes($postData['noLabel']) . '\'); ?></option>' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(9) . '<option value="1" <% if (' . $v['handle'] . '_no_follow==1) { %>selected="selected"<% } %>><?php echo t(\'' . addslashes($postData['yesLabel']) . '\'); ?></option>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(8) . '</select>' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL . PHP_EOL;
                     }
