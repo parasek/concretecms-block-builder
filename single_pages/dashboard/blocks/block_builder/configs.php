@@ -35,8 +35,7 @@
 
                 <?php if ($blockType['version']): ?>
                     <br/>
-                    <small class="text-muted"><?php echo t('Version'); ?>
-                        : <?php echo h($blockType['version']); ?></small>
+                    <small class="text-muted"><?php echo t('Version'); ?>: <?php echo h($blockType['version']); ?></small>
                 <?php endif; ?>
             </a>
             <a href="<?php echo $app->make('url/manager')->resolve(['/dashboard/blocks/block_builder/config/refresh/' . $blockType['handle']]); ?>"
@@ -77,8 +76,7 @@
             <br/>
 
             <?php if ($predefinedConfig['version']): ?>
-                <small class="text-muted"><?php echo t('Block Builder Version'); ?>
-                    : <?php echo h($predefinedConfig['version']); ?></small>
+                <small class="text-muted"><?php echo t('Block Builder Version'); ?>: <?php echo h($predefinedConfig['version']); ?></small>
             <?php endif; ?>
         </a>
     </div>
