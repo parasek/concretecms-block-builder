@@ -113,6 +113,11 @@ use Concrete\Core\System\Info as SystemInfo;
                 </div>
             </div>
 
+            <div class="mb-4 <?php in_array('highlightMultiElementFields', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('highlightMultiElementFields', t('Highlight multi-element fields')); ?>
+                <?php echo $form->select('highlightMultiElementFields', $highlightMultiElementFieldsOptions, $highlightMultiElementFields); ?>
+            </div>
+
             <div class="mb-4 <?php in_array('fieldsDivider', $fieldsWithError) ? print 'has-error' : false; ?>">
                 <?php echo $form->label('fieldsDivider', t('Use horizontal line as field\'s divider')); ?>
                 <?php echo $form->select('fieldsDivider', $dividerOptions, $fieldsDivider); ?>

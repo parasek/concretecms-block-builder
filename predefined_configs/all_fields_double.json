@@ -9,8 +9,9 @@
     "blockTypeSet": "basic",
     "entriesAsFirstTab": "0",
     "maxNumberOfEntries": "0",
-    "fieldsDivider": "smart",
-    "entryFieldsDivider": "smart",
+    "highlightMultiElementFields": "1",
+    "fieldsDivider": "never",
+    "entryFieldsDivider": "never",
     "basicLabel": "Basic information",
     "entriesLabel": "Entries",
     "settingsLabel": "Settings",
@@ -206,64 +207,54 @@
             "fieldType": "link_from_sitemap",
             "label": "Basic Link from Sitemap 1",
             "handle": "basic_link_from_sitemap_first",
-            "helpText": ""
-        },
-        "22": {
-            "fieldType": "link_from_sitemap",
-            "label": "Basic Link from Sitemap 2",
-            "handle": "basic_link_from_sitemap_second",
             "helpText": "",
             "linkFromSitemapShowEndingField": "1",
             "linkFromSitemapShowTextField": "1",
             "linkFromSitemapShowTitleField": "1",
             "linkFromSitemapShowNewWindowField": "1"
         },
+        "22": {
+            "fieldType": "link_from_sitemap",
+            "label": "Basic Link from Sitemap 2",
+            "handle": "basic_link_from_sitemap_second",
+            "helpText": ""
+        },
         "23": {
             "fieldType": "link_from_file_manager",
             "label": "Basic Link from File Manager 1",
             "handle": "basic_link_from_file_manager_first",
-            "helpText": ""
-        },
-        "24": {
-            "fieldType": "link_from_file_manager",
-            "label": "Basic Link from File Manager 2",
-            "handle": "basic_link_from_file_manager_second",
             "helpText": "",
             "linkFromFileManagerShowEndingField": "1",
             "linkFromFileManagerShowTextField": "1",
             "linkFromFileManagerShowTitleField": "1",
             "linkFromFileManagerShowNewWindowField": "1"
         },
+        "24": {
+            "fieldType": "link_from_file_manager",
+            "label": "Basic Link from File Manager 2",
+            "handle": "basic_link_from_file_manager_second",
+            "helpText": ""
+        },
         "25": {
             "fieldType": "external_link",
             "label": "Basic External Link 1",
             "handle": "basic_external_link_first",
-            "helpText": ""
-        },
-        "26": {
-            "fieldType": "external_link",
-            "label": "Basic External Link 2",
-            "handle": "basic_external_link_second",
             "helpText": "",
             "externalLinkShowEndingField": "1",
             "externalLinkShowTextField": "1",
             "externalLinkShowTitleField": "1",
             "externalLinkShowNewWindowField": "1"
         },
+        "26": {
+            "fieldType": "external_link",
+            "label": "Basic External Link 2",
+            "handle": "basic_external_link_second",
+            "helpText": ""
+        },
         "27": {
             "fieldType": "image",
             "label": "Basic Image 1",
             "handle": "basic_image_first",
-            "helpText": "",
-            "imageThumbnailWidth": "480",
-            "imageThumbnailHeight": "270",
-            "imageFullscreenWidth": "1920",
-            "imageFullscreenHeight": "1080"
-        },
-        "28": {
-            "fieldType": "image",
-            "label": "Basic Image 2",
-            "handle": "basic_image_second",
             "helpText": "",
             "imageShowAltTextField": "1",
             "imageCreateThumbnailImage": "1",
@@ -274,8 +265,17 @@
             "imageCreateFullscreenImage": "1",
             "imageFullscreenWidth": "1920",
             "imageFullscreenHeight": "1080",
-            "imageFullscreenCrop": "1",
             "imageFullscreenEditable": "1"
+        },
+        "28": {
+            "fieldType": "image",
+            "label": "Basic Image 2",
+            "handle": "basic_image_second",
+            "helpText": "",
+            "imageThumbnailWidth": "480",
+            "imageThumbnailHeight": "270",
+            "imageFullscreenWidth": "1920",
+            "imageFullscreenHeight": "1080"
         },
         "29": {
             "fieldType": "express",
@@ -363,13 +363,13 @@
             "fieldType": "text_field",
             "label": "Repeatable Text 1",
             "handle": "repeatable_text_first",
+            "titleSource": "1",
             "helpText": ""
         },
         "2": {
             "fieldType": "text_field",
             "label": "Repeatable Text 2",
             "handle": "repeatable_text_second",
-            "titleSource": "1",
             "helpText": ""
         },
         "3": {
@@ -512,64 +512,54 @@
             "fieldType": "link_from_sitemap",
             "label": "Repeatable Link from Sitemap 1",
             "handle": "repeatable_link_from_sitemap_first",
-            "helpText": ""
-        },
-        "22": {
-            "fieldType": "link_from_sitemap",
-            "label": "Repeatable Link from Sitemap 2",
-            "handle": "repeatable_link_from_sitemap_second",
             "helpText": "",
             "linkFromSitemapShowEndingField": "1",
             "linkFromSitemapShowTextField": "1",
             "linkFromSitemapShowTitleField": "1",
             "linkFromSitemapShowNewWindowField": "1"
         },
+        "22": {
+            "fieldType": "link_from_sitemap",
+            "label": "Repeatable Link from Sitemap 2",
+            "handle": "repeatable_link_from_sitemap_second",
+            "helpText": ""
+        },
         "23": {
             "fieldType": "link_from_file_manager",
             "label": "Repeatable Link from File Manager 1",
             "handle": "repeatable_link_from_file_manager_first",
-            "helpText": ""
-        },
-        "24": {
-            "fieldType": "link_from_file_manager",
-            "label": "Repeatable Link from File Manager 2",
-            "handle": "repeatable_link_from_file_manager_second",
             "helpText": "",
             "linkFromFileManagerShowEndingField": "1",
             "linkFromFileManagerShowTextField": "1",
             "linkFromFileManagerShowTitleField": "1",
             "linkFromFileManagerShowNewWindowField": "1"
         },
+        "24": {
+            "fieldType": "link_from_file_manager",
+            "label": "Repeatable Link from File Manager 2",
+            "handle": "repeatable_link_from_file_manager_second",
+            "helpText": ""
+        },
         "25": {
             "fieldType": "external_link",
             "label": "Repeatable External Link 1",
             "handle": "repeatable_external_link_first",
-            "helpText": ""
-        },
-        "26": {
-            "fieldType": "external_link",
-            "label": "Repeatable External Link 2",
-            "handle": "repeatable_external_link_second",
             "helpText": "",
             "externalLinkShowEndingField": "1",
             "externalLinkShowTextField": "1",
             "externalLinkShowTitleField": "1",
             "externalLinkShowNewWindowField": "1"
         },
+        "26": {
+            "fieldType": "external_link",
+            "label": "Repeatable External Link 2",
+            "handle": "repeatable_external_link_second",
+            "helpText": ""
+        },
         "27": {
             "fieldType": "image",
             "label": "Repeatable Image 1",
             "handle": "repeatable_image_first",
-            "helpText": "",
-            "imageThumbnailWidth": "480",
-            "imageThumbnailHeight": "270",
-            "imageFullscreenWidth": "1920",
-            "imageFullscreenHeight": "1080"
-        },
-        "28": {
-            "fieldType": "image",
-            "label": "Repeatable Image 2",
-            "handle": "repeatable_image_second",
             "helpText": "",
             "imageShowAltTextField": "1",
             "imageCreateThumbnailImage": "1",
@@ -580,8 +570,17 @@
             "imageCreateFullscreenImage": "1",
             "imageFullscreenWidth": "1920",
             "imageFullscreenHeight": "1080",
-            "imageFullscreenCrop": "1",
             "imageFullscreenEditable": "1"
+        },
+        "28": {
+            "fieldType": "image",
+            "label": "Repeatable Image 2",
+            "handle": "repeatable_image_second",
+            "helpText": "",
+            "imageThumbnailWidth": "480",
+            "imageThumbnailHeight": "270",
+            "imageFullscreenWidth": "1920",
+            "imageFullscreenHeight": "1080"
         },
         "29": {
             "fieldType": "express",

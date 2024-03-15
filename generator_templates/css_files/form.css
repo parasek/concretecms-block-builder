@@ -9,6 +9,14 @@
     margin-bottom: 30px;
 }
 
+/* Multi-element fields */
+.field-group-highlight {
+    padding: 1.5rem 1.5rem 0;
+    background: #fbfafa;
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+}
+
 /* Link */
 div.ccm-ui .toggle-additional-fields i {
     margin-right: 10px;
@@ -16,7 +24,8 @@ div.ccm-ui .toggle-additional-fields i {
 }
 
 div.ccm-ui .toggle-additional-fields-active {
-    background-color: #f7f7f7;
+    background-color: #ededed;
+    border-color: #d3d3d3;
 }
 
 div.ccm-ui .toggle-additional-fields-active i {

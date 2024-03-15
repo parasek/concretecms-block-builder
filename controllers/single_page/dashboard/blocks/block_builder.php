@@ -134,6 +134,9 @@ class BlockBuilder extends DashboardPageController
         $entriesAsFirstTabOptions = $blockBuilderOptionList->getEntriesAsFirstTabOptions();
         $this->set('entriesAsFirstTabOptions', $entriesAsFirstTabOptions);
 
+        $highlightMultiElementFieldsOptions = $blockBuilderOptionList->getHighlightMultiElementFieldsOptions();
+        $this->set('highlightMultiElementFieldsOptions', $highlightMultiElementFieldsOptions);
+
         $dividerOptions = $blockBuilderOptionList->getDividerOptions();
         $this->set('dividerOptions', $dividerOptions);
 
@@ -152,8 +155,9 @@ class BlockBuilder extends DashboardPageController
         $this->set('blockDescription', '');
         $this->set('blockTypeSet', '');
         $this->set('entriesAsFirstTab', '');
-        $this->set('fieldsDivider', '');
-        $this->set('entryFieldsDivider', '');
+        $this->set('highlightMultiElementFields', 1);
+        $this->set('fieldsDivider', 'never');
+        $this->set('entryFieldsDivider', 'never');
         $this->set('basic', '');
         $this->set('entries', '');
 

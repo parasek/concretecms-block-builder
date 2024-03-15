@@ -70,6 +70,17 @@ class OptionList
 
     }
 
+    public function getHighlightMultiElementFieldsOptions()
+    {
+
+        $options = [];
+        $options[0] = t('No');
+        $options[1] = t('Yes');
+
+        return $options;
+
+    }
+
     public function getDividerOptions()
     {
 
