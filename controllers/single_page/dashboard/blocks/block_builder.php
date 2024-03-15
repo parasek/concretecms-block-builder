@@ -81,9 +81,12 @@ class BlockBuilder extends DashboardPageController
                     }
                 }
 
-                // Add current package version
+                // Add additional info
                 $pkg = Package::getByHandle('block_builder');
-                $postData = ['version' => $pkg->getPackageVersion()] + $postData;
+                $postData = [
+                    'version' => $pkg->getPackageVersion(),
+                    'createdAt' => date('Y-m-d H:i:s'),
+                ] + $postData;
 
                 // Refresh block
                 if (!empty($this->post('refresh_block'))) {
@@ -347,6 +350,7 @@ class BlockBuilder extends DashboardPageController
                     $blockTypes[$i]['name'] = $config['blockName'];
                     $blockTypes[$i]['description'] = $config['blockDescription'];
                     $blockTypes[$i]['version'] = !empty($config['version']) ? $config['version'] : null;
+                    $blockTypes[$i]['createdAt'] = !empty($config['createdAt']) ? $config['createdAt'] : null;
 
                     $i++;
                 }
@@ -354,6 +358,16 @@ class BlockBuilder extends DashboardPageController
             }
 
         }
+
+        // Sort by creation date descending and then by handle ascending
+        usort($blockTypes, function($a, $b) {
+            $dateA = $a['createdAt'] ?? '0000-00-00'; // Sort null dates as earliest (will be put at the end)
+            $dateB = $b['createdAt'] ?? '0000-00-00';
+            if ($dateA == $dateB) {
+                return strcmp($a['handle'], $b['handle']); // Sort by handle ascending if dates are equal
+            }
+            return $dateB <=> $dateA; // Sort by createdAt descending
+        });
 
         $this->set('blockTypes', $blockTypes);
 
