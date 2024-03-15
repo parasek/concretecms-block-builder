@@ -327,6 +327,10 @@ class FormPhp
                     $code .= BlockBuilderUtility::tab(6) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '_new_window\'), t(\'' . addslashes($postData['newWindowLabel']) . '\')); ?>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(6) . '<?php echo $form->select($view->field(\'' . $v['handle'] . '_new_window\'), [\'0\'=>t(\'' . addslashes($postData['noLabel']) . '\'), \'1\'=>t(\'' . addslashes($postData['yesLabel']) . '\')], $' . $v['handle'] . '[\'new_window\'] ?? null); ?>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5) . '<div class="col-12 margin-bottom">' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(6) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '_no_follow\'), t(\'' . addslashes($postData['noFollowLabel']) . '\')); ?>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(6) . '<?php echo $form->select($view->field(\'' . $v['handle'] . '_no_follow\'), [\'0\'=>t(\'' . addslashes($postData['noLabel']) . '\'), \'1\'=>t(\'' . addslashes($postData['yesLabel']) . '\')], $' . $v['handle'] . '[\'no_follow\'] ?? null); ?>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '</div>' . PHP_EOL . PHP_EOL;
 
                     $code .= BlockBuilderUtility::tab(4) . '<script>' . PHP_EOL;
@@ -1281,6 +1285,13 @@ class FormPhp
                     $code .= BlockBuilderUtility::tab(9) . '<select id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_new_window]" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_new_window]" class="form-select">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(10) . '<option value="0" <% if (!' . $v['handle'] . '_new_window) { %>selected="selected"<% } %>><?php echo t(\'' . addslashes($postData['noLabel']) . '\'); ?></option>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(10) . '<option value="1" <% if (' . $v['handle'] . '_new_window==1) { %>selected="selected"<% } %>><?php echo t(\'' . addslashes($postData['yesLabel']) . '\'); ?></option>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(9) . '</select>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(8) . '</div>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(8) . '<div class="col-12 margin-bottom">' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(9) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_no_follow]" class="form-label"><?php echo t(\'' . addslashes($postData['noFollowLabel']) . '\'); ?></label>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(9) . '<select id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_no_follow]" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . '_no_follow]" class="form-select">' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(10) . '<option value="0" <% if (!' . $v['handle'] . '_no_follow) { %>selected="selected"<% } %>><?php echo t(\'' . addslashes($postData['noLabel']) . '\'); ?></option>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(10) . '<option value="1" <% if (' . $v['handle'] . '_no_follow==1) { %>selected="selected"<% } %>><?php echo t(\'' . addslashes($postData['yesLabel']) . '\'); ?></option>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(9) . '</select>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(8) . '</div>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL . PHP_EOL;
