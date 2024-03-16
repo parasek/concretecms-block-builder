@@ -137,6 +137,15 @@ $(function () {
                 templateData['required'] = 0;
                 templateData['titleSource'] = 0;
 
+                // number
+                templateData['numberSize'] = '10.2';
+                templateData['numberMin'] = '0';
+                templateData['numberMax'] = '99999999.99';
+                templateData['numberStep'] = '0.01';
+                templateData['numberDisplayedDecimals'] = '2';
+                templateData['numberDisplayedDecimalSeparator'] = ',';
+                templateData['numberDisplayedThousandsSeparator'] = ' ';
+
                 // textarea
                 templateData['textareaHeight'] = '';
 

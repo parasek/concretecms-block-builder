@@ -801,7 +801,7 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_text\'       => ' . $text . ',' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_title\'      => ' . $title . ',' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_new_window\' => ' . $newWindow . ',' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_no_follow\' => ' . $noFollow . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_no_follow\'  => ' . $noFollow . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(2) . ']);' . PHP_EOL . PHP_EOL;
 
                 }
@@ -1025,6 +1025,8 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? trim($args[\'' . $v['handle'] . '\']) : \'\';' . PHP_EOL;
                 } else if ($v['fieldType'] == 'select_multiple_field') {
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? trim(implode(\'|\', $args[\'' . $v['handle'] . '\'])) : \'\';' . PHP_EOL;
+                } else if ($v['fieldType'] == 'number') {
+                    $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? trim($args[\'' . $v['handle'] . '\']) : 0;' . PHP_EOL;
                 } else {
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? trim($args[\'' . $v['handle'] . '\']) : \'\';' . PHP_EOL;
                 }
@@ -1209,6 +1211,8 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($entry[\'' . $v['handle'] . '\']) ? trim($entry[\'' . $v['handle'] . '\']) : \'\';' . PHP_EOL;
                 } else if ($v['fieldType'] == 'select_multiple_field') {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($entry[\'' . $v['handle'] . '\']) ? implode(\'|\', $entry[\'' . $v['handle'] . '\']) : \'\';' . PHP_EOL;
+                } else if ($v['fieldType'] == 'number') {
+                    $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($entry[\'' . $v['handle'] . '\']) ? trim($entry[\'' . $v['handle'] . '\']) : 0;' . PHP_EOL;
                 } else {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= trim($entry[\'' . $v['handle'] . '\']);' . PHP_EOL;
                 }

@@ -322,6 +322,22 @@ class Validation
 
                 }
 
+                // number
+                if (isset($entry['numberDisplayedDecimals']) and (!ctype_digit($entry['numberDisplayedDecimals']) or $entry['numberDisplayedDecimals'] < 0)) {
+
+                    $postData[$counter]['error']['numberDisplayedDecimals'] = 1;
+                    $fieldsWithError[] = $handle . '|numberDisplayedDecimals|invalid_number';
+                    $tabsWithError[] = 'tab-' . $handle;
+
+                }
+
+                if (isset($entry['numberDisplayedDecimalSeparator']) and empty($entry['numberDisplayedDecimalSeparator'])) {
+
+                    $postData[$counter]['error']['numberDisplayedDecimalSeparator'] = 1;
+                    $fieldsWithError[] = $handle . '|numberDisplayedDecimalSeparator|invalid_value';
+                    $tabsWithError[] = 'tab-' . $handle;
+
+                }
 
                 // textarea
                 if (isset($entry['textareaHeight']) and $entry['textareaHeight'] != '' and (!ctype_digit($entry['textareaHeight']) or $entry['textareaHeight'] < 40 or $entry['textareaHeight'] > 2000)) {
@@ -581,6 +597,14 @@ class Validation
 
         if (in_array($handle . '|handle|repeated_handle', $fieldsWithError)) {
             $errors[] = t('All "Handle" fields should be unique (%s).', $label);
+        }
+
+        // number
+        if (in_array($handle . '|numberDisplayedDecimals|invalid_number', $fieldsWithError)) {
+            $errors[] = t('Invalid entry in one of "Displayed decimals" fields, should be a non-negative integer (%s).', $label);
+        }
+        if (in_array($handle . '|numberDisplayedDecimalSeparator|invalid_value', $fieldsWithError)) {
+            $errors[] = t('Invalid entry in one of "Displayed decimal separator" fields (%s).', $label);
         }
 
         // textarea

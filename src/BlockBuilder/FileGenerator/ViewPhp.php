@@ -30,6 +30,16 @@ class ViewPhp
 
                 }
 
+                if ($v['fieldType'] == 'number') {
+
+                    $code .= '<?php if (!empty($' . $v['handle'] . ')): ?>' . PHP_EOL;
+
+                    $code .= BlockBuilderUtility::tab(1) . '<?php echo h(number_format($' . $v['handle'] . ', ' . $v['numberDisplayedDecimals'] . ', \'' . $v['numberDisplayedDecimalSeparator'] . '\', \'' . $v['numberDisplayedThousandsSeparator'] . '\')); ?>' . PHP_EOL;
+
+                    $code .= '<?php endif; ?>' . PHP_EOL . PHP_EOL . PHP_EOL;
+
+                }
+
                 if ($v['fieldType'] == 'textarea') {
 
                     $code .= '<?php if (!empty($' . $v['handle'] . ')): ?>' . PHP_EOL;
@@ -283,6 +293,16 @@ class ViewPhp
                     $code .= BlockBuilderUtility::tab(2) . '<?php if (!empty($entry[\'' . $v['handle'] . '\'])): ?>' . PHP_EOL;
 
                     $code .= BlockBuilderUtility::tab(3) . '<?php echo h($entry[\'' . $v['handle'] . '\']); ?>' . PHP_EOL;
+
+                    $code .= BlockBuilderUtility::tab(2) . '<?php endif; ?>' . PHP_EOL . PHP_EOL . PHP_EOL;
+
+                }
+
+                if ($v['fieldType'] == 'number') {
+
+                    $code .= BlockBuilderUtility::tab(2) . '<?php if (!empty($entry[\'' . $v['handle'] . '\'])): ?>' . PHP_EOL;
+
+                    $code .= BlockBuilderUtility::tab(3) . '<?php echo h(number_format($entry[\'' . $v['handle'] . '\'], \'' . $v['numberDisplayedDecimals'] . '\', \'' . $v['numberDisplayedDecimalSeparator'] . '\', \'' . $v['numberDisplayedThousandsSeparator'] . '\')); ?>' . PHP_EOL;
 
                     $code .= BlockBuilderUtility::tab(2) . '<?php endif; ?>' . PHP_EOL . PHP_EOL . PHP_EOL;
 
