@@ -50,6 +50,7 @@ class OptionList
         $options = [];
         $options[''] = t('+ Add new field type');
         $options['text_field'] = t('Text');
+        $options['number'] = t('Number');
         $options['textarea'] = t('Textarea');
         $options['wysiwyg_editor'] = t('WYSIWYG Editor');
         $options['select_field'] = t('Single Choice Field');

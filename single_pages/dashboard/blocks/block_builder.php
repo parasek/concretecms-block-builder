@@ -575,6 +575,85 @@ use Concrete\Core\System\Info as SystemInfo;
 
                     <div class="mb-0">
 
+                        <% if (fieldType == 'number') { %>
+                        <div class="mb-4 <% if (error['numberSize']!=undefined) { %>has-error<% } %>">
+                            <label for="<%=groupHandle%>[<%=counter%>][numberSize]" class="form-label"><?php echo t('Size'); ?></label>
+                            <input type="text"
+                                   id="<%=groupHandle%>[<%=counter%>][numberSize]"
+                                   name="<%=groupHandle%>[<%=counter%>][numberSize]"
+                                   class="form-control"
+                                   value="<%=numberSize%>"
+                            />
+                            <div class="form-text">
+                                <?php echo t('Value "10.2" means, that database field can store 8 digits for the integer part and 2 digits for the fractional part.'); ?>
+                                <br>
+                                <?php echo t('If you want to store integers in database, write "0" after dot ("8.0 or similar").'); ?>
+                                <br>
+                                <?php echo t('If you want to store standard money values in database, write "2" after dot ("10.2 or similar").'); ?>
+                            </div>
+                        </div>
+                        <div class="mb-4 <% if (error['numberStep']!=undefined) { %>has-error<% } %>">
+                            <label for="<%=groupHandle%>[<%=counter%>][numberStep]" class="form-label"><?php echo t('Step'); ?></label>
+                            <input type="text"
+                                   id="<%=groupHandle%>[<%=counter%>][numberStep]"
+                                   name="<%=groupHandle%>[<%=counter%>][numberStep]"
+                                   class="form-control"
+                                   value="<%=numberStep%>"
+                            />
+                            <div class="form-text"><?php echo t('Value "1" will force integers in html field, use "0.01" when you want to use standard money format.'); ?></div>
+                        </div>
+                        <div class="mb-4 <% if (error['numberMin']!=undefined) { %>has-error<% } %>">
+                            <label for="<%=groupHandle%>[<%=counter%>][numberMin]" class="form-label"><?php echo t('Minimum'); ?></label>
+                            <input type="text"
+                                   id="<%=groupHandle%>[<%=counter%>][numberMin]"
+                                   name="<%=groupHandle%>[<%=counter%>][numberMin]"
+                                   class="form-control"
+                                   value="<%=numberMin%>"
+                            />
+                        </div>
+                        <div class="mb-4 <% if (error['numberMax']!=undefined) { %>has-error<% } %>">
+                            <label for="<%=groupHandle%>[<%=counter%>][numberMax]" class="form-label"><?php echo t('Maximum'); ?></label>
+                            <input type="text"
+                                   id="<%=groupHandle%>[<%=counter%>][numberMax]"
+                                   name="<%=groupHandle%>[<%=counter%>][numberMax]"
+                                   class="form-control"
+                                   value="<%=numberMax%>"
+                            />
+                        </div>
+                        <div class="mb-4 <% if (error['numberDisplayedDecimals']!=undefined) { %>has-error<% } %>">
+                            <label for="<%=groupHandle%>[<%=counter%>][numberDisplayedDecimals]" class="form-label"><?php echo t('Displayed decimals'); ?></label>
+                            <input type="number"
+                                   id="<%=groupHandle%>[<%=counter%>][numberDisplayedDecimals]"
+                                   name="<%=groupHandle%>[<%=counter%>][numberDisplayedDecimals]"
+                                   class="form-control"
+                                   value="<%=numberDisplayedDecimals%>"
+                                   min="0"
+                                   step="1"
+                            />
+                            <div class="form-text"><?php echo t('How many decimals to display after separator.'); ?></div>
+                        </div>
+                        <div class="mb-4 <% if (error['numberDisplayedDecimalSeparator']!=undefined) { %>has-error<% } %>">
+                            <label for="<%=groupHandle%>[<%=counter%>][numberDisplayedDecimalSeparator]" class="form-label"><?php echo t('Displayed decimal separator'); ?></label>
+                            <input type="text"
+                                   id="<%=groupHandle%>[<%=counter%>][numberDisplayedDecimalSeparator]"
+                                   name="<%=groupHandle%>[<%=counter%>][numberDisplayedDecimalSeparator]"
+                                   class="form-control"
+                                   value="<%=numberDisplayedDecimalSeparator%>"
+                            />
+                            <div class="form-text"><?php echo t('Usually "," (coma) or "." (dot).'); ?></div>
+                        </div>
+                        <div class="<% if (error['numberDisplayedThousandsSeparator']!=undefined) { %>has-error<% } %>">
+                            <label for="<%=groupHandle%>[<%=counter%>][numberDisplayedThousandsSeparator]" class="form-label"><?php echo t('Displayed thousands separator'); ?></label>
+                            <input type="text"
+                                   id="<%=groupHandle%>[<%=counter%>][numberDisplayedThousandsSeparator]"
+                                   name="<%=groupHandle%>[<%=counter%>][numberDisplayedThousandsSeparator]"
+                                   class="form-control"
+                                   value="<%=numberDisplayedThousandsSeparator%>"
+                            />
+                            <div class="form-text"><?php echo t('Usually " " (space is barely visible in this field), "." (dot) or "," (coma). You can also keep it empty.'); ?></div>
+                        </div>
+                        <% } %>
+
                         <% if (fieldType == 'textarea') { %>
                         <div class="<% if (error['textareaHeight']!=undefined) { %>has-error<% } %>">
                             <label for="<%=groupHandle%>[<%=counter%>][textareaHeight]" class="form-label"><?php echo t('Height'); ?></label>

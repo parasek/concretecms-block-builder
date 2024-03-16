@@ -121,6 +121,18 @@ class FormPhp
 
                 }
 
+                if ($v['fieldType'] == 'number') {
+
+                    $code .= BlockBuilderUtility::tab(3) . '<div class="mb-4">' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '\'), t(\'' . addslashes($v['label']) . '\')' . $required . '); ?>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->number($view->field(\'' . $v['handle'] . '\'), $' . $v['handle'] . ', [\'min\'=>\'' . $v['numberMin'] . '\', \'max\'=>\'' . $v['numberMax'] . '\', \'step\'=>\'' . $v['numberStep'] . '\']); ?>' . PHP_EOL;
+                    if (!empty($v['helpText'])) {
+                        $code .= BlockBuilderUtility::tab(4) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
+                    }
+                    $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL;
+
+                }
+
                 if ($v['fieldType'] == 'textarea') {
 
                     $height = !empty($v['textareaHeight']) ? ', [\'style\'=>\'height: ' . $v['textareaHeight'] . 'px\']' : false;
@@ -1066,6 +1078,18 @@ class FormPhp
                     $code .= BlockBuilderUtility::tab(6) . '<div class="mb-4">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" class="form-label"><?php echo t(\'' . addslashes($v['label']) . '\'); ?>' . $required . '</label>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '<input type="text" id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" value="<%=_.escape(' . $v['handle'] . ')%>" class="form-control' . $jsEntryTitleSource . '" maxlength="255" />' . PHP_EOL;
+                    if (!empty($v['helpText'])) {
+                        $code .= BlockBuilderUtility::tab(7) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
+                    }
+                    $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
+
+                }
+
+                if ($v['fieldType'] == 'number') {
+
+                    $code .= BlockBuilderUtility::tab(6) . '<div class="mb-4">' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(7) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" class="form-label"><?php echo t(\'' . addslashes($v['label']) . '\'); ?>' . $required . '</label>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(7) . '<input type="number" id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" value="<%=_.escape(' . $v['handle'] . ')%>" class="form-control" min="' . $v['numberMin'] . '"  max="' . $v['numberMax'] . '"  step="' . $v['numberStep'] . '" />' . PHP_EOL;
                     if (!empty($v['helpText'])) {
                         $code .= BlockBuilderUtility::tab(7) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
                     }

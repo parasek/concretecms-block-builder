@@ -60,7 +60,7 @@
             $entry[$textFieldName]      = $text;
             $entry[$titleFieldName]     = $title;
             $entry[$newWindowFieldName] = $newWindow;
-            $entry[$noFollowFieldName] = $noFollow;
+            $entry[$noFollowFieldName]  = $noFollow;
 
             // Additional data
             if (!empty($link) AND in_array($protocol, ['http://', 'https://'])) {

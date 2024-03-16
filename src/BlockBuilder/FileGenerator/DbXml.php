@@ -36,6 +36,10 @@ class DbXml
                     $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '" type="C" size="255"></field>' . PHP_EOL . PHP_EOL;
                 }
 
+                if ($v['fieldType'] == 'number') {
+                    $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '" type="N" size="' . $v['numberSize'] . '"></field>' . PHP_EOL . PHP_EOL;
+                }
+
                 if ($v['fieldType'] == 'textarea') {
                     $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '" type="X"></field>' . PHP_EOL . PHP_EOL;
                 }
@@ -221,6 +225,10 @@ class DbXml
 
                 if ($v['fieldType'] == 'text_field') {
                     $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '" type="C" size="255"></field>' . PHP_EOL . PHP_EOL;
+                }
+
+                if ($v['fieldType'] == 'number') {
+                    $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '" type="N" size="' . $v['numberSize'] . '"></field>' . PHP_EOL . PHP_EOL;
                 }
 
                 if ($v['fieldType'] == 'textarea') {
