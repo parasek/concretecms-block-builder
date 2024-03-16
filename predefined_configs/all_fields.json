@@ -1,6 +1,6 @@
 {
     "version": "2.4.0",
-    "createdAt": "2024-03-15 23:31:02",
+    "createdAt": "2024-03-16 20:33:51",
     "blockName": "All Fields",
     "blockHandle": "all_fields",
     "blockDescription": "All types of Fields (Basic + Repeatable)",
@@ -60,13 +60,13 @@
         "1": {
             "fieldType": "text_field",
             "label": "Basic Text 1",
-            "handle": "basic_text_first",
+            "handle": "basicTextFirst",
             "helpText": ""
         },
         "2": {
             "fieldType": "number",
             "label": "Basic Number 1",
-            "handle": "basic_number_one",
+            "handle": "basicNumberFirst",
             "helpText": "",
             "numberSize": "10.2",
             "numberStep": "0.01",
@@ -79,21 +79,21 @@
         "3": {
             "fieldType": "textarea",
             "label": "Basic Textarea 1",
-            "handle": "basic_textarea_first",
+            "handle": "basicTextareaFirst",
             "helpText": "",
             "textareaHeight": ""
         },
         "4": {
             "fieldType": "wysiwyg_editor",
             "label": "Basic WYSIWYG Editor 1",
-            "handle": "basic_wysiwyg_editor_first",
+            "handle": "basicWysiwygEditorFirst",
             "helpText": "",
             "wysiwygEditorHeight": ""
         },
         "5": {
             "fieldType": "select_field",
             "label": "Basic Single Choice Field Default 1",
-            "handle": "basic_single_choice_field_default_first",
+            "handle": "basicSingleChoiceFieldDefaultFirst",
             "helpText": "",
             "selectType": "default_select",
             "selectOptions": "dont_show :: Don't show\r\nshow :: Show"
@@ -101,7 +101,7 @@
         "6": {
             "fieldType": "select_field",
             "label": "Basic Single Choice Field Enhanced 1",
-            "handle": "basic_single_choice_field_enhanced_first",
+            "handle": "basicSingleChoiceFieldEnhancedFirst",
             "helpText": "",
             "selectType": "enhanced_select",
             "selectOptions": "Don't show\r\nShow"
@@ -109,7 +109,7 @@
         "7": {
             "fieldType": "select_field",
             "label": "Basic Single Choice Field Radio List 1",
-            "handle": "basic_single_choice_field_radio_list_first",
+            "handle": "basicSingleChoiceFieldRadioListFirst",
             "helpText": "",
             "selectType": "radio_list",
             "selectOptions": "example::Example\r\nsome_data::Some data"
@@ -117,7 +117,7 @@
         "8": {
             "fieldType": "select_multiple_field",
             "label": "Basic Multiple Choice Field Default 1",
-            "handle": "basic_multiple_choice_field_default_first",
+            "handle": "basicMultipleChoiceFieldDefaultFirst",
             "helpText": "",
             "selectMultipleType": "default_multiselect",
             "selectMultipleOptions": "Don't show\r\nShow"
@@ -125,7 +125,7 @@
         "9": {
             "fieldType": "select_multiple_field",
             "label": "Basic Multiple Choice Field Enhanced 1",
-            "handle": "basic_multiple_choice_field_enhanced_first",
+            "handle": "basicMultipleChoiceFieldEnhancedFirst",
             "helpText": "",
             "selectMultipleType": "enhanced_multiselect",
             "selectMultipleOptions": "1:: Don't show\r\n2 :: Show"
@@ -133,7 +133,7 @@
         "10": {
             "fieldType": "select_multiple_field",
             "label": "Basic Multiple Choice Field Checkbox List 1",
-            "handle": "basic_multiple_choice_field_checkbox_list_first",
+            "handle": "basicMultipleChoiceFieldCheckboxListFirst",
             "helpText": "",
             "selectMultipleType": "checkbox_list",
             "selectMultipleOptions": "example::Example\r\nsome_data::Some data"
@@ -141,13 +141,13 @@
         "11": {
             "fieldType": "link",
             "label": "Basic Flex Link 1",
-            "handle": "basic_flex_link_first",
+            "handle": "basicFlexLinkFirst",
             "helpText": ""
         },
         "12": {
             "fieldType": "link_from_sitemap",
             "label": "Basic Link from Sitemap 1",
-            "handle": "basic_link_from_sitemap_first",
+            "handle": "basicLinkFromSitemapFirst",
             "helpText": "",
             "linkFromSitemapShowEndingField": "1",
             "linkFromSitemapShowTextField": "1",
@@ -158,7 +158,7 @@
         "13": {
             "fieldType": "link_from_file_manager",
             "label": "Basic Link from File Manager 1",
-            "handle": "basic_link_from_file_manager_first",
+            "handle": "basicLinkFromFileManagerFirst",
             "helpText": "",
             "linkFromFileManagerShowEndingField": "1",
             "linkFromFileManagerShowTextField": "1",
@@ -169,7 +169,7 @@
         "14": {
             "fieldType": "external_link",
             "label": "Basic External Link 1",
-            "handle": "basic_external_link_first",
+            "handle": "basicExternalLinkFirst",
             "helpText": "",
             "externalLinkShowEndingField": "1",
             "externalLinkShowTextField": "1",
@@ -180,7 +180,7 @@
         "15": {
             "fieldType": "image",
             "label": "Basic Image 1",
-            "handle": "basic_image_first",
+            "handle": "basicImageFirst",
             "helpText": "",
             "imageShowAltTextField": "1",
             "imageCreateThumbnailImage": "1",
@@ -197,41 +197,41 @@
         "16": {
             "fieldType": "express",
             "label": "Basic Express 1",
-            "handle": "basic_express_first",
+            "handle": "basicExpressFirst",
             "helpText": "",
             "expressHandle": "teacher"
         },
         "17": {
             "fieldType": "file_set",
             "label": "Basic File Set 1",
-            "handle": "basic_file_set_first",
+            "handle": "basicFileSetFirst",
             "helpText": "",
             "fileSetPrefix": "Gallery - "
         },
         "18": {
             "fieldType": "html_editor",
             "label": "Basic HTML Editor 1",
-            "handle": "basic_html_editor_first",
+            "handle": "basicHtmlEditorFirst",
             "helpText": "",
             "htmlEditorHeight": ""
         },
         "19": {
             "fieldType": "date_picker",
             "label": "Basic Date Picker 1",
-            "handle": "basic_date_picker_first",
+            "handle": "basicDatePickerFirst",
             "helpText": "",
             "datePickerPattern": "d.m.Y"
         },
         "20": {
             "fieldType": "color_picker",
             "label": "Basic Color Picker 1",
-            "handle": "basic_color_picker_first",
+            "handle": "basicColorPickerFirst",
             "helpText": ""
         },
         "21": {
             "fieldType": "icon_picker",
             "label": "Basic Icon Picker 1",
-            "handle": "basic_icon_picker_first",
+            "handle": "basicIconPickerFirst",
             "helpText": ""
         }
     },
@@ -239,14 +239,14 @@
         "1": {
             "fieldType": "text_field",
             "label": "Repeatable Text 1",
-            "handle": "repeatable_text_first",
+            "handle": "repeatableTextFirst",
             "titleSource": "1",
             "helpText": ""
         },
         "2": {
             "fieldType": "number",
             "label": "Repeatable Number 1",
-            "handle": "repeatable_number_first",
+            "handle": "repeatableNumberFirst",
             "helpText": "",
             "numberSize": "10.2",
             "numberStep": "0.01",
@@ -259,21 +259,21 @@
         "3": {
             "fieldType": "textarea",
             "label": "Repeatable Textarea 1",
-            "handle": "repeatable_textarea_first",
+            "handle": "repeatableTextareaFirst",
             "helpText": "",
             "textareaHeight": ""
         },
         "4": {
             "fieldType": "wysiwyg_editor",
             "label": "Repeatable WYSIWYG Editor 1",
-            "handle": "repeatable_wysiwyg_editor_first",
+            "handle": "repeatableWysiwygEditorFirst",
             "helpText": "",
             "wysiwygEditorHeight": ""
         },
         "5": {
             "fieldType": "select_field",
             "label": "Repeatable Single Choice Field Default 1",
-            "handle": "repeatable_single_choice_field_default_first",
+            "handle": "repeatableSingleChoiceFieldDefaultFirst",
             "helpText": "",
             "selectType": "default_select",
             "selectOptions": "aaa :: Don't show\r\nbbb :: Show"
@@ -281,7 +281,7 @@
         "6": {
             "fieldType": "select_field",
             "label": "Repeatable Single Choice Field Enhanced 1",
-            "handle": "repeatable_single_choice_field_enhanced_first",
+            "handle": "repeatableSingleChoiceFieldEnhancedFirst",
             "helpText": "",
             "selectType": "enhanced_select",
             "selectOptions": "example2::Example\r\nsome_data2::Some data"
@@ -289,7 +289,7 @@
         "7": {
             "fieldType": "select_field",
             "label": "Repeatable Single Choice Field Radio List 1",
-            "handle": "repeatable_single_choice_field_radio_list_first",
+            "handle": "repeatableSingleChoiceFieldRadioListFirst",
             "helpText": "",
             "selectType": "radio_list",
             "selectOptions": "Don't show\r\nShow"
@@ -297,7 +297,7 @@
         "8": {
             "fieldType": "select_multiple_field",
             "label": "Repeatable Multiple Choice Field Default 1",
-            "handle": "repeatable_multiple_choice_field_default_first",
+            "handle": "repeatableMultipleChoiceFieldDefaultFirst",
             "helpText": "",
             "selectMultipleType": "default_multiselect",
             "selectMultipleOptions": "1::Yes\r\n2:: No"
@@ -305,7 +305,7 @@
         "9": {
             "fieldType": "select_multiple_field",
             "label": "Repeatable Multiple Choice Field Enhanced 1",
-            "handle": "repeatable_multiple_choice_field_enhanced_first",
+            "handle": "repeatableMultipleChoiceFieldEnhancedFirst",
             "helpText": "",
             "selectMultipleType": "enhanced_multiselect",
             "selectMultipleOptions": "Don't show\r\nShow"
@@ -313,7 +313,7 @@
         "10": {
             "fieldType": "select_multiple_field",
             "label": "Repeatable Multiple Choice Field Checkbox List 1",
-            "handle": "repeatable_multiple_choice_field_checkbox_first",
+            "handle": "repeatableMultipleChoiceFieldCheckboxFirst",
             "helpText": "",
             "selectMultipleType": "checkbox_list",
             "selectMultipleOptions": "no :: Don't show\r\nyes :: Show"
@@ -321,13 +321,13 @@
         "11": {
             "fieldType": "link",
             "label": "Repeatable Flex Link 1",
-            "handle": "repeatable_flex_link_first",
+            "handle": "repeatableFlexLinkFirst",
             "helpText": ""
         },
         "12": {
             "fieldType": "link_from_sitemap",
             "label": "Repeatable Link from Sitemap 1",
-            "handle": "repeatable_link_from_sitemap_first",
+            "handle": "repeatableLinkFromSitemapFirst",
             "helpText": "",
             "linkFromSitemapShowEndingField": "1",
             "linkFromSitemapShowTextField": "1",
@@ -338,7 +338,7 @@
         "13": {
             "fieldType": "link_from_file_manager",
             "label": "Repeatable Link from File Manager 1",
-            "handle": "repeatable_link_from_file_manager_first",
+            "handle": "repeatableLinkFromFileManagerFirst",
             "helpText": "",
             "linkFromFileManagerShowEndingField": "1",
             "linkFromFileManagerShowTextField": "1",
@@ -349,7 +349,7 @@
         "14": {
             "fieldType": "external_link",
             "label": "Repeatable External Link 1",
-            "handle": "repeatable_external_link_first",
+            "handle": "repeatableExternalLinkFirst",
             "helpText": "",
             "externalLinkShowEndingField": "1",
             "externalLinkShowTextField": "1",
@@ -360,7 +360,7 @@
         "15": {
             "fieldType": "image",
             "label": "Repeatable Image 1",
-            "handle": "repeatable_image_first",
+            "handle": "repeatableImageFirst",
             "helpText": "",
             "imageShowAltTextField": "1",
             "imageCreateThumbnailImage": "1",
@@ -377,41 +377,41 @@
         "16": {
             "fieldType": "express",
             "label": "Repeatable Express 1",
-            "handle": "repeatable_express_first",
+            "handle": "repeatableExpressFirst",
             "helpText": "",
             "expressHandle": "teacher"
         },
         "17": {
             "fieldType": "file_set",
             "label": "Repeatable File Set 1",
-            "handle": "repeatable_file_set_first",
+            "handle": "repeatableFileSetFirst",
             "helpText": "",
             "fileSetPrefix": ""
         },
         "18": {
             "fieldType": "html_editor",
             "label": "Repeatable HTML Editor 1",
-            "handle": "repeatable_html_editor_first",
+            "handle": "repeatableHtmlEditorFirst",
             "helpText": "",
             "htmlEditorHeight": ""
         },
         "19": {
             "fieldType": "date_picker",
             "label": "Repeatable Date Picker 1",
-            "handle": "repeatable_date_picker_first",
+            "handle": "repeatableDatePickerFirst",
             "helpText": "",
             "datePickerPattern": "d.m.Y"
         },
         "20": {
             "fieldType": "color_picker",
             "label": "Repeatable Color Picker 1",
-            "handle": "repeatable_color_picker_first",
+            "handle": "repeatableColorPickerFirst",
             "helpText": ""
         },
         "21": {
             "fieldType": "icon_picker",
             "label": "Repeatable Icon Picker 1",
-            "handle": "repeatable_icon_picker_first",
+            "handle": "repeatableIconPickerFirst",
             "helpText": ""
         }
     }
