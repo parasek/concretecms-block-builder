@@ -125,7 +125,8 @@ $(function () {
                     'togglePaletteMoreText': togglePaletteMoreText,
                     'togglePaletteLessText': togglePaletteLessText,
                     'noColorSelectedText': noColorSelectedText,
-                    'preferredFormat': 'rgb',
+                    'showPalette': false,
+                    'preferredFormat': 'hex',
                     'showAlpha': true,
                     'clearText': clearText,
                     'appendTo': '.ui-dialog'

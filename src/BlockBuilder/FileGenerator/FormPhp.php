@@ -873,7 +873,7 @@ class FormPhp
                     $code .= BlockBuilderUtility::tab(3) . '<div class="mb-4">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '\'), t(\'' . addslashes($v['label']) . '\')' . $required . '); ?>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '<div>' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(5) . '<?php echo $app->make(\'helper/form/color\')->output($view->field(\'' . $v['handle'] . '\'), $' . $v['handle'] . ', [\'showAlpha\' => true]); ?>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(5) . '<?php echo $app->make(\'helper/form/color\')->output($view->field(\'' . $v['handle'] . '\'), $' . $v['handle'] . ', [\'showAlpha\' => true, \'showPalette\' => false, \'preferredFormat\' => \'hex\']); ?>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '</div>' . PHP_EOL;
                     if (!empty($v['helpText'])) { // echo
                         $code .= BlockBuilderUtility::tab(4) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
