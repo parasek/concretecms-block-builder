@@ -36,12 +36,12 @@
         $height = '';
 
         $fullscreenLink   = '';
-        $fullscreenWidth  = '';
-        $fullscreenHeight = '';
+        $fullscreenWidth  = $options['fullscreenWidth'];
+        $fullscreenHeight = $options['thumbnailHeight'];
 
         $thumbnailLink   = '';
-        $thumbnailWidth  = '';
-        $thumbnailHeight = '';
+        $thumbnailWidth  = $options['thumbnailWidth'];
+        $thumbnailHeight = $options['thumbnailHeight'];
 
         if (!empty($fileID)) {
 
