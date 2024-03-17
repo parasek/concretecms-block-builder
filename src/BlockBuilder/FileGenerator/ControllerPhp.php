@@ -134,6 +134,7 @@ class ControllerPhp
                     if (!empty($v['imageShowAltTextField'])) {
                         $code .= BlockBuilderUtility::tab(1) . 'protected $' . $v['handle'] . '_alt;' . PHP_EOL;
                     }
+
                     if (
                         (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable']))
                         or
@@ -142,6 +143,41 @@ class ControllerPhp
                         (!empty($v['imageShowAltTextField']))
                     ) {
                         $code .= BlockBuilderUtility::tab(1) . 'protected $' . $v['handle'] . '_data;' . PHP_EOL;
+                    }
+
+                    if (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailWidth'])) {
+                        $code .= BlockBuilderUtility::tab(1) . 'protected $' . $v['handle'] . '_defaultThumbnailWidth = ' . $v['imageThumbnailWidth'] . ';' . PHP_EOL;
+                    }
+                    if (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailHeight'])) {
+                        $code .= BlockBuilderUtility::tab(1) . 'protected $' . $v['handle'] . '_defaultThumbnailHeight = ' . $v['imageThumbnailHeight'] . ';' . PHP_EOL;
+                    }
+
+                    if (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageFullscreenWidth'])) {
+                        $code .= BlockBuilderUtility::tab(1) . 'protected $' . $v['handle'] . '_defaultFullscreenWidth = ' . $v['imageFullscreenWidth'] . ';' . PHP_EOL;
+                    }
+                    if (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageFullscreenHeight'])) {
+                        $code .= BlockBuilderUtility::tab(1) . 'protected $' . $v['handle'] . '_defaultFullscreenHeight = ' . $v['imageFullscreenHeight'] . ';' . PHP_EOL;
+                    }
+                }
+            }
+            $code .= PHP_EOL;
+        }
+
+        if (!empty($postData['entries'])) {
+            foreach ($postData['entries'] as $k => $v) {
+                if ($v['fieldType'] == 'image') {
+                    if (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailWidth'])) {
+                        $code .= BlockBuilderUtility::tab(1) . 'protected $' . $v['handle'] . '_defaultRepeatableThumbnailWidth = ' . $v['imageThumbnailWidth'] . ';' . PHP_EOL;
+                    }
+                    if (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailHeight'])) {
+                        $code .= BlockBuilderUtility::tab(1) . 'protected $' . $v['handle'] . '_defaultRepeatableThumbnailHeight = ' . $v['imageThumbnailHeight'] . ';' . PHP_EOL;
+                    }
+
+                    if (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageFullscreenWidth'])) {
+                        $code .= BlockBuilderUtility::tab(1) . 'protected $' . $v['handle'] . '_defaultRepeatableFullscreenWidth = ' . $v['imageFullscreenWidth'] . ';' . PHP_EOL;
+                    }
+                    if (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageFullscreenHeight'])) {
+                        $code .= BlockBuilderUtility::tab(1) . 'protected $' . $v['handle'] . '_defaultRepeatableFullscreenHeight = ' . $v['imageFullscreenHeight'] . ';' . PHP_EOL;
                     }
                 }
             }
@@ -855,9 +891,9 @@ class ControllerPhp
                     if (!empty($v['imageCreateThumbnailImage'])) {
                         $thumbnail = 'true';
                         if (!empty($v['imageThumbnailEditable'])) {
-                            $imageThumbnailWidthDefault = !empty($v['imageThumbnailWidth']) ? $v['imageThumbnailWidth'] : 'false';
+                            $imageThumbnailWidthDefault = !empty($v['imageThumbnailWidth']) ? '$this->' . $v['handle'] . '_defaultThumbnailWidth' : 'false';
                             $thumbnailWidth = '!empty($this->' . $v['handle'] . '_data[\'override_dimensions\']) ? (!empty($this->' . $v['handle'] . '_data[\'custom_width\']) ? $this->' . $v['handle'] . '_data[\'custom_width\'] : false) : ' . $imageThumbnailWidthDefault;
-                            $imageThumbnailHeightDefault = !empty($v['imageThumbnailHeight']) ? $v['imageThumbnailHeight'] : 'false';
+                            $imageThumbnailHeightDefault = !empty($v['imageThumbnailHeight']) ? '$this->' . $v['handle'] . '_defaultThumbnailHeight' : 'false';
                             $thumbnailHeight = '!empty($this->' . $v['handle'] . '_data[\'override_dimensions\']) ? (!empty($this->' . $v['handle'] . '_data[\'custom_height\']) ? $this->' . $v['handle'] . '_data[\'custom_height\'] : false) : ' . $imageThumbnailHeightDefault;
                             $imageThumbnailCropDefault = !empty($v['imageThumbnailCrop']) ? $v['imageThumbnailCrop'] : 'false';
                             $thumbnailCrop = '!empty($this->' . $v['handle'] . '_data[\'override_dimensions\']) ? (!empty($this->' . $v['handle'] . '_data[\'custom_crop\']) ? true : false) : ' . $imageThumbnailCropDefault;
@@ -875,9 +911,9 @@ class ControllerPhp
                     if (!empty($v['imageCreateFullscreenImage'])) {
                         $fullscreen = 'true';
                         if (!empty($v['imageFullscreenEditable'])) {
-                            $imageFullscreenWidthDefault = !empty($v['imageFullscreenWidth']) ? $v['imageFullscreenWidth'] : 'false';
+                            $imageFullscreenWidthDefault = !empty($v['imageFullscreenWidth']) ? '$this->' . $v['handle'] . '_defaultFullscreenWidth' : 'false';
                             $fullscreenWidth = '!empty($this->' . $v['handle'] . '_data[\'override_fullscreen_dimensions\']) ? (!empty($this->' . $v['handle'] . '_data[\'custom_fullscreen_width\']) ? $this->' . $v['handle'] . '_data[\'custom_fullscreen_width\'] : false) : ' . $imageFullscreenWidthDefault;
-                            $imageFullscreenHeightDefault = !empty($v['imageFullscreenHeight']) ? $v['imageFullscreenHeight'] : 'false';
+                            $imageFullscreenHeightDefault = !empty($v['imageFullscreenHeight']) ? '$this->' . $v['handle'] . '_defaultFullscreenHeight' : 'false';
                             $fullscreenHeight = '!empty($this->' . $v['handle'] . '_data[\'override_fullscreen_dimensions\']) ? (!empty($this->' . $v['handle'] . '_data[\'custom_fullscreen_height\']) ? $this->' . $v['handle'] . '_data[\'custom_fullscreen_height\'] : false) : ' . $imageFullscreenHeightDefault;
                             $imageFullscreenCropDefault = !empty($v['imageFullscreenCrop']) ? $v['imageFullscreenCrop'] : 'false';
                             $fullscreenCrop = '!empty($this->' . $v['handle'] . '_data[\'override_fullscreen_dimensions\']) ? (!empty($this->' . $v['handle'] . '_data[\'custom_fullscreen_crop\']) ? true : false) : ' . $imageFullscreenCropDefault;
@@ -1937,7 +1973,7 @@ class ControllerPhp
                         $thumbnailHeight = '$thumbnailHeight';
                         $thumbnailCrop = '$thumbnailCrop';
 
-                        $code .= BlockBuilderUtility::tab(4) . '$thumbnailWidth = ' . (!empty($v['imageThumbnailWidth']) ? $v['imageThumbnailWidth'] : 'false') . ';' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(4) . '$thumbnailWidth = ' . (!empty($v['imageThumbnailWidth']) ? '$this->' . $v['handle'] . '_defaultRepeatableThumbnailWidth' : 'false') . ';' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(4) . 'if (!empty($this->settings[\'' . $v['handle'] . '_override_dimensions\'])) {' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(5) . '$thumbnailWidth = !empty($this->settings[\'' . $v['handle'] . '_custom_width\']) ? $this->settings[\'' . $v['handle'] . '_custom_width\'] : false;' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(4) . '}' . PHP_EOL;
@@ -1945,7 +1981,7 @@ class ControllerPhp
                         $code .= BlockBuilderUtility::tab(5) . '$thumbnailWidth = !empty($entry[\'' . $v['handle'] . '_custom_width\']) ? $entry[\'' . $v['handle'] . '_custom_width\'] : false;' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(4) . '}' . PHP_EOL;
 
-                        $code .= BlockBuilderUtility::tab(4) . '$thumbnailHeight = ' . (!empty($v['imageThumbnailHeight']) ? $v['imageThumbnailHeight'] : 'false') . ';' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(4) . '$thumbnailHeight = ' . (!empty($v['imageThumbnailHeight']) ? '$this->' . $v['handle'] . '_defaultRepeatableThumbnailHeight' : 'false') . ';' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(4) . 'if (!empty($this->settings[\'' . $v['handle'] . '_override_dimensions\'])) {' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(5) . '$thumbnailHeight = !empty($this->settings[\'' . $v['handle'] . '_custom_height\']) ? $this->settings[\'' . $v['handle'] . '_custom_height\'] : false;' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(4) . '}' . PHP_EOL;
@@ -1971,7 +2007,7 @@ class ControllerPhp
                         $fullscreenHeight = '$fullscreenHeight';
                         $fullscreenCrop = '$fullscreenCrop';
 
-                        $code .= BlockBuilderUtility::tab(4) . '$fullscreenWidth = ' . (!empty($v['imageFullscreenWidth']) ? $v['imageFullscreenWidth'] : 'false') . ';' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(4) . '$fullscreenWidth = ' . (!empty($v['imageFullscreenWidth']) ? '$this->' . $v['handle'] . '_defaultRepeatableFullscreenWidth' : 'false') . ';' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(4) . 'if (!empty($this->settings[\'' . $v['handle'] . '_override_fullscreen_dimensions\'])) {' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(5) . '$fullscreenWidth = !empty($this->settings[\'' . $v['handle'] . '_custom_fullscreen_width\']) ? $this->settings[\'' . $v['handle'] . '_custom_fullscreen_width\'] : false;' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(4) . '}' . PHP_EOL;
@@ -1979,7 +2015,7 @@ class ControllerPhp
                         $code .= BlockBuilderUtility::tab(5) . '$fullscreenWidth = !empty($entry[\'' . $v['handle'] . '_custom_fullscreen_width\']) ? $entry[\'' . $v['handle'] . '_custom_fullscreen_width\'] : false;' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(4) . '}' . PHP_EOL;
 
-                        $code .= BlockBuilderUtility::tab(4) . '$fullscreenHeight = ' . (!empty($v['imageFullscreenHeight']) ? $v['imageFullscreenHeight'] : 'false') . ';' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(4) . '$fullscreenHeight = ' . (!empty($v['imageFullscreenHeight']) ? '$this->' . $v['handle'] . '_defaultRepeatableFullscreenHeight' : 'false') . ';' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(4) . 'if (!empty($this->settings[\'' . $v['handle'] . '_override_fullscreen_dimensions\'])) {' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(5) . '$fullscreenHeight = !empty($this->settings[\'' . $v['handle'] . '_custom_fullscreen_height\']) ? $this->settings[\'' . $v['handle'] . '_custom_fullscreen_height\'] : false;' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(4) . '}' . PHP_EOL;
