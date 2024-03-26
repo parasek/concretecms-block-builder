@@ -1,3 +1,17 @@
+# 2.5.0
+- Increased package minimum Concrete version to 9.2.
+- Added "Color Picker" field type.
+- Added "Icon Picker" field type.
+- Added "Number" field type.
+- Added new option for generated blocks to highlight multi-element fields (with gray background) instead just dividing them with horizontal line.
+- When loading configs, existing blocks are now being sorted by creation date descending.
+- Field type "Link with type selection" has been renamed to "Flex Link".
+- Option rel="nofollow" has been added to all link type fields.
+- Thumbnail/fullscreen dimensions in "Image" field type are now available in view.php, even if no image is selected. They are also being listed as class properties, so they can be accessed in controller.
+- Fixed "Enhanced Select Field" in "Single Choice Field" and "Enhanced Multiselect Field" in "Multiple Choice Field" in Concrete 9.2+. New version of this field type will not work in older version of Concrete.
+- Fixed bugs when block with none/unknown version is being loaded.
+- Fixed tab css styling in generated blocks.
+
 # 2.4.0
 - Fixed bug in generated blocks, where you couldn't set empty value in several fields (null was changed to '' in save() method).
 - Fixed "trailing slashes" error on self-closing tags (W3C Validation).

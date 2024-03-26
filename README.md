@@ -10,7 +10,7 @@ Reporting errors via [GitHub Issues](https://github.com/parasek/concretecms-bloc
 
 # Requirements
 
-Latest version of Block Builder requires Concrete version 9.1.0 or higher and is compatible with PHP 8.
+Latest version of Block Builder requires Concrete version 9.2.0 or higher and is compatible with PHP 8.
 
 For Concrete 8.2.1+ use the highest version of 1.x.x branch.
 
@@ -39,6 +39,7 @@ This addon is made for developers and site builders. It allows you to quickly cr
   - Repeatable entries (one set of repeatable fields)
 - Multiple field types available:
   - Text
+  - Number
   - Textarea
   - WYSIWYG Editor
   - Single Choice Field
@@ -52,4 +53,6 @@ This addon is made for developers and site builders. It allows you to quickly cr
   - File Set
   - HTML Editor
   - Date Picker
+  - Color Picker
+  - Icon Picker
 - You can create blocks based on configuration of previously created blocks
