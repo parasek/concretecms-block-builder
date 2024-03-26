@@ -585,6 +585,8 @@ use Concrete\Core\System\Info as SystemInfo;
                                    value="<%=numberSize%>"
                             />
                             <div class="form-text">
+                                <?php echo t('Size od decimal field in mysql table.'); ?>
+                                <br>
                                 <?php echo t('Value "10.2" means, that database field can store 8 digits for the integer part and 2 digits for the fractional part.'); ?>
                                 <br>
                                 <?php echo t('If you want to store integers in database, write "0" after dot ("8.0 or similar").'); ?>
@@ -630,7 +632,10 @@ use Concrete\Core\System\Info as SystemInfo;
                                    min="0"
                                    step="1"
                             />
-                            <div class="form-text"><?php echo t('How many decimals to display after separator.'); ?></div>
+                            <div class="form-text">
+                                <?php echo t('How many decimals to display after separator.'); ?>
+                                <br><?php echo t('Argument of php function number_format().'); ?>
+                            </div>
                         </div>
                         <div class="mb-4 <% if (error['numberDisplayedDecimalSeparator']!=undefined) { %>has-error<% } %>">
                             <label for="<%=groupHandle%>[<%=counter%>][numberDisplayedDecimalSeparator]" class="form-label"><?php echo t('Displayed decimal separator'); ?></label>
@@ -640,7 +645,10 @@ use Concrete\Core\System\Info as SystemInfo;
                                    class="form-control"
                                    value="<%=numberDisplayedDecimalSeparator%>"
                             />
-                            <div class="form-text"><?php echo t('Usually "," (coma) or "." (dot).'); ?></div>
+                            <div class="form-text">
+                                <?php echo t('Usually "," (coma) or "." (dot).'); ?>
+                                <br><?php echo t('Argument of php function number_format().'); ?>
+                            </div>
                         </div>
                         <div class="<% if (error['numberDisplayedThousandsSeparator']!=undefined) { %>has-error<% } %>">
                             <label for="<%=groupHandle%>[<%=counter%>][numberDisplayedThousandsSeparator]" class="form-label"><?php echo t('Displayed thousands separator'); ?></label>
@@ -650,7 +658,10 @@ use Concrete\Core\System\Info as SystemInfo;
                                    class="form-control"
                                    value="<%=numberDisplayedThousandsSeparator%>"
                             />
-                            <div class="form-text"><?php echo t('Usually " " (space is barely visible in this field), "." (dot) or "," (coma). You can also keep it empty.'); ?></div>
+                            <div class="form-text">
+                                <?php echo t('Usually " " (space is barely visible in this field), "." (dot) or "," (coma). You can also keep it empty.'); ?>
+                                <br><?php echo t('Argument of php function number_format().'); ?>
+                            </div>
                         </div>
                         <% } %>
 

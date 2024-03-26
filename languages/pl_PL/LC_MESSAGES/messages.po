@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2024-03-15 23:20+0100\n"
-"PO-Revision-Date: 2024-03-15 23:20+0100\n"
+"POT-Creation-Date: 2024-03-26 09:21+0100\n"
+"PO-Revision-Date: 2024-03-26 09:21+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pl_PL\n"
@@ -29,7 +29,7 @@ msgstr ""
 "wpisów)."
 
 #: controllers/ajax.php:29 controllers/ajax.php:41 controllers/ajax.php:55
-#: src/BlockBuilder/Generator.php:317
+#: src/BlockBuilder/Generator.php:327
 msgid "Oops! Something went wrong..."
 msgstr "Uups! Coś poszło nie tak..."
 
@@ -254,10 +254,10 @@ msgstr "Dodaj atrybut nofollow"
 #: controllers/single_page/dashboard/blocks/block_builder.php:202
 #: single_pages/dashboard/blocks/block_builder.php:297
 #: single_pages/dashboard/blocks/block_builder.php:298
-#: single_pages/dashboard/blocks/block_builder.php:974
-#: single_pages/dashboard/blocks/block_builder.php:987
-#: single_pages/dashboard/blocks/block_builder.php:1037
-#: single_pages/dashboard/blocks/block_builder.php:1050
+#: single_pages/dashboard/blocks/block_builder.php:985
+#: single_pages/dashboard/blocks/block_builder.php:998
+#: single_pages/dashboard/blocks/block_builder.php:1048
+#: single_pages/dashboard/blocks/block_builder.php:1061
 #: src/BlockBuilder/OptionList.php:41 src/BlockBuilder/OptionList.php:79
 #: src/BlockBuilder/OptionList.php:102
 msgid "Yes"
@@ -286,27 +286,27 @@ msgstr "Nadpisz wymiary obrazu pełnoekranowego"
 #: controllers/single_page/dashboard/blocks/block_builder.php:206
 #: single_pages/dashboard/blocks/block_builder.php:317
 #: single_pages/dashboard/blocks/block_builder.php:318
-#: single_pages/dashboard/blocks/block_builder.php:941
-#: single_pages/dashboard/blocks/block_builder.php:1004
+#: single_pages/dashboard/blocks/block_builder.php:952
+#: single_pages/dashboard/blocks/block_builder.php:1015
 msgid "Width"
 msgstr "Szerokość"
 
 #: controllers/single_page/dashboard/blocks/block_builder.php:207
 #: single_pages/dashboard/blocks/block_builder.php:322
 #: single_pages/dashboard/blocks/block_builder.php:323
-#: single_pages/dashboard/blocks/block_builder.php:659
-#: single_pages/dashboard/blocks/block_builder.php:677
-#: single_pages/dashboard/blocks/block_builder.php:953
-#: single_pages/dashboard/blocks/block_builder.php:1016
-#: single_pages/dashboard/blocks/block_builder.php:1084
+#: single_pages/dashboard/blocks/block_builder.php:670
+#: single_pages/dashboard/blocks/block_builder.php:688
+#: single_pages/dashboard/blocks/block_builder.php:964
+#: single_pages/dashboard/blocks/block_builder.php:1027
+#: single_pages/dashboard/blocks/block_builder.php:1095
 msgid "Height"
 msgstr "Wysokość"
 
 #: controllers/single_page/dashboard/blocks/block_builder.php:208
 #: single_pages/dashboard/blocks/block_builder.php:327
 #: single_pages/dashboard/blocks/block_builder.php:328
-#: single_pages/dashboard/blocks/block_builder.php:965
-#: single_pages/dashboard/blocks/block_builder.php:1028
+#: single_pages/dashboard/blocks/block_builder.php:976
+#: single_pages/dashboard/blocks/block_builder.php:1039
 msgid "Crop"
 msgstr "Przytnij"
 
@@ -615,6 +615,10 @@ msgid "Size"
 msgstr "Rozmiar"
 
 #: single_pages/dashboard/blocks/block_builder.php:588
+msgid "Size od decimal field in mysql table."
+msgstr "Rozmiar pola typu Decimal w tabeli MySQL."
+
+#: single_pages/dashboard/blocks/block_builder.php:590
 msgid ""
 "Value \"10.2\" means, that database field can store 8 digits for the integer "
 "part and 2 digits for the fractional part."
@@ -622,7 +626,7 @@ msgstr ""
 "Wartość \"10.2\" oznacza, że pole w bazie danych może przechowywać 8 cyfr w "
 "części całkowitej i 2 cyfry w części dziesiętnej."
 
-#: single_pages/dashboard/blocks/block_builder.php:590
+#: single_pages/dashboard/blocks/block_builder.php:592
 msgid ""
 "If you want to store integers in database, write \"0\" after dot (\"8.0 or "
 "similar\")."
@@ -630,7 +634,7 @@ msgstr ""
 "Jeśli chcesz zapisywać liczby całkowite w bazie danych, wpisz \"0\" po "
 "kropce (\"8.0\" albo podobnie)."
 
-#: single_pages/dashboard/blocks/block_builder.php:592
+#: single_pages/dashboard/blocks/block_builder.php:594
 msgid ""
 "If you want to store standard money values in database, write \"2\" after "
 "dot (\"10.2 or similar\")."
@@ -638,11 +642,11 @@ msgstr ""
 "Jeśli chcesz zapisywać standardowe wartości pieniężne w bazie danych, wpisz "
 "\"2\" po kropce (\"10.2\" albo podobnie)."
 
-#: single_pages/dashboard/blocks/block_builder.php:596
+#: single_pages/dashboard/blocks/block_builder.php:598
 msgid "Step"
 msgstr "Krok"
 
-#: single_pages/dashboard/blocks/block_builder.php:603
+#: single_pages/dashboard/blocks/block_builder.php:605
 msgid ""
 "Value \"1\" will force integers in html field, use \"0.01\" when you want to "
 "use standard money format."
@@ -650,35 +654,41 @@ msgstr ""
 "Wartość \"1\" wymusi liczby całkowite w polu html, użyj \"0.01\" jeśli "
 "chcesz używać standardowego format pieniężnego."
 
-#: single_pages/dashboard/blocks/block_builder.php:606
+#: single_pages/dashboard/blocks/block_builder.php:608
 msgid "Minimum"
 msgstr "Minimum"
 
-#: single_pages/dashboard/blocks/block_builder.php:615
+#: single_pages/dashboard/blocks/block_builder.php:617
 msgid "Maximum"
 msgstr "Maximum"
 
-#: single_pages/dashboard/blocks/block_builder.php:624
+#: single_pages/dashboard/blocks/block_builder.php:626
 msgid "Displayed decimals"
 msgstr "Wyświetlane cyfry po przecinku"
 
-#: single_pages/dashboard/blocks/block_builder.php:633
+#: single_pages/dashboard/blocks/block_builder.php:636
 msgid "How many decimals to display after separator."
 msgstr "Ile wyświetlić cyfr po seperatorze."
 
-#: single_pages/dashboard/blocks/block_builder.php:636
+#: single_pages/dashboard/blocks/block_builder.php:637
+#: single_pages/dashboard/blocks/block_builder.php:650
+#: single_pages/dashboard/blocks/block_builder.php:663
+msgid "Argument of php function number_format()."
+msgstr "Argument funkcji php number_format()."
+
+#: single_pages/dashboard/blocks/block_builder.php:641
 msgid "Displayed decimal separator"
 msgstr "Wyświetlany separator części dziesiętnej"
 
-#: single_pages/dashboard/blocks/block_builder.php:643
+#: single_pages/dashboard/blocks/block_builder.php:649
 msgid "Usually \",\" (coma) or \".\" (dot)."
 msgstr "Zazwyczaj \",\" (przecinek) albo \".\" (kropka)."
 
-#: single_pages/dashboard/blocks/block_builder.php:646
+#: single_pages/dashboard/blocks/block_builder.php:654
 msgid "Displayed thousands separator"
 msgstr "Wyświetlany separator tysięcy"
 
-#: single_pages/dashboard/blocks/block_builder.php:653
+#: single_pages/dashboard/blocks/block_builder.php:662
 msgid ""
 "Usually \" \" (space is barely visible in this field), \".\" (dot) or \","
 "\" (coma). You can also keep it empty."
@@ -686,49 +696,49 @@ msgstr ""
 "Zazwyczaj \" \" (spacja jest ledwo widoczna w tym polu), \".\" (kropka) albo "
 "\",\" (przecinek). Możesz również zostawić te pole puste."
 
-#: single_pages/dashboard/blocks/block_builder.php:671
-#: single_pages/dashboard/blocks/block_builder.php:1095
+#: single_pages/dashboard/blocks/block_builder.php:682
+#: single_pages/dashboard/blocks/block_builder.php:1106
 #, php-format
 msgid "Default height: %s."
 msgstr "Standardowa wysokość: %s."
 
-#: single_pages/dashboard/blocks/block_builder.php:689
+#: single_pages/dashboard/blocks/block_builder.php:700
 #, php-format
 msgid "Default height of editable area: %s."
 msgstr "Domyślna wysokość edytowalnego obszaru: %s."
 
-#: single_pages/dashboard/blocks/block_builder.php:689
+#: single_pages/dashboard/blocks/block_builder.php:700
 msgid "Editor auto-grow will be enabled if you leave this field empty."
 msgstr ""
 "Auto-rozszerzanie edytora zostanie włączone, jeśli pozostawisz te pole puste."
 
-#: single_pages/dashboard/blocks/block_builder.php:695
-#: single_pages/dashboard/blocks/block_builder.php:727
+#: single_pages/dashboard/blocks/block_builder.php:706
+#: single_pages/dashboard/blocks/block_builder.php:738
 msgid "Type"
 msgstr "Typ"
 
-#: single_pages/dashboard/blocks/block_builder.php:706
-#: single_pages/dashboard/blocks/block_builder.php:738
+#: single_pages/dashboard/blocks/block_builder.php:717
+#: single_pages/dashboard/blocks/block_builder.php:749
 msgid "Select options"
 msgstr "Opcje wyboru"
 
-#: single_pages/dashboard/blocks/block_builder.php:708
-#: single_pages/dashboard/blocks/block_builder.php:740
+#: single_pages/dashboard/blocks/block_builder.php:719
+#: single_pages/dashboard/blocks/block_builder.php:751
 msgid "Enter every option in new line, e.g."
 msgstr "Wprowadź każdą kolejną opcję w nowej linii, np."
 
-#: single_pages/dashboard/blocks/block_builder.php:709
-#: single_pages/dashboard/blocks/block_builder.php:741
+#: single_pages/dashboard/blocks/block_builder.php:720
+#: single_pages/dashboard/blocks/block_builder.php:752
 msgid "Don't show"
 msgstr "Nie pokazuj"
 
-#: single_pages/dashboard/blocks/block_builder.php:710
-#: single_pages/dashboard/blocks/block_builder.php:742
+#: single_pages/dashboard/blocks/block_builder.php:721
+#: single_pages/dashboard/blocks/block_builder.php:753
 msgid "Show"
 msgstr "Pokaż"
 
-#: single_pages/dashboard/blocks/block_builder.php:713
-#: single_pages/dashboard/blocks/block_builder.php:745
+#: single_pages/dashboard/blocks/block_builder.php:724
+#: single_pages/dashboard/blocks/block_builder.php:756
 msgid ""
 "You can also use double colon to specify key (value saved in database, only "
 "a-zA-Z0-9_ characters are permitted) and value (displayed text), e.g."
@@ -737,51 +747,51 @@ msgstr ""
 "zapisywana w bazie danych, dozwolone są tylko znaki a-zA-Z0-9_) i wartości "
 "(wyświetlany tekst), np."
 
-#: single_pages/dashboard/blocks/block_builder.php:714
-#: single_pages/dashboard/blocks/block_builder.php:746
+#: single_pages/dashboard/blocks/block_builder.php:725
+#: single_pages/dashboard/blocks/block_builder.php:757
 msgid "no :: Don't show"
 msgstr "nie :: Nie pokazuj"
 
-#: single_pages/dashboard/blocks/block_builder.php:715
-#: single_pages/dashboard/blocks/block_builder.php:747
+#: single_pages/dashboard/blocks/block_builder.php:726
+#: single_pages/dashboard/blocks/block_builder.php:758
 msgid "yes :: Show"
 msgstr "tak :: Pokaż"
 
-#: single_pages/dashboard/blocks/block_builder.php:766
-#: single_pages/dashboard/blocks/block_builder.php:819
-#: single_pages/dashboard/blocks/block_builder.php:872
+#: single_pages/dashboard/blocks/block_builder.php:777
+#: single_pages/dashboard/blocks/block_builder.php:830
+#: single_pages/dashboard/blocks/block_builder.php:883
 msgid "Show \"Custom string at the end of URL\" field"
 msgstr "Pokaż pole \"Niestandardowe zakończenie adresu URL\""
 
-#: single_pages/dashboard/blocks/block_builder.php:776
-#: single_pages/dashboard/blocks/block_builder.php:829
-#: single_pages/dashboard/blocks/block_builder.php:882
+#: single_pages/dashboard/blocks/block_builder.php:787
+#: single_pages/dashboard/blocks/block_builder.php:840
+#: single_pages/dashboard/blocks/block_builder.php:893
 msgid "Show \"Text\" field"
 msgstr "Pokaż pole \"Tekst\""
 
-#: single_pages/dashboard/blocks/block_builder.php:786
-#: single_pages/dashboard/blocks/block_builder.php:839
-#: single_pages/dashboard/blocks/block_builder.php:892
+#: single_pages/dashboard/blocks/block_builder.php:797
+#: single_pages/dashboard/blocks/block_builder.php:850
+#: single_pages/dashboard/blocks/block_builder.php:903
 msgid "Show \"Title\" field"
 msgstr "Pokaż pole \"Tytuł\""
 
-#: single_pages/dashboard/blocks/block_builder.php:796
-#: single_pages/dashboard/blocks/block_builder.php:849
-#: single_pages/dashboard/blocks/block_builder.php:902
+#: single_pages/dashboard/blocks/block_builder.php:807
+#: single_pages/dashboard/blocks/block_builder.php:860
+#: single_pages/dashboard/blocks/block_builder.php:913
 msgid "Show \"Open in new window\" field"
 msgstr "Pokaż pole \"Otwórz w nowym oknie\""
 
-#: single_pages/dashboard/blocks/block_builder.php:806
-#: single_pages/dashboard/blocks/block_builder.php:859
-#: single_pages/dashboard/blocks/block_builder.php:912
+#: single_pages/dashboard/blocks/block_builder.php:817
+#: single_pages/dashboard/blocks/block_builder.php:870
+#: single_pages/dashboard/blocks/block_builder.php:923
 msgid "Show \"Add nofollow attribute\" field"
 msgstr "Pokaż pole \"Dodaj atrybut nofollow\""
 
-#: single_pages/dashboard/blocks/block_builder.php:925
+#: single_pages/dashboard/blocks/block_builder.php:936
 msgid "Show \"Alt text\" field"
 msgstr "Pokaż pole \"Tekst alternatywny\""
 
-#: single_pages/dashboard/blocks/block_builder.php:936
+#: single_pages/dashboard/blocks/block_builder.php:947
 msgid ""
 "Generate thumbnail using image helper (if original image is bigger than "
 "specified dimensions)"
@@ -789,12 +799,12 @@ msgstr ""
 "Wygeneruj miniaturę za pomocą \"image helpera\" (jeśli oryginalny obraz jest "
 "większy niż podane wymiary)"
 
-#: single_pages/dashboard/blocks/block_builder.php:978
-#: single_pages/dashboard/blocks/block_builder.php:1041
+#: single_pages/dashboard/blocks/block_builder.php:989
+#: single_pages/dashboard/blocks/block_builder.php:1052
 msgid "Editable"
 msgstr "Edytowalne"
 
-#: single_pages/dashboard/blocks/block_builder.php:999
+#: single_pages/dashboard/blocks/block_builder.php:1010
 msgid ""
 "Generate fullscreen image using image helper (if original image is bigger "
 "than specified dimensions)"
@@ -802,19 +812,19 @@ msgstr ""
 "Wygeneruj obraz pełnoekranowy za pomocą \"image helpera\" (jeśli oryginalny "
 "obraz jest większy niż podane wymiary)"
 
-#: single_pages/dashboard/blocks/block_builder.php:1058
+#: single_pages/dashboard/blocks/block_builder.php:1069
 msgid "Express object handle"
 msgstr "Identyfikator obiektu Express"
 
-#: single_pages/dashboard/blocks/block_builder.php:1071
+#: single_pages/dashboard/blocks/block_builder.php:1082
 msgid "Restrict File Set selection to those starting with:"
 msgstr "Ogranicz wybór zestawów plików do tych zaczynających się od:"
 
-#: single_pages/dashboard/blocks/block_builder.php:1102
+#: single_pages/dashboard/blocks/block_builder.php:1113
 msgid "PHP Date Pattern"
 msgstr "Wzorzec PHP daty"
 
-#: single_pages/dashboard/blocks/block_builder.php:1110
+#: single_pages/dashboard/blocks/block_builder.php:1121
 #, php-format
 msgid ""
 "Check %sphp manual%s for available formats. Examples: <code>d.m.Y</code>, "
@@ -825,7 +835,7 @@ msgstr ""
 "code>, <code>d-m-Y</code>, <code>Y-m-d</code>, <code>m-d-Y</code>, <code>m/d/"
 "Y</code>"
 
-#: single_pages/dashboard/blocks/block_builder.php:1127
+#: single_pages/dashboard/blocks/block_builder.php:1138
 msgid "You haven't added any field types yet."
 msgstr "Nie dodałeś jeszcze żadnych typów pól."
 
@@ -970,12 +980,12 @@ msgstr ""
 "przetestować, ale niektóre brzegowe przypadki mogły prześlizgnąć się przez "
 "proces testowania."
 
-#: src/BlockBuilder/Generator.php:307
+#: src/BlockBuilder/Generator.php:317
 msgid "Folder couldn't be created. Check your write permissions."
 msgstr ""
 "Folder nie mógł zostać utworzony. Sprawdź czy masz odpowiednie prawa zapisu."
 
-#: src/BlockBuilder/Generator.php:313
+#: src/BlockBuilder/Generator.php:323
 msgid "You do not have permission to install custom block types or add-ons."
 msgstr ""
 "Nie masz uprawnień by instalować niestandardowe typy bloków lub paczki."
