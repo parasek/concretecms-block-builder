@@ -942,6 +942,46 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(3) . '\'fullscreenCrop\'   => ' . $fullscreenCrop . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(2) . ']);' . PHP_EOL . PHP_EOL;
 
+                    // Default image dimensions
+                    if (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailWidth'])) {
+                        $code .= BlockBuilderUtility::tab(2) . '$this->set(\'' . $v['handle'] . '_defaultThumbnailWidth\', $this->' . $v['handle'] . '_defaultThumbnailWidth);' . PHP_EOL;
+                    }
+                    if (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailHeight'])) {
+                        $code .= BlockBuilderUtility::tab(2) . '$this->set(\'' . $v['handle'] . '_defaultThumbnailHeight\', $this->' . $v['handle'] . '_defaultThumbnailHeight);' . PHP_EOL . PHP_EOL;
+                    }
+                    if (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageFullscreenWidth'])) {
+                        $code .= BlockBuilderUtility::tab(2) . '$this->set(\'' . $v['handle'] . '_defaultFullscreenWidth\', $this->' . $v['handle'] . '_defaultFullscreenWidth);' . PHP_EOL;
+                    }
+                    if (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageFullscreenHeight'])) {
+                        $code .= BlockBuilderUtility::tab(2) . '$this->set(\'' . $v['handle'] . '_defaultFullscreenHeight\', $this->' . $v['handle'] . '_defaultFullscreenHeight);' . PHP_EOL . PHP_EOL;
+                    }
+
+                }
+
+            }
+
+        }
+
+        if (!empty($postData['entries'])) {
+
+            foreach ($postData['entries'] as $k => $v) {
+
+                if ($v['fieldType'] == 'image') {
+
+                    // Default image dimensions
+                    if (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailWidth'])) {
+                        $code .= BlockBuilderUtility::tab(2) . '$this->set(\'' . $v['handle'] . '_defaultRepeatableThumbnailWidth\', $this->' . $v['handle'] . '_defaultRepeatableThumbnailWidth);' . PHP_EOL;
+                    }
+                    if (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailHeight'])) {
+                        $code .= BlockBuilderUtility::tab(2) . '$this->set(\'' . $v['handle'] . '_defaultRepeatableThumbnailHeight\', $this->' . $v['handle'] . '_defaultRepeatableThumbnailHeight);' . PHP_EOL . PHP_EOL;
+                    }
+                    if (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageFullscreenWidth'])) {
+                        $code .= BlockBuilderUtility::tab(2) . '$this->set(\'' . $v['handle'] . '_defaultRepeatableFullscreenWidth\', $this->' . $v['handle'] . '_defaultRepeatableFullscreenWidth);' . PHP_EOL;
+                    }
+                    if (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageFullscreenHeight'])) {
+                        $code .= BlockBuilderUtility::tab(2) . '$this->set(\'' . $v['handle'] . '_defaultRepeatableFullscreenHeight\', $this->' . $v['handle'] . '_defaultRepeatableFullscreenHeight);' . PHP_EOL . PHP_EOL;
+                    }
+
                 }
 
             }
