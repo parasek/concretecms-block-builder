@@ -1,3 +1,6 @@
+# 2.5.1
+- Image default dimension values are now available in view.
+
 # 2.5.0
 - Increased package minimum Concrete version to 9.2.
 - Added "Color Picker" field type.
