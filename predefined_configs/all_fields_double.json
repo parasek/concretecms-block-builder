@@ -1,6 +1,6 @@
 {
-    "version": "2.4.0",
-    "createdAt": "2024-03-15 23:34:42",
+    "version": "2.6.0",
+    "createdAt": "2024-03-29 13:22:47",
     "blockName": "All Fields x2",
     "blockHandle": "all_fields_double",
     "blockDescription": "All types of Fields (Basic + Repeatable) x2",
@@ -114,14 +114,16 @@
             "label": "Basic WYSIWYG Editor 1",
             "handle": "basicWysiwygEditorFirst",
             "helpText": "",
-            "wysiwygEditorHeight": ""
+            "wysiwygEditorHeight": "",
+            "wysiwygCustomConfig": ""
         },
         "8": {
             "fieldType": "wysiwyg_editor",
             "label": "Basic WYSIWYG Editor 2",
             "handle": "basicWysiwygEditorSecond",
             "helpText": "",
-            "wysiwygEditorHeight": "80"
+            "wysiwygEditorHeight": "80",
+            "wysiwygCustomConfig": "{\r\n  \"toolbar\": [\r\n    {\r\n      \"name\": \"document\",\r\n      \"items\": [\"Source\", \"-\"]\r\n    },\r\n    {\r\n      \"name\": \"basicstyles\",\r\n      \"items\": [\"Bold\", \"Italic\", \"Underline\", \"Strike\", \"Subscript\", \"Superscript\", \"-\", \"RemoveFormat\"]\r\n    },\r\n    {\r\n      \"name\": \"styles\",\r\n      \"items\": [\"Styles\", \"Format\"]\r\n    }\r\n  ]\r\n}"
         },
         "9": {
             "fieldType": "select_field",
@@ -448,14 +450,16 @@
             "label": "Repeatable WYSIWYG Editor 1",
             "handle": "repeatableWysiwygEditorFirst",
             "helpText": "",
-            "wysiwygEditorHeight": ""
+            "wysiwygEditorHeight": "",
+            "wysiwygCustomConfig": ""
         },
         "8": {
             "fieldType": "wysiwyg_editor",
             "label": "Repeatable WYSIWYG Editor 2",
             "handle": "repeatableWysiwygEditorSecond",
             "helpText": "",
-            "wysiwygEditorHeight": "90"
+            "wysiwygEditorHeight": "90",
+            "wysiwygCustomConfig": "{\r\n  \"toolbar\": [\r\n    {\r\n      \"name\": \"document\",\r\n      \"items\": [\"Source\", \"-\"]\r\n    },\r\n    {\r\n      \"name\": \"basicstyles\",\r\n      \"items\": [\"Bold\", \"Italic\", \"Underline\", \"Strike\", \"Subscript\", \"Superscript\", \"-\", \"RemoveFormat\"]\r\n    },\r\n    {\r\n      \"name\": \"styles\",\r\n      \"items\": [\"Styles\", \"Format\"]\r\n    }\r\n  ]\r\n}"
         },
         "9": {
             "fieldType": "select_field",

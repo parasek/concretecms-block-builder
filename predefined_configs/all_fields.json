@@ -1,6 +1,6 @@
 {
-    "version": "2.4.0",
-    "createdAt": "2024-03-16 20:33:51",
+    "version": "2.6.0",
+    "createdAt": "2024-03-29 13:17:50",
     "blockName": "All Fields",
     "blockHandle": "all_fields",
     "blockDescription": "All types of Fields (Basic + Repeatable)",
@@ -88,7 +88,8 @@
             "label": "Basic WYSIWYG Editor 1",
             "handle": "basicWysiwygEditorFirst",
             "helpText": "",
-            "wysiwygEditorHeight": ""
+            "wysiwygEditorHeight": "",
+            "wysiwygCustomConfig": ""
         },
         "5": {
             "fieldType": "select_field",
@@ -268,7 +269,8 @@
             "label": "Repeatable WYSIWYG Editor 1",
             "handle": "repeatableWysiwygEditorFirst",
             "helpText": "",
-            "wysiwygEditorHeight": ""
+            "wysiwygEditorHeight": "",
+            "wysiwygCustomConfig": ""
         },
         "5": {
             "fieldType": "select_field",

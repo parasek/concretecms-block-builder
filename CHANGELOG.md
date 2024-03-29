@@ -1,3 +1,6 @@
+# 2.6.0
+- Added custom config to "WYSIWYG editor" field type
+
 # 2.5.1
 - Image default dimension values are now available in view.
 
