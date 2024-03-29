@@ -366,6 +366,14 @@ class Validation
 
                 }
 
+                if (!empty($entry['wysiwygCustomConfig']) and json_decode($entry['wysiwygCustomConfig']) === null and json_last_error() !== JSON_ERROR_NONE) {
+
+                    $postData[$counter]['error']['wysiwygCustomConfig'] = 1;
+                    $fieldsWithError[] = $handle . '|wysiwygCustomConfig|invalid_json';
+                    $tabsWithError[] = 'tab-' . $handle;
+
+                }
+
                 // select_field
                 if (isset($entry['selectOptions']) and !$entry['selectOptions']) {
 
@@ -620,6 +628,9 @@ class Validation
         // wysiwyg_editor
         if (in_array($handle . '|wysiwygEditorHeight|invalid_number', $fieldsWithError)) {
             $errors[] = t('Invalid entry in one of "WYSIWYG Editor/Height" fields, should be a number between %s and %s or empty (%s).', 40, 2000, $label);
+        }
+        if (in_array($handle . '|wysiwygCustomConfig|invalid_json', $fieldsWithError)) {
+            $errors[] = t('Invalid JSON in one of "WYSIWYG Editor/Custom editor config" fields, should be a valid JSON.');
         }
 
         // select_field

@@ -227,6 +227,18 @@
     margin-bottom: 200px;
 }
 
+.ccm-ui .bb-code-block {
+    display: block;
+    background: #f7f7f7;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.ccm-ui .bb-code-block pre {
+    margin-bottom: 0;
+}
+
 /* Block types */
 .ccm-ui .block-type {
     display: flex;

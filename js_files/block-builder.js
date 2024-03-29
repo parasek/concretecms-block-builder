@@ -42,6 +42,7 @@ $(function () {
                     // load .json file created by older version of package.
                     item.selectType = item.selectType == undefined ? 'default_select' : item.selectType;
                     item.selectMultipleType = item.selectMultipleType == undefined ? 'default_multiselect' : item.selectMultipleType;
+                    item.wysiwygCustomConfig = item.wysiwygCustomConfig == undefined ? '' : item.wysiwygCustomConfig;
 
                     // All checkboxes need to be here (because $_POST doesn't have non-checked ones)
 
@@ -151,6 +152,7 @@ $(function () {
 
                 // wysiwyg_editor
                 templateData['wysiwygEditorHeight'] = '';
+                templateData['wysiwygCustomConfig'] = '';
 
                 // select_field
                 templateData['selectOptions'] = '';

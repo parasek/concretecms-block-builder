@@ -684,7 +684,7 @@ use Concrete\Core\System\Info as SystemInfo;
                         <% } %>
 
                         <% if (fieldType == 'wysiwyg_editor') { %>
-                        <div class="<% if (error['wysiwygEditorHeight']!=undefined) { %>has-error<% } %>">
+                        <div class="<% if (error['wysiwygEditorHeight']!=undefined) { %>has-error<% } %> mb-4">
                             <label for="<%=groupHandle%>[<%=counter%>][wysiwygEditorHeight]" class="form-label"><?php echo t('Height'); ?></label>
                             <div class="col-lg-3">
                                 <div class="input-group">
@@ -698,6 +698,41 @@ use Concrete\Core\System\Info as SystemInfo;
                                 </div>
                             </div>
                             <div class="form-text"><?php echo t('Default height of editable area: %s.', '40px'); ?><br/><?php echo t('Editor auto-grow will be enabled if you leave this field empty.'); ?></div>
+                        </div>
+
+                        <div class="<% if (error['wysiwygCustomConfig']!=undefined) { %>has-error<% } %>">
+                            <label for="<%=groupHandle%>[<%=counter%>][wysiwygCustomConfig]" class="form-label"><?php echo t('Custom editor config'); ?></label>
+                            <textarea id="<%=groupHandle%>[<%=counter%>][wysiwygCustomConfig]"
+                                      name="<%=groupHandle%>[<%=counter%>][wysiwygCustomConfig]"
+                                      class="form-control"
+                            ><%=wysiwygCustomConfig%></textarea>
+                            <div class="form-text">
+                                <?php echo t('Custom editor config should be inserted as JSON.'); ?>
+                                <br/>
+                                <?php echo t('Full list of options can be found at %sToolbar Configurator%s.', '<a href="https://ckeditor.com/latest/samples/toolbarconfigurator/#advanced" target="_blank">', '</a>'); ?>
+                                <br/>
+                                <?php echo t('Example config:'); ?>
+<code class="bb-code-block">
+<pre>
+{
+  "toolbar": [
+    {
+      "name": "document",
+      "items": ["Source", "-"]
+    },
+    {
+      "name": "basicstyles",
+      "items": ["Bold", "Italic", "Underline", "Strike", "Subscript", "Superscript", "-", "RemoveFormat"]
+    },
+    {
+      "name": "styles",
+      "items": ["Styles", "Format"]
+    }
+  ]
+}
+</pre>
+</code>
+                            </div>
                         </div>
                         <% } %>
 
@@ -717,13 +752,19 @@ use Concrete\Core\System\Info as SystemInfo;
                             <label for="<%=groupHandle%>[<%=counter%>][selectOptions]" class="form-label"><?php echo t('Select options'); ?></label>
                             <p class="small text-muted">
                                 <?php echo t('Enter every option in new line, e.g.'); ?>
-                                <br/><code><?php echo t('Don\'t show'); ?></code>
-                                <br/><code><?php echo t('Show'); ?></code>
+                                <code class="bb-code-block">
+                                    <?php echo t('Don\'t show'); ?>
+                                    <br/>
+                                    <?php echo t('Show'); ?>
+                                </code>
                             </p>
                             <p class="small text-muted">
                                 <?php echo t('You can also use double colon to specify key (value saved in database, only a-zA-Z0-9_ characters are permitted) and value (displayed text), e.g.'); ?>
-                                <br/><code><?php echo t('no :: Don\'t show'); ?></code>
-                                <br/><code><?php echo t('yes :: Show'); ?></code>
+                                <code class="bb-code-block">
+                                    <?php echo t('no :: Don\'t show'); ?>
+                                    <br/>
+                                    <?php echo t('yes :: Show'); ?>
+                                </code>
                             </p>
                             <textarea name="<%=groupHandle%>[<%=counter%>][selectOptions]"
                                       id="<%=groupHandle%>[<%=counter%>][selectOptions]"
@@ -749,13 +790,19 @@ use Concrete\Core\System\Info as SystemInfo;
                             <label for="<%=groupHandle%>[<%=counter%>][selectMultipleOptions]" class="form-label"><?php echo t('Select options'); ?></label>
                             <p class="small text-muted">
                                 <?php echo t('Enter every option in new line, e.g.'); ?>
-                                <br/><code><?php echo t('Don\'t show'); ?></code>
-                                <br/><code><?php echo t('Show'); ?></code>
+                                <code class="bb-code-block">
+                                    <?php echo t('Don\'t show'); ?>
+                                    <br/>
+                                    <?php echo t('Show'); ?>
+                                </code>
                             </p>
                             <p class="small text-muted">
                                 <?php echo t('You can also use double colon to specify key (value saved in database, only a-zA-Z0-9_ characters are permitted) and value (displayed text), e.g.'); ?>
-                                <br/><code><?php echo t('no :: Don\'t show'); ?></code>
-                                <br/><code><?php echo t('yes :: Show'); ?></code>
+                                <code class="bb-code-block">
+                                    <?php echo t('no :: Don\'t show'); ?>
+                                    <br/>
+                                    <?php echo t('yes :: Show'); ?>
+                                </code>
                             </p>
                             <textarea name="<%=groupHandle%>[<%=counter%>][selectMultipleOptions]"
                                       id="<%=groupHandle%>[<%=counter%>][selectMultipleOptions]"

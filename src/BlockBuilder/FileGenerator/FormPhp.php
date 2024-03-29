@@ -150,10 +150,11 @@ class FormPhp
                 if ($v['fieldType'] == 'wysiwyg_editor') {
 
                     $height = !empty($v['wysiwygEditorHeight']) ? $v['wysiwygEditorHeight'] : false;
+                    $customConfig = !empty($v['wysiwygCustomConfig']) ? $v['wysiwygCustomConfig'] : '{}';
 
                     $code .= BlockBuilderUtility::tab(3) . '<div class="mb-4 js-custom-editor-height-<?php echo $view->field(\'' . $v['handle'] . '\'); ?>-<?php echo $uniqueID; ?>">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '\'), t(\'' . addslashes($v['label']) . '\')' . $required . '); ?>' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(4) . '<?php echo $app->make(\'editor\')->outputBlockEditModeEditor($view->field(\'' . $v['handle'] . '\'), $' . $v['handle'] . '); ?>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4) . '<?php echo $app->make(\'editor\')->outputEditorWithOptions($view->field(\'' . $v['handle'] . '\'), json_decode(\'' . $customConfig . '\', true), $' . $v['handle'] . '); ?>' . PHP_EOL;
                     if (!empty($v['helpText'])) {
                         $code .= BlockBuilderUtility::tab(4) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
                     }
@@ -1119,7 +1120,7 @@ class FormPhp
 
                     $code .= BlockBuilderUtility::tab(6) . '<div class="mb-4 js-custom-editor-height-<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']-<?php echo $uniqueID; ?>">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" class="form-label"><?php echo t(\'' . addslashes($v['label']) . '\'); ?>' . $required . '</label>' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(7) . '<textarea style="display: none;" class="js-editor-content" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']"><%=_.escape(' . $v['handle'] . ')%></textarea>' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(7) . '<textarea data-activation-script="' . $v['handle'] . '" style="display: none;" class="js-editor-content" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']"><%=_.escape(' . $v['handle'] . ')%></textarea>' . PHP_EOL;
                     if (!empty($v['helpText'])) {
                         $code .= BlockBuilderUtility::tab(7) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
                     }
@@ -1857,8 +1858,13 @@ class FormPhp
             $code .= BlockBuilderUtility::tab(3) . '<script>' . PHP_EOL . PHP_EOL;
 
             if ($postDataSummary['wysiwygEditorUsed_entry']) {
-                $code .= BlockBuilderUtility::tab(4) . 'var CCM_EDITOR_SECURITY_TOKEN = \'<?php echo $app->make(\'helper/validation/token\')->generate(\'editor\'); ?>\';' . PHP_EOL . PHP_EOL;
-                $code .= BlockBuilderUtility::tab(4) . 'var activateEditor = <?php echo $app->make(\'editor\')->outputStandardEditorInitJSFunction(); ?>;' . PHP_EOL . PHP_EOL;
+                $code .= BlockBuilderUtility::tab(4) . 'var CCM_EDITOR_SECURITY_TOKEN = \'<?php echo $app->make(\'helper/validation/token\')->generate(\'editor\'); ?>\';' . PHP_EOL;
+                $code .= BlockBuilderUtility::tab(4) . 'var activateEditor = {' . PHP_EOL;
+                foreach ($postData['entries'] as $k => $v) {
+                    $customConfig = !empty($v['wysiwygCustomConfig']) ? $v['wysiwygCustomConfig'] : '{}';
+                    $code .= BlockBuilderUtility::tab(5) . $v['handle'] . ': <?php echo $app->make(\'editor\')->getEditorInitJSFunction(json_decode(\'' . $customConfig . '\', true)); ?>,' . PHP_EOL;
+                }
+                $code .= BlockBuilderUtility::tab(4) . '}' . PHP_EOL . PHP_EOL;
             }
 
             $code .= BlockBuilderUtility::tab(4) . '$(function () {' . PHP_EOL . PHP_EOL;

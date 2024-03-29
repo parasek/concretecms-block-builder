@@ -17,7 +17,8 @@ $(function () {
 
             var editors = parentContainer.find('.js-editor-content');
             editors.each(function (i, item) {
-                activateEditor(item);
+                var handle = item.getAttribute('data-activation-script');
+                activateEditor[handle](item);
             });
 
         }
