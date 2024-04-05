@@ -1,3 +1,6 @@
+# 2.6.1
+- Fixed "Number" field type bug when block is being added through composer
+
 # 2.6.0
 - Added custom config to "WYSIWYG editor" field type
 
