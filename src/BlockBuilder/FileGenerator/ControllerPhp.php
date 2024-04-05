@@ -1105,7 +1105,7 @@ class ControllerPhp
                 } else if ($v['fieldType'] == 'select_multiple_field') {
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? trim(implode(\'|\', $args[\'' . $v['handle'] . '\'])) : \'\';' . PHP_EOL;
                 } else if ($v['fieldType'] == 'number') {
-                    $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= is_numeric($args[\'' . $v['handle'] . '\']) ? trim($args[\'' . $v['handle'] . '\']) : null;' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= (isset($args[\'' . $v['handle'] . '\']) and is_numeric($args[\'' . $v['handle'] . '\'])) ? trim($args[\'' . $v['handle'] . '\']) : null;' . PHP_EOL;
                 } else {
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? trim($args[\'' . $v['handle'] . '\']) : \'\';' . PHP_EOL;
                 }
@@ -1291,7 +1291,7 @@ class ControllerPhp
                 } else if ($v['fieldType'] == 'select_multiple_field') {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($entry[\'' . $v['handle'] . '\']) ? implode(\'|\', $entry[\'' . $v['handle'] . '\']) : \'\';' . PHP_EOL;
                 } else if ($v['fieldType'] == 'number') {
-                    $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= is_numeric($entry[\'' . $v['handle'] . '\']) ? trim($entry[\'' . $v['handle'] . '\']) : null;' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= (isset($args[\'' . $v['handle'] . '\']) and is_numeric($entry[\'' . $v['handle'] . '\'])) ? trim($entry[\'' . $v['handle'] . '\']) : null;' . PHP_EOL;
                 } else {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= trim($entry[\'' . $v['handle'] . '\']);' . PHP_EOL;
                 }
