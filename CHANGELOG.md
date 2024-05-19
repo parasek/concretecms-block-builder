@@ -1,8 +1,11 @@
+# 2.6.2
+- Fixed marketplace linter errors.
+
 # 2.6.1
-- Fixed "Number" field type bug when block is being added through composer
+- Fixed "Number" field type bug when block is being added through composer.
 
 # 2.6.0
-- Added custom config to "WYSIWYG editor" field type
+- Added custom config to "WYSIWYG editor" field type.
 
 # 2.5.1
 - Image default dimension values are now available in view.
