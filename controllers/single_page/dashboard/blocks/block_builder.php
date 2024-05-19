@@ -1,6 +1,7 @@
 <?php namespace Concrete\Package\BlockBuilder\Controller\SinglePage\Dashboard\Blocks;
 
 use Concrete\Core\Asset\AssetList;
+use Concrete\Core\File\Service\File as FileService;
 use Concrete\Core\Page\Controller\DashboardPageController;
 use Concrete\Core\Permission\Checker as Permissions;
 use Concrete\Core\System\Info as SystemInfo;
@@ -406,26 +407,12 @@ class BlockBuilder extends DashboardPageController
 
     private function removeDirectory($dir)
     {
-        if (!file_exists($dir)) {
-            return true;
-        }
+        /**
+         * @var FileService $fileService
+         */
+        $fileService = $this->app->make(FileService::class);
 
-        if (!is_dir($dir)) {
-            return unlink($dir);
-        }
-
-        foreach (scandir($dir) as $item) {
-            if ($item == '.' || $item == '..') {
-                continue;
-            }
-
-            if (!$this->removeDirectory($dir . DIRECTORY_SEPARATOR . $item)) {
-                return false;
-            }
-
-        }
-
-        return rmdir($dir);
+        return $fileService->removeAll($dir, true);
     }
 
     private function getSystemInfo()
