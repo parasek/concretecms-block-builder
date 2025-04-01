@@ -375,13 +375,13 @@ class Validation
                 }
 
                 // select_field
-                if (isset($entry['selectOptions']) and !$entry['selectOptions']) {
+                if (!empty($entry['selectListGenerationMethod']) && $entry['selectListGenerationMethod'] === 'basic_list' && empty($entry['selectOptions'])) {
 
                     $postData[$counter]['error']['selectOptions'] = 1;
                     $fieldsWithError[] = $handle . '|selectOptions|empty';
                     $tabsWithError[] = 'tab-' . $handle;
 
-                } else {
+                } elseif (!empty($entry['selectListGenerationMethod']) && $entry['selectListGenerationMethod'] === 'basic_list') {
 
                     $options = isset($entry['selectOptions']) ? explode('<br />', nl2br($entry['selectOptions'])) : [];
 
@@ -422,13 +422,13 @@ class Validation
                 }
 
                 // select_multiple_field
-                if (isset($entry['selectMultipleOptions']) and !$entry['selectMultipleOptions']) {
+                if (!empty($entry['selectMultipleListGenerationMethod']) && $entry['selectMultipleListGenerationMethod'] === 'basic_list' && empty($entry['selectMultipleOptions'])) {
 
                     $postData[$counter]['error']['selectMultipleOptions'] = 1;
                     $fieldsWithError[] = $handle . '|selectMultipleOptions|empty';
                     $tabsWithError[] = 'tab-' . $handle;
 
-                } else {
+                } elseif (!empty($entry['selectMultipleListGenerationMethod']) && $entry['selectMultipleListGenerationMethod'] === 'basic_list') {
 
                     $options = isset($entry['selectMultipleOptions']) ? explode('<br />', nl2br($entry['selectMultipleOptions'])) : [];
 

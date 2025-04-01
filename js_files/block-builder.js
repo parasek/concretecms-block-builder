@@ -41,7 +41,13 @@ $(function () {
                     // We would get javascript undefined error when trying to
                     // load .json file created by older version of package.
                     item.selectType = item.selectType == undefined ? 'default_select' : item.selectType;
+                    item.selectListGenerationMethod = item.selectListGenerationMethod == undefined ? 'basic_list' : item.selectListGenerationMethod;
+                    item.selectCustomCode = item.selectCustomCode == undefined ? '' : item.selectCustomCode;
+
                     item.selectMultipleType = item.selectMultipleType == undefined ? 'default_multiselect' : item.selectMultipleType;
+                    item.selectMultipleListGenerationMethod = item.selectMultipleListGenerationMethod == undefined ? 'basic_list' : item.selectMultipleListGenerationMethod;
+                    item.selectMultipleCustomCode = item.selectMultipleCustomCode == undefined ? '' : item.selectMultipleCustomCode;
+
                     item.wysiwygCustomConfig = item.wysiwygCustomConfig == undefined ? '' : item.wysiwygCustomConfig;
 
                     // All checkboxes need to be here (because $_POST doesn't have non-checked ones)
@@ -155,10 +161,14 @@ $(function () {
                 templateData['wysiwygCustomConfig'] = '';
 
                 // select_field
+                templateData['selectListGenerationMethod'] = '';
+                templateData['selectCustomCode'] = '';
                 templateData['selectOptions'] = '';
                 templateData['selectType'] = '';
 
                 // select_multiple_field
+                templateData['selectMultipleListGenerationMethod'] = '';
+                templateData['selectMultipleCustomCode'] = '';
                 templateData['selectMultipleOptions'] = '';
                 templateData['selectMultipleType'] = '';
 
@@ -442,6 +452,29 @@ $(function () {
 
         };
 
+        // Change Select List Generation Method
+        var changeSelectListGenerationMethod = function (e) {
+
+            e.preventDefault();
+
+            var selectField = $(this);
+            var checkedValue = selectField.val();
+            var entryContent = selectField.closest('.js-entry-content');
+
+            var listWrapper = entryContent.find('[data-select-list-generation-method="basic_list"]');
+            var customCodeWrapper = entryContent.find('[data-select-list-generation-method="custom_code"]');
+
+            listWrapper.hide();
+            customCodeWrapper.hide();
+
+            if (checkedValue === 'custom_code') {
+                customCodeWrapper.show();
+            } else {
+                listWrapper.show();
+            }
+
+        };
+
         // Delete block type folder
         var deleteBlockTypeFolder = function (e) {
 
@@ -587,6 +620,7 @@ $(function () {
             bbContainer.on('change', '.js-use-field-as-title-in-repeatable-entries', useFieldAsTitleInRepeatableEntries);
             bbContainer.on('change', '.js-image-create-thumbnail-image', createThumbnailImage);
             bbContainer.on('change', '.js-image-create-fullscreen-image', createFullscreenImage);
+            bbContainer.on('change', '.js-change-select-list-generation-method', changeSelectListGenerationMethod);
             $('.alert').on('click', '.js-delete-block-type-folder', deleteBlockTypeFolder);
         };
 

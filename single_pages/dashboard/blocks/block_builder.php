@@ -748,29 +748,63 @@ use Concrete\Core\System\Info as SystemInfo;
                                 <?php endforeach; ?>
                             </select>
                         </div>
+                        <div class="mb-4">
+                            <label for="<%=groupHandle%>[<%=counter%>][selectListGenerationMethod]" class="form-label"><?php echo t('List Generation Method'); ?></label>
+                            <select name="<%=groupHandle%>[<%=counter%>][selectListGenerationMethod]"
+                                    id="<%=groupHandle%>[<%=counter%>][selectListGenerationMethod]"
+                                    class="form-select js-change-select-list-generation-method"
+                            >
+                                <?php foreach ($selectFieldListGenerationMethods as $k => $v): ?>
+                                    <option value="<?php echo h($k); ?>" <% if (selectListGenerationMethod === '<?php echo h($k); ?>') { %>selected<% } %>><?php echo h($v); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
                         <div class="<% if (error['selectOptions']!=undefined) { %>has-error<% } %>">
-                            <label for="<%=groupHandle%>[<%=counter%>][selectOptions]" class="form-label"><?php echo t('Select options'); ?></label>
-                            <p class="small text-muted">
-                                <?php echo t('Enter every option in new line, e.g.'); ?>
-                                <code class="bb-code-block">
-                                    <?php echo t('Don\'t show'); ?>
-                                    <br/>
-                                    <?php echo t('Show'); ?>
-                                </code>
-                            </p>
-                            <p class="small text-muted">
-                                <?php echo t('You can also use double colon to specify key (value saved in database, only a-zA-Z0-9_ characters are permitted) and value (displayed text), e.g.'); ?>
-                                <code class="bb-code-block">
-                                    <?php echo t('no :: Don\'t show'); ?>
-                                    <br/>
-                                    <?php echo t('yes :: Show'); ?>
-                                </code>
-                            </p>
-                            <textarea name="<%=groupHandle%>[<%=counter%>][selectOptions]"
-                                      id="<%=groupHandle%>[<%=counter%>][selectOptions]"
-                                      class="form-control"
-                                      rows="4"
-                            ><%=selectOptions%></textarea>
+                            <div data-select-list-generation-method="basic_list"
+                                 <% if (!selectListGenerationMethod || (selectListGenerationMethod === 'basic_list')) { %>
+                                 style="display: block;"
+                                 <% } else { %>
+                                 style="display: none;"
+                                 <% } %>
+                            >
+                                <label for="<%=groupHandle%>[<%=counter%>][selectOptions]" class="form-label"><?php echo t('Select options'); ?></label>
+                                <p class="small text-muted">
+                                    <?php echo t('Enter every option in new line, e.g.'); ?>
+                                    <code class="bb-code-block">
+                                        <?php echo t('Don\'t show'); ?>
+                                        <br/>
+                                        <?php echo t('Show'); ?>
+                                    </code>
+                                </p>
+                                <p class="small text-muted">
+                                    <?php echo t('You can also use double colon to specify key (value saved in database, only a-zA-Z0-9_ characters are permitted) and value (displayed text), e.g.'); ?>
+                                    <code class="bb-code-block">
+                                        <?php echo t('no :: Don\'t show'); ?>
+                                        <br/>
+                                        <?php echo t('yes :: Show'); ?>
+                                    </code>
+                                </p>
+                                <textarea name="<%=groupHandle%>[<%=counter%>][selectOptions]"
+                                          id="<%=groupHandle%>[<%=counter%>][selectOptions]"
+                                          class="form-control"
+                                          rows="4"
+                                ><%=selectOptions%></textarea>
+                            </div>
+                            <div data-select-list-generation-method="custom_code"
+                                 <% if (selectListGenerationMethod && (selectListGenerationMethod === 'custom_code')) { %>
+                                 style="display: block;"
+                                 <% } else { %>
+                                 style="display: none;"
+                                 <% } %>
+                            >
+                                <label for="<%=groupHandle%>[<%=counter%>][selectCustomCode]" class="form-label"><?php echo t('Custom code'); ?></label>
+                                <?php View::element('custom_code_in_option_list', [], 'block_builder'); ?>
+                                <textarea name="<%=groupHandle%>[<%=counter%>][selectCustomCode]"
+                                          id="<%=groupHandle%>[<%=counter%>][selectCustomCode]"
+                                          class="form-control"
+                                          rows="4"
+                                ><%=selectCustomCode%></textarea>
+                            </div>
                         </div>
                         <% } %>
 
@@ -786,29 +820,63 @@ use Concrete\Core\System\Info as SystemInfo;
                                 <?php endforeach; ?>
                             </select>
                         </div>
+                        <div class="mb-4">
+                            <label for="<%=groupHandle%>[<%=counter%>][selectMultipleListGenerationMethod]" class="form-label"><?php echo t('List Generation Method'); ?></label>
+                            <select name="<%=groupHandle%>[<%=counter%>][selectMultipleListGenerationMethod]"
+                                    id="<%=groupHandle%>[<%=counter%>][selectMultipleListGenerationMethod]"
+                                    class="form-select js-change-select-list-generation-method"
+                            >
+                                <?php foreach ($selectFieldListGenerationMethods as $k => $v): ?>
+                                    <option value="<?php echo h($k); ?>" <% if (selectMultipleListGenerationMethod === '<?php echo h($k); ?>') { %>selected<% } %>><?php echo h($v); ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
                         <div class="<% if (error['selectMultipleOptions']!=undefined) { %>has-error<% } %>">
-                            <label for="<%=groupHandle%>[<%=counter%>][selectMultipleOptions]" class="form-label"><?php echo t('Select options'); ?></label>
-                            <p class="small text-muted">
-                                <?php echo t('Enter every option in new line, e.g.'); ?>
-                                <code class="bb-code-block">
-                                    <?php echo t('Don\'t show'); ?>
-                                    <br/>
-                                    <?php echo t('Show'); ?>
-                                </code>
-                            </p>
-                            <p class="small text-muted">
-                                <?php echo t('You can also use double colon to specify key (value saved in database, only a-zA-Z0-9_ characters are permitted) and value (displayed text), e.g.'); ?>
-                                <code class="bb-code-block">
-                                    <?php echo t('no :: Don\'t show'); ?>
-                                    <br/>
-                                    <?php echo t('yes :: Show'); ?>
-                                </code>
-                            </p>
-                            <textarea name="<%=groupHandle%>[<%=counter%>][selectMultipleOptions]"
-                                      id="<%=groupHandle%>[<%=counter%>][selectMultipleOptions]"
-                                      class="form-control"
-                                      rows="4"
-                            ><%=selectMultipleOptions%></textarea>
+                            <div data-select-list-generation-method="basic_list"
+                                 <% if (!selectMultipleListGenerationMethod || (selectMultipleListGenerationMethod === 'basic_list')) { %>
+                                    style="display: block;"
+                                 <% } else { %>
+                                    style="display: none;"
+                                 <% } %>
+                            >
+                                <label for="<%=groupHandle%>[<%=counter%>][selectMultipleOptions]" class="form-label"><?php echo t('Select options'); ?></label>
+                                <p class="small text-muted">
+                                    <?php echo t('Enter every option in new line, e.g.'); ?>
+                                    <code class="bb-code-block">
+                                        <?php echo t('Don\'t show'); ?>
+                                        <br/>
+                                        <?php echo t('Show'); ?>
+                                    </code>
+                                </p>
+                                <p class="small text-muted">
+                                    <?php echo t('You can also use double colon to specify key (value saved in database, only a-zA-Z0-9_ characters are permitted) and value (displayed text), e.g.'); ?>
+                                    <code class="bb-code-block">
+                                        <?php echo t('no :: Don\'t show'); ?>
+                                        <br/>
+                                        <?php echo t('yes :: Show'); ?>
+                                    </code>
+                                </p>
+                                <textarea name="<%=groupHandle%>[<%=counter%>][selectMultipleOptions]"
+                                          id="<%=groupHandle%>[<%=counter%>][selectMultipleOptions]"
+                                          class="form-control"
+                                          rows="4"
+                                ><%=selectMultipleOptions%></textarea>
+                            </div>
+                            <div data-select-list-generation-method="custom_code"
+                                 <% if (selectMultipleListGenerationMethod && (selectMultipleListGenerationMethod === 'custom_code')) { %>
+                                    style="display: block;"
+                                 <% } else { %>
+                                    style="display: none;"
+                                 <% } %>
+                            >
+                                <label for="<%=groupHandle%>[<%=counter%>][selectMultipleCustomCode]" class="form-label"><?php echo t('Custom code'); ?></label>
+                                <?php View::element('custom_code_in_option_list', [], 'block_builder'); ?>
+                                <textarea name="<%=groupHandle%>[<%=counter%>][selectMultipleCustomCode]"
+                                          id="<%=groupHandle%>[<%=counter%>][selectMultipleCustomCode]"
+                                          class="form-control"
+                                          rows="4"
+                                ><%=selectMultipleCustomCode%></textarea>
+                            </div>
                         </div>
                         <% } %>
 

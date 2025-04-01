@@ -131,4 +131,16 @@ class OptionList
 
     }
 
+    public function getSelectFieldListGenerationMethods()
+    {
+
+        $options = [
+            'basic_list' => t('Basic list'),
+            'custom_code' => t('Custom code'),
+        ];
+
+        return $options;
+
+    }
+
 }

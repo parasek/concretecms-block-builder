@@ -247,34 +247,41 @@ class ControllerPhp
 
                     $code .= BlockBuilderUtility::tab(2) . '// ' . addslashes($v['label']) . ' (' . $v['handle'] . ') options' . PHP_EOL;
 
-                    $maxKeyLength = 0;
-                    $tempOptions = [];
-                    if (!empty($v['selectOptions'])) {
-                        $options = explode('<br />', nl2br($v['selectOptions']));
-                        if (is_array($options)) {
-                            $i = 0;
-                            foreach ($options as $k2 => $v2) {
-                                $i++;
-                                $option = explode('::', $v2);
-                                $optionKey = !empty($option[1]) ? addslashes(trim($option[0])) : $i;
-                                $optionValue = !empty($option[1]) ? addslashes(trim($option[1])) : addslashes(trim($option[0]));
+                    if (empty($v['selectListGenerationMethod']) || $v['selectListGenerationMethod'] === 'basic_list') {
 
-                                $keyLength = mb_strlen($optionKey);
-                                $maxKeyLength = $keyLength > $maxKeyLength ? $keyLength : $maxKeyLength;
-                                $tempOptions[] = ['key' => $optionKey, 'value' => $optionValue, 'keyLength' => $keyLength];
+                        $maxKeyLength = 0;
+                        $tempOptions = [];
+                        if (!empty($v['selectOptions'])) {
+                            $options = explode('<br />', nl2br($v['selectOptions']));
+                            if (is_array($options)) {
+                                $i = 0;
+                                foreach ($options as $k2 => $v2) {
+                                    $i++;
+                                    $option = explode('::', $v2);
+                                    $optionKey = !empty($option[1]) ? addslashes(trim($option[0])) : $i;
+                                    $optionValue = !empty($option[1]) ? addslashes(trim($option[1])) : addslashes(trim($option[0]));
+
+                                    $keyLength = mb_strlen($optionKey);
+                                    $maxKeyLength = $keyLength > $maxKeyLength ? $keyLength : $maxKeyLength;
+                                    $tempOptions[] = ['key' => $optionKey, 'value' => $optionValue, 'keyLength' => $keyLength];
+                                }
                             }
                         }
-                    }
 
-                    // Generate actual code
-                    $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options ' . BlockBuilderUtility::arrayGap($maxKeyLength + 4) . '= [];' . PHP_EOL;
-                    if (empty($v['selectType']) or $v['selectType'] === 'default_select' or $v['selectType'] === 'enhanced_select') {
-                        $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options[] ' . BlockBuilderUtility::arrayGap($maxKeyLength + 2) . '= \'----\';' . PHP_EOL;
-                    }
-                    foreach ($tempOptions as $tempOption) {
-                        $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options[\'' . $tempOption['key'] . '\'] ';
-                        $code .= BlockBuilderUtility::arrayGap($maxKeyLength, $tempOption['keyLength']);
-                        $code .= '= t(\'' . $tempOption['value'] . '\');' . PHP_EOL;
+                        // Generate actual code
+                        $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options ' . BlockBuilderUtility::arrayGap($maxKeyLength + 4) . '= [];' . PHP_EOL;
+                        if (empty($v['selectType']) or $v['selectType'] === 'default_select' or $v['selectType'] === 'enhanced_select') {
+                            $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options[] ' . BlockBuilderUtility::arrayGap($maxKeyLength + 2) . '= \'----\';' . PHP_EOL;
+                        }
+                        foreach ($tempOptions as $tempOption) {
+                            $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options[\'' . $tempOption['key'] . '\'] ';
+                            $code .= BlockBuilderUtility::arrayGap($maxKeyLength, $tempOption['keyLength']);
+                            $code .= '= t(\'' . $tempOption['value'] . '\');' . PHP_EOL;
+                        }
+
+                    } elseif (!empty($v['selectListGenerationMethod']) && $v['selectListGenerationMethod'] === 'custom_code') {
+                        $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options = [];' . PHP_EOL;
+                        $code .= $v['selectCustomCode'] . PHP_EOL;
                     }
 
                     $code .= PHP_EOL;
@@ -286,31 +293,38 @@ class ControllerPhp
 
                     $code .= BlockBuilderUtility::tab(2) . '// ' . addslashes($v['label']) . ' (' . $v['handle'] . ') options' . PHP_EOL;
 
-                    $maxKeyLength = 0;
-                    $tempOptions = [];
-                    if (!empty($v['selectMultipleOptions'])) {
-                        $options = explode('<br />', nl2br($v['selectMultipleOptions']));
-                        if (is_array($options)) {
-                            $i = 0;
-                            foreach ($options as $k2 => $v2) {
-                                $i++;
-                                $option = explode('::', $v2);
-                                $optionKey = !empty($option[1]) ? addslashes(trim($option[0])) : $i;
-                                $optionValue = !empty($option[1]) ? addslashes(trim($option[1])) : addslashes(trim($option[0]));
+                    if (empty($v['selectMultipleListGenerationMethod']) || $v['selectMultipleListGenerationMethod'] === 'basic_list') {
 
-                                $keyLength = mb_strlen($optionKey);
-                                $maxKeyLength = $keyLength > $maxKeyLength ? $keyLength : $maxKeyLength;
-                                $tempOptions[] = ['key' => $optionKey, 'value' => $optionValue, 'keyLength' => $keyLength];
+                        $maxKeyLength = 0;
+                        $tempOptions = [];
+                        if (!empty($v['selectMultipleOptions'])) {
+                            $options = explode('<br />', nl2br($v['selectMultipleOptions']));
+                            if (is_array($options)) {
+                                $i = 0;
+                                foreach ($options as $k2 => $v2) {
+                                    $i++;
+                                    $option = explode('::', $v2);
+                                    $optionKey = !empty($option[1]) ? addslashes(trim($option[0])) : $i;
+                                    $optionValue = !empty($option[1]) ? addslashes(trim($option[1])) : addslashes(trim($option[0]));
+
+                                    $keyLength = mb_strlen($optionKey);
+                                    $maxKeyLength = $keyLength > $maxKeyLength ? $keyLength : $maxKeyLength;
+                                    $tempOptions[] = ['key' => $optionKey, 'value' => $optionValue, 'keyLength' => $keyLength];
+                                }
                             }
                         }
-                    }
 
-                    // Generate actual code
-                    $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options ' . BlockBuilderUtility::arrayGap($maxKeyLength + 4) . '= [];' . PHP_EOL;
-                    foreach ($tempOptions as $tempOption) {
-                        $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options[\'' . $tempOption['key'] . '\'] ';
-                        $code .= BlockBuilderUtility::arrayGap($maxKeyLength, $tempOption['keyLength']);
-                        $code .= '= t(\'' . $tempOption['value'] . '\');' . PHP_EOL;
+                        // Generate actual code
+                        $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options ' . BlockBuilderUtility::arrayGap($maxKeyLength + 4) . '= [];' . PHP_EOL;
+                        foreach ($tempOptions as $tempOption) {
+                            $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options[\'' . $tempOption['key'] . '\'] ';
+                            $code .= BlockBuilderUtility::arrayGap($maxKeyLength, $tempOption['keyLength']);
+                            $code .= '= t(\'' . $tempOption['value'] . '\');' . PHP_EOL;
+                        }
+
+                    } elseif (!empty($v['selectMultipleListGenerationMethod']) && $v['selectMultipleListGenerationMethod'] === 'custom_code') {
+                        $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options = [];' . PHP_EOL;
+                        $code .= $v['selectMultipleCustomCode'] . PHP_EOL;
                     }
 
                     $code .= PHP_EOL;
@@ -350,34 +364,41 @@ class ControllerPhp
 
                     $code .= BlockBuilderUtility::tab(2) . '// Entry / ' . addslashes($v['label']) . ' (' . $v['handle'] . ') options' . PHP_EOL;
 
-                    $maxKeyLength = 0;
-                    $tempOptions = [];
-                    if (!empty($v['selectOptions'])) {
-                        $options = explode('<br />', nl2br($v['selectOptions']));
-                        if (is_array($options)) {
-                            $i = 0;
-                            foreach ($options as $k2 => $v2) {
-                                $i++;
-                                $option = explode('::', $v2);
-                                $optionKey = !empty($option[1]) ? addslashes(trim($option[0])) : $i;
-                                $optionValue = !empty($option[1]) ? addslashes(trim($option[1])) : addslashes(trim($option[0]));
+                    if (empty($v['selectListGenerationMethod']) || $v['selectListGenerationMethod'] === 'basic_list') {
 
-                                $keyLength = mb_strlen($optionKey);
-                                $maxKeyLength = $keyLength > $maxKeyLength ? $keyLength : $maxKeyLength;
-                                $tempOptions[] = ['key' => $optionKey, 'value' => $optionValue, 'keyLength' => $keyLength];
+                        $maxKeyLength = 0;
+                        $tempOptions = [];
+                        if (!empty($v['selectOptions'])) {
+                            $options = explode('<br />', nl2br($v['selectOptions']));
+                            if (is_array($options)) {
+                                $i = 0;
+                                foreach ($options as $k2 => $v2) {
+                                    $i++;
+                                    $option = explode('::', $v2);
+                                    $optionKey = !empty($option[1]) ? addslashes(trim($option[0])) : $i;
+                                    $optionValue = !empty($option[1]) ? addslashes(trim($option[1])) : addslashes(trim($option[0]));
+
+                                    $keyLength = mb_strlen($optionKey);
+                                    $maxKeyLength = $keyLength > $maxKeyLength ? $keyLength : $maxKeyLength;
+                                    $tempOptions[] = ['key' => $optionKey, 'value' => $optionValue, 'keyLength' => $keyLength];
+                                }
                             }
                         }
-                    }
 
-                    // Generate actual code
-                    $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options ' . BlockBuilderUtility::arrayGap($maxKeyLength + 4) . '= [];' . PHP_EOL;
-                    if (empty($v['selectType']) or $v['selectType'] === 'default_select' or $v['selectType'] === 'enhanced_select') {
-                        $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options[] ' . BlockBuilderUtility::arrayGap($maxKeyLength + 2) . '= \'----\';' . PHP_EOL;
-                    }
-                    foreach ($tempOptions as $tempOption) {
-                        $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options[\'' . $tempOption['key'] . '\'] ';
-                        $code .= BlockBuilderUtility::arrayGap($maxKeyLength, $tempOption['keyLength']);
-                        $code .= '= t(\'' . $tempOption['value'] . '\');' . PHP_EOL;
+                        // Generate actual code
+                        $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options ' . BlockBuilderUtility::arrayGap($maxKeyLength + 4) . '= [];' . PHP_EOL;
+                        if (empty($v['selectType']) or $v['selectType'] === 'default_select' or $v['selectType'] === 'enhanced_select') {
+                            $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options[] ' . BlockBuilderUtility::arrayGap($maxKeyLength + 2) . '= \'----\';' . PHP_EOL;
+                        }
+                        foreach ($tempOptions as $tempOption) {
+                            $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options[\'' . $tempOption['key'] . '\'] ';
+                            $code .= BlockBuilderUtility::arrayGap($maxKeyLength, $tempOption['keyLength']);
+                            $code .= '= t(\'' . $tempOption['value'] . '\');' . PHP_EOL;
+                        }
+
+                    } elseif (!empty($v['selectListGenerationMethod']) && $v['selectListGenerationMethod'] === 'custom_code') {
+                        $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options = [];' . PHP_EOL;
+                        $code .= $v['selectCustomCode'] . PHP_EOL;
                     }
 
                     $code .= PHP_EOL;
@@ -389,31 +410,38 @@ class ControllerPhp
 
                     $code .= BlockBuilderUtility::tab(2) . '// Entry / ' . addslashes($v['label']) . ' (' . $v['handle'] . ') options' . PHP_EOL;
 
-                    $maxKeyLength = 0;
-                    $tempOptions = [];
-                    if (!empty($v['selectMultipleOptions'])) {
-                        $options = explode('<br />', nl2br($v['selectMultipleOptions']));
-                        if (is_array($options)) {
-                            $i = 0;
-                            foreach ($options as $k2 => $v2) {
-                                $i++;
-                                $option = explode('::', $v2);
-                                $optionKey = !empty($option[1]) ? addslashes(trim($option[0])) : $i;
-                                $optionValue = !empty($option[1]) ? addslashes(trim($option[1])) : addslashes(trim($option[0]));
+                    if (empty($v['selectMultipleListGenerationMethod']) || $v['selectMultipleListGenerationMethod'] === 'basic_list') {
 
-                                $keyLength = mb_strlen($optionKey);
-                                $maxKeyLength = $keyLength > $maxKeyLength ? $keyLength : $maxKeyLength;
-                                $tempOptions[] = ['key' => $optionKey, 'value' => $optionValue, 'keyLength' => $keyLength];
+                        $maxKeyLength = 0;
+                        $tempOptions = [];
+                        if (!empty($v['selectMultipleOptions'])) {
+                            $options = explode('<br />', nl2br($v['selectMultipleOptions']));
+                            if (is_array($options)) {
+                                $i = 0;
+                                foreach ($options as $k2 => $v2) {
+                                    $i++;
+                                    $option = explode('::', $v2);
+                                    $optionKey = !empty($option[1]) ? addslashes(trim($option[0])) : $i;
+                                    $optionValue = !empty($option[1]) ? addslashes(trim($option[1])) : addslashes(trim($option[0]));
+
+                                    $keyLength = mb_strlen($optionKey);
+                                    $maxKeyLength = $keyLength > $maxKeyLength ? $keyLength : $maxKeyLength;
+                                    $tempOptions[] = ['key' => $optionKey, 'value' => $optionValue, 'keyLength' => $keyLength];
+                                }
                             }
                         }
-                    }
 
-                    // Generate actual code
-                    $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options ' . BlockBuilderUtility::arrayGap($maxKeyLength + 4) . '= [];' . PHP_EOL;
-                    foreach ($tempOptions as $tempOption) {
-                        $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options[\'' . $tempOption['key'] . '\'] ';
-                        $code .= BlockBuilderUtility::arrayGap($maxKeyLength, $tempOption['keyLength']);
-                        $code .= '= t(\'' . $tempOption['value'] . '\');' . PHP_EOL;
+                        // Generate actual code
+                        $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options ' . BlockBuilderUtility::arrayGap($maxKeyLength + 4) . '= [];' . PHP_EOL;
+                        foreach ($tempOptions as $tempOption) {
+                            $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options[\'' . $tempOption['key'] . '\'] ';
+                            $code .= BlockBuilderUtility::arrayGap($maxKeyLength, $tempOption['keyLength']);
+                            $code .= '= t(\'' . $tempOption['value'] . '\');' . PHP_EOL;
+                        }
+
+                    } elseif (!empty($v['selectMultipleListGenerationMethod']) && $v['selectMultipleListGenerationMethod'] === 'custom_code') {
+                        $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options = [];' . PHP_EOL;
+                        $code .= $v['selectMultipleCustomCode'] . PHP_EOL;
                     }
 
                     $code .= PHP_EOL;
