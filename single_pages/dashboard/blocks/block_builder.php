@@ -106,23 +106,23 @@ use Concrete\Core\System\Info as SystemInfo;
 
             <div class="row">
                 <div class="col-lg-4 mb-4 <?php in_array('cacheBlockRecord', $fieldsWithError) ? print 'has-error' : false; ?>">
-                    <?php echo $form->label('cacheBlockRecord', t('Cache Block Record')); ?>
+                    <?php echo $form->label('cacheBlockRecord', t('Cache block record')); ?>
                     <?php echo $form->select('cacheBlockRecord', $cacheBlockRecordOptions, $cacheBlockRecord); ?>
                 </div>
                 <div class="col-lg-4 mb-4 <?php in_array('cacheBlockOutput', $fieldsWithError) ? print 'has-error' : false; ?>">
-                    <?php echo $form->label('cacheBlockOutput', t('Cache Block Output')); ?>
+                    <?php echo $form->label('cacheBlockOutput', t('Cache block output')); ?>
                     <?php echo $form->select('cacheBlockOutput', $cacheBlockOutputOptions, $cacheBlockOutput); ?>
                 </div>
                 <div class="col-lg-4 mb-4 <?php in_array('cacheBlockOutputLifetime', $fieldsWithError) ? print 'has-error' : false; ?>">
-                    <?php echo $form->label('cacheBlockOutputLifetime', t('Cache Block Output Lifetime')); ?>
+                    <?php echo $form->label('cacheBlockOutputLifetime', t('Cache block output lifetime')); ?>
                     <?php echo $form->text('cacheBlockOutputLifetime', $cacheBlockOutputLifetime); ?>
                 </div>
                 <div class="col-lg-4 mb-4 <?php in_array('cacheBlockOutputOnPost', $fieldsWithError) ? print 'has-error' : false; ?>">
-                    <?php echo $form->label('cacheBlockOutputOnPost', t('Cache Block Output On Post')); ?>
+                    <?php echo $form->label('cacheBlockOutputOnPost', t('Cache block output on post')); ?>
                     <?php echo $form->select('cacheBlockOutputOnPost', $cacheBlockOutputOnPostOptions, $cacheBlockOutputOnPost); ?>
                 </div>
                 <div class="col-lg-4 mb-4 <?php in_array('cacheBlockOutputForRegisteredUsers', $fieldsWithError) ? print 'has-error' : false; ?>">
-                    <?php echo $form->label('cacheBlockOutputForRegisteredUsers', t('Cache Block Output On Post')); ?>
+                    <?php echo $form->label('cacheBlockOutputForRegisteredUsers', t('Cache block output for registered users')); ?>
                     <?php echo $form->select('cacheBlockOutputForRegisteredUsers', $cacheBlockOutputForRegisteredUsersOptions, $cacheBlockOutputForRegisteredUsers); ?>
                 </div>
             </div>
@@ -131,11 +131,11 @@ use Concrete\Core\System\Info as SystemInfo;
 
             <div class="row">
                 <div class="col-lg-6 mb-4 <?php in_array('supportSavingNullValues', $fieldsWithError) ? print 'has-error' : false; ?>">
-                    <?php echo $form->label('supportSavingNullValues', t('Support Saving Null Values')); ?>
+                    <?php echo $form->label('supportSavingNullValues', t('Support saving null values')); ?>
                     <?php echo $form->select('supportSavingNullValues', $supportSavingNullValuesOptions, $supportSavingNullValues); ?>
                 </div>
                 <div class="col-lg-6 mb-4 <?php in_array('ignorePageThemeGridFrameworkContainer', $fieldsWithError) ? print 'has-error' : false; ?>">
-                    <?php echo $form->label('ignorePageThemeGridFrameworkContainer', t('Ignore Page Theme Grid Framework Container')); ?>
+                    <?php echo $form->label('ignorePageThemeGridFrameworkContainer', t('Ignore page theme grid framework container')); ?>
                     <?php echo $form->select('ignorePageThemeGridFrameworkContainer', $ignorePageThemeGridFrameworkContainerOptions, $ignorePageThemeGridFrameworkContainer); ?>
                 </div>
             </div>
