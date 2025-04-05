@@ -135,6 +135,24 @@ class BlockBuilder extends DashboardPageController
         $blockTypeSets = $blockBuilderOptionList->getBlockTypeSets();
         $this->set('blockTypeSets', $blockTypeSets);
 
+        $cacheBlockRecordOptions = $blockBuilderOptionList->getCacheBlockRecordOptions();
+        $this->set('cacheBlockRecordOptions', $cacheBlockRecordOptions);
+
+        $cacheBlockOutputOptions = $blockBuilderOptionList->getCacheBlockOutputOptions();
+        $this->set('cacheBlockOutputOptions', $cacheBlockOutputOptions);
+
+        $cacheBlockOutputOnPostOptions = $blockBuilderOptionList->getCacheBlockOutputOnPostOptions();
+        $this->set('cacheBlockOutputOnPostOptions', $cacheBlockOutputOnPostOptions);
+
+        $cacheBlockOutputForRegisteredUsersOptions = $blockBuilderOptionList->getCacheBlockOutputForRegisteredUsersOptions();
+        $this->set('cacheBlockOutputForRegisteredUsersOptions', $cacheBlockOutputForRegisteredUsersOptions);
+
+        $supportSavingNullValuesOptions = $blockBuilderOptionList->getSupportSavingNullValuesOptions();
+        $this->set('supportSavingNullValuesOptions', $supportSavingNullValuesOptions);
+
+        $ignorePageThemeGridFrameworkContainerOptions = $blockBuilderOptionList->getIgnorePageThemeGridFrameworkContainerOptions();
+        $this->set('ignorePageThemeGridFrameworkContainerOptions', $ignorePageThemeGridFrameworkContainerOptions);
+
         $entriesAsFirstTabOptions = $blockBuilderOptionList->getEntriesAsFirstTabOptions();
         $this->set('entriesAsFirstTabOptions', $entriesAsFirstTabOptions);
 
@@ -161,6 +179,16 @@ class BlockBuilder extends DashboardPageController
         $this->set('blockHandle', '');
         $this->set('blockDescription', '');
         $this->set('blockTypeSet', '');
+
+        $this->set('cacheBlockRecord', 'true');
+        $this->set('cacheBlockOutput', 'true');
+        $this->set('cacheBlockOutputLifetime', 0);
+        $this->set('cacheBlockOutputOnPost', 'true');
+        $this->set('cacheBlockOutputForRegisteredUsers', 'true');
+
+        $this->set('supportSavingNullValues', 'false');
+        $this->set('ignorePageThemeGridFrameworkContainer', 'false');
+
         $this->set('entriesAsFirstTab', '');
         $this->set('highlightMultiElementFields', 1);
         $this->set('fieldsDivider', 'never');

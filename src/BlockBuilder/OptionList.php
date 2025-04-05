@@ -33,6 +33,54 @@ class OptionList
 
     }
 
+    public function getCacheBlockRecordOptions()
+    {
+        return [
+            'true' => 'true',
+            'false' => 'false',
+        ];
+    }
+
+    public function getCacheBlockOutputOptions()
+    {
+        return [
+            'true' => 'true',
+            'false' => 'false',
+        ];
+    }
+
+    public function getCacheBlockOutputOnPostOptions()
+    {
+        return [
+            'true' => 'true',
+            'false' => 'false',
+        ];
+    }
+
+    public function getCacheBlockOutputForRegisteredUsersOptions()
+    {
+        return [
+            'true' => 'true',
+            'false' => 'false',
+        ];
+    }
+
+    public function getSupportSavingNullValuesOptions()
+    {
+        return [
+            'true' => 'true',
+            'false' => 'false',
+        ];
+    }
+
+    public function getIgnorePageThemeGridFrameworkContainerOptions()
+    {
+        return [
+            'true' => 'true',
+            'false' => 'false',
+        ];
+    }
+
     public function getEntriesAsFirstTabOptions()
     {
 
