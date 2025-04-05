@@ -254,67 +254,63 @@ class Generator
 
         if ($p->canInstallPackages()) {
 
-            // 2. Create folder
-            if (mkdir($postDataSummary['blockPath'])) {
+            // 2. Create folder (this happens only when building new block)
+            if (!file_exists($postDataSummary['blockPath'])) {
+                mkdir($postDataSummary['blockPath']);
+            }
 
-                // 3. Generate files
-                $this->generateConfigBbJson($postData, $postDataSummary);
+            // 3. Generate files
+            $this->generateConfigBbJson($postData, $postDataSummary);
 
-                $this->generateIconPng(false, $postDataSummary);
-                $this->generateScrapbookPhp(false, $postDataSummary);
-                $this->generateComposerPhp(false, $postDataSummary);
-                $this->generateControllerPhp($postData, $postDataSummary);
-                $this->generateViewPhp($postData, $postDataSummary);
-                $this->generateDbXml($postData, $postDataSummary);
-                $this->generateFormCss(false, $postDataSummary);
+            $this->generateIconPng(false, $postDataSummary);
+            $this->generateScrapbookPhp(false, $postDataSummary);
+            $this->generateComposerPhp(false, $postDataSummary);
+            $this->generateControllerPhp($postData, $postDataSummary);
+            $this->generateViewPhp($postData, $postDataSummary);
+            $this->generateDbXml($postData, $postDataSummary);
+            $this->generateFormCss(false, $postDataSummary);
 
-                if (!empty($postData['basic']) or !empty($postData['entries'])) {
-                    $this->generateAddPhp(false, $postDataSummary);
-                    $this->generateEditPhp(false, $postDataSummary);
-                    $this->generateFormPhp($postData, $postDataSummary);
+            if (!empty($postData['basic']) or !empty($postData['entries'])) {
+                $this->generateAddPhp(false, $postDataSummary);
+                $this->generateEditPhp(false, $postDataSummary);
+                $this->generateFormPhp($postData, $postDataSummary);
+            }
+
+            if (!empty($postData['entries'])) {
+                $this->generateAutoJs(false, $postDataSummary);
+            }
+
+            // 4. Refresh (if clicked) or Install block (if selected)
+            if (!empty($postData['refresh_block'])) {
+                $blockType = BlockType::getByHandle($postData['blockHandle']);
+                $app = \Concrete\Core\Support\Facade\Application::getFacadeApplication();
+                $em = $app->make(EntityManagerInterface::class);
+                $bt = $em->find(BlockTypeEntity::class, $blockType->getBlockTypeID());
+                try {
+                    $bt->refresh();
+                    return ['handle' => $postData['blockName'], 'blockInstalled' => false, 'blockRefreshed' => true];
+                } catch (UserMessageException $e) {
+                    $this->flash('error', $e->getMessage());
                 }
 
-                if (!empty($postData['entries'])) {
-                    $this->generateAutoJs(false, $postDataSummary);
-                }
+            } elseif ($postData['installBlock']) {
 
-                // 4. Refresh (if clicked) or Install block (if selected)
-                if (!empty($postData['refresh_block'])) {
-                    $blockType = BlockType::getByHandle($postData['blockHandle']);
-                    $app = \Concrete\Core\Support\Facade\Application::getFacadeApplication();
-                    $em = $app->make(EntityManagerInterface::class);
-                    $bt = $em->find(BlockTypeEntity::class, $blockType->getBlockTypeID());
-                    try {
-                        $bt->refresh();
-                        return ['handle' => $postData['blockName'], 'blockInstalled' => false, 'blockRefreshed' => true];
-                    } catch (UserMessageException $e) {
-                        $this->flash('error', $e->getMessage());
-                    }
+                try {
 
-                } elseif ($postData['installBlock']) {
+                    $env = Environment::get();
+                    $env->clearOverrideCache();
 
-                    try {
+                    BlockType::installBlockType($postDataSummary['blockHandle']);
 
-                        $env = Environment::get();
-                        $env->clearOverrideCache();
+                    return ['handle' => $postData['blockName'], 'blockInstalled' => true, 'blockRefreshed' => false];
 
-                        BlockType::installBlockType($postDataSummary['blockHandle']);
-
-                        return ['handle' => $postData['blockName'], 'blockInstalled' => true, 'blockRefreshed' => false];
-
-                    } catch (\Exception $e) {
-                        return t($e->getMessage());
-                    }
-
-                } else {
-
-                    return ['handle' => $postData['blockName'], 'blockInstalled' => false, 'blockRefreshed' => false];
-
+                } catch (\Exception $e) {
+                    return t($e->getMessage());
                 }
 
             } else {
 
-                return t('Folder couldn\'t be created. Check your write permissions.');
+                return ['handle' => $postData['blockName'], 'blockInstalled' => false, 'blockRefreshed' => false];
 
             }
 

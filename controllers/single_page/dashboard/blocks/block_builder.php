@@ -82,6 +82,19 @@ class BlockBuilder extends DashboardPageController
                     }
                 }
 
+                // Convert excluded paths to array
+                $excludedFromRemoval = [];
+                if (!empty($postData['excludedFromRemoval'])) {
+                    $explodedItems = explode(PHP_EOL, $postData['excludedFromRemoval']);
+                    foreach ($explodedItems as $explodedItem) {
+                        $explodedItem = trim($explodedItem);
+                        if (!empty($explodedItem)) {
+                            $excludedFromRemoval[] = trim($explodedItem);
+                        }
+                    }
+                }
+                $postData['excludedFromRemoval'] = $excludedFromRemoval;
+
                 // Add additional info
                 $pkg = Package::getByHandle('block_builder');
                 $postData = [
@@ -95,7 +108,10 @@ class BlockBuilder extends DashboardPageController
                     $p = new Permissions();
                     if ($p->canInstallPackages()) {
                         // Remove folder, and later it will be refreshed in generateBlock()
-                        $this->removeDirectory(DIR_FILES_BLOCK_TYPES . DIRECTORY_SEPARATOR . $postData['blockHandle']);
+                        $this->removeDirectory(
+                            DIR_FILES_BLOCK_TYPES . DIRECTORY_SEPARATOR . $postData['blockHandle'],
+                            $postData['excludedFromRemoval']
+                        );
                     }
                 }
 
@@ -195,6 +211,7 @@ class BlockBuilder extends DashboardPageController
         $this->set('entryFieldsDivider', 'never');
         $this->set('registerViewAssetsCustomCode', '');
         $this->set('customControllerMethods', '');
+        $this->set('excludedFromRemoval', ['templates']);
         $this->set('basic', '');
         $this->set('entries', '');
 
@@ -438,14 +455,24 @@ class BlockBuilder extends DashboardPageController
         $this->render('dashboard/blocks/block_builder/refresh_warning');
     }
 
-    private function removeDirectory($dir)
+    private function removeDirectory($dir, $excluded = [])
     {
         /**
          * @var FileService $fileService
          */
         $fileService = $this->app->make(FileService::class);
 
-        return $fileService->removeAll($dir, true);
+        $items = $fileService->getDirectoryContents($dir, $excluded);
+
+        foreach ($items as $item) {
+            $fullPath = $dir . DIRECTORY_SEPARATOR . $item;
+
+            if (is_dir($fullPath)) {
+                $fileService->removeAll($fullPath, true);
+            } else {
+                unlink($fullPath);
+            }
+        }
     }
 
     private function getSystemInfo()
