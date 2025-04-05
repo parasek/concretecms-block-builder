@@ -59,14 +59,22 @@ class ControllerPhp
         $code .= BlockBuilderUtility::tab(1) . 'protected $btInterfaceWidth = \'' . $postData['blockWidth'] . '\';' . PHP_EOL;
         $code .= BlockBuilderUtility::tab(1) . 'protected $btInterfaceHeight = \'' . $postData['blockHeight'] . '\';' . PHP_EOL;
         $code .= BlockBuilderUtility::tab(1) . 'protected $btWrapperClass = \'ccm-ui\';' . PHP_EOL;
-        if ($postDataSummary['numberUsed']) {
-            $code .= BlockBuilderUtility::tab(1) . 'protected $supportSavingNullValues = true;' . PHP_EOL;
-        }
-        $code .= BlockBuilderUtility::tab(1) . 'protected $btCacheBlockRecord = true;' . PHP_EOL;
-        $code .= BlockBuilderUtility::tab(1) . 'protected $btCacheBlockOutput = true;' . PHP_EOL;
-        $code .= BlockBuilderUtility::tab(1) . 'protected $btCacheBlockOutputOnPost = true;' . PHP_EOL;
-        $code .= BlockBuilderUtility::tab(1) . 'protected $btCacheBlockOutputForRegisteredUsers = true;' . PHP_EOL;
-        $code .= BlockBuilderUtility::tab(1) . 'protected $btCacheBlockOutputLifetime = 0;' . PHP_EOL . PHP_EOL;
+
+        $supportSavingNullValues = ($postData['supportSavingNullValues'] === 'true' || $postDataSummary['numberUsed']) ? 'true' : 'false';
+        $ignorePageThemeGridFrameworkContainer = ($postData['ignorePageThemeGridFrameworkContainer'] === 'true') ? 'true' : 'false';
+        $code .= BlockBuilderUtility::tab(1) . 'protected $supportSavingNullValues = ' . $supportSavingNullValues . ';' . PHP_EOL;
+        $code .= BlockBuilderUtility::tab(1) . 'protected $btIgnorePageThemeGridFrameworkContainer = ' . $ignorePageThemeGridFrameworkContainer . ';' . PHP_EOL;
+
+        $cacheBlockRecord = ($postData['cacheBlockRecord'] === 'true') ? 'true' : 'false';
+        $cacheBlockOutput = ($postData['cacheBlockOutput'] === 'true') ? 'true' : 'false';
+        $cacheBlockOutputOnPost = ($postData['cacheBlockOutputOnPost'] === 'true') ? 'true' : 'false';
+        $cacheBlockOutputForRegisteredUsers = ($postData['cacheBlockOutputForRegisteredUsers'] === 'true') ? 'true' : 'false';
+        $cacheBlockOutputLifetime = !empty($postData['cacheBlockOutputLifetime']) ? $postData['cacheBlockOutputLifetime'] : 0;
+        $code .= BlockBuilderUtility::tab(1) . 'protected $btCacheBlockRecord = ' . $cacheBlockRecord . ';' . PHP_EOL;
+        $code .= BlockBuilderUtility::tab(1) . 'protected $btCacheBlockOutput = ' . $cacheBlockOutput . ';' . PHP_EOL;
+        $code .= BlockBuilderUtility::tab(1) . 'protected $btCacheBlockOutputOnPost = ' . $cacheBlockOutputOnPost . ';' . PHP_EOL;
+        $code .= BlockBuilderUtility::tab(1) . 'protected $btCacheBlockOutputForRegisteredUsers = ' . $cacheBlockOutputForRegisteredUsers . ';' . PHP_EOL;
+        $code .= BlockBuilderUtility::tab(1) . 'protected $btCacheBlockOutputLifetime = ' . $cacheBlockOutputLifetime . ';' . PHP_EOL . PHP_EOL;
 
         $code .= BlockBuilderUtility::tab(1) . 'protected $btDefaultSet = \'' . $postData['blockTypeSet'] . '\'; // basic, navigation, form, express, social, multimedia' . PHP_EOL . PHP_EOL;
 
