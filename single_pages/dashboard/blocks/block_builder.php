@@ -168,6 +168,28 @@ use Concrete\Core\System\Info as SystemInfo;
                 <?php echo $form->select('entryFieldsDivider', $dividerOptions, $entryFieldsDivider); ?>
             </div>
 
+            <hr>
+
+            <div class="mb-4 <?php in_array('registerViewAssetsCustomCode', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('registerViewAssetsCustomCode', t('Custom code inside registerViewAssets() method')); ?>
+                <?php echo $form->textarea('registerViewAssetsCustomCode', $registerViewAssetsCustomCode, ['style' => 'min-height: 200px;']); ?>
+                <div class="form-text">
+                    <?= t('You can use this field to including js/css assets.'); ?>
+                    <br>
+                    <?= t('Use %s spaces as first indentation.', 8); ?>
+                </div>
+            </div>
+
+            <div class="mb-4 <?php in_array('customControllerMethods', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('customControllerMethods', t('Custom controller methods')); ?>
+                <?php echo $form->textarea('customControllerMethods', $customControllerMethods, ['style' => 'min-height: 200px;']); ?>
+                <div class="form-text">
+                    <?= t('You can use this field to put custom methods at the bottom of controller class.'); ?>
+                    <br>
+                    <?= t('Use %s spaces as first indentation.', 4); ?>
+                </div>
+            </div>
+
         </div>
 
         <div class="ccm-tab-content" id="ccm-tab-content-texts" style="display: none;">

@@ -234,7 +234,7 @@ class ControllerPhp
         }
 
 
-        // 3. on_start
+        // 3A. on_start
         $code .= BlockBuilderUtility::tab(1) . 'public function on_start() {' . PHP_EOL . PHP_EOL;
 
         $code .= BlockBuilderUtility::tab(2) . '// Unique identifier' . PHP_EOL;
@@ -463,6 +463,12 @@ class ControllerPhp
 
         $code .= BlockBuilderUtility::tab(1) . '}' . PHP_EOL . PHP_EOL;
 
+        // 3B. registerViewAssets()
+        if ($postData['registerViewAssetsCustomCode']) {
+            $code .= BlockBuilderUtility::tab(1) . 'public function registerViewAssets($outputContent = \'\') {' . PHP_EOL . PHP_EOL;
+            $code .= $postData['registerViewAssetsCustomCode'] . PHP_EOL . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(1) . '}' . PHP_EOL . PHP_EOL;
+        }
 
         // 4. add()
         $code .= BlockBuilderUtility::tab(1) . 'public function add() {' . PHP_EOL . PHP_EOL;
@@ -2167,6 +2173,13 @@ class ControllerPhp
 
             $templateCode = file_get_contents($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . 'functions' . DIRECTORY_SEPARATOR . 'get_files_by_file_set_id.txt');
             $code .= $templateCode . PHP_EOL;
+
+        }
+
+        // 23. customControllerMethods
+        if ($postData['customControllerMethods']) {
+
+            $code .= $postData['customControllerMethods'] . PHP_EOL;
 
         }
 

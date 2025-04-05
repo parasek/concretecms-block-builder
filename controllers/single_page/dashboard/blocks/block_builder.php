@@ -193,6 +193,8 @@ class BlockBuilder extends DashboardPageController
         $this->set('highlightMultiElementFields', 1);
         $this->set('fieldsDivider', 'never');
         $this->set('entryFieldsDivider', 'never');
+        $this->set('registerViewAssetsCustomCode', '');
+        $this->set('customControllerMethods', '');
         $this->set('basic', '');
         $this->set('entries', '');
 
