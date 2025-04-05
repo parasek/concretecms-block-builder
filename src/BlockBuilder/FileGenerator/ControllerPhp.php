@@ -2184,7 +2184,7 @@ class ControllerPhp
         }
 
         // Class end
-        $code .= '}';
+        $code .= '}' . PHP_EOL;
 
         $fileService = new FileService();
         $fileService->append($postDataSummary['blockPath'] . DIRECTORY_SEPARATOR . $filename, $code);
