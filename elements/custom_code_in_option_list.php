@@ -5,9 +5,9 @@
     <br>
     <?php echo t('This is especially useful when you want to list items from Express or any custom source.'); ?>
     <br>
-    <?php echo t('Be careful when inserting custom code. Invalid syntax can lead to errors.'); ?>
+    <?php echo t('Be careful when inserting custom code, invalid syntax can lead to errors.'); ?>
     <br><br>
-    <strong><?php echo t('Basic entries'); ?></strong>
+    <strong><?php echo t('Example code for field in "Basic information" tab'); ?>:</strong>
     <br>
     <?php echo t('If Handle of this field is "category", then all option variables should be named like "$category_options".'); ?>
     <br>
@@ -20,7 +20,7 @@
         <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
     </code>
     <br>
-    <strong><?php echo t('Repeatable entries'); ?></strong>
+    <strong><?php echo t('Example code for field in "Repeatable entries" tab'); ?>:</strong>
     <br>
     <?php echo t('If Handle of this field is "category", then all option variables should be named like "$entry_category_options".'); ?>
     <br>
