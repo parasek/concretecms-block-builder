@@ -1,6 +1,6 @@
 {
-    "version": "2.6.1",
-    "createdAt": "2024-03-29 13:22:47",
+    "version": "2.7.0",
+    "createdAt": "2025-04-08 14:12:14",
     "blockName": "All Fields x2",
     "blockHandle": "all_fields_double",
     "blockDescription": "All types of Fields (Basic + Repeatable) x2",
@@ -8,11 +8,23 @@
     "blockWidth": "1000",
     "blockHeight": "650",
     "blockTypeSet": "basic",
+    "cacheBlockRecord": "true",
+    "cacheBlockOutput": "true",
+    "cacheBlockOutputLifetime": "0",
+    "cacheBlockOutputOnPost": "true",
+    "cacheBlockOutputForRegisteredUsers": "true",
+    "supportSavingNullValues": "false",
+    "ignorePageThemeGridFrameworkContainer": "false",
     "entriesAsFirstTab": "0",
     "maxNumberOfEntries": "0",
     "highlightMultiElementFields": "1",
     "fieldsDivider": "never",
     "entryFieldsDivider": "never",
+    "registerViewAssetsCustomCode": "",
+    "customControllerMethods": "",
+    "excludedFromRemoval": [
+        "templates"
+    ],
     "basicLabel": "Basic information",
     "entriesLabel": "Entries",
     "settingsLabel": "Settings",
@@ -131,7 +143,9 @@
             "handle": "basicSingleChoiceFieldDefaultFirst",
             "helpText": "",
             "selectType": "default_select",
-            "selectOptions": "dont_show :: Don't show\r\nshow :: Show"
+            "selectListGenerationMethod": "basic_list",
+            "selectOptions": "dont_show :: Don't show\r\nshow :: Show",
+            "selectCustomCode": ""
         },
         "10": {
             "fieldType": "select_field",
@@ -139,7 +153,9 @@
             "handle": "basicSingleChoiceFieldDefaultSecond",
             "helpText": "",
             "selectType": "default_select",
-            "selectOptions": "dont_show :: Don't show\r\nshow :: Show"
+            "selectListGenerationMethod": "basic_list",
+            "selectOptions": "dont_show :: Don't show\r\nshow :: Show",
+            "selectCustomCode": ""
         },
         "11": {
             "fieldType": "select_field",
@@ -147,7 +163,9 @@
             "handle": "basicSingleChoiceFieldEnhancedFirst",
             "helpText": "",
             "selectType": "enhanced_select",
-            "selectOptions": "Don't show\r\nShow"
+            "selectListGenerationMethod": "basic_list",
+            "selectOptions": "Don't show\r\nShow",
+            "selectCustomCode": ""
         },
         "12": {
             "fieldType": "select_field",
@@ -155,7 +173,9 @@
             "handle": "basicSingleChoiceFieldEnhancedSecond",
             "helpText": "",
             "selectType": "enhanced_select",
-            "selectOptions": "Don't show\r\nShow"
+            "selectListGenerationMethod": "basic_list",
+            "selectOptions": "Don't show\r\nShow",
+            "selectCustomCode": ""
         },
         "13": {
             "fieldType": "select_field",
@@ -163,7 +183,9 @@
             "handle": "basicSingleChoiceFieldRadioListFirst",
             "helpText": "",
             "selectType": "radio_list",
-            "selectOptions": "example::Example\r\nsome_data::Some data"
+            "selectListGenerationMethod": "basic_list",
+            "selectOptions": "example::Example\r\nsome_data::Some data",
+            "selectCustomCode": ""
         },
         "14": {
             "fieldType": "select_field",
@@ -171,7 +193,9 @@
             "handle": "basicSingleChoiceFieldRadioListSecond",
             "helpText": "",
             "selectType": "radio_list",
-            "selectOptions": "example::Example\r\nsome_data::Some data"
+            "selectListGenerationMethod": "basic_list",
+            "selectOptions": "example::Example\r\nsome_data::Some data",
+            "selectCustomCode": ""
         },
         "15": {
             "fieldType": "select_multiple_field",
@@ -179,7 +203,9 @@
             "handle": "basicMultipleChoiceFieldDefaultFirst",
             "helpText": "",
             "selectMultipleType": "default_multiselect",
-            "selectMultipleOptions": "Don't show\r\nShow"
+            "selectMultipleListGenerationMethod": "basic_list",
+            "selectMultipleOptions": "Don't show\r\nShow",
+            "selectMultipleCustomCode": ""
         },
         "16": {
             "fieldType": "select_multiple_field",
@@ -187,7 +213,9 @@
             "handle": "basicMultipleChoiceFieldDefaultSecond",
             "helpText": "",
             "selectMultipleType": "default_multiselect",
-            "selectMultipleOptions": "Don't show\r\nShow"
+            "selectMultipleListGenerationMethod": "basic_list",
+            "selectMultipleOptions": "Don't show\r\nShow",
+            "selectMultipleCustomCode": ""
         },
         "17": {
             "fieldType": "select_multiple_field",
@@ -195,7 +223,9 @@
             "handle": "basicMultipleChoiceFieldEnhancedFirst",
             "helpText": "",
             "selectMultipleType": "enhanced_multiselect",
-            "selectMultipleOptions": "1:: Don't show\r\n2 :: Show"
+            "selectMultipleListGenerationMethod": "basic_list",
+            "selectMultipleOptions": "1:: Don't show\r\n2 :: Show",
+            "selectMultipleCustomCode": ""
         },
         "18": {
             "fieldType": "select_multiple_field",
@@ -203,7 +233,9 @@
             "handle": "basicMultipleChoiceFieldEnhancedSecond",
             "helpText": "",
             "selectMultipleType": "enhanced_multiselect",
-            "selectMultipleOptions": "1:: Don't show\r\n2 :: Show"
+            "selectMultipleListGenerationMethod": "basic_list",
+            "selectMultipleOptions": "1:: Don't show\r\n2 :: Show",
+            "selectMultipleCustomCode": ""
         },
         "19": {
             "fieldType": "select_multiple_field",
@@ -211,7 +243,9 @@
             "handle": "basicMultipleChoiceFieldCheckboxListFirst",
             "helpText": "",
             "selectMultipleType": "checkbox_list",
-            "selectMultipleOptions": "example::Example\r\nsome_data::Some data"
+            "selectMultipleListGenerationMethod": "basic_list",
+            "selectMultipleOptions": "example::Example\r\nsome_data::Some data",
+            "selectMultipleCustomCode": ""
         },
         "20": {
             "fieldType": "select_multiple_field",
@@ -219,7 +253,9 @@
             "handle": "basicMultipleChoiceFieldCheckboxListSecond",
             "helpText": "",
             "selectMultipleType": "checkbox_list",
-            "selectMultipleOptions": "example::Example\r\nsome_data::Some data"
+            "selectMultipleListGenerationMethod": "basic_list",
+            "selectMultipleOptions": "example::Example\r\nsome_data::Some data",
+            "selectMultipleCustomCode": ""
         },
         "21": {
             "fieldType": "link",
@@ -467,7 +503,9 @@
             "handle": "repeatableSingleChoiceFieldDefaultFirst",
             "helpText": "",
             "selectType": "default_select",
-            "selectOptions": "aaa :: Don't show\r\nbbb :: Show"
+            "selectListGenerationMethod": "basic_list",
+            "selectOptions": "aaa :: Don't show\r\nbbb :: Show",
+            "selectCustomCode": ""
         },
         "10": {
             "fieldType": "select_field",
@@ -475,7 +513,9 @@
             "handle": "repeatableSingleChoiceFieldDefaultSecond",
             "helpText": "",
             "selectType": "default_select",
-            "selectOptions": "aaa :: Don't show\r\nbbb :: Show"
+            "selectListGenerationMethod": "basic_list",
+            "selectOptions": "aaa :: Don't show\r\nbbb :: Show",
+            "selectCustomCode": ""
         },
         "11": {
             "fieldType": "select_field",
@@ -483,7 +523,9 @@
             "handle": "repeatableSingleChoiceFieldEnhancedFirst",
             "helpText": "",
             "selectType": "enhanced_select",
-            "selectOptions": "example2::Example\r\nsome_data2::Some data"
+            "selectListGenerationMethod": "basic_list",
+            "selectOptions": "example2::Example\r\nsome_data2::Some data",
+            "selectCustomCode": ""
         },
         "12": {
             "fieldType": "select_field",
@@ -491,7 +533,9 @@
             "handle": "repeatableSingleChoiceFieldEnhancedSecond",
             "helpText": "",
             "selectType": "enhanced_select",
-            "selectOptions": "example2::Example\r\nsome_data2::Some data"
+            "selectListGenerationMethod": "basic_list",
+            "selectOptions": "example2::Example\r\nsome_data2::Some data",
+            "selectCustomCode": ""
         },
         "13": {
             "fieldType": "select_field",
@@ -499,7 +543,9 @@
             "handle": "repeatableSingleChoiceFieldRadioListFirst",
             "helpText": "",
             "selectType": "radio_list",
-            "selectOptions": "Don't show\r\nShow"
+            "selectListGenerationMethod": "basic_list",
+            "selectOptions": "Don't show\r\nShow",
+            "selectCustomCode": ""
         },
         "14": {
             "fieldType": "select_field",
@@ -507,7 +553,9 @@
             "handle": "repeatableSingleChoiceFieldRadioListSecond",
             "helpText": "",
             "selectType": "radio_list",
-            "selectOptions": "Don't show\r\nShow"
+            "selectListGenerationMethod": "basic_list",
+            "selectOptions": "Don't show\r\nShow",
+            "selectCustomCode": ""
         },
         "15": {
             "fieldType": "select_multiple_field",
@@ -515,7 +563,9 @@
             "handle": "repeatableMultipleChoiceFieldDefaultFirst",
             "helpText": "",
             "selectMultipleType": "default_multiselect",
-            "selectMultipleOptions": "1::Yes\r\n2:: No"
+            "selectMultipleListGenerationMethod": "basic_list",
+            "selectMultipleOptions": "1::Yes\r\n2:: No",
+            "selectMultipleCustomCode": ""
         },
         "16": {
             "fieldType": "select_multiple_field",
@@ -523,7 +573,9 @@
             "handle": "repeatableMultipleChoiceFieldDefaultSecond",
             "helpText": "",
             "selectMultipleType": "default_multiselect",
-            "selectMultipleOptions": "1::Yes\r\n2:: No"
+            "selectMultipleListGenerationMethod": "basic_list",
+            "selectMultipleOptions": "1::Yes\r\n2:: No",
+            "selectMultipleCustomCode": ""
         },
         "17": {
             "fieldType": "select_multiple_field",
@@ -531,7 +583,9 @@
             "handle": "repeatableMultipleChoiceFieldEnhancedFirst",
             "helpText": "",
             "selectMultipleType": "enhanced_multiselect",
-            "selectMultipleOptions": "Don't show\r\nShow"
+            "selectMultipleListGenerationMethod": "basic_list",
+            "selectMultipleOptions": "Don't show\r\nShow",
+            "selectMultipleCustomCode": ""
         },
         "18": {
             "fieldType": "select_multiple_field",
@@ -539,7 +593,9 @@
             "handle": "repeatableMultipleChoiceFieldEnhancedSecond",
             "helpText": "",
             "selectMultipleType": "enhanced_multiselect",
-            "selectMultipleOptions": "Don't show\r\nShow"
+            "selectMultipleListGenerationMethod": "basic_list",
+            "selectMultipleOptions": "Don't show\r\nShow",
+            "selectMultipleCustomCode": ""
         },
         "19": {
             "fieldType": "select_multiple_field",
@@ -547,7 +603,9 @@
             "handle": "repeatableMultipleChoiceFieldCheckboxFirst",
             "helpText": "",
             "selectMultipleType": "checkbox_list",
-            "selectMultipleOptions": "no :: Don't show\r\nyes :: Show"
+            "selectMultipleListGenerationMethod": "basic_list",
+            "selectMultipleOptions": "no :: Don't show\r\nyes :: Show",
+            "selectMultipleCustomCode": ""
         },
         "20": {
             "fieldType": "select_multiple_field",
@@ -555,7 +613,9 @@
             "handle": "repeatableMultipleChoiceFieldCheckboxSecond",
             "helpText": "",
             "selectMultipleType": "checkbox_list",
-            "selectMultipleOptions": "no :: Don't show\r\nyes :: Show"
+            "selectMultipleListGenerationMethod": "basic_list",
+            "selectMultipleOptions": "no :: Don't show\r\nyes :: Show",
+            "selectMultipleCustomCode": ""
         },
         "21": {
             "fieldType": "link",
