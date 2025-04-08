@@ -9,6 +9,7 @@ use Concrete\Core\Validation\CSRF\Token;
 use Concrete\Core\Support\Facade\Package;
 use BlockBuilder\Generator as BlockBuilderGenerator;
 use BlockBuilder\OptionList as BlockBuilderOptionList;
+use Symfony\Component\Filesystem\Filesystem;
 
 defined('C5_EXECUTE') or die('Access Denied.');
 
@@ -470,7 +471,8 @@ class BlockBuilder extends DashboardPageController
             if (is_dir($fullPath)) {
                 $fileService->removeAll($fullPath, true);
             } else {
-                unlink($fullPath);
+                $fs = new Filesystem();
+                $fs->remove($fullPath);
             }
         }
     }
