@@ -454,7 +454,7 @@ $(function () {
 
         };
 
-        // Change Select List Generation Method
+        // Change Select List generation method
         var changeSelectListGenerationMethod = function (e) {
 
             e.preventDefault();

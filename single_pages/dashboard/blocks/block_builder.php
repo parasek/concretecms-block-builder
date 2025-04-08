@@ -843,7 +843,7 @@ use Concrete\Core\System\Info as SystemInfo;
                             </select>
                         </div>
                         <div class="mb-4">
-                            <label for="<%=groupHandle%>[<%=counter%>][selectListGenerationMethod]" class="form-label"><?php echo t('List Generation Method'); ?></label>
+                            <label for="<%=groupHandle%>[<%=counter%>][selectListGenerationMethod]" class="form-label"><?php echo t('List generation method'); ?></label>
                             <select name="<%=groupHandle%>[<%=counter%>][selectListGenerationMethod]"
                                     id="<%=groupHandle%>[<%=counter%>][selectListGenerationMethod]"
                                     class="form-select js-change-select-list-generation-method"
@@ -930,7 +930,7 @@ use Concrete\Core\System\Info as SystemInfo;
                             </select>
                         </div>
                         <div class="mb-4">
-                            <label for="<%=groupHandle%>[<%=counter%>][selectMultipleListGenerationMethod]" class="form-label"><?php echo t('List Generation Method'); ?></label>
+                            <label for="<%=groupHandle%>[<%=counter%>][selectMultipleListGenerationMethod]" class="form-label"><?php echo t('List generation method'); ?></label>
                             <select name="<%=groupHandle%>[<%=counter%>][selectMultipleListGenerationMethod]"
                                     id="<%=groupHandle%>[<%=counter%>][selectMultipleListGenerationMethod]"
                                     class="form-select js-change-select-list-generation-method"
