@@ -1,3 +1,12 @@
+# 2.7.0
+- You can now modify various block variables (like $btCacheBlockRecord etc.).
+- You can now add custom code to Single/Multiple Choice Fields (for example when you want to fetch list from Express etc.).
+- You can now add custom methods at the bottom of block controller.
+- You can now add custom code inside registerViewAssets method (to load javascript/css assets etc.).
+- You can now exclude custom files/folders when rebuilding (refreshing) block.
+- File config-bb.json is now generated in human-readable format.
+- Misc changes
+
 # 2.6.2
 - Fixed marketplace linter errors.
 
