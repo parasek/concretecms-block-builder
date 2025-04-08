@@ -42,6 +42,7 @@ $(function () {
                     // load .json file created by older version of package.
                     item.selectType = item.selectType == undefined ? 'default_select' : item.selectType;
                     item.selectListGenerationMethod = item.selectListGenerationMethod == undefined ? 'basic_list' : item.selectListGenerationMethod;
+                    item.selectAddEmptyOption = item.selectAddEmptyOption == undefined ? 'no' : item.selectAddEmptyOption;
                     item.selectCustomCode = item.selectCustomCode == undefined ? '' : item.selectCustomCode;
 
                     item.selectMultipleType = item.selectMultipleType == undefined ? 'default_multiselect' : item.selectMultipleType;
@@ -162,6 +163,7 @@ $(function () {
 
                 // select_field
                 templateData['selectListGenerationMethod'] = '';
+                templateData['selectAddEmptyOption'] = 'no';
                 templateData['selectCustomCode'] = '';
                 templateData['selectOptions'] = '';
                 templateData['selectType'] = '';

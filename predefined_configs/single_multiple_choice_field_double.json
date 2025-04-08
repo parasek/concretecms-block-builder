@@ -1,6 +1,6 @@
 {
     "version": "2.7.0",
-    "createdAt": "2025-04-08 14:12:02",
+    "createdAt": "2025-04-08 16:55:48",
     "blockName": "Single\/Multiple Choice Field x2",
     "blockHandle": "single_multiple_choice_field_double",
     "blockDescription": "All types of Single\/Multiple Choice Fields (Basic + Repeatable) x2",
@@ -67,7 +67,6 @@
     "noResultsMatchedLabel": "No results matched {0}",
     "selectAllLabel": "Select All",
     "deselectAllLabel": "Deselect All",
-    "scroll": "1",
     "basic": {
         "1": {
             "fieldType": "select_field",
@@ -77,6 +76,7 @@
             "selectType": "default_select",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "dont_show :: Don't show\r\nshow :: Show",
+            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "2": {
@@ -87,6 +87,7 @@
             "selectType": "default_select",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "dont_show :: Don't show\r\nshow :: Show",
+            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "3": {
@@ -97,6 +98,7 @@
             "selectType": "enhanced_select",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "Don't show\r\nShow",
+            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "4": {
@@ -107,6 +109,7 @@
             "selectType": "enhanced_select",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "Don't show\r\nShow",
+            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "5": {
@@ -117,6 +120,7 @@
             "selectType": "radio_list",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "example::Example\r\nsome_data::Some data",
+            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "6": {
@@ -127,6 +131,7 @@
             "selectType": "radio_list",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "example::Example\r\nsome_data::Some data",
+            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "7": {
@@ -199,6 +204,7 @@
             "selectType": "default_select",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "aaa :: Don't show\r\nbbb :: Show",
+            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "2": {
@@ -209,6 +215,7 @@
             "selectType": "default_select",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "aaa :: Don't show\r\nbbb :: Show",
+            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "3": {
@@ -219,6 +226,7 @@
             "selectType": "enhanced_select",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "example2::Example\r\nsome_data2::Some data",
+            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "4": {
@@ -229,6 +237,7 @@
             "selectType": "enhanced_select",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "example2::Example\r\nsome_data2::Some data",
+            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "5": {
@@ -239,6 +248,7 @@
             "selectType": "radio_list",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "Don't show\r\nShow",
+            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "6": {
@@ -249,6 +259,7 @@
             "selectType": "radio_list",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "Don't show\r\nShow",
+            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "7": {

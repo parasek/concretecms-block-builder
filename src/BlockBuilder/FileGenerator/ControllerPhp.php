@@ -279,7 +279,9 @@ class ControllerPhp
                         // Generate actual code
                         $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options ' . BlockBuilderUtility::arrayGap($maxKeyLength + 4) . '= [];' . PHP_EOL;
                         if (empty($v['selectType']) or $v['selectType'] === 'default_select' or $v['selectType'] === 'enhanced_select') {
-                            $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options[] ' . BlockBuilderUtility::arrayGap($maxKeyLength + 2) . '= \'----\';' . PHP_EOL;
+                            if ($v['selectAddEmptyOption'] === 'yes') {
+                                $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options[] ' . BlockBuilderUtility::arrayGap($maxKeyLength + 2) . '= \'----\';' . PHP_EOL;
+                            }
                         }
                         foreach ($tempOptions as $tempOption) {
                             $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options[\'' . $tempOption['key'] . '\'] ';
@@ -396,7 +398,9 @@ class ControllerPhp
                         // Generate actual code
                         $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options ' . BlockBuilderUtility::arrayGap($maxKeyLength + 4) . '= [];' . PHP_EOL;
                         if (empty($v['selectType']) or $v['selectType'] === 'default_select' or $v['selectType'] === 'enhanced_select') {
-                            $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options[] ' . BlockBuilderUtility::arrayGap($maxKeyLength + 2) . '= \'----\';' . PHP_EOL;
+                            if ($v['selectAddEmptyOption'] === 'yes') {
+                                $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options[] ' . BlockBuilderUtility::arrayGap($maxKeyLength + 2) . '= \'----\';' . PHP_EOL;
+                            }
                         }
                         foreach ($tempOptions as $tempOption) {
                             $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options[\'' . $tempOption['key'] . '\'] ';

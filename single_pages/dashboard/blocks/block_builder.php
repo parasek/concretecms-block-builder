@@ -861,28 +861,43 @@ use Concrete\Core\System\Info as SystemInfo;
                                  style="display: none;"
                                  <% } %>
                             >
-                                <label for="<%=groupHandle%>[<%=counter%>][selectOptions]" class="form-label"><?php echo t('Select options'); ?></label>
-                                <p class="small text-muted">
-                                    <?php echo t('Enter every option in new line, e.g.'); ?>
-                                    <code class="bb-code-block">
-                                        <?php echo t('Don\'t show'); ?>
-                                        <br/>
-                                        <?php echo t('Show'); ?>
-                                    </code>
-                                </p>
-                                <p class="small text-muted">
-                                    <?php echo t('You can also use double colon to specify key (value saved in database, only a-zA-Z0-9_ characters are permitted) and value (displayed text), e.g.'); ?>
-                                    <code class="bb-code-block">
-                                        <?php echo t('no :: Don\'t show'); ?>
-                                        <br/>
-                                        <?php echo t('yes :: Show'); ?>
-                                    </code>
-                                </p>
-                                <textarea name="<%=groupHandle%>[<%=counter%>][selectOptions]"
-                                          id="<%=groupHandle%>[<%=counter%>][selectOptions]"
-                                          class="form-control"
-                                          rows="4"
-                                ><%=selectOptions%></textarea>
+                                <div class="mb-4">
+                                    <label for="<%=groupHandle%>[<%=counter%>][selectOptions]" class="form-label"><?php echo t('Select options'); ?></label>
+                                    <p class="small text-muted">
+                                        <?php echo t('Enter every option in new line, e.g.'); ?>
+                                        <code class="bb-code-block">
+                                            <?php echo t('Don\'t show'); ?>
+                                            <br/>
+                                            <?php echo t('Show'); ?>
+                                        </code>
+                                    </p>
+                                    <p class="small text-muted">
+                                        <?php echo t('You can also use double colon to specify key (value saved in database, only a-zA-Z0-9_ characters are permitted) and value (displayed text), e.g.'); ?>
+                                        <code class="bb-code-block">
+                                            <?php echo t('no :: Don\'t show'); ?>
+                                            <br/>
+                                            <?php echo t('yes :: Show'); ?>
+                                        </code>
+                                    </p>
+                                    <textarea name="<%=groupHandle%>[<%=counter%>][selectOptions]"
+                                              id="<%=groupHandle%>[<%=counter%>][selectOptions]"
+                                              class="form-control"
+                                              rows="4"
+                                    ><%=selectOptions%></textarea>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="<%=groupHandle%>[<%=counter%>][selectAddEmptyOption]" class="form-label"><?php echo t('Add empty option'); ?></label>
+                                    <select name="<%=groupHandle%>[<%=counter%>][selectAddEmptyOption]"
+                                            id="<%=groupHandle%>[<%=counter%>][selectAddEmptyOption]"
+                                            class="form-select"
+                                    >
+                                        <option value="no" <% if (selectAddEmptyOption === 'no') { %>selected<% } %>><?php echo t('No'); ?></option>
+                                        <option value="yes" <% if (selectAddEmptyOption === 'yes') { %>selected<% } %>><?php echo t('Yes'); ?></option>
+                                    </select>
+                                    <div class="form-text">
+                                        <?php echo t('Works only with default and enhanced select field.'); ?>
+                                    </div>
+                                </div>
                             </div>
                             <div data-select-list-generation-method="custom_code"
                                  <% if (selectListGenerationMethod && (selectListGenerationMethod === 'custom_code')) { %>
