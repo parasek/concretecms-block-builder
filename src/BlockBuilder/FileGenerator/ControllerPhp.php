@@ -409,7 +409,7 @@ class ControllerPhp
                         }
 
                     } elseif (!empty($v['selectListGenerationMethod']) && $v['selectListGenerationMethod'] === 'custom_code') {
-                        $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options = [];' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options = [];' . PHP_EOL;
                         $code .= $v['selectCustomCode'] . PHP_EOL;
                     }
 
@@ -452,7 +452,7 @@ class ControllerPhp
                         }
 
                     } elseif (!empty($v['selectMultipleListGenerationMethod']) && $v['selectMultipleListGenerationMethod'] === 'custom_code') {
-                        $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options = [];' . PHP_EOL;
+                        $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options = [];' . PHP_EOL;
                         $code .= $v['selectMultipleCustomCode'] . PHP_EOL;
                     }
 
