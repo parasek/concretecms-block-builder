@@ -1,6 +1,6 @@
 {
-    "version": "2.7.0",
-    "createdAt": "2025-04-08 16:55:36",
+    "version": "2.8.0",
+    "createdAt": "2025-04-11 14:45:56",
     "blockName": "All Fields x2",
     "blockHandle": "all_fields_double",
     "blockDescription": "All types of Fields (Basic + Repeatable) x2",
@@ -21,6 +21,7 @@
     "fieldsDivider": "never",
     "entryFieldsDivider": "never",
     "registerViewAssetsCustomCode": "",
+    "viewCustomCode": "",
     "customControllerMethods": "",
     "excludedFromRemoval": [
         "templates"
@@ -142,9 +143,10 @@
             "handle": "basicSingleChoiceFieldDefaultFirst",
             "helpText": "",
             "selectType": "default_select",
+            "selectAddEmptyOption": "no",
+            "selectDefaultValue": "",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "dont_show :: Don't show\r\nshow :: Show",
-            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "10": {
@@ -153,9 +155,10 @@
             "handle": "basicSingleChoiceFieldDefaultSecond",
             "helpText": "",
             "selectType": "default_select",
+            "selectAddEmptyOption": "no",
+            "selectDefaultValue": "",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "dont_show :: Don't show\r\nshow :: Show",
-            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "11": {
@@ -164,9 +167,10 @@
             "handle": "basicSingleChoiceFieldEnhancedFirst",
             "helpText": "",
             "selectType": "enhanced_select",
+            "selectAddEmptyOption": "no",
+            "selectDefaultValue": "",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "Don't show\r\nShow",
-            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "12": {
@@ -175,9 +179,10 @@
             "handle": "basicSingleChoiceFieldEnhancedSecond",
             "helpText": "",
             "selectType": "enhanced_select",
+            "selectAddEmptyOption": "no",
+            "selectDefaultValue": "",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "Don't show\r\nShow",
-            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "13": {
@@ -186,9 +191,10 @@
             "handle": "basicSingleChoiceFieldRadioListFirst",
             "helpText": "",
             "selectType": "radio_list",
+            "selectAddEmptyOption": "no",
+            "selectDefaultValue": "",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "example::Example\r\nsome_data::Some data",
-            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "14": {
@@ -197,9 +203,10 @@
             "handle": "basicSingleChoiceFieldRadioListSecond",
             "helpText": "",
             "selectType": "radio_list",
+            "selectAddEmptyOption": "no",
+            "selectDefaultValue": "",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "example::Example\r\nsome_data::Some data",
-            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "15": {
@@ -208,6 +215,7 @@
             "handle": "basicMultipleChoiceFieldDefaultFirst",
             "helpText": "",
             "selectMultipleType": "default_multiselect",
+            "selectMultipleDefaultValue": "",
             "selectMultipleListGenerationMethod": "basic_list",
             "selectMultipleOptions": "Don't show\r\nShow",
             "selectMultipleCustomCode": ""
@@ -218,6 +226,7 @@
             "handle": "basicMultipleChoiceFieldDefaultSecond",
             "helpText": "",
             "selectMultipleType": "default_multiselect",
+            "selectMultipleDefaultValue": "",
             "selectMultipleListGenerationMethod": "basic_list",
             "selectMultipleOptions": "Don't show\r\nShow",
             "selectMultipleCustomCode": ""
@@ -228,6 +237,7 @@
             "handle": "basicMultipleChoiceFieldEnhancedFirst",
             "helpText": "",
             "selectMultipleType": "enhanced_multiselect",
+            "selectMultipleDefaultValue": "",
             "selectMultipleListGenerationMethod": "basic_list",
             "selectMultipleOptions": "1:: Don't show\r\n2 :: Show",
             "selectMultipleCustomCode": ""
@@ -238,6 +248,7 @@
             "handle": "basicMultipleChoiceFieldEnhancedSecond",
             "helpText": "",
             "selectMultipleType": "enhanced_multiselect",
+            "selectMultipleDefaultValue": "",
             "selectMultipleListGenerationMethod": "basic_list",
             "selectMultipleOptions": "1:: Don't show\r\n2 :: Show",
             "selectMultipleCustomCode": ""
@@ -248,6 +259,7 @@
             "handle": "basicMultipleChoiceFieldCheckboxListFirst",
             "helpText": "",
             "selectMultipleType": "checkbox_list",
+            "selectMultipleDefaultValue": "",
             "selectMultipleListGenerationMethod": "basic_list",
             "selectMultipleOptions": "example::Example\r\nsome_data::Some data",
             "selectMultipleCustomCode": ""
@@ -258,6 +270,7 @@
             "handle": "basicMultipleChoiceFieldCheckboxListSecond",
             "helpText": "",
             "selectMultipleType": "checkbox_list",
+            "selectMultipleDefaultValue": "",
             "selectMultipleListGenerationMethod": "basic_list",
             "selectMultipleOptions": "example::Example\r\nsome_data::Some data",
             "selectMultipleCustomCode": ""
@@ -508,9 +521,10 @@
             "handle": "repeatableSingleChoiceFieldDefaultFirst",
             "helpText": "",
             "selectType": "default_select",
+            "selectAddEmptyOption": "no",
+            "selectDefaultValue": "",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "aaa :: Don't show\r\nbbb :: Show",
-            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "10": {
@@ -519,9 +533,10 @@
             "handle": "repeatableSingleChoiceFieldDefaultSecond",
             "helpText": "",
             "selectType": "default_select",
+            "selectAddEmptyOption": "no",
+            "selectDefaultValue": "",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "aaa :: Don't show\r\nbbb :: Show",
-            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "11": {
@@ -530,9 +545,10 @@
             "handle": "repeatableSingleChoiceFieldEnhancedFirst",
             "helpText": "",
             "selectType": "enhanced_select",
+            "selectAddEmptyOption": "no",
+            "selectDefaultValue": "",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "example2::Example\r\nsome_data2::Some data",
-            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "12": {
@@ -541,9 +557,10 @@
             "handle": "repeatableSingleChoiceFieldEnhancedSecond",
             "helpText": "",
             "selectType": "enhanced_select",
+            "selectAddEmptyOption": "no",
+            "selectDefaultValue": "",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "example2::Example\r\nsome_data2::Some data",
-            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "13": {
@@ -552,9 +569,10 @@
             "handle": "repeatableSingleChoiceFieldRadioListFirst",
             "helpText": "",
             "selectType": "radio_list",
+            "selectAddEmptyOption": "no",
+            "selectDefaultValue": "",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "Don't show\r\nShow",
-            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "14": {
@@ -563,9 +581,10 @@
             "handle": "repeatableSingleChoiceFieldRadioListSecond",
             "helpText": "",
             "selectType": "radio_list",
+            "selectAddEmptyOption": "no",
+            "selectDefaultValue": "",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "Don't show\r\nShow",
-            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "15": {
@@ -574,6 +593,7 @@
             "handle": "repeatableMultipleChoiceFieldDefaultFirst",
             "helpText": "",
             "selectMultipleType": "default_multiselect",
+            "selectMultipleDefaultValue": "",
             "selectMultipleListGenerationMethod": "basic_list",
             "selectMultipleOptions": "1::Yes\r\n2:: No",
             "selectMultipleCustomCode": ""
@@ -584,6 +604,7 @@
             "handle": "repeatableMultipleChoiceFieldDefaultSecond",
             "helpText": "",
             "selectMultipleType": "default_multiselect",
+            "selectMultipleDefaultValue": "",
             "selectMultipleListGenerationMethod": "basic_list",
             "selectMultipleOptions": "1::Yes\r\n2:: No",
             "selectMultipleCustomCode": ""
@@ -594,6 +615,7 @@
             "handle": "repeatableMultipleChoiceFieldEnhancedFirst",
             "helpText": "",
             "selectMultipleType": "enhanced_multiselect",
+            "selectMultipleDefaultValue": "",
             "selectMultipleListGenerationMethod": "basic_list",
             "selectMultipleOptions": "Don't show\r\nShow",
             "selectMultipleCustomCode": ""
@@ -604,6 +626,7 @@
             "handle": "repeatableMultipleChoiceFieldEnhancedSecond",
             "helpText": "",
             "selectMultipleType": "enhanced_multiselect",
+            "selectMultipleDefaultValue": "",
             "selectMultipleListGenerationMethod": "basic_list",
             "selectMultipleOptions": "Don't show\r\nShow",
             "selectMultipleCustomCode": ""
@@ -614,6 +637,7 @@
             "handle": "repeatableMultipleChoiceFieldCheckboxFirst",
             "helpText": "",
             "selectMultipleType": "checkbox_list",
+            "selectMultipleDefaultValue": "",
             "selectMultipleListGenerationMethod": "basic_list",
             "selectMultipleOptions": "no :: Don't show\r\nyes :: Show",
             "selectMultipleCustomCode": ""
@@ -624,6 +648,7 @@
             "handle": "repeatableMultipleChoiceFieldCheckboxSecond",
             "helpText": "",
             "selectMultipleType": "checkbox_list",
+            "selectMultipleDefaultValue": "",
             "selectMultipleListGenerationMethod": "basic_list",
             "selectMultipleOptions": "no :: Don't show\r\nyes :: Show",
             "selectMultipleCustomCode": ""

@@ -1,6 +1,6 @@
 {
-    "version": "2.7.0",
-    "createdAt": "2025-04-08 16:55:41",
+    "version": "2.8.0",
+    "createdAt": "2025-04-11 14:46:01",
     "blockName": "Single\/Multiple Choice Field",
     "blockHandle": "single_multiple_choice_field",
     "blockDescription": "All types of Single\/Multiple Choice Fields (Basic + Repeatable)",
@@ -21,6 +21,7 @@
     "fieldsDivider": "never",
     "entryFieldsDivider": "never",
     "registerViewAssetsCustomCode": "",
+    "viewCustomCode": "",
     "customControllerMethods": "",
     "excludedFromRemoval": [
         "templates"
@@ -74,9 +75,10 @@
             "handle": "basic_single_choice_field_default_first",
             "helpText": "",
             "selectType": "default_select",
+            "selectAddEmptyOption": "no",
+            "selectDefaultValue": "",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "dont_show :: Don't show\r\nshow :: Show",
-            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "2": {
@@ -85,9 +87,10 @@
             "handle": "basic_single_choice_field_enhanced_first",
             "helpText": "",
             "selectType": "enhanced_select",
+            "selectAddEmptyOption": "no",
+            "selectDefaultValue": "",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "Don't show\r\nShow",
-            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "3": {
@@ -96,9 +99,10 @@
             "handle": "basic_single_choice_field_radio_list_first",
             "helpText": "",
             "selectType": "radio_list",
+            "selectAddEmptyOption": "no",
+            "selectDefaultValue": "",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "example::Example\r\nsome_data::Some data",
-            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "4": {
@@ -107,6 +111,7 @@
             "handle": "basic_multiple_choice_field_default_first",
             "helpText": "",
             "selectMultipleType": "default_multiselect",
+            "selectMultipleDefaultValue": "",
             "selectMultipleListGenerationMethod": "basic_list",
             "selectMultipleOptions": "Don't show\r\nShow",
             "selectMultipleCustomCode": ""
@@ -117,6 +122,7 @@
             "handle": "basic_multiple_choice_field_enhanced_first",
             "helpText": "",
             "selectMultipleType": "enhanced_multiselect",
+            "selectMultipleDefaultValue": "",
             "selectMultipleListGenerationMethod": "basic_list",
             "selectMultipleOptions": "1:: Don't show\r\n2 :: Show",
             "selectMultipleCustomCode": ""
@@ -127,6 +133,7 @@
             "handle": "basic_multiple_choice_field_checkbox_list_first",
             "helpText": "",
             "selectMultipleType": "checkbox_list",
+            "selectMultipleDefaultValue": "",
             "selectMultipleListGenerationMethod": "basic_list",
             "selectMultipleOptions": "example::Example\r\nsome_data::Some data",
             "selectMultipleCustomCode": ""
@@ -139,9 +146,10 @@
             "handle": "repeatable_single_choice_field_default_first",
             "helpText": "",
             "selectType": "default_select",
+            "selectAddEmptyOption": "no",
+            "selectDefaultValue": "",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "aaa :: Don't show\r\nbbb :: Show",
-            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "2": {
@@ -150,9 +158,10 @@
             "handle": "repeatable_single_choice_field_enhanced_first",
             "helpText": "",
             "selectType": "enhanced_select",
+            "selectAddEmptyOption": "no",
+            "selectDefaultValue": "",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "example2::Example\r\nsome_data2::Some data",
-            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "3": {
@@ -161,9 +170,10 @@
             "handle": "repeatable_single_choice_field_radio_list_first",
             "helpText": "",
             "selectType": "radio_list",
+            "selectAddEmptyOption": "no",
+            "selectDefaultValue": "",
             "selectListGenerationMethod": "basic_list",
             "selectOptions": "Don't show\r\nShow",
-            "selectAddEmptyOption": "no",
             "selectCustomCode": ""
         },
         "4": {
@@ -172,6 +182,7 @@
             "handle": "repeatable_multiple_choice_field_default_first",
             "helpText": "",
             "selectMultipleType": "default_multiselect",
+            "selectMultipleDefaultValue": "",
             "selectMultipleListGenerationMethod": "basic_list",
             "selectMultipleOptions": "1::Yes\r\n2:: No",
             "selectMultipleCustomCode": ""
@@ -182,6 +193,7 @@
             "handle": "repeatable_multiple_choice_field_enhanced_first",
             "helpText": "",
             "selectMultipleType": "enhanced_multiselect",
+            "selectMultipleDefaultValue": "",
             "selectMultipleListGenerationMethod": "basic_list",
             "selectMultipleOptions": "Don't show\r\nShow",
             "selectMultipleCustomCode": ""
@@ -192,6 +204,7 @@
             "handle": "repeatable_multiple_choice_field_checkbox_first",
             "helpText": "",
             "selectMultipleType": "checkbox_list",
+            "selectMultipleDefaultValue": "",
             "selectMultipleListGenerationMethod": "basic_list",
             "selectMultipleOptions": "no :: Don't show\r\nyes :: Show",
             "selectMultipleCustomCode": ""
