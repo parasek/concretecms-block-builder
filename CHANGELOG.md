@@ -1,3 +1,9 @@
+# 2.8.0
+- You can now add custom code inside view method
+- You can now add empty option when custom code is selected in Single Choice Field
+- You can now add default value/values in Single/Multiple Choice Fields
+- Fixed wrong variable name generation in Single/Multiple Choice Fields
+
 # 2.7.0
 - You can now modify various block variables (like $btCacheBlockRecord etc.).
 - You can now add custom code to Single/Multiple Choice Fields (for example when you want to fetch list from Express etc.).
