@@ -860,6 +860,19 @@ use Concrete\Core\System\Info as SystemInfo;
                             </select>
                         </div>
                         <div class="mb-4">
+                            <label for="<%=groupHandle%>[<%=counter%>][selectAddEmptyOption]" class="form-label"><?php echo t('Add empty option'); ?></label>
+                            <select name="<%=groupHandle%>[<%=counter%>][selectAddEmptyOption]"
+                                    id="<%=groupHandle%>[<%=counter%>][selectAddEmptyOption]"
+                                    class="form-select"
+                            >
+                                <option value="no" <% if (selectAddEmptyOption === 'no') { %>selected<% } %>><?php echo t('No'); ?></option>
+                                <option value="yes" <% if (selectAddEmptyOption === 'yes') { %>selected<% } %>><?php echo t('Yes'); ?></option>
+                            </select>
+                            <div class="form-text">
+                                <?php echo t('Works only with default and enhanced select field.'); ?>
+                            </div>
+                        </div>
+                        <div class="mb-4">
                             <label for="<%=groupHandle%>[<%=counter%>][selectListGenerationMethod]" class="form-label"><?php echo t('List generation method'); ?></label>
                             <select name="<%=groupHandle%>[<%=counter%>][selectListGenerationMethod]"
                                     id="<%=groupHandle%>[<%=counter%>][selectListGenerationMethod]"
@@ -901,19 +914,6 @@ use Concrete\Core\System\Info as SystemInfo;
                                               class="form-control"
                                               rows="4"
                                     ><%=selectOptions%></textarea>
-                                </div>
-                                <div class="mb-4">
-                                    <label for="<%=groupHandle%>[<%=counter%>][selectAddEmptyOption]" class="form-label"><?php echo t('Add empty option'); ?></label>
-                                    <select name="<%=groupHandle%>[<%=counter%>][selectAddEmptyOption]"
-                                            id="<%=groupHandle%>[<%=counter%>][selectAddEmptyOption]"
-                                            class="form-select"
-                                    >
-                                        <option value="no" <% if (selectAddEmptyOption === 'no') { %>selected<% } %>><?php echo t('No'); ?></option>
-                                        <option value="yes" <% if (selectAddEmptyOption === 'yes') { %>selected<% } %>><?php echo t('Yes'); ?></option>
-                                    </select>
-                                    <div class="form-text">
-                                        <?php echo t('Works only with default and enhanced select field.'); ?>
-                                    </div>
                                 </div>
                             </div>
                             <div data-select-list-generation-method="custom_code"
