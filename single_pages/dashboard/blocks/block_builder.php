@@ -873,6 +873,15 @@ use Concrete\Core\System\Info as SystemInfo;
                             </div>
                         </div>
                         <div class="mb-4">
+                            <label for="<%=groupHandle%>[<%=counter%>][selectDefaultValue]" class="form-label"><?php echo t('Default value'); ?></label>
+                            <input type="text"
+                                   id="<%=groupHandle%>[<%=counter%>][selectDefaultValue]"
+                                   name="<%=groupHandle%>[<%=counter%>][selectDefaultValue]"
+                                   class="form-control"
+                                   value="<%=selectDefaultValue%>"
+                            />
+                        </div>
+                        <div class="mb-4">
                             <label for="<%=groupHandle%>[<%=counter%>][selectListGenerationMethod]" class="form-label"><?php echo t('List generation method'); ?></label>
                             <select name="<%=groupHandle%>[<%=counter%>][selectListGenerationMethod]"
                                     id="<%=groupHandle%>[<%=counter%>][selectListGenerationMethod]"
@@ -945,6 +954,18 @@ use Concrete\Core\System\Info as SystemInfo;
                                     <option value="<?php echo h($k); ?>" <% if (selectMultipleType === '<?php echo h($k); ?>') { %>selected<% } %>><?php echo h($v); ?></option>
                                 <?php endforeach; ?>
                             </select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="<%=groupHandle%>[<%=counter%>][selectMultipleDefaultValue]" class="form-label"><?php echo t('Default value'); ?></label>
+                            <input type="text"
+                                   id="<%=groupHandle%>[<%=counter%>][selectMultipleDefaultValue]"
+                                   name="<%=groupHandle%>[<%=counter%>][selectMultipleDefaultValue]"
+                                   class="form-control"
+                                   value="<%=selectMultipleDefaultValue%>"
+                            />
+                            <div class="form-text">
+                                <?php echo t('Use | (pipe character) to separate default values.'); ?>
+                            </div>
                         </div>
                         <div class="mb-4">
                             <label for="<%=groupHandle%>[<%=counter%>][selectMultipleListGenerationMethod]" class="form-label"><?php echo t('List generation method'); ?></label>

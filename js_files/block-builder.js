@@ -43,10 +43,12 @@ $(function () {
                     item.selectType = item.selectType == undefined ? 'default_select' : item.selectType;
                     item.selectListGenerationMethod = item.selectListGenerationMethod == undefined ? 'basic_list' : item.selectListGenerationMethod;
                     item.selectAddEmptyOption = item.selectAddEmptyOption == undefined ? 'no' : item.selectAddEmptyOption;
+                    item.selectDefaultValue = item.selectDefaultValue == undefined ? '' : item.selectDefaultValue;
                     item.selectCustomCode = item.selectCustomCode == undefined ? '' : item.selectCustomCode;
 
                     item.selectMultipleType = item.selectMultipleType == undefined ? 'default_multiselect' : item.selectMultipleType;
                     item.selectMultipleListGenerationMethod = item.selectMultipleListGenerationMethod == undefined ? 'basic_list' : item.selectMultipleListGenerationMethod;
+                    item.selectMultipleDefaultValue = item.selectMultipleDefaultValue == undefined ? '' : item.selectMultipleDefaultValue;
                     item.selectMultipleCustomCode = item.selectMultipleCustomCode == undefined ? '' : item.selectMultipleCustomCode;
 
                     item.wysiwygCustomConfig = item.wysiwygCustomConfig == undefined ? '' : item.wysiwygCustomConfig;
@@ -164,12 +166,14 @@ $(function () {
                 // select_field
                 templateData['selectListGenerationMethod'] = '';
                 templateData['selectAddEmptyOption'] = 'no';
+                templateData['selectDefaultValue'] = '';
                 templateData['selectCustomCode'] = '';
                 templateData['selectOptions'] = '';
                 templateData['selectType'] = '';
 
                 // select_multiple_field
                 templateData['selectMultipleListGenerationMethod'] = '';
+                templateData['selectMultipleDefaultValue'] = '';
                 templateData['selectMultipleCustomCode'] = '';
                 templateData['selectMultipleOptions'] = '';
                 templateData['selectMultipleType'] = '';

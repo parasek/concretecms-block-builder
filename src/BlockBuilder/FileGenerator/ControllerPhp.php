@@ -477,6 +477,26 @@ class ControllerPhp
         // 4. add()
         $code .= BlockBuilderUtility::tab(1) . 'public function add() {' . PHP_EOL . PHP_EOL;
         $code .= BlockBuilderUtility::tab(2) . '$this->addEdit();' . PHP_EOL;
+
+        if (!empty($postData['basic'])) {
+
+            foreach ($postData['basic'] as $k => $v) {
+
+                if ($v['fieldType'] == 'select_field') {
+                    if (!empty($v['selectDefaultValue'])) {
+                        $code .= BlockBuilderUtility::tab(2) . '$this->set(\'' . $v['handle'] . '\', \'' . $v['selectDefaultValue'] . '\');' . PHP_EOL;
+                    }
+                }
+
+                if ($v['fieldType'] == 'select_multiple_field') {
+                    if (!empty($v['selectMultipleDefaultValue'])) {
+                        $code .= BlockBuilderUtility::tab(2) . '$this->set(\'' . $v['handle'] . '\', \'' . $v['selectMultipleDefaultValue'] . '\');' . PHP_EOL;
+                    }
+                }
+            }
+
+        }
+
         $code .= BlockBuilderUtility::tab(2) . '$this->set(\'entries\', []);' . PHP_EOL . PHP_EOL;
         $code .= BlockBuilderUtility::tab(1) . '}' . PHP_EOL . PHP_EOL;
 
@@ -682,6 +702,30 @@ class ControllerPhp
                 }
                 $code .= BlockBuilderUtility::tab(2) . '$this->set(\'expressEntity\', $expressEntity);' . PHP_EOL . PHP_EOL;
             }
+        }
+
+        // Default values in repeatable entries
+        if (!empty($postData['entries'])) {
+
+
+            $code .= BlockBuilderUtility::tab(2) . '// Default values for repeatable entries' . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(2) . '$this->set(\'defaultValues\', [' . PHP_EOL;
+            foreach ($postData['entries'] as $k => $v) {
+
+                if ($v['fieldType'] == 'select_field') {
+                    if (!empty($v['selectDefaultValue'])) {
+                        $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '\' => \'' . $v['selectDefaultValue'] . '\',' . PHP_EOL;
+                    }
+                }
+
+                if ($v['fieldType'] == 'select_multiple_field') {
+                    if (!empty($v['selectMultipleDefaultValue'])) {
+                        $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '\' => \'' . $v['selectMultipleDefaultValue'] . '\',' . PHP_EOL;
+                    }
+                }
+            }
+            $code .= BlockBuilderUtility::tab(2) . ']);' . PHP_EOL;
+
         }
 
         $code .= BlockBuilderUtility::tab(2) . '// Load form.css' . PHP_EOL;

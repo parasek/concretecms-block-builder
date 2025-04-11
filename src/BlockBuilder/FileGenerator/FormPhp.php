@@ -953,7 +953,7 @@ class FormPhp
             $code .= BlockBuilderUtility::tab(4) . '<a href="#" class="entries-action-link entries-action-link-remove-all js-remove-all" data-confirm-text="<?php echo t(\'' . addslashes($postData['areYouSureLabel']) . '\'); ?>"  title="<?php echo t(\'' . addslashes($postData['removeAllLabel']) . '\'); ?>"><i class="fas fa-times-circle"></i></a>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL;
 
-            $code .= BlockBuilderUtility::tab(3) . '<div class="entries" id="entries-<?php echo $uniqueID; ?>" data-entries="<?php echo htmlspecialchars(json_encode($entries)); ?>" data-column-names="<?php echo h(json_encode($entryColumnNames)); ?>"></div>' . PHP_EOL . PHP_EOL;
+            $code .= BlockBuilderUtility::tab(3) . '<div class="entries" id="entries-<?php echo $uniqueID; ?>" data-entries="<?php echo htmlspecialchars(json_encode($entries)); ?>" data-default-values="<?php echo htmlspecialchars(json_encode($defaultValues)); ?>" data-column-names="<?php echo h(json_encode($entryColumnNames)); ?>"></div>' . PHP_EOL . PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(3) . '<div class="mb-3 entries-actions">' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(4) . '<button type="button" class="btn btn-primary entries-action-button js-add-entry" data-action="prepend"><?php echo t(\'' . addslashes($postData['addAtTheTopLabel']) . '\'); ?></button>' . PHP_EOL;

@@ -9,6 +9,7 @@ $(function () {
         var maxNumberOfEntries = parseInt(formContainer.find('.js-max-number-of-entries').text());
         var entryColumnNames = JSON.parse(entriesContainer.attr('data-column-names'));
         var entries = JSON.parse(entriesContainer.attr('data-entries'));
+        var defaultValues = JSON.parse(entriesContainer.attr('data-default-values'));
         var position = entries != null ? entries.length : 0;
         var template = _.template(formContainer.find('.js-entry-template').html());
         var templateNoEntries = _.template(formContainer.find('.js-template-no-entries').html());
@@ -280,7 +281,12 @@ $(function () {
                         templateData[value] = sourceEntryElement.val();
                     }
                 } else {
-                    templateData[value] = '';
+                    // This is run when adding new entry
+                    if (defaultValues[value] !== undefined) {
+                        templateData[value] = defaultValues[value];
+                    } else {
+                        templateData[value] = '';
+                    }
                 }
             });
 
