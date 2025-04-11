@@ -174,7 +174,7 @@ use Concrete\Core\System\Info as SystemInfo;
                 <?php echo $form->label('registerViewAssetsCustomCode', t('Custom code inside registerViewAssets() method')); ?>
                 <?php echo $form->textarea('registerViewAssetsCustomCode', $registerViewAssetsCustomCode, ['style' => 'min-height: 200px;']); ?>
                 <div class="form-text">
-                    <?= t('You can use this field to including js/css assets.'); ?>
+                    <?= t('You can use this field to include js/css assets.'); ?>
                     <br>
                     <?php echo t('Be careful when inserting custom code, invalid syntax can lead to errors.'); ?>
                     <br>
@@ -193,7 +193,7 @@ use Concrete\Core\System\Info as SystemInfo;
                 <?php echo $form->label('viewCustomCode', t('Custom code inside view() method')); ?>
                 <?php echo $form->textarea('viewCustomCode', $viewCustomCode, ['style' => 'min-height: 200px;']); ?>
                 <div class="form-text">
-                    <?= t('You can use this field to including custom php code.'); ?>
+                    <?= t('You can use this field to include custom php code.'); ?>
                     <br>
                     <?php echo t('Be careful when inserting custom code, invalid syntax can lead to errors.'); ?>
                     <br>
