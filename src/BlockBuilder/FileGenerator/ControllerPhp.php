@@ -1054,6 +1054,10 @@ class ControllerPhp
 
         }
 
+        if ($postData['viewCustomCode']) {
+            $code .= $postData['viewCustomCode'] . PHP_EOL . PHP_EOL;
+        }
+
         $code .= BlockBuilderUtility::tab(1) . '}' . PHP_EOL . PHP_EOL;
 
 

@@ -211,6 +211,7 @@ class BlockBuilder extends DashboardPageController
         $this->set('fieldsDivider', 'never');
         $this->set('entryFieldsDivider', 'never');
         $this->set('registerViewAssetsCustomCode', '');
+        $this->set('viewCustomCode', '');
         $this->set('customControllerMethods', '');
         $this->set('excludedFromRemoval', ['templates']);
         $this->set('basic', '');

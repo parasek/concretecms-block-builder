@@ -189,6 +189,23 @@ use Concrete\Core\System\Info as SystemInfo;
                 </div>
             </div>
 
+            <div class="mb-4 <?php in_array('viewCustomCode', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?php echo $form->label('viewCustomCode', t('Custom code inside view() method')); ?>
+                <?php echo $form->textarea('viewCustomCode', $viewCustomCode, ['style' => 'min-height: 200px;']); ?>
+                <div class="form-text">
+                    <?= t('You can use this field to including custom php code.'); ?>
+                    <br>
+                    <?php echo t('Be careful when inserting custom code, invalid syntax can lead to errors.'); ?>
+                    <br>
+                    <?= t('Use %s spaces as first indentation.', 8); ?>
+                    <br>
+                    <strong class="d-block mt-2"><?= t('Example code'); ?>:</strong>
+                    <code class="bb-code-block">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$this->set('someVariable', 'value');
+                    </code>
+                </div>
+            </div>
+
             <div class="mb-4 <?php in_array('customControllerMethods', $fieldsWithError) ? print 'has-error' : false; ?>">
                 <?php echo $form->label('customControllerMethods', t('Custom controller methods')); ?>
                 <?php echo $form->textarea('customControllerMethods', $customControllerMethods, ['style' => 'min-height: 200px;']); ?>
