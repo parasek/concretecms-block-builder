@@ -1,16 +1,16 @@
-<?php namespace BlockBuilder\FileGenerator;
+<?php
 
-use Concrete\Core\File\Service\File as FileService;
+namespace BlockBuilder\FileGenerator;
+
 use BlockBuilder\Utility as BlockBuilderUtility;
+use Concrete\Core\File\Service\File as FileService;
 
-defined('C5_EXECUTE') or die('Access Denied.');
+defined('C5_EXECUTE') or exit('Access Denied.');
 
 class FormPhp
 {
-
     public function generate($postDataSummary, $postData)
     {
-
         $filename = 'form.php';
 
         $code = '';
@@ -60,13 +60,11 @@ class FormPhp
         }
 
         if (!empty($postData['basic'])) {
-
             $previousFieldTypeHadMultipleFields = false;
             $i = 0;
 
             foreach ($postData['basic'] as $k => $v) {
-
-                $i++;
+                ++$i;
 
                 $required = !empty($v['required']) ? '.\' *\'' : '';
 
@@ -78,23 +76,23 @@ class FormPhp
                 // Horizontal line (smart)
                 if ($postData['fieldsDivider'] == 'smart') {
                     if (
-                        !empty($v['linkFromSitemapShowEndingField']) or
-                        !empty($v['linkFromSitemapShowTextField']) or
-                        !empty($v['linkFromSitemapShowTitleField']) or
-                        !empty($v['linkFromSitemapShowNewWindowField']) or
-                        !empty($v['linkFromSitemapShowNoFollowField']) or
-                        !empty($v['linkFromFileManagerShowEndingField']) or
-                        !empty($v['linkFromFileManagerShowTextField']) or
-                        !empty($v['linkFromFileManagerShowTitleField']) or
-                        !empty($v['linkFromFileManagerShowNewWindowField']) or
-                        !empty($v['linkFromFileManagerShowNoFollowField']) or
-                        !empty($v['externalLinkShowEndingField']) or
-                        !empty($v['externalLinkShowTextField']) or
-                        !empty($v['externalLinkShowTitleField']) or
-                        !empty($v['externalLinkShowNewWindowField']) or
-                        !empty($v['externalLinkShowNoFollowField']) or
-                        ($v['fieldType'] == 'link') or
-                        ($v['fieldType'] == 'image')
+                        !empty($v['linkFromSitemapShowEndingField'])
+                        or !empty($v['linkFromSitemapShowTextField'])
+                        or !empty($v['linkFromSitemapShowTitleField'])
+                        or !empty($v['linkFromSitemapShowNewWindowField'])
+                        or !empty($v['linkFromSitemapShowNoFollowField'])
+                        or !empty($v['linkFromFileManagerShowEndingField'])
+                        or !empty($v['linkFromFileManagerShowTextField'])
+                        or !empty($v['linkFromFileManagerShowTitleField'])
+                        or !empty($v['linkFromFileManagerShowNewWindowField'])
+                        or !empty($v['linkFromFileManagerShowNoFollowField'])
+                        or !empty($v['externalLinkShowEndingField'])
+                        or !empty($v['externalLinkShowTextField'])
+                        or !empty($v['externalLinkShowTitleField'])
+                        or !empty($v['externalLinkShowNewWindowField'])
+                        or !empty($v['externalLinkShowNoFollowField'])
+                        or ($v['fieldType'] == 'link')
+                        or ($v['fieldType'] == 'image')
                     ) {
                         if ($i != 1) {
                             $code .= BlockBuilderUtility::tab(3) . '<hr/>' . PHP_EOL . PHP_EOL;
@@ -110,7 +108,6 @@ class FormPhp
 
                 // Field types
                 if ($v['fieldType'] == 'text_field') {
-
                     $code .= BlockBuilderUtility::tab(3) . '<div class="mb-4">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '\'), t(\'' . addslashes($v['label']) . '\')' . $required . '); ?>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->text($view->field(\'' . $v['handle'] . '\'), $' . $v['handle'] . ', [\'maxlength\'=>\'255\']); ?>' . PHP_EOL;
@@ -118,11 +115,9 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(4) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
                     }
                     $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'number') {
-
                     $code .= BlockBuilderUtility::tab(3) . '<div class="mb-4">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '\'), t(\'' . addslashes($v['label']) . '\')' . $required . '); ?>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->number($view->field(\'' . $v['handle'] . '\'), $' . $v['handle'] . ', [\'min\'=>\'' . $v['numberMin'] . '\', \'max\'=>\'' . $v['numberMax'] . '\', \'step\'=>\'' . $v['numberStep'] . '\']); ?>' . PHP_EOL;
@@ -130,11 +125,9 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(4) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
                     }
                     $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'textarea') {
-
                     $height = !empty($v['textareaHeight']) ? ', [\'style\'=>\'height: ' . $v['textareaHeight'] . 'px\']' : false;
 
                     $code .= BlockBuilderUtility::tab(3) . '<div class="mb-4">' . PHP_EOL;
@@ -144,11 +137,9 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(4) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
                     }
                     $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'wysiwyg_editor') {
-
                     $height = !empty($v['wysiwygEditorHeight']) ? $v['wysiwygEditorHeight'] : false;
                     $customConfig = !empty($v['wysiwygCustomConfig']) ? $v['wysiwygCustomConfig'] : '{}';
 
@@ -169,11 +160,9 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(4) . '</style>' . PHP_EOL;
                     }
                     $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'select_field') {
-
                     $code .= BlockBuilderUtility::tab(3) . '<div class="mb-4">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '\'), t(\'' . addslashes($v['label']) . '\')' . $required . '); ?>' . PHP_EOL;
 
@@ -211,11 +200,9 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(4) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
                     }
                     $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'select_multiple_field') {
-
                     $code .= BlockBuilderUtility::tab(3) . '<div class="mb-4">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '\'), t(\'' . addslashes($v['label']) . '\')' . $required . '); ?>' . PHP_EOL;
 
@@ -254,11 +241,9 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(4) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
                     }
                     $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'link') {
-
                     $fieldGroupHighlight = '';
                     if ($postData['highlightMultiElementFields']) {
                         $fieldGroupHighlight = ' field-group-highlight';
@@ -390,18 +375,15 @@ class FormPhp
                     $code .= BlockBuilderUtility::tab(4) . '</script>' . PHP_EOL . PHP_EOL;
 
                     $code .= BlockBuilderUtility::tab(3) . '</div><?php // .js-link-wrapper ?>' . PHP_EOL . PHP_EOL;
-
-
                 }
 
                 if ($v['fieldType'] == 'link_from_sitemap') {
-
                     $hasMultipleElements =
-                        !empty($v['linkFromSitemapShowEndingField']) ||
-                        !empty($v['linkFromSitemapShowTextField']) ||
-                        !empty($v['linkFromSitemapShowTitleField']) ||
-                        !empty($v['linkFromSitemapShowNewWindowField']) ||
-                        !empty($v['linkFromSitemapShowNoFollowField']);
+                        !empty($v['linkFromSitemapShowEndingField'])
+                        || !empty($v['linkFromSitemapShowTextField'])
+                        || !empty($v['linkFromSitemapShowTitleField'])
+                        || !empty($v['linkFromSitemapShowNewWindowField'])
+                        || !empty($v['linkFromSitemapShowNoFollowField']);
                     $fieldGroupHighlight = '';
                     if ($postData['highlightMultiElementFields'] && $hasMultipleElements) {
                         $fieldGroupHighlight = ' field-group-highlight mb-4';
@@ -454,17 +436,15 @@ class FormPhp
                     }
 
                     $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'link_from_file_manager') {
-
                     $hasMultipleElements =
-                        !empty($v['linkFromFileManagerShowEndingField']) ||
-                        !empty($v['linkFromFileManagerShowTextField']) ||
-                        !empty($v['linkFromFileManagerShowTitleField']) ||
-                        !empty($v['linkFromFileManagerShowNewWindowField']) ||
-                        !empty($v['linkFromFileManagerShowNoFollowField']);
+                        !empty($v['linkFromFileManagerShowEndingField'])
+                        || !empty($v['linkFromFileManagerShowTextField'])
+                        || !empty($v['linkFromFileManagerShowTitleField'])
+                        || !empty($v['linkFromFileManagerShowNewWindowField'])
+                        || !empty($v['linkFromFileManagerShowNoFollowField']);
                     $fieldGroupHighlight = '';
                     if ($postData['highlightMultiElementFields'] && $hasMultipleElements) {
                         $fieldGroupHighlight = ' field-group-highlight mb-4';
@@ -517,17 +497,15 @@ class FormPhp
                     }
 
                     $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'external_link') {
-
                     $hasMultipleElements =
-                        !empty($v['externalLinkShowEndingField']) ||
-                        !empty($v['externalLinkShowTextField']) ||
-                        !empty($v['externalLinkShowTitleField']) ||
-                        !empty($v['externalLinkShowNewWindowField']) ||
-                        !empty($v['externalLinkShowNoFollowField']);
+                        !empty($v['externalLinkShowEndingField'])
+                        || !empty($v['externalLinkShowTextField'])
+                        || !empty($v['externalLinkShowTitleField'])
+                        || !empty($v['externalLinkShowNewWindowField'])
+                        || !empty($v['externalLinkShowNoFollowField']);
                     $fieldGroupHighlight = '';
                     if ($postData['highlightMultiElementFields'] && $hasMultipleElements) {
                         $fieldGroupHighlight = ' field-group-highlight mb-4';
@@ -602,15 +580,13 @@ class FormPhp
                     }
 
                     $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'image') {
-
                     $hasMultipleElements =
-                        !empty($v['imageShowAltTextField']) ||
-                        (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable'])) ||
-                        (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']));
+                        !empty($v['imageShowAltTextField'])
+                        || (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable']))
+                        || (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']));
                     $fieldGroupHighlight = '';
                     if ($postData['highlightMultiElementFields'] && $hasMultipleElements) {
                         $fieldGroupHighlight = ' field-group-highlight';
@@ -644,7 +620,6 @@ class FormPhp
                     $code .= BlockBuilderUtility::tab(4) . '</div>' . PHP_EOL . PHP_EOL;
 
                     if (!empty($v['imageShowAltTextField']) or (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable'])) or (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']))) {
-
                         $code .= BlockBuilderUtility::tab(4) . '<div class="js-additional-image-fields-wrapper-' . $v['handle'] . '-<?php echo $uniqueID; ?>" <?php if (empty($' . $v['handle'] . '_data[\'show_additional_fields\'])): ?>style="display: none;"<?php endif; ?>>' . PHP_EOL . PHP_EOL;
 
                         if (!empty($v['imageShowAltTextField'])) {
@@ -776,15 +751,12 @@ class FormPhp
 
                         $code .= BlockBuilderUtility::tab(5) . '});' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(4) . '</script>' . PHP_EOL . PHP_EOL;
-
                     }
 
                     $code .= BlockBuilderUtility::tab(3) . '</div><?php // .js-image-wrapper ?>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'express') {
-
                     $code .= BlockBuilderUtility::tab(3) . '<div class="mb-4">' . PHP_EOL;
 
                     $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '\'), t(\'' . addslashes($v['label']) . '\')); ?>' . PHP_EOL;
@@ -801,14 +773,12 @@ class FormPhp
                     }
 
                     $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'file_set') {
-
                     $code .= BlockBuilderUtility::tab(3) . '<div class="mb-4">' . PHP_EOL;
 
-                    $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '\'), t(\'' . addslashes($v['label']) . '\')' . $required . '); ?>' . PHP_EOL ;
+                    $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '\'), t(\'' . addslashes($v['label']) . '\')' . $required . '); ?>' . PHP_EOL;
 
                     if (!empty($v['fileSetPrefix'])) {
                         $code .= BlockBuilderUtility::tab(4) . '<div class="input-group">' . PHP_EOL;
@@ -824,11 +794,9 @@ class FormPhp
                     }
 
                     $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'html_editor') {
-
                     $height = !empty($v['htmlEditorHeight']) ? $v['htmlEditorHeight'] : 250;
 
                     $code .= BlockBuilderUtility::tab(3) . '<div class="mb-4">' . PHP_EOL . PHP_EOL;
@@ -854,11 +822,9 @@ class FormPhp
                     $code .= BlockBuilderUtility::tab(4) . '</script>' . PHP_EOL . PHP_EOL;
 
                     $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'date_picker') {
-
                     $code .= BlockBuilderUtility::tab(3) . '<div class="mb-4">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '\'), t(\'' . addslashes($v['label']) . '\')' . $required . '); ?>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '<?php echo $app->make(\'helper/form/date_time\')->date($view->field(\'' . $v['handle'] . '\'), $' . $v['handle'] . '); ?>' . PHP_EOL;
@@ -866,11 +832,9 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(4) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
                     }
                     $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'color_picker') {
-
                     $code .= BlockBuilderUtility::tab(3) . '<div class="mb-4">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '\'), t(\'' . addslashes($v['label']) . '\')' . $required . '); ?>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '<div>' . PHP_EOL;
@@ -880,11 +844,9 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(4) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
                     }
                     $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'icon_picker') {
-
                     $code .= BlockBuilderUtility::tab(3) . '<div class="mb-4">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '<?php echo $form->label($view->field(\'' . $v['handle'] . '\'), t(\'' . addslashes($v['label']) . '\')' . $required . '); ?>' . PHP_EOL;
 
@@ -910,20 +872,17 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(4) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
                     }
                     $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
-
             }
-
         }
 
         if (!empty($postData['basic'])) {
             $code .= BlockBuilderUtility::tab(2) . '</div>' . PHP_EOL . PHP_EOL;
         }
 
-        ///////////////////////////////////////////////////////////////////////////
+        // /////////////////////////////////////////////////////////////////////////
         // Entries
-        ///////////////////////////////////////////////////////////////////////////
+        // /////////////////////////////////////////////////////////////////////////
 
         if (!empty($postData['entries'])) {
             $code .= BlockBuilderUtility::tab(2) . '<div class="js-tab-pane';
@@ -938,7 +897,6 @@ class FormPhp
         }
 
         if (!empty($postData['entries'])) {
-
             $code .= BlockBuilderUtility::tab(3) . '<div class="mb-3 entries-actions">' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(4) . '<button type="button" class="btn btn-primary entries-action-button js-add-entry" data-action="prepend"><?php echo t(\'' . addslashes($postData['addAtTheTopLabel']) . '\'); ?></button>' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(4) . '<button type="button" class="btn btn-primary entries-action-button js-add-entry" data-action="append"><?php echo t(\'' . addslashes($postData['addAtTheBottomLabel']) . '\'); ?></button>' . PHP_EOL;
@@ -995,7 +953,6 @@ class FormPhp
         }
 
         if (!empty($postData['entries'])) {
-
             $code .= BlockBuilderUtility::tab(3) . '<script type="text/template" class="js-entry-template">' . PHP_EOL . PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(4) . '<div class="well entry js-entry" data-position="<%=_.escape(position)%>">' . PHP_EOL . PHP_EOL;
@@ -1023,13 +980,11 @@ class FormPhp
 
             $code .= BlockBuilderUtility::tab(5) . '<div class="entry-content js-entry-content" <% if (keepAddedEntryCollapsed) { %>style="display: none;"<% } %>>' . PHP_EOL . PHP_EOL;
 
-
             $previousFieldTypeHadMultipleFields = false;
             $i = 0;
 
             foreach ($postData['entries'] as $k => $v) {
-
-                $i++;
+                ++$i;
 
                 $required = !empty($v['required']) ? ' *' : '';
 
@@ -1041,23 +996,23 @@ class FormPhp
                 // Horizontal line (smart)
                 if ($postData['entryFieldsDivider'] == 'smart') {
                     if (
-                        !empty($v['linkFromSitemapShowEndingField']) or
-                        !empty($v['linkFromSitemapShowTextField']) or
-                        !empty($v['linkFromSitemapShowTitleField']) or
-                        !empty($v['linkFromSitemapShowNewWindowField']) or
-                        !empty($v['linkFromSitemapShowNoFollowField']) or
-                        !empty($v['linkFromFileManagerShowEndingField']) or
-                        !empty($v['linkFromFileManagerShowTextField']) or
-                        !empty($v['linkFromFileManagerShowTitleField']) or
-                        !empty($v['linkFromFileManagerShowNewWindowField']) or
-                        !empty($v['linkFromFileManagerShowNoFollowField']) or
-                        !empty($v['externalLinkShowEndingField']) or
-                        !empty($v['externalLinkShowTextField']) or
-                        !empty($v['externalLinkShowTitleField']) or
-                        !empty($v['externalLinkShowNewWindowField']) or
-                        !empty($v['externalLinkShowNoFollowField']) or
-                        ($v['fieldType'] == 'link') or
-                        ($v['fieldType'] == 'image')
+                        !empty($v['linkFromSitemapShowEndingField'])
+                        or !empty($v['linkFromSitemapShowTextField'])
+                        or !empty($v['linkFromSitemapShowTitleField'])
+                        or !empty($v['linkFromSitemapShowNewWindowField'])
+                        or !empty($v['linkFromSitemapShowNoFollowField'])
+                        or !empty($v['linkFromFileManagerShowEndingField'])
+                        or !empty($v['linkFromFileManagerShowTextField'])
+                        or !empty($v['linkFromFileManagerShowTitleField'])
+                        or !empty($v['linkFromFileManagerShowNewWindowField'])
+                        or !empty($v['linkFromFileManagerShowNoFollowField'])
+                        or !empty($v['externalLinkShowEndingField'])
+                        or !empty($v['externalLinkShowTextField'])
+                        or !empty($v['externalLinkShowTitleField'])
+                        or !empty($v['externalLinkShowNewWindowField'])
+                        or !empty($v['externalLinkShowNoFollowField'])
+                        or ($v['fieldType'] == 'link')
+                        or ($v['fieldType'] == 'image')
                     ) {
                         if ($i != 1) {
                             $code .= BlockBuilderUtility::tab(6) . '<hr/>' . PHP_EOL . PHP_EOL;
@@ -1073,7 +1028,6 @@ class FormPhp
 
                 // Field types
                 if ($v['fieldType'] == 'text_field') {
-
                     $jsEntryTitleSource = ($postDataSummary['entryTitleSource'] == $v['handle']) ? ' js-entry-title-source' : false;
 
                     $code .= BlockBuilderUtility::tab(6) . '<div class="mb-4">' . PHP_EOL;
@@ -1083,11 +1037,9 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(7) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
                     }
                     $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'number') {
-
                     $code .= BlockBuilderUtility::tab(6) . '<div class="mb-4">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" class="form-label"><?php echo t(\'' . addslashes($v['label']) . '\'); ?>' . $required . '</label>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '<input type="number" id="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" name="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" value="<%=_.escape(' . $v['handle'] . ')%>" class="form-control" min="' . $v['numberMin'] . '"  max="' . $v['numberMax'] . '"  step="' . $v['numberStep'] . '" />' . PHP_EOL;
@@ -1095,11 +1047,9 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(7) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
                     }
                     $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'textarea') {
-
                     $jsEntryTitleSource = ($postDataSummary['entryTitleSource'] == $v['handle']) ? ' js-entry-title-source' : false;
 
                     $height = !empty($v['textareaHeight']) ? ' style="height: ' . $v['textareaHeight'] . 'px;"' : false;
@@ -1111,11 +1061,9 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(7) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
                     }
                     $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'wysiwyg_editor') {
-
                     $height = !empty($v['wysiwygEditorHeight']) ? $v['wysiwygEditorHeight'] : false;
 
                     $code .= BlockBuilderUtility::tab(6) . '<div class="mb-4 js-custom-editor-height-<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']-<?php echo $uniqueID; ?>">' . PHP_EOL;
@@ -1135,11 +1083,9 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(7) . '</style>' . PHP_EOL;
                     }
                     $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'select_field') {
-
                     $code .= BlockBuilderUtility::tab(6) . '<div class="mb-4">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" class="form-label"><?php echo t(\'' . addslashes($v['label']) . '\'); ?>' . $required . '</label>' . PHP_EOL;
 
@@ -1173,11 +1119,9 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(7) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
                     }
                     $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'select_multiple_field') {
-
                     $code .= BlockBuilderUtility::tab(6) . '<div class="mb-4">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" class="form-label"><?php echo t(\'' . addslashes($v['label']) . '\'); ?>' . $required . '</label>' . PHP_EOL;
 
@@ -1215,11 +1159,9 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(7) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
                     }
                     $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'link') {
-
                     $fieldGroupHighlight = '';
                     if ($postData['highlightMultiElementFields']) {
                         $fieldGroupHighlight = ' field-group-highlight';
@@ -1321,17 +1263,15 @@ class FormPhp
                     $code .= BlockBuilderUtility::tab(8) . '</div>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(6) . '</div><?php // .js-link-wrapper ?>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'link_from_sitemap') {
-
                     $hasMultipleElements =
-                        !empty($v['linkFromSitemapShowEndingField']) ||
-                        !empty($v['linkFromSitemapShowTextField']) ||
-                        !empty($v['linkFromSitemapShowTitleField']) ||
-                        !empty($v['linkFromSitemapShowNoFollowField']) ||
-                        !empty($v['linkFromSitemapShowNewWindowField']);
+                        !empty($v['linkFromSitemapShowEndingField'])
+                        || !empty($v['linkFromSitemapShowTextField'])
+                        || !empty($v['linkFromSitemapShowTitleField'])
+                        || !empty($v['linkFromSitemapShowNoFollowField'])
+                        || !empty($v['linkFromSitemapShowNewWindowField']);
                     $fieldGroupHighlight = '';
                     if ($postData['highlightMultiElementFields'] && $hasMultipleElements) {
                         $fieldGroupHighlight = ' field-group-highlight mb-4';
@@ -1397,17 +1337,15 @@ class FormPhp
                     }
 
                     $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'link_from_file_manager') {
-
                     $hasMultipleElements =
-                        !empty($v['linkFromFileManagerShowEndingField']) ||
-                        !empty($v['linkFromFileManagerShowTextField']) ||
-                        !empty($v['linkFromFileManagerShowTitleField']) ||
-                        !empty($v['linkFromFileManagerShowNoFollowField']) ||
-                        !empty($v['linkFromFileManagerShowNewWindowField']);
+                        !empty($v['linkFromFileManagerShowEndingField'])
+                        || !empty($v['linkFromFileManagerShowTextField'])
+                        || !empty($v['linkFromFileManagerShowTitleField'])
+                        || !empty($v['linkFromFileManagerShowNoFollowField'])
+                        || !empty($v['linkFromFileManagerShowNewWindowField']);
                     $fieldGroupHighlight = '';
                     if ($postData['highlightMultiElementFields'] && $hasMultipleElements) {
                         $fieldGroupHighlight = ' field-group-highlight mb-4';
@@ -1474,11 +1412,9 @@ class FormPhp
                     }
 
                     $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'express') {
-
                     $code .= BlockBuilderUtility::tab(6) . '<div class="mb-4">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" class="form-label"><?php echo t(\'' . addslashes($v['label']) . '\'); ?>' . $required . '</label>' . PHP_EOL;
 
@@ -1496,11 +1432,9 @@ class FormPhp
                     }
 
                     $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'file_set') {
-
                     $code .= BlockBuilderUtility::tab(6) . '<div class="mb-4">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" class="form-label"><?php echo t(\'' . addslashes($v['label']) . '\'); ?>' . $required . '</label>' . PHP_EOL;
 
@@ -1525,17 +1459,15 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(7) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
                     }
                     $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'external_link') {
-
                     $hasMultipleElements =
-                        !empty($v['externalLinkShowEndingField']) ||
-                        !empty($v['externalLinkShowTextField']) ||
-                        !empty($v['externalLinkShowTitleField']) ||
-                        !empty($v['externalLinkShowNoFollowField']) ||
-                        !empty($v['externalLinkShowNewWindowField']);
+                        !empty($v['externalLinkShowEndingField'])
+                        || !empty($v['externalLinkShowTextField'])
+                        || !empty($v['externalLinkShowTitleField'])
+                        || !empty($v['externalLinkShowNoFollowField'])
+                        || !empty($v['externalLinkShowNewWindowField']);
                     $fieldGroupHighlight = '';
                     if ($postData['highlightMultiElementFields'] && $hasMultipleElements) {
                         $fieldGroupHighlight = ' field-group-highlight mb-4';
@@ -1606,15 +1538,13 @@ class FormPhp
                     }
 
                     $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'image') {
-
                     $hasMultipleElements =
-                        !empty($v['imageShowAltTextField']) ||
-                        (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable'])) ||
-                        (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']));
+                        !empty($v['imageShowAltTextField'])
+                        || (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable']))
+                        || (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']));
                     $fieldGroupHighlight = '';
                     if ($postData['highlightMultiElementFields'] && $hasMultipleElements) {
                         $fieldGroupHighlight = ' field-group-highlight';
@@ -1656,7 +1586,6 @@ class FormPhp
                     $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL . PHP_EOL; // row margin-bottom
 
                     if (!empty($v['imageShowAltTextField']) or (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable'])) or (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']))) {
-
                         $code .= BlockBuilderUtility::tab(7) . '<div class="js-additional-image-fields-wrapper" <% if (!parseInt(' . $v['handle'] . '_show_additional_fields)) { %>style="display: none;"<% } %>>' . PHP_EOL . PHP_EOL;
 
                         if (!empty($v['imageShowAltTextField'])) {
@@ -1751,15 +1680,12 @@ class FormPhp
                         }
 
                         $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL . PHP_EOL; // .js-additional-image-fields-wrapper
-
                     }
 
                     $code .= BlockBuilderUtility::tab(6) . '</div><?php // .js-image-wrapper ?>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'html_editor') {
-
                     $height = !empty($v['htmlEditorHeight']) ? $v['htmlEditorHeight'] : 250;
 
                     $code .= BlockBuilderUtility::tab(6) . '<div class="mb-4">' . PHP_EOL;
@@ -1770,11 +1696,9 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(7) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
                     }
                     $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'date_picker') {
-
                     $code .= BlockBuilderUtility::tab(6) . '<div class="mb-4">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" class="form-label"><?php echo t(\'' . addslashes($v['label']) . '\'); ?>' . $required . '</label>' . PHP_EOL;
 
@@ -1787,11 +1711,9 @@ class FormPhp
                     $code .= BlockBuilderUtility::tab(7) . '</div>' . PHP_EOL;
 
                     $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'color_picker') {
-
                     $code .= BlockBuilderUtility::tab(6) . '<div class="mb-4">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" class="form-label"><?php echo t(\'' . addslashes($v['label']) . '\'); ?>' . $required . '</label>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '<div>' . PHP_EOL;
@@ -1812,11 +1734,9 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(7) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
                     }
                     $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'icon_picker') {
-
                     $code .= BlockBuilderUtility::tab(6) . '<div class="mb-4">' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '<label for="<?php echo $view->field(\'entry\'); ?>[<%=_.escape(position)%>][' . $v['handle'] . ']" class="form-label"><?php echo t(\'' . addslashes($v['label']) . '\'); ?>' . $required . '</label>' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(7) . '<div class="js-icon-picker">' . PHP_EOL;
@@ -1830,9 +1750,7 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(7) . '<div class="form-text"><?php echo t(\'' . addslashes($v['helpText']) . '\'); ?></div>' . PHP_EOL;
                     }
                     $code .= BlockBuilderUtility::tab(6) . '</div>' . PHP_EOL . PHP_EOL;
-
                 }
-
             }
 
             $code .= BlockBuilderUtility::tab(5) . '</div>' . PHP_EOL . PHP_EOL;
@@ -1840,21 +1758,17 @@ class FormPhp
             $code .= BlockBuilderUtility::tab(4) . '</div>' . PHP_EOL . PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(3) . '</script>' . PHP_EOL . PHP_EOL;
-
         }
 
         if (!empty($postData['entries'])) {
-
             $code .= BlockBuilderUtility::tab(3) . '<script type="text/template" class="js-template-no-entries">' . PHP_EOL . PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(4) . '<div class="alert alert-info js-alert"><?php echo t(\'' . addslashes($postData['noEntriesFoundLabel']) . '\'); ?></div>' . PHP_EOL . PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(3) . '</script>' . PHP_EOL . PHP_EOL;
-
         }
 
         if (!empty($postData['entries'])) {
-
             $code .= BlockBuilderUtility::tab(3) . '<script>' . PHP_EOL . PHP_EOL;
 
             if ($postDataSummary['wysiwygEditorUsed_entry']) {
@@ -1875,27 +1789,22 @@ class FormPhp
 
             $code .= BlockBuilderUtility::tab(4) . '});' . PHP_EOL . PHP_EOL;
             $code .= BlockBuilderUtility::tab(3) . '</script>' . PHP_EOL . PHP_EOL;
-
         }
 
         if (!empty($postData['entries'])) {
             $code .= BlockBuilderUtility::tab(2) . '</div>' . PHP_EOL . PHP_EOL;
         }
 
-        ///////////////////////////////////////////////////////////////////////////
-        /// Settings tab
-        ///////////////////////////////////////////////////////////////////////////
+        // /////////////////////////////////////////////////////////////////////////
+        // / Settings tab
+        // /////////////////////////////////////////////////////////////////////////
 
         if (!empty($postDataSummary['settingsTab'])) {
-
             $code .= BlockBuilderUtility::tab(2) . '<div class="js-tab-pane tab-pane" id="settings-tab-<?php echo $uniqueID; ?>">' . PHP_EOL . PHP_EOL;
 
             foreach ($postData['entries'] as $k => $v) {
-
                 if ($v['fieldType'] == 'image') {
-
                     if (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable'])) {
-
                         $code .= BlockBuilderUtility::tab(3) . '<div class="mb-4 js-image-settings-wrapper">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(4) . '<div class="row margin-bottom">' . PHP_EOL;
 
@@ -1937,7 +1846,6 @@ class FormPhp
                     }
 
                     if (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable'])) {
-
                         $code .= BlockBuilderUtility::tab(3) . '<div class="mb-4 js-fullscreen-image-settings-wrapper">' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(4) . '<div class="row margin-bottom">' . PHP_EOL;
 
@@ -1977,32 +1885,25 @@ class FormPhp
                         $code .= BlockBuilderUtility::tab(4) . '</div>' . PHP_EOL; // .row margin-bottom
                         $code .= BlockBuilderUtility::tab(3) . '</div>' . PHP_EOL . PHP_EOL; // .js-fullscreen-image-settings-wrapper
                     }
-
                 }
-
             }
 
             $code .= BlockBuilderUtility::tab(2) . '</div>' . PHP_EOL . PHP_EOL; // .js-tab-pane
-
         }
 
-        ///////////////////////////////////////////////////////////////////////////
-        /// Footer
-        ///////////////////////////////////////////////////////////////////////////
+        // /////////////////////////////////////////////////////////////////////////
+        // / Footer
+        // /////////////////////////////////////////////////////////////////////////
 
         if (!empty($postData['requiredFieldsLabel']) and (!empty($postDataSummary['requiredFields']) or !empty($postDataSummary['requiredEntryFields']))) {
             $code .= BlockBuilderUtility::tab(2) . '<hr/>' . PHP_EOL . PHP_EOL;
             $code .= BlockBuilderUtility::tab(2) . '<div class="form-text">* <?php echo t(\'' . addslashes($postData['requiredFieldsLabel']) . '\'); ?></div>' . PHP_EOL . PHP_EOL;
         }
 
-
         $code .= BlockBuilderUtility::tab(1) . '</div>' . PHP_EOL . PHP_EOL; // .tab-content
         $code .= '</div>'; // #form-container-x
 
-
         $fileService = new FileService();
         $fileService->append($postDataSummary['blockPath'] . DIRECTORY_SEPARATOR . $filename, $code);
-
     }
-
 }

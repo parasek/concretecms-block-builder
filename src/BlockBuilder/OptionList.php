@@ -1,15 +1,15 @@
-<?php namespace BlockBuilder;
+<?php
+
+namespace BlockBuilder;
 
 use Concrete\Core\Block\BlockType\Set as BlockTypeSet;
 
-defined('C5_EXECUTE') or die('Access Denied.');
+defined('C5_EXECUTE') or exit('Access Denied.');
 
 class OptionList
 {
-
     public function getBlockTypeSets()
     {
-
         $options = [];
         $options[''] = t('None');
 
@@ -30,7 +30,6 @@ class OptionList
         }
 
         return $options;
-
     }
 
     public function getCacheBlockRecordOptions()
@@ -83,18 +82,15 @@ class OptionList
 
     public function getEntriesAsFirstTabOptions()
     {
-
         $options = [];
         $options[0] = t('No');
         $options[1] = t('Yes');
 
         return $options;
-
     }
 
     public function getFieldTypes()
     {
-
         $options = [];
         $options[''] = t('+ Add new field type');
         $options['text_field'] = t('Text');
@@ -116,46 +112,38 @@ class OptionList
         $options['icon_picker'] = t('Icon Picker');
 
         return $options;
-
     }
 
     public function getHighlightMultiElementFieldsOptions()
     {
-
         $options = [];
         $options[0] = t('No');
         $options[1] = t('Yes');
 
         return $options;
-
     }
 
     public function getDividerOptions()
     {
-
         $options = [];
         $options['smart'] = t('Only if the field type consists of more than 1 element (default)');
         $options['always'] = t('Always');
         $options['never'] = t('Never');
 
         return $options;
-
     }
 
     public function getInstallBlockOptions()
     {
-
         $options = [];
         $options[0] = t('No');
         $options[1] = t('Yes');
 
         return $options;
-
     }
 
     public function getSelectFieldTypes()
     {
-
         $options = [
             'default_select' => t('Default Select Field'),
             'enhanced_select' => t('Enhanced Select Field'),
@@ -163,12 +151,10 @@ class OptionList
         ];
 
         return $options;
-
     }
 
     public function getSelectMultipleFieldTypes()
     {
-
         $options = [
             'default_multiselect' => t('Default Multiselect Field'),
             'enhanced_multiselect' => t('Enhanced Multiselect Field'),
@@ -176,19 +162,15 @@ class OptionList
         ];
 
         return $options;
-
     }
 
     public function getSelectFieldListGenerationMethods()
     {
-
         $options = [
             'basic_list' => t('Basic list'),
             'custom_code' => t('Custom code'),
         ];
 
         return $options;
-
     }
-
 }

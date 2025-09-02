@@ -1,20 +1,20 @@
-<?php namespace Concrete\Package\BlockBuilder\Controller;
+<?php
+
+namespace Concrete\Package\BlockBuilder\Controller;
 
 use Concrete\Core\Controller\Controller;
-use Concrete\Core\Validation\CSRF\Token;
 use Concrete\Core\File\Service\File as FileService;
 use Concrete\Core\Page\Page;
 use Concrete\Core\Permission\Checker as Permissions;
 use Concrete\Core\User\User;
+use Concrete\Core\Validation\CSRF\Token;
 
-defined('C5_EXECUTE') or die('Access Denied.');
+defined('C5_EXECUTE') or exit('Access Denied.');
 
 class Ajax extends Controller
 {
-
     public function deleteBlockTypeFolder()
     {
-
         $response = [];
 
         // Check simple permissions
@@ -23,53 +23,45 @@ class Ajax extends Controller
         $p = new Permissions(Page::getByID(1)); // Check if user can edit Homepage
 
         if (!$u->IsLoggedIn() or !$p->canWrite()) {
-
             $response['status'] = 'error';
             $response['code'] = 400;
             $response['message'] = t('Oops! Something went wrong...');
 
             echo $this->app->make('helper/json')->encode($response);
-            exit();
-
+            exit;
         }
 
         // Permit only $_POST actions
         if (!$this->post()) {
-
             $response['status'] = 'error';
             $response['code'] = 400;
             $response['message'] = t('Oops! Something went wrong...');
 
             echo $this->app->make('helper/json')->encode($response);
-            exit();
-
+            exit;
         }
 
         // Check against CSRF attacks
         $token = new Token();
 
         if (!$token->validate('ajax_csrf_token', $this->post('ajaxCsrfToken'))) {
-
             $response['status'] = 'error';
             $response['code'] = 400;
             $response['message'] = t('Oops! Something went wrong...');
 
             echo $this->app->make('helper/json')->encode($response);
-            exit();
-
+            exit;
         }
 
         // Delete folder
         $blockBuilderValidation = $this->app->build('BlockBuilder\Validation');
 
         if ($blockBuilderValidation->isBlockInstalled($this->post('handle'))) {
-
             $response['status'] = 'error';
             $response['code'] = 400;
             $response['message'] = t('Uninstall block type before deleting folder.');
             echo $this->app->make('helper/json')->encode($response);
             exit;
-
         }
 
         $blockTypePath = DIR_FILES_BLOCK_TYPES . DIRECTORY_SEPARATOR . $this->post('handle');
@@ -89,7 +81,5 @@ class Ajax extends Controller
         $response['message'] = t('Block type folder has been deleted.');
         echo $this->app->make('helper/json')->encode($response);
         exit;
-
     }
-
 }

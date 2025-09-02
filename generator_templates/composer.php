@@ -1,25 +1,25 @@
-<?php defined('C5_EXECUTE') or die('Access Denied.'); ?>
+<?php defined('C5_EXECUTE') or exit('Access Denied.'); ?>
 
 <div class="form-group">
-    <label class="form-label"><?php echo $label; ?></label>
+    <label class="form-label"><?= $label; ?></label>
     <?php if ($description): ?>
-        <i class="fas fa-question-circle launch-tooltip" title="" data-original-title="<?php echo $description; ?>"></i>
+        <i class="fas fa-question-circle launch-tooltip" title="" data-original-title="<?= $description; ?>"></i>
     <?php endif; ?>
     <div class="controls controls-custom">
         <?php
         $pageTypeComposerFormLayoutSetControlID = '';
-        $pageTypeComposerFormLayoutSetControlObject = $view->getPageTypeComposerFormLayoutSetControlObject();
-        if (is_object($pageTypeComposerFormLayoutSetControlObject)) {
-            $pageTypeComposerFormLayoutSetControlID = $pageTypeComposerFormLayoutSetControlObject->getPageTypeComposerFormLayoutSetControlID();
-        }
-        ?>
-        <div class="ccm-ui" data-page-type-composer-form-layout-set-control-id="<?php echo $pageTypeComposerFormLayoutSetControlID; ?>">
-            <?php echo $view->inc('form.php', ['view' => $view]); ?>
+$pageTypeComposerFormLayoutSetControlObject = $view->getPageTypeComposerFormLayoutSetControlObject();
+if (is_object($pageTypeComposerFormLayoutSetControlObject)) {
+    $pageTypeComposerFormLayoutSetControlID = $pageTypeComposerFormLayoutSetControlObject->getPageTypeComposerFormLayoutSetControlID();
+}
+?>
+        <div class="ccm-ui" data-page-type-composer-form-layout-set-control-id="<?= $pageTypeComposerFormLayoutSetControlID; ?>">
+            <?= $view->inc('form.php', ['view' => $view]); ?>
         </div>
     </div>
 </div>
 
-<?php // UI fixes for composer ?>
+<?php // UI fixes for composer?>
 <style>
     div#ccm-panel-detail-page-composer div.ccm-panel-detail-content .controls-custom ul.nav-tabs {
         padding-left: 0;

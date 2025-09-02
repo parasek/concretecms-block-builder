@@ -1,16 +1,16 @@
-<?php namespace BlockBuilder\FileGenerator;
+<?php
 
-use Concrete\Core\File\Service\File as FileService;
+namespace BlockBuilder\FileGenerator;
+
 use BlockBuilder\Utility as BlockBuilderUtility;
+use Concrete\Core\File\Service\File as FileService;
 
-defined('C5_EXECUTE') or die('Access Denied.');
+defined('C5_EXECUTE') or exit('Access Denied.');
 
 class ControllerPhp
 {
-
     public function generate($postDataSummary, $postData)
     {
-
         $filename = 'controller.php';
         $code = '';
 
@@ -148,10 +148,8 @@ class ControllerPhp
 
                     if (
                         (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable']))
-                        or
-                        (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']))
-                        or
-                        (!empty($v['imageShowAltTextField']))
+                        or (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']))
+                        or (!empty($v['imageShowAltTextField']))
                     ) {
                         $code .= BlockBuilderUtility::tab(1) . 'protected $' . $v['handle'] . '_data;' . PHP_EOL;
                     }
@@ -205,10 +203,8 @@ class ControllerPhp
         $code .= BlockBuilderUtility::tab(2) . 'return t(\'' . addslashes($postData['blockDescription']) . '\');' . PHP_EOL;
         $code .= BlockBuilderUtility::tab(1) . '}' . PHP_EOL . PHP_EOL;
 
-
         // 2. getSearchableContent()
         if (!empty($postDataSummary['searchableFields']) or !empty($postDataSummary['searchableEntryFields'])) {
-
             $code .= BlockBuilderUtility::tab(1) . 'public function getSearchableContent() {' . PHP_EOL . PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(2) . '$content = [];' . PHP_EOL;
@@ -230,9 +226,7 @@ class ControllerPhp
             $code .= BlockBuilderUtility::tab(2) . 'return implode(\' \', $content);' . PHP_EOL . PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(1) . '}' . PHP_EOL . PHP_EOL;
-
         }
-
 
         // 3A. on_start
         $code .= BlockBuilderUtility::tab(1) . 'public function on_start() {' . PHP_EOL . PHP_EOL;
@@ -248,15 +242,11 @@ class ControllerPhp
         }
 
         if (!empty($postData['basic'])) {
-
             foreach ($postData['basic'] as $k => $v) {
-
                 if ($v['fieldType'] == 'select_field') {
-
                     $code .= BlockBuilderUtility::tab(2) . '// ' . addslashes($v['label']) . ' (' . $v['handle'] . ') options' . PHP_EOL;
 
                     if (empty($v['selectListGenerationMethod']) || $v['selectListGenerationMethod'] === 'basic_list') {
-
                         $maxKeyLength = 0;
                         $tempOptions = [];
                         if (!empty($v['selectOptions'])) {
@@ -264,7 +254,7 @@ class ControllerPhp
                             if (is_array($options)) {
                                 $i = 0;
                                 foreach ($options as $k2 => $v2) {
-                                    $i++;
+                                    ++$i;
                                     $option = explode('::', $v2);
                                     $optionKey = !empty($option[1]) ? addslashes(trim($option[0])) : $i;
                                     $optionValue = !empty($option[1]) ? addslashes(trim($option[1])) : addslashes(trim($option[0]));
@@ -288,7 +278,6 @@ class ControllerPhp
                             $code .= BlockBuilderUtility::arrayGap($maxKeyLength, $tempOption['keyLength']);
                             $code .= '= t(\'' . $tempOption['value'] . '\');' . PHP_EOL;
                         }
-
                     } elseif (!empty($v['selectListGenerationMethod']) && $v['selectListGenerationMethod'] === 'custom_code') {
                         $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options = [];' . PHP_EOL;
                         $code .= $v['selectCustomCode'] . PHP_EOL;
@@ -296,15 +285,12 @@ class ControllerPhp
 
                     $code .= PHP_EOL;
                     $code .= BlockBuilderUtility::tab(2) . '$this->set(\'' . $v['handle'] . '_options\', $' . $v['handle'] . '_options);' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'select_multiple_field') {
-
                     $code .= BlockBuilderUtility::tab(2) . '// ' . addslashes($v['label']) . ' (' . $v['handle'] . ') options' . PHP_EOL;
 
                     if (empty($v['selectMultipleListGenerationMethod']) || $v['selectMultipleListGenerationMethod'] === 'basic_list') {
-
                         $maxKeyLength = 0;
                         $tempOptions = [];
                         if (!empty($v['selectMultipleOptions'])) {
@@ -312,7 +298,7 @@ class ControllerPhp
                             if (is_array($options)) {
                                 $i = 0;
                                 foreach ($options as $k2 => $v2) {
-                                    $i++;
+                                    ++$i;
                                     $option = explode('::', $v2);
                                     $optionKey = !empty($option[1]) ? addslashes(trim($option[0])) : $i;
                                     $optionValue = !empty($option[1]) ? addslashes(trim($option[1])) : addslashes(trim($option[0]));
@@ -331,7 +317,6 @@ class ControllerPhp
                             $code .= BlockBuilderUtility::arrayGap($maxKeyLength, $tempOption['keyLength']);
                             $code .= '= t(\'' . $tempOption['value'] . '\');' . PHP_EOL;
                         }
-
                     } elseif (!empty($v['selectMultipleListGenerationMethod']) && $v['selectMultipleListGenerationMethod'] === 'custom_code') {
                         $code .= BlockBuilderUtility::tab(2) . '$' . $v['handle'] . '_options = [];' . PHP_EOL;
                         $code .= $v['selectMultipleCustomCode'] . PHP_EOL;
@@ -339,16 +324,13 @@ class ControllerPhp
 
                     $code .= PHP_EOL;
                     $code .= BlockBuilderUtility::tab(2) . '$this->set(\'' . $v['handle'] . '_options\', $' . $v['handle'] . '_options);' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'image') {
                     if (
                         (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable']))
-                        or
-                        (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']))
-                        or
-                        (!empty($v['imageShowAltTextField']))
+                        or (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']))
+                        or (!empty($v['imageShowAltTextField']))
                     ) {
                         $code .= BlockBuilderUtility::tab(2) . '// ' . addslashes($v['label']) . ' (' . $v['handle'] . '_data) - Additional fields for Image' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(2) . '$this->' . $v['handle'] . '_data = is_array($this->' . $v['handle'] . '_data) ? $this->' . $v['handle'] . '_data : json_decode($this->' . $v['handle'] . '_data, true);' . PHP_EOL;
@@ -361,21 +343,15 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(2) . '$this->' . $v['handle'] . ' = is_array($this->' . $v['handle'] . ') ? $this->' . $v['handle'] . ' : json_decode($this->' . $v['handle'] . ', true);' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(2) . '$this->set(\'' . $v['handle'] . '\', $this->' . $v['handle'] . ');' . PHP_EOL . PHP_EOL;
                 }
-
             }
-
         }
 
         if (!empty($postData['entries'])) {
-
             foreach ($postData['entries'] as $k => $v) {
-
                 if ($v['fieldType'] == 'select_field') {
-
                     $code .= BlockBuilderUtility::tab(2) . '// Entry / ' . addslashes($v['label']) . ' (' . $v['handle'] . ') options' . PHP_EOL;
 
                     if (empty($v['selectListGenerationMethod']) || $v['selectListGenerationMethod'] === 'basic_list') {
-
                         $maxKeyLength = 0;
                         $tempOptions = [];
                         if (!empty($v['selectOptions'])) {
@@ -383,7 +359,7 @@ class ControllerPhp
                             if (is_array($options)) {
                                 $i = 0;
                                 foreach ($options as $k2 => $v2) {
-                                    $i++;
+                                    ++$i;
                                     $option = explode('::', $v2);
                                     $optionKey = !empty($option[1]) ? addslashes(trim($option[0])) : $i;
                                     $optionValue = !empty($option[1]) ? addslashes(trim($option[1])) : addslashes(trim($option[0]));
@@ -407,7 +383,6 @@ class ControllerPhp
                             $code .= BlockBuilderUtility::arrayGap($maxKeyLength, $tempOption['keyLength']);
                             $code .= '= t(\'' . $tempOption['value'] . '\');' . PHP_EOL;
                         }
-
                     } elseif (!empty($v['selectListGenerationMethod']) && $v['selectListGenerationMethod'] === 'custom_code') {
                         $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options = [];' . PHP_EOL;
                         $code .= $v['selectCustomCode'] . PHP_EOL;
@@ -415,15 +390,12 @@ class ControllerPhp
 
                     $code .= PHP_EOL;
                     $code .= BlockBuilderUtility::tab(2) . '$this->set(\'entry_' . $v['handle'] . '_options\', $entry_' . $v['handle'] . '_options);' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'select_multiple_field') {
-
                     $code .= BlockBuilderUtility::tab(2) . '// Entry / ' . addslashes($v['label']) . ' (' . $v['handle'] . ') options' . PHP_EOL;
 
                     if (empty($v['selectMultipleListGenerationMethod']) || $v['selectMultipleListGenerationMethod'] === 'basic_list') {
-
                         $maxKeyLength = 0;
                         $tempOptions = [];
                         if (!empty($v['selectMultipleOptions'])) {
@@ -431,7 +403,7 @@ class ControllerPhp
                             if (is_array($options)) {
                                 $i = 0;
                                 foreach ($options as $k2 => $v2) {
-                                    $i++;
+                                    ++$i;
                                     $option = explode('::', $v2);
                                     $optionKey = !empty($option[1]) ? addslashes(trim($option[0])) : $i;
                                     $optionValue = !empty($option[1]) ? addslashes(trim($option[1])) : addslashes(trim($option[0]));
@@ -450,7 +422,6 @@ class ControllerPhp
                             $code .= BlockBuilderUtility::arrayGap($maxKeyLength, $tempOption['keyLength']);
                             $code .= '= t(\'' . $tempOption['value'] . '\');' . PHP_EOL;
                         }
-
                     } elseif (!empty($v['selectMultipleListGenerationMethod']) && $v['selectMultipleListGenerationMethod'] === 'custom_code') {
                         $code .= BlockBuilderUtility::tab(2) . '$entry_' . $v['handle'] . '_options = [];' . PHP_EOL;
                         $code .= $v['selectMultipleCustomCode'] . PHP_EOL;
@@ -458,11 +429,8 @@ class ControllerPhp
 
                     $code .= PHP_EOL;
                     $code .= BlockBuilderUtility::tab(2) . '$this->set(\'entry_' . $v['handle'] . '_options\', $entry_' . $v['handle'] . '_options);' . PHP_EOL . PHP_EOL;
-
                 }
-
             }
-
         }
 
         $code .= BlockBuilderUtility::tab(1) . '}' . PHP_EOL . PHP_EOL;
@@ -479,9 +447,7 @@ class ControllerPhp
         $code .= BlockBuilderUtility::tab(2) . '$this->addEdit();' . PHP_EOL;
 
         if (!empty($postData['basic'])) {
-
             foreach ($postData['basic'] as $k => $v) {
-
                 if ($v['fieldType'] == 'select_field') {
                     if (!empty($v['selectDefaultValue'])) {
                         $code .= BlockBuilderUtility::tab(2) . '$this->set(\'' . $v['handle'] . '\', \'' . $v['selectDefaultValue'] . '\');' . PHP_EOL;
@@ -494,12 +460,10 @@ class ControllerPhp
                     }
                 }
             }
-
         }
 
         $code .= BlockBuilderUtility::tab(2) . '$this->set(\'entries\', []);' . PHP_EOL . PHP_EOL;
         $code .= BlockBuilderUtility::tab(1) . '}' . PHP_EOL . PHP_EOL;
-
 
         // 5. edit()
         $code .= BlockBuilderUtility::tab(1) . 'public function edit() {' . PHP_EOL . PHP_EOL;
@@ -525,7 +489,6 @@ class ControllerPhp
         }
 
         $code .= BlockBuilderUtility::tab(1) . '}' . PHP_EOL . PHP_EOL;
-
 
         // 6. addEdit()
         $code .= BlockBuilderUtility::tab(1) . 'public function addEdit() {' . PHP_EOL . PHP_EOL;
@@ -595,10 +558,8 @@ class ControllerPhp
                     }
                     if (
                         (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable']))
-                        or
-                        (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']))
-                        or
-                        (!empty($v['imageShowAltTextField']))
+                        or (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']))
+                        or (!empty($v['imageShowAltTextField']))
                     ) {
                         $code .= BlockBuilderUtility::tab(2) . '$this->set(\'' . $v['handle'] . '_data\', $this->' . $v['handle'] . '_data);' . PHP_EOL;
                     }
@@ -608,7 +569,6 @@ class ControllerPhp
         }
 
         if (!empty($postData['entries'])) {
-
             if ($postDataSummary['linkUsed_entry'] or $postDataSummary['linkFromSitemapUsed_entry'] or $postDataSummary['linkFromFileManagerUsed_entry'] or $postDataSummary['imageUsed_entry']) {
                 $code .= BlockBuilderUtility::tab(2) . '// Load assets for repeatable entries' . PHP_EOL;
             }
@@ -660,10 +620,8 @@ class ControllerPhp
                     if ($v['fieldType'] == 'image') {
                         if (
                             (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable']))
-                            or
-                            (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']))
-                            or
-                            (!empty($v['imageShowAltTextField']))
+                            or (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']))
+                            or (!empty($v['imageShowAltTextField']))
                         ) {
                             $code .= PHP_EOL;
                             $code .= BlockBuilderUtility::tab(2) . '// ' . addslashes($v['label']) . ' (' . $v['handle'] . ') - Fields that don\'t exist in database, but are required in repeatable entry (image)' . PHP_EOL;
@@ -706,12 +664,9 @@ class ControllerPhp
 
         // Default values in repeatable entries
         if (!empty($postData['entries'])) {
-
-
             $code .= BlockBuilderUtility::tab(2) . '// Default values for repeatable entries' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(2) . '$this->set(\'defaultValues\', [' . PHP_EOL;
             foreach ($postData['entries'] as $k => $v) {
-
                 if ($v['fieldType'] == 'select_field') {
                     if (!empty($v['selectDefaultValue'])) {
                         $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '\' => \'' . $v['selectDefaultValue'] . '\',' . PHP_EOL;
@@ -725,7 +680,6 @@ class ControllerPhp
                 }
             }
             $code .= BlockBuilderUtility::tab(2) . ']);' . PHP_EOL;
-
         }
 
         $code .= BlockBuilderUtility::tab(2) . '// Load form.css' . PHP_EOL;
@@ -790,7 +744,6 @@ class ControllerPhp
 
         $code .= BlockBuilderUtility::tab(1) . '}' . PHP_EOL . PHP_EOL;
 
-
         // 7. view()
         $code .= BlockBuilderUtility::tab(1) . 'public function view() {' . PHP_EOL . PHP_EOL;
 
@@ -822,15 +775,12 @@ class ControllerPhp
         }
 
         if (!empty($postData['basic'])) {
-
             if ($postDataSummary['linkUsed'] or $postDataSummary['linkFromSitemapUsed'] or $postDataSummary['linkFromFileManagerUsed'] or $postDataSummary['externalLinkUsed'] or $postDataSummary['imageUsed']) {
                 $code .= BlockBuilderUtility::tab(2) . '// Prepare fields for view' . PHP_EOL;
             }
 
             foreach ($postData['basic'] as $k => $v) {
-
                 if ($v['fieldType'] == 'link') {
-
                     $code .= BlockBuilderUtility::tab(2) . '// ' . addslashes($v['label']) . ' (' . $v['handle'] . ') - Link' . PHP_EOL;
 
                     $code .= BlockBuilderUtility::tab(2) . 'if (!empty($this->' . $v['handle'] . ') and $this->' . $v['handle'] . '[\'link_type\'] == \'link_from_sitemap\') {' . PHP_EOL;
@@ -864,11 +814,9 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(4) . '\'' . $v['handle'] . '_no_follow\'  => $this->' . $v['handle'] . '[\'no_follow\']' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . ']);' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(2) . '}' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'link_from_sitemap') {
-
                     $ending = 'false';
                     $text = 'false';
                     $title = 'false';
@@ -898,11 +846,9 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_new_window\' => ' . $newWindow . ',' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_no_follow\' => ' . $noFollow . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(2) . ']);' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'link_from_file_manager') {
-
                     $ending = 'false';
                     $text = 'false';
                     $title = 'false';
@@ -932,11 +878,9 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_new_window\' => ' . $newWindow . ',' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_no_follow\'  => ' . $noFollow . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(2) . ']);' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'external_link') {
-
                     $ending = 'false';
                     $text = 'false';
                     $title = 'false';
@@ -960,18 +904,16 @@ class ControllerPhp
 
                     $code .= BlockBuilderUtility::tab(2) . '$this->prepareForViewExternalLink(\'view\', [' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '\'            => $this->' . $v['handle'] . ',' . PHP_EOL;
-                    $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_protocol\'   => $this->' . $v['handle'] . '_protocol' . ',' . PHP_EOL;
+                    $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_protocol\'   => $this->' . $v['handle'] . '_protocol,' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_ending\'     => ' . $ending . ',' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_text\'       => ' . $text . ',' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_title\'      => ' . $title . ',' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_new_window\' => ' . $newWindow . ',' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(3) . '\'' . $v['handle'] . '_no_follow\' => ' . $noFollow . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(2) . ']);' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'image') {
-
                     $alt = 'false';
                     if (!empty($v['imageShowAltTextField'])) {
                         $alt = '$this->' . $v['handle'] . '_alt';
@@ -991,9 +933,15 @@ class ControllerPhp
                             $imageThumbnailCropDefault = !empty($v['imageThumbnailCrop']) ? $v['imageThumbnailCrop'] : 'false';
                             $thumbnailCrop = '!empty($this->' . $v['handle'] . '_data[\'override_dimensions\']) ? (!empty($this->' . $v['handle'] . '_data[\'custom_crop\']) ? true : false) : ' . $imageThumbnailCropDefault;
                         } else {
-                            if (!empty($v['imageThumbnailWidth'])) $thumbnailWidth = $v['imageThumbnailWidth'];
-                            if (!empty($v['imageThumbnailHeight'])) $thumbnailHeight = $v['imageThumbnailHeight'];
-                            if (!empty($v['imageThumbnailCrop'])) $thumbnailCrop = 'true';
+                            if (!empty($v['imageThumbnailWidth'])) {
+                                $thumbnailWidth = $v['imageThumbnailWidth'];
+                            }
+                            if (!empty($v['imageThumbnailHeight'])) {
+                                $thumbnailHeight = $v['imageThumbnailHeight'];
+                            }
+                            if (!empty($v['imageThumbnailCrop'])) {
+                                $thumbnailCrop = 'true';
+                            }
                         }
                     }
 
@@ -1011,9 +959,15 @@ class ControllerPhp
                             $imageFullscreenCropDefault = !empty($v['imageFullscreenCrop']) ? $v['imageFullscreenCrop'] : 'false';
                             $fullscreenCrop = '!empty($this->' . $v['handle'] . '_data[\'override_fullscreen_dimensions\']) ? (!empty($this->' . $v['handle'] . '_data[\'custom_fullscreen_crop\']) ? true : false) : ' . $imageFullscreenCropDefault;
                         } else {
-                            if (!empty($v['imageFullscreenWidth'])) $fullscreenWidth = $v['imageFullscreenWidth'];
-                            if (!empty($v['imageFullscreenHeight'])) $fullscreenHeight = $v['imageFullscreenHeight'];
-                            if (!empty($v['imageFullscreenCrop'])) $fullscreenCrop = 'true';
+                            if (!empty($v['imageFullscreenWidth'])) {
+                                $fullscreenWidth = $v['imageFullscreenWidth'];
+                            }
+                            if (!empty($v['imageFullscreenHeight'])) {
+                                $fullscreenHeight = $v['imageFullscreenHeight'];
+                            }
+                            if (!empty($v['imageFullscreenCrop'])) {
+                                $fullscreenCrop = 'true';
+                            }
                         }
                     }
 
@@ -1045,19 +999,13 @@ class ControllerPhp
                     if (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageFullscreenHeight'])) {
                         $code .= BlockBuilderUtility::tab(2) . '$this->set(\'' . $v['handle'] . '_defaultFullscreenHeight\', $this->' . $v['handle'] . '_defaultFullscreenHeight);' . PHP_EOL . PHP_EOL;
                     }
-
                 }
-
             }
-
         }
 
         if (!empty($postData['entries'])) {
-
             foreach ($postData['entries'] as $k => $v) {
-
                 if ($v['fieldType'] == 'image') {
-
                     // Default image dimensions
                     if (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailWidth'])) {
                         $code .= BlockBuilderUtility::tab(2) . '$this->set(\'' . $v['handle'] . '_defaultRepeatableThumbnailWidth\', $this->' . $v['handle'] . '_defaultRepeatableThumbnailWidth);' . PHP_EOL;
@@ -1071,31 +1019,26 @@ class ControllerPhp
                     if (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageFullscreenHeight'])) {
                         $code .= BlockBuilderUtility::tab(2) . '$this->set(\'' . $v['handle'] . '_defaultRepeatableFullscreenHeight\', $this->' . $v['handle'] . '_defaultRepeatableFullscreenHeight);' . PHP_EOL . PHP_EOL;
                     }
-
                 }
-
             }
-
         }
 
         if (!empty($postData['entries'])) {
-
             $code .= BlockBuilderUtility::tab(2) . '// Get entries' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(2) . '$entries = $this->getEntries();' . PHP_EOL;
 
             if (
-                $postDataSummary['linkUsed_entry'] or
-                $postDataSummary['linkFromSitemapUsed_entry'] or
-                $postDataSummary['linkFromFileManagerUsed_entry'] or
-                $postDataSummary['externalLinkUsed_entry'] or
-                $postDataSummary['imageUsed_entry'] or
-                $postDataSummary['fileSetUsed_entry']
+                $postDataSummary['linkUsed_entry']
+                or $postDataSummary['linkFromSitemapUsed_entry']
+                or $postDataSummary['linkFromFileManagerUsed_entry']
+                or $postDataSummary['externalLinkUsed_entry']
+                or $postDataSummary['imageUsed_entry']
+                or $postDataSummary['fileSetUsed_entry']
             ) {
                 $code .= BlockBuilderUtility::tab(2) . '$entries = $this->prepareEntriesForView($entries);' . PHP_EOL;
             }
 
             $code .= BlockBuilderUtility::tab(2) . '$this->set(\'entries\', $entries);' . PHP_EOL . PHP_EOL;
-
         }
 
         if ($postData['viewCustomCode']) {
@@ -1104,7 +1047,6 @@ class ControllerPhp
 
         $code .= BlockBuilderUtility::tab(1) . '}' . PHP_EOL . PHP_EOL;
 
-
         // 8. save()
         $code .= BlockBuilderUtility::tab(1) . 'public function save($args) {' . PHP_EOL;
 
@@ -1112,11 +1054,8 @@ class ControllerPhp
             $code .= PHP_EOL . BlockBuilderUtility::tab(2) . '// Settings' . PHP_EOL;
 
             if (!empty($postData['entries'])) {
-
                 foreach ($postData['entries'] as $k => $v) {
-
                     if ($v['fieldType'] == 'image') {
-
                         if (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable'])) {
                             $code .= BlockBuilderUtility::tab(2) . 'if (isset($args[\'settings\']) and $args[\'settings\'][\'' . $v['handle'] . '_custom_crop\']===\'1\' and (empty($args[\'settings\'][\'' . $v['handle'] . '_custom_width\']) or empty($args[\'settings\'][\'' . $v['handle'] . '_custom_height\']))) {' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(3) . '$args[\'settings\'][\'' . $v['handle'] . '_custom_crop\'] = 0; // Crop should be disabled if width or height is missing' . PHP_EOL;
@@ -1128,24 +1067,19 @@ class ControllerPhp
                             $code .= BlockBuilderUtility::tab(3) . '$args[\'settings\'][\'' . $v['handle'] . '_custom_fullscreen_crop\'] = 0; // Crop should be disabled if width or height is missing' . PHP_EOL;
                             $code .= BlockBuilderUtility::tab(2) . '}' . PHP_EOL;
                         }
-
                     }
-
                 }
-
             }
 
             $code .= BlockBuilderUtility::tab(2) . '$args[\'settings\'] = isset($args[\'settings\']) ? json_encode($args[\'settings\']) : null;' . PHP_EOL;
         }
 
         if (!empty($postData['basic'])) {
-
             $code .= PHP_EOL . BlockBuilderUtility::tab(2) . '// Basic fields' . PHP_EOL;
 
             $maxKeyLength = 0;
 
             foreach ($postData['basic'] as $k => $v) {
-
                 $keyLength = mb_strlen($v['handle']);
                 $additionalSpaces = 0;
 
@@ -1162,7 +1096,7 @@ class ControllerPhp
                     !empty($v['linkFromFileManagerShowEndingField']) ? $additionalSpaces = 7 : false;
                     !empty($v['linkFromFileManagerShowNoFollowField']) ? $additionalSpaces = 10 : false;
                     !empty($v['linkFromFileManagerShowNewWindowField']) ? $additionalSpaces = 11 : false;
-                } else if ($v['fieldType'] == 'external_link') {
+                } elseif ($v['fieldType'] == 'external_link') {
                     $additionalSpaces = 9; // string '_protocol' is always used
                     !empty($v['externalLinkShowNoFollowField']) ? $additionalSpaces = 10 : false;
                     !empty($v['externalLinkShowNewWindowField']) ? $additionalSpaces = 11 : false;
@@ -1176,29 +1110,28 @@ class ControllerPhp
             }
 
             foreach ($postData['basic'] as $k => $v) {
-
                 $keyLength = mb_strlen($v['handle']);
 
                 // Basic fields
                 if ($v['fieldType'] == 'wysiwyg_editor') {
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? LinkAbstractor::translateTo($args[\'' . $v['handle'] . '\']) : \'\';' . PHP_EOL;
-                } else if ($v['fieldType'] == 'html_editor') {
+                } elseif ($v['fieldType'] == 'html_editor') {
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? $args[\'' . $v['handle'] . '\'] : \'\';' . PHP_EOL;
-                } else if (in_array($v['fieldType'], ['link_from_sitemap', 'link_from_file_manager', 'image', 'express', 'file_set'])) {
+                } elseif (in_array($v['fieldType'], ['link_from_sitemap', 'link_from_file_manager', 'image', 'express', 'file_set'])) {
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? intval($args[\'' . $v['handle'] . '\']) : 0;' . PHP_EOL;
-                } else if ($v['fieldType'] == 'date_picker') {
+                } elseif ($v['fieldType'] == 'date_picker') {
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? $args[\'' . $v['handle'] . '\'] : null;' . PHP_EOL;
-                } else if ($v['fieldType'] == 'color_picker') {
+                } elseif ($v['fieldType'] == 'color_picker') {
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? trim($args[\'' . $v['handle'] . '\']) : \'\';' . PHP_EOL;
-                } else if ($v['fieldType'] == 'icon_picker') {
+                } elseif ($v['fieldType'] == 'icon_picker') {
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? trim($args[\'' . $v['handle'] . '\']) : \'\';' . PHP_EOL;
-                } else if ($v['fieldType'] == 'link') {
+                } elseif ($v['fieldType'] == 'link') {
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? trim($args[\'' . $v['handle'] . '\']) : \'\';' . PHP_EOL;
-                } else if ($v['fieldType'] == 'select_field') {
+                } elseif ($v['fieldType'] == 'select_field') {
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? trim($args[\'' . $v['handle'] . '\']) : \'\';' . PHP_EOL;
-                } else if ($v['fieldType'] == 'select_multiple_field') {
+                } elseif ($v['fieldType'] == 'select_multiple_field') {
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? trim(implode(\'|\', $args[\'' . $v['handle'] . '\'])) : \'\';' . PHP_EOL;
-                } else if ($v['fieldType'] == 'number') {
+                } elseif ($v['fieldType'] == 'number') {
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= (isset($args[\'' . $v['handle'] . '\']) and is_numeric($args[\'' . $v['handle'] . '\'])) ? trim($args[\'' . $v['handle'] . '\']) : null;' . PHP_EOL;
                 } else {
                     $code .= BlockBuilderUtility::tab(2) . '$args[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($args[\'' . $v['handle'] . '\']) ? trim($args[\'' . $v['handle'] . '\']) : \'\';' . PHP_EOL;
@@ -1262,10 +1195,8 @@ class ControllerPhp
                 if ($v['fieldType'] == 'image') {
                     if (
                         (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable']))
-                        or
-                        (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']))
-                        or
-                        (!empty($v['imageShowAltTextField']))
+                        or (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']))
+                        or (!empty($v['imageShowAltTextField']))
                     ) {
                         $code .= PHP_EOL;
                         $code .= BlockBuilderUtility::tab(2) . '// ' . addslashes($v['label']) . ' (' . $v['handle'] . ') - Additional fields for Image' . PHP_EOL;
@@ -1304,14 +1235,12 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(2) . ']);' . PHP_EOL;
                 }
             }
-
         }
         $code .= PHP_EOL;
 
         $code .= BlockBuilderUtility::tab(2) . 'parent::save($args);' . PHP_EOL . PHP_EOL;
 
         if (!empty($postData['entries'])) {
-
             $code .= BlockBuilderUtility::tab(2) . '$db = $this->app->make(\'database\')->connection();' . PHP_EOL . PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(2) . '// Delete existing entries of current block\'s version' . PHP_EOL;
@@ -1328,7 +1257,6 @@ class ControllerPhp
 
             $maxKeyLength = 8;
             foreach ($postData['entries'] as $k => $v) {
-
                 $keyLength = mb_strlen($v['handle']);
                 $additionalSpaces = 0;
 
@@ -1345,7 +1273,7 @@ class ControllerPhp
                     !empty($v['linkFromFileManagerShowEndingField']) ? $additionalSpaces = 7 : false;
                     !empty($v['linkFromFileManagerShowNoFollowField']) ? $additionalSpaces = 10 : false;
                     !empty($v['linkFromFileManagerShowNewWindowField']) ? $additionalSpaces = 11 : false;
-                } else if ($v['fieldType'] == 'external_link') {
+                } elseif ($v['fieldType'] == 'external_link') {
                     $additionalSpaces = 9; // string '_protocol' is always used
                     !empty($v['externalLinkShowNoFollowField']) ? $additionalSpaces = 10 : false;
                     !empty($v['externalLinkShowNewWindowField']) ? $additionalSpaces = 11 : false;
@@ -1362,29 +1290,28 @@ class ControllerPhp
             $code .= BlockBuilderUtility::tab(4) . '$data[\'bID\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, 3) . '= $this->bID;' . PHP_EOL;
 
             foreach ($postData['entries'] as $k => $v) {
-
                 $keyLength = mb_strlen($v['handle']);
 
                 // Basic fields
                 if ($v['fieldType'] == 'wysiwyg_editor') {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= LinkAbstractor::translateTo($entry[\'' . $v['handle'] . '\']);' . PHP_EOL;
-                } else if ($v['fieldType'] == 'html_editor') {
+                } elseif ($v['fieldType'] == 'html_editor') {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= $entry[\'' . $v['handle'] . '\'];' . PHP_EOL;
-                } else if (in_array($v['fieldType'], ['link_from_sitemap', 'link_from_file_manager', 'image', 'express', 'file_set'])) {
+                } elseif (in_array($v['fieldType'], ['link_from_sitemap', 'link_from_file_manager', 'image', 'express', 'file_set'])) {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= intval($entry[\'' . $v['handle'] . '\']);' . PHP_EOL;
-                } else if ($v['fieldType'] == 'date_picker') {
+                } elseif ($v['fieldType'] == 'date_picker') {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($entry[\'' . $v['handle'] . '\']) ? $this->app->make(\'helper/form/date_time\')->translate(\'' . $v['handle'] . '\', $entry) : null;' . PHP_EOL;
-                } else if ($v['fieldType'] == 'color_picker') {
+                } elseif ($v['fieldType'] == 'color_picker') {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($entry[\'' . $v['handle'] . '\']) ? trim($entry[\'' . $v['handle'] . '\']) : null;' . PHP_EOL;
-                } else if ($v['fieldType'] == 'icon_picker') {
+                } elseif ($v['fieldType'] == 'icon_picker') {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($entry[\'' . $v['handle'] . '\']) ? trim($entry[\'' . $v['handle'] . '\']) : null;' . PHP_EOL;
-                } else if ($v['fieldType'] == 'link') {
+                } elseif ($v['fieldType'] == 'link') {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($entry[\'' . $v['handle'] . '\']) ? trim($entry[\'' . $v['handle'] . '\']) : null;' . PHP_EOL;
-                } else if ($v['fieldType'] == 'select_field') {
+                } elseif ($v['fieldType'] == 'select_field') {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($entry[\'' . $v['handle'] . '\']) ? trim($entry[\'' . $v['handle'] . '\']) : \'\';' . PHP_EOL;
-                } else if ($v['fieldType'] == 'select_multiple_field') {
+                } elseif ($v['fieldType'] == 'select_multiple_field') {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= !empty($entry[\'' . $v['handle'] . '\']) ? implode(\'|\', $entry[\'' . $v['handle'] . '\']) : \'\';' . PHP_EOL;
-                } else if ($v['fieldType'] == 'number') {
+                } elseif ($v['fieldType'] == 'number') {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= (isset($args[\'' . $v['handle'] . '\']) and is_numeric($entry[\'' . $v['handle'] . '\'])) ? trim($entry[\'' . $v['handle'] . '\']) : null;' . PHP_EOL;
                 } else {
                     $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength) . '= trim($entry[\'' . $v['handle'] . '\']);' . PHP_EOL;
@@ -1451,7 +1378,6 @@ class ControllerPhp
                         $code .= BlockBuilderUtility::tab(4) . '$data[\'' . $v['handle'] . '_alt\'] ' . BlockBuilderUtility::arrayGap($maxKeyLength, $keyLength + 4) . '= trim($entry[\'' . $v['handle'] . '_alt\']);' . PHP_EOL;
                     }
                 }
-
             }
 
             foreach ($postData['entries'] as $k => $v) {
@@ -1478,10 +1404,8 @@ class ControllerPhp
                 if ($v['fieldType'] == 'image') {
                     if (
                         (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable']))
-                        or
-                        (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']))
-                        or
-                        (!empty($v['imageShowAltTextField']))
+                        or (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']))
+                        or (!empty($v['imageShowAltTextField']))
                     ) {
                         $code .= PHP_EOL;
                         $code .= BlockBuilderUtility::tab(4) . '// ' . addslashes($v['label']) . ' (' . $v['handle'] . ') - Image' . PHP_EOL;
@@ -1512,11 +1436,9 @@ class ControllerPhp
             $code .= BlockBuilderUtility::tab(3) . '}' . PHP_EOL . PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(2) . '}' . PHP_EOL . PHP_EOL;
-
         }
 
         $code .= BlockBuilderUtility::tab(1) . '}' . PHP_EOL . PHP_EOL;
-
 
         // 9. duplicate()
         $code .= BlockBuilderUtility::tab(1) . 'public function duplicate($newBlockID) {' . PHP_EOL . PHP_EOL;
@@ -1524,7 +1446,6 @@ class ControllerPhp
         $code .= BlockBuilderUtility::tab(2) . 'parent::duplicate($newBlockID);' . PHP_EOL . PHP_EOL;
 
         if (!empty($postData['entries'])) {
-
             $code .= BlockBuilderUtility::tab(2) . '$db = $this->app->make(\'database\')->connection();' . PHP_EOL . PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(2) . '// Get latest entry...' . PHP_EOL;
@@ -1553,16 +1474,13 @@ class ControllerPhp
             $code .= BlockBuilderUtility::tab(4) . '$db->insert(\'' . $postDataSummary['blockTableNameEntries'] . '\', $data);' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(3) . '}' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(2) . '}' . PHP_EOL . PHP_EOL;
-
         }
 
         $code .= BlockBuilderUtility::tab(1) . '}' . PHP_EOL . PHP_EOL;
 
-
         // 10. delete()
         $code .= BlockBuilderUtility::tab(1) . 'public function delete() {' . PHP_EOL . PHP_EOL;
         $code .= BlockBuilderUtility::tab(1) . '}' . PHP_EOL . PHP_EOL;
-
 
         // 11. validate()
         $code .= BlockBuilderUtility::tab(1) . 'public function validate($args) {' . PHP_EOL . PHP_EOL;
@@ -1570,7 +1488,6 @@ class ControllerPhp
         $code .= BlockBuilderUtility::tab(2) . '$error = $this->app->make(\'helper/validation/error\');' . PHP_EOL . PHP_EOL;
 
         if (!empty($postDataSummary['requiredFields'])) {
-
             // Required fields
             $code .= BlockBuilderUtility::tab(2) . '// Required fields' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(2) . '$requiredFields = [];' . PHP_EOL;
@@ -1627,11 +1544,9 @@ class ControllerPhp
             $code .= BlockBuilderUtility::tab(3) . '}' . PHP_EOL . PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(2) . '}' . PHP_EOL . PHP_EOL;
-
         }
 
         if (!empty($postDataSummary['requiredEntryFields'])) {
-
             $code .= BlockBuilderUtility::tab(2) . '// Repeatable entries' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(2) . 'if (isset($args[\'entry\']) AND is_array($args[\'entry\'])) {' . PHP_EOL . PHP_EOL;
 
@@ -1714,29 +1629,24 @@ class ControllerPhp
             $code .= BlockBuilderUtility::tab(3) . '}' . PHP_EOL . PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(2) . '}' . PHP_EOL . PHP_EOL;
-
         }
 
         $code .= BlockBuilderUtility::tab(2) . 'return $error;' . PHP_EOL . PHP_EOL;
 
         $code .= BlockBuilderUtility::tab(1) . '}' . PHP_EOL . PHP_EOL;
 
-
         // 12. composer()
         $code .= BlockBuilderUtility::tab(1) . 'public function composer() {' . PHP_EOL . PHP_EOL;
 
         if (!empty($postData['entries'])) {
-
             $code .= BlockBuilderUtility::tab(2) . '$al = AssetList::getInstance();' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(2) . '$al->register(\'javascript\', \'' . $postDataSummary['blockHandleDashed'] . '/auto-js\', \'blocks/' . $postDataSummary['blockHandle'] . '/auto.js\', [], false);' . PHP_EOL;
             $code .= BlockBuilderUtility::tab(2) . '$this->requireAsset(\'javascript\', \'' . $postDataSummary['blockHandleDashed'] . '/auto-js\');' . PHP_EOL . PHP_EOL;
-
         }
 
         $code .= BlockBuilderUtility::tab(2) . '$this->edit();' . PHP_EOL . PHP_EOL;
 
         $code .= BlockBuilderUtility::tab(1) . '}' . PHP_EOL . PHP_EOL;
-
 
         // 13. scrapbook()
         $code .= BlockBuilderUtility::tab(1) . 'public function scrapbook() {' . PHP_EOL . PHP_EOL;
@@ -1745,10 +1655,8 @@ class ControllerPhp
 
         $code .= BlockBuilderUtility::tab(1) . '}' . PHP_EOL . PHP_EOL;
 
-
         // 14. getEntries()
         if (!empty($postData['entries'])) {
-
             $code .= BlockBuilderUtility::tab(1) . 'private function getEntries($outputMethod = \'view\') {' . PHP_EOL . PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(2) . '$db = $this->app->make(\'database\')->connection();' . PHP_EOL . PHP_EOL;
@@ -1783,10 +1691,8 @@ class ControllerPhp
                 if ($v['fieldType'] == 'image') {
                     if (
                         (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable']))
-                        or
-                        (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']))
-                        or
-                        (!empty($v['imageShowAltTextField']))
+                        or (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']))
+                        or (!empty($v['imageShowAltTextField']))
                     ) {
                         $code .= BlockBuilderUtility::tab(3) . '// ' . addslashes($v['label']) . ' (' . $v['handle'] . ') - Image' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(3) . '$' . $v['handle'] . 'Array = json_decode($entry[\'' . $v['handle'] . '_data\'], true);' . PHP_EOL;
@@ -1835,13 +1741,10 @@ class ControllerPhp
             $code .= BlockBuilderUtility::tab(2) . 'return $modifiedEntries;' . PHP_EOL . PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(1) . '}' . PHP_EOL . PHP_EOL;
-
         }
-
 
         // 15. getEntryColumnNames()
         if (!empty($postData['entries'])) {
-
             $code .= BlockBuilderUtility::tab(1) . ' private function getEntryColumnNames() {' . PHP_EOL . PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(2) . '$db = $this->app->make(\'database\')->connection();' . PHP_EOL . PHP_EOL;
@@ -1864,57 +1767,40 @@ class ControllerPhp
             $code .= BlockBuilderUtility::tab(2) . 'return $columnNames;' . PHP_EOL . PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(1) . '}' . PHP_EOL . PHP_EOL;
-
         }
-
 
         // 16. prepareForViewLinkFromSitemap()
         if ($postDataSummary['linkUsed'] or $postDataSummary['linkUsed_entry'] or $postDataSummary['linkFromSitemapUsed'] or $postDataSummary['linkFromSitemapUsed_entry']) {
-
             $code .= file_get_contents($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . 'functions' . DIRECTORY_SEPARATOR . 'prepare_for_view_link_from_sitemap.txt');
-
         }
-
 
         // 17. prepareForViewLinkFromFileManager()
         if ($postDataSummary['linkUsed'] or $postDataSummary['linkUsed_entry'] or $postDataSummary['linkFromFileManagerUsed'] or $postDataSummary['linkFromFileManagerUsed_entry']) {
-
             $code .= file_get_contents($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . 'functions' . DIRECTORY_SEPARATOR . 'prepare_for_view_link_from_file_manager.txt');
-
         }
-
 
         // 18. prepareForViewExternalLink()
         if ($postDataSummary['linkUsed'] or $postDataSummary['linkUsed_entry'] or $postDataSummary['externalLinkUsed'] or $postDataSummary['externalLinkUsed_entry']) {
-
             $code .= file_get_contents($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . 'functions' . DIRECTORY_SEPARATOR . 'prepare_for_view_external_link.txt');
-
         }
-
 
         // 19. prepareForViewImage()
         if ($postDataSummary['imageUsed'] or $postDataSummary['imageUsed_entry']) {
-
             $code .= file_get_contents($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . 'functions' . DIRECTORY_SEPARATOR . 'prepare_for_view_image.txt');
-
         }
-
 
         // 20. prepareEntriesForView()
         if (
             !empty($postData['entries'])
-            and
-            (
-                $postDataSummary['linkUsed_entry'] or
-                $postDataSummary['linkFromSitemapUsed_entry'] or
-                $postDataSummary['linkFromFileManagerUsed_entry'] or
-                $postDataSummary['externalLinkUsed_entry'] or
-                $postDataSummary['fileSetUsed_entry'] or
-                $postDataSummary['imageUsed_entry']
+            and (
+                $postDataSummary['linkUsed_entry']
+                or $postDataSummary['linkFromSitemapUsed_entry']
+                or $postDataSummary['linkFromFileManagerUsed_entry']
+                or $postDataSummary['externalLinkUsed_entry']
+                or $postDataSummary['fileSetUsed_entry']
+                or $postDataSummary['imageUsed_entry']
             )
         ) {
-
-
             $code .= BlockBuilderUtility::tab(1) . 'private function prepareEntriesForView($entries) {' . PHP_EOL . PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(2) . '$entriesForView = [];' . PHP_EOL . PHP_EOL;
@@ -1924,9 +1810,7 @@ class ControllerPhp
             $code .= BlockBuilderUtility::tab(3) . 'foreach ($entries as $key => $entry) {' . PHP_EOL . PHP_EOL;
 
             foreach ($postData['entries'] as $k => $v) {
-
                 if ($v['fieldType'] == 'link') {
-
                     $code .= BlockBuilderUtility::tab(4) . '// ' . addslashes($v['label']) . ' (' . $v['handle'] . ') - Link' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '$modifiedEntry = [];' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . 'if ($entry[\'' . $v['handle'] . '_link_type\'] == \'link_from_sitemap\') {' . PHP_EOL;
@@ -1959,11 +1843,9 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(5) . ']);' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '}' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '$entry = array_merge($entry, $modifiedEntry);' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'link_from_sitemap') {
-
                     $ending = 'false';
                     $text = 'false';
                     $title = 'false';
@@ -1995,11 +1877,9 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '_no_follow\'  => ' . $noFollow . '' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . ']);' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '$entry = array_merge($entry, $modifiedEntry);' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'link_from_file_manager') {
-
                     $ending = 'false';
                     $text = 'false';
                     $title = 'false';
@@ -2031,11 +1911,9 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '_no_follow\'  => ' . $noFollow . '' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . ']);' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '$entry = array_merge($entry, $modifiedEntry);' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'external_link') {
-
                     $ending = 'false';
                     $text = 'false';
                     $title = 'false';
@@ -2068,11 +1946,9 @@ class ControllerPhp
                     $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '_no_follow\'  => ' . $noFollow . '' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . ']);' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '$entry = array_merge($entry, $modifiedEntry);' . PHP_EOL . PHP_EOL;
-
                 }
 
                 if ($v['fieldType'] == 'image') {
-
                     $alt = 'false';
                     if (!empty($v['imageShowAltTextField'])) {
                         $alt = '$entry[\'' . $v['handle'] . '_alt\']';
@@ -2084,9 +1960,15 @@ class ControllerPhp
                     $thumbnailCrop = 'false';
                     if (!empty($v['imageCreateThumbnailImage'])) {
                         $thumbnail = 'true';
-                        if (!empty($v['imageThumbnailWidth'])) $thumbnailWidth = $v['imageThumbnailWidth'];
-                        if (!empty($v['imageThumbnailHeight'])) $thumbnailHeight = $v['imageThumbnailHeight'];
-                        if (!empty($v['imageThumbnailCrop'])) $thumbnailCrop = 'true';
+                        if (!empty($v['imageThumbnailWidth'])) {
+                            $thumbnailWidth = $v['imageThumbnailWidth'];
+                        }
+                        if (!empty($v['imageThumbnailHeight'])) {
+                            $thumbnailHeight = $v['imageThumbnailHeight'];
+                        }
+                        if (!empty($v['imageThumbnailCrop'])) {
+                            $thumbnailCrop = 'true';
+                        }
                     }
 
                     $fullscreen = 'false';
@@ -2095,16 +1977,21 @@ class ControllerPhp
                     $fullscreenCrop = 'false';
                     if (!empty($v['imageCreateFullscreenImage'])) {
                         $fullscreen = 'true';
-                        if (!empty($v['imageFullscreenWidth'])) $fullscreenWidth = $v['imageFullscreenWidth'];
-                        if (!empty($v['imageFullscreenHeight'])) $fullscreenHeight = $v['imageFullscreenHeight'];
-                        if (!empty($v['imageFullscreenCrop'])) $fullscreenCrop = 'true';
+                        if (!empty($v['imageFullscreenWidth'])) {
+                            $fullscreenWidth = $v['imageFullscreenWidth'];
+                        }
+                        if (!empty($v['imageFullscreenHeight'])) {
+                            $fullscreenHeight = $v['imageFullscreenHeight'];
+                        }
+                        if (!empty($v['imageFullscreenCrop'])) {
+                            $fullscreenCrop = 'true';
+                        }
                     }
 
                     $code .= BlockBuilderUtility::tab(4) . '// ' . addslashes($v['label']) . ' (' . $v['handle'] . ') - Image' . PHP_EOL;
 
                     // If repeatable image field is editable, then we need to add more code and made it more complicated
                     if (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable'])) {
-
                         $thumbnail = 'true';
                         $thumbnailWidth = '$thumbnailWidth';
                         $thumbnailHeight = '$thumbnailHeight';
@@ -2133,12 +2020,10 @@ class ControllerPhp
                         $code .= BlockBuilderUtility::tab(4) . 'if (!empty($entry[\'' . $v['handle'] . '_override_dimensions\'])) {' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(5) . '$thumbnailCrop = !empty($entry[\'' . $v['handle'] . '_custom_crop\']) ? $entry[\'' . $v['handle'] . '_custom_crop\'] : false;' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(4) . '}' . PHP_EOL;
-
                     }
 
                     // If repeatable image field is editable, then we need to add more code and made it more complicated
                     if (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable'])) {
-
                         $fullscreen = 'true';
                         $fullscreenWidth = '$fullscreenWidth';
                         $fullscreenHeight = '$fullscreenHeight';
@@ -2167,7 +2052,6 @@ class ControllerPhp
                         $code .= BlockBuilderUtility::tab(4) . 'if (!empty($entry[\'' . $v['handle'] . '_override_fullscreen_dimensions\'])) {' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(5) . '$fullscreenCrop = !empty($entry[\'' . $v['handle'] . '_custom_fullscreen_crop\']) ? $entry[\'' . $v['handle'] . '_custom_fullscreen_crop\'] : false;' . PHP_EOL;
                         $code .= BlockBuilderUtility::tab(4) . '}' . PHP_EOL;
-
                     }
 
                     $code .= BlockBuilderUtility::tab(4) . '$modifiedEntry = $this->prepareForViewImage(\'entry\', [' . PHP_EOL;
@@ -2188,16 +2072,13 @@ class ControllerPhp
                 }
 
                 if ($v['fieldType'] == 'file_set') {
-
                     $code .= BlockBuilderUtility::tab(4) . '// ' . addslashes($v['label']) . ' (' . $v['handle'] . ') - File Set' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '$modifiedEntry = [' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '\' => is_object(FileSet::getByID($entry[\'' . $v['handle'] . '\'])) ? $entry[\'' . $v['handle'] . '\'] : null,' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(5) . '\'' . $v['handle'] . '_files\' => $this->getFilesByFileSetID($entry[\'' . $v['handle'] . '\']),' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '];' . PHP_EOL;
                     $code .= BlockBuilderUtility::tab(4) . '$entry = array_merge($entry, $modifiedEntry);' . PHP_EOL . PHP_EOL;
-
                 }
-
             }
 
             $code .= BlockBuilderUtility::tab(4) . '$entriesForView[] = $entry;' . PHP_EOL . PHP_EOL;
@@ -2209,30 +2090,23 @@ class ControllerPhp
             $code .= BlockBuilderUtility::tab(2) . 'return $entriesForView;' . PHP_EOL . PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(1) . '}' . PHP_EOL . PHP_EOL;
-
         }
 
         // 21. getFileSets()
         if ($postDataSummary['fileSetUsed'] or $postDataSummary['fileSetUsed_entry']) {
-
             $templateCode = file_get_contents($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . 'functions' . DIRECTORY_SEPARATOR . 'get_file_sets.txt');
             $code .= $templateCode . PHP_EOL;
-
         }
 
         // 22. getFilesByFileSetID()
         if ($postDataSummary['fileSetUsed'] or $postDataSummary['fileSetUsed_entry']) {
-
             $templateCode = file_get_contents($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . 'functions' . DIRECTORY_SEPARATOR . 'get_files_by_file_set_id.txt');
             $code .= $templateCode . PHP_EOL;
-
         }
 
         // 23. customControllerMethods
         if ($postData['customControllerMethods']) {
-
             $code .= $postData['customControllerMethods'] . PHP_EOL;
-
         }
 
         // Class end
@@ -2240,7 +2114,5 @@ class ControllerPhp
 
         $fileService = new FileService();
         $fileService->append($postDataSummary['blockPath'] . DIRECTORY_SEPARATOR . $filename, $code);
-
     }
-
 }

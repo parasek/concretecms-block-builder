@@ -1,26 +1,26 @@
-<?php namespace BlockBuilder;
+<?php
 
+namespace BlockBuilder;
+
+use BlockBuilder\FileGenerator\ControllerPhp as FileGeneratorControllerPhp;
+use BlockBuilder\FileGenerator\DbXml as FileGeneratorDbXml;
+use BlockBuilder\FileGenerator\FormPhp as FileGeneratorFormPhp;
+use BlockBuilder\FileGenerator\ViewPhp as FileGeneratorViewPhp;
+use BlockBuilder\Utility as BlockBuilderUtility;
 use Concrete\Core\Block\BlockType\BlockType;
 use Concrete\Core\Entity\Block\BlockType\BlockType as BlockTypeEntity;
 use Concrete\Core\Error\UserMessageException;
 use Concrete\Core\File\Service\File as FileService;
 use Concrete\Core\Foundation\Environment;
 use Concrete\Core\Permission\Checker as Permissions;
-use BlockBuilder\FileGenerator\ControllerPhp as FileGeneratorControllerPhp;
-use BlockBuilder\FileGenerator\ViewPhp as FileGeneratorViewPhp;
-use BlockBuilder\FileGenerator\DbXml as FileGeneratorDbXml;
-use BlockBuilder\FileGenerator\FormPhp as FileGeneratorFormPhp;
-use BlockBuilder\Utility as BlockBuilderUtility;
 use Doctrine\ORM\EntityManagerInterface;
 
-defined('C5_EXECUTE') or die('Access Denied.');
+defined('C5_EXECUTE') or exit('Access Denied.');
 
 class Generator
 {
-
     public function generateBlock($postData)
     {
-
         unset($postData['ccm_token']);
         unset($postData['ccm-submit-url-form']);
 
@@ -74,9 +74,7 @@ class Generator
         $postDataSummary['entryTitleSource'] = false;
 
         if (!empty($postData['basic'])) {
-
             foreach ($postData['basic'] as $k => $v) {
-
                 // Export fields
                 if ($v['fieldType'] == 'link_from_sitemap') {
                     if (!in_array($v['handle'], $postDataSummary['exportPageColumns'])) {
@@ -144,15 +142,11 @@ class Generator
                 if ($v['fieldType'] == 'number') {
                     $postDataSummary['numberUsed'] = true;
                 }
-
             }
-
         }
 
         if (!empty($postData['entries'])) {
-
             foreach ($postData['entries'] as $k => $v) {
-
                 // Export fields
                 if ($v['fieldType'] == 'link_from_sitemap') {
                     if (!in_array($v['handle'], $postDataSummary['exportPageColumns'])) {
@@ -184,8 +178,7 @@ class Generator
                 if ($v['fieldType'] == 'image') {
                     if (
                         (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable']))
-                        or
-                        (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']))
+                        or (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']))
                     ) {
                         $postDataSummary['settingsTab'] = true;
                     }
@@ -244,16 +237,13 @@ class Generator
                 if (!empty($v['titleSource'])) {
                     $postDataSummary['entryTitleSource'] = $v['handle'];
                 }
-
             }
-
         }
 
         // 1. Check permissions
         $p = new Permissions();
 
         if ($p->canInstallPackages()) {
-
             // 2. Create folder (this happens only when building new block)
             if (!file_exists($postDataSummary['blockPath'])) {
                 mkdir($postDataSummary['blockPath']);
@@ -288,113 +278,88 @@ class Generator
                 $bt = $em->find(BlockTypeEntity::class, $blockType->getBlockTypeID());
                 try {
                     $bt->refresh();
+
                     return ['handle' => $postData['blockName'], 'blockInstalled' => false, 'blockRefreshed' => true];
                 } catch (UserMessageException $e) {
                     $this->flash('error', $e->getMessage());
                 }
-
             } elseif ($postData['installBlock']) {
-
                 try {
-
                     $env = Environment::get();
                     $env->clearOverrideCache();
 
                     BlockType::installBlockType($postDataSummary['blockHandle']);
 
                     return ['handle' => $postData['blockName'], 'blockInstalled' => true, 'blockRefreshed' => false];
-
                 } catch (\Exception $e) {
                     return t($e->getMessage());
                 }
-
             } else {
-
                 return ['handle' => $postData['blockName'], 'blockInstalled' => false, 'blockRefreshed' => false];
-
             }
-
         } else {
-
             return t('You do not have permission to install custom block types or add-ons.');
-
         }
 
         return t('Oops! Something went wrong...');
-
     }
 
     private function generateIconPng($postData, $postDataSummary)
     {
-
         $filename = 'icon.png';
 
         copy($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . $filename, $postDataSummary['blockPath'] . DIRECTORY_SEPARATOR . $filename);
-
     }
 
     private function generateAddPhp($postData, $postDataSummary)
     {
-
         $filename = 'add.php';
 
         copy($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . $filename, $postDataSummary['blockPath'] . DIRECTORY_SEPARATOR . $filename);
-
     }
 
     private function generateComposerPhp($postData, $postDataSummary)
     {
-
         $filename = 'composer.php';
 
         copy($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . $filename, $postDataSummary['blockPath'] . DIRECTORY_SEPARATOR . $filename);
-
     }
 
     private function generateEditPhp($postData, $postDataSummary)
     {
-
         $filename = 'edit.php';
 
         copy($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . $filename, $postDataSummary['blockPath'] . DIRECTORY_SEPARATOR . $filename);
-
     }
 
     private function generateScrapbookPhp($postData, $postDataSummary)
     {
-
         $filename = 'scrapbook.php';
 
         copy($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . $filename, $postDataSummary['blockPath'] . DIRECTORY_SEPARATOR . $filename);
-
     }
 
     private function generateFormCss($postData, $postDataSummary)
     {
-
         $filename = 'form.css';
 
         mkdir($postDataSummary['blockPath'] . DIRECTORY_SEPARATOR . 'css_files');
 
         copy($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . 'css_files' . DIRECTORY_SEPARATOR . $filename, $postDataSummary['blockPath'] . DIRECTORY_SEPARATOR . 'css_files' . DIRECTORY_SEPARATOR . $filename);
-
     }
 
     private function generateConfigBbJson($postData, $postDataSummary)
     {
-
         $filename = 'config-bb.json';
 
         unset($postData['refresh_block']);
 
         $fileService = new FileService();
         $fileService->append($postDataSummary['blockPath'] . DIRECTORY_SEPARATOR . $filename, json_encode($postData, JSON_PRETTY_PRINT));
-
     }
 
     private function generateAutoJs($postData, $postDataSummary)
     {
-
         $filename = 'auto.js';
 
         $code = file_get_contents($postDataSummary['templatePath'] . DIRECTORY_SEPARATOR . $filename);
@@ -402,39 +367,29 @@ class Generator
 
         $fileService = new FileService();
         $fileService->append($postDataSummary['blockPath'] . DIRECTORY_SEPARATOR . $filename, $code);
-
     }
 
     private function generateControllerPhp($postData, $postDataSummary)
     {
-
         $fileGeneratorControllerPhp = new FileGeneratorControllerPhp();
         $fileGeneratorControllerPhp->generate($postDataSummary, $postData);
-
     }
 
     private function generateViewPhp($postData, $postDataSummary)
     {
-
         $fileGeneratorViewPhp = new FileGeneratorViewPhp();
         $fileGeneratorViewPhp->generate($postDataSummary, $postData);
-
     }
 
     private function generateDbXml($postData, $postDataSummary)
     {
-
         $fileGeneratorDbXml = new FileGeneratorDbXml();
         $fileGeneratorDbXml->generate($postDataSummary, $postData);
-
     }
 
     private function generateFormPhp($postData, $postDataSummary)
     {
-
         $fileGeneratorFormPhp = new FileGeneratorFormPhp();
         $fileGeneratorFormPhp->generate($postDataSummary, $postData);
-
     }
-
 }

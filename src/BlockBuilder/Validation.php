@@ -1,14 +1,15 @@
-<?php namespace BlockBuilder;
+<?php
+
+namespace BlockBuilder;
 
 use Concrete\Core\Block\BlockType\BlockType;
 use Concrete\Core\File\Service\File as FileService;
 use Concrete\Core\Url\Resolver\Manager\ResolverManager;
 
-defined('C5_EXECUTE') or die('Access Denied.');
+defined('C5_EXECUTE') or exit('Access Denied.');
 
 class Validation
 {
-
     protected $resolverManager;
 
     public function __construct(ResolverManager $resolverManager)
@@ -18,31 +19,26 @@ class Validation
 
     public function getForbiddenBlockHandles()
     {
-
         // Few blocks, which have folder name different from db table name
         $forbiddenWords = [
             'navigation',
             'content_local',
             'content_file',
-            'content_image'
+            'content_image',
         ];
 
         return $forbiddenWords;
-
     }
 
     public function getForbiddenHandles()
     {
-
         $forbiddenWords = ['id', 'bID', 'position', 'class'];
 
         return $forbiddenWords;
-
     }
 
     public function validateBlockData($postData)
     {
-
         $errors = [];
         $tabsWithError = [];
         $fieldsWithError = [];
@@ -51,30 +47,23 @@ class Validation
 
         // Block name
         if (!$postData['blockName']) {
-
             $errors[] = t('Field "%s" is required (%s).', t('Block name'), t('Block settings'));
             $fieldsWithError[] = 'blockName';
             $tabsWithError[] = 'block-settings';
-
         } else {
-
             if (mb_strlen($postData['blockName']) < 3 or mb_strlen($postData['blockName']) > 100) {
                 $errors[] = t('Field "%s" should be between %s and %s characters long (%s).', t('Block name'), 3, 100, t('Block settings'));
                 $fieldsWithError[] = 'blockName';
                 $tabsWithError[] = 'block-settings';
             }
-
         }
 
         // Block handle
         if (!$postData['blockHandle']) {
-
             $errors[] = t('Field "%s" is required (%s).', t('Block handle'), t('Block settings'));
             $fieldsWithError[] = 'blockHandle';
             $tabsWithError[] = 'block-settings';
-
         } else {
-
             if (mb_strlen($postData['blockHandle']) < 3 or mb_strlen($postData['blockHandle']) > 50) {
                 $errors[] = t('Field "%s" should be between %s and %s characters long (%s).', t('Block handle'), 3, 50, t('Block settings'));
                 $fieldsWithError[] = 'blockHandle';
@@ -100,7 +89,6 @@ class Validation
             }
 
             if (!empty($postData['refresh_block'])) {
-
                 if (!$this->blockTypeFolderExists($postData['blockHandle'], false)) {
                     $errors[] = t('Block folder named after chosen handle does not exist. You should build your block instead.');
                     $fieldsWithError[] = 'blockHandle';
@@ -112,19 +100,13 @@ class Validation
                         $tabsWithError[] = 'block-settings';
                     }
                 }
-
             } else {
-
                 if ($this->blockTypeFolderExists($postData['blockHandle'], true)) {
-
                     $errors[] = t('Concrete CMS already uses the same name as your handle for one of its blocks. Use different handle. (%s).', t('Block settings'));
                     $fieldsWithError[] = 'blockHandle';
                     $tabsWithError[] = 'block-settings';
-
                 } else {
-
                     if ($this->isBlockInstalled($postData['blockHandle'])) {
-
                         $blockType = BlockType::getByHandle($postData['blockHandle']);
 
                         $urlEnding = '';
@@ -135,20 +117,14 @@ class Validation
                         $errors[] = t('Block with that handle is already installed. %sUninstall it%s first and then build block again. Alternatively you can use different handle (%s).', '<a href="' . $this->resolverManager->resolve(['dashboard/blocks/types' . $urlEnding]) . '" target="_blank" rel="noopener" class="btn btn-primary btn-sm"><i class="fas fa-external-link-alt"></i> ', '</a>', t('Block settings'));
                         $fieldsWithError[] = 'blockHandle';
                         $tabsWithError[] = 'block-settings';
-
                     } else {
-
                         if ($this->blockTypeFolderExists($postData['blockHandle'])) {
-
                             $errors[] = t('Block folder named %s already exists. %sPermanently delete that folder%s or use different handle (%s).', '"' . $postData['blockHandle'] . '"', '<a href="#" class="btn btn-danger btn-sm js-delete-block-type-folder"><i class="far fa-trash-alt"></i> ', '</a>', t('Block settings'));
                             $fieldsWithError[] = 'blockHandle';
                             $tabsWithError[] = 'block-settings';
-
                         }
-
                     }
                 }
-
             }
 
             if (!$this->validateForbiddenBlockHandles($postData['blockHandle'])) {
@@ -156,40 +132,31 @@ class Validation
                 $fieldsWithError[] = 'blockHandle';
                 $tabsWithError[] = 'block-settings';
             }
-
         }
 
         // Other
         if (!$postData['blockWidth']) {
-
             $errors[] = t('Field "%s" is required (%s).', t('Block width'), t('Block settings'));
             $fieldsWithError[] = 'blockWidth';
             $tabsWithError[] = 'block-settings';
-
         } else {
-
             if (!ctype_digit($postData['blockWidth']) or $postData['blockWidth'] < 300 or $postData['blockWidth'] > 2000) {
                 $errors[] = t('Field "%s" should be a number between %s and %s (%s).', t('Block width'), 300, 2000, t('Block settings'));
                 $fieldsWithError[] = 'blockWidth';
                 $tabsWithError[] = 'block-settings';
             }
-
         }
 
         if (!$postData['blockHeight']) {
-
             $errors[] = t('Field "%s" is required (%s).', t('Block height'), t('Block settings'));
             $fieldsWithError[] = 'blockHeight';
             $tabsWithError[] = 'block-settings';
-
         } else {
-
             if (!ctype_digit($postData['blockHeight']) or $postData['blockHeight'] < 300 or $postData['blockHeight'] > 2000) {
                 $errors[] = t('Field "%s" should be a number between %s and %s (%s).', t('Block width'), 300, 2000, t('Block settings'));
                 $fieldsWithError[] = 'blockHeight';
                 $tabsWithError[] = 'block-settings';
             }
-
         }
 
         if (!empty($postData['excludedFromRemoval'])) {
@@ -224,7 +191,6 @@ class Validation
                 $fieldsWithError[] = 'excludedFromRemoval';
                 $tabsWithError[] = 'block-settings';
             }
-
         }
 
         // 2. Texts
@@ -246,7 +212,6 @@ class Validation
             $tabsWithError[] = 'texts';
         }
 
-
         // 3. Basic information + Repeatable entries
         $basicData = $this->validateRepeatableEntries($postData['basic'] ?? [], 'basic-information', t('Tab: Basic information'));
         $entriesData = $this->validateRepeatableEntries($postData['entries'] ?? [], 'repeatable-entries', t('Tab: Repeatable entries'));
@@ -262,48 +227,37 @@ class Validation
         $validation['entries'] = $entriesData['data'];
 
         return $validation;
-
     }
 
     private function validateRepeatableEntries($postData, $handle, $label)
     {
-
         $errors = [];
         $fieldsWithError = [];
         $tabsWithError = [];
 
         if (is_array($postData) and count($postData)) {
-
             $uniqueHandles = [];
 
             foreach ($postData as $counter => $entry) {
-
                 // Label
                 if (!$entry['label']) {
-
                     $postData[$counter]['error']['label'] = 1;
                     $fieldsWithError[] = $handle . '|label|empty';
                     $tabsWithError[] = 'tab-' . $handle;
-
                 } else {
-
                     if (mb_strlen($entry['label']) < 3) {
                         $postData[$counter]['error']['label'] = 1;
                         $fieldsWithError[] = $handle . '|label|less_than_3_characters';
                         $tabsWithError[] = 'tab-' . $handle;
                     }
-
                 }
 
                 // Handle
                 if (!$entry['handle']) {
-
                     $postData[$counter]['error']['handle'] = 1;
                     $fieldsWithError[] = $handle . '|handle|empty';
                     $tabsWithError[] = 'tab-' . $handle;
-
                 } else {
-
                     if (mb_strlen($entry['handle']) < 3) {
                         $postData[$counter]['error']['handle'] = 1;
                         $fieldsWithError[] = $handle . '|handle|less_than_3_characters';
@@ -354,151 +308,115 @@ class Validation
                     } else {
                         $uniqueHandles[] = $entry['handle'];
                     }
-
                 }
 
                 // number
                 if (isset($entry['numberDisplayedDecimals']) and (!ctype_digit($entry['numberDisplayedDecimals']) or $entry['numberDisplayedDecimals'] < 0)) {
-
                     $postData[$counter]['error']['numberDisplayedDecimals'] = 1;
                     $fieldsWithError[] = $handle . '|numberDisplayedDecimals|invalid_number';
                     $tabsWithError[] = 'tab-' . $handle;
-
                 }
 
                 if (isset($entry['numberDisplayedDecimalSeparator']) and empty($entry['numberDisplayedDecimalSeparator'])) {
-
                     $postData[$counter]['error']['numberDisplayedDecimalSeparator'] = 1;
                     $fieldsWithError[] = $handle . '|numberDisplayedDecimalSeparator|invalid_value';
                     $tabsWithError[] = 'tab-' . $handle;
-
                 }
 
                 // textarea
                 if (isset($entry['textareaHeight']) and $entry['textareaHeight'] != '' and (!ctype_digit($entry['textareaHeight']) or $entry['textareaHeight'] < 40 or $entry['textareaHeight'] > 2000)) {
-
                     $postData[$counter]['error']['textareaHeight'] = 1;
                     $fieldsWithError[] = $handle . '|textareaHeight|invalid_number';
                     $tabsWithError[] = 'tab-' . $handle;
-
                 }
 
                 // express
                 if (isset($entry['expressHandle']) and !$entry['expressHandle']) {
-
                     $postData[$counter]['error']['expressHandle'] = 1;
                     $fieldsWithError[] = $handle . '|expressHandle|empty';
                     $tabsWithError[] = 'tab-' . $handle;
-
                 }
 
                 // wysiwyg_editor
                 if (isset($entry['wysiwygEditorHeight']) and $entry['wysiwygEditorHeight'] != '' and (!ctype_digit($entry['wysiwygEditorHeight']) or $entry['wysiwygEditorHeight'] < 40 or $entry['wysiwygEditorHeight'] > 2000)) {
-
                     $postData[$counter]['error']['wysiwygEditorHeight'] = 1;
                     $fieldsWithError[] = $handle . '|wysiwygEditorHeight|invalid_number';
                     $tabsWithError[] = 'tab-' . $handle;
-
                 }
 
                 if (!empty($entry['wysiwygCustomConfig']) and json_decode($entry['wysiwygCustomConfig']) === null and json_last_error() !== JSON_ERROR_NONE) {
-
                     $postData[$counter]['error']['wysiwygCustomConfig'] = 1;
                     $fieldsWithError[] = $handle . '|wysiwygCustomConfig|invalid_json';
                     $tabsWithError[] = 'tab-' . $handle;
-
                 }
 
                 // select_field
                 if (!empty($entry['selectListGenerationMethod']) && $entry['selectListGenerationMethod'] === 'basic_list' && empty($entry['selectOptions'])) {
-
                     $postData[$counter]['error']['selectOptions'] = 1;
                     $fieldsWithError[] = $handle . '|selectOptions|empty';
                     $tabsWithError[] = 'tab-' . $handle;
-
                 } elseif (!empty($entry['selectListGenerationMethod']) && $entry['selectListGenerationMethod'] === 'basic_list') {
-
                     $options = isset($entry['selectOptions']) ? explode('<br />', nl2br($entry['selectOptions'])) : [];
 
                     $invalidKey = 0;
 
                     if (is_array($options)) {
-
                         foreach ($options as $option) {
-
                             $explodedOption = explode('::', $option);
 
                             if (is_array($explodedOption) and count($explodedOption) == 2) {
-
                                 $key = $explodedOption[0];
 
                                 if (!preg_match('/^[a-zA-Z0-9_]+$/', trim($key))) {
-                                    $invalidKey++;
+                                    ++$invalidKey;
                                 }
 
                                 if (mb_substr(trim($key), 0, 1, 'utf-8') == '_') {
-                                    $invalidKey++;
+                                    ++$invalidKey;
                                 }
-
                             }
-
                         }
-
                     }
 
                     if ($invalidKey > 0) {
-
                         $postData[$counter]['error']['selectOptions'] = 1;
                         $fieldsWithError[] = $handle . '|selectOptions|invalid_data';
                         $tabsWithError[] = 'tab-' . $handle;
-
                     }
-
                 }
 
                 // select_multiple_field
                 if (!empty($entry['selectMultipleListGenerationMethod']) && $entry['selectMultipleListGenerationMethod'] === 'basic_list' && empty($entry['selectMultipleOptions'])) {
-
                     $postData[$counter]['error']['selectMultipleOptions'] = 1;
                     $fieldsWithError[] = $handle . '|selectMultipleOptions|empty';
                     $tabsWithError[] = 'tab-' . $handle;
-
                 } elseif (!empty($entry['selectMultipleListGenerationMethod']) && $entry['selectMultipleListGenerationMethod'] === 'basic_list') {
-
                     $options = isset($entry['selectMultipleOptions']) ? explode('<br />', nl2br($entry['selectMultipleOptions'])) : [];
 
                     $invalidKey = 0;
 
                     if (is_array($options)) {
-
                         foreach ($options as $option) {
-
                             $explodedOption = explode('::', $option);
 
                             if (is_array($explodedOption) and count($explodedOption) == 2) {
-
                                 $key = $explodedOption[0];
 
                                 if (!preg_match('/^[a-zA-Z0-9_]+$/', trim($key))) {
-                                    $invalidKey++;
+                                    ++$invalidKey;
                                 }
 
                                 if (mb_substr(trim($key), 0, 1, 'utf-8') == '_') {
-                                    $invalidKey++;
+                                    ++$invalidKey;
                                 }
-
                             }
-
                         }
-
                     }
 
                     if ($invalidKey > 0) {
-
                         $postData[$counter]['error']['selectMultipleOptions'] = 1;
                         $fieldsWithError[] = $handle . '|selectMultipleOptions|invalid_data';
                         $tabsWithError[] = 'tab-' . $handle;
-
                     }
 
                     // Do not use | (vertical line), because it is used as separator in database when saving options
@@ -507,93 +425,68 @@ class Validation
                         $fieldsWithError[] = $handle . '|selectMultipleOptions|invalid_data';
                         $tabsWithError[] = 'tab-' . $handle;
                     }
-
                 }
 
                 // image
                 if (!empty($entry['imageCreateThumbnailImage'])) {
-
                     if ($entry['imageThumbnailWidth'] == '' and $entry['imageThumbnailHeight'] == '') {
-
                         $postData[$counter]['error']['imageThumbnailOptions'] = 1;
                         $fieldsWithError[] = $handle . '|imageThumbnailOptions|empty_width_and_height';
                         $tabsWithError[] = 'tab-' . $handle;
-
                     }
 
                     if (!empty($entry['imageThumbnailCrop']) and ($entry['imageThumbnailWidth'] == '' or $entry['imageThumbnailHeight'] == '')) {
-
                         $postData[$counter]['error']['imageThumbnailOptions'] = 1;
                         $fieldsWithError[] = $handle . '|imageThumbnailOptions|crop_requires_width_and_height';
                         $tabsWithError[] = 'tab-' . $handle;
-
                     }
 
                     if ($entry['imageThumbnailWidth'] != '' and (!ctype_digit($entry['imageThumbnailWidth']) or $entry['imageThumbnailWidth'] < 1)) {
-
                         $postData[$counter]['error']['imageThumbnailWidth'] = 1;
                         $fieldsWithError[] = $handle . '|imageThumbnailWidth|invalid_number';
                         $tabsWithError[] = 'tab-' . $handle;
-
                     }
 
                     if ($entry['imageThumbnailHeight'] != '' and (!ctype_digit($entry['imageThumbnailHeight']) or $entry['imageThumbnailHeight'] < 1)) {
-
                         $postData[$counter]['error']['imageThumbnailHeight'] = 1;
                         $fieldsWithError[] = $handle . '|imageThumbnailHeight|invalid_number';
                         $tabsWithError[] = 'tab-' . $handle;
-
                     }
-
                 }
 
                 if (!empty($entry['imageCreateFullscreenImage'])) {
-
                     if ($entry['imageFullscreenWidth'] == '' and $entry['imageFullscreenHeight'] == '') {
-
                         $postData[$counter]['error']['imageFullscreenOptions'] = 1;
                         $fieldsWithError[] = $handle . '|imageFullscreenOptions|empty_width_and_height';
                         $tabsWithError[] = 'tab-' . $handle;
-
                     }
 
                     if (!empty($entry['imageFullscreenCrop']) and ($entry['imageFullscreenWidth'] == '' or $entry['imageFullscreenHeight'] == '')) {
-
                         $postData[$counter]['error']['imageFullscreenOptions'] = 1;
                         $fieldsWithError[] = $handle . '|imageFullscreenOptions|crop_requires_width_and_height';
                         $tabsWithError[] = 'tab-' . $handle;
-
                     }
 
                     if ($entry['imageFullscreenWidth'] != '' and (!ctype_digit($entry['imageFullscreenWidth']) or $entry['imageFullscreenWidth'] < 1)) {
-
                         $postData[$counter]['error']['imageFullscreenWidth'] = 1;
                         $fieldsWithError[] = $handle . '|imageFullscreenWidth|invalid_number';
                         $tabsWithError[] = 'tab-' . $handle;
-
                     }
 
                     if ($entry['imageFullscreenHeight'] != '' and (!ctype_digit($entry['imageFullscreenHeight']) or $entry['imageFullscreenHeight'] < 1)) {
-
                         $postData[$counter]['error']['imageFullscreenHeight'] = 1;
                         $fieldsWithError[] = $handle . '|imageFullscreenHeight|invalid_number';
                         $tabsWithError[] = 'tab-' . $handle;
-
                     }
-
                 }
 
                 // html_editor
                 if (isset($entry['htmlEditorHeight']) and $entry['htmlEditorHeight'] != '' and (!ctype_digit($entry['htmlEditorHeight']) or $entry['htmlEditorHeight'] < 40 or $entry['htmlEditorHeight'] > 2000)) {
-
                     $postData[$counter]['error']['htmlEditorHeight'] = 1;
                     $fieldsWithError[] = $handle . '|htmlEditorHeight|invalid_number';
                     $tabsWithError[] = 'tab-' . $handle;
-
                 }
-
             }
-
         }
 
         // Label
@@ -716,7 +609,6 @@ class Validation
             $errors[] = t('Invalid entry in one of "HTML Editor/Height" fields, should be a number between %s and %s or empty (%s).', 40, 2000, $label);
         }
 
-
         // Return data
         $validation = [];
 
@@ -742,7 +634,6 @@ class Validation
 
     public function blockTypeFolderExists($handle, $pathToCore = false)
     {
-
         if ($pathToCore) {
             $blockTypePath = DIR_FILES_BLOCK_TYPES_CORE . DIRECTORY_SEPARATOR . $handle;
         } else {
@@ -767,12 +658,10 @@ class Validation
         }
 
         return false;
-
     }
 
     public function isBlockInstalled($handle)
     {
-
         $blockType = BlockType::getByHandle($handle);
 
         if (is_object($blockType)) {
@@ -780,46 +669,32 @@ class Validation
         } else {
             return false;
         }
-
     }
 
     private function validateForbiddenBlockHandles($handle)
     {
-
         // We do this instead of simple in_array() because
         // we don't want to override existing core tables
         // content_image => btContentImage
         // contentimage => btContentimage
         foreach ($this->getForbiddenBlockHandles() as $k => $v) {
-
             if (strtolower(str_replace('_', '', $handle)) == strtolower(str_replace('_', '', $v))) {
-
                 return false;
-
             }
-
         }
 
         return true;
-
     }
 
     private function validateForbiddenHandles($handle)
     {
-
         // Case-insensitive check
         foreach ($this->getForbiddenHandles() as $k => $v) {
-
             if (strtolower($handle) == strtolower($v)) {
-
                 return false;
-
             }
-
         }
 
         return true;
-
     }
-
 }

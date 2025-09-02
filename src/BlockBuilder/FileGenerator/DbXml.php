@@ -1,16 +1,16 @@
-<?php namespace BlockBuilder\FileGenerator;
+<?php
 
-use Concrete\Core\File\Service\File as FileService;
+namespace BlockBuilder\FileGenerator;
+
 use BlockBuilder\Utility as BlockBuilderUtility;
+use Concrete\Core\File\Service\File as FileService;
 
-defined('C5_EXECUTE') or die('Access Denied.');
+defined('C5_EXECUTE') or exit('Access Denied.');
 
 class DbXml
 {
-
     public function generate($postDataSummary, $postData)
     {
-
         $filename = 'db.xml';
 
         $code = '';
@@ -29,9 +29,7 @@ class DbXml
         }
 
         if (!empty($postData['basic'])) {
-
             foreach ($postData['basic'] as $k => $v) {
-
                 if ($v['fieldType'] == 'text_field') {
                     $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '" type="C" size="255"></field>' . PHP_EOL . PHP_EOL;
                 }
@@ -155,10 +153,8 @@ class DbXml
                     }
                     if (
                         (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable']))
-                        or
-                        (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']))
-                        or
-                        (!empty($v['imageShowAltTextField']))
+                        or (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']))
+                        or (!empty($v['imageShowAltTextField']))
                     ) {
                         $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '_data" type="X2"></field>' . PHP_EOL;
                     }
@@ -194,15 +190,12 @@ class DbXml
                 if ($v['fieldType'] == 'icon_picker') {
                     $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '" type="C" size="255"></field>' . PHP_EOL . PHP_EOL;
                 }
-
             }
-
         }
 
         $code .= BlockBuilderUtility::tab(1) . '</table>' . PHP_EOL . PHP_EOL;
 
         if (!empty($postData['entries'])) {
-
             $code .= BlockBuilderUtility::tab(1) . '<table name="' . $postDataSummary['blockTableNameEntries'] . '">' . PHP_EOL . PHP_EOL;
 
             $code .= BlockBuilderUtility::tab(2) . '<field name="id" type="I">' . PHP_EOL;
@@ -222,7 +215,6 @@ class DbXml
             $code .= BlockBuilderUtility::tab(2) . '</field>' . PHP_EOL . PHP_EOL;
 
             foreach ($postData['entries'] as $k => $v) {
-
                 if ($v['fieldType'] == 'text_field') {
                     $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '" type="C" size="255"></field>' . PHP_EOL . PHP_EOL;
                 }
@@ -346,10 +338,8 @@ class DbXml
                     }
                     if (
                         (!empty($v['imageCreateThumbnailImage']) and !empty($v['imageThumbnailEditable']))
-                        or
-                        (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']))
-                        or
-                        (!empty($v['imageShowAltTextField']))
+                        or (!empty($v['imageCreateFullscreenImage']) and !empty($v['imageFullscreenEditable']))
+                        or (!empty($v['imageShowAltTextField']))
                     ) {
                         $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '_data" type="X2"></field>' . PHP_EOL;
                     }
@@ -387,18 +377,14 @@ class DbXml
                 if ($v['fieldType'] == 'icon_picker') {
                     $code .= BlockBuilderUtility::tab(2) . '<field name="' . $v['handle'] . '" type="C" size="255"></field>' . PHP_EOL . PHP_EOL;
                 }
-
             }
 
             $code .= BlockBuilderUtility::tab(1) . '</table>' . PHP_EOL . PHP_EOL;
-
         }
 
         $code .= '</schema>';
 
         $fileService = new FileService();
         $fileService->append($postDataSummary['blockPath'] . DIRECTORY_SEPARATOR . $filename, $code);
-
     }
-
 }
