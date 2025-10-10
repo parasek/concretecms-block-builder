@@ -613,10 +613,10 @@ class ControllerPhp
                 $code .= BlockBuilderUtility::tab(2) . '// Load assets for repeatable entries' . PHP_EOL;
             }
             if ($postDataSummary['linkUsed_entry'] or $postDataSummary['linkFromSitemapUsed_entry']) {
-                $code .= BlockBuilderUtility::tab(2) . '$this->requireAsset(\'core/sitemap\');' . PHP_EOL;
+                //$code .= BlockBuilderUtility::tab(2) . '$this->requireAsset(\'core/sitemap\');' . PHP_EOL;
             }
             if ($postDataSummary['linkUsed_entry'] or $postDataSummary['linkFromFileManagerUsed_entry'] or $postDataSummary['imageUsed_entry']) {
-                $code .= BlockBuilderUtility::tab(2) . '$this->requireAsset(\'core/file-manager\');' . PHP_EOL;
+                //$code .= BlockBuilderUtility::tab(2) . '$this->requireAsset(\'core/file-manager\');' . PHP_EOL;
             }
             if ($postDataSummary['linkUsed_entry'] or $postDataSummary['linkFromSitemapUsed_entry'] or $postDataSummary['linkFromFileManagerUsed_entry'] or $postDataSummary['imageUsed_entry']) {
                 $code .= PHP_EOL;
