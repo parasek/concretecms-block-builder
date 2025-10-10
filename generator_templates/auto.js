@@ -261,7 +261,7 @@ $(function () {
                             var sourceEntryElement = sourceEntry.find('[name="entry[' + sourceEntry.attr('data-position') + '][' + value + ']"]');
                         }
                     }
-                    if (sourceEntryElement.length > 1) {
+                    if (sourceEntryElement.attr('type') == 'checkbox') {
                         // Checkbox list (Multiple choice)
                         var selectedCheckboxes = [];
                         sourceEntryElement.each(function(index, element) {

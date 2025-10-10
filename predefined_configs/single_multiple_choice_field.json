@@ -1,6 +1,6 @@
 {
-    "version": "2.8.0",
-    "createdAt": "2025-04-11 14:46:01",
+    "version": "2.8.1",
+    "createdAt": "2025-10-10 13:39:56",
     "blockName": "Single\/Multiple Choice Field",
     "blockHandle": "single_multiple_choice_field",
     "blockDescription": "All types of Single\/Multiple Choice Fields (Basic + Repeatable)",

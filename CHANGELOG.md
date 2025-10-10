@@ -1,3 +1,8 @@
+# 2.8.1
+- Fixed undefined php8 errors for image field type
+- Removed unnecessary asset loads
+- Fixed an error when copying a single checkbox field ("Multiple Choice Field" in repeatable entries)
+
 # 2.8.0
 - You can now add custom code inside view method
 - You can now add empty option when custom code is selected in Single Choice Field
