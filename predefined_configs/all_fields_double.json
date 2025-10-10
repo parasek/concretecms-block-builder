@@ -1,6 +1,6 @@
 {
-    "version": "2.8.0",
-    "createdAt": "2025-04-11 14:45:56",
+    "version": "2.8.1",
+    "createdAt": "2025-10-10 13:39:49",
     "blockName": "All Fields x2",
     "blockHandle": "all_fields_double",
     "blockDescription": "All types of Fields (Basic + Repeatable) x2",
