@@ -1,0 +1,28 @@
+<div class="mb-4">
+    <label
+        class="form-label"
+        for="<?= h($view->field('entry')); ?>-<?= h((string) $entryIndex); ?>-{{HANDLE}}"
+    ><?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?></label>
+    <?php $selectedValues = isset($entry[{{HANDLE_LITERAL}}]) && is_string($entry[{{HANDLE_LITERAL}}]) && $entry[{{HANDLE_LITERAL}}] !== '' ? explode('|', $entry[{{HANDLE_LITERAL}}]) : []; ?>
+    <input
+        type="hidden"
+        name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
+        value=""
+    >
+    <select
+        class="form-select"
+        id="<?= h($view->field('entry')); ?>-<?= h((string) $entryIndex); ?>-{{HANDLE}}"
+        name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}][]"
+        data-entry-field="{{HANDLE}}"
+        multiple
+    >
+        <?php if (!empty(${{OPTIONS_VARIABLE}}) && is_array(${{OPTIONS_VARIABLE}})): ?>
+            <?php foreach (${{OPTIONS_VARIABLE}} as $optionKey => $optionLabel): ?>
+                <option
+                    value="<?= h((string) $optionKey); ?>"
+                    <?= in_array((string) $optionKey, $selectedValues, true) ? 'selected' : ''; ?>
+                ><?= h($optionLabel); ?></option>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </select>{{HELP_TEXT}}
+</div>

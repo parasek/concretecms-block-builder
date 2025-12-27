@@ -1,0 +1,129 @@
+<?php
+
+declare(strict_types=1);
+
+namespace BlockBuilder\FieldType\Type\WysiwygEditor;
+
+use BlockBuilder\Block\Validation\IntegerValueValidator;
+use BlockBuilder\FieldType\AbstractFieldType;
+use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
+use BlockBuilder\FieldType\Enum\FieldTypeEnum;
+
+class WysiwygEditorFieldType extends AbstractFieldType
+{
+    private const int MINIMUM_EDITOR_HEIGHT = 40;
+    private const int MAXIMUM_EDITOR_HEIGHT = 2000;
+
+    protected const array LEGACY_PROPERTY_ALIASES = [
+        'wysiwygEditorHeight' => 'maxHeight',
+        'wysiwygCustomConfig' => 'customConfig',
+    ];
+
+    public static function getFieldType(): FieldTypeEnum
+    {
+        return FieldTypeEnum::WysiwygEditor;
+    }
+
+    public static function getLabel(): string
+    {
+        return t('WYSIWYG Editor');
+    }
+
+    public static function getIcon(): string
+    {
+        return 'far fa-window-maximize';
+    }
+
+    public static function getDefaultValues(): array
+    {
+        return [
+            'defaultValue' => '',
+            'minHeight' => '',
+            'maxHeight' => '',
+            'customConfig' => '',
+            'allowedTags' => '',
+        ];
+    }
+
+    public static function createDtoFromArray(array $data): WysiwygEditorFieldTypeDto
+    {
+        return new WysiwygEditorFieldTypeDto(
+            fieldType: self::getFieldType(),
+            label: trim($data['label'] ?? ''),
+            handle: trim($data['handle'] ?? ''),
+            required: !empty($data['required']),
+            helpText: trim($data['helpText'] ?? ''),
+            defaultValue: (string) ($data['defaultValue'] ?? ''),
+            minHeight: !empty($data['minHeight']) ? (int) $data['minHeight'] : null,
+            maxHeight: !empty($data['maxHeight']) ? (int) $data['maxHeight'] : null,
+            customConfig: $data['customConfig'] ?? '',
+            allowedTags: trim($data['allowedTags'] ?? ''),
+        );
+    }
+
+    public static function getErrorMessages(FieldTypeContextEnum $context): array
+    {
+        return [
+            'minHeight|invalid_number' => t('Some "WYSIWYG Editor/Minimum height" fields must contain a number between %s and %s or be empty (%s).', self::MINIMUM_EDITOR_HEIGHT, self::MAXIMUM_EDITOR_HEIGHT, $context->getTabName()),
+            'maxHeight|invalid_number' => t('Some "WYSIWYG Editor/Maximum height" fields must contain a number between %s and %s or be empty (%s).', self::MINIMUM_EDITOR_HEIGHT, self::MAXIMUM_EDITOR_HEIGHT, $context->getTabName()),
+            'minHeight|greater_than_maximum' => t('The minimum height of a WYSIWYG Editor cannot be greater than its maximum height (%s).', $context->getTabName()),
+            'customConfig|invalid_json' => t('Some "WYSIWYG Editor/Custom editor configuration" fields must contain a valid JSON object (%s).', $context->getTabName()),
+        ];
+    }
+
+    public function validate(array $data): array
+    {
+        $errors = [];
+
+        $minimumHeight = $data['minHeight'] ?? '';
+        $maximumHeight = $data['maxHeight'] ?? '';
+        $customConfig = $data['customConfig'] ?? '';
+
+        $minimumHeightIsValid = $minimumHeight === ''
+            || IntegerValueValidator::isInRange(
+                $minimumHeight,
+                self::MINIMUM_EDITOR_HEIGHT,
+                self::MAXIMUM_EDITOR_HEIGHT,
+            );
+        if (!$minimumHeightIsValid) {
+            $errors[] = 'minHeight|invalid_number';
+        }
+
+        $maximumHeightIsValid = $maximumHeight === ''
+            || IntegerValueValidator::isInRange(
+                $maximumHeight,
+                self::MINIMUM_EDITOR_HEIGHT,
+                self::MAXIMUM_EDITOR_HEIGHT,
+            );
+        if (!$maximumHeightIsValid) {
+            $errors[] = 'maxHeight|invalid_number';
+        }
+
+        if (
+            $minimumHeight !== ''
+            && $maximumHeight !== ''
+            && $minimumHeightIsValid
+            && $maximumHeightIsValid
+            && (int) $minimumHeight > (int) $maximumHeight
+        ) {
+            $errors[] = 'minHeight|greater_than_maximum';
+        }
+
+        if ($customConfig !== '') {
+            if (!is_string($customConfig)) {
+                $errors[] = 'customConfig|invalid_json';
+            } else {
+                try {
+                    $decodedConfig = json_decode($customConfig, false, 512, JSON_THROW_ON_ERROR);
+                    if (!is_object($decodedConfig)) {
+                        $errors[] = 'customConfig|invalid_json';
+                    }
+                } catch (\JsonException) {
+                    $errors[] = 'customConfig|invalid_json';
+                }
+            }
+        }
+
+        return $errors;
+    }
+}

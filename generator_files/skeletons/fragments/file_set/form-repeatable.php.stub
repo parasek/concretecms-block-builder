@@ -1,0 +1,23 @@
+<div class="mb-4">
+    <label
+        class="form-label"
+        for="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
+    ><?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?></label>
+    <div class="input-group">
+{{PREFIX}}        <select
+            class="form-select"
+            id="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
+            name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
+            data-entry-field="{{HANDLE}}"
+        >
+            <?php if (!empty(${{OPTION_VARIABLE}})): ?>
+                <?php foreach (${{OPTION_VARIABLE}} as $fileSetID => $fileSetName): ?>
+                    <option
+                        value="<?= h((string) $fileSetID); ?>"
+                        <?= (int) ($entry[{{HANDLE_LITERAL}}] ?? 0) === (int) $fileSetID ? 'selected' : ''; ?>
+                    ><?= h($fileSetName); ?></option>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </select>
+    </div>{{HELP_TEXT}}
+</div>

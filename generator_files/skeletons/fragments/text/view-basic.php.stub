@@ -1,0 +1,3 @@
+<?php if ({{DISPLAY_CONDITION}}): ?>
+    <?= h(${{HANDLE}}); ?>
+<?php endif; ?>

@@ -1,0 +1,12 @@
+<?php
+${{SVG_VARIABLE}} = match ($entry[{{HANDLE_LITERAL}}] ?? '') {
+{{SVG_MAP}}
+    default => null,
+};
+?>
+<?php if (${{SVG_VARIABLE}} !== null): ?>
+    <img
+        src="<?= h(${{SVG_VARIABLE}}['source']); ?>"
+        alt="<?= h(${{SVG_VARIABLE}}['name']); ?>"
+    >
+<?php endif; ?>

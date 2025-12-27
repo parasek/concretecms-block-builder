@@ -1,0 +1,3 @@
+<?php if ({{DISPLAY_CONDITION}}): ?>
+    <?= {{OUTPUT_EXPRESSION}}; ?>
+<?php endif; ?>

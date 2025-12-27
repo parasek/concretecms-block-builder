@@ -1,0 +1,191 @@
+<?php
+
+declare(strict_types=1);
+
+namespace BlockBuilder\FieldType\Type\Number;
+
+use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
+use BlockBuilder\FieldType\Enum\FieldTypeEnum;
+use BlockBuilder\FieldType\AbstractFieldType;
+
+class NumberFieldType extends AbstractFieldType
+{
+    public const int MAXIMUM_DISPLAYED_DECIMALS = 20;
+    public const int MAXIMUM_AFFIX_LENGTH = 100;
+
+    protected const array LEGACY_PROPERTY_ALIASES = [
+        'numberSize' => 'size',
+        'numberStep' => 'step',
+        'numberMin' => 'minimum',
+        'numberMax' => 'maximum',
+        'numberDisplayedDecimals' => 'displayedDecimals',
+        'numberDisplayedDecimalSeparator' => 'displayedDecimalSeparator',
+        'numberDisplayedThousandsSeparator' => 'displayedThousandsSeparator',
+    ];
+
+    public static function getFieldType(): FieldTypeEnum
+    {
+        return FieldTypeEnum::Number;
+    }
+
+    public static function getLabel(): string
+    {
+        return t('Number');
+    }
+
+    public static function getIcon(): string
+    {
+        return 'fas fa-hashtag';
+    }
+
+    public static function getDefaultValues(): array
+    {
+        return [
+            'displayZeroValue' => 0,
+            'defaultValue' => '',
+            'placeholder' => '',
+            'prefix' => '',
+            'suffix' => '',
+            'size' => '10.2',
+            'minimum' => '0',
+            'maximum' => '99999999.99',
+            'step' => '0.01',
+            'displayedDecimals' => '2',
+            'displayedDecimalSeparator' => ',',
+            'displayedThousandsSeparator' => ' ',
+        ];
+    }
+
+    public static function createDtoFromArray(array $data): NumberFieldTypeDto
+    {
+        return new NumberFieldTypeDto(
+            fieldType: self::getFieldType(),
+            label: trim($data['label'] ?? ''),
+            handle: trim($data['handle'] ?? ''),
+            required: !empty($data['required']),
+            helpText: trim($data['helpText'] ?? ''),
+            displayZeroValue: !empty($data['displayZeroValue']),
+            defaultValue: trim((string) ($data['defaultValue'] ?? '')),
+            placeholder: trim((string) ($data['placeholder'] ?? '')),
+            prefix: trim($data['prefix'] ?? ''),
+            suffix: trim($data['suffix'] ?? ''),
+            size: trim($data['size'] ?? ''),
+            step: trim($data['step'] ?? ''),
+            minimum: trim($data['minimum'] ?? ''),
+            maximum: trim($data['maximum'] ?? ''),
+            displayedDecimals: (int) ($data['displayedDecimals'] ?? 0),
+            displayedDecimalSeparator: trim($data['displayedDecimalSeparator'] ?? ''),
+            displayedThousandsSeparator: trim($data['displayedThousandsSeparator'] ?? ''),
+        );
+    }
+
+    public static function getErrorMessages(FieldTypeContextEnum $context): array
+    {
+        return [
+            'size|invalid_format' => t('Some "Number/Database precision and scale" fields must use a dot-separated precision-and-scale format such as 10.2 or 8.0 (%s).', $context->getTabName()),
+            'step|invalid_format' => t('Some "Number/%s" fields must contain a numeric value such as 1 or 0.01 (%s).', t('Step'), $context->getTabName()),
+            'minimum|invalid_format' => t('Some "Number/%s" fields must contain a numeric value such as 1 or 0.01 (%s).', t('Minimum'), $context->getTabName()),
+            'maximum|invalid_format' => t('Some "Number/%s" fields must contain a numeric value such as 1 or 0.01 (%s).', t('Maximum'), $context->getTabName()),
+            'step|not_positive' => t('Some "Number/Step" fields must contain a value greater than zero (%s).', $context->getTabName()),
+            'minimum|greater_than_maximum' => t('Some "Number/Minimum" fields contain a value greater than the corresponding maximum (%s).', $context->getTabName()),
+            'displayedDecimals|invalid_number' => t(
+                'Some "Displayed decimals" fields must contain an integer between 0 and %s (%s).',
+                self::MAXIMUM_DISPLAYED_DECIMALS,
+                $context->getTabName(),
+            ),
+            'displayedDecimalSeparator|invalid_value' => t('Some "Displayed decimal separator" fields are empty (%s).', $context->getTabName()),
+            'defaultValue|invalid_number' => t('Some "Number/Default value" fields contain an invalid number (%s).', $context->getTabName()),
+            'defaultValue|outside_range' => t('Some "Number/Default value" fields are outside their configured range (%s).', $context->getTabName()),
+            'defaultValue|invalid_step' => t('Some "Number/Default value" fields do not match their configured step (%s).', $context->getTabName()),
+            'prefix|too_long' => t('Some "Field prefix" values contain more than %s characters (%s).', self::MAXIMUM_AFFIX_LENGTH, $context->getTabName()),
+            'suffix|too_long' => t('Some "Field suffix" values contain more than %s characters (%s).', self::MAXIMUM_AFFIX_LENGTH, $context->getTabName()),
+        ];
+    }
+
+    public function validate(array $data): array
+    {
+        $errors = [];
+
+        $size = $data['size'] ?? '';
+        $step = $data['step'] ?? '';
+        $minimum = $data['minimum'] ?? '';
+        $maximum = $data['maximum'] ?? '';
+        $decimals = $data['displayedDecimals'] ?? '';
+        $separator = $data['displayedDecimalSeparator'] ?? '';
+        $defaultValue = $data['defaultValue'] ?? '';
+
+        foreach (['prefix', 'suffix'] as $propertyName) {
+            $value = $data[$propertyName] ?? '';
+            if (!is_scalar($value) || mb_strlen(trim((string) $value)) > self::MAXIMUM_AFFIX_LENGTH) {
+                $errors[] = $propertyName . '|too_long';
+            }
+        }
+
+        // Size
+        // Validates formats like "10.2" or "8.0", ensuring it doesn't start with "0".
+        if (!is_scalar($size) || preg_match('/^[1-9]\d*\.\d+$/', (string) $size) !== 1) {
+            $errors[] = 'size|invalid_format';
+        }
+
+        // Step
+        if (!is_scalar($step) || !is_numeric($step) || !is_finite((float) $step)) {
+            $errors[] = 'step|invalid_format';
+        } elseif ((float) $step <= 0) {
+            $errors[] = 'step|not_positive';
+        }
+
+        // Minimum
+        if (!is_scalar($minimum) || !is_numeric($minimum) || !is_finite((float) $minimum)) {
+            $errors[] = 'minimum|invalid_format';
+        }
+
+        // Maximum
+        if (!is_scalar($maximum) || !is_numeric($maximum) || !is_finite((float) $maximum)) {
+            $errors[] = 'maximum|invalid_format';
+        }
+        if (
+            is_scalar($minimum)
+            && is_scalar($maximum)
+            && is_numeric($minimum)
+            && is_numeric($maximum)
+            && is_finite((float) $minimum)
+            && is_finite((float) $maximum)
+            && (float) $minimum > (float) $maximum
+        ) {
+            $errors[] = 'minimum|greater_than_maximum';
+        }
+
+        // Displayed decimals
+        if (
+            !is_scalar($decimals)
+            || !ctype_digit((string) $decimals)
+            || (int) $decimals > self::MAXIMUM_DISPLAYED_DECIMALS
+        ) {
+            $errors[] = 'displayedDecimals|invalid_number';
+        }
+
+        // Displayed decimal separator
+        if (!is_scalar($separator) || $separator === '') {
+            $errors[] = 'displayedDecimalSeparator|invalid_value';
+        }
+
+        if ($defaultValue !== '') {
+            if (!is_scalar($defaultValue) || !is_numeric($defaultValue) || !is_finite((float) $defaultValue)) {
+                $errors[] = 'defaultValue|invalid_number';
+            } elseif (
+                is_numeric($minimum)
+                && is_numeric($maximum)
+                && ((float) $defaultValue < (float) $minimum || (float) $defaultValue > (float) $maximum)
+            ) {
+                $errors[] = 'defaultValue|outside_range';
+            } elseif (is_numeric($minimum) && is_numeric($step) && (float) $step > 0) {
+                $stepPosition = ((float) $defaultValue - (float) $minimum) / (float) $step;
+                if (!is_finite($stepPosition) || abs($stepPosition - round($stepPosition)) > 1.0E-9) {
+                    $errors[] = 'defaultValue|invalid_step';
+                }
+            }
+        }
+
+        return $errors;
+    }
+}

@@ -1,0 +1,18 @@
+<div class="mb-4">
+    <label
+        class="form-label"
+        for="<?= h($view->field({{HANDLE_LITERAL}})); ?>"
+    ><?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?></label>
+    <div
+        id="<?= h($view->field({{HANDLE_LITERAL}}) . '-html-editor'); ?>"
+        style="height: {{HEIGHT}}px;"
+        data-block-builder-html-editor
+        data-html-editor-input="<?= h($view->field({{HANDLE_LITERAL}})); ?>"
+    ></div>
+    <textarea
+        id="<?= h($view->field({{HANDLE_LITERAL}})); ?>"
+        name="<?= h($view->field({{HANDLE_LITERAL}})); ?>"
+        hidden
+        data-block-builder-html-editor-input
+    ><?= h(isset(${{HANDLE}}) && is_scalar(${{HANDLE}}) ? (string) ${{HANDLE}} : ''); ?></textarea>{{HELP_TEXT}}
+</div>

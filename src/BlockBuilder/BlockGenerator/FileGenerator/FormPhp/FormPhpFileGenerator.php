@@ -1,0 +1,506 @@
+<?php
+
+declare(strict_types=1);
+
+namespace BlockBuilder\BlockGenerator\FileGenerator\FormPhp;
+
+use BlockBuilder\BlockGenerator\BlockFileGenerationContext;
+use BlockBuilder\BlockGenerator\FileGenerator\FileGeneratorInterface;
+use BlockBuilder\BlockGenerator\FileGenerator\GeneratedTextFile;
+use BlockBuilder\BlockGenerator\FileGenerator\Service\PhpLiteralFormatter;
+use BlockBuilder\BlockGenerator\FileGenerator\Service\StubRenderer;
+use BlockBuilder\BlockGenerator\Generation\Plan\CodeFragment;
+use BlockBuilder\BlockGenerator\Generation\Plan\FormGenerationPlanBuilder;
+
+readonly class FormPhpFileGenerator implements FileGeneratorInterface
+{
+    public function __construct(
+        private StubRenderer $stubRenderer,
+        private PhpLiteralFormatter $phpLiteralFormatter,
+    ) {
+    }
+
+    /**
+     * @return list<GeneratedTextFile>
+     */
+    public function generate(BlockFileGenerationContext $context): array
+    {
+        if (!$context->config->hasFields()) {
+            return [];
+        }
+
+        $basicFields = $this->renderFragments(
+            $context->plan->form->getFragments(FormGenerationPlanBuilder::SECTION_BASIC_FIELDS),
+        );
+        $settings = $this->renderFragments(
+            $context->plan->form->getFragments(FormGenerationPlanBuilder::SECTION_SETTINGS),
+        );
+        $repeatableSection = $context->config->entries !== []
+            ? $this->renderRepeatableSection($context)
+            : '';
+        $usesTabs = $this->countFormSections($context, $basicFields, $repeatableSection, $settings) > 1;
+        $formSections = array_filter([
+            $this->renderFragments(
+                $context->plan->form->getFragments(FormGenerationPlanBuilder::SECTION_SETUP),
+            ),
+            $this->renderFormContent(
+                $context,
+                $basicFields,
+                $repeatableSection,
+                $settings,
+            ),
+            $this->renderFragments(
+                $context->plan->form->getFragments(FormGenerationPlanBuilder::SECTION_VALIDATION),
+            ),
+        ], static fn (string $section): bool => $section !== '');
+
+        return [
+            new GeneratedTextFile(
+                relativePath: FILENAME_FORM,
+                contents: $this->stubRenderer->render('form.php.stub', [
+                    '{{FORM_SECTIONS}}' => implode(PHP_EOL . PHP_EOL, $formSections),
+                    '{{BLOCK_EVENT_NAME}}' => $context->manifest->blockHandleKebabCase,
+                    '{{USER_INTERFACE_USE}}' => $usesTabs
+                        ? 'use Concrete\Core\Application\Service\UserInterface;'
+                        : '',
+                    '{{USER_INTERFACE_SETUP}}' => $usesTabs
+                        ? '$userInterface = $app->make(UserInterface::class);'
+                        : '',
+                ]),
+                producer: self::class,
+            ),
+        ];
+    }
+
+    private function countFormSections(
+        BlockFileGenerationContext $context,
+        string $basicFields,
+        string $repeatableSection,
+        string $settings,
+    ): int {
+        return count(array_filter([
+            $basicFields !== '' || trim((string) $context->config->messageBasicTab) !== '',
+            $repeatableSection !== '',
+            $settings !== '',
+        ]));
+    }
+
+    private function renderFormContent(
+        BlockFileGenerationContext $context,
+        string $basicFields,
+        string $repeatableSection,
+        string $settings,
+    ): string {
+        $basicContent = $this->prependTabMessage(
+            message: $context->config->messageBasicTab,
+            content: $basicFields,
+        );
+        $tabs = [];
+        if ($basicContent !== '') {
+            $tabs['basic-information'] = [
+                'label' => $context->config->basicLabel ?: 'Basic information',
+                'content' => $basicContent,
+            ];
+        }
+        if ($repeatableSection !== '') {
+            $tabs['entries'] = [
+                'label' => $context->config->entriesLabel ?: 'Entries',
+                'content' => $this->prependTabMessage(
+                    message: $context->config->messageEntriesTab,
+                    content: $repeatableSection,
+                ),
+            ];
+        }
+        if ($settings !== '') {
+            $tabs['settings'] = [
+                'label' => $context->config->settingsLabel ?: 'Settings',
+                'content' => $settings,
+            ];
+        }
+        if ($context->config->entriesAsFirstTab && isset($tabs['entries'])) {
+            $entriesTab = $tabs['entries'];
+            unset($tabs['entries']);
+            $tabs = ['entries' => $entriesTab, ...$tabs];
+        }
+
+        if (count($tabs) === 1) {
+            $onlyTab = reset($tabs);
+
+            return sprintf(
+                '<div id="form-container-<?= h($formInstanceIdentifier); ?>" data-block-builder-form>%1$s'
+                . '%2$s%1$s</div>',
+                PHP_EOL,
+                $this->indentCode($onlyTab['content'], 1),
+            );
+        }
+
+        $tabDefinitions = [];
+        $tabPanes = [];
+        foreach ($tabs as $tabIndex => $tab) {
+            $active = $tabDefinitions === [];
+            $tabIdExpression = $this->phpLiteralFormatter->format($tabIndex . '-tab-')
+                . ' . $formInstanceIdentifier';
+            $tabDefinitions[] = sprintf(
+                '    [%s, t(%s), %s],',
+                $tabIdExpression,
+                $this->phpLiteralFormatter->format($tab['label']),
+                $active ? 'true' : 'false',
+            );
+            $tabPanes[] = sprintf(
+                '<div class="tab-pane fade%2$s"%1$s'
+                . '     id="<?= h(%3$s); ?>"%1$s'
+                . '     role="tabpanel"%1$s'
+                . '>%1$s%4$s%1$s</div>',
+                PHP_EOL,
+                $active ? ' show active' : '',
+                $tabIdExpression,
+                $this->indentCode($tab['content'], 1),
+            );
+        }
+
+        $formContent = sprintf(
+            '<?php%1$secho $userInterface->tabs([%1$s%2$s%1$s]);%1$s?>%1$s'
+            . '<div class="tab-content mt-4">%1$s%3$s%1$s</div>',
+            PHP_EOL,
+            implode(PHP_EOL, $tabDefinitions),
+            $this->indentCode(implode(PHP_EOL, $tabPanes), 1),
+        );
+
+        return sprintf(
+            '<div id="form-container-<?= h($formInstanceIdentifier); ?>" data-block-builder-form>%1$s'
+            . '%2$s%1$s</div>',
+            PHP_EOL,
+            $this->indentCode($formContent, 1),
+        );
+    }
+
+    private function prependTabMessage(?string $message, string $content): string
+    {
+        if ($message === null || trim($message) === '') {
+            return $content;
+        }
+
+        $alert = sprintf(
+            '<div class="bb-tab-message alert alert-info mb-4"><?= t(%s); ?></div>',
+            $this->phpLiteralFormatter->format($message),
+        );
+
+        return $content === ''
+            ? $alert
+            : $alert . PHP_EOL . PHP_EOL . $content;
+    }
+
+    private function renderRepeatableSection(BlockFileGenerationContext $context): string
+    {
+        $fieldFragments = $this->renderFragments(
+            $context->plan->form->getFragments(FormGenerationPlanBuilder::SECTION_REPEATABLE_FIELDS),
+        );
+        $config = $context->config;
+        $labels = [
+            'addAtTop' => $config->addAtTheTopLabel ?: 'Add at the top',
+            'addAtBottom' => $config->addAtTheBottomLabel ?: 'Add at the bottom',
+            'copyLast' => $config->copyLastEntryLabel ?: 'Copy last entry',
+            'expandAll' => $config->expandAllLabel ?: 'Expand all',
+            'collapseAll' => $config->collapseAllLabel ?: 'Collapse all',
+            'removeAll' => $config->removeAllLabel ?: 'Remove all',
+            'disableSmoothScroll' => $config->disableSmoothScrollLabel ?: 'Disable smooth scroll',
+            'keepAddedCollapsed' => $config->keepAddedEntryCollapsedLabel ?: 'Keep added or copied entries collapsed',
+            'noEntries' => $config->noEntriesFoundLabel ?: 'No entries found.',
+            'maximum' => $config->maxNumberOfEntriesLabel ?: 'Maximum number of entries',
+            'remove' => $config->removeEntryLabel ?: 'Remove entry',
+            'duplicate' => $config->duplicateEntryLabel ?: 'Duplicate entry',
+            'duplicateAtEnd' => $config->duplicateEntryAndAddAtTheEndLabel ?: 'Duplicate entry at the end',
+            'confirm' => $config->areYouSureLabel ?: 'Are you sure?',
+        ];
+
+        $template = <<<'PHP'
+<?php
+$blockBuilderEntries = isset($entries) && is_array($entries) ? array_values($entries) : [];
+$translatedAddAtTopLabel = t({{ADD_AT_TOP_LABEL}});
+$translatedAddAtBottomLabel = t({{ADD_AT_BOTTOM_LABEL}});
+$translatedCopyLastLabel = t({{COPY_LAST_LABEL}});
+$translatedExpandAllLabel = t({{EXPAND_ALL_LABEL}});
+$translatedCollapseAllLabel = t({{COLLAPSE_ALL_LABEL}});
+$translatedRemoveAllLabel = t({{REMOVE_ALL_LABEL}});
+$translatedDisableSmoothScrollLabel = t({{DISABLE_SMOOTH_SCROLL_LABEL}});
+$translatedKeepAddedCollapsedLabel = t({{KEEP_ADDED_COLLAPSED_LABEL}});
+$translatedNoEntriesLabel = t({{NO_ENTRIES_LABEL}});
+$translatedMaximumLabel = t({{MAXIMUM_LABEL}});
+$translatedRemoveLabel = t({{REMOVE_LABEL}});
+$translatedDuplicateLabel = t({{DUPLICATE_LABEL}});
+$translatedDuplicateAtEndLabel = t({{DUPLICATE_AT_END_LABEL}});
+$translatedConfirmLabel = t({{CONFIRM_LABEL}});
+$translatedMoveLabel = t('Move entry');
+$renderBlockBuilderEntry = static function (int|string $entryIndex, array $entry) use ({{REPEATABLE_CAPTURE_LIST}}): void {
+?>
+<article
+    class="bb-entry"
+    data-entry
+    data-entry-index="<?= h((string) $entryIndex); ?>"
+>
+    <div class="bb-entry-header">
+        <div class="bb-entry-header-start">
+            <button
+                class="bb-entry-icon-button bb-entry-drag-handle"
+                type="button"
+                data-entry-drag-handle
+                aria-label="<?= h($translatedMoveLabel); ?>"
+                title="<?= h($translatedMoveLabel); ?>"
+            >
+                <i class="fas fa-arrows-alt" aria-hidden="true"></i>
+            </button>
+            <button
+                class="bb-entry-icon-button"
+                type="button"
+                data-entry-action="toggle"
+                data-expand-label="<?= h($translatedExpandAllLabel); ?>"
+                data-collapse-label="<?= h($translatedCollapseAllLabel); ?>"
+                aria-expanded="true"
+                aria-label="<?= h($translatedCollapseAllLabel); ?>"
+                title="<?= h($translatedCollapseAllLabel); ?>"
+            >
+                <i class="far fa-minus-square" aria-hidden="true"></i>
+            </button>
+        </div>
+        <strong class="bb-entry-title" data-entry-title></strong>
+        <div class="bb-entry-header-end">
+            <button
+                class="bb-entry-icon-button"
+                type="button"
+                data-entry-action="duplicate"
+                aria-label="<?= h($translatedDuplicateLabel); ?>"
+                title="<?= h($translatedDuplicateLabel); ?>"
+            >
+                <i class="far fa-clone" aria-hidden="true"></i>
+            </button>
+            <button
+                class="bb-entry-icon-button"
+                type="button"
+                data-entry-action="duplicate-at-end"
+                aria-label="<?= h($translatedDuplicateAtEndLabel); ?>"
+                title="<?= h($translatedDuplicateAtEndLabel); ?>"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free v5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M464 0H144c-26.51 0-48 21.49-48 48v48H48c-26.51 0-48 21.49-48 48v320c0 26.51 21.49 48 48 48h320c26.51 0 48-21.49 48-48v-48h48c26.51 0 48-21.49 48-48V48c0-26.51-21.49-48-48-48M362 464H54a6 6 0 0 1-6-6V150a6 6 0 0 1 6-6h42v224c0 26.51 21.49 48 48 48h224v42a6 6 0 0 1-6 6m96-96H150a6 6 0 0 1-6-6V54a6 6 0 0 1 6-6h308a6 6 0 0 1 6 6v308a6 6 0 0 1-6 6"/><path d="m295.304 273.181-81.3-92.93c-9.595-10.933-1.798-28.106 12.764-28.106H389.37a16.952 16.952 0 0 1 12.764 28.123l-81.3 92.896a16.952 16.952 0 0 1-25.53 0z" style="stroke-width:1"/></svg>
+            </button>
+            <button
+                class="bb-entry-icon-button bb-entry-remove-button"
+                type="button"
+                data-entry-action="remove"
+                data-confirm="<?= h($translatedConfirmLabel); ?>"
+                aria-label="<?= h($translatedRemoveLabel); ?>"
+                title="<?= h($translatedRemoveLabel); ?>"
+            >
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+    <div class="bb-entry-content" data-entry-content>
+{{REPEATABLE_FIELDS}}
+    </div>
+</article>
+<?php
+};
+?>
+<section data-block-builder-repeatable>
+    <div class="bb-entry-toolbar">
+        <div class="bb-entry-toolbar-buttons">
+            <button class="btn btn-primary" type="button" data-entry-action="add-top">
+                <?= $translatedAddAtTopLabel; ?>
+            </button>
+            <button class="btn btn-primary" type="button" data-entry-action="add-bottom">
+                <?= $translatedAddAtBottomLabel; ?>
+            </button>
+            <button class="btn btn-primary" type="button" data-entry-action="copy-last">
+                <?= $translatedCopyLastLabel; ?>
+            </button>
+        </div>
+        <div class="bb-entry-toolbar-links">
+            <button class="btn btn-link" type="button" data-entry-action="expand-all">
+                <i class="far fa-plus-square" aria-hidden="true"></i>
+                <?= $translatedExpandAllLabel; ?>
+            </button>
+            <button class="btn btn-link" type="button" data-entry-action="collapse-all">
+                <i class="far fa-minus-square" aria-hidden="true"></i>
+                <?= $translatedCollapseAllLabel; ?>
+            </button>
+            <button
+                class="btn btn-link bb-entry-remove-all-button"
+                type="button"
+                data-entry-action="remove-all"
+                data-confirm="<?= h($translatedConfirmLabel); ?>"
+                aria-label="<?= h($translatedRemoveAllLabel); ?>"
+                title="<?= h($translatedRemoveAllLabel); ?>"
+            >
+                <i class="fas fa-times-circle" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+
+    <script type="application/json" data-entry-data><?= json_encode(
+        [
+            'entries' => [],
+            'defaultValues' => {{REPEATABLE_DEFAULT_VALUES}},
+            'maxEntries' => {{MAXIMUM_ENTRIES}},
+        ],
+        JSON_THROW_ON_ERROR | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT,
+    ); ?></script>
+    <div data-block-builder-entries data-max-entries="{{MAXIMUM_ENTRIES}}">
+        <?php foreach ($blockBuilderEntries as $entryIndex => $entry): ?>
+            <?php if (is_array($entry)): ?>
+                <?php $renderBlockBuilderEntry($entryIndex, $entry); ?>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </div>
+    <div class="alert alert-info" data-no-entries-message hidden>
+        <?= $translatedNoEntriesLabel; ?>
+    </div>
+    <div class="bb-entry-count text-muted">
+        <span data-entry-count>0</span>{{MAXIMUM_COUNTER}}
+    </div>
+
+    <template data-entry-template>
+        <?php $renderBlockBuilderEntry('__INDEX__', []); ?>
+    </template>
+
+    <div class="bb-entry-toolbar bb-entry-toolbar-bottom">
+        <div class="bb-entry-toolbar-buttons">
+            <button class="btn btn-primary" type="button" data-entry-action="add-top">
+                <?= $translatedAddAtTopLabel; ?>
+            </button>
+            <button class="btn btn-primary" type="button" data-entry-action="add-bottom">
+                <?= $translatedAddAtBottomLabel; ?>
+            </button>
+            <button class="btn btn-primary" type="button" data-entry-action="copy-last">
+                <?= $translatedCopyLastLabel; ?>
+            </button>
+        </div>
+        <div class="bb-entry-toolbar-links">
+            <button class="btn btn-link" type="button" data-entry-action="expand-all">
+                <i class="far fa-plus-square" aria-hidden="true"></i>
+                <?= $translatedExpandAllLabel; ?>
+            </button>
+            <button class="btn btn-link" type="button" data-entry-action="collapse-all">
+                <i class="far fa-minus-square" aria-hidden="true"></i>
+                <?= $translatedCollapseAllLabel; ?>
+            </button>
+            <button
+                class="btn btn-link bb-entry-remove-all-button"
+                type="button"
+                data-entry-action="remove-all"
+                data-confirm="<?= h($translatedConfirmLabel); ?>"
+                aria-label="<?= h($translatedRemoveAllLabel); ?>"
+                title="<?= h($translatedRemoveAllLabel); ?>"
+            >
+                <i class="fas fa-times-circle" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="bb-entry-options">
+        <div class="form-check">
+            <input
+                class="form-check-input"
+                id="disable-smooth-scroll-<?= h($formInstanceIdentifier); ?>"
+                type="checkbox"
+                data-disable-smooth-scroll
+            >
+            <label class="form-check-label" for="disable-smooth-scroll-<?= h($formInstanceIdentifier); ?>">
+                <?= $translatedDisableSmoothScrollLabel; ?>
+            </label>
+        </div>
+        <div class="form-check">
+            <input
+                class="form-check-input"
+                id="keep-added-collapsed-<?= h($formInstanceIdentifier); ?>"
+                type="checkbox"
+                data-keep-added-collapsed
+            >
+            <label class="form-check-label" for="keep-added-collapsed-<?= h($formInstanceIdentifier); ?>">
+                <?= $translatedKeepAddedCollapsedLabel; ?>
+            </label>
+        </div>
+    </div>
+</section>
+PHP;
+
+        $maximumCounter = $config->maxNumberOfEntries > 0
+            ? sprintf(' / <span title="<?= h($translatedMaximumLabel); ?>">%d</span>', $config->maxNumberOfEntries)
+            : '';
+        $repeatableDefaultValues = $this->phpLiteralFormatter->format(
+            $context->plan->form->repeatableDefaultValues,
+        );
+        $repeatableDefaultValues = str_replace(
+            PHP_EOL,
+            PHP_EOL . str_repeat('    ', 3),
+            $repeatableDefaultValues,
+        );
+
+        return strtr($template, [
+            '{{ADD_AT_TOP_LABEL}}' => $this->phpLiteralFormatter->format($labels['addAtTop']),
+            '{{ADD_AT_BOTTOM_LABEL}}' => $this->phpLiteralFormatter->format($labels['addAtBottom']),
+            '{{COPY_LAST_LABEL}}' => $this->phpLiteralFormatter->format($labels['copyLast']),
+            '{{EXPAND_ALL_LABEL}}' => $this->phpLiteralFormatter->format($labels['expandAll']),
+            '{{COLLAPSE_ALL_LABEL}}' => $this->phpLiteralFormatter->format($labels['collapseAll']),
+            '{{REMOVE_ALL_LABEL}}' => $this->phpLiteralFormatter->format($labels['removeAll']),
+            '{{DISABLE_SMOOTH_SCROLL_LABEL}}' => $this->phpLiteralFormatter->format($labels['disableSmoothScroll']),
+            '{{KEEP_ADDED_COLLAPSED_LABEL}}' => $this->phpLiteralFormatter->format($labels['keepAddedCollapsed']),
+            '{{NO_ENTRIES_LABEL}}' => $this->phpLiteralFormatter->format($labels['noEntries']),
+            '{{MAXIMUM_LABEL}}' => $this->phpLiteralFormatter->format($labels['maximum']),
+            '{{REMOVE_LABEL}}' => $this->phpLiteralFormatter->format($labels['remove']),
+            '{{DUPLICATE_LABEL}}' => $this->phpLiteralFormatter->format($labels['duplicate']),
+            '{{DUPLICATE_AT_END_LABEL}}' => $this->phpLiteralFormatter->format($labels['duplicateAtEnd']),
+            '{{CONFIRM_LABEL}}' => $this->phpLiteralFormatter->format($labels['confirm']),
+            '{{MAXIMUM_COUNTER}}' => $maximumCounter,
+            '{{MAXIMUM_ENTRIES}}' => (string) $config->maxNumberOfEntries,
+            '{{REPEATABLE_CAPTURE_LIST}}' => $this->renderRepeatableCaptureList($context),
+            '{{REPEATABLE_DEFAULT_VALUES}}' => $repeatableDefaultValues,
+            '{{REPEATABLE_FIELDS}}' => $this->indentCode($fieldFragments, 2),
+        ]);
+    }
+
+    private function renderRepeatableCaptureList(BlockFileGenerationContext $context): string
+    {
+        $variableNames = array_values(array_unique([
+            'form',
+            'view',
+            'translatedCollapseAllLabel',
+            'translatedConfirmLabel',
+            'translatedDuplicateLabel',
+            'translatedDuplicateAtEndLabel',
+            'translatedExpandAllLabel',
+            'translatedMoveLabel',
+            'translatedRemoveLabel',
+            ...$context->plan->form->repeatableCapturedVariableNames,
+        ]));
+        sort($variableNames, SORT_STRING);
+
+        return implode(
+            ', ',
+            array_map(static fn (string $variableName): string => '$' . $variableName, $variableNames),
+        );
+    }
+
+    /**
+     * @param CodeFragment[] $fragments
+     */
+    private function renderFragments(array $fragments): string
+    {
+        return implode(
+            PHP_EOL . PHP_EOL,
+            array_map(static fn (CodeFragment $fragment): string => trim($fragment->code), $fragments),
+        );
+    }
+
+    private function indentCode(string $code, int $indentation): string
+    {
+        $indent = str_repeat('    ', $indentation);
+
+        return implode(
+            PHP_EOL,
+            array_map(
+                static fn (string $line): string => $line === '' ? '' : $indent . rtrim($line),
+                explode(PHP_EOL, trim($code)),
+            ),
+        );
+    }
+}

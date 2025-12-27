@@ -1,0 +1,19 @@
+<div class="mb-4">
+    <label
+        class="form-label"
+        for="<?= h($view->field('entry')); ?>-<?= h((string) $entryIndex); ?>-{{HANDLE}}"
+    ><?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?></label>
+    <div
+        id="<?= h($view->field('entry')); ?>-<?= h((string) $entryIndex); ?>-{{HANDLE}}-html-editor"
+        style="height: {{HEIGHT}}px;"
+        data-block-builder-html-editor
+        data-html-editor-input="<?= h($view->field('entry')); ?>-<?= h((string) $entryIndex); ?>-{{HANDLE}}"
+    ></div>
+    <textarea
+        id="<?= h($view->field('entry')); ?>-<?= h((string) $entryIndex); ?>-{{HANDLE}}"
+        name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
+        hidden
+        data-block-builder-html-editor-input
+        data-entry-field="{{HANDLE}}"
+    ><?= h(isset($entry[{{HANDLE_LITERAL}}]) && is_scalar($entry[{{HANDLE_LITERAL}}]) ? (string) $entry[{{HANDLE_LITERAL}}] : ''); ?></textarea>{{HELP_TEXT}}
+</div>

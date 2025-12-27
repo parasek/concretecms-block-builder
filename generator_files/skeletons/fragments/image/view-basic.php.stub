@@ -1,0 +1,7 @@
+<?php if (!empty(${{HANDLE}}_link)): ?>
+    <img src="<?= h(${{HANDLE}}_link); ?>"
+         alt="<?= h(${{HANDLE}}_alt ?? ''); ?>"
+         width="<?= h(${{HANDLE}}_width ?? 0); ?>"
+         height="<?= h(${{HANDLE}}_height ?? 0); ?>"
+    >
+<?php endif; ?>

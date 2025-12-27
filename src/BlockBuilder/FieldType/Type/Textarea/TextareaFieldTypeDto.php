@@ -1,0 +1,28 @@
+<?php
+
+declare(strict_types=1);
+
+namespace BlockBuilder\FieldType\Type\Textarea;
+
+use BlockBuilder\FieldType\Enum\FieldTypeEnum;
+use BlockBuilder\FieldType\FieldTypeDtoInterface;
+
+readonly class TextareaFieldTypeDto implements FieldTypeDtoInterface
+{
+    public function __construct(
+        public FieldTypeEnum $fieldType,
+        public string $label,
+        public string $handle,
+        public bool $required,
+        public ?string $helpText,
+        public bool $displayZeroValue,
+        public string $defaultValue,
+        public string $placeholder,
+        public ?int $minimumLength,
+        public ?int $maximumLength,
+        public bool $titleSource,
+        public ?int $minHeight,
+        public ?int $maxHeight,
+    ) {
+    }
+}

@@ -1,0 +1,4 @@
+<?php if (isset($entry[{{HANDLE_LITERAL}}]) && $entry[{{HANDLE_LITERAL}}] !== ''): ?>
+    <?= t('Key'); ?>: <?= h($entry[{{HANDLE_LITERAL}}]); ?><br>
+    <?= t('Value'); ?>: <?= h(${{OPTIONS_VARIABLE}}[$entry[{{HANDLE_LITERAL}}]] ?? ''); ?>
+<?php endif; ?>

@@ -1,0 +1,38 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Application\Block\{{BLOCK_HANDLE_PASCAL_CASE}};
+
+{{USE_STATEMENTS}}
+
+defined('C5_EXECUTE') or die('Access Denied.');
+
+class Controller extends BlockController{{IMPLEMENTED_INTERFACES}}
+{
+{{BLOCK_PROPERTIES}}
+{{FIELD_PROPERTIES}}
+    public function getBlockTypeName(): string
+    {
+        return t({{BLOCK_NAME_LITERAL}});
+    }
+
+    public function getBlockTypeDescription(): string
+    {
+        return t({{BLOCK_DESCRIPTION_LITERAL}});
+    }
+{{SEARCHABLE_CONTENT_METHOD}}
+{{USED_FILES_METHOD}}
+{{ON_START_METHOD}}
+{{FORM_METHODS}}
+{{VIEW_METHOD}}
+{{SAVE_METHOD}}
+{{DUPLICATE_METHOD}}
+{{DELETE_METHOD}}
+{{VALIDATION_METHODS}}
+{{COMPOSER_METHOD}}
+{{GET_ENTRIES_METHOD}}
+{{REPEATABLE_EXPORT_IMPORT_METHODS}}
+{{REGISTER_VIEW_ASSETS_METHOD}}
+{{CUSTOM_CONTROLLER_METHODS}}
+}

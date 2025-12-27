@@ -1,0 +1,3 @@
+<div class="bb-image-settings mb-4">
+    <div class="form-label mb-4"><?= t({{LABEL_LITERAL}}); ?></div>{{THUMBNAIL_SETTINGS}}{{FULLSCREEN_SETTINGS}}
+</div>

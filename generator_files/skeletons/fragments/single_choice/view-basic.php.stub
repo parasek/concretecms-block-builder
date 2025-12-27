@@ -1,0 +1,4 @@
+<?php if (isset(${{HANDLE}}) && ${{HANDLE}} !== ''): ?>
+    <?= t('Key'); ?>: <?= h(${{HANDLE}}); ?><br>
+    <?= t('Value'); ?>: <?= h(${{OPTIONS_VARIABLE}}[${{HANDLE}}] ?? ''); ?>
+<?php endif; ?>

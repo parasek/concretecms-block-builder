@@ -1,0 +1,14 @@
+<div class="mb-4">
+    <label class="form-label" for="<?= h($view->field({{HANDLE_LITERAL}})); ?>"><?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?></label>
+    <div class="row g-2 align-items-center">
+        <div class="col-auto">
+            <input
+                class="form-control"
+                id="<?= h($view->field({{HANDLE_LITERAL}})); ?>"
+                name="<?= h($view->field({{HANDLE_LITERAL}})); ?>"
+                type="date"
+                value="<?= h(${{HANDLE}} ?? ''); ?>"
+{{DATE_LIMIT_ATTRIBUTES}}            >
+        </div>{{TIME_FIELDS}}
+    </div>{{HELP_TEXT}}
+</div>

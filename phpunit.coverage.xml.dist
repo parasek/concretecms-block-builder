@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../../../vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="tests/bootstrap.php"
+         cacheResult="false"
+         colors="true"
+         failOnWarning="true"
+>
+    <coverage cacheDirectory=".phpunit.cache/coverage"
+              processUncoveredFiles="true"
+              pathCoverage="true"
+    >
+        <include>
+            <directory suffix=".php">src/BlockBuilder</directory>
+        </include>
+        <report>
+            <clover outputFile="build/coverage/clover.xml"/>
+            <cobertura outputFile="build/coverage/cobertura.xml"/>
+            <html outputDirectory="build/coverage/html"/>
+            <text outputFile="build/coverage/summary.txt" showUncoveredFiles="true"/>
+        </report>
+    </coverage>
+    <testsuites>
+        <testsuite name="Block Builder coverage">
+            <directory suffix="Test.php">tests</directory>
+            <exclude>tests/Browser</exclude>
+            <exclude>tests/Integration</exclude>
+        </testsuite>
+    </testsuites>
+</phpunit>

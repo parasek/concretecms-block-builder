@@ -1,25 +1,29 @@
 {
-    "version": "2.8.1",
+    "blockBuilderVersion": "3.0.0",
+    "concreteVersion": "9.5.2",
+    "phpVersion": "8.4",
     "createdAt": "2025-10-10 13:39:49",
     "blockName": "All Fields x2",
     "blockHandle": "all_fields_double",
     "blockDescription": "All types of Fields (Basic + Repeatable) x2",
-    "installBlock": "1",
-    "blockWidth": "1000",
-    "blockHeight": "650",
+    "installBlock": true,
+    "blockWidth": 1000,
+    "blockHeight": 650,
     "blockTypeSet": "basic",
-    "cacheBlockRecord": "true",
-    "cacheBlockOutput": "true",
-    "cacheBlockOutputLifetime": "0",
-    "cacheBlockOutputOnPost": "true",
-    "cacheBlockOutputForRegisteredUsers": "true",
-    "supportSavingNullValues": "false",
-    "ignorePageThemeGridFrameworkContainer": "false",
-    "entriesAsFirstTab": "0",
-    "maxNumberOfEntries": "0",
-    "highlightMultiElementFields": "1",
-    "fieldsDivider": "never",
-    "entryFieldsDivider": "never",
+    "cacheBlockRecord": true,
+    "cacheBlockOutput": true,
+    "cacheBlockOutputLifetime": 0,
+    "cacheBlockOutputOnPost": true,
+    "cacheBlockOutputOnEditMode": false,
+    "cacheBlockOutputForRegisteredUsers": true,
+    "supportSavingNullValues": false,
+    "ignorePageThemeGridFrameworkContainer": false,
+    "entriesAsFirstTab": false,
+    "maxNumberOfEntries": 0,
+    "highlightMultiElementFields": true,
+    "messageBasicTab": "",
+    "messageEntriesTab": "",
+    "onStartCustomCode": "",
     "registerViewAssetsCustomCode": "",
     "viewCustomCode": "",
     "customControllerMethods": "",
@@ -38,14 +42,14 @@
     "disableSmoothScrollLabel": "Disable smooth scroll",
     "keepAddedEntryCollapsedLabel": "Keep added\/copied entry collapsed",
     "noEntriesFoundLabel": "No entries found.",
-    "maxNumberOfEntriesLabel": "Max. number of entries",
+    "maxNumberOfEntriesLabel": "Maximum number of entries",
     "removeEntryLabel": "Remove entry",
     "duplicateEntryLabel": "Duplicate entry",
-    "duplicateEntryAndAddAtTheEndLabel": "Duplicate entry and add at the end",
+    "duplicateEntryAndAddAtTheEndLabel": "Duplicate entry at the end",
     "areYouSureLabel": "Are you sure?",
     "requiredFieldsLabel": "Required fields",
-    "urlEndingLabel": "Custom string at the end of URL",
-    "urlEndingHelpText": "(e.g. #contact-form or ?ccm_paging_p=2)",
+    "urlEndingLabel": "Custom string at the end of the URL",
+    "urlEndingHelpTextLabel": "(e.g., #contact-form or ?ccm_paging_p=2)",
     "textLabel": "Text",
     "titleLabel": "Title",
     "altTextLabel": "Alt text",
@@ -55,772 +59,1141 @@
     "showAdditionalFieldsLabel": "Show additional fields",
     "hideAdditionalFieldsLabel": "Hide additional fields",
     "newWindowLabel": "Open in new window",
-    "noFollowLabel": "Add nofollow attribute",
+    "noFollowLabel": "Add the nofollow attribute",
     "yesLabel": "Yes",
     "noLabel": "No",
-    "overrideThumbnailDimensionsLabel": "Override Thumbnail dimensions",
-    "overrideFullscreenImageDimensionsLabel": "Override Fullscreen Image dimensions",
+    "overrideThumbnailDimensionsLabel": "Override thumbnail dimensions",
+    "overrideFullscreenImageDimensionsLabel": "Override fullscreen image dimensions",
     "widthLabel": "Width",
     "heightLabel": "Height",
     "cropLabel": "Crop",
     "pxLabel": "px",
     "nothingSelectedLabel": "Nothing selected",
     "noResultsMatchedLabel": "No results matched {0}",
-    "selectAllLabel": "Select All",
-    "deselectAllLabel": "Deselect All",
-    "basic": {
-        "1": {
+    "selectAllLabel": "Select all",
+    "deselectAllLabel": "Deselect all",
+    "basic": [
+        {
             "fieldType": "text_field",
             "label": "Basic Text 1",
             "handle": "basicTextFirst",
-            "helpText": ""
+            "required": false,
+            "helpText": "",
+            "displayZeroValue": false,
+            "defaultValue": "",
+            "placeholder": "",
+            "additionalValidation": "none",
+            "minimumLength": null,
+            "maximumLength": 255,
+            "prefix": "",
+            "suffix": "",
+            "titleSource": false
         },
-        "2": {
+        {
             "fieldType": "text_field",
             "label": "Basic Text 2",
             "handle": "basicTextSecond",
-            "helpText": ""
+            "required": false,
+            "helpText": "",
+            "displayZeroValue": false,
+            "defaultValue": "",
+            "placeholder": "",
+            "additionalValidation": "none",
+            "minimumLength": null,
+            "maximumLength": 255,
+            "prefix": "",
+            "suffix": "",
+            "titleSource": false
         },
-        "3": {
+        {
             "fieldType": "number",
             "label": "Basic Number 1",
             "handle": "basicNumberFirst",
+            "required": false,
             "helpText": "",
-            "numberSize": "10.2",
-            "numberStep": "0.01",
-            "numberMin": "0",
-            "numberMax": "99999999.99",
-            "numberDisplayedDecimals": "2",
-            "numberDisplayedDecimalSeparator": ",",
-            "numberDisplayedThousandsSeparator": " "
+            "displayZeroValue": false,
+            "defaultValue": "",
+            "placeholder": "",
+            "prefix": "",
+            "suffix": "",
+            "size": "10.2",
+            "step": "0.01",
+            "minimum": "0",
+            "maximum": "99999999.99",
+            "displayedDecimals": 2,
+            "displayedDecimalSeparator": ",",
+            "displayedThousandsSeparator": ""
         },
-        "4": {
+        {
             "fieldType": "number",
             "label": "Basic Number 1",
             "handle": "basicNumberSecond",
+            "required": false,
             "helpText": "",
-            "numberSize": "10.2",
-            "numberStep": "0.01",
-            "numberMin": "0",
-            "numberMax": "99999999.99",
-            "numberDisplayedDecimals": "2",
-            "numberDisplayedDecimalSeparator": ",",
-            "numberDisplayedThousandsSeparator": " "
+            "displayZeroValue": false,
+            "defaultValue": "",
+            "placeholder": "",
+            "prefix": "",
+            "suffix": "",
+            "size": "10.2",
+            "step": "0.01",
+            "minimum": "0",
+            "maximum": "99999999.99",
+            "displayedDecimals": 2,
+            "displayedDecimalSeparator": ",",
+            "displayedThousandsSeparator": ""
         },
-        "5": {
+        {
             "fieldType": "textarea",
             "label": "Basic Textarea 1",
             "handle": "basicTextareaFirst",
+            "required": false,
             "helpText": "",
-            "textareaHeight": ""
+            "displayZeroValue": false,
+            "defaultValue": "",
+            "placeholder": "",
+            "minimumLength": null,
+            "maximumLength": null,
+            "titleSource": false,
+            "minHeight": null,
+            "maxHeight": null
         },
-        "6": {
+        {
             "fieldType": "textarea",
             "label": "Basic Textarea 2",
             "handle": "basicTextareaSecond",
+            "required": false,
             "helpText": "",
-            "textareaHeight": "120"
+            "displayZeroValue": false,
+            "defaultValue": "",
+            "placeholder": "",
+            "minimumLength": null,
+            "maximumLength": null,
+            "titleSource": false,
+            "minHeight": null,
+            "maxHeight": 120
         },
-        "7": {
+        {
             "fieldType": "wysiwyg_editor",
             "label": "Basic WYSIWYG Editor 1",
             "handle": "basicWysiwygEditorFirst",
+            "required": false,
             "helpText": "",
-            "wysiwygEditorHeight": "",
-            "wysiwygCustomConfig": ""
+            "defaultValue": "",
+            "minHeight": null,
+            "maxHeight": null,
+            "customConfig": "",
+            "allowedTags": ""
         },
-        "8": {
+        {
             "fieldType": "wysiwyg_editor",
             "label": "Basic WYSIWYG Editor 2",
             "handle": "basicWysiwygEditorSecond",
+            "required": false,
             "helpText": "",
-            "wysiwygEditorHeight": "80",
-            "wysiwygCustomConfig": "{\r\n  \"toolbar\": [\r\n    {\r\n      \"name\": \"document\",\r\n      \"items\": [\"Source\", \"-\"]\r\n    },\r\n    {\r\n      \"name\": \"basicstyles\",\r\n      \"items\": [\"Bold\", \"Italic\", \"Underline\", \"Strike\", \"Subscript\", \"Superscript\", \"-\", \"RemoveFormat\"]\r\n    },\r\n    {\r\n      \"name\": \"styles\",\r\n      \"items\": [\"Styles\", \"Format\"]\r\n    }\r\n  ]\r\n}"
+            "defaultValue": "",
+            "minHeight": null,
+            "maxHeight": 80,
+            "customConfig": "{\r\n  \"toolbar\": [\r\n    {\r\n      \"name\": \"document\",\r\n      \"items\": [\"Source\", \"-\"]\r\n    },\r\n    {\r\n      \"name\": \"basicstyles\",\r\n      \"items\": [\"Bold\", \"Italic\", \"Underline\", \"Strike\", \"Subscript\", \"Superscript\", \"-\", \"RemoveFormat\"]\r\n    },\r\n    {\r\n      \"name\": \"styles\",\r\n      \"items\": [\"Styles\", \"Format\"]\r\n    }\r\n  ]\r\n}",
+            "allowedTags": ""
         },
-        "9": {
+        {
             "fieldType": "select_field",
-            "label": "Basic Single Choice Field Default 1",
+            "label": "Basic Single Choice Default 1",
             "handle": "basicSingleChoiceFieldDefaultFirst",
+            "required": false,
             "helpText": "",
-            "selectType": "default_select",
-            "selectAddEmptyOption": "no",
-            "selectDefaultValue": "",
-            "selectListGenerationMethod": "basic_list",
-            "selectOptions": "dont_show :: Don't show\r\nshow :: Show",
-            "selectCustomCode": ""
+            "displayType": "default_select",
+            "addEmptyOption": false,
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "dont_show :: Don't show\r\nshow :: Show",
+            "customCode": ""
         },
-        "10": {
+        {
             "fieldType": "select_field",
-            "label": "Basic Single Choice Field Default 2",
+            "label": "Basic Single Choice Default 2",
             "handle": "basicSingleChoiceFieldDefaultSecond",
+            "required": false,
             "helpText": "",
-            "selectType": "default_select",
-            "selectAddEmptyOption": "no",
-            "selectDefaultValue": "",
-            "selectListGenerationMethod": "basic_list",
-            "selectOptions": "dont_show :: Don't show\r\nshow :: Show",
-            "selectCustomCode": ""
+            "displayType": "default_select",
+            "addEmptyOption": false,
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "dont_show :: Don't show\r\nshow :: Show",
+            "customCode": ""
         },
-        "11": {
+        {
             "fieldType": "select_field",
-            "label": "Basic Single Choice Field Enhanced 1",
+            "label": "Basic Single Choice Enhanced 1",
             "handle": "basicSingleChoiceFieldEnhancedFirst",
+            "required": false,
             "helpText": "",
-            "selectType": "enhanced_select",
-            "selectAddEmptyOption": "no",
-            "selectDefaultValue": "",
-            "selectListGenerationMethod": "basic_list",
-            "selectOptions": "Don't show\r\nShow",
-            "selectCustomCode": ""
+            "displayType": "enhanced_select",
+            "addEmptyOption": false,
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "Don't show\r\nShow",
+            "customCode": ""
         },
-        "12": {
+        {
             "fieldType": "select_field",
-            "label": "Basic Single Choice Field Enhanced 2",
+            "label": "Basic Single Choice Enhanced 2",
             "handle": "basicSingleChoiceFieldEnhancedSecond",
+            "required": false,
             "helpText": "",
-            "selectType": "enhanced_select",
-            "selectAddEmptyOption": "no",
-            "selectDefaultValue": "",
-            "selectListGenerationMethod": "basic_list",
-            "selectOptions": "Don't show\r\nShow",
-            "selectCustomCode": ""
+            "displayType": "enhanced_select",
+            "addEmptyOption": false,
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "Don't show\r\nShow",
+            "customCode": ""
         },
-        "13": {
+        {
             "fieldType": "select_field",
-            "label": "Basic Single Choice Field Radio List 1",
+            "label": "Basic Single Choice Radio List 1",
             "handle": "basicSingleChoiceFieldRadioListFirst",
+            "required": false,
             "helpText": "",
-            "selectType": "radio_list",
-            "selectAddEmptyOption": "no",
-            "selectDefaultValue": "",
-            "selectListGenerationMethod": "basic_list",
-            "selectOptions": "example::Example\r\nsome_data::Some data",
-            "selectCustomCode": ""
+            "displayType": "radio_list",
+            "addEmptyOption": false,
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "example::Example\r\nsome_data::Some data",
+            "customCode": ""
         },
-        "14": {
+        {
             "fieldType": "select_field",
-            "label": "Basic Single Choice Field Radio List 2",
+            "label": "Basic Single Choice Radio List 2",
             "handle": "basicSingleChoiceFieldRadioListSecond",
+            "required": false,
             "helpText": "",
-            "selectType": "radio_list",
-            "selectAddEmptyOption": "no",
-            "selectDefaultValue": "",
-            "selectListGenerationMethod": "basic_list",
-            "selectOptions": "example::Example\r\nsome_data::Some data",
-            "selectCustomCode": ""
+            "displayType": "radio_list",
+            "addEmptyOption": false,
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "example::Example\r\nsome_data::Some data",
+            "customCode": ""
         },
-        "15": {
+        {
             "fieldType": "select_multiple_field",
-            "label": "Basic Multiple Choice Field Default 1",
+            "label": "Basic Multiple Choice Default 1",
             "handle": "basicMultipleChoiceFieldDefaultFirst",
+            "required": false,
             "helpText": "",
-            "selectMultipleType": "default_multiselect",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "Don't show\r\nShow",
-            "selectMultipleCustomCode": ""
+            "displayType": "default_multiselect",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "Don't show\r\nShow",
+            "customCode": ""
         },
-        "16": {
+        {
             "fieldType": "select_multiple_field",
-            "label": "Basic Multiple Choice Field Default 2",
+            "label": "Basic Multiple Choice Default 2",
             "handle": "basicMultipleChoiceFieldDefaultSecond",
+            "required": false,
             "helpText": "",
-            "selectMultipleType": "default_multiselect",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "Don't show\r\nShow",
-            "selectMultipleCustomCode": ""
+            "displayType": "default_multiselect",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "Don't show\r\nShow",
+            "customCode": ""
         },
-        "17": {
+        {
             "fieldType": "select_multiple_field",
-            "label": "Basic Multiple Choice Field Enhanced 1",
+            "label": "Basic Multiple Choice Enhanced 1",
             "handle": "basicMultipleChoiceFieldEnhancedFirst",
+            "required": false,
             "helpText": "",
-            "selectMultipleType": "enhanced_multiselect",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "1:: Don't show\r\n2 :: Show",
-            "selectMultipleCustomCode": ""
+            "displayType": "enhanced_multiselect",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "1:: Don't show\r\n2 :: Show",
+            "customCode": ""
         },
-        "18": {
+        {
             "fieldType": "select_multiple_field",
-            "label": "Basic Multiple Choice Field Enhanced 2",
+            "label": "Basic Multiple Choice Enhanced 2",
             "handle": "basicMultipleChoiceFieldEnhancedSecond",
+            "required": false,
             "helpText": "",
-            "selectMultipleType": "enhanced_multiselect",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "1:: Don't show\r\n2 :: Show",
-            "selectMultipleCustomCode": ""
+            "displayType": "enhanced_multiselect",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "1:: Don't show\r\n2 :: Show",
+            "customCode": ""
         },
-        "19": {
+        {
             "fieldType": "select_multiple_field",
-            "label": "Basic Multiple Choice Field Checkbox List 1",
+            "label": "Basic Multiple Choice Checkbox List 1",
             "handle": "basicMultipleChoiceFieldCheckboxListFirst",
+            "required": false,
             "helpText": "",
-            "selectMultipleType": "checkbox_list",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "example::Example\r\nsome_data::Some data",
-            "selectMultipleCustomCode": ""
+            "displayType": "checkbox_list",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "example::Example\r\nsome_data::Some data",
+            "customCode": ""
         },
-        "20": {
+        {
             "fieldType": "select_multiple_field",
-            "label": "Basic Multiple Choice Field Checkbox List 2",
+            "label": "Basic Multiple Choice Checkbox List 2",
             "handle": "basicMultipleChoiceFieldCheckboxListSecond",
+            "required": false,
             "helpText": "",
-            "selectMultipleType": "checkbox_list",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "example::Example\r\nsome_data::Some data",
-            "selectMultipleCustomCode": ""
+            "displayType": "checkbox_list",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "example::Example\r\nsome_data::Some data",
+            "customCode": ""
         },
-        "21": {
+        {
             "fieldType": "link",
             "label": "Basic Flex Link 1",
             "handle": "basicFlexLinkFirst",
+            "required": false,
             "helpText": ""
         },
-        "22": {
+        {
             "fieldType": "link",
             "label": "Basic Flex Link 2",
             "handle": "basicFlexLinkSecond",
+            "required": false,
             "helpText": ""
         },
-        "23": {
+        {
             "fieldType": "link_from_sitemap",
             "label": "Basic Link from Sitemap 1",
             "handle": "basicLinkFromSitemapFirst",
+            "required": false,
             "helpText": "",
-            "linkFromSitemapShowEndingField": "1",
-            "linkFromSitemapShowTextField": "1",
-            "linkFromSitemapShowTitleField": "1",
-            "linkFromSitemapShowNewWindowField": "1",
-            "linkFromSitemapShowNoFollowField": "1"
+            "showEndingField": true,
+            "showTextField": true,
+            "showTitleField": true,
+            "showNewWindowField": true,
+            "showNoFollowField": true
         },
-        "24": {
+        {
             "fieldType": "link_from_sitemap",
             "label": "Basic Link from Sitemap 2",
             "handle": "basicLinkFromSitemapSecond",
-            "helpText": ""
+            "required": false,
+            "helpText": "",
+            "showEndingField": false,
+            "showTextField": false,
+            "showTitleField": false,
+            "showNewWindowField": false,
+            "showNoFollowField": false
         },
-        "25": {
+        {
             "fieldType": "link_from_file_manager",
             "label": "Basic Link from File Manager 1",
             "handle": "basicLinkFromFileManagerFirst",
+            "required": false,
             "helpText": "",
-            "linkFromFileManagerShowEndingField": "1",
-            "linkFromFileManagerShowTextField": "1",
-            "linkFromFileManagerShowTitleField": "1",
-            "linkFromFileManagerShowNewWindowField": "1",
-            "linkFromFileManagerShowNoFollowField": "1"
+            "showEndingField": true,
+            "showTextField": true,
+            "showTitleField": true,
+            "showNewWindowField": true,
+            "showNoFollowField": true
         },
-        "26": {
+        {
             "fieldType": "link_from_file_manager",
             "label": "Basic Link from File Manager 2",
             "handle": "basicLinkFromFileManagerSecond",
-            "helpText": ""
+            "required": false,
+            "helpText": "",
+            "showEndingField": false,
+            "showTextField": false,
+            "showTitleField": false,
+            "showNewWindowField": false,
+            "showNoFollowField": false
         },
-        "27": {
+        {
             "fieldType": "external_link",
             "label": "Basic External Link 1",
             "handle": "basicExternalLinkFirst",
+            "required": false,
             "helpText": "",
-            "externalLinkShowEndingField": "1",
-            "externalLinkShowTextField": "1",
-            "externalLinkShowTitleField": "1",
-            "externalLinkShowNewWindowField": "1",
-            "externalLinkShowNoFollowField": "1"
+            "showEndingField": true,
+            "showTextField": true,
+            "showTitleField": true,
+            "showNewWindowField": true,
+            "showNoFollowField": true
         },
-        "28": {
+        {
             "fieldType": "external_link",
             "label": "Basic External Link 2",
             "handle": "basicExternalLinkSecond",
-            "helpText": ""
+            "required": false,
+            "helpText": "",
+            "showEndingField": false,
+            "showTextField": false,
+            "showTitleField": false,
+            "showNewWindowField": false,
+            "showNoFollowField": false
         },
-        "29": {
+        {
             "fieldType": "image",
             "label": "Basic Image 1",
             "handle": "basicImageFirst",
+            "required": false,
             "helpText": "",
-            "imageShowAltTextField": "1",
-            "imageCreateThumbnailImage": "1",
-            "imageThumbnailWidth": "480",
-            "imageThumbnailHeight": "270",
-            "imageThumbnailCrop": "1",
-            "imageThumbnailEditable": "1",
-            "imageCreateFullscreenImage": "1",
-            "imageFullscreenWidth": "1920",
-            "imageFullscreenHeight": "1080",
-            "imageFullscreenEditable": "1"
+            "showAltTextField": true,
+            "createThumbnailImage": true,
+            "thumbnailWidth": 480,
+            "thumbnailHeight": 270,
+            "thumbnailCrop": true,
+            "thumbnailEditable": true,
+            "createFullscreenImage": true,
+            "fullscreenWidth": 1920,
+            "fullscreenHeight": 1080,
+            "fullscreenCrop": false,
+            "fullscreenEditable": true
         },
-        "30": {
+        {
             "fieldType": "image",
             "label": "Basic Image 2",
             "handle": "basicImageSecond",
+            "required": false,
             "helpText": "",
-            "imageThumbnailWidth": "480",
-            "imageThumbnailHeight": "270",
-            "imageFullscreenWidth": "1920",
-            "imageFullscreenHeight": "1080"
+            "showAltTextField": false,
+            "createThumbnailImage": false,
+            "thumbnailWidth": 480,
+            "thumbnailHeight": 270,
+            "thumbnailCrop": false,
+            "thumbnailEditable": false,
+            "createFullscreenImage": false,
+            "fullscreenWidth": 1920,
+            "fullscreenHeight": 1080,
+            "fullscreenCrop": false,
+            "fullscreenEditable": false
         },
-        "31": {
+        {
             "fieldType": "express",
             "label": "Basic Express 1",
             "handle": "basicExpressFirst",
+            "required": false,
             "helpText": "",
             "expressHandle": "teacher"
         },
-        "32": {
+        {
             "fieldType": "express",
             "label": "Basic Express 2",
             "handle": "basicExpressSecond",
+            "required": false,
             "helpText": "",
             "expressHandle": "worker"
         },
-        "33": {
+        {
             "fieldType": "file_set",
             "label": "Basic File Set 1",
             "handle": "basicFileSetFirst",
+            "required": false,
             "helpText": "",
             "fileSetPrefix": ""
         },
-        "34": {
+        {
+            "fieldType": "files_from_folder",
+            "label": "Basic Files from Folder 1",
+            "handle": "basicFilesFromFolderFirst",
+            "required": false,
+            "helpText": "",
+            "fileOrder": "file_manager"
+        },
+        {
             "fieldType": "file_set",
             "label": "Basic File Set 2",
             "handle": "basicFileSetSecond",
+            "required": false,
             "helpText": "",
             "fileSetPrefix": "Gallery - "
         },
-        "35": {
+        {
+            "fieldType": "files_from_folder",
+            "label": "Basic Files from Folder 2",
+            "handle": "basicFilesFromFolderSecond",
+            "required": false,
+            "helpText": "",
+            "fileOrder": "ascending"
+        },
+        {
             "fieldType": "html_editor",
             "label": "Basic HTML Editor 1",
             "handle": "basicHtmlEditorFirst",
+            "required": false,
             "helpText": "",
-            "htmlEditorHeight": ""
+            "defaultValue": "",
+            "height": null
         },
-        "36": {
+        {
             "fieldType": "html_editor",
             "label": "Basic HTML Editor 2",
             "handle": "basicHtmlEditorSecond",
+            "required": false,
             "helpText": "",
-            "htmlEditorHeight": "400"
+            "defaultValue": "",
+            "height": 400
         },
-        "37": {
+        {
             "fieldType": "date_picker",
             "label": "Basic Date Picker 1",
             "handle": "basicDatePickerFirst",
+            "required": false,
             "helpText": "",
-            "datePickerPattern": "d.m.Y"
+            "datePattern": "d.m.Y",
+            "minDate": "",
+            "maxDate": "",
+            "attachTimeSelector": false,
+            "minuteInterval": 1
         },
-        "38": {
+        {
             "fieldType": "date_picker",
             "label": "Basic Date Picker 2",
             "handle": "basicDatePickerSecond",
+            "required": false,
             "helpText": "",
-            "datePickerPattern": "Y-m-d"
+            "datePattern": "Y-m-d",
+            "minDate": "",
+            "maxDate": "",
+            "attachTimeSelector": false,
+            "minuteInterval": 1
         },
-        "39": {
+        {
             "fieldType": "color_picker",
             "label": "Basic Color Picker 1",
             "handle": "basicColorPickerFirst",
-            "helpText": ""
+            "required": false,
+            "helpText": "",
+            "defaultValue": ""
         },
-        "40": {
+        {
             "fieldType": "color_picker",
             "label": "Basic Color Picker 2",
             "handle": "basicColorPickerSecond",
-            "helpText": ""
+            "required": false,
+            "helpText": "",
+            "defaultValue": ""
         },
-        "41": {
+        {
             "fieldType": "icon_picker",
             "label": "Basic Icon Picker 1",
             "handle": "basicIconPickerFirst",
+            "required": false,
+            "helpText": "",
+            "defaultValue": ""
+        },
+        {
+            "fieldType": "svg_icon_picker",
+            "label": "Basic SVG Icon Picker 1",
+            "handle": "basicSvgIconPickerFirst",
+            "required": false,
+            "helpText": "",
+            "icons": [
+                {
+                    "name": "Square",
+                    "handle": "square",
+                    "svg": "<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" viewBox=\"0 0 16 16\"><path d=\"M1 1h14v14H1z\"><\/path><\/svg>"
+                }
+            ]
+        },
+        {
+            "fieldType": "user_selector",
+            "label": "Basic User Selector 1",
+            "handle": "basicUserSelectorFirst",
+            "required": false,
             "helpText": ""
         },
-        "42": {
+        {
             "fieldType": "icon_picker",
             "label": "Basic Icon Picker 2",
             "handle": "basicIconPickerSecond",
+            "required": false,
+            "helpText": "",
+            "defaultValue": ""
+        },
+        {
+            "fieldType": "svg_icon_picker",
+            "label": "Basic SVG Icon Picker 2",
+            "handle": "basicSvgIconPickerSecond",
+            "required": false,
+            "helpText": "",
+            "icons": [
+                {
+                    "name": "Square",
+                    "handle": "square",
+                    "svg": "<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" viewBox=\"0 0 16 16\"><path d=\"M1 1h14v14H1z\"><\/path><\/svg>"
+                }
+            ]
+        },
+        {
+            "fieldType": "user_selector",
+            "label": "Basic User Selector 2",
+            "handle": "basicUserSelectorSecond",
+            "required": false,
             "helpText": ""
         }
-    },
-    "entries": {
-        "1": {
+    ],
+    "entries": [
+        {
             "fieldType": "text_field",
             "label": "Repeatable Text 1",
             "handle": "repeatableTextFirst",
-            "titleSource": "1",
-            "helpText": ""
+            "required": false,
+            "helpText": "",
+            "displayZeroValue": false,
+            "defaultValue": "",
+            "placeholder": "",
+            "additionalValidation": "none",
+            "minimumLength": null,
+            "maximumLength": 255,
+            "prefix": "",
+            "suffix": "",
+            "titleSource": true
         },
-        "2": {
+        {
             "fieldType": "text_field",
             "label": "Repeatable Text 2",
             "handle": "repeatableTextSecond",
-            "helpText": ""
+            "required": false,
+            "helpText": "",
+            "displayZeroValue": false,
+            "defaultValue": "",
+            "placeholder": "",
+            "additionalValidation": "none",
+            "minimumLength": null,
+            "maximumLength": 255,
+            "prefix": "",
+            "suffix": "",
+            "titleSource": false
         },
-        "3": {
+        {
             "fieldType": "number",
             "label": "Repeatable Number 1",
             "handle": "repeatableNumberFirst",
+            "required": false,
             "helpText": "",
-            "numberSize": "10.2",
-            "numberStep": "0.01",
-            "numberMin": "0",
-            "numberMax": "99999999.99",
-            "numberDisplayedDecimals": "2",
-            "numberDisplayedDecimalSeparator": ",",
-            "numberDisplayedThousandsSeparator": " "
+            "displayZeroValue": false,
+            "defaultValue": "",
+            "placeholder": "",
+            "prefix": "",
+            "suffix": "",
+            "size": "10.2",
+            "step": "0.01",
+            "minimum": "0",
+            "maximum": "99999999.99",
+            "displayedDecimals": 2,
+            "displayedDecimalSeparator": ",",
+            "displayedThousandsSeparator": ""
         },
-        "4": {
+        {
             "fieldType": "number",
             "label": "Repeatable Number 2",
             "handle": "repeatableNumberSecond",
+            "required": false,
             "helpText": "",
-            "numberSize": "10.2",
-            "numberStep": "0.01",
-            "numberMin": "0",
-            "numberMax": "99999999.99",
-            "numberDisplayedDecimals": "2",
-            "numberDisplayedDecimalSeparator": ",",
-            "numberDisplayedThousandsSeparator": " "
+            "displayZeroValue": false,
+            "defaultValue": "",
+            "placeholder": "",
+            "prefix": "",
+            "suffix": "",
+            "size": "10.2",
+            "step": "0.01",
+            "minimum": "0",
+            "maximum": "99999999.99",
+            "displayedDecimals": 2,
+            "displayedDecimalSeparator": ",",
+            "displayedThousandsSeparator": ""
         },
-        "5": {
+        {
             "fieldType": "textarea",
             "label": "Repeatable Textarea 1",
             "handle": "repeatableTextareaFirst",
+            "required": false,
             "helpText": "",
-            "textareaHeight": ""
+            "displayZeroValue": false,
+            "defaultValue": "",
+            "placeholder": "",
+            "minimumLength": null,
+            "maximumLength": null,
+            "titleSource": false,
+            "minHeight": null,
+            "maxHeight": null
         },
-        "6": {
+        {
             "fieldType": "textarea",
             "label": "Repeatable Textarea 2",
             "handle": "repeatableTextareaSecond",
+            "required": false,
             "helpText": "",
-            "textareaHeight": "100"
+            "displayZeroValue": false,
+            "defaultValue": "",
+            "placeholder": "",
+            "minimumLength": null,
+            "maximumLength": null,
+            "titleSource": false,
+            "minHeight": null,
+            "maxHeight": 100
         },
-        "7": {
+        {
             "fieldType": "wysiwyg_editor",
             "label": "Repeatable WYSIWYG Editor 1",
             "handle": "repeatableWysiwygEditorFirst",
+            "required": false,
             "helpText": "",
-            "wysiwygEditorHeight": "",
-            "wysiwygCustomConfig": ""
+            "defaultValue": "",
+            "minHeight": null,
+            "maxHeight": null,
+            "customConfig": "",
+            "allowedTags": ""
         },
-        "8": {
+        {
             "fieldType": "wysiwyg_editor",
             "label": "Repeatable WYSIWYG Editor 2",
             "handle": "repeatableWysiwygEditorSecond",
+            "required": false,
             "helpText": "",
-            "wysiwygEditorHeight": "90",
-            "wysiwygCustomConfig": "{\r\n  \"toolbar\": [\r\n    {\r\n      \"name\": \"document\",\r\n      \"items\": [\"Source\", \"-\"]\r\n    },\r\n    {\r\n      \"name\": \"basicstyles\",\r\n      \"items\": [\"Bold\", \"Italic\", \"Underline\", \"Strike\", \"Subscript\", \"Superscript\", \"-\", \"RemoveFormat\"]\r\n    },\r\n    {\r\n      \"name\": \"styles\",\r\n      \"items\": [\"Styles\", \"Format\"]\r\n    }\r\n  ]\r\n}"
+            "defaultValue": "",
+            "minHeight": null,
+            "maxHeight": 90,
+            "customConfig": "{\r\n  \"toolbar\": [\r\n    {\r\n      \"name\": \"document\",\r\n      \"items\": [\"Source\", \"-\"]\r\n    },\r\n    {\r\n      \"name\": \"basicstyles\",\r\n      \"items\": [\"Bold\", \"Italic\", \"Underline\", \"Strike\", \"Subscript\", \"Superscript\", \"-\", \"RemoveFormat\"]\r\n    },\r\n    {\r\n      \"name\": \"styles\",\r\n      \"items\": [\"Styles\", \"Format\"]\r\n    }\r\n  ]\r\n}",
+            "allowedTags": ""
         },
-        "9": {
+        {
             "fieldType": "select_field",
-            "label": "Repeatable Single Choice Field Default 1",
+            "label": "Repeatable Single Choice Default 1",
             "handle": "repeatableSingleChoiceFieldDefaultFirst",
+            "required": false,
             "helpText": "",
-            "selectType": "default_select",
-            "selectAddEmptyOption": "no",
-            "selectDefaultValue": "",
-            "selectListGenerationMethod": "basic_list",
-            "selectOptions": "aaa :: Don't show\r\nbbb :: Show",
-            "selectCustomCode": ""
+            "displayType": "default_select",
+            "addEmptyOption": false,
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "aaa :: Don't show\r\nbbb :: Show",
+            "customCode": ""
         },
-        "10": {
+        {
             "fieldType": "select_field",
-            "label": "Repeatable Single Choice Field Default 2",
+            "label": "Repeatable Single Choice Default 2",
             "handle": "repeatableSingleChoiceFieldDefaultSecond",
+            "required": false,
             "helpText": "",
-            "selectType": "default_select",
-            "selectAddEmptyOption": "no",
-            "selectDefaultValue": "",
-            "selectListGenerationMethod": "basic_list",
-            "selectOptions": "aaa :: Don't show\r\nbbb :: Show",
-            "selectCustomCode": ""
+            "displayType": "default_select",
+            "addEmptyOption": false,
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "aaa :: Don't show\r\nbbb :: Show",
+            "customCode": ""
         },
-        "11": {
+        {
             "fieldType": "select_field",
-            "label": "Repeatable Single Choice Field Enhanced 1",
+            "label": "Repeatable Single Choice Enhanced 1",
             "handle": "repeatableSingleChoiceFieldEnhancedFirst",
+            "required": false,
             "helpText": "",
-            "selectType": "enhanced_select",
-            "selectAddEmptyOption": "no",
-            "selectDefaultValue": "",
-            "selectListGenerationMethod": "basic_list",
-            "selectOptions": "example2::Example\r\nsome_data2::Some data",
-            "selectCustomCode": ""
+            "displayType": "enhanced_select",
+            "addEmptyOption": false,
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "example2::Example\r\nsome_data2::Some data",
+            "customCode": ""
         },
-        "12": {
+        {
             "fieldType": "select_field",
-            "label": "Repeatable Single Choice Field Enhanced 2",
+            "label": "Repeatable Single Choice Enhanced 2",
             "handle": "repeatableSingleChoiceFieldEnhancedSecond",
+            "required": false,
             "helpText": "",
-            "selectType": "enhanced_select",
-            "selectAddEmptyOption": "no",
-            "selectDefaultValue": "",
-            "selectListGenerationMethod": "basic_list",
-            "selectOptions": "example2::Example\r\nsome_data2::Some data",
-            "selectCustomCode": ""
+            "displayType": "enhanced_select",
+            "addEmptyOption": false,
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "example2::Example\r\nsome_data2::Some data",
+            "customCode": ""
         },
-        "13": {
+        {
             "fieldType": "select_field",
-            "label": "Repeatable Single Choice Field Radio List 1",
+            "label": "Repeatable Single Choice Radio List 1",
             "handle": "repeatableSingleChoiceFieldRadioListFirst",
+            "required": false,
             "helpText": "",
-            "selectType": "radio_list",
-            "selectAddEmptyOption": "no",
-            "selectDefaultValue": "",
-            "selectListGenerationMethod": "basic_list",
-            "selectOptions": "Don't show\r\nShow",
-            "selectCustomCode": ""
+            "displayType": "radio_list",
+            "addEmptyOption": false,
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "Don't show\r\nShow",
+            "customCode": ""
         },
-        "14": {
+        {
             "fieldType": "select_field",
-            "label": "Repeatable Single Choice Field Radio List 2",
+            "label": "Repeatable Single Choice Radio List 2",
             "handle": "repeatableSingleChoiceFieldRadioListSecond",
+            "required": false,
             "helpText": "",
-            "selectType": "radio_list",
-            "selectAddEmptyOption": "no",
-            "selectDefaultValue": "",
-            "selectListGenerationMethod": "basic_list",
-            "selectOptions": "Don't show\r\nShow",
-            "selectCustomCode": ""
+            "displayType": "radio_list",
+            "addEmptyOption": false,
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "Don't show\r\nShow",
+            "customCode": ""
         },
-        "15": {
+        {
             "fieldType": "select_multiple_field",
-            "label": "Repeatable Multiple Choice Field Default 1",
+            "label": "Repeatable Multiple Choice Default 1",
             "handle": "repeatableMultipleChoiceFieldDefaultFirst",
+            "required": false,
             "helpText": "",
-            "selectMultipleType": "default_multiselect",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "1::Yes\r\n2:: No",
-            "selectMultipleCustomCode": ""
+            "displayType": "default_multiselect",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "1::Yes\r\n2:: No",
+            "customCode": ""
         },
-        "16": {
+        {
             "fieldType": "select_multiple_field",
-            "label": "Repeatable Multiple Choice Field Default 2",
+            "label": "Repeatable Multiple Choice Default 2",
             "handle": "repeatableMultipleChoiceFieldDefaultSecond",
+            "required": false,
             "helpText": "",
-            "selectMultipleType": "default_multiselect",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "1::Yes\r\n2:: No",
-            "selectMultipleCustomCode": ""
+            "displayType": "default_multiselect",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "1::Yes\r\n2:: No",
+            "customCode": ""
         },
-        "17": {
+        {
             "fieldType": "select_multiple_field",
-            "label": "Repeatable Multiple Choice Field Enhanced 1",
+            "label": "Repeatable Multiple Choice Enhanced 1",
             "handle": "repeatableMultipleChoiceFieldEnhancedFirst",
+            "required": false,
             "helpText": "",
-            "selectMultipleType": "enhanced_multiselect",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "Don't show\r\nShow",
-            "selectMultipleCustomCode": ""
+            "displayType": "enhanced_multiselect",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "Don't show\r\nShow",
+            "customCode": ""
         },
-        "18": {
+        {
             "fieldType": "select_multiple_field",
-            "label": "Repeatable Multiple Choice Field Enhanced 2",
+            "label": "Repeatable Multiple Choice Enhanced 2",
             "handle": "repeatableMultipleChoiceFieldEnhancedSecond",
+            "required": false,
             "helpText": "",
-            "selectMultipleType": "enhanced_multiselect",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "Don't show\r\nShow",
-            "selectMultipleCustomCode": ""
+            "displayType": "enhanced_multiselect",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "Don't show\r\nShow",
+            "customCode": ""
         },
-        "19": {
+        {
             "fieldType": "select_multiple_field",
-            "label": "Repeatable Multiple Choice Field Checkbox List 1",
+            "label": "Repeatable Multiple Choice Checkbox List 1",
             "handle": "repeatableMultipleChoiceFieldCheckboxFirst",
+            "required": false,
             "helpText": "",
-            "selectMultipleType": "checkbox_list",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "no :: Don't show\r\nyes :: Show",
-            "selectMultipleCustomCode": ""
+            "displayType": "checkbox_list",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "no :: Don't show\r\nyes :: Show",
+            "customCode": ""
         },
-        "20": {
+        {
             "fieldType": "select_multiple_field",
-            "label": "Repeatable Multiple Choice Field Checkbox List 2",
+            "label": "Repeatable Multiple Choice Checkbox List 2",
             "handle": "repeatableMultipleChoiceFieldCheckboxSecond",
+            "required": false,
             "helpText": "",
-            "selectMultipleType": "checkbox_list",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "no :: Don't show\r\nyes :: Show",
-            "selectMultipleCustomCode": ""
+            "displayType": "checkbox_list",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "no :: Don't show\r\nyes :: Show",
+            "customCode": ""
         },
-        "21": {
+        {
             "fieldType": "link",
             "label": "Repeatable Flex Link 1",
             "handle": "repeatableFlexLinkFirst",
+            "required": false,
             "helpText": ""
         },
-        "22": {
+        {
             "fieldType": "link",
             "label": "Repeatable Flex Link 2",
             "handle": "repeatableFlexLinkSecond",
+            "required": false,
             "helpText": ""
         },
-        "23": {
+        {
             "fieldType": "link_from_sitemap",
             "label": "Repeatable Link from Sitemap 1",
             "handle": "repeatableLinkFromSitemapFirst",
+            "required": false,
             "helpText": "",
-            "linkFromSitemapShowEndingField": "1",
-            "linkFromSitemapShowTextField": "1",
-            "linkFromSitemapShowTitleField": "1",
-            "linkFromSitemapShowNewWindowField": "1",
-            "linkFromSitemapShowNoFollowField": "1"
+            "showEndingField": true,
+            "showTextField": true,
+            "showTitleField": true,
+            "showNewWindowField": true,
+            "showNoFollowField": true
         },
-        "24": {
+        {
             "fieldType": "link_from_sitemap",
             "label": "Repeatable Link from Sitemap 2",
             "handle": "repeatableLinkFromSitemapSecond",
-            "helpText": ""
+            "required": false,
+            "helpText": "",
+            "showEndingField": false,
+            "showTextField": false,
+            "showTitleField": false,
+            "showNewWindowField": false,
+            "showNoFollowField": false
         },
-        "25": {
+        {
             "fieldType": "link_from_file_manager",
             "label": "Repeatable Link from File Manager 1",
             "handle": "repeatableLinkFromFileManagerFirst",
+            "required": false,
             "helpText": "",
-            "linkFromFileManagerShowEndingField": "1",
-            "linkFromFileManagerShowTextField": "1",
-            "linkFromFileManagerShowTitleField": "1",
-            "linkFromFileManagerShowNewWindowField": "1",
-            "linkFromFileManagerShowNoFollowField": "1"
+            "showEndingField": true,
+            "showTextField": true,
+            "showTitleField": true,
+            "showNewWindowField": true,
+            "showNoFollowField": true
         },
-        "26": {
+        {
             "fieldType": "link_from_file_manager",
             "label": "Repeatable Link from File Manager 2",
             "handle": "repeatableLinkFromFileManagerSecond",
-            "helpText": ""
+            "required": false,
+            "helpText": "",
+            "showEndingField": false,
+            "showTextField": false,
+            "showTitleField": false,
+            "showNewWindowField": false,
+            "showNoFollowField": false
         },
-        "27": {
+        {
             "fieldType": "external_link",
             "label": "Repeatable External Link 1",
             "handle": "repeatableExternalLinkFirst",
+            "required": false,
             "helpText": "",
-            "externalLinkShowEndingField": "1",
-            "externalLinkShowTextField": "1",
-            "externalLinkShowTitleField": "1",
-            "externalLinkShowNewWindowField": "1",
-            "externalLinkShowNoFollowField": "1"
+            "showEndingField": true,
+            "showTextField": true,
+            "showTitleField": true,
+            "showNewWindowField": true,
+            "showNoFollowField": true
         },
-        "28": {
+        {
             "fieldType": "external_link",
             "label": "Repeatable External Link 2",
             "handle": "repeatableExternalLinkSecond",
-            "helpText": ""
+            "required": false,
+            "helpText": "",
+            "showEndingField": false,
+            "showTextField": false,
+            "showTitleField": false,
+            "showNewWindowField": false,
+            "showNoFollowField": false
         },
-        "29": {
+        {
             "fieldType": "image",
             "label": "Repeatable Image 1",
             "handle": "repeatableImageFirst",
+            "required": false,
             "helpText": "",
-            "imageShowAltTextField": "1",
-            "imageCreateThumbnailImage": "1",
-            "imageThumbnailWidth": "480",
-            "imageThumbnailHeight": "270",
-            "imageThumbnailCrop": "1",
-            "imageThumbnailEditable": "1",
-            "imageCreateFullscreenImage": "1",
-            "imageFullscreenWidth": "1920",
-            "imageFullscreenHeight": "1080",
-            "imageFullscreenEditable": "1"
+            "showAltTextField": true,
+            "createThumbnailImage": true,
+            "thumbnailWidth": 480,
+            "thumbnailHeight": 270,
+            "thumbnailCrop": true,
+            "thumbnailEditable": true,
+            "createFullscreenImage": true,
+            "fullscreenWidth": 1920,
+            "fullscreenHeight": 1080,
+            "fullscreenCrop": false,
+            "fullscreenEditable": true
         },
-        "30": {
+        {
             "fieldType": "image",
             "label": "Repeatable Image 2",
             "handle": "repeatableImageSecond",
+            "required": false,
             "helpText": "",
-            "imageThumbnailWidth": "480",
-            "imageThumbnailHeight": "270",
-            "imageFullscreenWidth": "1920",
-            "imageFullscreenHeight": "1080"
+            "showAltTextField": false,
+            "createThumbnailImage": false,
+            "thumbnailWidth": 480,
+            "thumbnailHeight": 270,
+            "thumbnailCrop": false,
+            "thumbnailEditable": false,
+            "createFullscreenImage": false,
+            "fullscreenWidth": 1920,
+            "fullscreenHeight": 1080,
+            "fullscreenCrop": false,
+            "fullscreenEditable": false
         },
-        "31": {
+        {
             "fieldType": "express",
             "label": "Repeatable Express 1",
             "handle": "repeatableExpressFirst",
+            "required": false,
             "helpText": "",
             "expressHandle": "teacher"
         },
-        "32": {
+        {
             "fieldType": "express",
             "label": "Repeatable Express 2",
             "handle": "repeatableExpressSecond",
+            "required": false,
             "helpText": "",
             "expressHandle": "worker"
         },
-        "33": {
+        {
             "fieldType": "file_set",
             "label": "Repeatable File Set 1",
             "handle": "repeatableFileSetFirst",
+            "required": false,
             "helpText": "",
             "fileSetPrefix": ""
         },
-        "34": {
+        {
+            "fieldType": "files_from_folder",
+            "label": "Repeatable Files from Folder 1",
+            "handle": "repeatableFilesFromFolderFirst",
+            "required": false,
+            "helpText": "",
+            "fileOrder": "file_manager"
+        },
+        {
             "fieldType": "file_set",
             "label": "Repeatable File Set 2",
             "handle": "repeatableFileSetSecond",
+            "required": false,
             "helpText": "",
             "fileSetPrefix": "Gallery \/ "
         },
-        "35": {
+        {
+            "fieldType": "files_from_folder",
+            "label": "Repeatable Files from Folder 2",
+            "handle": "repeatableFilesFromFolderSecond",
+            "required": false,
+            "helpText": "",
+            "fileOrder": "ascending"
+        },
+        {
             "fieldType": "html_editor",
             "label": "Repeatable HTML Editor 1",
             "handle": "repeatableHtmlEditorFirst",
+            "required": false,
             "helpText": "",
-            "htmlEditorHeight": ""
+            "defaultValue": "",
+            "height": null
         },
-        "36": {
+        {
             "fieldType": "html_editor",
             "label": "Repeatable HTML Editor 2",
             "handle": "repeatableHtmlEditorSecond",
+            "required": false,
             "helpText": "",
-            "htmlEditorHeight": "400"
+            "defaultValue": "",
+            "height": 400
         },
-        "37": {
+        {
             "fieldType": "date_picker",
             "label": "Repeatable Date Picker 1",
             "handle": "repeatableDatePickerFirst",
+            "required": false,
             "helpText": "",
-            "datePickerPattern": "d.m.Y"
+            "datePattern": "d.m.Y",
+            "minDate": "",
+            "maxDate": "",
+            "attachTimeSelector": false,
+            "minuteInterval": 1
         },
-        "38": {
+        {
             "fieldType": "date_picker",
             "label": "Repeatable Date Picker 2",
             "handle": "repeatableDatePickerSecond",
+            "required": false,
             "helpText": "",
-            "datePickerPattern": "m\/d\/Y"
+            "datePattern": "m\/d\/Y",
+            "minDate": "",
+            "maxDate": "",
+            "attachTimeSelector": false,
+            "minuteInterval": 1
         },
-        "39": {
+        {
             "fieldType": "color_picker",
             "label": "Repeatable Color Picker 1",
             "handle": "repeatableColorPickerFirst",
-            "helpText": ""
+            "required": false,
+            "helpText": "",
+            "defaultValue": ""
         },
-        "40": {
+        {
             "fieldType": "color_picker",
             "label": "Repeatable Color Picker 2",
             "handle": "repeatableColorPickerSecond",
-            "helpText": ""
+            "required": false,
+            "helpText": "",
+            "defaultValue": ""
         },
-        "41": {
+        {
             "fieldType": "icon_picker",
             "label": "Repeatable Icon Picker 1",
             "handle": "repeatableIconPickerFirst",
+            "required": false,
+            "helpText": "",
+            "defaultValue": ""
+        },
+        {
+            "fieldType": "svg_icon_picker",
+            "label": "Repeatable SVG Icon Picker 1",
+            "handle": "repeatableSvgIconPickerFirst",
+            "required": false,
+            "helpText": "",
+            "icons": [
+                {
+                    "name": "Square",
+                    "handle": "square",
+                    "svg": "<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" viewBox=\"0 0 16 16\"><path d=\"M1 1h14v14H1z\"><\/path><\/svg>"
+                }
+            ]
+        },
+        {
+            "fieldType": "user_selector",
+            "label": "Repeatable User Selector 1",
+            "handle": "repeatableUserSelectorFirst",
+            "required": false,
             "helpText": ""
         },
-        "42": {
+        {
             "fieldType": "icon_picker",
             "label": "Repeatable Icon Picker 2",
             "handle": "repeatableIconPickerSecond",
+            "required": false,
+            "helpText": "",
+            "defaultValue": ""
+        },
+        {
+            "fieldType": "svg_icon_picker",
+            "label": "Repeatable SVG Icon Picker 2",
+            "handle": "repeatableSvgIconPickerSecond",
+            "required": false,
+            "helpText": "",
+            "icons": [
+                {
+                    "name": "Square",
+                    "handle": "square",
+                    "svg": "<svg xmlns=\"http:\/\/www.w3.org\/2000\/svg\" viewBox=\"0 0 16 16\"><path d=\"M1 1h14v14H1z\"><\/path><\/svg>"
+                }
+            ]
+        },
+        {
+            "fieldType": "user_selector",
+            "label": "Repeatable User Selector 2",
+            "handle": "repeatableUserSelectorSecond",
+            "required": false,
             "helpText": ""
         }
-    }
+    ]
 }

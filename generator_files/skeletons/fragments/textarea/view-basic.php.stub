@@ -1,0 +1,3 @@
+<?php if ({{DISPLAY_CONDITION}}): ?>
+    <?= nl2br(h(${{HANDLE}}), false); ?>
+<?php endif; ?>

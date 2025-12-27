@@ -1,0 +1,53 @@
+<?php
+
+declare(strict_types=1);
+
+namespace BlockBuilder\FieldType\Type\FlexLink;
+
+use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
+use BlockBuilder\FieldType\Enum\FieldTypeEnum;
+use BlockBuilder\FieldType\AbstractFieldType;
+
+class FlexLinkFieldType extends AbstractFieldType
+{
+    public static function getFieldType(): FieldTypeEnum
+    {
+        return FieldTypeEnum::FlexLink;
+    }
+
+    public static function getLabel(): string
+    {
+        return t('Flex Link');
+    }
+
+    public static function getIcon(): string
+    {
+        return 'fas fa-link';
+    }
+
+    public static function getDefaultValues(): array
+    {
+        return [];
+    }
+
+    public static function createDtoFromArray(array $data): FlexLinkFieldTypeDto
+    {
+        return new FlexLinkFieldTypeDto(
+            fieldType: self::getFieldType(),
+            label: trim($data['label'] ?? ''),
+            handle: trim($data['handle'] ?? ''),
+            required: !empty($data['required']),
+            helpText: trim($data['helpText'] ?? ''),
+        );
+    }
+
+    public static function getErrorMessages(FieldTypeContextEnum $context): array
+    {
+        return [];
+    }
+
+    public function validate(array $data): array
+    {
+        return [];
+    }
+}

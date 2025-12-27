@@ -1,0 +1,55 @@
+<div class="mb-4" data-image-dimension-group>
+    <div class="form-check">
+        <input
+            class="form-check-input"
+            id="<?= h($view->field({{OVERRIDE_HANDLE_LITERAL}})); ?>"
+            name="<?= h($view->field({{OVERRIDE_HANDLE_LITERAL}})); ?>"
+            type="checkbox"
+            value="1"
+            data-image-dimension-toggle
+            <?= !empty($settings[{{OVERRIDE_KEY_LITERAL}}]) ? 'checked' : ''; ?>
+        >
+        <label class="form-check-label" for="<?= h($view->field({{OVERRIDE_HANDLE_LITERAL}})); ?>">
+            <?= t({{OVERRIDE_LABEL_LITERAL}}); ?>
+        </label>
+    </div>
+    <div class="row g-3 mt-1" data-image-dimension-fields <?= empty($settings[{{OVERRIDE_KEY_LITERAL}}]) ? 'hidden' : ''; ?>>
+        <div class="col-lg-4">
+            <label class="form-label" for="<?= h($view->field({{WIDTH_HANDLE_LITERAL}})); ?>"><?= t({{WIDTH_LABEL_LITERAL}}); ?></label>
+            <div class="input-group">
+                <input
+                    class="form-control"
+                    id="<?= h($view->field({{WIDTH_HANDLE_LITERAL}})); ?>"
+                    name="<?= h($view->field({{WIDTH_HANDLE_LITERAL}})); ?>"
+                    type="number"
+                    value="<?= !empty($settings[{{WIDTH_KEY_LITERAL}}]) ? h((string) $settings[{{WIDTH_KEY_LITERAL}}]) : ''; ?>"
+                >
+                <span class="input-group-text"><?= t({{PX_LABEL_LITERAL}}); ?></span>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <label class="form-label" for="<?= h($view->field({{HEIGHT_HANDLE_LITERAL}})); ?>"><?= t({{HEIGHT_LABEL_LITERAL}}); ?></label>
+            <div class="input-group">
+                <input
+                    class="form-control"
+                    id="<?= h($view->field({{HEIGHT_HANDLE_LITERAL}})); ?>"
+                    name="<?= h($view->field({{HEIGHT_HANDLE_LITERAL}})); ?>"
+                    type="number"
+                    value="<?= !empty($settings[{{HEIGHT_KEY_LITERAL}}]) ? h((string) $settings[{{HEIGHT_KEY_LITERAL}}]) : ''; ?>"
+                >
+                <span class="input-group-text"><?= t({{PX_LABEL_LITERAL}}); ?></span>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <label class="form-label" for="<?= h($view->field({{CROP_HANDLE_LITERAL}})); ?>"><?= t({{CROP_LABEL_LITERAL}}); ?></label>
+            <select
+                class="form-select"
+                id="<?= h($view->field({{CROP_HANDLE_LITERAL}})); ?>"
+                name="<?= h($view->field({{CROP_HANDLE_LITERAL}})); ?>"
+            >
+                <option value="0" <?= empty($settings[{{CROP_KEY_LITERAL}}]) ? 'selected' : ''; ?>><?= t({{NO_LABEL_LITERAL}}); ?></option>
+                <option value="1" <?= !empty($settings[{{CROP_KEY_LITERAL}}]) ? 'selected' : ''; ?>><?= t({{YES_LABEL_LITERAL}}); ?></option>
+            </select>
+        </div>
+    </div>
+</div>

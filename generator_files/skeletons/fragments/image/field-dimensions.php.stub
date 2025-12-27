@@ -1,0 +1,51 @@
+<div class="mb-4" data-image-dimension-group>
+    <div class="form-check">
+        <input
+            class="form-check-input"
+            id="{{OVERRIDE_NAME}}"
+            name="{{OVERRIDE_NAME}}"
+            type="checkbox"
+            value="1"
+            data-image-dimension-toggle{{OVERRIDE_ENTRY_FIELD}}
+            <?= !empty({{OVERRIDE_VALUE_EXPRESSION}}) ? 'checked' : ''; ?>
+        >
+        <label class="form-check-label" for="{{OVERRIDE_NAME}}">
+            <?= t({{OVERRIDE_LABEL_LITERAL}}); ?>
+        </label>
+    </div>
+    <div class="row g-3 mt-1" data-image-dimension-fields <?= empty({{OVERRIDE_VALUE_EXPRESSION}}) ? 'hidden' : ''; ?>>
+        <div class="col-lg-4">
+            <label class="form-label" for="{{WIDTH_NAME}}"><?= t({{WIDTH_LABEL_LITERAL}}); ?></label>
+            <div class="input-group">
+                <input
+                    class="form-control"
+                    id="{{WIDTH_NAME}}"
+                    name="{{WIDTH_NAME}}"
+                    type="number"
+                    value="<?= !empty({{WIDTH_VALUE_EXPRESSION}}) ? h((string) ({{WIDTH_VALUE_EXPRESSION}})) : ''; ?>"{{WIDTH_ENTRY_FIELD}}
+                >
+                <span class="input-group-text"><?= t({{PX_LABEL_LITERAL}}); ?></span>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <label class="form-label" for="{{HEIGHT_NAME}}"><?= t({{HEIGHT_LABEL_LITERAL}}); ?></label>
+            <div class="input-group">
+                <input
+                    class="form-control"
+                    id="{{HEIGHT_NAME}}"
+                    name="{{HEIGHT_NAME}}"
+                    type="number"
+                    value="<?= !empty({{HEIGHT_VALUE_EXPRESSION}}) ? h((string) ({{HEIGHT_VALUE_EXPRESSION}})) : ''; ?>"{{HEIGHT_ENTRY_FIELD}}
+                >
+                <span class="input-group-text"><?= t({{PX_LABEL_LITERAL}}); ?></span>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <label class="form-label" for="{{CROP_NAME}}"><?= t({{CROP_LABEL_LITERAL}}); ?></label>
+            <select class="form-select" id="{{CROP_NAME}}" name="{{CROP_NAME}}"{{CROP_ENTRY_FIELD}}>
+                <option value="0" <?= empty({{CROP_VALUE_EXPRESSION}}) ? 'selected' : ''; ?>><?= t({{NO_LABEL_LITERAL}}); ?></option>
+                <option value="1" <?= !empty({{CROP_VALUE_EXPRESSION}}) ? 'selected' : ''; ?>><?= t({{YES_LABEL_LITERAL}}); ?></option>
+            </select>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+<div class="mb-4">
+    <label class="form-label" for="<?= h($view->field({{HANDLE_LITERAL}})); ?>">
+        <?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?>
+    </label>
+    <div class="row g-3">
+        <div class="col-lg-4">
+            <select
+                class="form-select"
+                name="<?= h($view->field({{PROTOCOL_HANDLE_LITERAL}})); ?>"
+                data-link-protocol
+            >
+                <?php foreach (['https://', 'http://', 'BASE_URL', 'CURRENT_PAGE', 'other'] as $protocol): ?>
+                    <option value="<?= h($protocol); ?>" <?= (${{HANDLE}}_protocol ?? 'https://') === $protocol ? 'selected' : ''; ?>>
+                        <?= h($protocol === 'other' ? '----' : $protocol); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="col-lg-8">
+            <input
+                class="form-control"
+                id="<?= h($view->field({{HANDLE_LITERAL}})); ?>"
+                name="<?= h($view->field({{HANDLE_LITERAL}})); ?>"
+                type="text"
+                value="<?= h(${{HANDLE}} ?? ''); ?>"
+                maxlength="255"
+                data-link-external-url
+            >
+        </div>
+    </div>{{HELP_TEXT}}
+</div>
