@@ -1,0 +1,16 @@
+<?php
+
+declare(strict_types=1);
+
+namespace BlockBuilder\Environment\Dto;
+
+readonly class EnvironmentDto
+{
+    public function __construct(
+        public ?string $blockBuilderVersion,
+        public ?string $concreteVersion,
+        public ?string $phpVersion,
+        public ?string $packageHandle,
+    ) {
+    }
+}

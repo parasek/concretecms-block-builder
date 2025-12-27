@@ -1,6 +1,4 @@
-<?php defined('C5_EXECUTE') or exit('Access Denied.');
-
-?>
+<?php defined('C5_EXECUTE') or exit('Access Denied.'); ?>
 
 <?php if (!empty($errors)): ?>
     <div class="alert alert-danger alert-dismissible">
@@ -11,139 +9,132 @@
     </div>
 <?php endif; ?>
 
-<?php if (!empty($type) and $type === 'refresh'): ?>
-    <div class="alert alert-warning alert-dismissible">
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            <div>
-                <strong><?= t('Warning'); ?>:</strong>
-                <?= t('Rebuilding and refreshing block (without uninstalling it first) can potentially break your site. Backup your database and files before proceeding.'); ?>
-                <a href="<?= $app->make('url/manager')->resolve(['dashboard/blocks/block_builder/refresh_warning']); ?>" target="_blank" rel="noopener" class="btn btn-primary btn-sm">
-                    <i class="fas fa-external-link-alt"></i> <?= t('Read more'); ?>
-                </a>
-            </div>
+<div class="alert alert-warning alert-dismissible">
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    <div>
+        <strong><?= t('Warning'); ?>:</strong>
+        <?= t('Rebuilding and refreshing block (without uninstalling it first) can potentially break your site. Backup your database and files before proceeding.'); ?>
     </div>
-<?php endif; ?>
+</div>
 
-<div id="bb-container" class="bb-container">
+<div id="bb-container" class="bb-container" data-fields-with-errors="<?= h(json_encode($fieldsWithError ?? [])); ?>">
 
     <div class="mb-4 small text-muted">
-        <?= t('Discard current changes and <a href="%s">create new block</a> from scratch or <a href="%s">load configuration</a> from existing blocks.', $this->action(''), $this->action('configs')); ?>
+        <?= t('Discard current changes and <a href="%s">create a new block</a> from scratch, or <a href="%s">load a configuration</a> from existing blocks.', $this->action(''), $this->action('configs')); ?>
     </div>
 
-    <div class="mb-4">
-        <span class="small badge rounded-pill bg-secondary"><?= t('Block Builder Version'); ?></span> <?= $systemInfo['block_builder_version'] ?? t('No info'); ?>
-        <span class="small badge rounded-pill bg-secondary ms-2"><?= t('Concrete Version'); ?></span> <?= $systemInfo['concrete_version'] ?? t('No info'); ?>
-        <span class="small badge rounded-pill bg-secondary ms-2"><?= t('PHP Version'); ?></span> <?= $systemInfo['php_version'] ?? t('No info'); ?>
-    </div>
+    <?php
+    // MAKE THOSE INTO TABLE!!!!
+    ?>
+    <?php if (in_array($controller->getAction(), ['config', 'predefined_config'])): ?>
+        <?php View::element('environment', ['environment' => $environment], 'block_builder'); ?>
+        <?php View::element('loaded_config_info', ['config' => $config], 'block_builder'); ?>
+    <?php endif; ?>
 
-    <input type="hidden" id="ajaxCsrfToken" value="<?= $ajaxCsrfToken; ?>"/>
+    <input type="hidden" id="ajaxCsrfToken" value="<?= $this->controller->token->generate('ajax_csrf_token'); ?>"/>
     <input type="hidden" id="deleteBlockTypeFolderUrl" value="<?= $app->make('url/manager')->resolve(['ajax/delete-block-type-folder']); ?>"/>
     <input type="hidden" id="deleteBlockTypeFolderSuccessMessagePart1" value="<?= t('Block type folder has been deleted.'); ?>"/>
     <input type="hidden" id="deleteBlockTypeFolderSuccessMessagePart2" value="<?= t('Press button Build your block now! once again.'); ?>"/>
     <input type="hidden" id="deleteBlockTypeFolderConfirmationMessage" value="<?= t('Are you sure?'); ?>"/>
 
-    <form method="post" action="<?= $formAction; ?>">
-
-        <?= $this->controller->token->output('csrfToken'); ?>
+    <form method="post" action="<?= $controller->action('view'); ?>">
+        <?= $this->controller->token->output('create_block'); ?>
 
         <ul class="navigation-tabs mb-4" id="navigation-tabs">
             <li><a href="#" data-tab="block-settings" class="btn btn-secondary <?php in_array('block-settings', $tabsWithError) ? print 'has-error' : false; ?>"><?= t('Block settings'); ?></a></li>
+            <li><a href="#" data-tab="build-options" class="btn btn-secondary <?php in_array('build-options', $tabsWithError) ? print 'has-error' : false; ?>"><?= t('Build options'); ?></a></li>
+            <li><a href="#" data-tab="custom-codes" class="btn btn-secondary <?php in_array('custom-codes', $tabsWithError) ? print 'has-error' : false; ?>"><?= t('Custom codes'); ?></a></li>
             <li><a href="#" data-tab="texts" class="btn btn-secondary <?php in_array('texts', $tabsWithError) ? print 'has-error' : false; ?>"><?= t('Texts for translation'); ?></a></li>
-            <li><a href="#" data-tab="tab-basic-information" class="btn btn-secondary <?php in_array('tab-basic-information', $tabsWithError) ? print 'has-error' : false; ?>"><?= t('Tab: Basic information'); ?></a></li>
-            <li><a href="#" data-tab="tab-repeatable-entries" class="btn btn-secondary <?php in_array('tab-repeatable-entries', $tabsWithError) ? print 'has-error' : false; ?>"><?= t('Tab: Repeatable entries'); ?></a></li>
+            <li><a href="#" data-tab="<?= h(\BlockBuilder\FieldType\Enum\FieldTypeContextEnum::BasicFields->getTabHandle()); ?>" class="btn btn-secondary <?php in_array('tab-basic-information', $tabsWithError) ? print 'has-error' : false; ?>"><?= t('Tab: Basic information'); ?></a></li>
+            <li><a href="#" data-tab="<?= h(\BlockBuilder\FieldType\Enum\FieldTypeContextEnum::RepeatableFields->getTabHandle()); ?>" class="btn btn-secondary <?php in_array('tab-repeatable-entries', $tabsWithError) ? print 'has-error' : false; ?>"><?= t('Tab: Repeatable entries'); ?></a></li>
         </ul>
 
         <div class="ccm-tab-content active" id="ccm-tab-content-block-settings" style="display: none;">
 
-            <div class="row">
-                <div class="col-lg-6 mb-4 <?php in_array('blockName', $fieldsWithError) ? print 'has-error' : false; ?>">
-                    <?= $form->label('blockName', t('Block name') . ' *'); ?>
-                    <?= $form->text('blockName', $blockName, ['maxlength' => '100']); ?>
-                    <div class="form-text"><?= t('Human-readable name e.g. "Example block"'); ?></div>
-                </div>
-                <div class="col-lg-6 mb-4 <?php in_array('blockHandle', $fieldsWithError) ? print 'has-error' : false; ?>">
-                    <?= $form->label('blockHandle', t('Block handle') . ' *'); ?>
-                    <?= $form->text('blockHandle', $blockHandle, ['maxlength' => '50']); ?>
-                    <div class="form-text"><?= t('Lowercase letters and underscores only e.g. "example_block"'); ?></div>
-                </div>
-            </div>
+            <div class="row g-5">
+                <div class="col-lg-6 mb-4">
 
-            <div class="row">
-                <div class="col-lg-6 mb-4 <?php in_array('blockDescription', $fieldsWithError) ? print 'has-error' : false; ?>">
-                    <?= $form->label('blockDescription', t('Block description')); ?>
-                    <?= $form->textarea('blockDescription', $blockDescription, ['maxlength' => '100']); ?>
-                </div>
-                <div class="col-lg-6 mb-4 <?php in_array('installBlock', $fieldsWithError) ? print 'has-error' : false; ?>">
-                    <?= $form->label('installBlock', t('Install block after creation')); ?>
-                    <?= $form->select('installBlock', $installBlockOptions, $installBlock); ?>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-4 mb-4 <?php in_array('blockWidth', $fieldsWithError) ? print 'has-error' : false; ?>">
-                    <?= $form->label('blockWidth', t('Block width') . ' *'); ?>
-                    <div class="input-group">
-                        <?= $form->text('blockWidth', $blockWidth); ?>
-                        <span class="input-group-text">px</span>
+                    <div class="mb-4 <?php in_array('blockName', $fieldsWithError) ? print 'has-error' : false; ?>">
+                        <?= $form->label('blockName', t('Block name') . ' *'); ?>
+                        <?= $form->text('blockName', $blockName, ['maxlength' => '100']); ?>
+                        <div class="form-text"><?= t('Human-readable name e.g. "Example block"'); ?></div>
                     </div>
-                </div>
-                <div class="col-lg-4 mb-4 <?php in_array('blockHeight', $fieldsWithError) ? print 'has-error' : false; ?>">
-                    <?= $form->label('blockHeight', t('Block height') . ' *'); ?>
-                    <div class="input-group">
-                        <?= $form->text('blockHeight', $blockHeight); ?>
-                        <span class="input-group-text">px</span>
+                    <div class="mb-4 <?php in_array('blockHandle', $fieldsWithError) ? print 'has-error' : false; ?>">
+                        <?= $form->label('blockHandle', t('Block handle') . ' *'); ?>
+                        <?= $form->text('blockHandle', $blockHandle, ['maxlength' => '50']); ?>
+                        <div class="form-text"><?= t('Lowercase letters and underscores only e.g. "example_block"'); ?></div>
                     </div>
+                    <div class="mb-4 <?php in_array('blockDescription', $fieldsWithError) ? print 'has-error' : false; ?>">
+                        <?= $form->label('blockDescription', t('Block description')); ?>
+                        <?= $form->textarea('blockDescription', $blockDescription, ['maxlength' => '100']); ?>
+                    </div>
+                    <div class="mb-4 <?php in_array('blockWidth', $fieldsWithError) ? print 'has-error' : false; ?>">
+                        <?= $form->label('blockWidth', t('Block width') . ' *'); ?>
+                        <div class="input-group">
+                            <?= $form->text('blockWidth', $blockWidth); ?>
+                            <span class="input-group-text">px</span>
+                        </div>
+                    </div>
+                    <div class="mb-4 <?php in_array('blockHeight', $fieldsWithError) ? print 'has-error' : false; ?>">
+                        <?= $form->label('blockHeight', t('Block height') . ' *'); ?>
+                        <div class="input-group">
+                            <?= $form->text('blockHeight', $blockHeight); ?>
+                            <span class="input-group-text">px</span>
+                        </div>
+                    </div>
+                    <div class="mb-4 <?php in_array('blockTypeSet', $fieldsWithError) ? print 'has-error' : false; ?>">
+                        <?= $form->label('blockTypeSet', t('Block type set')); ?>
+                        <?= $form->select('blockTypeSet', $blockTypeSets, $blockTypeSet); ?>
+                    </div>
+
                 </div>
-                <div class="col-lg-4 mb-4 <?php in_array('blockTypeSet', $fieldsWithError) ? print 'has-error' : false; ?>">
-                    <?= $form->label('blockTypeSet', t('Block type set')); ?>
-                    <?= $form->select('blockTypeSet', $blockTypeSets, $blockTypeSet); ?>
+                <div class="col-lg-6 mb-4 ">
+
+                    <div class="mb-4 <?php in_array('cacheBlockRecord', $fieldsWithError) ? print 'has-error' : false; ?>">
+                        <?= $form->label('cacheBlockRecord', t('Cache block record')); ?>
+                        <?= $form->select('cacheBlockRecord', $cacheBlockRecordOptions, (int) $cacheBlockRecord); ?>
+                    </div>
+                    <div class="mb-4 <?php in_array('cacheBlockOutput', $fieldsWithError) ? print 'has-error' : false; ?>">
+                        <?= $form->label('cacheBlockOutput', t('Cache block output')); ?>
+                        <?= $form->select('cacheBlockOutput', $cacheBlockOutputOptions, (int) $cacheBlockOutput); ?>
+                    </div>
+                    <div class="mb-4 <?php in_array('cacheBlockOutputLifetime', $fieldsWithError) ? print 'has-error' : false; ?>">
+                        <?= $form->label('cacheBlockOutputLifetime', t('Cache block output lifetime')); ?>
+                        <?= $form->text('cacheBlockOutputLifetime', $cacheBlockOutputLifetime); ?>
+                    </div>
+                    <div class="mb-4 <?php in_array('cacheBlockOutputOnPost', $fieldsWithError) ? print 'has-error' : false; ?>">
+                        <?= $form->label('cacheBlockOutputOnPost', t('Cache block output on post')); ?>
+                        <?= $form->select('cacheBlockOutputOnPost', $cacheBlockOutputOnPostOptions, (int) $cacheBlockOutputOnPost); ?>
+                    </div>
+                    <div class="mb-4 <?php in_array('cacheBlockOutputForRegisteredUsers', $fieldsWithError) ? print 'has-error' : false; ?>">
+                        <?= $form->label('cacheBlockOutputForRegisteredUsers', t('Cache block output for registered users')); ?>
+                        <?= $form->select('cacheBlockOutputForRegisteredUsers', $cacheBlockOutputForRegisteredUsersOptions, (int) $cacheBlockOutputForRegisteredUsers); ?>
+                    </div>
+                    <div class="mb-4 <?php in_array('supportSavingNullValues', $fieldsWithError) ? print 'has-error' : false; ?>">
+                        <?= $form->label('supportSavingNullValues', t('Support saving null values')); ?>
+                        <?= $form->select('supportSavingNullValues', $supportSavingNullValuesOptions, (int) $supportSavingNullValues); ?>
+                    </div>
+                    <div class="mb-4 <?php in_array('ignorePageThemeGridFrameworkContainer', $fieldsWithError) ? print 'has-error' : false; ?>">
+                        <?= $form->label('ignorePageThemeGridFrameworkContainer', t('Ignore page theme grid framework container')); ?>
+                        <?= $form->select('ignorePageThemeGridFrameworkContainer',  $ignorePageThemeGridFrameworkContainerOptions, (int) $ignorePageThemeGridFrameworkContainer); ?>
+                    </div>
+
                 </div>
             </div>
 
-            <hr>
+        </div>
 
-            <div class="row">
-                <div class="col-lg-4 mb-4 <?php in_array('cacheBlockRecord', $fieldsWithError) ? print 'has-error' : false; ?>">
-                    <?= $form->label('cacheBlockRecord', t('Cache block record')); ?>
-                    <?= $form->select('cacheBlockRecord', $cacheBlockRecordOptions, $cacheBlockRecord); ?>
-                </div>
-                <div class="col-lg-4 mb-4 <?php in_array('cacheBlockOutput', $fieldsWithError) ? print 'has-error' : false; ?>">
-                    <?= $form->label('cacheBlockOutput', t('Cache block output')); ?>
-                    <?= $form->select('cacheBlockOutput', $cacheBlockOutputOptions, $cacheBlockOutput); ?>
-                </div>
-                <div class="col-lg-4 mb-4 <?php in_array('cacheBlockOutputLifetime', $fieldsWithError) ? print 'has-error' : false; ?>">
-                    <?= $form->label('cacheBlockOutputLifetime', t('Cache block output lifetime')); ?>
-                    <?= $form->text('cacheBlockOutputLifetime', $cacheBlockOutputLifetime); ?>
-                </div>
-                <div class="col-lg-4 mb-4 <?php in_array('cacheBlockOutputOnPost', $fieldsWithError) ? print 'has-error' : false; ?>">
-                    <?= $form->label('cacheBlockOutputOnPost', t('Cache block output on post')); ?>
-                    <?= $form->select('cacheBlockOutputOnPost', $cacheBlockOutputOnPostOptions, $cacheBlockOutputOnPost); ?>
-                </div>
-                <div class="col-lg-4 mb-4 <?php in_array('cacheBlockOutputForRegisteredUsers', $fieldsWithError) ? print 'has-error' : false; ?>">
-                    <?= $form->label('cacheBlockOutputForRegisteredUsers', t('Cache block output for registered users')); ?>
-                    <?= $form->select('cacheBlockOutputForRegisteredUsers', $cacheBlockOutputForRegisteredUsersOptions, $cacheBlockOutputForRegisteredUsers); ?>
-                </div>
+        <div class="ccm-tab-content" id="ccm-tab-content-build-options" style="display: none;">
+
+            <div class="mb-4 <?php in_array('installBlock', $fieldsWithError) ? print 'has-error' : false; ?>">
+                <?= $form->label('installBlock', t('Install block after creation')); ?>
+                <?= $form->select('installBlock', $installBlockOptions, (int) $installBlock); ?>
             </div>
-
-            <hr>
-
-            <div class="row">
-                <div class="col-lg-6 mb-4 <?php in_array('supportSavingNullValues', $fieldsWithError) ? print 'has-error' : false; ?>">
-                    <?= $form->label('supportSavingNullValues', t('Support saving null values')); ?>
-                    <?= $form->select('supportSavingNullValues', $supportSavingNullValuesOptions, $supportSavingNullValues); ?>
-                </div>
-                <div class="col-lg-6 mb-4 <?php in_array('ignorePageThemeGridFrameworkContainer', $fieldsWithError) ? print 'has-error' : false; ?>">
-                    <?= $form->label('ignorePageThemeGridFrameworkContainer', t('Ignore page theme grid framework container')); ?>
-                    <?= $form->select('ignorePageThemeGridFrameworkContainer', $ignorePageThemeGridFrameworkContainerOptions, $ignorePageThemeGridFrameworkContainer); ?>
-                </div>
-            </div>
-
-            <hr>
 
             <div class="row">
                 <div class="col-lg-6 mb-4 <?php in_array('entriesAsFirstTab', $fieldsWithError) ? print 'has-error' : false; ?>">
                     <?= $form->label('entriesAsFirstTab', t('Entries as first tab')); ?>
-                    <?= $form->select('entriesAsFirstTab', $entriesAsFirstTabOptions, $entriesAsFirstTab); ?>
+                    <?= $form->select('entriesAsFirstTab', $entriesAsFirstTabOptions, (int) $entriesAsFirstTab); ?>
                 </div>
                 <div class="col-lg-6 mb-4 <?php in_array('maxNumberOfEntries', $fieldsWithError) ? print 'has-error' : false; ?>">
                     <?= $form->label('maxNumberOfEntries', t('Max. number of entries') . ' ' . t('(0 for unlimited)')); ?>
@@ -153,7 +144,7 @@
 
             <div class="mb-4 <?php in_array('highlightMultiElementFields', $fieldsWithError) ? print 'has-error' : false; ?>">
                 <?= $form->label('highlightMultiElementFields', t('Highlight multi-element fields')); ?>
-                <?= $form->select('highlightMultiElementFields', $highlightMultiElementFieldsOptions, $highlightMultiElementFields); ?>
+                <?= $form->select('highlightMultiElementFields', $highlightMultiElementFieldsOptions, (int) $highlightMultiElementFields); ?>
             </div>
 
             <div class="mb-4 <?php in_array('fieldsDivider', $fieldsWithError) ? print 'has-error' : false; ?>">
@@ -166,7 +157,9 @@
                 <?= $form->select('entryFieldsDivider', $dividerOptions, $entryFieldsDivider); ?>
             </div>
 
-            <hr>
+        </div>
+
+        <div class="ccm-tab-content" id="ccm-tab-content-custom-codes" style="display: none;">
 
             <div class="mb-4 <?php in_array('registerViewAssetsCustomCode', $fieldsWithError) ? print 'has-error' : false; ?>">
                 <?= $form->label('registerViewAssetsCustomCode', t('Custom code inside registerViewAssets() method')); ?>
@@ -176,7 +169,7 @@
                     <br>
                     <?= t('Be careful when inserting custom code, invalid syntax can lead to errors.'); ?>
                     <br>
-                    <?= t('Use %s spaces as first indentation.', 8); ?>
+                    <?= t('Use %s spaces as indentation.', 8); ?>
                     <br>
                     <strong class="d-block mt-2"><?= t('Example code'); ?>:</strong>
                     <code class="bb-code-block">
@@ -195,7 +188,7 @@
                     <br>
                     <?= t('Be careful when inserting custom code, invalid syntax can lead to errors.'); ?>
                     <br>
-                    <?= t('Use %s spaces as first indentation.', 8); ?>
+                    <?= t('Use %s spaces as indentation.', 8); ?>
                     <br>
                     <strong class="d-block mt-2"><?= t('Example code'); ?>:</strong>
                     <code class="bb-code-block">
@@ -212,7 +205,7 @@
                     <br>
                     <?= t('Be careful when inserting custom code, invalid syntax can lead to errors.'); ?>
                     <br>
-                    <?= t('Use %s spaces as first indentation.', 4); ?>
+                    <?= t('Use %s spaces as indentation.', 4); ?>
                     <br>
                     <strong class="d-block mt-2"><?= t('Example code'); ?>:</strong>
                     <code class="bb-code-block mt4">
@@ -236,7 +229,6 @@
                     <?= t('Every file/folder should be relative to controller.php (for example: templates) and put in new line.'); ?>
                 </div>
             </div>
-
         </div>
 
         <div class="ccm-tab-content" id="ccm-tab-content-texts" style="display: none;">
@@ -464,7 +456,7 @@
 
         </div>
 
-        <div class="ccm-tab-content" id="ccm-tab-content-tab-basic-information" style="display: none;">
+        <div class="ccm-tab-content" id="ccm-tab-content-<?= h(\BlockBuilder\FieldType\Enum\FieldTypeContextEnum::BasicFields->getTabHandle()); ?>" style="display: none;">
 
             <div class="row">
                 <div class="col-lg-3 mb-4">
@@ -522,7 +514,7 @@
 
         </div>
 
-        <div class="ccm-tab-content" id="ccm-tab-content-tab-repeatable-entries" style="display: none;">
+        <div class="ccm-tab-content" id="ccm-tab-content-<?= h(\BlockBuilder\FieldType\Enum\FieldTypeContextEnum::RepeatableFields->getTabHandle()); ?>" style="display: none;">
 
             <div class="row">
                 <div class="col-lg-3 mb-4">
@@ -585,9 +577,14 @@
 
         <div class="ccm-dashboard-form-actions-wrapper">
             <div class="ccm-dashboard-form-actions">
-                <input type="submit" class="btn btn-primary float-end" value="<?= t('Build your block now!'); ?>" id="ccm-submit-url-form" name="ccm-submit-url-form">
-                <?php if (!empty($type) and in_array($type, ['refresh', 'predefined'])): ?>
-                    <input type="submit" class="btn btn-secondary float-end me-4" value="<?= t('Rebuild and refresh block'); ?> <?= t('(experimental)'); ?>" id="ccm-submit-url-form-refresh" name="refresh_block">
+                <?= $form->hidden('sourceAction', $controller->getAction() ?? null); ?>
+                <button type="submit" class="btn btn-primary float-end" value="1" name="buildBlock">
+                    <i class="fas fa-hammer me-2"></i> <?= t('Build your block now!'); ?>
+                </button>
+                <?php if (in_array($controller->getAction(), ['config', 'predefined_config']) || in_array($this->post('sourceAction'), ['config', 'predefined_config'])): ?>
+                    <button type="submit" class="btn btn-secondary float-end me-4" value="1" name="rebuildBlock">
+                        <i class="fas fa-sync-alt"></i> <?= t('Rebuild and refresh block'); ?>
+                    </button>
                 <?php endif; ?>
             </div>
         </div>
@@ -674,7 +671,7 @@
                                class="form-control"
                                value="<%=helpText%>"
                         />
-                        <div class="form-text"><?= t('It will look exactly like this text'); ?></p>
+                        <div class="form-text"><?= t('This is example preview of help text.'); ?></p>
                         </div>
                     </div>
 
@@ -768,7 +765,7 @@
                                    value="<%=numberDisplayedThousandsSeparator%>"
                             />
                             <div class="form-text">
-                                <?= t('Usually " " (space is barely visible in this field), "." (dot) or "," (coma). You can also keep it empty.'); ?>
+                                <?= t('Usually " " (space is not visible in this field), "." (dot) or "," (coma). You can also keep it empty.'); ?>
                                 <br><?= t('Argument of php function number_format().'); ?>
                             </div>
                         </div>
@@ -863,8 +860,8 @@
                                     id="<%=groupHandle%>[<%=counter%>][selectAddEmptyOption]"
                                     class="form-select"
                             >
-                                <option value="no" <% if (selectAddEmptyOption === 'no') { %>selected<% } %>><?= t('No'); ?></option>
-                                <option value="yes" <% if (selectAddEmptyOption === 'yes') { %>selected<% } %>><?= t('Yes'); ?></option>
+                                <option value="0" <% if (!selectAddEmptyOption) { %>selected<% } %>><?= t('No'); ?></option>
+                                <option value="1" <% if (selectAddEmptyOption) { %>selected<% } %>><?= t('Yes'); ?></option>
                             </select>
                             <div class="form-text">
                                 <?= t('Works only with default and enhanced select field.'); ?>
@@ -1206,7 +1203,7 @@
                             >
                             <label for="<%=groupHandle%>[<%=counter%>][imageCreateThumbnailImage]" class="form-check-label"><?= t('Generate thumbnail using image helper (if original image is bigger than specified dimensions)'); ?></label>
                         </div>
-                        <div class="row mt-2 js-image-create-thumbnail-image-wrapper <% if (error['imageThumbnailOptions']!=undefined) { %>has-error<% } %>"
+                        <div class="row mt-2 js-image-create-thumbnail-image-wrapper <% if (error['imageThumbnailOptions']!=undefined) { %>has-error<% } %>" id="<%=groupHandle%>[<%=counter%>][imageThumbnailOptions]"
                         <% if (!parseInt(imageCreateThumbnailImage)) { %> style="display: none;" <% } %>>
                         <div class="col-lg-4 mb-4 <% if (error['imageThumbnailWidth']!=undefined) { %>has-error<% } %>">
                             <label for="<%=groupHandle%>[<%=counter%>][imageThumbnailWidth]" class="form-label"><?= t('Width'); ?></label>
@@ -1269,7 +1266,7 @@
                         >
                         <label for="<%=groupHandle%>[<%=counter%>][imageCreateFullscreenImage]" class="form-check-label"><?= t('Generate fullscreen image using image helper (if original image is bigger than specified dimensions)'); ?></label>
                     </div>
-                    <div class="row mt-2 js-image-create-fullscreen-image-wrapper <% if (error['imageFullscreenOptions']!=undefined) { %>has-error<% } %>"
+                    <div class="row mt-2 js-image-create-fullscreen-image-wrapper <% if (error['imageFullscreenOptions']!=undefined) { %>has-error<% } %>" id="<%=groupHandle%>[<%=counter%>][imageFullscreenOptions]"
                     <% if (!parseInt(imageCreateFullscreenImage)) { %> style="display: none;" <% } %>>
                     <div class="col-lg-4 mb-4 <% if (error['imageFullscreenWidth']!=undefined) { %>has-error<% } %>">
                         <label for="<%=groupHandle%>[<%=counter%>][imageFullscreenWidth]" class="form-label"><?= t('Width'); ?></label>

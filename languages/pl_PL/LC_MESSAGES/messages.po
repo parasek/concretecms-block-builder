@@ -426,7 +426,7 @@ msgstr ""
 #: single_pages/dashboard/blocks/block_builder.php:200
 #: single_pages/dashboard/blocks/block_builder.php:217
 #, php-format
-msgid "Use %s spaces as first indentation."
+msgid "Use %s spaces as indentation."
 msgstr "Użyj %s spacji jako pierwszego wcięcia."
 
 #: elements/custom_code_in_option_list.php:23

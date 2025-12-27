@@ -11,7 +11,7 @@
     <br>
     <?= t('If Handle of this field is "category", then all option variables should be named like "$category_options".'); ?>
     <br>
-    <?= t('Use %s spaces as first indentation.', 8); ?>
+    <?= t('Use %s spaces as indentation.', 8); ?>
     <code class="bb-code-block">
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$list = new \Concrete\Core\Page\PageList();
         <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$pages = $list->getResults();
@@ -24,7 +24,7 @@
     <br>
     <?= t('If Handle of this field is "category", then all option variables should be named like "$entry_category_options".'); ?>
     <br>
-    <?= t('Use %s spaces as first indentation.', 12); ?>
+    <?= t('Use %s spaces as indentation.', 12); ?>
     <code class="bb-code-block">
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$list = new \Concrete\Core\Page\PageList();
         <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$pages = $list->getResults();

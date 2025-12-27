@@ -166,8 +166,10 @@
 }
 
 .ccm-ui .entry.well.entry-has-error {
-    border-color: #a94442;
-    background: #fff1f1;
+    /*border-color: #a94442;*/
+    /*background: #fff1f1;*/
+    border-color: #ebd9d9;
+    background: #fff5f5;
 }
 
 .ccm-ui .entry-header {
@@ -250,30 +252,30 @@
         justify-content: space-between;
     }
 }
-.ccm-ui .block-type-build {
+.ccm-ui .block-type-info {
     flex: 1;
     background: #fff;
-    border: 1px solid #dedede;
+    /*border: 1px solid #dedede;*/
     padding: 20px;
     border-radius: 2px 2px 0 0;
     color: #555555;
     margin-bottom: 0;
 }
-.ccm-ui .block-type-build-single {
-    border: 1px solid #dedede;
-    border-radius: 2px;
-    margin-bottom: 10px;
-}
+/*.ccm-ui .block-type-info-single {*/
+/*    border: 1px solid #dedede;*/
+/*    border-radius: 2px;*/
+/*    margin-bottom: 10px;*/
+/*}*/
 @media only screen and (min-width: 992px) {
-    .ccm-ui .block-type-build {
+    .ccm-ui .block-type-info {
         margin-bottom: 10px;
         border-radius: 2px 0 0 2px;
     }
-    .ccm-ui .block-type-build-single {
-        border-radius: 2px;
-    }
+    /*.ccm-ui .block-type-build-single {*/
+    /*    border-radius: 2px;*/
+    /*}*/
 }
-.ccm-ui .block-type-refresh {
+.ccm-ui .block-type-rebuild {
     background: #fff;
     border: 1px solid #dedede;
     border-top: none;
@@ -282,11 +284,11 @@
     color: #555555;
     margin-bottom: 10px;
 }
-.ccm-ui .block-type-refresh br {
+.ccm-ui .block-type-rebuild br {
     display: none;
 }
 @media only screen and (min-width: 992px) {
-    .ccm-ui .block-type-refresh {
+    .ccm-ui .block-type-rebuild {
         flex-shrink: 1;
         display: flex;
         align-items: center;
@@ -295,14 +297,14 @@
         border-left: none;
         border-radius: 0 2px 2px 0;
     }
-    .ccm-ui .block-type-refresh br {
+    .ccm-ui .block-type-rebuild br {
         display: block;
     }
 }
 .ccm-ui .block-type-build:hover,
 .ccm-ui .block-type-build:focus,
-.ccm-ui .block-type-refresh:hover,
-.ccm-ui .block-type-refresh:focus {
+.ccm-ui .block-type-rebuild:hover,
+.ccm-ui .block-type-rebuild:focus {
     background: #ecf5ff;
     color: #555555;
     text-decoration: none;
@@ -316,4 +318,14 @@
 .ccm-ui .has-error .form-control {
     border-color: #a94442;
     border-width: 1px;
+}
+
+/* Pills */
+.info-item-title {
+    display: inline-block;
+}
+
+.info-item-config {
+    background-color: #e3e3e3 !important;
+    color: #454545;
 }

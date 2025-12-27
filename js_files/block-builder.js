@@ -31,62 +31,63 @@ $(function () {
 
                 $.each(entries, function (index, item) {
 
-                    item.counter = index + 1;
+                    item.counter = index;
                     item.groupHandle = groupHandle;
                     item.fieldTypeName = $('.js-add-entry').first().find('option[value="' + item.fieldType + '"]').text();
-                    item.error = item.error == undefined ? '' : item.error;
+                    item.error = item.error === undefined ? '' : item.error;
 
                     // New fields
                     // Those fields don't exist in older .json files.
                     // We would get javascript undefined error when trying to
                     // load .json file created by older version of package.
-                    item.selectType = item.selectType == undefined ? 'default_select' : item.selectType;
-                    item.selectListGenerationMethod = item.selectListGenerationMethod == undefined ? 'basic_list' : item.selectListGenerationMethod;
-                    item.selectAddEmptyOption = item.selectAddEmptyOption == undefined ? 'no' : item.selectAddEmptyOption;
-                    item.selectDefaultValue = item.selectDefaultValue == undefined ? '' : item.selectDefaultValue;
-                    item.selectCustomCode = item.selectCustomCode == undefined ? '' : item.selectCustomCode;
+                    item.selectType = item.selectType === undefined ? 'default_select' : item.selectType;
+                    item.selectListGenerationMethod = item.selectListGenerationMethod === undefined ? 'basic_list' : item.selectListGenerationMethod;
+                    item.selectAddEmptyOption = (item.selectAddEmptyOption === undefined || !item.selectAddEmptyOption) ? 0 : 1;
+                    item.selectDefaultValue = item.selectDefaultValue === undefined ? '' : item.selectDefaultValue;
+                    item.selectCustomCode = item.selectCustomCode === undefined ? '' : item.selectCustomCode;
+                    item.selectOptions = item.selectOptions === undefined ? '' : item.selectOptions;
 
-                    item.selectMultipleType = item.selectMultipleType == undefined ? 'default_multiselect' : item.selectMultipleType;
-                    item.selectMultipleListGenerationMethod = item.selectMultipleListGenerationMethod == undefined ? 'basic_list' : item.selectMultipleListGenerationMethod;
-                    item.selectMultipleDefaultValue = item.selectMultipleDefaultValue == undefined ? '' : item.selectMultipleDefaultValue;
-                    item.selectMultipleCustomCode = item.selectMultipleCustomCode == undefined ? '' : item.selectMultipleCustomCode;
+                    item.selectMultipleType = item.selectMultipleType === undefined ? 'default_multiselect' : item.selectMultipleType;
+                    item.selectMultipleListGenerationMethod = item.selectMultipleListGenerationMethod === undefined ? 'basic_list' : item.selectMultipleListGenerationMethod;
+                    item.selectMultipleDefaultValue = item.selectMultipleDefaultValue === undefined ? '' : item.selectMultipleDefaultValue;
+                    item.selectMultipleCustomCode = item.selectMultipleCustomCode === undefined ? '' : item.selectMultipleCustomCode;
 
-                    item.wysiwygCustomConfig = item.wysiwygCustomConfig == undefined ? '' : item.wysiwygCustomConfig;
+                    item.wysiwygCustomConfig = item.wysiwygCustomConfig === undefined ? '' : item.wysiwygCustomConfig;
 
                     // All checkboxes need to be here (because $_POST doesn't have non-checked ones)
 
-                    item.required = item.required == undefined ? 0 : 1;
-                    item.titleSource = item.titleSource == undefined ? 0 : 1;
+                    item.required = (item.required === undefined || item.required === false) ? 0 : 1;
+                    item.titleSource = (item.titleSource === undefined || item.titleSource === false) ? 0 : 1;
 
                     // link_from_sitemap
-                    item.linkFromSitemapShowTextField = item.linkFromSitemapShowTextField == undefined ? 0 : 1;
-                    item.linkFromSitemapShowTitleField = item.linkFromSitemapShowTitleField == undefined ? 0 : 1;
-                    item.linkFromSitemapShowEndingField = item.linkFromSitemapShowEndingField == undefined ? 0 : 1;
-                    item.linkFromSitemapShowNewWindowField = item.linkFromSitemapShowNewWindowField == undefined ? 0 : 1;
-                    item.linkFromSitemapShowNoFollowField = item.linkFromSitemapShowNoFollowField == undefined ? 0 : 1;
+                    item.linkFromSitemapShowTextField = (item.linkFromSitemapShowTextField === undefined || item.linkFromSitemapShowTextField === false) ? 0 : 1;
+                    item.linkFromSitemapShowTitleField = (item.linkFromSitemapShowTitleField === undefined || item.linkFromSitemapShowTitleField === false) ? 0 : 1;
+                    item.linkFromSitemapShowEndingField = (item.linkFromSitemapShowEndingField === undefined || item.linkFromSitemapShowEndingField === false) ? 0 : 1;
+                    item.linkFromSitemapShowNewWindowField = (item.linkFromSitemapShowNewWindowField === undefined || item.linkFromSitemapShowNewWindowField === false) ? 0 : 1;
+                    item.linkFromSitemapShowNoFollowField = (item.linkFromSitemapShowNoFollowField === undefined || item.linkFromSitemapShowNoFollowField === false) ? 0 : 1;
 
                     // link_from_file_manager
-                    item.linkFromFileManagerShowTextField = item.linkFromFileManagerShowTextField == undefined ? 0 : 1;
-                    item.linkFromFileManagerShowTitleField = item.linkFromFileManagerShowTitleField == undefined ? 0 : 1;
-                    item.linkFromFileManagerShowEndingField = item.linkFromFileManagerShowEndingField == undefined ? 0 : 1;
-                    item.linkFromFileManagerShowNewWindowField = item.linkFromFileManagerShowNewWindowField == undefined ? 0 : 1;
-                    item.linkFromFileManagerShowNoFollowField = item.linkFromFileManagerShowNoFollowField == undefined ? 0 : 1;
+                    item.linkFromFileManagerShowTextField = (item.linkFromFileManagerShowTextField === undefined || item.linkFromFileManagerShowTextField === false) ? 0 : 1;
+                    item.linkFromFileManagerShowTitleField = (item.linkFromFileManagerShowTitleField === undefined || item.linkFromFileManagerShowTitleField === false) ? 0 : 1;
+                    item.linkFromFileManagerShowEndingField = (item.linkFromFileManagerShowEndingField === undefined || item.linkFromFileManagerShowEndingField === false) ? 0 : 1;
+                    item.linkFromFileManagerShowNewWindowField = (item.linkFromFileManagerShowNewWindowField === undefined || item.linkFromFileManagerShowNewWindowField === false) ? 0 : 1;
+                    item.linkFromFileManagerShowNoFollowField = (item.linkFromFileManagerShowNoFollowField === undefined || item.linkFromFileManagerShowNoFollowField === false) ? 0 : 1;
 
                     // external_link
-                    item.externalLinkShowTextField = item.externalLinkShowTextField == undefined ? 0 : 1;
-                    item.externalLinkShowTitleField = item.externalLinkShowTitleField == undefined ? 0 : 1;
-                    item.externalLinkShowEndingField = item.externalLinkShowEndingField == undefined ? 0 : 1;
-                    item.externalLinkShowNewWindowField = item.externalLinkShowNewWindowField == undefined ? 0 : 1;
-                    item.externalLinkShowNoFollowField = item.externalLinkShowNoFollowField == undefined ? 0 : 1;
+                    item.externalLinkShowTextField = (item.externalLinkShowTextField === undefined || item.externalLinkShowTextField === false) ? 0 : 1;
+                    item.externalLinkShowTitleField = (item.externalLinkShowTitleField === undefined || item.externalLinkShowTitleField === false) ? 0 : 1;
+                    item.externalLinkShowEndingField = (item.externalLinkShowEndingField === undefined || item.externalLinkShowEndingField === false) ? 0 : 1;
+                    item.externalLinkShowNewWindowField = (item.externalLinkShowNewWindowField === undefined || item.externalLinkShowNewWindowField === false) ? 0 : 1;
+                    item.externalLinkShowNoFollowField = (item.externalLinkShowNoFollowField === undefined || item.externalLinkShowNoFollowField === false) ? 0 : 1;
 
                     // image
-                    item.imageShowAltTextField = item.imageShowAltTextField == undefined ? 0 : 1;
-                    item.imageCreateFullscreenImage = item.imageCreateFullscreenImage == undefined ? 0 : 1;
-                    item.imageCreateThumbnailImage = item.imageCreateThumbnailImage == undefined ? 0 : 1;
-                    item.imageThumbnailCrop = item.imageThumbnailCrop == undefined ? 0 : 1;
-                    item.imageFullscreenCrop = item.imageFullscreenCrop == undefined ? 0 : 1;
-                    item.imageThumbnailEditable = item.imageThumbnailEditable == undefined ? 0 : 1;
-                    item.imageFullscreenEditable = item.imageFullscreenEditable == undefined ? 0 : 1;
+                    item.imageShowAltTextField = (item.imageShowAltTextField === undefined || item.imageShowAltTextField === false) ? 0 : 1;
+                    item.imageCreateFullscreenImage = (item.imageCreateFullscreenImage === undefined || item.imageCreateFullscreenImage === false) ? 0 : 1;
+                    item.imageCreateThumbnailImage = (item.imageCreateThumbnailImage === undefined || item.imageCreateThumbnailImage === false) ? 0 : 1;
+                    item.imageThumbnailCrop = (item.imageThumbnailCrop === undefined || item.imageThumbnailCrop === false) ? 0 : 1;
+                    item.imageFullscreenCrop = (item.imageFullscreenCrop === undefined || item.imageFullscreenCrop === false) ? 0 : 1;
+                    item.imageThumbnailEditable = (item.imageThumbnailEditable === undefined || item.imageThumbnailEditable === false) ? 0 : 1;
+                    item.imageFullscreenEditable = (item.imageFullscreenEditable === undefined || item.imageFullscreenEditable === false) ? 0 : 1;
 
                     $(id).append(template(item));
 
@@ -102,6 +103,25 @@ $(function () {
         // Somehow we can't just put it in init, because counting will stop working
         populateFormWithExistingEntries('basic');
         populateFormWithExistingEntries('entries');
+
+        // Add error for basic/entries
+        // Need more refinement, it's just a quick fix
+        // Need to remove error stuff from other places
+        const fieldsWithErrors = JSON.parse(bbContainer.attr('data-fields-with-errors'));
+        fieldsWithErrors.forEach(function (fieldWithError) {
+            let escapedId = fieldWithError.replace(/[[\]]/g, "\\$&");
+            let fieldWithErrorNode = document.querySelector('#' + escapedId);
+            if (fieldWithErrorNode) {
+                let closestDiv = fieldWithErrorNode.closest('div');
+                if (closestDiv) {
+                    closestDiv.classList.add('has-error')
+                }
+                let jsEntry = fieldWithErrorNode.closest('.js-entry');
+                if (jsEntry) {
+                    jsEntry.classList.add('entry-has-error');
+                }
+            }
+        })
 
         // Add new entry
         var counterBasic = countEntries($('#field-types-basic'));
@@ -165,7 +185,7 @@ $(function () {
 
                 // select_field
                 templateData['selectListGenerationMethod'] = '';
-                templateData['selectAddEmptyOption'] = 'no';
+                templateData['selectAddEmptyOption'] = false;
                 templateData['selectDefaultValue'] = '';
                 templateData['selectCustomCode'] = '';
                 templateData['selectOptions'] = '';

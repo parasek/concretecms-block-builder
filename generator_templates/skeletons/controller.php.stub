@@ -1,0 +1,103 @@
+<?php
+
+namespace Application\Block\{{BLOCK_HANDLE_PASCAL_CASE}};
+
+{{USE_STATEMENTS}}
+
+defined('C5_EXECUTE') or die('Access Denied.');
+
+class Controller extends BlockController
+{
+    private string $uniqueId;
+
+    public function getBlockTypeName(): string
+    {
+        return t('{{BLOCK_NAME}}');
+    }
+
+    public function getBlockTypeDescription(): string
+    {
+        return t('{{BLOCK_DESCRIPTION}}');
+    }
+
+    public function getSearchableContent(): string
+    {
+        {{SEARCHABLE_FIELDS}}
+
+        return implode(' ', $content);
+    }
+
+    public function on_start(): void
+    {
+        parent::on_start();
+
+        $this->uniqueId = $this->app->make('helper/validation/identifier')->getString(18);
+        $this->set('uniqueId', $this->uniqueId);
+    }
+
+    public function add(): void
+    {
+        $this->addEdit();
+
+        $this->set('entries', []);
+    }
+
+    public function edit(): void
+    {
+        $this->addEdit();
+    }
+
+    public function addEdit(): void
+    {
+    }
+
+    public function view(): void
+    {
+        $this->set('app', $this->app);
+    }
+
+    public function save($args): void
+    {
+        parent::save($args);
+    }
+
+    public function duplicate($newBID): void
+    {
+        parent::duplicate($newBID);
+    }
+
+    public function delete(): void
+    {
+       parent::delete();
+    }
+
+    public function validate($args): \Concrete\Core\Error\ErrorList\ErrorList
+    {
+       $e = $this->app->make(\Concrete\Core\Error\ErrorList\ErrorList::class);
+       return $e;
+    }
+
+    public function composer(): void
+    {
+        $al = AssetList::getInstance();
+        $al->register('javascript', '{{BLOCK_HANDLE_KEBAB_CASE}}/auto-js', 'blocks/{{BLOCK_HANDLE}}/auto.js', [], false);
+        $this->requireAsset('javascript', '{{BLOCK_HANDLE_KEBAB_CASE}}/auto-js');
+
+        $this->edit();
+    }
+
+    public function scrapbook(): void
+    {
+        $this->edit();
+    }
+
+    private function getEntries($outputMethod = 'view'): array
+    {
+        return [];
+    }
+
+    private function getEntryColumnNames(): array
+    {
+        return [];
+    }
+}
