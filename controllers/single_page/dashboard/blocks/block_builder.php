@@ -47,7 +47,7 @@ class BlockBuilder extends BaseDashboardController
 
     public function view()
     {
-        $this->set('pageTitle', t('Block Builder') . ' - ' . t('Create a new block'));
+        $this->set('pageTitle', t('Block Builder') );
 
         $this->setProviderData();
 

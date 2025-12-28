@@ -22,7 +22,7 @@ class Configs extends BaseDashboardController
         $predefinedConfigs = $this->jsonConfigService->getPredefinedConfigs();
         $this->set('predefinedConfigs', $predefinedConfigs);
 
-        $this->set('pageTitle', t('Block Builder') . ' - ' . t('Load existing configurations'));
+        $this->set('pageTitle', t('Block Builder') . ' - ' . t('Browse existing configs'));
     }
 
     public function uninstall($btID = 0): SymfonyResponse
