@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace BlockBuilder\FieldType\FieldType\ExpressFieldType;
 
-use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
 use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\FieldType\FieldTypeDtoInterface;
 

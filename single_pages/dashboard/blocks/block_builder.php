@@ -3,13 +3,43 @@
 /**
  * @var Concrete\Package\BlockBuilder\Controller\SinglePage\Dashboard\Blocks\BlockBuilder $controller
  * @var BlockBuilder\Environment\Dto\EnvironmentDto $environment
- * @var BlockBuilder\Block\Dto\ConfigDto $config
+ * @var BlockBuilder\Block\Dto\CreateBlockDto $config
+ * @var BlockBuilder\NavigationTab\Enum\NavigationTabEnum[] $navigationTabEnums
+ * @var Concrete\Core\Form\Service\Form $form
  * @var string $formActionPath
+ * @var array $tabsWithError
+ * @var array $blockTypeSets
+ * @var array $cacheBlockRecordOptions
+ * @var array $cacheBlockOutputOptions
+ * @var array $cacheBlockOutputOnPostOptions
+ * @var array $cacheBlockOutputForRegisteredUsersOptions
+ * @var array $supportSavingNullValuesOptions
+ * @var array $ignorePageThemeGridFrameworkContainerOptions
+ * @var array $installBlockOptions
+ * @var array $entriesAsFirstTabOptions
+ * @var array $highlightMultiElementFieldsOptions
+ * @var array $dividerOptions
+ * @var array $fieldTypes
+ * @var BlockBuilder\FieldType\FieldTypeDtoInterface[] $basic
+ * @var BlockBuilder\FieldType\FieldTypeDtoInterface[] $entries
  */
 ?>
 
-<div class="bb-container" id="bbContainer" data-fields-with-errors="<?= h(json_encode($fieldsWithError ?? [])); ?>">
-
+<div class="bb-container"
+     id="bbContainer"
+     data-csrf-token="<?= h($this->controller->token->generate('csrf_token')); ?>"
+     data-fields-with-errors="<?= h(json_encode($fieldsWithError ?? [])); ?>"
+     data-install-block-type-url="<?= app('url/manager')->resolve(['js/install-block-type']); ?>"
+     data-uninstall-block-type-url="<?= h(app('url/manager')->resolve(['js/uninstall-block-type'])); ?>"
+     data-delete-block-type-folder-url="<?= h(app('url/manager')->resolve(['js/delete-block-type-folder'])); ?>"
+     data-confirmation-message="<?= t('Are you sure?'); ?>"
+     data-install-block-type-success-message-1="<?= t('Block has been installed.'); ?>"
+     data-install-block-type-success-message-2="<?= t('Click Rebuild and refresh block once again.'); ?>"
+     data-uninstall-block-type-success-message-1="<?= t('Block has been uninstalled.'); ?>"
+     data-uninstall-block-type-success-message-2="<?= t('Click Build your block now! once again.'); ?>"
+     data-delete-block-type-folder-success-message-1="<?= t('Block type folder has been deleted.'); ?>"
+     data-delete-block-type-folder-success-message-2="<?= t('Click Build your block now! once again.'); ?>"
+>
     <div class="ccm-dashboard-header-buttons">
         <a href="<?= h(app('url/manager')->resolve(['dashboard/blocks/block_builder'])); ?>"
            class="btn btn-secondary"
@@ -38,653 +68,62 @@
     View::element('info_table', $infoTable, 'block_builder');
     ?>
 
-
-    <input type="hidden" id="confirmationMessage" value="<?= t('Are you sure?'); ?>">
-
-
-
-    <input type="hidden" id="csrfToken" value="<?= $this->controller->token->generate('csrf_token'); ?>">
-
-    <input type="hidden"
-           id="installBlockTypeUrl"
-           value="<?= $app->make('url/manager')->resolve(['js/install-block-type']); ?>"
-    >
-    <input type="hidden"
-           id="installBlockTypeSuccessMessagePart1"
-           value="<?= t('Block has been installed.'); ?>"
-    >
-    <input type="hidden"
-           id="installBlockTypeSuccessMessagePart2"
-           value="<?= t('Click Rebuild and refresh block once again.'); ?>"
-    >
-
-
-    <input type="hidden"
-           id="uninstallBlockTypeUrl"
-           value="<?= $app->make('url/manager')->resolve(['js/uninstall-block-type']); ?>"
-    >
-    <input type="hidden"
-           id="uninstallBlockTypeSuccessMessagePart1"
-           value="<?= t('Block has been uninstalled.'); ?>"
-    >
-    <input type="hidden"
-           id="uninstallBlockTypeSuccessMessagePart2"
-           value="<?= t('Click Build your block now! once again.'); ?>"
-    >
-
-
-    <input type="hidden"
-           id="deleteBlockTypeFolderUrl"
-           value="<?= $app->make('url/manager')->resolve(['js/delete-block-type-folder']); ?>"
-    >
-    <input type="hidden"
-           id="deleteBlockTypeFolderSuccessMessagePart1"
-           value="<?= t('Block folder has been deleted.'); ?>"
-    >
-    <input type="hidden"
-           id="deleteBlockTypeFolderSuccessMessagePart2"
-           value="<?= t('Click Build your block now! once again.'); ?>"
-    >
-
-
-
-
     <form method="post" action="<?= h($controller->action($formActionPath)); ?>">
         <?= $this->controller->token->output('create_block'); ?>
 
-        <ul class="navigation-tabs mb-4" id="navigation-tabs">
-            <li><a href="#"
-                   data-tab="block-settings"
-                   class="btn btn-secondary <?php in_array('block-settings', $tabsWithError) ? print 'has-error' : false; ?>"
-                ><i class="fas fa-wrench"></i> <?= t('Block settings'); ?></a></li>
-            <li><a href="#"
-                   data-tab="build-options"
-                   class="btn btn-secondary <?php in_array('build-options', $tabsWithError) ? print 'has-error' : false; ?>"
-                ><i class="fas fa-cogs"></i> <?= t('Build options'); ?></a></li>
-            <li><a href="#"
-                   data-tab="custom-code"
-                   class="btn btn-secondary <?php in_array('custom-code', $tabsWithError) ? print 'has-error' : false; ?>"
-                ><i class="fas fa-code"></i> <?= t('Custom code'); ?></a></li>
-            <li><a href="#"
-                   data-tab="texts"
-                   class="btn btn-secondary <?php in_array('texts', $tabsWithError) ? print 'has-error' : false; ?>"
-                ><i class="fas fa-book"></i> <?= t('Labels'); ?></a></li>
-            <li><a href="#"
-                   data-tab="<?= h(\BlockBuilder\FieldType\Enum\FieldTypeContextEnum::BasicFields->getTabHandle()); ?>"
-                   class="btn btn-secondary <?php in_array('tab-basic-information', $tabsWithError) ? print 'has-error' : false; ?>"
-                ><i class="far fa-file"></i> <?= t('Tab: Basic information'); ?></a></li>
-            <li><a href="#"
-                   data-tab="<?= h(\BlockBuilder\FieldType\Enum\FieldTypeContextEnum::RepeatableFields->getTabHandle()); ?>"
-                   class="btn btn-secondary <?php in_array('tab-repeatable-entries', $tabsWithError) ? print 'has-error' : false; ?>"
-                ><i class="far fa-copy"></i> <?= t('Tab: Repeatable entries'); ?></a></li>
-        </ul>
+        <?php // TODO: data-tab, name, icon? should go t seperate enum class + find usage accros file ?>
+        <?php // TODO: zmienic texts na labals i i moze inne rzeczy? ?>
+        <?php if (!empty($navigationTabEnums)): ?>
 
-        <div class="ccm-tab-content active" id="ccm-tab-content-block-settings" style="display: none;">
+            <ul class="navigation-tabs mb-4" id="navigation-tabs">
+                <?php foreach ($navigationTabEnums as $navigationTabEnum): ?>
+                    <li>
+                        <a href="#"
+                           class="navigation-tab-link <?= h(in_array($navigationTabEnum->getHandle(), $tabsWithError) ? 'has-error' : null); ?>"
+                           data-tab="<?= h($navigationTabEnum->getHandle()); ?>"
+                        ><i class="<?= h($navigationTabEnum->getIcon()); ?>"></i> <?= h($navigationTabEnum->getName()); ?>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
 
-            <div class="row g-5">
-                <div class="col-lg-6 mb-4">
-
-                    <div class="mb-4 <?php in_array('blockName', $fieldsWithError) ? print 'has-error' : false; ?>">
-                        <?= $form->label('blockName', t('Block name') . ' *'); ?>
-                        <?= $form->text('blockName', $blockName, ['maxlength' => '100']); ?>
-                        <div class="form-text"><?= t('Human-readable name e.g. "Example block"'); ?></div>
-                    </div>
-                    <div class="mb-4 <?php in_array('blockHandle', $fieldsWithError) ? print 'has-error' : false; ?>">
-                        <?= $form->label('blockHandle', t('Block handle') . ' *'); ?>
-                        <?= $form->text('blockHandle', $blockHandle, ['maxlength' => '50']); ?>
-                        <div class="form-text"><?= t('Lowercase letters and underscores only e.g. "example_block"'); ?></div>
-                    </div>
-                    <div class="mb-4 <?php in_array('blockDescription', $fieldsWithError) ? print 'has-error' : false; ?>">
-                        <?= $form->label('blockDescription', t('Block description')); ?>
-                        <?= $form->textarea('blockDescription', $blockDescription, ['maxlength' => '100']); ?>
-                    </div>
-                    <div class="mb-4 <?php in_array('blockWidth', $fieldsWithError) ? print 'has-error' : false; ?>">
-                        <?= $form->label('blockWidth', t('Block width') . ' *'); ?>
-                        <div class="input-group">
-                            <?= $form->text('blockWidth', $blockWidth); ?>
-                            <span class="input-group-text">px</span>
-                        </div>
-                    </div>
-                    <div class="mb-4 <?php in_array('blockHeight', $fieldsWithError) ? print 'has-error' : false; ?>">
-                        <?= $form->label('blockHeight', t('Block height') . ' *'); ?>
-                        <div class="input-group">
-                            <?= $form->text('blockHeight', $blockHeight); ?>
-                            <span class="input-group-text">px</span>
-                        </div>
-                    </div>
-                    <div class="mb-4 <?php in_array('blockTypeSet', $fieldsWithError) ? print 'has-error' : false; ?>">
-                        <?= $form->label('blockTypeSet', t('Block type set')); ?>
-                        <?= $form->select('blockTypeSet', $blockTypeSets, $blockTypeSet); ?>
-                    </div>
-
+            <?php foreach ($navigationTabEnums as $k => $navigationTabEnum): ?>
+                <div class="ccm-tab-content <?php if (!$k): ?>active<?php endif; ?>"
+                     id="ccm-tab-content-<?= h($navigationTabEnum->getHandle()); ?>"
+                     style="display: none;"
+                >
+                    <?= View::element(
+                        _file: $navigationTabEnum->getTabContentElementName(),
+                        args: [
+                            'fieldsWithError' => $fieldsWithError,
+                            'form' => $form,
+                            'config' => $config ?? null,
+                            // Block settings
+                            'blockTypeSets' => $blockTypeSets,
+                            'cacheBlockRecordOptions' => $cacheBlockRecordOptions,
+                            'cacheBlockOutputOptions' => $cacheBlockOutputOptions,
+                            'cacheBlockOutputOnPostOptions' => $cacheBlockOutputOnPostOptions,
+                            'cacheBlockOutputForRegisteredUsersOptions' => $cacheBlockOutputForRegisteredUsersOptions,
+                            'supportSavingNullValuesOptions' => $supportSavingNullValuesOptions,
+                            'ignorePageThemeGridFrameworkContainerOptions' => $ignorePageThemeGridFrameworkContainerOptions,
+                            // Build options
+                            'installBlockOptions' => $installBlockOptions,
+                            'entriesAsFirstTabOptions' => $entriesAsFirstTabOptions,
+                            'highlightMultiElementFieldsOptions' => $highlightMultiElementFieldsOptions,
+                            'dividerOptions' => $dividerOptions,
+                            // Tab: Basic information / Tab: Repeatable entries
+                            'fieldTypes' => $fieldTypes,
+                            // Tab: Basic information
+                            'basic' => $basic ,
+                            // Tab: Repeatable entries
+                            'entries' => $entries ,
+                        ],
+                        _pkgHandle: 'block_builder',
+                    ); ?>
                 </div>
-                <div class="col-lg-6 mb-4 ">
+            <?php endforeach; ?>
 
-                    <div class="mb-4 <?php in_array('cacheBlockRecord', $fieldsWithError) ? print 'has-error' : false; ?>">
-                        <?= $form->label('cacheBlockRecord', t('Cache block record')); ?>
-                        <?= $form->select('cacheBlockRecord', $cacheBlockRecordOptions, (int) $cacheBlockRecord); ?>
-                    </div>
-                    <div class="mb-4 <?php in_array('cacheBlockOutput', $fieldsWithError) ? print 'has-error' : false; ?>">
-                        <?= $form->label('cacheBlockOutput', t('Cache block output')); ?>
-                        <?= $form->select('cacheBlockOutput', $cacheBlockOutputOptions, (int) $cacheBlockOutput); ?>
-                    </div>
-                    <div class="mb-4 <?php in_array('cacheBlockOutputLifetime', $fieldsWithError) ? print 'has-error' : false; ?>">
-                        <?= $form->label('cacheBlockOutputLifetime', t('Cache block output lifetime')); ?>
-                        <?= $form->text('cacheBlockOutputLifetime', $cacheBlockOutputLifetime); ?>
-                    </div>
-                    <div class="mb-4 <?php in_array('cacheBlockOutputOnPost', $fieldsWithError) ? print 'has-error' : false; ?>">
-                        <?= $form->label('cacheBlockOutputOnPost', t('Cache block output on post')); ?>
-                        <?= $form->select('cacheBlockOutputOnPost', $cacheBlockOutputOnPostOptions, (int) $cacheBlockOutputOnPost); ?>
-                    </div>
-                    <div class="mb-4 <?php in_array('cacheBlockOutputForRegisteredUsers', $fieldsWithError) ? print 'has-error' : false; ?>">
-                        <?= $form->label('cacheBlockOutputForRegisteredUsers', t('Cache block output for registered users')); ?>
-                        <?= $form->select('cacheBlockOutputForRegisteredUsers', $cacheBlockOutputForRegisteredUsersOptions, (int) $cacheBlockOutputForRegisteredUsers); ?>
-                    </div>
-                    <div class="mb-4 <?php in_array('supportSavingNullValues', $fieldsWithError) ? print 'has-error' : false; ?>">
-                        <?= $form->label('supportSavingNullValues', t('Support saving null values')); ?>
-                        <?= $form->select('supportSavingNullValues', $supportSavingNullValuesOptions, (int) $supportSavingNullValues); ?>
-                    </div>
-                    <div class="mb-4 <?php in_array('ignorePageThemeGridFrameworkContainer', $fieldsWithError) ? print 'has-error' : false; ?>">
-                        <?= $form->label('ignorePageThemeGridFrameworkContainer', t('Ignore page theme grid framework container')); ?>
-                        <?= $form->select('ignorePageThemeGridFrameworkContainer', $ignorePageThemeGridFrameworkContainerOptions, (int) $ignorePageThemeGridFrameworkContainer); ?>
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
-
-        <div class="ccm-tab-content" id="ccm-tab-content-build-options" style="display: none;">
-
-            <div class="mb-4 <?php in_array('installBlock', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('installBlock', t('Install block after creation')); ?>
-                <?= $form->select('installBlock', $installBlockOptions, (int) $installBlock); ?>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-6 mb-4 <?php in_array('entriesAsFirstTab', $fieldsWithError) ? print 'has-error' : false; ?>">
-                    <?= $form->label('entriesAsFirstTab', t('Entries as first tab')); ?>
-                    <?= $form->select('entriesAsFirstTab', $entriesAsFirstTabOptions, (int) $entriesAsFirstTab); ?>
-                </div>
-                <div class="col-lg-6 mb-4 <?php in_array('maxNumberOfEntries', $fieldsWithError) ? print 'has-error' : false; ?>">
-                    <?= $form->label('maxNumberOfEntries', t('Max. number of entries') . ' ' . t('(0 for unlimited)')); ?>
-                    <?= $form->number('maxNumberOfEntries', $maxNumberOfEntries); ?>
-                </div>
-            </div>
-
-            <div class="mb-4 <?php in_array('highlightMultiElementFields', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('highlightMultiElementFields', t('Highlight multi-element fields')); ?>
-                <?= $form->select('highlightMultiElementFields', $highlightMultiElementFieldsOptions, (int) $highlightMultiElementFields); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('fieldsDivider', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('fieldsDivider', t('Use horizontal line as field\'s divider')); ?>
-                <?= $form->select('fieldsDivider', $dividerOptions, $fieldsDivider); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('entryFieldsDivider', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('entryFieldsDivider', t('Use horizontal line as field\'s divider in repeatable entries')); ?>
-                <?= $form->select('entryFieldsDivider', $dividerOptions, $entryFieldsDivider); ?>
-            </div>
-
-        </div>
-
-        <div class="ccm-tab-content" id="ccm-tab-content-custom-code" style="display: none;">
-
-            <div class="mb-4 <?php in_array('registerViewAssetsCustomCode', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('registerViewAssetsCustomCode', t('Custom code inside registerViewAssets() method')); ?>
-                <?= $form->textarea('registerViewAssetsCustomCode', $registerViewAssetsCustomCode, ['style' => 'min-height: 200px;']); ?>
-                <div class="form-text">
-                    <?= t('You can use this field to include js/css assets.'); ?>
-                    <br>
-                    <?= t('Be careful when inserting custom code, invalid syntax can lead to errors.'); ?>
-                    <br>
-                    <?= t('Use %s spaces as indentation.', 8); ?>
-                    <br>
-                    <strong class="d-block mt-2"><?= t('Example code'); ?>:</strong>
-                    <code class="bb-code-block">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Load lightbox files
-                        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$this->requireAsset('javascript',
-                        'feature/imagery/frontend');
-                        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$this->requireAsset('css',
-                        'feature/imagery/frontend');
-                    </code>
-                </div>
-            </div>
-
-            <div class="mb-4 <?php in_array('viewCustomCode', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('viewCustomCode', t('Custom code inside view() method')); ?>
-                <?= $form->textarea('viewCustomCode', $viewCustomCode, ['style' => 'min-height: 200px;']); ?>
-                <div class="form-text">
-                    <?= t('You can use this field to include custom php code.'); ?>
-                    <br>
-                    <?= t('Be careful when inserting custom code, invalid syntax can lead to errors.'); ?>
-                    <br>
-                    <?= t('Use %s spaces as indentation.', 8); ?>
-                    <br>
-                    <strong class="d-block mt-2"><?= t('Example code'); ?>:</strong>
-                    <code class="bb-code-block">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$this->set('someVariable', 'value');
-                    </code>
-                </div>
-            </div>
-
-            <div class="mb-4 <?php in_array('customControllerMethods', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('customControllerMethods', t('Custom controller methods')); ?>
-                <?= $form->textarea('customControllerMethods', $customControllerMethods, ['style' => 'min-height: 200px;']); ?>
-                <div class="form-text">
-                    <?= t('You can use this field to put custom methods at the bottom of controller class.'); ?>
-                    <br>
-                    <?= t('Be careful when inserting custom code, invalid syntax can lead to errors.'); ?>
-                    <br>
-                    <?= t('Use %s spaces as indentation.', 4); ?>
-                    <br>
-                    <strong class="d-block mt-2"><?= t('Example code'); ?>:</strong>
-                    <code class="bb-code-block mt4">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;private function exampleMethod($exampleArgument)
-                        {
-                        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Your custom code
-                        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
-                    </code>
-                </div>
-            </div>
-
-            <div class="mb-4 <?php in_array('excludedFromRemoval', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('excludedFromRemoval', t('Excluded files and folders when rebuilding block')); ?>
-                <?= $form->textarea('excludedFromRemoval', implode(PHP_EOL, $excludedFromRemoval), ['style' => 'min-height: 200px;']); ?>
-                <div class="form-text">
-                    <?= t('You can use this field to exclude your own files/folders when rebuilding block (case scenario: you do not want to delete "templates" folder).'); ?>
-                    <br>
-                    <?= t('You can exclude first level files/folders only.'); ?>
-                    <br>
-                    <?= t('Do not exclude standard files/folders generated by Block Builder.'); ?>
-                    <br>
-                    <?= t('Every file/folder should be relative to controller.php (for example: templates) and put in new line.'); ?>
-                </div>
-            </div>
-        </div>
-
-        <div class="ccm-tab-content" id="ccm-tab-content-texts" style="display: none;">
-
-            <div class="mb-4 populate-translation-fields">
-                <i class="fas fa-book"></i> <?= t('Populate fields with'); ?>
-                <a href="#" class="js-populate-translation-fields" data-type="translated"><?= t('translated'); ?></a>
-                or
-                <a href="#"
-                   class="js-populate-translation-fields"
-                   data-type="untranslated"
-                ><?= t('untranslated'); ?></a>
-                <?= t('default texts'); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('basicLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('basicLabel', t('Basic information')); ?>
-                <?= $form->text('basicLabel', $basicLabel, ['data-translated-text' => t('Basic information'), 'data-untranslated-text' => 'Basic information']); ?>
-                <div class="form-text"><?= t('Displayed name of "Basic information" tab'); ?></div>
-            </div>
-
-            <div class="mb-4 <?php in_array('entriesLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('entriesLabel', t('Entries')); ?>
-                <?= $form->text('entriesLabel', $entriesLabel, ['data-translated-text' => t('Entries'), 'data-untranslated-text' => 'Entries']); ?>
-                <div class="form-text"><?= t('Displayed name of "Repeatable entries" tab'); ?></div>
-            </div>
-
-            <div class="mb-4 <?php in_array('settingsLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('settingsLabel', t('Settings')); ?>
-                <?= $form->text('settingsLabel', $settingsLabel, ['data-translated-text' => t('Settings'), 'data-untranslated-text' => 'Settings']); ?>
-                <div class="form-text"><?= t('Displayed name of "Settings" tab'); ?></div>
-            </div>
-
-            <div class="mb-4 <?php in_array('addAtTheTopLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('addAtTheTopLabel', t('Add at the top')); ?>
-                <?= $form->text('addAtTheTopLabel', $addAtTheTopLabel, ['data-translated-text' => t('Add at the top'), 'data-untranslated-text' => 'Add at the top']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('addAtTheBottomLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('addAtTheBottomLabel', t('Add at the bottom')); ?>
-                <?= $form->text('addAtTheBottomLabel', $addAtTheBottomLabel, ['data-translated-text' => t('Add at the bottom'), 'data-untranslated-text' => 'Add at the bottom']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('copyLastEntryLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('copyLastEntryLabel', t('Copy last entry')); ?>
-                <?= $form->text('copyLastEntryLabel', $copyLastEntryLabel, ['data-translated-text' => t('Copy last entry'), 'data-untranslated-text' => 'Copy last entry']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('collapseAllLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('collapseAllLabel', t('Collapse all')); ?>
-                <?= $form->text('collapseAllLabel', $collapseAllLabel, ['data-translated-text' => t('Collapse all'), 'data-untranslated-text' => 'Collapse all']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('expandAllLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('expandAllLabel', t('Expand all')); ?>
-                <?= $form->text('expandAllLabel', $expandAllLabel, ['data-translated-text' => t('Expand all'), 'data-untranslated-text' => 'Expand all']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('removeAllLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('removeAllLabel', t('Remove all')); ?>
-                <?= $form->text('removeAllLabel', $removeAllLabel, ['data-translated-text' => t('Remove all'), 'data-untranslated-text' => 'Remove all']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('disableSmoothScrollLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('disableSmoothScrollLabel', t('Disable smooth scroll')); ?>
-                <?= $form->text('disableSmoothScrollLabel', $disableSmoothScrollLabel, ['data-translated-text' => t('Disable smooth scroll'), 'data-untranslated-text' => 'Disable smooth scroll']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('keepAddedEntryCollapsedLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('keepAddedEntryCollapsedLabel', t('Keep added/copied entry collapsed')); ?>
-                <?= $form->text('keepAddedEntryCollapsedLabel', $keepAddedEntryCollapsedLabel, ['data-translated-text' => t('Keep added/copied entry collapsed'), 'data-untranslated-text' => 'Keep added/copied entry collapsed']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('noEntriesFoundLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('noEntriesFoundLabel', t('No entries found.')); ?>
-                <?= $form->text('noEntriesFoundLabel', $noEntriesFoundLabel, ['data-translated-text' => t('No entries found.'), 'data-untranslated-text' => 'No entries found.']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('maxNumberOfEntriesLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('maxNumberOfEntriesLabel', t('Max. number of entries')); ?>
-                <?= $form->text('maxNumberOfEntriesLabel', $maxNumberOfEntriesLabel, ['data-translated-text' => t('Max. number of entries'), 'data-untranslated-text' => 'Max. number of entries']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('removeEntryLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('removeEntryLabel', t('Remove entry')); ?>
-                <?= $form->text('removeEntryLabel', $removeEntryLabel, ['data-translated-text' => t('Remove entry'), 'data-untranslated-text' => 'Remove entry']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('duplicateEntryLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('duplicateEntryLabel', t('Duplicate entry')); ?>
-                <?= $form->text('duplicateEntryLabel', $duplicateEntryLabel, ['data-translated-text' => t('Duplicate entry'), 'data-untranslated-text' => 'Duplicate entry']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('duplicateEntryAndAddAtTheEndLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('duplicateEntryAndAddAtTheEndLabel', t('Duplicate entry and add at the end')); ?>
-                <?= $form->text('duplicateEntryAndAddAtTheEndLabel', $duplicateEntryAndAddAtTheEndLabel, ['data-translated-text' => t('Duplicate entry and add at the end'), 'data-untranslated-text' => 'Duplicate entry and add at the end']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('areYouSureLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('areYouSureLabel', t('Are you sure?')); ?>
-                <?= $form->text('areYouSureLabel', $areYouSureLabel, ['data-translated-text' => t('Are you sure?'), 'data-untranslated-text' => 'Are you sure?']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('requiredFieldsLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('requiredFieldsLabel', t('Required fields')); ?>
-                <?= $form->text('requiredFieldsLabel', $requiredFieldsLabel, ['data-translated-text' => t('Required fields'), 'data-untranslated-text' => 'Required fields']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('urlEndingLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('urlEndingLabel', t('Custom string at the end of URL')); ?>
-                <?= $form->text('urlEndingLabel', $urlEndingLabel, ['data-translated-text' => t('Custom string at the end of URL'), 'data-untranslated-text' => 'Custom string at the end of URL']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('urlEndingHelpText', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('urlEndingHelpText', t('(e.g. #contact-form or ?ccm_paging_p=2)')); ?>
-                <?= $form->text('urlEndingHelpText', $urlEndingHelpText, ['data-translated-text' => t('(e.g. #contact-form or ?ccm_paging_p=2)'), 'data-untranslated-text' => '(e.g. #contact-form or ?ccm_paging_p=2)']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('textLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('textLabel', t('Text')); ?>
-                <?= $form->text('textLabel', $textLabel, ['data-translated-text' => t('Text'), 'data-untranslated-text' => 'Text']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('titleLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('titleLabel', t('Title')); ?>
-                <?= $form->text('titleLabel', $titleLabel, ['data-translated-text' => t('Title'), 'data-untranslated-text' => 'Title']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('altTextLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('altTextLabel', t('Alt text')); ?>
-                <?= $form->text('altTextLabel', $altTextLabel, ['data-translated-text' => t('Alt text'), 'data-untranslated-text' => 'Alt text']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('linkFromSitemapLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('linkFromSitemapLabel', t('Link from Sitemap')); ?>
-                <?= $form->text('linkFromSitemapLabel', $linkFromSitemapLabel, ['data-translated-text' => t('Link from Sitemap'), 'data-untranslated-text' => 'Link from Sitemap']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('linkFromFileManagerLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('linkFromFileManagerLabel', t('Link from File Manager')); ?>
-                <?= $form->text('linkFromFileManagerLabel', $linkFromFileManagerLabel, ['data-translated-text' => t('Link from File Manager'), 'data-untranslated-text' => 'Link from File Manager']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('externalLinkLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('externalLinkLabel', t('External Link')); ?>
-                <?= $form->text('externalLinkLabel', $externalLinkLabel, ['data-translated-text' => t('External Link'), 'data-untranslated-text' => 'External Link']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('showAdditionalFieldsLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('showAdditionalFieldsLabel', t('Show additional fields')); ?>
-                <?= $form->text('showAdditionalFieldsLabel', $showAdditionalFieldsLabel, ['data-translated-text' => t('Show additional fields'), 'data-untranslated-text' => 'Show additional fields']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('hideAdditionalFieldsLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('hideAdditionalFieldsLabel', t('Hide additional fields')); ?>
-                <?= $form->text('hideAdditionalFieldsLabel', $hideAdditionalFieldsLabel, ['data-translated-text' => t('Hide additional fields'), 'data-untranslated-text' => 'Hide additional fields']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('newWindowLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('newWindowLabel', t('Open in new window')); ?>
-                <?= $form->text('newWindowLabel', $newWindowLabel, ['data-translated-text' => t('Open in new window'), 'data-untranslated-text' => 'Open in new window']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('noFollowLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('noFollowLabel', t('Add nofollow attribute')); ?>
-                <?= $form->text('noFollowLabel', $noFollowLabel, ['data-translated-text' => t('Add nofollow attribute'), 'data-untranslated-text' => 'Add nofollow attribute']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('yesLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('yesLabel', t('Yes')); ?>
-                <?= $form->text('yesLabel', $yesLabel, ['data-translated-text' => t('Yes'), 'data-untranslated-text' => 'Yes']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('noLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('noLabel', t('No')); ?>
-                <?= $form->text('noLabel', $noLabel, ['data-translated-text' => t('No'), 'data-untranslated-text' => 'No']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('overrideThumbnailDimensionsLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('overrideThumbnailDimensionsLabel', t('Override Thumbnail dimensions')); ?>
-                <?= $form->text('overrideThumbnailDimensionsLabel', $overrideThumbnailDimensionsLabel, ['data-translated-text' => t('Override Thumbnail dimensions'), 'data-untranslated-text' => 'Override Thumbnail dimensions']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('overrideFullscreenImageDimensionsLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('overrideFullscreenImageDimensionsLabel', t('Override Fullscreen Image dimensions')); ?>
-                <?= $form->text('overrideFullscreenImageDimensionsLabel', $overrideFullscreenImageDimensionsLabel, ['data-translated-text' => t('Override Fullscreen Image dimensions'), 'data-untranslated-text' => 'Override Fullscreen Image dimensions']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('widthLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('widthLabel', t('Width')); ?>
-                <?= $form->text('widthLabel', $widthLabel, ['data-translated-text' => t('Width'), 'data-untranslated-text' => 'Width']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('heightLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('heightLabel', t('Height')); ?>
-                <?= $form->text('heightLabel', $heightLabel, ['data-translated-text' => t('Height'), 'data-untranslated-text' => 'Height']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('cropLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('cropLabel', t('Crop')); ?>
-                <?= $form->text('cropLabel', $cropLabel, ['data-translated-text' => t('Crop'), 'data-untranslated-text' => 'Crop']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('pxLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('pxLabel', t('px')); ?>
-                <?= $form->text('pxLabel', $pxLabel, ['data-translated-text' => t('px'), 'data-untranslated-text' => 'px']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('nothingSelectedLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('nothingSelectedLabel', t('Nothing selected')); ?>
-                <?= $form->text('nothingSelectedLabel', $nothingSelectedLabel, ['data-translated-text' => t('Nothing selected'), 'data-untranslated-text' => 'Nothing selected']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('noResultsMatchedLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('noResultsMatchedLabel', t('No results matched {0}')); ?>
-                <?= $form->text('noResultsMatchedLabel', $noResultsMatchedLabel, ['data-translated-text' => t('No results matched {0}'), 'data-untranslated-text' => 'No results matched {0}']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('selectAllLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('selectAllLabel', t('Select All')); ?>
-                <?= $form->text('selectAllLabel', $selectAllLabel, ['data-translated-text' => t('Select All'), 'data-untranslated-text' => 'Select All']); ?>
-            </div>
-
-            <div class="mb-4 <?php in_array('deselectAllLabel', $fieldsWithError) ? print 'has-error' : false; ?>">
-                <?= $form->label('deselectAllLabel', t('Deselect All')); ?>
-                <?= $form->text('deselectAllLabel', $deselectAllLabel, ['data-translated-text' => t('Deselect All'), 'data-untranslated-text' => 'Deselect All']); ?>
-            </div>
-
-        </div>
-
-        <div class="ccm-tab-content"
-             id="ccm-tab-content-<?= h(\BlockBuilder\FieldType\Enum\FieldTypeContextEnum::BasicFields->getTabHandle()); ?>"
-             style="display: none;"
-        >
-
-            <div class="row">
-                <div class="col-lg-3 mb-4">
-                    <select class="js-add-entry form-select" data-group-handle="basic">
-                        <?php foreach ($fieldTypes as $k => $v): ?>
-                            <option value="<?= h($k); ?>" data-icon="<?= h($v['icon']); ?>"><?= h($v['label']); ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                <div class="col-lg-9 mb-4 entries-actions d-flex flex-column flex-md-row align-items-md-center">
-                    <div class="entries-action entries-action-scroll form-check-inline">
-                        <input type="checkbox"
-                               name="scroll"
-                               class="js-toggle-scroll form-check-input"
-                               value="1"
-                               id="scroll-down-1"
-                               <?php if (empty($app->make('cookie')->get('scrollDisabled'))): ?>checked="checked"<?php endif; ?>
-                        >
-                        <label for="scroll-down-1" class="form-check-label"><?= t('Scroll down'); ?></label>
-                    </div>
-                    <a href="#"
-                       class="entries-action js-expand-all"
-                    ><i class="far fa-plus-square"></i> <?= t('Expand all'); ?></a>
-                    <a href="#"
-                       class="entries-action js-collapse-all"
-                    ><i class="far fa-minus-square"></i> <?= t('Collapse all'); ?></a>
-                    <a href="#"
-                       class="entries-action entries-action-remove-all js-remove-all"
-                       data-group-handle="basic"
-                       data-confirm-text="<?= t('Are you sure?'); ?>"
-                    ><i class="fas fa-times-circle"></i> <?= t('Remove all'); ?></a>
-                </div>
-            </div>
-
-            <div class="mb-4">
-                <div id="field-types-basic" class="js-sortable" data-entries="<?= h(json_encode($basic)); ?>"></div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-3 mb-4">
-                    <select class="js-add-entry form-select" data-group-handle="basic">
-                        <?php foreach ($fieldTypes as $k => $v): ?>
-                            <option value="<?= h($k); ?>" data-icon="<?= h($v['icon']); ?>"><?= h($v['label']); ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                <div class="col-lg-9 mb-4 entries-actions d-flex flex-column flex-md-row align-items-md-center">
-                    <div class="entries-action entries-action-scroll form-check-inline">
-                        <input type="checkbox"
-                               name="scroll"
-                               class="js-toggle-scroll form-check-input"
-                               value="1"
-                               id="scroll-down-2"
-                               <?php if (empty($app->make('cookie')->get('scrollDisabled'))): ?>checked="checked"<?php endif; ?>
-                        >
-                        <label for="scroll-down-2" class="form-check-label"><?= t('Scroll down'); ?></label>
-                    </div>
-                    <a href="#"
-                       class="entries-action js-expand-all"
-                    ><i class="far fa-plus-square"></i> <?= t('Expand all'); ?></a>
-                    <a href="#"
-                       class="entries-action js-collapse-all"
-                    ><i class="far fa-minus-square"></i> <?= t('Collapse all'); ?></a>
-                    <a href="#"
-                       class="entries-action entries-action-remove-all js-remove-all"
-                       data-group-handle="basic"
-                       data-confirm-text="<?= t('Are you sure?'); ?>"
-                    ><i class="fas fa-times-circle"></i> <?= t('Remove all'); ?></a>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="ccm-tab-content"
-             id="ccm-tab-content-<?= h(\BlockBuilder\FieldType\Enum\FieldTypeContextEnum::RepeatableFields->getTabHandle()); ?>"
-             style="display: none;"
-        >
-
-            <div class="row">
-                <div class="col-lg-3 mb-4">
-                    <select class="js-add-entry form-select" data-group-handle="entries">
-                        <?php foreach ($fieldTypes as $k => $v): ?>
-                            <option value="<?= h($k); ?>" data-icon="<?= h($v['icon']); ?>"><?= h($v['label']); ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                <div class="col-lg-9 mb-4 entries-actions d-flex flex-column flex-md-row align-items-md-center">
-                    <div class="entries-action entries-action-scroll form-check-inline">
-                        <input type="checkbox"
-                               name="scroll"
-                               class="js-toggle-scroll form-check-input"
-                               value="1"
-                               id="scroll-down-3"
-                               <?php if (empty($app->make('cookie')->get('scrollDisabled'))): ?>checked="checked"<?php endif; ?>
-                        >
-                        <label for="scroll-down-3" class="form-check-label"><?= t('Scroll down'); ?></label>
-                    </div>
-                    <a href="#"
-                       class="entries-action js-expand-all"
-                    ><i class="far fa-plus-square"></i> <?= t('Expand all'); ?></a>
-                    <a href="#"
-                       class="entries-action js-collapse-all"
-                    ><i class="far fa-minus-square"></i> <?= t('Collapse all'); ?></a>
-                    <a href="#"
-                       class="entries-action entries-action-remove-all js-remove-all"
-                       data-group-handle="entries"
-                       data-confirm-text="<?= t('Are you sure?'); ?>"
-                    ><i class="fas fa-times-circle"></i> <?= t('Remove all'); ?></a>
-                </div>
-            </div>
-
-            <div class="mb-4">
-                <div id="field-types-entries" class="js-sortable" data-entries="<?= h(json_encode($entries)); ?>"></div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-3 mb-4">
-                    <select class="js-add-entry form-select" data-group-handle="entries">
-                        <?php foreach ($fieldTypes as $k => $v): ?>
-                            <option value="<?= h($k); ?>" data-icon="<?= h($v['icon']); ?>"><?= h($v['label']); ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                <div class="col-lg-9 mb-4 entries-actions d-flex flex-column flex-md-row align-items-md-center">
-                    <div class="entries-action entries-action-scroll form-check-inline">
-                        <input type="checkbox"
-                               name="scroll"
-                               class="js-toggle-scroll form-check-input"
-                               value="1"
-                               id="scroll-down-4"
-                               <?php if (empty($app->make('cookie')->get('scrollDisabled'))): ?>checked="checked"<?php endif; ?>
-                        >
-                        <label for="scroll-down-4" class="form-check-label"><?= t('Scroll down'); ?></label>
-                    </div>
-                    <a href="#"
-                       class="entries-action js-expand-all"
-                    ><i class="far fa-plus-square"></i> <?= t('Expand all'); ?></a>
-                    <a href="#"
-                       class="entries-action js-collapse-all"
-                    ><i class="far fa-minus-square"></i> <?= t('Collapse all'); ?></a>
-                    <a href="#"
-                       class="entries-action entries-action-remove-all js-remove-all"
-                       data-group-handle="entries"
-                       data-confirm-text="<?= t('Are you sure?'); ?>"
-                    ><i class="fas fa-times-circle"></i> <?= t('Remove all'); ?></a>
-                </div>
-            </div>
-
-        </div>
+        <?php endif; ?>
 
         <hr>
         <p class="small text-muted required-fields">* <?= t('Required fields'); ?></p>

@@ -511,11 +511,11 @@ $(function () {
 
             e.preventDefault();
 
-            var csrfToken = $('#csrfToken').val();
-            var installBlockTypeUrl = $('#installBlockTypeUrl').val();
-            var successMessagePart1 = $('#installBlockTypeSuccessMessagePart1').val();
-            var successMessagePart2 = $('#installBlockTypeSuccessMessagePart2').val();
-            var confirmationMessage = $('#confirmationMessage').val();
+            var csrfToken = bbContainer.attr('data-csrf-token');
+            var installBlockTypeUrl = bbContainer.attr('data-install-block-type-url');
+            var successMessagePart1 = bbContainer.attr('data-install-block-type-success-message-1');
+            var successMessagePart2 = bbContainer.attr('data-install-block-type-success-message-2');
+            var confirmationMessage = bbContainer.attr('data-confirmation-message');
             var handle = $(this).attr('data-handle');
 
             var confirmQuestion = confirm(confirmationMessage);
@@ -554,11 +554,11 @@ $(function () {
 
             e.preventDefault();
 
-            var csrfToken = $('#csrfToken').val();
-            var uninstallBlockTypeUrl = $('#uninstallBlockTypeUrl').val();
-            var successMessagePart1 = $('#uninstallBlockTypeSuccessMessagePart1').val();
-            var successMessagePart2 = $('#uninstallBlockTypeSuccessMessagePart2').val();
-            var confirmationMessage = $('#confirmationMessage').val();
+            var csrfToken = bbContainer.attr('data-csrf-token');
+            var uninstallBlockTypeUrl = bbContainer.attr('data-uninstall-block-type-url');
+            var successMessagePart1 = bbContainer.attr('data-uninstall-block-type-success-message-1');
+            var successMessagePart2 = bbContainer.attr('data-uninstall-block-type-success-message-2');
+            var confirmationMessage = bbContainer.attr('data-confirmation-message');
             var handle = $(this).attr('data-handle');
 
             var confirmQuestion = confirm(confirmationMessage);
@@ -597,11 +597,11 @@ $(function () {
 
             e.preventDefault();
 
-            var csrfToken = $('#csrfToken').val();
-            var deleteBlockTypeFolderUrl = $('#deleteBlockTypeFolderUrl').val();
-            var successMessagePart1 = $('#deleteBlockTypeFolderSuccessMessagePart1').val();
-            var successMessagePart2 = $('#deleteBlockTypeFolderSuccessMessagePart2').val();
-            var confirmationMessage = $('#confirmationMessage').val();
+            var csrfToken = bbContainer.attr('data-csrf-token');
+            var deleteBlockTypeFolderUrl = bbContainer.attr('data-delete-block-type-folder-url');
+            var successMessagePart1 = bbContainer.attr('data-delete-block-type-folder-success-message-1');
+            var successMessagePart2 = bbContainer.attr('data-delete-block-type-folder-success-message-2');
+            var confirmationMessage = bbContainer.attr('data-confirmation-message');
             var handle = $(this).attr('data-handle');
 
             var confirmQuestion = confirm(confirmationMessage);
@@ -673,11 +673,11 @@ $(function () {
             // Find active tab (by # in url or first element)
             if (hash) {
                 activeTab = hash.substring(1);
-                navContainer.find('a').removeClass('navigation-tabs-active');
-                navContainer.find('a[data-tab="' + activeTab + '"]').addClass('navigation-tabs-active');
+                navContainer.find('a').removeClass('navigation-tab-link-active');
+                navContainer.find('a[data-tab="' + activeTab + '"]').addClass('navigation-tab-link-active');
             } else {
                 activeTab = navContainer.children(':first').find('a').attr('data-tab');
-                navContainer.children(':first').find('a').addClass('navigation-tabs-active');
+                navContainer.children(':first').find('a').addClass('navigation-tab-link-active');
             }
 
             // Show content of active tab
@@ -695,8 +695,8 @@ $(function () {
 
                 var activeTab = $(this).attr('data-tab');
 
-                navContainer.find('a').removeClass('navigation-tabs-active');
-                $(this).addClass('navigation-tabs-active');
+                navContainer.find('a').removeClass('navigation-tab-link-active');
+                $(this).addClass('navigation-tab-link-active');
                 navContainer.find('a').each(function (i, item) {
                     $('#ccm-tab-content-' + $(item).attr('data-tab')).hide();
                 });

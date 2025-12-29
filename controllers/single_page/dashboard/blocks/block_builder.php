@@ -13,6 +13,7 @@ use BlockBuilder\Block\Service\BlockManifestService;
 use BlockBuilder\BlockGenerator\BlockGenerator;
 use BlockBuilder\Controller\BaseDashboardController;
 use BlockBuilder\DataProvider\BlockBuilderViewDataProvider;
+use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
 use Concrete\Core\Asset\AssetList;
 use JetBrains\PhpStorm\NoReturn;
 
@@ -43,6 +44,8 @@ class BlockBuilder extends BaseDashboardController
         $this->set('errors', $this->errors);
         $this->set('fieldsWithError', $this->fieldsWithError);
         $this->set('tabsWithError', $this->tabsWithError);
+
+        $this->set('navigationTabEnums', NavigationTabEnum::cases());
     }
 
     public function view(): void
@@ -51,7 +54,9 @@ class BlockBuilder extends BaseDashboardController
 
         $this->set('pageTitle', t('Block Builder'));
         $this->set('formActionPath', '');
+        $this->set('config', $this->app->make(CreateBlockDtoFactory::class)->fromArray($this->provider->getDefaultValues()));
         $this->setProviderData();
+        $this->overrideFieldsWithDataFromConfig($this->app->make(CreateBlockDtoFactory::class)->fromArray($this->provider->getDefaultValues()));
     }
 
     public function config($handle): void
@@ -136,7 +141,7 @@ class BlockBuilder extends BaseDashboardController
         $data = array_merge(
             $this->provider->getOptionLists(),
             $this->provider->getLabels(),
-            $this->provider->getDefaultValues()
+            $this->provider->getDefaultValues(),
         );
 
         foreach ($data as $key => $value) {
