@@ -65,7 +65,7 @@ readonly class BlockBuilderViewDataProvider
     {
         return [
             'fieldTypes' => $this->optionListService->getFieldTypes(),
-            'blockTypeSets' => $this->optionListService->getBlockTypeSets(),
+            'blockTypeSets' => $this->optionListService->getBlockTypeSets(includeEmptyOption: true),
             'cacheBlockRecordOptions' => $this->optionListService->getCacheBlockRecordOptions(),
             'cacheBlockOutputOptions' => $this->optionListService->getCacheBlockOutputOptions(),
             'cacheBlockOutputOnPostOptions' => $this->optionListService->getCacheBlockOutputOnPostOptions(),

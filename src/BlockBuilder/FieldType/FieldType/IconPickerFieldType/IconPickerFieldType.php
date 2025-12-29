@@ -26,6 +26,11 @@ class IconPickerFieldType implements FieldTypeInterface
         return t('Icon Picker');
     }
 
+    public static function getIcon(): string
+    {
+        return t('fab fa-redhat');
+    }
+
     public static function createDtoFromArray(array $data): IconPickerFieldTypeDto
     {
         return new IconPickerFieldTypeDto(

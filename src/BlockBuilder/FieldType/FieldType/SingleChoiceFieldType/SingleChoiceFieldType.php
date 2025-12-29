@@ -26,6 +26,11 @@ class SingleChoiceFieldType implements FieldTypeInterface
         return t('Single Choice Field');
     }
 
+    public static function getIcon(): string
+    {
+        return t('fas fa-check-circle');
+    }
+
     public static function createDtoFromArray(array $data): SingleChoiceFieldTypeDto
     {
         $selectAddEmptyOption = false;

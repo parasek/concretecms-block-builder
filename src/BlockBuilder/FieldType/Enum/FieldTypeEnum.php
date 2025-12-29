@@ -153,13 +153,21 @@ enum FieldTypeEnum implements JsonSerializable
      */
     public static function getOptions(): array
     {
-        $options = ['' => t('+ Add new field')];
+        $options = [
+            '' => [
+                'label' => t('+ Add new field'),
+                'icon' => '',
+            ],
+        ];
 
         foreach (self::cases() as $case) {
             /** @var FieldTypeInterface $class */
             $class = $case->getDefinitionClass();
 
-            $options[$class::getHandle()] = $class::getLabel();
+            $options[$class::getHandle()] = [
+                'label' => $class::getLabel(),
+                'icon' => $class::getIcon(),
+            ];
         }
 
         return $options;

@@ -26,6 +26,11 @@ class DatePickerFieldType implements FieldTypeInterface
         return t('Date Picker');
     }
 
+    public static function getIcon(): string
+    {
+        return t('fas fa-calendar-alt');
+    }
+
     public static function createDtoFromArray(array $data): DatePickerFieldTypeDto
     {
         return new DatePickerFieldTypeDto(

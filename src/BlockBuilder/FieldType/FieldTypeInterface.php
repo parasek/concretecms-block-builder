@@ -12,6 +12,7 @@ interface FieldTypeInterface
     public static function getEnum(): FieldTypeEnum;
     public static function getHandle(): string;
     public static function getLabel(): string;
+    public static function getIcon(): string;
     public static function createDtoFromArray(array $data): FieldTypeDtoInterface;
     public static function getControllerPhpStrategyClass(): string;
     public static function getErrorMessages(FieldTypeContextEnum $context): array;

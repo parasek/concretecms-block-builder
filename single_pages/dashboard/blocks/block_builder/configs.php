@@ -11,12 +11,15 @@ $u = $app->make(Concrete\Core\User\User::class);
 ?>
 
 <div class="ccm-dashboard-header-buttons">
+    <a href="<?= h(app('url/manager')->resolve(['dashboard/blocks/block_builder'])); ?>"
+       class="btn btn-secondary"
+    ><i class="fas fa-plus"></i> <?= t('New block'); ?></a>
     <a href="<?= h($app->make('url/manager')->resolve(['dashboard/blocks/block_builder'])); ?>"
        class="btn btn-secondary"
     ><i class="fas fa-angle-double-left"></i> <?= t('Go back'); ?></a>
 </div>
 
-<?php View::element('environment', ['environment' => $environment], 'block_builder'); ?>
+<?php View::element('info_table', ['environment' => $environment, 'config' => null], 'block_builder'); ?>
 
 <div class="mb-4">
     <p><?= t('Configuration files found in existing blocks:'); ?></p>
@@ -83,7 +86,7 @@ $u = $app->make(Concrete\Core\User\User::class);
                                 <?= $this->controller->token->output('uninstall_block'); ?>
                                 <button class="btn btn-danger"
                                         type="submit"
-                                ><?= t('Uninstall'); ?></button>
+                                ><i class="fas fa-minus-circle"></i> <?= t('Uninstall'); ?></button>
                             </form>
                         <?php endif; ?>
                     <?php else: ?>
@@ -105,7 +108,7 @@ $u = $app->make(Concrete\Core\User\User::class);
                 <a href="<?= h($app->make('url/manager')->resolve(['/dashboard/blocks/block_builder/config/' . $config->blockHandle])); ?>"
                    class="btn btn-primary"
                 >
-                    <i class="fas fa-hammer me-2"></i> <?= t('Load config'); ?>
+                    <i class="fas fa-upload me-2"></i> <?= t('Load config'); ?>
                 </a>
             </div>
 

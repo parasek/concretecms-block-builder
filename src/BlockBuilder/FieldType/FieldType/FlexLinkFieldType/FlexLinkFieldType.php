@@ -26,6 +26,11 @@ class FlexLinkFieldType implements FieldTypeInterface
         return t('Flex Link');
     }
 
+    public static function getIcon(): string
+    {
+        return t('fas fa-link');
+    }
+
     public static function createDtoFromArray(array $data): FlexLinkFieldTypeDto
     {
         return new FlexLinkFieldTypeDto(

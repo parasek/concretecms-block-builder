@@ -26,6 +26,11 @@ class NumberFieldType implements FieldTypeInterface
         return t('Number');
     }
 
+    public static function getIcon(): string
+    {
+        return t('fas fa-hashtag');
+    }
+
     public static function createDtoFromArray(array $data): NumberFieldTypeDto
     {
         return new NumberFieldTypeDto(

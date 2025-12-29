@@ -26,6 +26,11 @@ class ImageFieldType implements FieldTypeInterface
         return t('Image');
     }
 
+    public static function getIcon(): string
+    {
+        return t('fas fa-image');
+    }
+
     public static function createDtoFromArray(array $data): ImageFieldTypeDto
     {
         return new ImageFieldTypeDto(

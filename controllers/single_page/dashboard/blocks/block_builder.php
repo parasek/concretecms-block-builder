@@ -14,7 +14,7 @@ use BlockBuilder\BlockGenerator\BlockGenerator;
 use BlockBuilder\Controller\BaseDashboardController;
 use BlockBuilder\DataProvider\BlockBuilderViewDataProvider;
 use Concrete\Core\Asset\AssetList;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use JetBrains\PhpStorm\NoReturn;
 
 defined('C5_EXECUTE') or exit('Access Denied.');
 
@@ -45,14 +45,45 @@ class BlockBuilder extends BaseDashboardController
         $this->set('tabsWithError', $this->tabsWithError);
     }
 
-    public function view()
+    public function view(): void
     {
-        $this->set('pageTitle', t('Block Builder') );
+        $this->handlePostRequest();
 
+        $this->set('pageTitle', t('Block Builder'));
+        $this->set('formActionPath', '');
+        $this->setProviderData();
+    }
+
+    public function config($handle): void
+    {
+        $this->handlePostRequest();
+
+        $config = $this->jsonConfigService->getConfigFromApplicationFolder($handle);
+
+        $this->set('config', $config);
+        $this->set('pageTitle', t('Block Builder') . ' - ' . t('Config loaded from block "%s"', $config->blockName));
+        $this->set('formActionPath', 'config/' . $handle);
         $this->setProviderData();
 
-        $this->overrideJavaScriptFieldsWithDataFromPost();
+        $this->overrideFieldsWithDataFromConfig($config);
+    }
 
+    public function predefined_config($handle): void
+    {
+        $this->handlePostRequest();
+
+        $config = $this->jsonConfigService->getPredefinedConfig($handle);
+
+        $this->set('config', $config);
+        $this->set('pageTitle', t('Block Builder') . ' - ' . t('Config loaded from predefined JSON file "%s"', $config->blockName));
+        $this->set('formActionPath', 'predefined_config/' . $handle);
+        $this->setProviderData();
+
+        $this->overrideFieldsWithDataFromConfig($config);
+    }
+
+    private function handlePostRequest(): void
+    {
         if ($this->post()) {
             $request = $this->app->make(CreateBlockRequest::class, [
                 'post' => $this->post(),
@@ -74,36 +105,15 @@ class BlockBuilder extends BaseDashboardController
                     manifestDto: $manifestDto,
                 );
 
-                return $this->handleCreateBlockResponse($createBlockResult);
+                $this->handleCreateBlockResponse($createBlockResult);
             }
         }
+
+        $this->overrideJavaScriptFieldsWithDataFromPost();
     }
 
-    public function config($handle): void
-    {
-        $this->view();
-
-        $config = $this->jsonConfigService->getConfigFromApplicationFolder($handle);
-
-        $this->set('config', $config);
-        $this->set('pageTitle', t('Block Builder') . ' - ' . t('Configuration loaded from block "%s"', $config->blockName));
-
-        $this->overrideFieldsWithDataFromConfig($config);
-    }
-
-    public function predefined_config($handle): void
-    {
-        $this->view();
-
-        $config = $this->jsonConfigService->getPredefinedConfig($handle);
-
-        $this->set('config', $config);
-        $this->set('pageTitle', t('Block Builder') . ' - ' . t('Configuration loaded from predefined JSON file "%s"', $config->blockName));
-
-        $this->overrideFieldsWithDataFromConfig($config);
-    }
-
-    private function handleCreateBlockResponse(CreateBlockResultDto $result): RedirectResponse
+    #[NoReturn]
+    private function handleCreateBlockResponse(CreateBlockResultDto $result): void
     {
         $message = '';
 
@@ -115,9 +125,10 @@ class BlockBuilder extends BaseDashboardController
             $message = t('Block "%s" has been successfully created. Go to "Block Types" page to manually install it.', $result->blockName);
         }
 
+        // This is the only working solution for redirecting to the proper url and displaying a flash message. Why???
         $this->flash('success', $message);
-
-        return $this->buildRedirect('/dashboard/blocks/block_builder/config/' . $result->blockHandle);
+        $this->buildRedirect('/dashboard/blocks/block_builder/config/' . $result->blockHandle)->send();
+        exit;
     }
 
     private function setProviderData(): void
@@ -149,6 +160,7 @@ class BlockBuilder extends BaseDashboardController
 
     private function overrideFieldsWithDataFromConfig(CreateBlockDto $config): void
     {
+        // Do not trigger on $_POST request
         if (!$this->post()) {
             foreach ($config as $k => $v) {
                 $this->set($k, $v);

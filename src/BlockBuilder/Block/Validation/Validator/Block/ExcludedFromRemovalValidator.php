@@ -50,7 +50,7 @@ class ExcludedFromRemovalValidator extends AbstractValidator
                 $this->addError(
                     error: $error,
                     field: 'excludedFromRemoval',
-                    tab: 'custom-codes',
+                    tab: 'custom-code',
                 );
             }
         }

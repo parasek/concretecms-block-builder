@@ -26,6 +26,11 @@ class ColorPickerFieldType implements FieldTypeInterface
         return t('Color Picker');
     }
 
+    public static function getIcon(): string
+    {
+        return t('fas fa-palette');
+    }
+
     public static function createDtoFromArray(array $data): ColorPickerFieldTypeDto
     {
         return new ColorPickerFieldTypeDto(

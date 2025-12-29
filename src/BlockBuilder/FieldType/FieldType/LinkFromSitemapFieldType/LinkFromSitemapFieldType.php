@@ -26,6 +26,11 @@ class LinkFromSitemapFieldType implements FieldTypeInterface
         return t('Link from Sitemap');
     }
 
+    public static function getIcon(): string
+    {
+        return t('fas fa-sitemap');
+    }
+
     public static function createDtoFromArray(array $data): LinkFromSitemapFieldTypeDto
     {
         return new LinkFromSitemapFieldTypeDto(

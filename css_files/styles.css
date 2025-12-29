@@ -1,3 +1,63 @@
+/* Environment info block */
+.env-info {
+    display: grid;
+    grid-gap: 10px 0;
+    grid-template-columns: 1fr auto auto auto;
+    font-size: 0.85rem;
+
+    @media (min-width: 992px) {
+        inline-size: fit-content;
+    }
+}
+
+.env-info-row {
+    border: 1px solid var(--bs-border-color);
+    border-radius: 3px;
+    grid-column: 1/-1;
+
+    @media (min-width: 992px) {
+        display: grid;
+        grid-template-columns: subgrid;
+    }
+}
+
+.env-info-entry {
+    padding: 10px 20px;
+    border-block-end: 1px solid var(--bs-border-color);
+    background: #f7f7f7;
+
+    @media (min-width: 992px) {
+        border-block-end: 0;
+        border-inline-end: 1px solid var(--bs-border-color);
+    }
+}
+
+.env-info-entry:last-child {
+    border-block-end: 0;
+
+    @media (min-width: 992px) {
+        border-inline-end: 0;
+    }
+}
+
+.env-info-entry-title {
+    background: #e8e8e8;
+}
+
+.env-info-entry-value {
+    white-space: nowrap;
+    margin-left: 4px;
+}
+
+
+
+
+
+
+
+
+
+
 /* Navigation tabs */
 .ccm-ui .navigation-tabs {
     margin: 0 0 10px 0;

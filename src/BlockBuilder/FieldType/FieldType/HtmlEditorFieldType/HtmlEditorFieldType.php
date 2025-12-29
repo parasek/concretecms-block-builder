@@ -26,6 +26,11 @@ class HtmlEditorFieldType implements FieldTypeInterface
         return t('HTML Editor');
     }
 
+    public static function getIcon(): string
+    {
+        return t('fas fa-code');
+    }
+
     public static function createDtoFromArray(array $data): HtmlEditorFieldTypeDto
     {
         return new HtmlEditorFieldTypeDto(

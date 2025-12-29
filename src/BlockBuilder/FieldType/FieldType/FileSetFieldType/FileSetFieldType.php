@@ -26,6 +26,11 @@ class FileSetFieldType implements FieldTypeInterface
         return t('File Set');
     }
 
+    public static function getIcon(): string
+    {
+        return t('fas fa-clone');
+    }
+
     public static function createDtoFromArray(array $data): FileSetFieldTypeDto
     {
         return new FileSetFieldTypeDto(

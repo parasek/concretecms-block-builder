@@ -50,7 +50,11 @@ class BlockHandleValidator extends AbstractValidator
                     $errors[] = t('Block folder named after chosen handle does not exist. You should build your block instead.');
                 } else {
                     if (!$this->blockTypeService->isBlockTypeInstalled($blockHandle)) {
-                        $errors[] = t('You can not rebuild and refresh block that is awaiting installation. Visit %sBlock Types%s and install it first.', '<a href="' . $this->resolverManager->resolve(['dashboard/blocks/block_builder/configs']) . '" target="_blank" class="btn btn-primary btn-sm"><i class="fas fa-external-link-alt"></i> ', '</a>');
+                        $errors[] = t(
+                            'You can not rebuild and refresh block that is awaiting installation, %sInstall%s it first. If you tried to rebuild a block by mistake, build it instead.',
+                            '<a href="#" class="btn btn-primary btn-sm js-install-block-type" data-handle="' . $blockHandle . '"><i class="fas fa-plus-circle"></i> ',
+                            '</a>',
+                        );
                     }
                 }
             } else {
@@ -59,10 +63,21 @@ class BlockHandleValidator extends AbstractValidator
                     $errors[] = t('Concrete CMS already uses your chosen handle for one of its blocks. Use different handle. (%s).', t('Block settings'));
                 } else {
                     if ($this->blockTypeService->isBlockTypeInstalled($blockHandle)) {
-                        $errors[] = t('Block with that handle is already installed. %sUninstall it%s first and then build block again. Alternatively you can use different handle (%s).', '<a href="' . $this->resolverManager->resolve(['dashboard/blocks/block_builder/configs']) . '" target="_blank" class="btn btn-primary btn-sm"><i class="fas fa-external-link-alt"></i> ', '</a>', t('Block settings'));
+                        $errors[] = t(
+                            'Block with that handle is already installed. %sUninstall it%s first and then build block again. Alternatively you can use different handle (%s).',
+                            '<a href="#" class="btn btn-danger btn-sm js-uninstall-block-type" data-handle="' . $blockHandle . '"><i class="fas fa-minus-circle"></i> ',
+                            '</a>',
+                            t('Block settings'),
+                        );
                     } else {
                         if ($this->blockTypeService->isBlockTypeFolderAlreadyCreated($blockHandle)) {
-                            $errors[] = t('Block folder named %s already exists. %sPermanently delete that folder%s or use different handle (%s).', '"' . $blockHandle . '"', '<a href="#" class="btn btn-danger btn-sm js-delete-block-type-folder"><i class="far fa-trash-alt"></i> ', '</a>', t('Block settings'));
+                            $errors[] = t(
+                                'Block folder named %s already exists. %sPermanently delete that folder%s or use different handle (%s).',
+                                '"' . $blockHandle . '"',
+                                '<a href="#" class="btn btn-danger btn-sm js-delete-block-type-folder" data-handle="' . $blockHandle . '"><i class="far fa-trash-alt"></i> ',
+                                '</a>',
+                                t('Block settings'),
+                            );
                         }
                     }
                 }

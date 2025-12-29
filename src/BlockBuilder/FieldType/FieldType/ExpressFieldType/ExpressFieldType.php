@@ -26,6 +26,11 @@ class ExpressFieldType implements FieldTypeInterface
         return t('Express');
     }
 
+    public static function getIcon(): string
+    {
+        return t('fas fa-database');
+    }
+
     public static function createDtoFromArray(array $data): ExpressFieldTypeDto
     {
         return new ExpressFieldTypeDto(

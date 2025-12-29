@@ -26,6 +26,11 @@ class ExternalLinkFieldType implements FieldTypeInterface
         return t('External Link');
     }
 
+    public static function getIcon(): string
+    {
+        return t('fas fa-external-link-alt');
+    }
+
     public static function createDtoFromArray(array $data): ExternalLinkFieldTypeDto
     {
         return new ExternalLinkFieldTypeDto(

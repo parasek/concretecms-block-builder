@@ -26,6 +26,11 @@ class WysiwygEditorFieldType implements FieldTypeInterface
         return t('WYSIWYG Editor');
     }
 
+    public static function getIcon(): string
+    {
+        return t('far fa-window-maximize');// fas fa-paragraph
+    }
+
     public static function createDtoFromArray(array $data): WysiwygEditorFieldTypeDto
     {
         return new WysiwygEditorFieldTypeDto(

@@ -26,6 +26,11 @@ class TextFieldType implements FieldTypeInterface
         return t('Text');
     }
 
+    public static function getIcon(): string
+    {
+        return t('fas fa-font');
+    }
+
     public static function createDtoFromArray(array $data): TextFieldTypeDto
     {
         return new TextFieldTypeDto(

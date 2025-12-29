@@ -26,6 +26,11 @@ class TextareaFieldType implements FieldTypeInterface
         return t('Textarea');
     }
 
+    public static function getIcon(): string
+    {
+        return t('fas fa-align-justify'); //
+    }
+
     public static function createDtoFromArray(array $data): TextareaFieldTypeDto
     {
         return new TextareaFieldTypeDto(

@@ -2,7 +2,7 @@ $(function () {
 
     var blockBuilder = (function ($, window, document, undefined) {
 
-        var bbContainer = $('#bb-container');
+        var bbContainer = $('#bbContainer');
         var template = _.template(bbContainer.find('.js-template-entries').html());
         var templateNoEntries = _.template(bbContainer.find('.js-template-no-entries').html());
 
@@ -31,9 +31,12 @@ $(function () {
 
                 $.each(entries, function (index, item) {
 
+                    const selectedOption = $('.js-add-entry').first().find('option[value="' + item.fieldType + '"]');
+
                     item.counter = index;
                     item.groupHandle = groupHandle;
-                    item.fieldTypeName = $('.js-add-entry').first().find('option[value="' + item.fieldType + '"]').text();
+                    item.fieldTypeName = selectedOption.text();
+                    item.fieldTypeIcon = selectedOption.attr('data-icon');
                     item.error = item.error === undefined ? '' : item.error;
 
                     // New fields
@@ -137,6 +140,7 @@ $(function () {
             if (fieldType) {
 
                 var fieldTypeName = selectedFieldType.find('option:selected').text();
+                var fieldTypeIcon = selectedFieldType.find('option:selected').attr('data-icon');
                 var groupHandle = selectedFieldType.attr('data-group-handle');
                 var entriesContainer = $('#field-types-' + groupHandle);
 
@@ -159,6 +163,7 @@ $(function () {
                 templateData['counter'] = counter;
                 templateData['fieldType'] = fieldType;
                 templateData['fieldTypeName'] = fieldTypeName;
+                templateData['fieldTypeIcon'] = fieldTypeIcon;
                 templateData['error'] = '';
 
                 templateData['label'] = '';
@@ -501,17 +506,17 @@ $(function () {
 
         };
 
-        // Delete block type folder
-        var deleteBlockTypeFolder = function (e) {
+        // Install block type
+        var installBlockType = function (e) {
 
             e.preventDefault();
 
-            var ajaxCsrfToken = $('#ajaxCsrfToken').val();
-            var deleteBlockTypeFolderUrl = $('#deleteBlockTypeFolderUrl').val();
-            var successMessagePart1 = $('#deleteBlockTypeFolderSuccessMessagePart1').val();
-            var successMessagePart2 = $('#deleteBlockTypeFolderSuccessMessagePart2').val();
-            var confirmationMessage = $('#deleteBlockTypeFolderConfirmationMessage').val();
-            var handle = $('#blockHandle').val();
+            var csrfToken = $('#csrfToken').val();
+            var installBlockTypeUrl = $('#installBlockTypeUrl').val();
+            var successMessagePart1 = $('#installBlockTypeSuccessMessagePart1').val();
+            var successMessagePart2 = $('#installBlockTypeSuccessMessagePart2').val();
+            var confirmationMessage = $('#confirmationMessage').val();
+            var handle = $(this).attr('data-handle');
 
             var confirmQuestion = confirm(confirmationMessage);
 
@@ -521,35 +526,109 @@ $(function () {
                     type: 'POST',
                     dataType: 'json',
                     data: {
-                        ajaxCsrfToken: ajaxCsrfToken,
+                        csrfToken: csrfToken,
                         handle: handle
                     },
-                    url: deleteBlockTypeFolderUrl,
-                    error: function (jqXHR, textStatus, errorThrown) {
+                    url: installBlockTypeUrl
+                }).done(function (response) {
+                    // This only runs for 2xx status codes
+                    alert(successMessagePart1 + '\n' + successMessagePart2);
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    // This runs for 400, 405, 500, etc.
+                    var message = 'Oops! Something went wrong...';
 
-                        if (errorThrown) {
-                            var message = 'Oops! Something went wrong...';
-                        } else {
-                            var message = textStatus;
-                        }
-
-                        alert(message)
-
-                    },
-                    success: function (response) {
-
-                        if (response['status'] == 'success') {
-
-                            alert(successMessagePart1 + '\n' + successMessagePart2)
-
-                        } else {
-
-                            var message = response['message'];
-                            this.error(this.xhr, message);
-
-                        }
-
+                    // Try to parse the JSON response from the server even though it failed
+                    if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
+                        message = jqXHR.responseJSON.message;
                     }
+
+                    alert(message);
+                });
+
+            }
+
+        };
+
+        // Uninstall block type
+        var uninstallBlockType = function (e) {
+
+            e.preventDefault();
+
+            var csrfToken = $('#csrfToken').val();
+            var uninstallBlockTypeUrl = $('#uninstallBlockTypeUrl').val();
+            var successMessagePart1 = $('#uninstallBlockTypeSuccessMessagePart1').val();
+            var successMessagePart2 = $('#uninstallBlockTypeSuccessMessagePart2').val();
+            var confirmationMessage = $('#confirmationMessage').val();
+            var handle = $(this).attr('data-handle');
+
+            var confirmQuestion = confirm(confirmationMessage);
+
+            if (confirmQuestion == true) {
+
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        csrfToken: csrfToken,
+                        handle: handle
+                    },
+                    url: uninstallBlockTypeUrl
+                }).done(function (response) {
+                    // This only runs for 2xx status codes
+                    alert(successMessagePart1 + '\n' + successMessagePart2);
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    // This runs for 400, 405, 500, etc.
+                    var message = 'Oops! Something went wrong...';
+
+                    // Try to parse the JSON response from the server even though it failed
+                    if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
+                        message = jqXHR.responseJSON.message;
+                    }
+
+                    alert(message);
+                });
+
+            }
+
+        };
+
+        // Delete block type folder
+        var deleteBlockTypeFolder = function (e) {
+
+            e.preventDefault();
+
+            var csrfToken = $('#csrfToken').val();
+            var deleteBlockTypeFolderUrl = $('#deleteBlockTypeFolderUrl').val();
+            var successMessagePart1 = $('#deleteBlockTypeFolderSuccessMessagePart1').val();
+            var successMessagePart2 = $('#deleteBlockTypeFolderSuccessMessagePart2').val();
+            var confirmationMessage = $('#confirmationMessage').val();
+            var handle = $(this).attr('data-handle');
+
+            var confirmQuestion = confirm(confirmationMessage);
+
+            if (confirmQuestion == true) {
+
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        csrfToken: csrfToken,
+                        handle: handle
+                    },
+                    url: deleteBlockTypeFolderUrl
+                }).done(function (response) {
+                    // This only runs for 2xx status codes
+                    alert(successMessagePart1 + '\n' + successMessagePart2);
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    // This runs for 400, 405, 500, etc.
+                    var message = 'Oops! Something went wrong...';
+
+                    // Try to parse the JSON response from the server even though it failed
+                    if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
+                        message = jqXHR.responseJSON.message;
+                    }
+
+                    alert(message);
                 });
 
             }
@@ -647,6 +726,8 @@ $(function () {
             bbContainer.on('change', '.js-image-create-thumbnail-image', createThumbnailImage);
             bbContainer.on('change', '.js-image-create-fullscreen-image', createFullscreenImage);
             bbContainer.on('change', '.js-change-select-list-generation-method', changeSelectListGenerationMethod);
+            $('.alert').on('click', '.js-install-block-type', installBlockType);
+            $('.alert').on('click', '.js-uninstall-block-type', uninstallBlockType);
             $('.alert').on('click', '.js-delete-block-type-folder', deleteBlockTypeFolder);
         };
 

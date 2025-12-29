@@ -26,6 +26,11 @@ class MultipleChoiceFieldType implements FieldTypeInterface
         return t('Multiple Choice Field');
     }
 
+    public static function getIcon(): string
+    {
+        return t('fas fa-check-square');
+    }
+
     public static function createDtoFromArray(array $data): MultipleChoiceFieldTypeDto
     {
         return new MultipleChoiceFieldTypeDto(

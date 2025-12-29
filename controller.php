@@ -31,8 +31,16 @@ class Controller extends Package
     public function on_start(): void
     {
         $this->app->make(RouterInterface::class)->post(
-            path: 'ajax/delete-block-type-folder',
-            action: 'Concrete\Package\BlockBuilder\Controller\Ajax::deleteBlockTypeFolder',
+            path: 'js/install-block-type',
+            action: 'Concrete\Package\BlockBuilder\Controller\Js\InstallBlockType::process',
+        );
+        $this->app->make(RouterInterface::class)->post(
+            path: 'js/uninstall-block-type',
+            action: 'Concrete\Package\BlockBuilder\Controller\Js\UninstallBlockType::process',
+        );
+        $this->app->make(RouterInterface::class)->post(
+            path: 'js/delete-block-type-folder',
+            action: 'Concrete\Package\BlockBuilder\Controller\Js\DeleteBlockTypeFolder::process',
         );
     }
 

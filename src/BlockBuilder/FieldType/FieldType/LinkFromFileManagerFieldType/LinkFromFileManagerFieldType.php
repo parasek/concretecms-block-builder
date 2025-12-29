@@ -26,6 +26,11 @@ class LinkFromFileManagerFieldType implements FieldTypeInterface
         return t('Link from File Manager');
     }
 
+    public static function getIcon(): string
+    {
+        return t('fas fa-folder-open');
+    }
+
     public static function createDtoFromArray(array $data): LinkFromFileManagerFieldTypeDto
     {
         return new LinkFromFileManagerFieldTypeDto(
