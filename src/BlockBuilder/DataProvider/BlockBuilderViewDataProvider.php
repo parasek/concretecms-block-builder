@@ -35,7 +35,7 @@ readonly class BlockBuilderViewDataProvider
             'areYouSureLabel' => t('Are you sure?'),
             'requiredFieldsLabel' => t('Required fields'),
             'urlEndingLabel' => t('Custom string at the end of URL'),
-            'urlEndingHelpText' => t('(e.g. #contact-form or ?ccm_paging_p=2)'),
+            'urlEndingHelpTextLabel' => t('(e.g. #contact-form or ?ccm_paging_p=2)'),
             'textLabel' => t('Text'),
             'titleLabel' => t('Title'),
             'altTextLabel' => t('Alt text'),

@@ -1,5 +1,7 @@
 <?php defined('C5_EXECUTE') or exit('Access Denied.');
 
+use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
+
 /**
  * @var Concrete\Core\Form\Service\Form $form
  * @var BlockBuilder\Block\Dto\CreateBlockDto $config
@@ -11,7 +13,7 @@
 
 <div class="row">
     <div class="col-lg-3 mb-4">
-        <select class="js-add-entry form-select" data-group-handle="entries">
+        <select class="js-add-entry form-select" data-group-handle="<?= h(FieldTypeContextEnum::RepeatableFields->value); ?>">
             <?php foreach ($fieldTypes as $k => $v): ?>
                 <option value="<?= h($k); ?>"
                         data-icon="<?= h($v['icon']); ?>"
@@ -38,19 +40,19 @@
         ><i class="far fa-minus-square"></i> <?= t('Collapse all'); ?></a>
         <a href="#"
            class="entries-action entries-action-remove-all js-remove-all"
-           data-group-handle="entries"
+           data-group-handle="<?= h(FieldTypeContextEnum::RepeatableFields->value); ?>"
            data-confirm-text="<?= t('Are you sure?'); ?>"
         ><i class="fas fa-times-circle"></i> <?= t('Remove all'); ?></a>
     </div>
 </div>
 
 <div class="mb-4">
-    <div id="field-types-entries" class="js-sortable" data-entries="<?= h(json_encode($entries)); ?>"></div>
+    <div id="field-types-<?= h(FieldTypeContextEnum::RepeatableFields->value); ?>" class="js-sortable" data-entries="<?= h(json_encode($entries)); ?>"></div>
 </div>
 
 <div class="row">
     <div class="col-lg-3 mb-4">
-        <select class="js-add-entry form-select" data-group-handle="entries">
+        <select class="js-add-entry form-select" data-group-handle="<?= h(FieldTypeContextEnum::RepeatableFields->value); ?>">
             <?php foreach ($fieldTypes as $k => $v): ?>
                 <option value="<?= h($k); ?>"
                         data-icon="<?= h($v['icon']); ?>"
@@ -77,7 +79,7 @@
         ><i class="far fa-minus-square"></i> <?= t('Collapse all'); ?></a>
         <a href="#"
            class="entries-action entries-action-remove-all js-remove-all"
-           data-group-handle="entries"
+           data-group-handle="<?= h(FieldTypeContextEnum::RepeatableFields->value); ?>"
            data-confirm-text="<?= t('Are you sure?'); ?>"
         ><i class="fas fa-times-circle"></i> <?= t('Remove all'); ?></a>
     </div>

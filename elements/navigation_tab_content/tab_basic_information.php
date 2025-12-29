@@ -1,5 +1,7 @@
 <?php defined('C5_EXECUTE') or exit('Access Denied.');
 
+use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
+
 /**
  * @var Concrete\Core\Form\Service\Form $form
  * @var BlockBuilder\Block\Dto\CreateBlockDto $config
@@ -7,11 +9,12 @@
  * @var array $fieldTypes
  * @var BlockBuilder\FieldType\FieldTypeDtoInterface[] $basic
  */
+// TODO: scroll-down-1/2/3/4 + merge those two files into one template
 ?>
 
 <div class="row">
     <div class="col-lg-3 mb-4">
-        <select class="js-add-entry form-select" data-group-handle="basic">
+        <select class="js-add-entry form-select" data-group-handle="<?= h(FieldTypeContextEnum::BasicFields->value); ?>">
             <?php foreach ($fieldTypes as $k => $v): ?>
                 <option value="<?= h($k); ?>"
                         data-icon="<?= h($v['icon']); ?>"
@@ -38,19 +41,19 @@
         ><i class="far fa-minus-square"></i> <?= t('Collapse all'); ?></a>
         <a href="#"
            class="entries-action entries-action-remove-all js-remove-all"
-           data-group-handle="basic"
+           data-group-handle="<?= h(FieldTypeContextEnum::BasicFields->value); ?>"
            data-confirm-text="<?= t('Are you sure?'); ?>"
         ><i class="fas fa-times-circle"></i> <?= t('Remove all'); ?></a>
     </div>
 </div>
-<?php dump($basic); ?>
+
 <div class="mb-4">
-    <div id="field-types-basic" class="js-sortable" data-entries="<?= h(json_encode($basic)); ?>"></div>
+    <div id="field-types-<?= h(FieldTypeContextEnum::BasicFields->value); ?>" class="js-sortable" data-entries="<?= h(json_encode($basic)); ?>"></div>
 </div>
 
 <div class="row">
     <div class="col-lg-3 mb-4">
-        <select class="js-add-entry form-select" data-group-handle="basic">
+        <select class="js-add-entry form-select" data-group-handle="<?= h(FieldTypeContextEnum::BasicFields->value); ?>">
             <?php foreach ($fieldTypes as $k => $v): ?>
                 <option value="<?= h($k); ?>"
                         data-icon="<?= h($v['icon']); ?>"
@@ -77,7 +80,7 @@
         ><i class="far fa-minus-square"></i> <?= t('Collapse all'); ?></a>
         <a href="#"
            class="entries-action entries-action-remove-all js-remove-all"
-           data-group-handle="basic"
+           data-group-handle="<?= h(FieldTypeContextEnum::BasicFields->value); ?>"
            data-confirm-text="<?= t('Are you sure?'); ?>"
         ><i class="fas fa-times-circle"></i> <?= t('Remove all'); ?></a>
     </div>

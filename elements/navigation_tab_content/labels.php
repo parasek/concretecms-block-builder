@@ -1,5 +1,7 @@
 <?php defined('C5_EXECUTE') or exit('Access Denied.');
 
+use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
+
 /**
  * @var Concrete\Core\Form\Service\Form $form
  * @var BlockBuilder\Block\Dto\CreateBlockDto $config
@@ -9,13 +11,17 @@
 
 <div class="mb-4 populate-translation-fields">
     <i class="fas fa-book"></i> <?= t('Populate fields with'); ?>
-    <a href="#" class="js-populate-translation-fields" data-type="translated"><?= t('translated'); ?></a>
-    or
+    <a href="#"
+       class="js-populate-translation-fields"
+       data-type="translated"
+       data-tab-handle="<?= h(NavigationTabEnum::Labels->getHandle()); ?>"><?= t('translated'); ?></a>
+    /
     <a href="#"
        class="js-populate-translation-fields"
        data-type="untranslated"
+       data-tab-handle="<?= h(NavigationTabEnum::Labels->getHandle()); ?>"
     ><?= t('untranslated'); ?></a>
-    <?= t('default texts'); ?>
+    <?= t('default labels'); ?>
 </div>
 
 <div class="mb-4 <?= h(in_array('basicLabel', $fieldsWithError) ? 'has-error' : null); ?>">
@@ -116,10 +122,9 @@
     <?= $form->text('urlEndingLabel', $config->urlEndingLabel, ['data-translated-text' => t('Custom string at the end of URL'), 'data-untranslated-text' => 'Custom string at the end of URL']); ?>
 </div>
 
-<?php // TODO:: remove urlEndingHelpText? ?>
-<div class="mb-4 <?= h(in_array('urlEndingHelpText', $fieldsWithError) ? 'has-error' : null); ?>">
-    <?= $form->label('urlEndingHelpText', t('(e.g. #contact-form or ?ccm_paging_p=2)')); ?>
-    <?= $form->text('urlEndingHelpText', $config->urlEndingHelpText, ['data-translated-text' => t('(e.g. #contact-form or ?ccm_paging_p=2)'), 'data-untranslated-text' => '(e.g. #contact-form or ?ccm_paging_p=2)']); ?>
+<div class="mb-4 <?= h(in_array('urlEndingHelpTextLabel', $fieldsWithError) ? 'has-error' : null); ?>">
+    <?= $form->label('urlEndingHelpTextLabel', t('(e.g. #contact-form or ?ccm_paging_p=2)')); ?>
+    <?= $form->text('urlEndingHelpTextLabel', $config->urlEndingHelpTextLabel, ['data-translated-text' => t('(e.g. #contact-form or ?ccm_paging_p=2)'), 'data-untranslated-text' => '(e.g. #contact-form or ?ccm_paging_p=2)']); ?>
 </div>
 
 <div class="mb-4 <?= h(in_array('textLabel', $fieldsWithError) ? 'has-error' : null); ?>">

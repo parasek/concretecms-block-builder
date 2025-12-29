@@ -8,6 +8,7 @@ use BlockBuilder\Block\Service\BlockTypeService;
 use BlockBuilder\Block\Service\ReservedWordsService;
 use BlockBuilder\Block\Validation\AbstractValidator;
 use BlockBuilder\Block\Validation\ValidationFeedback;
+use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
 use Concrete\Core\Url\Resolver\Manager\ResolverManager;
 
 class BlockHandleValidator extends AbstractValidator
@@ -92,7 +93,7 @@ class BlockHandleValidator extends AbstractValidator
                 $this->addError(
                     error: $error,
                     field: 'blockHandle',
-                    tab: 'block-settings',
+                    tab: NavigationTabEnum::BlockSettings->getHandle(),
                 );
             }
         }

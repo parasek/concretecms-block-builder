@@ -1,6 +1,7 @@
 <?php defined('C5_EXECUTE') or exit('Access Denied.');
 
 /**
+ * @var Concrete\Package\BlockBuilder\Controller\SinglePage\Dashboard\Blocks\BlockBuilder\Configs $controller
  * @var Concrete\Core\Application\Application $app
  * @var BlockBuilder\Environment\Dto\EnvironmentDto $environment
  * @var BlockBuilder\Block\Dto\CreateBlockDto[] $configs
@@ -83,7 +84,7 @@ $u = $app->make(Concrete\Core\User\User::class);
                                   data-confirm-question="<?= h(t('This will remove all instances of the %s block type. This cannot be undone. Are you sure?', $config->blockName)); ?>"
                                   data-block-type-id="<?= h($app->make(\BlockBuilder\Block\Service\BlockTypeService::class)->getBlockTypeId($config->blockHandle)); ?>"
                             >
-                                <?= $this->controller->token->output('uninstall_block'); ?>
+                                <?= $controller->token->output('uninstall_block'); ?>
                                 <button class="btn btn-danger"
                                         type="submit"
                                 ><i class="fas fa-minus-circle"></i> <?= t('Uninstall'); ?></button>
@@ -97,7 +98,7 @@ $u = $app->make(Concrete\Core\User\User::class);
                                   data-confirm-question="<?= h(t('This will permanently delete "%s" folder. This cannot be undone. Are you sure?', DIR_FILES_BLOCK_TYPES . DIRECTORY_SEPARATOR . $config->blockHandle)); ?>"
                                   data-block-type-handle="<?= h($config->blockHandle); ?>"
                             >
-                                <?= $this->controller->token->output('delete_folder'); ?>
+                                <?= $controller->token->output('delete_folder'); ?>
                                 <button class="btn btn-danger"
                                         type="submit"
                                 ><i class="far fa-trash-alt"></i> <?= t('Delete folder'); ?></button>

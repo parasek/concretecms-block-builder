@@ -6,6 +6,7 @@ namespace BlockBuilder\Block\Validation\Validator\Block;
 
 use BlockBuilder\Block\Validation\AbstractValidator;
 use BlockBuilder\Block\Validation\ValidationFeedback;
+use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
 
 class BlockWidthValidator extends AbstractValidator
 {
@@ -26,7 +27,7 @@ class BlockWidthValidator extends AbstractValidator
                 $this->addError(
                     error: $error,
                     field: 'blockWidth',
-                    tab: 'block-settings',
+                    tab: NavigationTabEnum::BlockSettings->getHandle(),
                 );
             }
         }

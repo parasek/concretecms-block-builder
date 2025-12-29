@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace BlockBuilder\FieldType\Enum;
 
+use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
+
 /**
  * Represents the context of field types within a block creation process.
  *
@@ -15,27 +17,19 @@ enum FieldTypeContextEnum: string
     case BasicFields = 'basic';
     case RepeatableFields = 'entries';
 
-    public function getName(): string
-    {
-        return match ($this) {
-            self::BasicFields => t('Basic information'),
-            self::RepeatableFields => t('Repeatable entries'),
-        };
-    }
-
     public function getTabName(): string
     {
         return match ($this) {
-            self::BasicFields => t('Tab: Basic information'),
-            self::RepeatableFields => t('Tab: Repeatable entries'),
+            self::BasicFields => NavigationTabEnum::TabBasicInformation->getName(),
+            self::RepeatableFields => NavigationTabEnum::TabRepeatableEntries->getName(),
         };
     }
 
     public function getTabHandle(): string
     {
         return match ($this) {
-            self::BasicFields => 'tab-basic-information',
-            self::RepeatableFields => 'tab-repeatable-entries',
+            self::BasicFields => NavigationTabEnum::TabBasicInformation->getHandle(),
+            self::RepeatableFields => NavigationTabEnum::TabRepeatableEntries->getHandle(),
         };
     }
 }

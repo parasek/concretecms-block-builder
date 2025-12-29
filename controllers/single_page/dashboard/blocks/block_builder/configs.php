@@ -3,8 +3,6 @@
 namespace Concrete\Package\BlockBuilder\Controller\SinglePage\Dashboard\Blocks\BlockBuilder;
 
 use BlockBuilder\Controller\BaseDashboardController;
-use Concrete\Core\Entity\Block\BlockType\BlockType as BlockTypeEntity;
-use Concrete\Core\User\User;
 use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyResponse;
 
 defined('C5_EXECUTE') or exit('Access Denied.');

@@ -6,6 +6,7 @@
  * @var BlockBuilder\Block\Dto\CreateBlockDto $config
  * @var BlockBuilder\NavigationTab\Enum\NavigationTabEnum[] $navigationTabEnums
  * @var Concrete\Core\Form\Service\Form $form
+ * @var array $fieldsWithError
  * @var string $formActionPath
  * @var array $tabsWithError
  * @var array $blockTypeSets
@@ -69,10 +70,8 @@
     ?>
 
     <form method="post" action="<?= h($controller->action($formActionPath)); ?>">
-        <?= $this->controller->token->output('create_block'); ?>
+        <?= $controller->token->output('create_block'); ?>
 
-        <?php // TODO: data-tab, name, icon? should go t seperate enum class + find usage accros file ?>
-        <?php // TODO: zmienic texts na labals i i moze inne rzeczy? ?>
         <?php if (!empty($navigationTabEnums)): ?>
 
             <ul class="navigation-tabs mb-4" id="navigation-tabs">
@@ -92,7 +91,7 @@
                      id="ccm-tab-content-<?= h($navigationTabEnum->getHandle()); ?>"
                      style="display: none;"
                 >
-                    <?= View::element(
+                    <?php View::element(
                         _file: $navigationTabEnum->getTabContentElementName(),
                         args: [
                             'fieldsWithError' => $fieldsWithError,
@@ -126,6 +125,7 @@
         <?php endif; ?>
 
         <hr>
+
         <p class="small text-muted required-fields">* <?= t('Required fields'); ?></p>
 
         <div class="ccm-dashboard-form-actions-wrapper">
@@ -136,7 +136,7 @@
                 </button>
                 <?php if ($controller->getAction() === 'config' || $this->post('sourceAction') === 'config'): ?>
                     <button type="submit" class="btn btn-secondary float-end me-4" value="1" name="rebuildBlock">
-                        <i class="fas fa-sync-alt"></i> <?= t('Rebuild and refresh block'); ?>
+                        <i class="fas fa-sync-alt me-2"></i> <?= t('Rebuild and refresh block'); ?>
                     </button>
                 <?php endif; ?>
             </div>
@@ -144,6 +144,7 @@
 
     </form>
 
+    <?php // TODO: divide into smaller files; ?>
     <script type="text/template" class="js-template-entries">
 
         <div class="well entry js-entry <% if (error) { %>entry-has-error<% } %>" data-counter="<%=counter%>">

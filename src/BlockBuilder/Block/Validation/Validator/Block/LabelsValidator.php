@@ -6,6 +6,7 @@ namespace BlockBuilder\Block\Validation\Validator\Block;
 
 use BlockBuilder\Block\Validation\AbstractValidator;
 use BlockBuilder\Block\Validation\ValidationFeedback;
+use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
 
 class LabelsValidator extends AbstractValidator
 {
@@ -15,7 +16,7 @@ class LabelsValidator extends AbstractValidator
             $this->addError(
                 error: t('At least one label for buttons ("Add at the top" or "Add at the bottom") is required (%s).', t('Labels')),
                 field: 'addAtTheTopLabel',
-                tab: 'texts',
+                tab: NavigationTabEnum::BlockSettings->getHandle(),
             );
         }
 
@@ -23,7 +24,7 @@ class LabelsValidator extends AbstractValidator
             $this->addError(
                 error: t('Label for "%s" is required (%s).', t('Basic information'), t('Labels')),
                 field: 'basicLabel',
-                tab: 'texts',
+                tab: NavigationTabEnum::BlockSettings->getHandle(),
             );
         }
 
@@ -31,7 +32,7 @@ class LabelsValidator extends AbstractValidator
             $this->addError(
                 error: t('Label for "%s" is required (%s).', t('Entries'), t('Labels')),
                 field: 'entriesLabel',
-                tab: 'texts',
+                tab: NavigationTabEnum::BlockSettings->getHandle(),
             );
         }
 

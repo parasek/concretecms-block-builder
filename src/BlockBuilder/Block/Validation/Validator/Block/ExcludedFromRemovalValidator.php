@@ -6,6 +6,7 @@ namespace BlockBuilder\Block\Validation\Validator\Block;
 
 use BlockBuilder\Block\Validation\AbstractValidator;
 use BlockBuilder\Block\Validation\ValidationFeedback;
+use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
 
 class ExcludedFromRemovalValidator extends AbstractValidator
 {
@@ -50,7 +51,7 @@ class ExcludedFromRemovalValidator extends AbstractValidator
                 $this->addError(
                     error: $error,
                     field: 'excludedFromRemoval',
-                    tab: 'custom-code',
+                    tab: NavigationTabEnum::CustomCode->getHandle(),
                 );
             }
         }

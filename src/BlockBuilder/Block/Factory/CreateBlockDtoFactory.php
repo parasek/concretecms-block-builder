@@ -77,7 +77,7 @@ readonly class CreateBlockDtoFactory
             areYouSureLabel: trim($data['areYouSureLabel'] ?? ''),
             requiredFieldsLabel: trim($data['requiredFieldsLabel'] ?? ''),
             urlEndingLabel: trim($data['urlEndingLabel'] ?? ''),
-            urlEndingHelpText: trim($data['urlEndingHelpText'] ?? ''),
+            urlEndingHelpTextLabel: $data['urlEndingHelpTextLabel'] ?? $data['urlEndingHelpText'] ?? '', // Backwards compatibility
             textLabel: trim($data['textLabel'] ?? ''),
             titleLabel: trim($data['titleLabel'] ?? ''),
             altTextLabel: trim($data['altTextLabel'] ?? ''),

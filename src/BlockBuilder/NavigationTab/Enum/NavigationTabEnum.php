@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace BlockBuilder\NavigationTab\Enum;
 
-use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
-
 enum NavigationTabEnum
 {
     case BlockSettings;
@@ -33,9 +31,9 @@ enum NavigationTabEnum
             self::BlockSettings => 'block-settings',
             self::BuildOptions => 'build-options',
             self::CustomCode => 'custom-code',
-            self::Labels => 'texts',
-            self::TabBasicInformation => FieldTypeContextEnum::BasicFields->getTabHandle(),
-            self::TabRepeatableEntries => FieldTypeContextEnum::RepeatableFields->getTabHandle(),
+            self::Labels => 'labels',
+            self::TabBasicInformation => 'tab-basic-information',
+            self::TabRepeatableEntries => 'tab-repeatable-entries',
         };
     }
 

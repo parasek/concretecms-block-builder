@@ -55,7 +55,7 @@ readonly class CreateBlockDto
         public ?string $areYouSureLabel,
         public ?string $requiredFieldsLabel,
         public ?string $urlEndingLabel,
-        public ?string $urlEndingHelpText,
+        public ?string $urlEndingHelpTextLabel,
         public ?string $textLabel,
         public ?string $titleLabel,
         public ?string $altTextLabel,

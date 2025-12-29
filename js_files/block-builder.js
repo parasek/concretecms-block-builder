@@ -413,8 +413,9 @@ $(function () {
             e.preventDefault();
 
             var replacementType = $(this).attr('data-type');
+            var tabHandle = $(this).attr('data-tab-handle');
 
-            var inputs = $('#ccm-tab-content-texts').find('input');
+            var inputs = $('#ccm-tab-content-'+tabHandle).find('input');
 
             inputs.each(function (i, item) {
                 if (replacementType == 'translated') {
