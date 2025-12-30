@@ -17,11 +17,11 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-6 mb-4 <?= h(in_array('entriesAsFirstTab', $fieldsWithError) ? 'has-error' : null); ?>">
+    <div class="col-xl-6 mb-4 <?= h(in_array('entriesAsFirstTab', $fieldsWithError) ? 'has-error' : null); ?>">
         <?= $form->label('entriesAsFirstTab', t('Entries as first tab')); ?>
         <?= $form->select('entriesAsFirstTab', $entriesAsFirstTabOptions, (int) $config->entriesAsFirstTab); ?>
     </div>
-    <div class="col-lg-6 mb-4 <?= h(in_array('maxNumberOfEntries', $fieldsWithError) ? 'has-error' : null); ?>">
+    <div class="col-xl-6 mb-4 <?= h(in_array('maxNumberOfEntries', $fieldsWithError) ? 'has-error' : null); ?>">
         <?= $form->label('maxNumberOfEntries', t('Max. number of entries') . ' ' . t('(0 for unlimited)')); ?>
         <?= $form->number('maxNumberOfEntries', $config->maxNumberOfEntries); ?>
     </div>

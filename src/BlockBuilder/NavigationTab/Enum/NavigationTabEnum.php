@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace BlockBuilder\NavigationTab\Enum;
 
+use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
+
 enum NavigationTabEnum
 {
     case BlockSettings;
@@ -37,11 +39,6 @@ enum NavigationTabEnum
         };
     }
 
-    public function getTabContentElementName(): string
-    {
-        return 'navigation_tab_content/' . str_replace('-', '_', $this->getHandle());
-    }
-
     public function getIcon(): string
     {
         return match ($this) {
@@ -51,6 +48,23 @@ enum NavigationTabEnum
             self::Labels => 'fas fa-book',
             self::TabBasicInformation => 'far fa-file',
             self::TabRepeatableEntries => 'far fa-copy',
+        };
+    }
+
+    public function getTabContentElementName(): string
+    {
+        return match ($this) {
+            self::TabBasicInformation, self::TabRepeatableEntries => 'navigation_tab_content/field_type_fields',
+            default => 'navigation_tab_content/' . str_replace('-', '_', $this->getHandle()),
+        };
+    }
+
+    public function getFieldTypeContextEnum(): ?FieldTypeContextEnum
+    {
+        return match ($this) {
+            self::TabBasicInformation => FieldTypeContextEnum::BasicFields,
+            self::TabRepeatableEntries => FieldTypeContextEnum::RepeatableFields,
+            default => null,
         };
     }
 }

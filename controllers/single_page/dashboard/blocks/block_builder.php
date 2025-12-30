@@ -50,11 +50,13 @@ class BlockBuilder extends BaseDashboardController
 
     public function view(): void
     {
+        // TODO: Fix Dto (maybe we should not use DTO but raw data)
         $this->handlePostRequest();
 
         $this->set('pageTitle', t('Block Builder'));
         $this->set('formActionPath', '');
         $this->set('config', $this->app->make(CreateBlockDtoFactory::class)->fromArray($this->provider->getDefaultValues()));
+
         $this->setProviderData();
         $this->overrideFieldsWithDataFromConfig($this->app->make(CreateBlockDtoFactory::class)->fromArray($this->provider->getDefaultValues()));
     }
@@ -82,8 +84,8 @@ class BlockBuilder extends BaseDashboardController
         $this->set('config', $config);
         $this->set('pageTitle', t('Block Builder') . ' - ' . t('Config loaded from predefined JSON file "%s"', $config->blockName));
         $this->set('formActionPath', 'predefined_config/' . $handle);
-        $this->setProviderData();
 
+        $this->setProviderData();
         $this->overrideFieldsWithDataFromConfig($config);
     }
 
@@ -112,9 +114,9 @@ class BlockBuilder extends BaseDashboardController
 
                 $this->handleCreateBlockResponse($createBlockResult);
             }
-        }
 
-        $this->overrideJavaScriptFieldsWithDataFromPost();
+            $this->overrideJavaScriptFieldsWithDataFromPost();
+        }
     }
 
     #[NoReturn]
@@ -141,6 +143,7 @@ class BlockBuilder extends BaseDashboardController
         $data = array_merge(
             $this->provider->getOptionLists(),
             $this->provider->getLabels(),
+            // TODO: THIS ONE SHOULD BE DELETED CAUSE WE ARE MAKING DTO?
             $this->provider->getDefaultValues(),
         );
 

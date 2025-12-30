@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BlockBuilder\DataProvider;
 
+use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\Service\OptionListService;
 
 readonly class BlockBuilderViewDataProvider
@@ -64,7 +65,7 @@ readonly class BlockBuilderViewDataProvider
     public function getOptionLists(): array
     {
         return [
-            'fieldTypes' => $this->optionListService->getFieldTypes(),
+            'fieldTypes' => FieldTypeEnum::cases(),
             'blockTypeSets' => $this->optionListService->getBlockTypeSets(includeEmptyOption: true),
             'cacheBlockRecordOptions' => $this->optionListService->getCacheBlockRecordOptions(),
             'cacheBlockOutputOptions' => $this->optionListService->getCacheBlockOutputOptions(),

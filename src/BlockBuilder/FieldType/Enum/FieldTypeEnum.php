@@ -135,6 +135,14 @@ enum FieldTypeEnum implements JsonSerializable
         return $class::getLabel();
     }
 
+    public function getIcon(): string
+    {
+        /** @var FieldTypeInterface $class */
+        $class = $this->getDefinitionClass();
+
+        return $class::getIcon();
+    }
+
     public static function fromHandle(string $handle): self
     {
         foreach (self::cases() as $case) {
@@ -146,31 +154,6 @@ enum FieldTypeEnum implements JsonSerializable
         }
 
         throw new InvalidArgumentException("Unknown field type handle: $handle");
-    }
-
-    /**
-     * Returns an array for a select dropdown: [handle => Label]
-     */
-    public static function getOptions(): array
-    {
-        $options = [
-            '' => [
-                'label' => t('+ Add new field'),
-                'icon' => '',
-            ],
-        ];
-
-        foreach (self::cases() as $case) {
-            /** @var FieldTypeInterface $class */
-            $class = $case->getDefinitionClass();
-
-            $options[$class::getHandle()] = [
-                'label' => $class::getLabel(),
-                'icon' => $class::getIcon(),
-            ];
-        }
-
-        return $options;
     }
 
     public function jsonSerialize(): string

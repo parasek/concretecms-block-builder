@@ -1,5 +1,7 @@
 <?php defined('C5_EXECUTE') or exit('Access Denied.');
 
+use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
+
 /**
  * @var Concrete\Package\BlockBuilder\Controller\SinglePage\Dashboard\Blocks\BlockBuilder $controller
  * @var BlockBuilder\Environment\Dto\EnvironmentDto $environment
@@ -20,7 +22,7 @@
  * @var array $entriesAsFirstTabOptions
  * @var array $highlightMultiElementFieldsOptions
  * @var array $dividerOptions
- * @var array $fieldTypes
+ * @var BlockBuilder\FieldType\Enum\FieldTypeEnum[] $fieldTypes
  * @var BlockBuilder\FieldType\FieldTypeDtoInterface[] $basic
  * @var BlockBuilder\FieldType\FieldTypeDtoInterface[] $entries
  */
@@ -28,7 +30,7 @@
 
 <div class="bb-container"
      id="bbContainer"
-     data-csrf-token="<?= h($this->controller->token->generate('csrf_token')); ?>"
+     data-csrf-token="<?= h($controller->token->generate('csrf_token')); ?>"
      data-fields-with-errors="<?= h(json_encode($fieldsWithError ?? [])); ?>"
      data-install-block-type-url="<?= app('url/manager')->resolve(['js/install-block-type']); ?>"
      data-uninstall-block-type-url="<?= h(app('url/manager')->resolve(['js/uninstall-block-type'])); ?>"
@@ -94,6 +96,8 @@
                     <?php View::element(
                         _file: $navigationTabEnum->getTabContentElementName(),
                         args: [
+                            // Common variables used across all tabs
+                            'navigationTabEnum' => $navigationTabEnum,
                             'fieldsWithError' => $fieldsWithError,
                             'form' => $form,
                             'config' => $config ?? null,
@@ -112,10 +116,12 @@
                             'dividerOptions' => $dividerOptions,
                             // Tab: Basic information / Tab: Repeatable entries
                             'fieldTypes' => $fieldTypes,
-                            // Tab: Basic information
-                            'basic' => $basic ,
-                            // Tab: Repeatable entries
-                            'entries' => $entries ,
+                            'fieldTypeContextEnum' => $navigationTabEnum->getFieldTypeContextEnum(),
+                            'fields' => match ($navigationTabEnum) {
+                                NavigationTabEnum::TabBasicInformation => $basic,
+                                NavigationTabEnum::TabRepeatableEntries => $entries,
+                                default => null,
+                            },
                         ],
                         _pkgHandle: 'block_builder',
                     ); ?>

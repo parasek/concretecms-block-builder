@@ -14,8 +14,8 @@
  */
 ?>
 
-<div class="row g-5">
-    <div class="col-lg-6 mb-4">
+<div class="row gx-5">
+    <div class="col-xl-6">
 
         <div class="mb-4 <?= h(in_array('blockName', $fieldsWithError) ? 'has-error' : null); ?>">
             <?= $form->label('blockName', t('Block name') . ' *'); ?>
@@ -51,7 +51,7 @@
         </div>
 
     </div>
-    <div class="col-lg-6 mb-4">
+    <div class="col-xl-6">
 
         <div class="mb-4 <?= h(in_array('cacheBlockRecord', $fieldsWithError) ? 'has-error' : null); ?>">
             <?= $form->label('cacheBlockRecord', t('Cache block record')); ?>
