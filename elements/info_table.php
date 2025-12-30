@@ -25,6 +25,7 @@
             <strong class="env-info-entry-value"><?= h($environment->phpVersion ?? t('No info')); ?></strong>
         </div>
     </div>
+
     <?php if (isset($config)): ?>
         <div class="env-info-row">
             <div class="env-info-entry env-info-entry-title">

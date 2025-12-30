@@ -23,8 +23,6 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
  * @var array $highlightMultiElementFieldsOptions
  * @var array $dividerOptions
  * @var BlockBuilder\FieldType\Enum\FieldTypeEnum[] $fieldTypes
- * @var BlockBuilder\FieldType\FieldTypeDtoInterface[] $basic
- * @var BlockBuilder\FieldType\FieldTypeDtoInterface[] $entries
  */
 ?>
 
@@ -118,8 +116,8 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
                             'fieldTypes' => $fieldTypes,
                             'fieldTypeContextEnum' => $navigationTabEnum->getFieldTypeContextEnum(),
                             'fields' => match ($navigationTabEnum) {
-                                NavigationTabEnum::TabBasicInformation => $basic,
-                                NavigationTabEnum::TabRepeatableEntries => $entries,
+                                NavigationTabEnum::TabBasicInformation => $config->basic,
+                                NavigationTabEnum::TabRepeatableEntries => $config->entries,
                                 default => null,
                             },
                         ],

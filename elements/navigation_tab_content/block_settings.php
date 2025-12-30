@@ -55,11 +55,11 @@
 
         <div class="mb-4 <?= h(in_array('cacheBlockRecord', $fieldsWithError) ? 'has-error' : null); ?>">
             <?= $form->label('cacheBlockRecord', t('Cache block record')); ?>
-            <?= $form->select('cacheBlockRecord', $cacheBlockRecordOptions, (int) ($config->cacheBlockRecord)); ?>
+            <?= $form->select('cacheBlockRecord', $cacheBlockRecordOptions, (int) $config->cacheBlockRecord); ?>
         </div>
         <div class="mb-4 <?= h(in_array('cacheBlockOutput', $fieldsWithError) ? 'has-error' : null); ?>">
             <?= $form->label('cacheBlockOutput', t('Cache block output')); ?>
-            <?= $form->select('cacheBlockOutput', $cacheBlockOutputOptions, (int) ($config->cacheBlockOutput)); ?>
+            <?= $form->select('cacheBlockOutput', $cacheBlockOutputOptions, (int) $config->cacheBlockOutput); ?>
         </div>
         <div class="mb-4 <?= h(in_array('cacheBlockOutputLifetime', $fieldsWithError) ? 'has-error' : null); ?>">
             <?= $form->label('cacheBlockOutputLifetime', t('Cache block output lifetime')); ?>
