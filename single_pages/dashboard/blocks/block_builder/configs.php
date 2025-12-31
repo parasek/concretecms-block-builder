@@ -182,7 +182,7 @@ use BlockBuilder\Block\Service\BlockTypeService;
         <?php foreach ($predefinedConfigs as $predefinedConfig): ?>
 
             <?php
-            $bt = app(BlockTypeService::class)->getBlockTypeObject($config->blockHandle);
+            $bt = app(BlockTypeService::class)->getBlockTypeObject($predefinedConfig->blockHandle);
             ?>
 
             <div class="block-type d-flex flex-column justify-content-xxl-between flex-xxl-row mb-3 w-100">
@@ -192,21 +192,21 @@ use BlockBuilder\Block\Service\BlockTypeService;
                          class="block-type-icon-image img-fluid"
                          width="97"
                          height="97"
-                         alt="<?= h($config->blockName); ?>"
+                         alt="<?= h($predefinedConfig->blockName); ?>"
                     >
                 </div>
 
                 <div class="block-type-info flex-xxl-grow-1">
 
                     <div class="block-type-info-heading mb-1">
-                        <strong class="block-type-name me-2"><?= h($config->blockName); ?></strong>
+                        <strong class="block-type-name me-2"><?= h($predefinedConfig->blockName); ?></strong>
                     </div>
 
-                    <div class="block-type-handle text-muted mb-1"><?= h($config->blockHandle); ?></div>
+                    <div class="block-type-handle text-muted mb-1"><?= h($predefinedConfig->blockHandle); ?></div>
 
                     <div class="block-type-description mb-2 mb-xxl-3">
-                        <?php if ($config->blockDescription): ?>
-                            <?= h($config->blockDescription); ?>
+                        <?php if ($predefinedConfig->blockDescription): ?>
+                            <?= h($predefinedConfig->blockDescription); ?>
                         <?php else: ?>
                             <?= t('No description'); ?>
                         <?php endif; ?>
@@ -214,16 +214,16 @@ use BlockBuilder\Block\Service\BlockTypeService;
 
                     <div class="block-type-badges text-muted small mb-3 mb-xxl-0">
                         <span class="badge small block-type-info-badge mb-1">
-                           <span class="me-1 text-muted"><?= t('Block Builder'); ?>:</span> <?= h($config->blockBuilderVersion); ?>
+                           <span class="me-1 text-muted"><?= t('Block Builder'); ?>:</span> <?= h($predefinedConfig->blockBuilderVersion); ?>
                         </span>
                         <span class="badge small block-type-info-badge mb-1">
-                            <span class="me-1 text-muted"><?= t('Concrete'); ?>:</span> <?= h($config->concreteVersion); ?>
+                            <span class="me-1 text-muted"><?= t('Concrete'); ?>:</span> <?= h($predefinedConfig->concreteVersion); ?>
                         </span>
                         <span class="badge small block-type-info-badge mb-1">
-                            <span class="me-1 text-muted"><?= t('PHP'); ?>:</span> <?= h($config->phpVersion); ?>
+                            <span class="me-1 text-muted"><?= t('PHP'); ?>:</span> <?= h($predefinedConfig->phpVersion); ?>
                         </span>
                         <span class="badge small block-type-info-badge mb-1">
-                            <span class="me-1 text-muted"><?= t('Created At'); ?>:</span> <?= h(date('Y-m-d H:i', strtotime($config->createdAt))); ?>
+                            <span class="me-1 text-muted"><?= t('Created At'); ?>:</span> <?= h(date('Y-m-d H:i', strtotime($predefinedConfig->createdAt))); ?>
                         </span>
                     </div>
 
@@ -232,7 +232,7 @@ use BlockBuilder\Block\Service\BlockTypeService;
                 <div class="block-type-actions d-flex flex-column align-items-xxl-end">
 
                     <div class="block-type-action block-type-action-load-config mb-2">
-                        <a href="<?= h(app('url/manager')->resolve(['/dashboard/blocks/block_builder/config/' . $config->blockHandle])); ?>"
+                        <a href="<?= h(app('url/manager')->resolve(['/dashboard/blocks/block_builder/config/' . $predefinedConfig->blockHandle])); ?>"
                            class="btn btn-primary"
                         >
                             <i class="fas fa-upload me-2"></i> <?= t('Load config'); ?>
@@ -245,10 +245,9 @@ use BlockBuilder\Block\Service\BlockTypeService;
 
         <?php endforeach; ?>
 
-    </div>
+    </div> <?php // .block-types ?>
 
 <?php endif; ?>
-
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

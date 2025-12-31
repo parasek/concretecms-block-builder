@@ -15,7 +15,6 @@ use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
 use BlockBuilder\BlockGenerator\FileGenerator\AbstractFileGenerator;
 use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\FieldType\FieldTypeDtoInterface;
-use BlockBuilder\FieldType\FieldTypeInterface;
 
 readonly class ControllerPhpFileGenerator extends AbstractFileGenerator implements FileGeneratorInterface
 {
