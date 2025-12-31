@@ -107,7 +107,6 @@ use BlockBuilder\Block\Service\BlockTypeService;
                         <div class="block-type-action block-type-action-install mb-2">
                             <form action="<?= h(app('url/manager')->resolve(['/dashboard/blocks/block_builder/configs/install/' . $config->blockHandle])); ?>"
                                   method="post"
-                                  data-install
                                   data-confirm-question="<?= h(t('This will install %s block type. Are you sure?', $config->blockName)); ?>"
                                   data-block-type-handle="<?= h($config->blockHandle); ?>"
                             >
@@ -121,7 +120,6 @@ use BlockBuilder\Block\Service\BlockTypeService;
                         <div class="block-type-action block-type-action-delete-folder mb-2">
                             <form action="<?= h(app('url/manager')->resolve(['/dashboard/blocks/block_builder/configs/delete_folder/' . $config->blockHandle])); ?>"
                                   method="post"
-                                  data-delete-folder
                                   data-confirm-question="<?= h(t('This will permanently delete "%s" folder. This cannot be undone. Are you sure?', DIR_FILES_BLOCK_TYPES . DIRECTORY_SEPARATOR . $config->blockHandle)); ?>"
                                   data-block-type-handle="<?= h($config->blockHandle); ?>"
                             >
@@ -137,7 +135,6 @@ use BlockBuilder\Block\Service\BlockTypeService;
                         <div class="block-type-action block-type-action-uninstall mb-2">
                             <form action="<?= h(app('url/manager')->resolve(['/dashboard/blocks/block_builder/configs/uninstall/' . $bt->getBlockTypeID()])); ?>"
                                   method="post"
-                                  data-uninstall
                                   data-confirm-question="<?= h(t('This will remove all instances of the %s block type. This cannot be undone. Are you sure?', $config->blockName)); ?>"
                                   data-block-type-id="<?= h($bt->getBlockTypeID()); ?>"
                             >
@@ -251,21 +248,7 @@ use BlockBuilder\Block\Service\BlockTypeService;
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('[data-uninstall]').forEach(function(element) {
-            element.addEventListener('submit', function(e) {
-                if (!confirm(element.getAttribute('data-confirm-question'))) {
-                    e.preventDefault();
-                }
-            });
-        });
-        document.querySelectorAll('[data-delete-folder]').forEach(function(element) {
-            element.addEventListener('submit', function(e) {
-                if (!confirm(element.getAttribute('data-confirm-question'))) {
-                    e.preventDefault();
-                }
-            });
-        });
-        document.querySelectorAll('[data-install]').forEach(function(element) {
+        document.querySelectorAll('[data-confirm-question]').forEach(function(element) {
             element.addEventListener('submit', function(e) {
                 if (!confirm(element.getAttribute('data-confirm-question'))) {
                     e.preventDefault();
