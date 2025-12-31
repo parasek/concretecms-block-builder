@@ -53,7 +53,7 @@ class BlockHandleValidator extends AbstractValidator
                     if (!$this->blockTypeService->isBlockTypeInstalled($blockHandle)) {
                         $errors[] = t(
                             'You can not rebuild and refresh block that is awaiting installation, %sInstall%s it first. If you tried to rebuild a block by mistake, build it instead.',
-                            '<a href="#" class="btn btn-primary btn-sm js-install-block-type" data-handle="' . $blockHandle . '"><i class="fas fa-plus-circle"></i> ',
+                            '<a href="#" class="btn btn-success btn-sm js-install-block-type" data-handle="' . $blockHandle . '"><i class="fas fa-plus-circle"></i> ',
                             '</a>',
                         );
                     }

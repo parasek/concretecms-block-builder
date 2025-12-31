@@ -10,6 +10,8 @@ use BlockBuilder\Block\Dto\CreateBlockManifestDto;
 use BlockBuilder\Block\Enum\PostGenerationBlockStateEnum;
 use BlockBuilder\BlockGenerator\FileGenerator\ConfigBbJson\ConfigBbJsonFileGenerator;
 use BlockBuilder\BlockGenerator\FileGenerator\ControllerPhp\ControllerPhpFileGenerator;
+use BlockBuilder\DataProvider\BlockBuilderViewDataProvider;
+use BlockBuilder\Environment\EnvironmentService;
 use BlockBuilder\Service\FileSystemService;
 use Concrete\Core\Block\BlockType\BlockType;
 use Concrete\Core\Entity\Block\BlockType\BlockType as BlockTypeEntity;
@@ -24,6 +26,7 @@ readonly class BlockGenerator
         private ConfigBbJsonFileGenerator $configBbJsonFileGenerator,
         private ControllerPhpFileGenerator $controllerPhpFileGenerator,
         private FileSystemService $fileSystemService,
+        private EnvironmentService $environmentService,
     ) {
     }
 
@@ -72,11 +75,12 @@ readonly class BlockGenerator
 
         $this->generateConfigBbJson($dto, $manifestDto);
         $this->generateControllerPhp($dto, $manifestDto);
+        $this->generateIconPng($dto, $manifestDto);
 
         if ($manifestDto->shouldBlockBeRebuilt) {
             $postGenerationBlockState = PostGenerationBlockStateEnum::Rebuilt;
-            $blockType = BlockType::getByHandle($dto->blockHandle);
-            $bt = $this->em->find(BlockTypeEntity::class, $blockType->getBlockTypeID());
+            $bt = BlockType::getByHandle($dto->blockHandle);
+            $bt = $this->em->find(BlockTypeEntity::class, $bt->getBlockTypeID());
             $bt->refresh();
         } elseif ($manifestDto->shouldBlockBeInstalled) {
             $postGenerationBlockState = PostGenerationBlockStateEnum::CreatedAndInstalled;
@@ -95,13 +99,31 @@ readonly class BlockGenerator
     private function generateConfigBbJson(CreateBlockDto $dto, CreateBlockManifestDto $manifestDto): void
     {
         $output = $this->configBbJsonFileGenerator->getOutput($dto, $manifestDto);
-        $this->createFile(DIR_FILES_BLOCK_TYPES . '/' . $dto->blockHandle . '/config-bb.json', $output);
+        $this->createFile(
+            path: DIR_FILES_BLOCK_TYPES . '/' . $dto->blockHandle . '/config-bb.json',
+            content: $output,
+        );
     }
 
     private function generateControllerPhp(CreateBlockDto $dto, CreateBlockManifestDto $manifestDto): void
     {
         $output = $this->controllerPhpFileGenerator->getOutput($dto, $manifestDto);
-        $this->createFile(DIR_FILES_BLOCK_TYPES . '/' . $dto->blockHandle . '/controller.php', $output);
+        $this->createFile(
+            path: DIR_FILES_BLOCK_TYPES . '/' . $dto->blockHandle . '/controller.php',
+            content: $output,
+        );
+    }
+
+    private function generateIconPng(CreateBlockDto $dto, CreateBlockManifestDto $manifestDto): void
+    {
+        $filename = 'icon.png';
+
+        copy(
+            from: $this->environmentService->getGeneratorFilesPath() . DIRECTORY_SEPARATOR . $filename,
+            to: DIR_FILES_BLOCK_TYPES . DIRECTORY_SEPARATOR
+            . $dto->blockHandle . DIRECTORY_SEPARATOR
+            . $filename,
+        );
     }
 
     private function createFile($path, $content): void

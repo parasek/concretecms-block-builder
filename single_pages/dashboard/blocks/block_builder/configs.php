@@ -1,29 +1,29 @@
 <?php defined('C5_EXECUTE') or exit('Access Denied.');
 
+use BlockBuilder\Block\Service\BlockTypeService;
+
 /**
  * @var Concrete\Package\BlockBuilder\Controller\SinglePage\Dashboard\Blocks\BlockBuilder\Configs $controller
- * @var Concrete\Core\Application\Application $app
  * @var BlockBuilder\Environment\Dto\EnvironmentDto $environment
  * @var BlockBuilder\Block\Dto\CreateBlockDto[] $configs
  * @var BlockBuilder\Block\Dto\CreateBlockDto[] $predefinedConfigs
  */
 
-$u = $app->make(Concrete\Core\User\User::class);
 ?>
 
 <div class="ccm-dashboard-header-buttons">
     <a href="<?= h(app('url/manager')->resolve(['dashboard/blocks/block_builder'])); ?>"
        class="btn btn-secondary"
     ><i class="fas fa-plus"></i> <?= t('New block'); ?></a>
-    <a href="<?= h($app->make('url/manager')->resolve(['dashboard/blocks/block_builder'])); ?>"
+    <a href="<?= h(app('url/manager')->resolve(['dashboard/blocks/block_builder'])); ?>"
        class="btn btn-secondary"
     ><i class="fas fa-angle-double-left"></i> <?= t('Go back'); ?></a>
 </div>
 
 <?php View::element('info_table', ['environment' => $environment, 'config' => null], 'block_builder'); ?>
 
-<div class="mb-4">
-    <p><?= t('Configuration files found in existing blocks:'); ?></p>
+<div class="block-types-title mb-4 mt-4">
+    <?= t('Configuration files found in existing blocks'); ?>
 </div>
 
 <?php if (!empty($configs)): ?>
@@ -32,90 +32,138 @@ $u = $app->make(Concrete\Core\User\User::class);
 
         <?php foreach ($configs as $config): ?>
 
-            <div class="block-type">
-                <div class="block-type-icon">
-                    <img src="/application/blocks/all_fields/icon.png" alt="">
-                </div>
-                <div class="block-type-info">
-                    <strong class="me-2"><?= h($config->blockName); ?></strong>
-                    <span class="small badge rounded-pill bg-primary"><?= h($config->blockHandle); ?></span>
+            <?php
+            $bt = app(BlockTypeService::class)->getBlockTypeObject($config->blockHandle);
+            ?>
 
-                    <?php if ($config->blockDescription): ?>
-                        <br>
-                        <small class="text-muted"><?= h($config->blockDescription); ?></small>
-                    <?php endif; ?>
-                    <br>
-                    <small class="text-muted">
-                        <span class="small badge rounded-pill info-item-config">
-                            <?= t('Block Builder Version'); ?>: <?= h($config->blockBuilderVersion); ?>
-                        </span>
-                        <span class="small badge rounded-pill info-item-config">
-                            <?= t('Concrete Version'); ?>: <?= h($config->concreteVersion); ?>
-                        </span>
-                        <span class="small badge rounded-pill info-item-config">
-                            <?= t('PHP Version'); ?>: <?= h($config->phpVersion); ?>
-                        </span>
-                        <span class="small badge rounded-pill info-item-config">
-                            <?= t('Created At'); ?>: <?= h($config->createdAt); ?>
-                        </span>
-                    </small>
+            <div class="block-type d-flex flex-column justify-content-xxl-between flex-xxl-row mb-3 w-100">
+
+                <div class="block-type-icon mb-2">
+                    <img src="/application/blocks/all_fields/icon.png"
+                         class="block-type-icon-image img-fluid"
+                         width="97"
+                         height="97"
+                         alt="<?= h($config->blockName); ?>"
+                    >
                 </div>
-                <div class="block-type-usage">
-                    <div class=""><?= t('Usage Count'); ?>: XXXX</div>
-                    <div class=""><?= t('Usage Count on Active Pages'); ?>: XXXX</div>
-                </div>
-                <div class="block-type-status">
-                    <div class=""><?= t('Status'); ?></div>
-                    <div class="">
-                        <?php if ($app->make(\BlockBuilder\Block\Service\BlockTypeService::class)->isBlockTypeInstalled($config->blockHandle)): ?>
-                            <?= t('Installed'); ?>
+
+                <div class="block-type-info flex-xxl-grow-1">
+
+                    <div class="block-type-info-heading mb-1">
+                        <strong class="block-type-name me-2"><?= h($config->blockName); ?></strong>
+
+                        <?php if (app(BlockTypeService::class)->isBlockTypeInstalled($bt)): ?>
+                            <span class="block-type-status badge rounded-pill small bg-success"><?= t('Installed'); ?></span>
                         <?php else: ?>
-                            <?= t('Not installed'); ?>
-                            <br>xXxx ISNTALL BUTTON
+                            <span class="block-type-status badge rounded-pill small bg-danger"><?= t('Not installed'); ?></span>
                         <?php endif; ?>
                     </div>
-                </div>
-                <div class="block-type-actions">
-                    <?php if ($app->make(\BlockBuilder\Block\Service\BlockTypeService::class)->isBlockTypeInstalled($config->blockHandle)): ?>
-                        <?php if ($u->isSuperUser()): ?>
-                            <form action="<?= h($app->make('url/manager')->resolve(['/dashboard/blocks/block_builder/configs/uninstall/' . $app->make(\BlockBuilder\Block\Service\BlockTypeService::class)->getBlockTypeId($config->blockHandle)])); ?>"
-                                  method="post"
-                                  data-uninstall
-                                  data-confirm-question="<?= h(t('This will remove all instances of the %s block type. This cannot be undone. Are you sure?', $config->blockName)); ?>"
-                                  data-block-type-id="<?= h($app->make(\BlockBuilder\Block\Service\BlockTypeService::class)->getBlockTypeId($config->blockHandle)); ?>"
-                            >
-                                <?= $controller->token->output('uninstall_block'); ?>
-                                <button class="btn btn-danger"
-                                        type="submit"
-                                ><i class="fas fa-minus-circle"></i> <?= t('Uninstall'); ?></button>
-                            </form>
+
+                    <div class="block-type-handle text-muted mb-1"><?= h($config->blockHandle); ?></div>
+
+                    <div class="block-type-description mb-2 mb-xxl-3">
+                        <?php if ($config->blockDescription): ?>
+                            <?= h($config->blockDescription); ?>
+                        <?php else: ?>
+                            <?= t('No description'); ?>
                         <?php endif; ?>
-                    <?php else: ?>
-                        <?php if ($u->isSuperUser()): ?>
-                            <form action="<?= h($app->make('url/manager')->resolve(['/dashboard/blocks/block_builder/configs/delete_folder/' . $config->blockHandle])); ?>"
+                    </div>
+
+                    <?php if (app(BlockTypeService::class)->isBlockTypeInstalled($bt)): ?>
+                        <div class="block-type-usage text-muted small mb-2 d-xxl-flex">
+                            <div class="me-xxl-3">
+                                <?= t('Usage count'); ?>:
+                                <?= h($bt->getCount()); ?>
+                            </div>
+                            <div class="">
+                                <?= t('Usage count on active pages'); ?>:
+                                <a href="<?= $controller->action('search', $bt->getBlockTypeID()); ?>">
+                                    <?= h($bt->getCount(ignoreUnapprovedVersions: true)); ?>
+                                </a>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+
+                    <div class="block-type-badges text-muted small mb-3 mb-xxl-0">
+                        <span class="badge small block-type-info-badge mb-1">
+                           <span class="me-1 text-muted"><?= t('Block Builder'); ?>:</span> <?= h($config->blockBuilderVersion); ?>
+                        </span>
+                        <span class="badge small block-type-info-badge mb-1">
+                            <span class="me-1 text-muted"><?= t('Concrete'); ?>:</span> <?= h($config->concreteVersion); ?>
+                        </span>
+                        <span class="badge small block-type-info-badge mb-1">
+                            <span class="me-1 text-muted"><?= t('PHP'); ?>:</span> <?= h($config->phpVersion); ?>
+                        </span>
+                        <span class="badge small block-type-info-badge mb-1">
+                            <span class="me-1 text-muted"><?= t('Created At'); ?>:</span> <?= h(date('Y-m-d H:i', strtotime($config->createdAt))); ?>
+                        </span>
+                    </div>
+
+                </div> <?php // .block-type-info ?>
+
+                <div class="block-type-actions d-flex flex-column align-items-xxl-end">
+
+                    <?php if (!app(BlockTypeService::class)->isBlockTypeInstalled($bt)): ?>
+                        <div class="block-type-action block-type-action-install mb-2">
+                            <form action="<?= h(app('url/manager')->resolve(['/dashboard/blocks/block_builder/configs/install/' . $config->blockHandle])); ?>"
+                                  method="post"
+                                  data-install
+                                  data-confirm-question="<?= h(t('This will install %s block type. Are you sure?', $config->blockName)); ?>"
+                                  data-block-type-handle="<?= h($config->blockHandle); ?>"
+                            >
+                                <?= $controller->token->output('install_block'); ?>
+                                <button class="btn btn-success text-nowrap"
+                                        type="submit"
+                                ><i class="fas fa-plus-circle"></i> <?= t('Install'); ?></button>
+                            </form>
+                        </div>
+
+                        <div class="block-type-action block-type-action-delete-folder mb-2">
+                            <form action="<?= h(app('url/manager')->resolve(['/dashboard/blocks/block_builder/configs/delete_folder/' . $config->blockHandle])); ?>"
                                   method="post"
                                   data-delete-folder
                                   data-confirm-question="<?= h(t('This will permanently delete "%s" folder. This cannot be undone. Are you sure?', DIR_FILES_BLOCK_TYPES . DIRECTORY_SEPARATOR . $config->blockHandle)); ?>"
                                   data-block-type-handle="<?= h($config->blockHandle); ?>"
                             >
                                 <?= $controller->token->output('delete_folder'); ?>
-                                <button class="btn btn-danger"
+                                <button class="btn btn-danger text-nowrap"
                                         type="submit"
                                 ><i class="far fa-trash-alt"></i> <?= t('Delete folder'); ?></button>
                             </form>
-                        <?php endif; ?>
+                        </div>
                     <?php endif; ?>
-                </div>
-                <a href="<?= h($app->make('url/manager')->resolve(['/dashboard/blocks/block_builder/config/' . $config->blockHandle])); ?>"
-                   class="btn btn-primary"
-                >
-                    <i class="fas fa-upload me-2"></i> <?= t('Load config'); ?>
-                </a>
-            </div>
+
+                    <?php if (app(BlockTypeService::class)->isBlockTypeInstalled($bt)): ?>
+                        <div class="block-type-action block-type-action-uninstall mb-2">
+                            <form action="<?= h(app('url/manager')->resolve(['/dashboard/blocks/block_builder/configs/uninstall/' . $bt->getBlockTypeID()])); ?>"
+                                  method="post"
+                                  data-uninstall
+                                  data-confirm-question="<?= h(t('This will remove all instances of the %s block type. This cannot be undone. Are you sure?', $config->blockName)); ?>"
+                                  data-block-type-id="<?= h($bt->getBlockTypeID()); ?>"
+                            >
+                                <?= $controller->token->output('uninstall_block'); ?>
+                                <button class="btn btn-danger text-nowrap"
+                                        type="submit"
+                                ><i class="fas fa-minus-circle"></i> <?= t('Uninstall'); ?></button>
+                            </form>
+                        </div>
+                    <?php endif; ?>
+
+                    <div class="block-type-action block-type-action-load-config mb-2">
+                        <a href="<?= h(app('url/manager')->resolve(['/dashboard/blocks/block_builder/config/' . $config->blockHandle])); ?>"
+                           class="btn btn-primary"
+                        >
+                            <i class="fas fa-upload me-2"></i> <?= t('Load config'); ?>
+                        </a>
+                    </div>
+
+                </div> <?php // .block-type-actions ?>
+
+            </div> <?php // .block-type ?>
 
         <?php endforeach; ?>
 
-    </div>
+    </div> <?php // .block-types ?>
 
 <?php else: ?>
 
@@ -123,8 +171,8 @@ $u = $app->make(Concrete\Core\User\User::class);
 
 <?php endif; ?>
 
-<div class="mb-4 mt-4">
-    <p><?= t('Predefined configuration files for testing:'); ?></p>
+<div class="block-types-title mb-4 mt-4">
+    <?= t('Predefined configuration files'); ?>
 </div>
 
 <?php if (!empty($predefinedConfigs)): ?>
@@ -133,39 +181,67 @@ $u = $app->make(Concrete\Core\User\User::class);
 
         <?php foreach ($predefinedConfigs as $predefinedConfig): ?>
 
-            <div class="block-type">
-                <a href="<?= h($app->make('url/manager')->resolve(['/dashboard/blocks/block_builder/predefined_config/' . $predefinedConfig->blockHandle])); ?>"
-                   class="block-type-build block-type-build-single"
-                >
-                    <strong class="me-2"><?= h($predefinedConfig->blockName); ?></strong>
-                    <span class="small badge rounded-pill bg-primary"><?= h($predefinedConfig->blockHandle); ?></span>
+            <?php
+            $bt = app(BlockTypeService::class)->getBlockTypeObject($config->blockHandle);
+            ?>
 
-                    <br>
+            <div class="block-type d-flex flex-column justify-content-xxl-between flex-xxl-row mb-3 w-100">
 
-                    <?php if ($predefinedConfig->blockDescription): ?>
-                        <small class="text-muted"><?= h($predefinedConfig->blockDescription); ?></small>
-                    <?php endif; ?>
+                <div class="block-type-icon mb-2">
+                    <img src="/application/blocks/all_fields/icon.png"
+                         class="block-type-icon-image img-fluid"
+                         width="97"
+                         height="97"
+                         alt="<?= h($config->blockName); ?>"
+                    >
+                </div>
 
-                    <br>
+                <div class="block-type-info flex-xxl-grow-1">
 
-                    <?php if ($predefinedConfig->blockBuilderVersion): ?>
-                        <small class="text-muted">
-                            <span class="small badge rounded-pill info-item-config">
-                                <?= t('Block Builder Version'); ?>: <?= h($predefinedConfig->blockBuilderVersion ?? t('No info')); ?>
-                            </span>
-                            <span class="small badge rounded-pill info-item-config">
-                                <?= t('Concrete Version'); ?>: <?= h($predefinedConfig->concreteVersion ?? t('No info')); ?>
-                            </span>
-                            <span class="small badge rounded-pill info-item-config">
-                                <?= t('PHP Version'); ?>: <?= h($predefinedConfig->phpVersion ?? t('No info')); ?>
-                            </span>
-                            <span class="small badge rounded-pill info-item-config">
-                                <?= t('Created at'); ?>: <?= h($predefinedConfig->createdAt ?? t('No info')); ?>
-                            </span>
-                        </small>
-                    <?php endif; ?>
-                </a>
-            </div>
+                    <div class="block-type-info-heading mb-1">
+                        <strong class="block-type-name me-2"><?= h($config->blockName); ?></strong>
+                    </div>
+
+                    <div class="block-type-handle text-muted mb-1"><?= h($config->blockHandle); ?></div>
+
+                    <div class="block-type-description mb-2 mb-xxl-3">
+                        <?php if ($config->blockDescription): ?>
+                            <?= h($config->blockDescription); ?>
+                        <?php else: ?>
+                            <?= t('No description'); ?>
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="block-type-badges text-muted small mb-3 mb-xxl-0">
+                        <span class="badge small block-type-info-badge mb-1">
+                           <span class="me-1 text-muted"><?= t('Block Builder'); ?>:</span> <?= h($config->blockBuilderVersion); ?>
+                        </span>
+                        <span class="badge small block-type-info-badge mb-1">
+                            <span class="me-1 text-muted"><?= t('Concrete'); ?>:</span> <?= h($config->concreteVersion); ?>
+                        </span>
+                        <span class="badge small block-type-info-badge mb-1">
+                            <span class="me-1 text-muted"><?= t('PHP'); ?>:</span> <?= h($config->phpVersion); ?>
+                        </span>
+                        <span class="badge small block-type-info-badge mb-1">
+                            <span class="me-1 text-muted"><?= t('Created At'); ?>:</span> <?= h(date('Y-m-d H:i', strtotime($config->createdAt))); ?>
+                        </span>
+                    </div>
+
+                </div> <?php // .block-type-info ?>
+
+                <div class="block-type-actions d-flex flex-column align-items-xxl-end">
+
+                    <div class="block-type-action block-type-action-load-config mb-2">
+                        <a href="<?= h(app('url/manager')->resolve(['/dashboard/blocks/block_builder/config/' . $config->blockHandle])); ?>"
+                           class="btn btn-primary"
+                        >
+                            <i class="fas fa-upload me-2"></i> <?= t('Load config'); ?>
+                        </a>
+                    </div>
+
+                </div> <?php // .block-type-actions ?>
+
+            </div> <?php // .block-type ?>
 
         <?php endforeach; ?>
 
@@ -184,6 +260,13 @@ $u = $app->make(Concrete\Core\User\User::class);
             });
         });
         document.querySelectorAll('[data-delete-folder]').forEach(function(element) {
+            element.addEventListener('submit', function(e) {
+                if (!confirm(element.getAttribute('data-confirm-question'))) {
+                    e.preventDefault();
+                }
+            });
+        });
+        document.querySelectorAll('[data-install]').forEach(function(element) {
             element.addEventListener('submit', function(e) {
                 if (!confirm(element.getAttribute('data-confirm-question'))) {
                     e.preventDefault();

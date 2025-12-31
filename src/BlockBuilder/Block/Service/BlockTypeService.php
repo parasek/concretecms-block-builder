@@ -65,28 +65,33 @@ readonly class BlockTypeService
         return false;
     }
 
-    public function isBlockTypeInstalled(string $handle): bool
+    public function isBlockTypeInstalled(null|BlockTypeEntity|int|string $bt): bool
     {
-        return is_object(BlockType::getByHandle($handle));
-    }
-
-    public function getBlockTypeId(?string $handle): ?int
-    {
-        $blockType = BlockType::getByHandle($handle);
-
-        if (is_object($blockType)) {
-            return $blockType->getBlockTypeID();
+        if (is_numeric($bt)) {
+            $bt = BlockType::getByID($bt);
+        } elseif (is_string($bt)) {
+            $bt = BlockType::getByHandle($bt);
         }
 
-        return null;
+        if ($bt instanceof BlockTypeEntity) {
+            return true;
+        }
+
+        return false;
     }
 
-    public function getBlockTypeName(?int $blockTypeId): ?string
+    public function getBlockTypeObject(null|int|string $handleOrId): ?BlockTypeEntity
     {
-        $blockType = BlockType::getByID($blockTypeId);
+        if (is_numeric($handleOrId)) {
+            $bt = BlockType::getByID($handleOrId);
+        } elseif (is_string($handleOrId)) {
+            $bt = BlockType::getByHandle($handleOrId);
+        } else {
+            $bt = null;
+        }
 
-        if (is_object($blockType)) {
-            return $blockType->getBlockTypeName();
+        if ($bt instanceof BlockTypeEntity) {
+            return $bt;
         }
 
         return null;

@@ -17,7 +17,7 @@ readonly abstract class AbstractFileGenerator
 
     protected function loadStub(string $fileName): string
     {
-        $stubPath = $this->environmentService->getGeneratorTemplatesPath() . DIRECTORY_SEPARATOR . $fileName;
+        $stubPath = $this->environmentService->getGeneratorSkeletonsPath() . DIRECTORY_SEPARATOR . $fileName;
 
         return file_get_contents($stubPath);
     }

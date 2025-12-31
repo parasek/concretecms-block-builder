@@ -23,7 +23,8 @@ class UninstallBlockType extends BaseJsController
         }
 
         $handle = (string) $this->post('handle');
-        $blockTypeId = $blockTypeService->getBlockTypeId($handle);
+        $bt = $blockTypeService->getBlockTypeObject($handle);
+        $blockTypeId = $bt->getBlockTypeID();
 
         $error = $blockTypeService->validateBlockTypeBeforeUninstall($blockTypeId);
         if ($error) {

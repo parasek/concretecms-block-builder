@@ -32,11 +32,15 @@ readonly class EnvironmentService
         );
     }
 
-    public function getGeneratorTemplatesPath(): string
+    public function getGeneratorFilesPath(): string
     {
         return DIR_PACKAGES . DIRECTORY_SEPARATOR .
             self::PACKAGE_HANDLE . DIRECTORY_SEPARATOR .
-            'generator_templates' . DIRECTORY_SEPARATOR .
-            'skeletons';
+            'generator_files';
+    }
+
+    public function getGeneratorSkeletonsPath(): string
+    {
+        return $this->getGeneratorFilesPath() . DIRECTORY_SEPARATOR . 'skeletons';
     }
 }

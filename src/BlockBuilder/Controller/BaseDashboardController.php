@@ -11,6 +11,7 @@ use Concrete\Core\Asset\AssetList;
 use Concrete\Core\Entity\Package as PackageEntity;
 use Concrete\Core\Package\PackageService;
 use Concrete\Core\Page\Controller\DashboardPageController;
+use Concrete\Core\User\User;
 
 class BaseDashboardController extends DashboardPageController
 {
@@ -33,6 +34,7 @@ class BaseDashboardController extends DashboardPageController
         $this->loadAssets();
 
         $this->set('app', $this->app);
+        $this->set('u', $this->app->make(User::class));
         $this->set('environment', $environment);
     }
 
