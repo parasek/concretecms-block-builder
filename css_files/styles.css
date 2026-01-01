@@ -187,6 +187,17 @@
     margin-bottom: 0;
 }
 
+.block-icon-preview {
+    border: 1px solid #ebebeb;
+    border-radius: 4px;
+    padding: 10px 20px 18px;
+}
+
+.block-icon-preview-image-wrapper {
+    width: 97px;
+    margin: 0 auto;
+}
+
 /************************************************************/
 /* Night mode
 /************************************************************/
@@ -212,6 +223,10 @@
 .block-type {
     border: 1px solid var(--bs-border-color);
     padding: 20px;
+}
+
+.block-type-icon {
+    width: 97px;
 }
 
 .block-type-info {

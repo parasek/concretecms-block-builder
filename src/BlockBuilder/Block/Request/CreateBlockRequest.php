@@ -13,16 +13,20 @@ use BlockBuilder\Block\Validation\Validator\Block\CsrfValidator;
 use BlockBuilder\Block\Validation\Validator\Block\ExcludedFromRemovalValidator;
 use BlockBuilder\Block\Validation\Validator\Block\LabelsValidator;
 use BlockBuilder\Block\Validation\Validator\Block\PermissionsValidator;
+use BlockBuilder\Block\Validation\Validator\Block\CustomBlockIconValidator;
 use BlockBuilder\Block\Validation\Validator\FieldType\FieldTypeValidator;
+use Symfony\Component\HttpFoundation\FileBag;
 
 readonly class CreateBlockRequest
 {
     public function __construct(
         private array $post,
+        private FileBag $files,
         private BlockNameValidator $blockNameValidator,
         private BlockHandleValidator $blockHandleValidator,
         private BlockWidthValidator $blockWidthValidator,
         private BlockHeightValidator $blockHeightValidator,
+        private CustomBlockIconValidator $customBlockIconValidator,
         private ExcludedFromRemovalValidator $excludedFromRemovalValidator,
         private LabelsValidator $labelsValidator,
         private PermissionsValidator $permissionsValidator,
@@ -44,6 +48,7 @@ readonly class CreateBlockRequest
             $this->blockHandleValidator->validate($this->post),
             $this->blockWidthValidator->validate($this->post),
             $this->blockHeightValidator->validate($this->post),
+            $this->customBlockIconValidator->validate($this->post, $this->files),
             $this->excludedFromRemovalValidator->validate($this->post),
             $this->labelsValidator->validate($this->post),
             $this->fieldTypeValidator->validate($this->post),

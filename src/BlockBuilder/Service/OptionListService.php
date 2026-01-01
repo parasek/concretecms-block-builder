@@ -4,11 +4,19 @@ declare(strict_types=1);
 
 namespace BlockBuilder\Service;
 
-use BlockBuilder\FieldType\Enum\FieldTypeEnum;
+use BlockBuilder\Block\Service\BlockTypeService;
+use BlockBuilder\BlockGenerator\Enum\CreateBlockContextEnum;
+use BlockBuilder\Environment\EnvironmentService;
 use Concrete\Core\Block\BlockType\Set as BlockTypeSet;
 
-class OptionListService
+readonly class OptionListService
 {
+    public function __construct(
+        private BlockTypeService $blockTypeService,
+        private EnvironmentService $environmentService,
+    ) {
+    }
+
     public function getBlockTypeSets(bool $includeEmptyOption = false): array
     {
         // These calls ensure Concrete's translation extractor picks up these strings
@@ -24,6 +32,39 @@ class OptionListService
 
         foreach (BlockTypeSet::getList() as $blockTypeSet) {
             $options[$blockTypeSet->getBlockTypeSetHandle()] = t($blockTypeSet->getBlockTypeSetName());
+        }
+
+        return $options;
+    }
+
+    public function getBlockIcons(CreateBlockContextEnum $context, string $blockHandle): array
+    {
+        $icons = [];
+
+        if ($context === CreateBlockContextEnum::Config) {
+            // Skip if the block type folder/icon was already deleted
+            // (for example, using js call in an alert message)
+            $publicPath = $this->environmentService->getPublicPathToBlockIcon($blockHandle);
+            if (file_exists(DIR_BASE . $publicPath)) {
+                $icons[] = [
+                    'path' => $publicPath,
+                    'label' => t('Keep current icon'),
+                ];
+            }
+
+        }
+
+        $icons[] = [
+            'path' => $this->environmentService->getPublicPathToDefaultBlockIcon(),
+            'label' => t('Default Block Builder icon'),
+        ];
+
+        $concreteIcons = $this->blockTypeService->getBlockTypeIconPublicPaths();
+        $allIcons = array_merge($icons, $concreteIcons);
+
+        $options = [];
+        foreach ($allIcons as $icon) {
+            $options[$icon['path']] = $icon['label'];
         }
 
         return $options;
@@ -62,11 +103,6 @@ class OptionListService
     public function getEntriesAsFirstTabOptions(bool $includeEmptyOption = false): array
     {
         return $this->getYesNoOptions($includeEmptyOption);
-    }
-
-    public function getFieldTypes(): array
-    {
-        return FieldTypeEnum::getOptions();
     }
 
     public function getHighlightMultiElementFieldsOptions(bool $includeEmptyOption = false): array
@@ -166,8 +202,8 @@ class OptionListService
         return $options;
     }
 
-    private function getEmptyOption(): array
+    private function getEmptyOption(?string $label = null): array
     {
-        return ['' => '---'];
+        return ['' => ($label ?? '---')];
     }
 }

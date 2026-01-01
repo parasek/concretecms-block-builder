@@ -7,6 +7,7 @@ namespace BlockBuilder\Block\Validation\Validator\Block;
 use BlockBuilder\Block\Validation\AbstractValidator;
 use BlockBuilder\Block\Validation\ValidationFeedback;
 use Concrete\Core\Validation\CSRF\Token;
+use Symfony\Component\HttpFoundation\FileBag;
 
 class CsrfValidator extends AbstractValidator
 {
@@ -15,7 +16,7 @@ class CsrfValidator extends AbstractValidator
     ) {
     }
 
-    public function validate(array $data): ValidationFeedback
+    public function validate(array $data, ?FileBag $files = null): ValidationFeedback
     {
         $errors = [];
 

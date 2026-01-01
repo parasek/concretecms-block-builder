@@ -10,6 +10,7 @@ use BlockBuilder\Block\Factory\CreateBlockDtoFactory;
 use BlockBuilder\Block\Request\CreateBlockRequest;
 use BlockBuilder\Block\Service\BlockManifestService;
 use BlockBuilder\BlockGenerator\BlockGenerator;
+use BlockBuilder\BlockGenerator\Enum\CreateBlockContextEnum;
 use BlockBuilder\Controller\BaseDashboardController;
 use BlockBuilder\DataProvider\BlockBuilderViewDataProvider;
 use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
@@ -60,7 +61,7 @@ class BlockBuilder extends BaseDashboardController
 
         $this->set('pageTitle', t('Block Builder'));
         $this->set('formActionPath', '');
-        $this->setProviderData();
+        $this->setProviderData(context: CreateBlockContextEnum::NewBlock, blockHandle: $config->blockHandle);
     }
 
     public function config($handle): void
@@ -75,8 +76,8 @@ class BlockBuilder extends BaseDashboardController
         }
 
         $this->set('pageTitle', t('Block Builder') . ' - ' . t('Config loaded from block "%s"', $config->blockName));
-        $this->set('formActionPath', 'config/' . $handle);
-        $this->setProviderData();
+        $this->set('formActionPath', CreateBlockContextEnum::Config->value . '/' . $handle);
+        $this->setProviderData(context: CreateBlockContextEnum::Config, blockHandle: $config->blockHandle);
     }
 
     public function predefined_config($handle): void
@@ -91,8 +92,8 @@ class BlockBuilder extends BaseDashboardController
         }
 
         $this->set('pageTitle', t('Block Builder') . ' - ' . t('Config loaded from predefined JSON file "%s"', $config->blockName));
-        $this->set('formActionPath', 'predefined_config/' . $handle);
-        $this->setProviderData();
+        $this->set('formActionPath', CreateBlockContextEnum::PredefinedConfig->value . '/' . $handle);
+        $this->setProviderData(context: CreateBlockContextEnum::PredefinedConfig, blockHandle: $config->blockHandle);
     }
 
     private function handlePostRequest(): ?Response
@@ -103,6 +104,7 @@ class BlockBuilder extends BaseDashboardController
 
         $request = $this->app->make(CreateBlockRequest::class, [
             'post' => $this->post(),
+            'files' => $this->request->files,
         ]);
         $result = $request->validate();
 
@@ -115,6 +117,8 @@ class BlockBuilder extends BaseDashboardController
             $manifestDto = $this->blockManifestService->getManifest(
                 dto: $dto,
                 rebuildBlock: !empty($result->data['rebuildBlock']),
+                blockIcon: $result->data['blockIcon'],
+                customBlockIcon: $this->request->files->get('customBlockIcon'),
             );
 
             $createBlockResult = $this->blockGenerator->create(
@@ -145,10 +149,10 @@ class BlockBuilder extends BaseDashboardController
         return $this->buildRedirect('/dashboard/blocks/block_builder/config/' . $result->blockHandle);
     }
 
-    private function setProviderData(): void
+    private function setProviderData(CreateBlockContextEnum $context, string $blockHandle): void
     {
         $data = array_merge(
-            $this->provider->getOptionLists(),
+            $this->provider->getOptionLists(context: $context, blockHandle: $blockHandle),
         );
 
         foreach ($data as $key => $value) {

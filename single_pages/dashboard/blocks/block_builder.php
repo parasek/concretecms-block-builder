@@ -1,5 +1,6 @@
 <?php defined('C5_EXECUTE') or exit('Access Denied.');
 
+use BlockBuilder\BlockGenerator\Enum\CreateBlockContextEnum;
 use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
 
 /**
@@ -12,6 +13,7 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
  * @var string $formActionPath
  * @var array $tabsWithError
  * @var array $blockTypeSets
+ * @var array $blockIcons
  * @var array $cacheBlockRecordOptions
  * @var array $cacheBlockOutputOptions
  * @var array $cacheBlockOutputOnPostOptions
@@ -63,13 +65,13 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
 
     <?php
     $infoTable = ['environment' => $environment];
-    if (in_array($controller->getAction(), ['config', 'predefined_config'], true)) {
+    if (in_array($controller->getAction(), [CreateBlockContextEnum::Config->value, CreateBlockContextEnum::PredefinedConfig->value], true)) {
         $infoTable = array_merge($infoTable, ['config' => $config]);
     }
     View::element('info_table', $infoTable, 'block_builder');
     ?>
 
-    <form method="post" action="<?= h($controller->action($formActionPath)); ?>">
+    <form method="post" action="<?= h($controller->action($formActionPath)); ?>" enctype="multipart/form-data">
         <?= $controller->token->output('create_block'); ?>
 
         <?php if (!empty($navigationTabEnums)): ?>
@@ -101,6 +103,7 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
                             'config' => $config ?? null,
                             // Block settings
                             'blockTypeSets' => $blockTypeSets,
+                            'blockIcons' => $blockIcons,
                             'cacheBlockRecordOptions' => $cacheBlockRecordOptions,
                             'cacheBlockOutputOptions' => $cacheBlockOutputOptions,
                             'cacheBlockOutputOnPostOptions' => $cacheBlockOutputOnPostOptions,
@@ -138,7 +141,7 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
                 <button type="submit" class="btn btn-primary float-end" value="1" name="buildBlock">
                     <i class="fas fa-hammer me-2"></i> <?= t('Build your block now!'); ?>
                 </button>
-                <?php if ($controller->getAction() === 'config' || $this->post('sourceAction') === 'config'): ?>
+                <?php if ($controller->getAction() === CreateBlockContextEnum::Config->value || $this->post('sourceAction') === CreateBlockContextEnum::Config->value): ?>
                     <button type="submit" class="btn btn-secondary float-end me-4" value="1" name="rebuildBlock">
                         <i class="fas fa-sync-alt me-2"></i> <?= t('Rebuild and refresh block'); ?>
                     </button>

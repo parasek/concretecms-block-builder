@@ -10,6 +10,7 @@ use BlockBuilder\Block\Validation\ValidationFeedback;
 use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
 use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\FieldType\FieldTypeInterface;
+use Symfony\Component\HttpFoundation\FileBag;
 
 class FieldTypeValidator extends AbstractValidator
 {
@@ -18,7 +19,7 @@ class FieldTypeValidator extends AbstractValidator
     ) {
     }
 
-    public function validate(array $data): ValidationFeedback
+    public function validate(array $data, ?FileBag $files = null): ValidationFeedback
     {
         foreach (FieldTypeContextEnum::cases() as $context) {
             $contextHandle = $context->value;

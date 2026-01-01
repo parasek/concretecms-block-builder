@@ -205,4 +205,34 @@ readonly class BlockTypeService
 
         return $blockTypeName;
     }
+
+    public function getBlockTypeIconPublicPaths(): array
+    {
+        $paths = [];
+
+        $concreteBlockFolders = $this->fileService->getDirectoryContents(DIR_FILES_BLOCK_TYPES_CORE);
+        sort($concreteBlockFolders);
+
+        foreach ($concreteBlockFolders as $concreteBlockFolder) {
+            $path = $this->getBlockTypeIconPublicPath($concreteBlockFolder);
+
+            if (file_exists(DIR_BASE . $path)) {
+                $paths[] = [
+                    'path' => $path,
+                    'label' => $concreteBlockFolder,
+                ];
+            }
+
+        }
+
+        return $paths;
+    }
+
+    public function getBlockTypeIconPublicPath(string $concreteBlockFolder): string
+    {
+        return DIRECTORY_SEPARATOR . DIRNAME_CORE . DIRECTORY_SEPARATOR .
+            DIRNAME_BLOCKS . DIRECTORY_SEPARATOR .
+            $concreteBlockFolder . DIRECTORY_SEPARATOR .
+            FILENAME_BLOCK_ICON;
+    }
 }

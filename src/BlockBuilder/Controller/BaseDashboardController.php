@@ -44,5 +44,11 @@ class BaseDashboardController extends DashboardPageController
 
         $al->register('css', 'bb/styles', 'css_files/styles.css', [], $this->pkg);
         $this->requireAsset('css', 'bb/styles');
+
+        $al->register('css', 'choices/css', 'vendor/choices.js/choices.min.css', [], $this->pkg);
+        $this->requireAsset('css', 'choices/css');
+
+        $al->register('javascript', 'choices/js', 'vendor/choices.js/choices.min.js', [], $this->pkg);
+        $this->requireAsset('javascript', 'choices/js');
     }
 }

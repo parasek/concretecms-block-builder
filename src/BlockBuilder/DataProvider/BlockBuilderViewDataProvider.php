@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BlockBuilder\DataProvider;
 
+use BlockBuilder\BlockGenerator\Enum\CreateBlockContextEnum;
 use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\Service\OptionListService;
 
@@ -14,11 +15,12 @@ readonly class BlockBuilderViewDataProvider
     ) {
     }
 
-    public function getOptionLists(): array
+    public function getOptionLists(CreateBlockContextEnum $context, string $blockHandle): array
     {
         return [
             'fieldTypes' => FieldTypeEnum::cases(),
             'blockTypeSets' => $this->optionListService->getBlockTypeSets(includeEmptyOption: true),
+            'blockIcons' => $this->optionListService->getBlockIcons(context: $context, blockHandle: $blockHandle),
             'cacheBlockRecordOptions' => $this->optionListService->getCacheBlockRecordOptions(),
             'cacheBlockOutputOptions' => $this->optionListService->getCacheBlockOutputOptions(),
             'cacheBlockOutputOnPostOptions' => $this->optionListService->getCacheBlockOutputOnPostOptions(),

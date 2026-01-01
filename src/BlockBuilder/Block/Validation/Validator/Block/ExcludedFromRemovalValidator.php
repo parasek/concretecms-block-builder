@@ -6,28 +6,30 @@ namespace BlockBuilder\Block\Validation\Validator\Block;
 
 use BlockBuilder\Block\Validation\AbstractValidator;
 use BlockBuilder\Block\Validation\ValidationFeedback;
+use BlockBuilder\Environment\EnvironmentService;
 use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
+use Symfony\Component\HttpFoundation\FileBag;
 
 class ExcludedFromRemovalValidator extends AbstractValidator
 {
-    public function validate(array $data): ValidationFeedback
+    public function validate(array $data, ?FileBag $files = null): ValidationFeedback
     {
         $errors = [];
 
         if (!empty($data['excludedFromRemoval'])) {
             $forbiddenItems = [
                 'css_files',
-                'add.php',
+                FILENAME_BLOCK_ADD,
+                FILENAME_BLOCK_EDIT,
                 'auto.js',
-                'composer.php',
-                'config-bb.json',
-                'controller.php',
-                'db.xml',
-                'edit.php',
-                'form.php',
-                'icon.png',
-                'scrapbook.php',
-                'view.php',
+                FILENAME_BLOCK_COMPOSER,
+                EnvironmentService::CONFIG_BB_JS,
+                FILENAME_BLOCK_CONTROLLER,
+                FILENAME_BLOCK_DB,
+                FILENAME_FORM,
+                FILENAME_BLOCK_ICON,
+                FILENAME_BLOCK_VIEW_SCRAPBOOK,
+                FILENAME_BLOCK_VIEW,
             ];
             $items = explode(PHP_EOL, $data['excludedFromRemoval']);
             $isForbiddenItemFound = false;

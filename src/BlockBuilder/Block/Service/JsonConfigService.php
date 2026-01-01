@@ -23,7 +23,7 @@ readonly class JsonConfigService
             DIRECTORY_SEPARATOR .
             $blockHandle .
             DIRECTORY_SEPARATOR .
-            'config-bb.json';
+            EnvironmentService::CONFIG_BB_JS;
 
         $data = $this->parseJsonFile($path);
 
@@ -52,7 +52,7 @@ readonly class JsonConfigService
         }
 
         foreach ($blockPaths as $blockPath) {
-            $path = $blockPath . DIRECTORY_SEPARATOR . 'config-bb.json';
+            $path = $blockPath . DIRECTORY_SEPARATOR . EnvironmentService::CONFIG_BB_JS;
             $config = $this->parseJsonFile($path);
             if (!empty($config)) {
                 $configs[] = $this->getFactory()->fromArray($config);
@@ -121,7 +121,7 @@ readonly class JsonConfigService
             DIRECTORY_SEPARATOR .
             $this->environmentService->getEnvironment()->packageHandle .
             DIRECTORY_SEPARATOR .
-            'predefined_configs';
+            EnvironmentService::PREDEFINED_CONFIGS_FOLDER;
     }
 
     private function getFactory(): CreateBlockDtoFactory

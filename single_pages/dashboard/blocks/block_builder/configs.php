@@ -1,6 +1,8 @@
 <?php defined('C5_EXECUTE') or exit('Access Denied.');
 
 use BlockBuilder\Block\Service\BlockTypeService;
+use BlockBuilder\BlockGenerator\Enum\CreateBlockContextEnum;
+use BlockBuilder\Environment\EnvironmentService;
 
 /**
  * @var Concrete\Package\BlockBuilder\Controller\SinglePage\Dashboard\Blocks\BlockBuilder\Configs $controller
@@ -38,11 +40,9 @@ use BlockBuilder\Block\Service\BlockTypeService;
 
             <div class="block-type d-flex flex-column justify-content-xxl-between flex-xxl-row mb-3 w-100">
 
-                <div class="block-type-icon mb-2">
-                    <img src="/application/blocks/all_fields/icon.png"
+                <div class="block-type-icon mb-3">
+                    <img src="<?= h(app(EnvironmentService::class)->getPublicPathToBlockIcon($config->blockHandle)); ?>"
                          class="block-type-icon-image img-fluid"
-                         width="97"
-                         height="97"
                          alt="<?= h($config->blockName); ?>"
                     >
                 </div>
@@ -77,7 +77,9 @@ use BlockBuilder\Block\Service\BlockTypeService;
                             </div>
                             <div class="">
                                 <?= t('Usage count on active pages'); ?>:
-                                <a href="<?= $controller->action('search', $bt->getBlockTypeID()); ?>">
+                                <a href="<?= $controller->action('search', $bt->getBlockTypeID()); ?>"
+                                   target="_blank"
+                                >
                                     <?= h($bt->getCount(ignoreUnapprovedVersions: true)); ?>
                                 </a>
                             </div>
@@ -147,7 +149,7 @@ use BlockBuilder\Block\Service\BlockTypeService;
                     <?php endif; ?>
 
                     <div class="block-type-action block-type-action-load-config mb-2">
-                        <a href="<?= h(app('url/manager')->resolve(['/dashboard/blocks/block_builder/config/' . $config->blockHandle])); ?>"
+                        <a href="<?= h(app('url/manager')->resolve(['/dashboard/blocks/block_builder/' . CreateBlockContextEnum::Config->value . '/' . $config->blockHandle])); ?>"
                            class="btn btn-primary"
                         >
                             <i class="fas fa-upload me-2"></i> <?= t('Load config'); ?>
@@ -184,8 +186,8 @@ use BlockBuilder\Block\Service\BlockTypeService;
 
             <div class="block-type d-flex flex-column justify-content-xxl-between flex-xxl-row mb-3 w-100">
 
-                <div class="block-type-icon mb-2">
-                    <img src="/application/blocks/all_fields/icon.png"
+                <div class="block-type-icon mb-3">
+                    <img src="<?= h(app(EnvironmentService::class)->getPublicPathToDefaultBlockIcon()); ?>"
                          class="block-type-icon-image img-fluid"
                          width="97"
                          height="97"
@@ -229,7 +231,7 @@ use BlockBuilder\Block\Service\BlockTypeService;
                 <div class="block-type-actions d-flex flex-column align-items-xxl-end">
 
                     <div class="block-type-action block-type-action-load-config mb-2">
-                        <a href="<?= h(app('url/manager')->resolve(['/dashboard/blocks/block_builder/config/' . $predefinedConfig->blockHandle])); ?>"
+                        <a href="<?= h(app('url/manager')->resolve(['/dashboard/blocks/block_builder/' . CreateBlockContextEnum::PredefinedConfig->value . '/' . $predefinedConfig->blockHandle])); ?>"
                            class="btn btn-primary"
                         >
                             <i class="fas fa-upload me-2"></i> <?= t('Load config'); ?>

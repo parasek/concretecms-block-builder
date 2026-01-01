@@ -1,10 +1,13 @@
 <?php defined('C5_EXECUTE') or exit('Access Denied.');
 
+use BlockBuilder\Environment\EnvironmentService;
+
 /**
  * @var Concrete\Core\Form\Service\Form $form
  * @var BlockBuilder\Block\Dto\CreateBlockDto $config
  * @var array $fieldsWithError
  * @var array $blockTypeSets
+ * @var array $blockIcons
  * @var array $cacheBlockRecordOptions
  * @var array $cacheBlockOutputOptions
  * @var array $cacheBlockOutputOnPostOptions
@@ -48,6 +51,40 @@
         <div class="mb-4 <?= h(in_array('blockTypeSet', $fieldsWithError) ? 'has-error' : null); ?>">
             <?= $form->label('blockTypeSet', t('Block type set')); ?>
             <?= $form->select('blockTypeSet', $blockTypeSets, $config->blockTypeSet); ?>
+        </div>
+        <div class="mb-4 <?= h(in_array('blockIcon', $fieldsWithError) ? 'has-error' : null); ?>">
+            <?= $form->label('blockIcon', t('Block icon')); ?>
+            <?php
+            if ($config->blockHandle) {
+                $blockIconPath = app(EnvironmentService::class)->getPublicPathToBlockIcon($config->blockHandle);
+            } else {
+                $blockIconPath = app(EnvironmentService::class)->getPublicPathToDefaultBlockIcon();
+            }
+            ?>
+            <div class="d-xxl-flex gap-4">
+                <div class="">
+                    <div class="block-icon-preview mb-3">
+                        <div class="form-label text-center mb-2"><?= t('Preview'); ?></div>
+                        <div class="block-icon-preview-image-wrapper text-center">
+                            <img src="<?= h($blockIconPath); ?>"
+                                 class="img-fluid"
+                                 alt="<?= h($config->blockName); ?>"
+                            >
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-grow-1">
+                    <div class="mb-3">
+                        <?= $form->label('blockIcon', t('Choose from existing icons')); ?>
+                        <?= $form->select('blockIcon', $blockIcons); ?>
+                    </div>
+                    <div class="">
+                        <?= $form->label('customBlockIcon', t('Upload a custom icon')); ?>
+                        <?= $form->file('customBlockIcon'); ?>
+                        <div class="form-text"><?= t('Requirements: PNG image, 97px x 97px'); ?></div>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>

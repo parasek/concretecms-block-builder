@@ -9,18 +9,17 @@ use BlockBuilder\Block\Service\ReservedWordsService;
 use BlockBuilder\Block\Validation\AbstractValidator;
 use BlockBuilder\Block\Validation\ValidationFeedback;
 use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
-use Concrete\Core\Url\Resolver\Manager\ResolverManager;
+use Symfony\Component\HttpFoundation\FileBag;
 
 class BlockHandleValidator extends AbstractValidator
 {
     public function __construct(
         private readonly BlockTypeService $blockTypeService,
         private readonly ReservedWordsService $reservedHandlesService,
-        private readonly ResolverManager $resolverManager,
     ) {
     }
 
-    public function validate(array $data): ValidationFeedback
+    public function validate(array $data, ?FileBag $files = null): ValidationFeedback
     {
         $errors = [];
 

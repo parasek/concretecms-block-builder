@@ -664,6 +664,46 @@ $(function () {
 
         };
 
+        var initBlockIconPicker = function () {
+
+            const choices = new Choices('#blockIcon', {
+                shouldSort: false,
+                searchEnabled: true,
+                itemSelectText: '',
+                callbackOnCreateTemplates: function (template) {
+                    return {
+                        item: ({classNames}, data) => {
+                            return template(`
+                                    <div class="${classNames.item} ${data.highlighted ? classNames.highlightedState : classNames.itemSelectable}" data-item data-id="${data.id}" data-value="${data.value}" ${data.active ? 'aria-selected="true"' : ''} ${data.disabled ? 'aria-disabled="true"' : ''}>
+                                        <img src="${data.value}" style="width: 24px; height: 24px; margin-right: 10px; vertical-align: middle;"> ${data.label}
+                                    </div>
+                                `);
+                        },
+                        choice: ({classNames}, data) => {
+                            return template(`
+                                    <div class="${classNames.item} ${classNames.itemChoice} ${data.disabled ? classNames.itemDisabled : classNames.itemSelectable}" data-select-text="${this.config.itemSelectText}" data-choice ${data.disabled ? 'aria-disabled="true"' : 'aria-haspopup="true"'} data-id="${data.id}" data-value="${data.value}" data-choice-selectable>
+                                        <img src="${data.value}" style="width: 24px; height: 24px; margin-right: 10px; vertical-align: middle;"> ${data.label}
+                                    </div>
+                                `);
+                        },
+                    };
+                },
+            });
+
+            const element = document.getElementById('blockIcon');
+            element.addEventListener('change', function(event) {
+                const previewImg = document.querySelector('.block-icon-preview img');
+                if (previewImg) {
+                    previewImg.src = event.detail.value;
+                }
+            });
+
+            const previewImg = document.querySelector('.block-icon-preview img');
+            if (previewImg && element.value) {
+                previewImg.src = element.value;
+            }
+        };
+
         var initNavigationTabs = function (navContainer) {
 
             navContainer = $(navContainer);
@@ -735,6 +775,7 @@ $(function () {
         var init = function () {
             initNavigationTabs('#navigation-tabs');
             initSortable();
+            initBlockIconPicker();
             bindFunctions();
         };
 

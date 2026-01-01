@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace BlockBuilder\Block\Validation;
 
+use Symfony\Component\HttpFoundation\FileBag;
+
 abstract class AbstractValidator
 {
     /**
@@ -48,5 +50,5 @@ abstract class AbstractValidator
         );
     }
 
-    abstract public function validate(array $data): ValidationFeedback;
+    abstract public function validate(array $data, ?FileBag $files = null): ValidationFeedback;
 }

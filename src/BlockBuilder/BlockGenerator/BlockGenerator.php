@@ -10,7 +10,6 @@ use BlockBuilder\Block\Dto\CreateBlockManifestDto;
 use BlockBuilder\Block\Enum\PostGenerationBlockStateEnum;
 use BlockBuilder\BlockGenerator\FileGenerator\ConfigBbJson\ConfigBbJsonFileGenerator;
 use BlockBuilder\BlockGenerator\FileGenerator\ControllerPhp\ControllerPhpFileGenerator;
-use BlockBuilder\DataProvider\BlockBuilderViewDataProvider;
 use BlockBuilder\Environment\EnvironmentService;
 use BlockBuilder\Service\FileSystemService;
 use Concrete\Core\Block\BlockType\BlockType;
@@ -66,7 +65,7 @@ readonly class BlockGenerator
     public function create(CreateBlockDto $dto, CreateBlockManifestDto $manifestDto): CreateBlockResultDto
     {
         if ($manifestDto->shouldBlockBeRebuilt) {
-            $this->prepareDirectoryForRebuild($dto);
+            $this->prepareDirectoryForRebuild($dto, $manifestDto);
         }
 
         if (!file_exists($manifestDto->blockPath)) {
@@ -100,7 +99,7 @@ readonly class BlockGenerator
     {
         $output = $this->configBbJsonFileGenerator->getOutput($dto, $manifestDto);
         $this->createFile(
-            path: DIR_FILES_BLOCK_TYPES . '/' . $dto->blockHandle . '/config-bb.json',
+            path: DIR_FILES_BLOCK_TYPES . DIRECTORY_SEPARATOR . $dto->blockHandle . DIRECTORY_SEPARATOR . EnvironmentService::CONFIG_BB_JS,
             content: $output,
         );
     }
@@ -109,21 +108,40 @@ readonly class BlockGenerator
     {
         $output = $this->controllerPhpFileGenerator->getOutput($dto, $manifestDto);
         $this->createFile(
-            path: DIR_FILES_BLOCK_TYPES . '/' . $dto->blockHandle . '/controller.php',
+            path: DIR_FILES_BLOCK_TYPES . DIRECTORY_SEPARATOR . $dto->blockHandle . DIRECTORY_SEPARATOR . FILENAME_BLOCK_CONTROLLER,
             content: $output,
         );
     }
 
     private function generateIconPng(CreateBlockDto $dto, CreateBlockManifestDto $manifestDto): void
     {
-        $filename = 'icon.png';
-
-        copy(
-            from: $this->environmentService->getGeneratorFilesPath() . DIRECTORY_SEPARATOR . $filename,
-            to: DIR_FILES_BLOCK_TYPES . DIRECTORY_SEPARATOR
+        $to = DIR_FILES_BLOCK_TYPES . DIRECTORY_SEPARATOR
             . $dto->blockHandle . DIRECTORY_SEPARATOR
-            . $filename,
-        );
+            . FILENAME_BLOCK_ICON;
+
+        if ($manifestDto->customBlockIcon) {
+            $manifestDto->customBlockIcon->move(
+                dirname($to),
+                basename($to)
+            );
+        } elseif ($manifestDto->blockIconPublicPath) {
+            $path = DIR_BASE . $manifestDto->blockIconPublicPath;
+            if (file_exists($path)) {
+                copy(
+                    from: $path,
+                    to: $to,
+                );
+            }
+        }
+
+        // If for some reason, the icon was not generated, copy the default one.
+        // It can happen when uninstalling a block type / removing the block type folder with js call (alert message).
+        if (!file_exists($to)) {
+            copy(
+                from: DIR_BASE . $this->environmentService->getPublicPathToDefaultBlockIcon(),
+                to: $to,
+            );
+        }
     }
 
     private function createFile($path, $content): void
@@ -131,11 +149,19 @@ readonly class BlockGenerator
         $this->fileService->append($path, $content);
     }
 
-    private function prepareDirectoryForRebuild(CreateBlockDto $dto): void
+    private function prepareDirectoryForRebuild(CreateBlockDto $dto, CreateBlockManifestDto $manifestDto): void
     {
+        // We want to exclude "icon.png" from being removed
+        // when rebuilding block, and the option "Keep current icon" is selected
+        $excludedFromRemoval = $dto->excludedFromRemoval;
+        $needle = DIRECTORY_SEPARATOR . DIRNAME_APPLICATION . DIRECTORY_SEPARATOR . DIRNAME_BLOCKS;
+        if (str_starts_with(haystack: $manifestDto->blockIconPublicPath, needle: $needle)) {
+            $excludedFromRemoval = array_merge($excludedFromRemoval, [FILENAME_BLOCK_ICON]);
+        }
+
         $this->fileSystemService->removeDirectory(
             dir: DIR_FILES_BLOCK_TYPES . DIRECTORY_SEPARATOR . $dto->blockHandle,
-            excluded: $dto->excludedFromRemoval,
+            excluded: $excludedFromRemoval,
         );
     }
 }

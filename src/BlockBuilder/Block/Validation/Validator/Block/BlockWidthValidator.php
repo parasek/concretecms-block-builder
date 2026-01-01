@@ -7,10 +7,11 @@ namespace BlockBuilder\Block\Validation\Validator\Block;
 use BlockBuilder\Block\Validation\AbstractValidator;
 use BlockBuilder\Block\Validation\ValidationFeedback;
 use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
+use Symfony\Component\HttpFoundation\FileBag;
 
 class BlockWidthValidator extends AbstractValidator
 {
-    public function validate(array $data): ValidationFeedback
+    public function validate(array $data, ?FileBag $files = null): ValidationFeedback
     {
         $errors = [];
 
