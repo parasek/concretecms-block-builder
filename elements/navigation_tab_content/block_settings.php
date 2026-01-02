@@ -23,12 +23,12 @@ use BlockBuilder\Environment\EnvironmentService;
         <div class="mb-4 <?= h(in_array('blockName', $fieldsWithError) ? 'has-error' : null); ?>">
             <?= $form->label('blockName', t('Block name') . ' *'); ?>
             <?= $form->text('blockName', $config->blockName, ['maxlength' => '100']); ?>
-            <div class="form-text"><?= t('Human-readable name e.g. "Example block"'); ?></div>
+            <div class="form-text"><?= t('Human-readable name, e.g., Example block'); ?></div>
         </div>
         <div class="mb-4 <?= h(in_array('blockHandle', $fieldsWithError) ? 'has-error' : null); ?>">
             <?= $form->label('blockHandle', t('Block handle') . ' *'); ?>
             <?= $form->text('blockHandle', $config->blockHandle, ['maxlength' => '50']); ?>
-            <div class="form-text"><?= t('Lowercase letters and underscores only e.g. "example_block"'); ?></div>
+            <div class="form-text"><?= t('Lowercase letters and underscores only, e.g., example_block'); ?></div>
         </div>
         <div class="mb-4 <?= h(in_array('blockDescription', $fieldsWithError) ? 'has-error' : null); ?>">
             <?= $form->label('blockDescription', t('Block description')); ?>

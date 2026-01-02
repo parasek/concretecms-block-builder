@@ -119,9 +119,9 @@ $(function () {
                 if (closestDiv) {
                     closestDiv.classList.add('has-error')
                 }
-                let jsEntry = fieldWithErrorNode.closest('.js-entry');
+                let jsEntry = fieldWithErrorNode.closest('.js-field-entry');
                 if (jsEntry) {
-                    jsEntry.classList.add('entry-has-error');
+                    jsEntry.classList.add('field-entry-has-error');
                 }
             }
         })
@@ -256,16 +256,21 @@ $(function () {
 
                 entriesContainer.append(template(templateData));
 
-                //var newField = entriesContainer.children(':last');
-                //newField.effect('highlight', {}, 1500);
+                entriesContainer.find('[data-recently-added]').removeAttr('data-recently-added');
+                var newField = entriesContainer.children(':last');
+                newField.attr('data-recently-added', true);
 
                 selectedFieldType.val('');
 
                 // Smooth scroll
-                if (!$.cookie('scrollDisabled')) {
-                    $('html').animate({
-                        scrollTop: entriesContainer.find('.js-entry[data-counter="' + counter + '"]').position().top - 50 + entriesContainer.scrollTop()
-                    }, 0);
+                if (!localStorage.getItem('scrollDisabled')) {
+                    var targetEntry = entriesContainer.find('.js-field-entry[data-counter="' + counter + '"]');
+                    if (targetEntry.length) {
+                        window.scrollTo({
+                            top: targetEntry.offset().top - 50,
+                            behavior: 'smooth'
+                        });
+                    }
                 }
 
             }
@@ -285,7 +290,7 @@ $(function () {
 
                 var entriesContainer = $(this).closest('.js-sortable');
 
-                $(this).closest('.js-entry').remove();
+                $(this).closest('.js-field-entry').remove();
 
                 if (countEntries(entriesContainer) == 0) {
 
@@ -302,11 +307,11 @@ $(function () {
 
             e.preventDefault();
 
-            var counter = $(this).closest('.js-entry').attr('data-counter');
+            var counter = $(this).closest('.js-field-entry').attr('data-counter');
 
             var entriesContainer = $(this).closest('.js-sortable');
 
-            entriesContainer.find('.js-entry[data-counter="' + counter + '"] .js-entry-content').toggle();
+            entriesContainer.find('.js-field-entry[data-counter="' + counter + '"] .js-field-entry-content').toggle();
 
             if ($(this).attr('data-action') == 'collapse') {
 
@@ -327,12 +332,17 @@ $(function () {
         // Toggle scroll
         var toggleScroll = function (e) {
 
-            if (!$(this).is(':checked')) {
-                $('.js-toggle-scroll').prop('checked', false);
-                $.cookie('scrollDisabled', 1, {expires: 180});
+            var isChecked = e.target.checked;
+            var allToggles = document.querySelectorAll('.js-toggle-scroll');
+
+            allToggles.forEach(function(el) {
+                el.checked = isChecked;
+            });
+
+            if (!isChecked) {
+                localStorage.setItem('scrollDisabled', '1');
             } else {
-                $('.js-toggle-scroll').prop('checked', true);
-                $.cookie('scrollDisabled', 1, {expires: -1});
+                localStorage.removeItem('scrollDisabled');
             }
 
         };
@@ -344,7 +354,7 @@ $(function () {
 
             var formContainer = $(this).closest('.ccm-tab-content');
 
-            formContainer.find('.js-entry-content').hide();
+            formContainer.find('.js-field-entry-content').hide();
 
             var toggleButtons = formContainer.find('.js-toggle-entry');
             toggleButtons.find('i').removeClass('fa-minus-square');
@@ -360,12 +370,28 @@ $(function () {
 
             var formContainer = $(this).closest('.ccm-tab-content');
 
-            formContainer.find('.js-entry-content').show();
+            formContainer.find('.js-field-entry-content').show();
 
             var toggleButtons = formContainer.find('.js-toggle-entry');
             toggleButtons.find('i').removeClass('fa-plus-square');
             toggleButtons.find('i').addClass('fa-minus-square');
             toggleButtons.attr('data-action', 'collapse');
+
+        };
+
+        // Back to top
+        var backToTop = function (e) {
+
+            e.preventDefault();
+
+            var navTabs = document.querySelector('#navigation-tabs');
+
+            if (navTabs) {
+                window.scrollTo({
+                    top: $(navTabs).offset().top - 67, // take dashboard bar into account
+                    behavior: 'smooth'
+                });
+            }
 
         };
 
@@ -397,12 +423,12 @@ $(function () {
 
             if (!title) {
 
-                title = '#' + $(this).closest('.js-entry').attr('data-counter');
+                title = '#' + $(this).closest('.js-field-entry').attr('data-counter');
 
             }
 
-            $(this).closest('.js-entry')
-                .find('.js-entry-title')
+            $(this).closest('.js-field-entry')
+                .find('.js-field-entry-title')
                 .text(title);
 
         };
@@ -453,7 +479,7 @@ $(function () {
 
             var clickedCheckbox = $(this);
 
-            var formContainer = clickedCheckbox.closest('.js-entry-content');
+            var formContainer = clickedCheckbox.closest('.js-field-entry-content');
 
             var optionsWrapper = formContainer.find('.js-image-create-thumbnail-image-wrapper');
 
@@ -472,7 +498,7 @@ $(function () {
 
             var clickedCheckbox = $(this);
 
-            var formContainer = clickedCheckbox.closest('.js-entry-content');
+            var formContainer = clickedCheckbox.closest('.js-field-entry-content');
 
             var optionsWrapper = formContainer.find('.js-image-create-fullscreen-image-wrapper');
 
@@ -491,7 +517,7 @@ $(function () {
 
             var selectField = $(this);
             var checkedValue = selectField.val();
-            var entryContent = selectField.closest('.js-entry-content');
+            var entryContent = selectField.closest('.js-field-entry-content');
 
             var listWrapper = entryContent.find('[data-select-list-generation-method="basic_list"]');
             var customCodeWrapper = entryContent.find('[data-select-list-generation-method="custom_code"]');
@@ -704,6 +730,51 @@ $(function () {
             }
         };
 
+        var initAddNewFieldSelects = function () {
+
+            const elements = document.querySelectorAll('.js-add-entry');
+
+            elements.forEach((element) => {
+                const choices = new Choices(element, {
+                    shouldSort: false,
+                    searchEnabled: true,
+                    itemSelectText: '',
+                    callbackOnCreateTemplates: function (template) {
+                        return {
+                            item: ({classNames}, data) => {
+                                const option = element.querySelector(`option[value="${data.value}"]`);
+                                const icon = option ? option.getAttribute('data-icon') : '';
+                                return template(`
+                                        <div class="${classNames.item} ${data.highlighted ? classNames.highlightedState : classNames.itemSelectable}" data-item data-id="${data.id}" data-value="${data.value}" ${data.active ? 'aria-selected="true"' : ''} ${data.disabled ? 'aria-disabled="true"' : ''}>
+                                            ${icon ? `<i class="${icon} fa-fw" style="margin-right: 10px; width: 1.25em; text-align: center; display: inline-block;"></i>` : ''} ${data.label}
+                                        </div>
+                                    `);
+                            },
+                            choice: ({classNames}, data) => {
+                                const option = element.querySelector(`option[value="${data.value}"]`);
+                                const icon = option ? option.getAttribute('data-icon') : '';
+                                return template(`
+                                        <div class="${classNames.item} ${classNames.itemChoice} ${data.disabled ? classNames.itemDisabled : classNames.itemSelectable}" data-select-text="${this.config.itemSelectText}" data-choice ${data.disabled ? 'aria-disabled="true"' : 'aria-haspopup="true"'} data-id="${data.id}" data-value="${data.value}" data-choice-selectable>
+                                            ${icon ? `<i class="${icon} fa-fw" style="margin-right: 10px; width: 1.25em; text-align: center; display: inline-block;"></i>` : ''} ${data.label}
+                                        </div>
+                                    `);
+                            },
+                        };
+                    },
+                });
+
+                element.addEventListener('change', function (event) {
+
+                    // Trigger the addEntry logic. Since addEntry expects a jQuery context
+                    // and event, we call it via jQuery to maintain compatibility.
+                    addEntry.call($(this), event);
+
+                    // Reset choices selection after adding entry
+                    choices.setChoiceByValue('');
+                });
+            });
+        };
+
         var initNavigationTabs = function (navContainer) {
 
             navContainer = $(navContainer);
@@ -754,14 +825,14 @@ $(function () {
         };
 
         var bindFunctions = function () {
-            bbContainer.on('change', '.js-add-entry', addEntry);
             bbContainer.on('click', '.js-remove-entry', removeEntry);
             bbContainer.on('click', '.js-toggle-entry', toggleEntry);
             bbContainer.on('click', '.js-toggle-scroll', toggleScroll);
             bbContainer.on('click', '.js-expand-all', expandAllEntries);
             bbContainer.on('click', '.js-collapse-all', collapseAllEntries);
+            bbContainer.on('click', '.js-back-to-top', backToTop);
             bbContainer.on('click', '.js-remove-all', removeAllEntries);
-            bbContainer.on('input', '.js-entry-title-source', changeEntryTitle);
+            bbContainer.on('input', '.js-field-entry-title-source', changeEntryTitle);
             bbContainer.on('click', '.js-populate-translation-fields', populateTranslationFields);
             bbContainer.on('change', '.js-use-field-as-title-in-repeatable-entries', useFieldAsTitleInRepeatableEntries);
             bbContainer.on('change', '.js-image-create-thumbnail-image', createThumbnailImage);
@@ -776,6 +847,11 @@ $(function () {
             initNavigationTabs('#navigation-tabs');
             initSortable();
             initBlockIconPicker();
+            initAddNewFieldSelects();
+            var isScrollDisabled = localStorage.getItem('scrollDisabled') === '1';
+            document.querySelectorAll('.js-toggle-scroll').forEach(function(el) {
+                el.checked = !isScrollDisabled;
+            });
             bindFunctions();
         };
 

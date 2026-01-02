@@ -133,9 +133,9 @@ readonly class OptionListService
     public function getSelectFieldTypes(bool $includeEmptyOption = false): array
     {
         $options = [
-            'default_select' => t('Default Select Field'),
-            'enhanced_select' => t('Enhanced Select Field'),
-            'radio_list' => t('Radio List'),
+            'default_select' => t('Default select field'),
+            'enhanced_select' => t('Enhanced select field'),
+            'radio_list' => t('Radio list'),
         ];
 
         if ($includeEmptyOption) {
