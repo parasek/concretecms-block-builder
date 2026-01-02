@@ -22,7 +22,7 @@ class CustomBlockIconValidator extends AbstractValidator
 
             if (!$file->isValid()) {
                 $this->addError(
-                    error: t('The uploaded "Custom block icon" file is invalid.'),
+                    error: t('The uploaded "Custom block icon" file is invalid (%s).', NavigationTabEnum::BlockSettings->getName()),
                     field: 'customBlockIcon',
                     tab: NavigationTabEnum::BlockSettings->getHandle()
                 );
@@ -32,7 +32,7 @@ class CustomBlockIconValidator extends AbstractValidator
 
                 if (!$imageSize) {
                     $this->addError(
-                        error: t('The uploaded "Custom block icon" is not a valid image.'),
+                        error: t('The uploaded "Custom block icon" is not a valid image (%s).', NavigationTabEnum::BlockSettings->getName()),
                         field: 'customBlockIcon',
                         tab: NavigationTabEnum::BlockSettings->getHandle()
                     );
@@ -43,7 +43,7 @@ class CustomBlockIconValidator extends AbstractValidator
 
                     if ($mime !== 'image/png') {
                         $this->addError(
-                            error: t('The "Custom block icon" must be a PNG image.'),
+                            error: t('The "Custom block icon" must be a PNG image (%s).', NavigationTabEnum::BlockSettings->getName()),
                             field: 'customBlockIcon',
                             tab: NavigationTabEnum::BlockSettings->getHandle()
                         );
@@ -52,11 +52,12 @@ class CustomBlockIconValidator extends AbstractValidator
                     if ($width !== $requiredWidth || $height !== $requiredHeight) {
                         $this->addError(
                             error: t(
-                                'The "Custom block icon" must be exactly %spx x %spx. Current size: %spx x %spx.',
+                                'The "Custom block icon" must be exactly %spx x %spx. Current size: %spx x %spx (%s).',
                                 $requiredWidth,
                                 $requiredHeight,
                                 $width,
-                                $height
+                                $height,
+                                NavigationTabEnum::BlockSettings->getName(),
                             ),
                             field: 'customBlockIcon',
                             tab: NavigationTabEnum::BlockSettings->getHandle()

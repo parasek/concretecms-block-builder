@@ -26,22 +26,22 @@ class BlockHandleValidator extends AbstractValidator
         $blockHandle = $data['blockHandle'] ?? '';
 
         if (!$blockHandle) {
-            $errors[] = t('Field "%s" is required (%s).', t('Block handle'), t('Block settings'));
+            $errors[] = t('Field "%s" is required (%s).', t('Block handle'), NavigationTabEnum::BlockSettings->getName());
         } else {
             if (mb_strlen($blockHandle) < 3 || mb_strlen($blockHandle) > 50) {
-                $errors[] = t('Field "%s" should be between %s and %s characters long (%s).', t('Block handle'), 3, 50, t('Block settings'));
+                $errors[] = t('Field "%s" should be between %s and %s characters long (%s).', t('Block handle'), 3, 50, NavigationTabEnum::BlockSettings->getName());
             }
 
             if (!preg_match('/^[a-z_]+$/', $blockHandle)) {
-                $errors[] = t('Field "%s" should only consist of lowercase letters and underscores (%s).', t('Block handle'), t('Block settings'));
+                $errors[] = t('Field "%s" should only consist of lowercase letters and underscores (%s).', t('Block handle'), NavigationTabEnum::BlockSettings->getName());
             }
 
             if (mb_substr($blockHandle, 0, 1, 'utf-8') == '_' || mb_substr($blockHandle, -1, 1, 'utf-8') == '_') {
-                $errors[] = t('Field "%s" should not start or end with underscore (%s).', t('Block handle'), t('Block settings'));
+                $errors[] = t('Field "%s" should not start or end with underscore (%s).', t('Block handle'), NavigationTabEnum::BlockSettings->getName());
             }
 
             if (preg_match('/_{2,}/', $blockHandle)) {
-                $errors[] = t('Field "%s" should not consist of two or more consecutive underscores (%s).', t('Block handle'), t('Block settings'));
+                $errors[] = t('Field "%s" should not consist of two or more consecutive underscores (%s).', t('Block handle'), NavigationTabEnum::BlockSettings->getName());
             }
 
             if (!empty($data['rebuildBlock'])) {
@@ -60,14 +60,14 @@ class BlockHandleValidator extends AbstractValidator
             } else {
                 // Build block
                 if ($this->blockTypeService->isBlockTypeFolderAlreadyCreated(handle: $blockHandle, searchedFolder: 'concrete')) {
-                    $errors[] = t('Concrete CMS already uses your chosen handle for one of its blocks. Use different handle. (%s).', t('Block settings'));
+                    $errors[] = t('Concrete CMS already uses your chosen handle for one of its blocks. Use different handle. (%s).', NavigationTabEnum::BlockSettings->getName());
                 } else {
                     if ($this->blockTypeService->isBlockTypeInstalled($blockHandle)) {
                         $errors[] = t(
                             'Block with that handle is already installed. %sUninstall it%s first and then build block again. Alternatively you can use different handle (%s).',
                             '<a href="#" class="btn btn-danger btn-sm js-uninstall-block-type" data-handle="' . $blockHandle . '"><i class="fas fa-minus-circle"></i> ',
                             '</a>',
-                            t('Block settings'),
+                            NavigationTabEnum::BlockSettings->getName(),
                         );
                     } else {
                         if ($this->blockTypeService->isBlockTypeFolderAlreadyCreated($blockHandle)) {
@@ -76,14 +76,14 @@ class BlockHandleValidator extends AbstractValidator
                                 '"' . $blockHandle . '"',
                                 '<a href="#" class="btn btn-danger btn-sm js-delete-block-type-folder" data-handle="' . $blockHandle . '"><i class="far fa-trash-alt"></i> ',
                                 '</a>',
-                                t('Block settings'),
+                                NavigationTabEnum::BlockSettings->getName(),
                             );
                         }
                     }
                 }
             }
             if (!$this->reservedHandlesService->isBlockHandleAllowed($blockHandle)) {
-                $errors[] = t('Your "%s" is a forbidden word, use different phrase (%s).', t('Block handle'), t('Block settings'));
+                $errors[] = t('Your "%s" is a forbidden word, use different phrase (%s).', t('Block handle'), NavigationTabEnum::BlockSettings->getName());
             }
         }
 
