@@ -45,13 +45,27 @@ class FieldTypeValidator extends AbstractValidator
         $errorMessages = $this->getErrorMessages($context);
 
         foreach ($fields as $key => $field) {
-            // Validate fields that are shared across all Field Types
-            $labelErrors = $this->validateLabel($field);
-            $handleErrors = $this->validateHandle($field, $uniqueHandles);
+            // A. Validate fields that are shared across all Field Types
 
-            $errorHandles = array_merge($errorHandles, $labelErrors, $handleErrors);
+            // Get error handles from the label field
+            // and prefix it with the current field key
+            $labelErrors = $this->validateLabel($field['label'] ?? '');
+            $keyedLabelErrors = [];
+            foreach ($labelErrors as $labelError) {
+                $keyedLabelErrors[] = $key . '|' . $labelError;
+            }
 
-            // Validate fields specific to the current Field Type
+            // Get error handles from the handle field
+            // and prefix it with the current field key
+            $handleErrors = $this->validateHandle($field['handle'] ?? '', $uniqueHandles);
+            $keyedHandleErrors = [];
+            foreach ($handleErrors as $handleError) {
+                $keyedHandleErrors[] = $key . '|' . $handleError;
+            }
+
+            $errorHandles = array_merge($errorHandles, $keyedLabelErrors, $keyedHandleErrors);
+
+            // B. Validate fields specific to the current Field Type
             $fieldTypeValue = $field['fieldType'] ?? null;
             if ($fieldTypeValue) {
                 // Retrieve Field Type class
@@ -60,23 +74,21 @@ class FieldTypeValidator extends AbstractValidator
                 /** @var FieldTypeInterface $class */
                 $fieldType = new $class();
 
-                // Collect all error messages provided by the current Field Type
+                // Collect all human-readable error messages provided by the current Field Type
                 $errorMessages = array_merge($errorMessages, $class::getErrorMessages($context));
 
-                // Collect validation errors from the specific Field Type implementation
+                // Get error handles from the specific Field Type implementation
+                // and prefix it with the current field key
+                $fieldTypeErrorHandles = $fieldType->validate($field);
+                $keyedFieldTypeErrorHandles = [];
+                foreach ($fieldTypeErrorHandles as $errorItem) {
+                    $keyedFieldTypeErrorHandles[] = $key . '|' . $errorItem;
+                }
+
                 $errorHandles = array_merge(
                     $errorHandles,
-                    $fieldType->validate($field),
+                    $keyedFieldTypeErrorHandles,
                 );
-            }
-
-            // Add tabs and fields with errors (based on error handles)
-            if (!empty($errorHandles)) {
-                $tabsWithError[] = $context->getTabHandle();
-                foreach ($errorHandles as $errorHandle) {
-                    $extractedHandle = explode('|', $errorHandle)[0];
-                    $fieldsWithErrors[] = $context->value . '[' . $key . '][' . $extractedHandle . ']';
-                }
             }
 
             // Add an entry to the array that collects unique handles
@@ -85,10 +97,23 @@ class FieldTypeValidator extends AbstractValidator
             }
         }
 
-        // Transform handles to human-readable messages
+        // Add tabs and fields with errors (based on error handles)
         $errors = [];
-        foreach ($errorHandles as $errorHandle) {
-            $errors[] = $errorMessages[$errorHandle] ?? $errorHandle;
+        if (!empty($errorHandles)) {
+            $tabsWithError[] = $context->getTabHandle();
+            foreach ($errorHandles as $errorHandle) {
+                $errorHandleData = explode('|', $errorHandle);
+                $extractedKey = $errorHandleData[0] ?? null;
+                $extractedHandle = $errorHandleData[1] ?? null;
+                $extractedErrorHandle = $errorHandleData[2] ?? null;
+
+                // Add fields with errors
+                $fieldsWithErrors[] = $context->value . '[' . $extractedKey . '][' . $extractedHandle . ']';
+
+                // Add tabs with errors
+                $transformedKey = $extractedHandle . '|' .$extractedErrorHandle;
+                $errors[] = $errorMessages[$transformedKey] ?? $transformedKey;
+            }
         }
 
         $this->addContextErrors(
@@ -98,10 +123,9 @@ class FieldTypeValidator extends AbstractValidator
         );
     }
 
-    private function validateLabel(array $field): array
+    private function validateLabel(string $label): array
     {
         $errors = [];
-        $label = $field['label'] ?? '';
 
         if (!$label) {
             $errors[] = 'label|empty';
@@ -112,10 +136,9 @@ class FieldTypeValidator extends AbstractValidator
         return $errors;
     }
 
-    private function validateHandle(array $field, array $uniqueHandles): array
+    private function validateHandle(string $handle, array $uniqueHandles): array
     {
         $errors = [];
-        $handle = $field['handle'] ?? '';
 
         if (!$handle) {
             $errors[] = 'handle|empty';
