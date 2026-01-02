@@ -131,7 +131,7 @@
             foreach ($fieldTypes as $fieldType) {
                 $handle = $fieldType->getHandle();
                 echo '<% if (fieldType === "' . $handle . '") { %>';
-                View::element('field_types/' . $handle, [
+                View::element('field_type/partials/' . $handle, [
                     'selectFieldTypes' => $selectFieldTypes,
                     'selectFieldListGenerationMethods' => $selectFieldListGenerationMethods,
                     'selectMultipleFieldTypes' => $selectMultipleFieldTypes,

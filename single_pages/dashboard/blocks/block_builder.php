@@ -168,7 +168,7 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
         <div class="alert alert-info js-alert mb-4"><?= t('You haven\'t added any fields yet.'); ?></div>
     </script>
 
-    <?php View::element('field_type_skeleton', [
+    <?php View::element('field_type/field_type_template', [
         'fieldTypes' => $fieldTypes,
         'selectFieldTypes' => $selectFieldTypes,
         'selectFieldListGenerationMethods' => $selectFieldListGenerationMethods,
