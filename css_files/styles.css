@@ -350,7 +350,7 @@
     background: var(--bb-entry-recently-added-bg);
 }
 
-.field-entry.bb-entry-has-error {
+.field-entry.has-error {
     border-color: var(--bb-entry-error-border-color);
     background: var(--bb-entry-error-bg);
 }

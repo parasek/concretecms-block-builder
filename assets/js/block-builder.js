@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (fieldNode) {
                     fieldNode.closest('div')?.classList.add('has-error');
-                    fieldNode.closest('[data-entry]')?.classList.add('bb-entry-has-error');
+                    fieldNode.closest('[data-entry]')?.classList.add('has-error');
                 }
             });
         };
