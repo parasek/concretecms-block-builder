@@ -149,13 +149,13 @@
 
 .bb-tabs > li > a:hover,
 .bb-tabs > li > a[data-bb-tab-active]:hover,
-.bb-tabs > li > a.has-error:hover {
+.bb-tabs > li > a.bb-has-error:hover {
     color: var(--bs-white);
     border-color: var(--bb-tab-hover-bg);
     background: var(--bb-tab-hover-bg);
 }
 
-.bb-tabs > li > a.has-error {
+.bb-tabs > li > a.bb-has-error {
     color: var(--bs-white);
     background: var(--bs-danger);
     border-color: var(--bs-danger);
@@ -177,22 +177,22 @@
 }
 
 .bb-tabs > li > a[data-bb-tab-active]:hover::after,
-.bb-tabs > li > a[data-bb-tab-active].has-error:hover::after {
+.bb-tabs > li > a[data-bb-tab-active].bb-has-error:hover::after {
     border-top-color: var(--bb-tab-hover-bg);
 }
 
-.bb-tabs > li > a[data-bb-tab-active].has-error::after {
+.bb-tabs > li > a[data-bb-tab-active].bb-has-error::after {
     border-top-color: var(--bs-danger);
 }
 
 /************************************************************/
 /* Form
 /************************************************************/
-.has-error .form-control {
+.bb-has-error .form-control {
     border-color: var(--bs-danger) !important;
 }
 
-.has-error label {
+.bb-has-error label {
     color: var(--bs-danger) !important;
 }
 
@@ -350,7 +350,7 @@
     background: var(--bb-entry-recently-added-bg);
 }
 
-.field-entry.has-error {
+.field-entry.bb-has-error {
     border-color: var(--bb-entry-error-border-color);
     background: var(--bb-entry-error-bg);
 }
