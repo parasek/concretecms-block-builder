@@ -8,9 +8,12 @@ use BlockBuilder\BlockGenerator\FileGenerator\ControllerPhp\Strategy\ControllerP
 use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
 use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\FieldType\FieldTypeInterface;
+use BlockBuilder\FieldType\FieldTypeTrait;
 
 class HtmlEditorFieldType implements FieldTypeInterface
 {
+    use FieldTypeTrait;
+
     public static function getEnum(): FieldTypeEnum
     {
         return FieldTypeEnum::HtmlEditor;
@@ -29,6 +32,11 @@ class HtmlEditorFieldType implements FieldTypeInterface
     public static function getIcon(): string
     {
         return t('fas fa-code');
+    }
+
+    public static function getDefaultValues(): array
+    {
+        return [];
     }
 
     public static function createDtoFromArray(array $data): HtmlEditorFieldTypeDto

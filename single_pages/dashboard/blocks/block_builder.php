@@ -79,12 +79,12 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
 
         <?php if (!empty($navigationTabEnums)): ?>
 
-            <ul class="navigation-tabs mb-4" id="navigation-tabs">
+            <ul class="bb-tabs mb-4" id="bb-tabs">
                 <?php foreach ($navigationTabEnums as $navigationTabEnum): ?>
                     <li>
                         <a href="#"
                            class="navigation-tab-link <?= h(in_array($navigationTabEnum->getHandle(), $tabsWithError) ? 'has-error' : null); ?>"
-                           data-tab="<?= h($navigationTabEnum->getHandle()); ?>"
+                           data-bb-tab="<?= h($navigationTabEnum->getHandle()); ?>"
                         ><i class="<?= h($navigationTabEnum->getIcon()); ?> me-2"></i><?= h($navigationTabEnum->getName()); ?>
                         </a>
                     </li>
@@ -94,6 +94,7 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
             <?php foreach ($navigationTabEnums as $k => $navigationTabEnum): ?>
                 <div class="ccm-tab-content <?php if (!$k): ?>active<?php endif; ?>"
                      id="ccm-tab-content-<?= h($navigationTabEnum->getHandle()); ?>"
+                     data-tab-content
                      style="display: none;"
                 >
                     <?php View::element(
@@ -164,11 +165,11 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
 
     </form>
 
-    <script type="text/template" class="js-template-no-entries">
-        <div class="alert alert-info js-alert mb-4"><?= t('You haven\'t added any fields yet.'); ?></div>
+    <script type="text/template" id="templateNoEntries">
+        <div class="alert alert-info mb-4" data-alert-no-entries><?= t('You haven\'t added any fields yet.'); ?></div>
     </script>
 
-    <?php View::element('field_type/field_type_template', [
+    <?php View::element('field_type_template/field_type_template', [
         'fieldTypes' => $fieldTypes,
         'selectFieldTypes' => $selectFieldTypes,
         'selectFieldListGenerationMethods' => $selectFieldListGenerationMethods,

@@ -54,7 +54,7 @@ enum NavigationTabEnum
     public function getTabContentElementName(): string
     {
         return match ($this) {
-            self::TabBasicInformation, self::TabRepeatableEntries => 'navigation_tab_content/field_type_fields',
+            self::TabBasicInformation, self::TabRepeatableEntries => 'navigation_tab_content/entries',
             default => 'navigation_tab_content/' . str_replace('-', '_', $this->getHandle()),
         };
     }

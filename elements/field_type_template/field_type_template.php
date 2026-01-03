@@ -8,23 +8,26 @@
  */
 ?>
 
-<script type="text/template" class="js-template-entries">
+<script type="text/template" id="templateEntry">
 
-    <div class="field-entry mb-4 js-field-entry <% if (error) { %>field-entry-has-error<% } %>"
+    <div class="field-entry mb-4"
+         data-entry
          data-counter="<%-counter%>"
     >
 
         <div class="field-entry-header position-relative">
 
-            <div class="field-entry-header-move-entry text-body text-body-hover js-move-entry"
+            <div class="field-entry-header-move-entry text-body text-body-hover"
+                 data-move-entry
             ><i class="fas fa-arrows-alt"></i></div>
 
-            <div class="field-entry-header-toggle-entry text-body text-body-hover js-toggle-entry"
+            <div class="field-entry-header-toggle-entry text-body text-body-hover"
+                 data-toggle-entry
                  data-action="collapse"
             ><i class="far fa-minus-square"></i></div>
 
             <div class="field-entry-header-title text-body">
-                <strong class="js-field-entry-title">
+                <strong data-entry-title>
                     <% if (label) { %>
                     <%-label%>
                     <% } else { %>
@@ -33,42 +36,46 @@
                 </strong><i class="<%-fieldTypeIcon%> m-2 ms-2"></i><span><%-fieldTypeName%></span>
             </div>
 
-            <div class="field-entry-header-remove-entry text-danger text-danger-hover js-remove-entry"
+            <div class="field-entry-header-remove-entry text-danger text-danger-hover"
+                 data-remove-entry
                  data-confirm-text="<?= t('Are you sure?'); ?>"
             ><i class="fas fa-times"></i></div>
 
         </div>
 
-        <div class="field-entry-content js-field-entry-content">
+        <div class="field-entry-content field-entry-content"
+             data-entry-content
+        >
 
             <input type="hidden"
-                   id="<%-groupHandle%>[<%-counter%>][fieldType]"
-                   name="<%-groupHandle%>[<%-counter%>][fieldType]"
-                   value="<%-fieldType%>"
+                   id="<%-context%>[<%-counter%>][fieldType]"
+                   name="<%-context%>[<%-counter%>][fieldType]"
+                   value="<%-fieldTypeHandle%>"
             >
 
             <div class="row">
 
-                <div class="col-lg-6 mb-4 <% if (error['label'] !== undefined) { %>has-error<% } %>">
-                    <label for="<%-groupHandle%>[<%-counter%>][label]" class="form-label">
+                <div class="col-lg-6 mb-4">
+                    <label for="<%-context%>[<%-counter%>][label]" class="form-label">
                         <?= t('Label'); ?> *
                     </label>
                     <input type="text"
-                           id="<%-groupHandle%>[<%-counter%>][label]"
-                           name="<%-groupHandle%>[<%-counter%>][label]"
-                           class="form-control js-field-entry-title-source"
+                           id="<%-context%>[<%-counter%>][label]"
+                           name="<%-context%>[<%-counter%>][label]"
+                           class="form-control"
                            value="<%-label%>"
+                           data-entry-title-source
                     >
                     <div class="form-text"><?= t('Human-readable name, e.g., Product name'); ?></div>
                 </div>
 
-                <div class="col-lg-6 mb-4 <% if (error['handle'] !== undefined) { %>has-error<% } %>">
-                    <label for="<%-groupHandle%>[<%-counter%>][handle]" class="form-label">
+                <div class="col-lg-6 mb-4">
+                    <label for="<%-context%>[<%-counter%>][handle]" class="form-label">
                         <?= t('Handle'); ?> *
                     </label>
                     <input type="text"
-                           id="<%-groupHandle%>[<%-counter%>][handle]"
-                           name="<%-groupHandle%>[<%-counter%>][handle]"
+                           id="<%-context%>[<%-counter%>][handle]"
+                           name="<%-context%>[<%-counter%>][handle]"
                            class="form-control"
                            value="<%-handle%>"
                            maxlength="50"
@@ -85,26 +92,27 @@
                     <div class="form-check">
                         <input type="checkbox"
                                class="form-check-input"
-                               name="<%=groupHandle%>[<%=counter%>][required]"
-                               id="<%=groupHandle%>[<%=counter%>][required]"
+                               name="<%=context%>[<%=counter%>][required]"
+                               id="<%=context%>[<%=counter%>][required]"
                                value="1"
                         <% if (parseInt(required)) { %> checked="checked" <% } %>
                         >
-                        <label for="<%=groupHandle%>[<%=counter%>][required]"
+                        <label for="<%=context%>[<%=counter%>][required]"
                                class="form-check-label"
                         ><?= t('Required'); ?></label>
                     </div>
 
-                    <% if (groupHandle === 'entries' && ['text_field', 'textarea'].includes(fieldType)) { %>
+                    <% if (context === 'entries' && ['text_field', 'textarea'].includes(fieldTypeHandle)) { %>
                     <div class="form-check">
                         <input type="checkbox"
-                               name="<%=groupHandle%>[<%=counter%>][titleSource]"
-                               id="<%=groupHandle%>[<%=counter%>][titleSource]"
-                               class="form-check-input js-use-field-as-title-in-repeatable-entries"
+                               name="<%=context%>[<%=counter%>][titleSource]"
+                               id="<%=context%>[<%=counter%>][titleSource]"
+                               class="form-check-input"
+                               data-use-field-as-title-in-repeatable-entries
                                value="1"
                         <% if (parseInt(titleSource)) { %> checked="checked" <% } %>
                         >
-                        <label for="<%=groupHandle%>[<%=counter%>][titleSource]"
+                        <label for="<%=context%>[<%=counter%>][titleSource]"
                                class="form-check-label"
                         ><?= t('Use this field as title in repeatable entries'); ?></label>
                     </div>
@@ -113,12 +121,12 @@
                 </div>
 
                 <div class="col-lg-6 mb-4">
-                    <label for="<%=groupHandle%>[<%=counter%>][helpText]"
+                    <label for="<%=context%>[<%=counter%>][helpText]"
                            class="form-label"
                     ><?= t('Help text'); ?></label>
                     <input type="text"
-                           id="<%=groupHandle%>[<%=counter%>][helpText]"
-                           name="<%=groupHandle%>[<%=counter%>][helpText]"
+                           id="<%=context%>[<%=counter%>][helpText]"
+                           name="<%=context%>[<%=counter%>][helpText]"
                            class="form-control"
                            value="<%=helpText%>"
                     >
@@ -127,21 +135,21 @@
 
             </div>
 
-            <?php
-            foreach ($fieldTypes as $fieldType) {
-                $handle = $fieldType->getHandle();
-                echo '<% if (fieldType === "' . $handle . '") { %>';
-                View::element('field_type/partials/' . $handle, [
-                    'selectFieldTypes' => $selectFieldTypes,
-                    'selectFieldListGenerationMethods' => $selectFieldListGenerationMethods,
-                    'selectMultipleFieldTypes' => $selectMultipleFieldTypes,
-                ], 'block_builder');
-                echo '<% } %>';
-            }
-            ?>
+            <%=partialContent%>
 
         </div>
 
     </div>
 
 </script>
+
+<?php
+foreach ($fieldTypes as $fieldType) {
+    View::element('field_type_template/partials/' . $fieldType->getHandle(), [
+        'handle' => $fieldType->getHandle(),
+        'selectFieldTypes' => $selectFieldTypes,
+        'selectFieldListGenerationMethods' => $selectFieldListGenerationMethods,
+        'selectMultipleFieldTypes' => $selectMultipleFieldTypes,
+    ], 'block_builder');
+}
+?>

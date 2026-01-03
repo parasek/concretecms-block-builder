@@ -8,9 +8,12 @@ use BlockBuilder\BlockGenerator\FileGenerator\ControllerPhp\Strategy\ControllerP
 use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
 use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\FieldType\FieldTypeInterface;
+use BlockBuilder\FieldType\FieldTypeTrait;
 
 class ImageFieldType implements FieldTypeInterface
 {
+    use FieldTypeTrait;
+
     public static function getEnum(): FieldTypeEnum
     {
         return FieldTypeEnum::Image;
@@ -29,6 +32,25 @@ class ImageFieldType implements FieldTypeInterface
     public static function getIcon(): string
     {
         return t('fas fa-image');
+    }
+
+    public static function getDefaultValues(): array
+    {
+        return [
+            'imageShowAltTextField' => 1,
+            'imageCreateFullscreenImage' => 1,
+            'imageCreateThumbnailImage' => 1,
+
+            'imageThumbnailWidth' => 480,
+            'imageThumbnailHeight' => 270,
+            'imageThumbnailCrop' => 1,
+            'imageThumbnailEditable' => 1,
+
+            'imageFullscreenWidth' => 1920,
+            'imageFullscreenHeight' => 1080,
+            'imageFullscreenCrop' => 0,
+            'imageFullscreenEditable' => 1,
+        ];
     }
 
     public static function createDtoFromArray(array $data): ImageFieldTypeDto

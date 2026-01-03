@@ -8,9 +8,12 @@ use BlockBuilder\BlockGenerator\FileGenerator\ControllerPhp\Strategy\ControllerP
 use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
 use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\FieldType\FieldTypeInterface;
+use BlockBuilder\FieldType\FieldTypeTrait;
 
 class NumberFieldType implements FieldTypeInterface
 {
+    use FieldTypeTrait;
+
     public static function getEnum(): FieldTypeEnum
     {
         return FieldTypeEnum::Number;
@@ -29,6 +32,19 @@ class NumberFieldType implements FieldTypeInterface
     public static function getIcon(): string
     {
         return t('fas fa-hashtag');
+    }
+
+    public static function getDefaultValues(): array
+    {
+        return [
+            'numberSize' => '10.2',
+            'numberMin' => '0',
+            'numberMax' => '99999999.99',
+            'numberStep' => '0.01',
+            'numberDisplayedDecimals' => '2',
+            'numberDisplayedDecimalSeparator' => ',',
+            'numberDisplayedThousandsSeparator' => ' ',
+        ];
     }
 
     public static function createDtoFromArray(array $data): NumberFieldTypeDto

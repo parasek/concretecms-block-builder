@@ -12,14 +12,13 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
 <div class="mb-4 populate-translation-fields">
     <i class="fas fa-book"></i> <?= t('Populate fields with'); ?>
     <a href="#"
-       class="js-populate-translation-fields"
+       data-populate-translation-fields
        data-type="translated"
-       data-tab-handle="<?= h(NavigationTabEnum::Labels->getHandle()); ?>"><?= t('translated'); ?></a>
+    ><?= t('translated'); ?></a>
     /
     <a href="#"
-       class="js-populate-translation-fields"
+       data-populate-translation-fields
        data-type="untranslated"
-       data-tab-handle="<?= h(NavigationTabEnum::Labels->getHandle()); ?>"
     ><?= t('untranslated'); ?></a>
     <?= t('default labels'); ?>
 </div>

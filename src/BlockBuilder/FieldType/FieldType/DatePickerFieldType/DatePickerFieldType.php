@@ -8,9 +8,12 @@ use BlockBuilder\BlockGenerator\FileGenerator\ControllerPhp\Strategy\ControllerP
 use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
 use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\FieldType\FieldTypeInterface;
+use BlockBuilder\FieldType\FieldTypeTrait;
 
 class DatePickerFieldType implements FieldTypeInterface
 {
+    use FieldTypeTrait;
+
     public static function getEnum(): FieldTypeEnum
     {
         return FieldTypeEnum::DatePicker;
@@ -29,6 +32,13 @@ class DatePickerFieldType implements FieldTypeInterface
     public static function getIcon(): string
     {
         return t('fas fa-calendar-alt');
+    }
+
+    public static function getDefaultValues(): array
+    {
+        return [
+            'datePickerPattern' => 'd.m.Y',
+        ];
     }
 
     public static function createDtoFromArray(array $data): DatePickerFieldTypeDto

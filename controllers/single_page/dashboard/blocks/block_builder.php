@@ -164,7 +164,10 @@ class BlockBuilder extends BaseDashboardController
     {
         $al = AssetList::getInstance();
 
-        $al->register('javascript', 'bb/scripts', 'js_files/block-builder.js', [], $this->pkg);
-        $this->requireAsset('javascript', 'bb/scripts');
+        $al->register('javascript', 'block-builder/js', 'assets/js/block-builder.js', [], $this->pkg);
+        $this->requireAsset('javascript', 'block-builder/js');
+
+        $al->register('javascript', 'sortable/js', 'vendor/sortablejs/Sortable.min.js', [], $this->pkg);
+        $this->requireAsset('javascript', 'sortable/js');
     }
 }

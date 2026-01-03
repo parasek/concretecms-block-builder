@@ -52,7 +52,7 @@ class BlockHandleValidator extends AbstractValidator
                     if (!$this->blockTypeService->isBlockTypeInstalled($blockHandle)) {
                         $errors[] = t(
                             'You can not rebuild and refresh block that is awaiting installation, %sInstall%s it first. If you tried to rebuild a block by mistake, build it instead.',
-                            '<a href="#" class="btn btn-success btn-sm js-install-block-type" data-handle="' . $blockHandle . '"><i class="fas fa-plus-circle"></i> ',
+                            '<a href="#" class="btn btn-success btn-sm" data-install-block-type data-handle="' . $blockHandle . '"><i class="fas fa-plus-circle"></i> ',
                             '</a>',
                         );
                     }
@@ -65,7 +65,7 @@ class BlockHandleValidator extends AbstractValidator
                     if ($this->blockTypeService->isBlockTypeInstalled($blockHandle)) {
                         $errors[] = t(
                             'Block with that handle is already installed. %sUninstall it%s first and then build block again. Alternatively you can use different handle (%s).',
-                            '<a href="#" class="btn btn-danger btn-sm js-uninstall-block-type" data-handle="' . $blockHandle . '"><i class="fas fa-minus-circle"></i> ',
+                            '<a href="#" class="btn btn-danger btn-sm" data-uninstall-block-type data-handle="' . $blockHandle . '"><i class="fas fa-minus-circle"></i> ',
                             '</a>',
                             NavigationTabEnum::BlockSettings->getName(),
                         );
@@ -74,7 +74,7 @@ class BlockHandleValidator extends AbstractValidator
                             $errors[] = t(
                                 'Block folder named %s already exists. %sPermanently delete that folder%s or use different handle (%s).',
                                 '"' . $blockHandle . '"',
-                                '<a href="#" class="btn btn-danger btn-sm js-delete-block-type-folder" data-handle="' . $blockHandle . '"><i class="far fa-trash-alt"></i> ',
+                                '<a href="#" class="btn btn-danger btn-sm" data-delete-block-type-folder data-handle="' . $blockHandle . '"><i class="far fa-trash-alt"></i> ',
                                 '</a>',
                                 NavigationTabEnum::BlockSettings->getName(),
                             );

@@ -8,9 +8,12 @@ use BlockBuilder\BlockGenerator\FileGenerator\ControllerPhp\Strategy\ControllerP
 use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
 use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\FieldType\FieldTypeInterface;
+use BlockBuilder\FieldType\FieldTypeTrait;
 
 class WysiwygEditorFieldType implements FieldTypeInterface
 {
+    use FieldTypeTrait;
+
     public static function getEnum(): FieldTypeEnum
     {
         return FieldTypeEnum::WysiwygEditor;
@@ -28,7 +31,12 @@ class WysiwygEditorFieldType implements FieldTypeInterface
 
     public static function getIcon(): string
     {
-        return t('far fa-window-maximize');// fas fa-paragraph
+        return t('far fa-window-maximize');
+    }
+
+    public static function getDefaultValues(): array
+    {
+        return [];
     }
 
     public static function createDtoFromArray(array $data): WysiwygEditorFieldTypeDto

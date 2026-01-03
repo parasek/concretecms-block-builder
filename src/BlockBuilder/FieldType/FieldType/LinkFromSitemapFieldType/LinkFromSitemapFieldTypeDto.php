@@ -18,7 +18,7 @@ readonly class LinkFromSitemapFieldTypeDto implements FieldTypeDtoInterface
         public bool $linkFromSitemapShowEndingField,
         public bool $linkFromSitemapShowTextField,
         public bool $linkFromSitemapShowTitleField,
-        public bool$linkFromSitemapShowNewWindowField,
+        public bool $linkFromSitemapShowNewWindowField,
         public bool $linkFromSitemapShowNoFollowField,
     ) {
     }

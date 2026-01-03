@@ -8,9 +8,12 @@ use BlockBuilder\BlockGenerator\FileGenerator\ControllerPhp\Strategy\ControllerP
 use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
 use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\FieldType\FieldTypeInterface;
+use BlockBuilder\FieldType\FieldTypeTrait;
 
 class TextareaFieldType implements FieldTypeInterface
 {
+    use FieldTypeTrait;
+
     public static function getEnum(): FieldTypeEnum
     {
         return FieldTypeEnum::Textarea;
@@ -28,7 +31,12 @@ class TextareaFieldType implements FieldTypeInterface
 
     public static function getIcon(): string
     {
-        return t('fas fa-align-justify'); //
+        return t('fas fa-align-justify');
+    }
+
+    public static function getDefaultValues(): array
+    {
+        return [];
     }
 
     public static function createDtoFromArray(array $data): TextareaFieldTypeDto

@@ -8,9 +8,12 @@ use BlockBuilder\BlockGenerator\FileGenerator\ControllerPhp\Strategy\ControllerP
 use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
 use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\FieldType\FieldTypeInterface;
+use BlockBuilder\FieldType\FieldTypeTrait;
 
 class SingleChoiceFieldType implements FieldTypeInterface
 {
+    use FieldTypeTrait;
+
     public static function getEnum(): FieldTypeEnum
     {
         return FieldTypeEnum::SingleChoice;
@@ -29,6 +32,11 @@ class SingleChoiceFieldType implements FieldTypeInterface
     public static function getIcon(): string
     {
         return t('fas fa-check-circle');
+    }
+
+    public static function getDefaultValues(): array
+    {
+        return [];
     }
 
     public static function createDtoFromArray(array $data): SingleChoiceFieldTypeDto

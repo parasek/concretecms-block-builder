@@ -143,6 +143,22 @@ enum FieldTypeEnum implements JsonSerializable
         return $class::getIcon();
     }
 
+    public function getProperties(): array
+    {
+        /** @var FieldTypeInterface $class */
+        $class = $this->getDefinitionClass();
+
+        return $class::getProperties();
+    }
+
+    public function getDefaultValues(): array
+    {
+        /** @var FieldTypeInterface $class */
+        $class = $this->getDefinitionClass();
+
+        return $class::getDefaultValues();
+    }
+
     public static function fromHandle(string $handle): self
     {
         foreach (self::cases() as $case) {
