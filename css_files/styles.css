@@ -149,13 +149,13 @@
 
 .bb-tabs > li > a:hover,
 .bb-tabs > li > a[data-bb-tab-active]:hover,
-.bb-tabs > li > a.bb-has-error:hover {
+.bb-tabs > li > a.bb-tab-has-error:hover {
     color: var(--bs-white);
     border-color: var(--bb-tab-hover-bg);
     background: var(--bb-tab-hover-bg);
 }
 
-.bb-tabs > li > a.bb-has-error {
+.bb-tabs > li > a.bb-tab-has-error {
     color: var(--bs-white);
     background: var(--bs-danger);
     border-color: var(--bs-danger);
@@ -177,11 +177,11 @@
 }
 
 .bb-tabs > li > a[data-bb-tab-active]:hover::after,
-.bb-tabs > li > a[data-bb-tab-active].bb-has-error:hover::after {
+.bb-tabs > li > a[data-bb-tab-active].bb-tab-has-error:hover::after {
     border-top-color: var(--bb-tab-hover-bg);
 }
 
-.bb-tabs > li > a[data-bb-tab-active].bb-has-error::after {
+.bb-tabs > li > a[data-bb-tab-active].bb-tab-has-error::after {
     border-top-color: var(--bs-danger);
 }
 
@@ -350,7 +350,7 @@
     background: var(--bb-entry-recently-added-bg);
 }
 
-.field-entry.bb-has-error {
+.field-entry.bb-entry-has-error {
     border-color: var(--bb-entry-error-border-color);
     background: var(--bb-entry-error-bg);
 }

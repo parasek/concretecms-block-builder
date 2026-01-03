@@ -83,7 +83,7 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
                 <?php foreach ($navigationTabEnums as $navigationTabEnum): ?>
                     <li>
                         <a href="#"
-                           class="navigation-tab-link <?= h(in_array($navigationTabEnum->getHandle(), $tabsWithError) ? 'bb-has-error' : null); ?>"
+                           class="navigation-tab-link <?= h(in_array($navigationTabEnum->getHandle(), $tabsWithError) ? 'bb-tab-has-error' : null); ?>"
                            data-bb-tab="<?= h($navigationTabEnum->getHandle()); ?>"
                         ><i class="<?= h($navigationTabEnum->getIcon()); ?> me-2"></i><?= h($navigationTabEnum->getName()); ?>
                         </a>
