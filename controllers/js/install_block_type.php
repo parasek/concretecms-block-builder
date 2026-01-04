@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Concrete\Package\BlockBuilder\Controller\Js;
 
 use BlockBuilder\Controller\BaseJsController;
@@ -24,6 +26,9 @@ class InstallBlockType extends BaseJsController
 
         $bt = BlockType::installBlockType($handle);
 
-        return $this->jsonSuccess(t('Block "%s" has been successfully installed.', $bt->getBlockTypeName()));
+        return $this->jsonSuccess(
+            t('The block type "%s" has been successfully installed.', $bt->getBlockTypeName()) . "\n" .
+            t('Click "Rebuild and refresh block" once again.'),
+        );
     }
 }

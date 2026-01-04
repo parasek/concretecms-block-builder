@@ -110,7 +110,7 @@ use BlockBuilder\Environment\EnvironmentService;
                             <div class="block-type-action block-type-action-install mb-2">
                                 <form action="<?= h(app('url/manager')->resolve(['/dashboard/blocks/block_builder/configs/install/' . $config->blockHandle])); ?>"
                                       method="post"
-                                      data-confirm-question="<?= h(t('This will install %s block type. Are you sure?', $config->blockName)); ?>"
+                                      data-confirm-question="<?= h(t('This will install the %s block type. Are you sure?', $config->blockName)); ?>"
                                       data-block-type-handle="<?= h($config->blockHandle); ?>"
                                 >
                                     <?= $controller->token->output('install_block'); ?>
@@ -123,7 +123,7 @@ use BlockBuilder\Environment\EnvironmentService;
                             <div class="block-type-action block-type-action-delete-folder mb-2">
                                 <form action="<?= h(app('url/manager')->resolve(['/dashboard/blocks/block_builder/configs/delete_folder/' . $config->blockHandle])); ?>"
                                       method="post"
-                                      data-confirm-question="<?= h(t('This will permanently delete "%s" folder. This cannot be undone. Are you sure?', DIR_FILES_BLOCK_TYPES . DIRECTORY_SEPARATOR . $config->blockHandle)); ?>"
+                                      data-confirm-question="<?= h(t('This will permanently delete the "%s" folder. This cannot be undone. Are you sure?', DIR_FILES_BLOCK_TYPES . DIRECTORY_SEPARATOR . $config->blockHandle)); ?>"
                                       data-block-type-handle="<?= h($config->blockHandle); ?>"
                                 >
                                     <?= $controller->token->output('delete_folder'); ?>
@@ -138,7 +138,7 @@ use BlockBuilder\Environment\EnvironmentService;
                             <div class="block-type-action block-type-action-uninstall mb-2">
                                 <form action="<?= h(app('url/manager')->resolve(['/dashboard/blocks/block_builder/configs/uninstall/' . $bt->getBlockTypeID()])); ?>"
                                       method="post"
-                                      data-confirm-question="<?= h(t('This will remove all instances of the %s block type. This cannot be undone. Are you sure?', $config->blockName)); ?>"
+                                      data-confirm-question="<?= h(t('This will remove all instances of the "%s" block type. This cannot be undone. Are you sure?', $config->blockName)); ?>"
                                       data-block-type-id="<?= h($bt->getBlockTypeID()); ?>"
                                 >
                                     <?= $controller->token->output('uninstall_block'); ?>
@@ -167,7 +167,7 @@ use BlockBuilder\Environment\EnvironmentService;
 
     <?php else: ?>
 
-        <div class="alert alert-info"><?= t('No blocks created by Block Builder have been found.'); ?></div>
+        <div class="alert alert-info"><?= t('No blocks created by Block Builder were found.'); ?></div>
 
     <?php endif; ?>
 

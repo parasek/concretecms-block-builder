@@ -188,6 +188,37 @@
 /************************************************************/
 /* Form
 /************************************************************/
+/* Alert list*/
+.bb-alert-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.bb-alert-list li {
+    position: relative;
+    padding-left: 1.6rem;
+}
+
+.bb-alert-list li::before {
+    content: '\f071';
+    font-family: 'Font Awesome 5 Free', serif;
+    font-weight: 900;
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--bs-danger);
+}
+
+.bb-alert-list .text-danger {
+    color: #b32e34 !important;
+}
+
+.bb-alert-list .text-success {
+    color: #2c733c !important;
+}
+
+/* Errors */
 .bb-has-error .form-control {
     border-color: var(--bs-danger) !important;
 }

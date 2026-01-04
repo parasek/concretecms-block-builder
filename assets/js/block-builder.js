@@ -309,7 +309,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        const handleBlockAction = async (button, url, successMsg1, successMsg2) => {
+        const handleBlockAction = async (button, url) => {
             const csrfToken = bbContainer.getAttribute('data-csrf-token');
             const confirmationMessage = bbContainer.getAttribute('data-confirmation-message');
             const handle = button.getAttribute('data-handle');
@@ -329,7 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await response.json();
 
                 if (response.ok) {
-                    alert(`${successMsg1}\n${successMsg2}`);
+                    alert(data.message);
                 } else {
                     alert(data.message || 'Oops! Something went wrong...');
                 }
@@ -343,12 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const button = e.target.closest('[data-install-block-type]');
             if (!button) return;
 
-            handleBlockAction(
-                button,
-                bbContainer.getAttribute('data-install-block-type-url'),
-                bbContainer.getAttribute('data-install-block-type-success-message-1'),
-                bbContainer.getAttribute('data-install-block-type-success-message-2')
-            ).then(() => {});
+            handleBlockAction(button, bbContainer.getAttribute('data-install-block-type-url')).then(() => {});
         };
 
         const uninstallBlockType = (e) => {
@@ -356,12 +351,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const button = e.target.closest('[data-uninstall-block-type]');
             if (!button) return;
 
-            handleBlockAction(
-                button,
-                bbContainer.getAttribute('data-uninstall-block-type-url'),
-                bbContainer.getAttribute('data-uninstall-block-type-success-message-1'),
-                bbContainer.getAttribute('data-uninstall-block-type-success-message-2')
-            ).then(() => {});
+            handleBlockAction(button, bbContainer.getAttribute('data-uninstall-block-type-url')).then(() => {});
         };
 
         const deleteBlockTypeFolder = (e) => {
@@ -369,12 +359,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const button = e.target.closest('[data-delete-block-type-folder]');
             if (!button) return;
 
-            handleBlockAction(
-                button,
-                bbContainer.getAttribute('data-delete-block-type-folder-url'),
-                bbContainer.getAttribute('data-delete-block-type-folder-success-message-1'),
-                bbContainer.getAttribute('data-delete-block-type-folder-success-message-2')
-            ).then(() => {});
+            handleBlockAction(button, bbContainer.getAttribute('data-delete-block-type-folder-url')).then(() => {});
         };
 
         const initTabs = () => {

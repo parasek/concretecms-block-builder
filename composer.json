@@ -1,6 +1,6 @@
 {
     "name": "parasek/block_builder",
-    "description": "Build custom Concrete CMS blocks with an optional set of repeatable entries.",
+    "description": "Design, configure and build custom Concrete CMS blocks with a user‑friendly interface.",
     "type": "concretecms-package",
     "require": {
         "php": ">=8.4",

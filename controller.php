@@ -26,7 +26,7 @@ class Controller extends Package
 
     public function getPackageDescription(): string
     {
-        return t('Build custom Concrete CMS blocks with an optional set of repeatable entries.');
+        return t('Design, configure and build custom Concrete CMS blocks with a user‑friendly interface.');
     }
 
     public function on_start(): void

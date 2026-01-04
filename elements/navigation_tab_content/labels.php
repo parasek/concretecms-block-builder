@@ -24,19 +24,19 @@
 <div class="mb-4 <?= h(in_array('basicLabel', $fieldsWithError) ? 'bb-has-error' : null); ?>">
     <?= $form->label('basicLabel', t('Basic information')); ?>
     <?= $form->text('basicLabel', $config->basicLabel, ['data-translated-text' => t('Basic information'), 'data-untranslated-text' => 'Basic information']); ?>
-    <div class="form-text"><?= t('Displayed name of "Basic information" tab'); ?></div>
+    <div class="form-text"><?= t('Displayed name of the "Basic information" tab'); ?></div>
 </div>
 
 <div class="mb-4 <?= h(in_array('entriesLabel', $fieldsWithError) ? 'bb-has-error' : null); ?>">
     <?= $form->label('entriesLabel', t('Entries')); ?>
     <?= $form->text('entriesLabel', $config->entriesLabel, ['data-translated-text' => t('Entries'), 'data-untranslated-text' => 'Entries']); ?>
-    <div class="form-text"><?= t('Displayed name of "Repeatable entries" tab'); ?></div>
+    <div class="form-text"><?= t('Displayed name of the "Repeatable entries" tab'); ?></div>
 </div>
 
 <div class="mb-4 <?= h(in_array('settingsLabel', $fieldsWithError) ? 'bb-has-error' : null); ?>">
     <?= $form->label('settingsLabel', t('Settings')); ?>
     <?= $form->text('settingsLabel', $config->settingsLabel, ['data-translated-text' => t('Settings'), 'data-untranslated-text' => 'Settings']); ?>
-    <div class="form-text"><?= t('Displayed name of "Settings" tab'); ?></div>
+    <div class="form-text"><?= t('Displayed name of the "Settings" tab'); ?></div>
 </div>
 
 <div class="mb-4 <?= h(in_array('addAtTheTopLabel', $fieldsWithError) ? 'bb-has-error' : null); ?>">
@@ -233,5 +233,3 @@
     <?= $form->label('deselectAllLabel', t('Deselect All')); ?>
     <?= $form->text('deselectAllLabel', $config->deselectAllLabel, ['data-translated-text' => t('Deselect All'), 'data-untranslated-text' => 'Deselect All']); ?>
 </div>
-
-

@@ -16,9 +16,9 @@ class BlockNameValidator extends AbstractValidator
         $errors = [];
 
         if (empty($data['blockName'])) {
-            $errors[] = t('Field "%s" is required (%s).', t('Block name'), NavigationTabEnum::BlockSettings->getName());
+            $errors[] = t('The field "%s" is required (%s).', t('Block name'), NavigationTabEnum::BlockSettings->getName());
         } elseif (mb_strlen($data['blockName']) < 3 || mb_strlen($data['blockName']) > 100) {
-            $errors[] = t('Field "%s" should be between %s and %s characters long (%s).', t('Block name'), 3, 100, NavigationTabEnum::BlockSettings->getName());
+            $errors[] = t('The field "%s" should be between %s and %s characters long (%s).', t('Block name'), 3, 100, NavigationTabEnum::BlockSettings->getName());
         }
 
         if (!empty($errors)) {

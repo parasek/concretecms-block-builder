@@ -118,11 +118,11 @@ readonly class BlockTypeService
         }
 
         if (!is_dir($blockTypePath)) {
-            return t('Folder "%s" does not exist.', $blockTypePath);
+            return t('The folder "%s" does not exist.', $blockTypePath);
         }
 
         if ($this->isBlockTypeInstalled($handle)) {
-            return t('Uninstall block type before deleting folder.');
+            return t('Uninstall the block type before deleting the folder.');
         }
 
         return false;
@@ -142,10 +142,10 @@ readonly class BlockTypeService
         try {
             $result = $this->fileService->removeAll(source: $blockTypePath, inc: true);
             if (!$result) {
-                return t('Failed to remove block type folder "%s"', $handle);
+                return t('Failed to remove the block type folder "%s".', $handle);
             }
         } catch (Exception) {
-            return t('Failed to remove block type folder "%s". Please check file permissions.', $handle);
+            return t('Failed to remove the block type folder "%s". Please check the file permissions.', $handle);
         }
 
         return true;
@@ -183,7 +183,7 @@ readonly class BlockTypeService
         $handle = $bt->getBlockTypeHandle();
 
         if (!$this->isBlockTypeInstalled($handle)) {
-            return t('Specified block type is not installed.');
+            return t('The specified block type is not installed.');
         }
 
         return false;

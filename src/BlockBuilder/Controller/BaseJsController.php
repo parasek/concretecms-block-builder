@@ -30,8 +30,8 @@ abstract class BaseJsController extends Controller
 
     protected function validateRequestMethod(): ?JsonResponse
     {
-        if (!$this->request->isMethod('POST')) {
-            return $this->jsonError(t('Invalid request method.'), 405);
+        if (!$this->request->isMethod('post')) {
+            return $this->jsonError(t('Only POST requests are allowed.'), 405);
         }
 
         return null;

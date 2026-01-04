@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Concrete\Package\BlockBuilder\Controller\Js;
 
 use BlockBuilder\Block\Service\BlockTypeService;
@@ -33,6 +35,9 @@ class UninstallBlockType extends BaseJsController
 
         $blockTypeName = $blockTypeService->uninstallBlockType($blockTypeId);
 
-        return $this->jsonSuccess(t('Block "%s" has been successfully uninstalled.', $blockTypeName));
+        return $this->jsonSuccess(
+            t('The block type "%s" has been successfully uninstalled.', $blockTypeName) . "\n" .
+            t('Click "Build your block now!" once again.'),
+        );
     }
 }

@@ -15,7 +15,7 @@ class LabelsValidator extends AbstractValidator
     {
         if (!$data['addAtTheTopLabel'] && !$data['addAtTheBottomLabel']) {
             $this->addError(
-                error: t('At least one label for buttons ("Add at the top" or "Add at the bottom") is required (%s).', NavigationTabEnum::Labels->getName()),
+                error: t('At least one label for the buttons ("Add at the top" or "Add at the bottom") is required (%s).', NavigationTabEnum::Labels->getName()),
                 field: 'addAtTheTopLabel',
                 tab: NavigationTabEnum::BlockSettings->getHandle(),
             );
@@ -23,7 +23,7 @@ class LabelsValidator extends AbstractValidator
 
         if (!empty($data['basic']) && empty($data['basicLabel'])) {
             $this->addError(
-                error: t('Label for "%s" is required (%s).', t('Basic information'), NavigationTabEnum::Labels->getName()),
+                error: t('The label for "%s" is required (%s).', t('Basic information'), NavigationTabEnum::Labels->getName()),
                 field: 'basicLabel',
                 tab: NavigationTabEnum::BlockSettings->getHandle(),
             );

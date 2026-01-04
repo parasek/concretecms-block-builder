@@ -7,7 +7,6 @@
  */
 ?>
 
-
 <div class="field-type-actions d-flex flex-column flex-xxl-row gap-xxl-4"
      data-field-type-actions
 >

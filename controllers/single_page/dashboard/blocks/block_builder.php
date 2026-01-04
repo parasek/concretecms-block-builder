@@ -136,9 +136,9 @@ class BlockBuilder extends BaseDashboardController
     private function handleCreateBlockResponse(CreateBlockResultDto $result): Response
     {
         $message = match ($result->postGenerationBlockState) {
-            PostGenerationBlockStateEnum::Rebuilt => t('Block "%s" has been successfully rebuilt and refreshed.', $result->blockName),
-            PostGenerationBlockStateEnum::CreatedAndInstalled => t('Block "%s" has been successfully created and installed.', $result->blockName),
-            PostGenerationBlockStateEnum::Created => t('Block "%s" has been successfully created. Go to "Block Types" page to manually install it.', $result->blockName),
+            PostGenerationBlockStateEnum::Rebuilt => t('The block "%s" has been successfully rebuilt and refreshed.', $result->blockName),
+            PostGenerationBlockStateEnum::CreatedAndInstalled => t('The block type "%s" has been successfully created and installed.', $result->blockName),
+            PostGenerationBlockStateEnum::Created => t('The block type "%s" has been successfully created. Please install it manually now.', $result->blockName),
         };
 
         $this->flash('success', $message);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Concrete\Package\BlockBuilder\Controller\Js;
 
 use BlockBuilder\Block\Service\BlockTypeService;
@@ -33,6 +35,9 @@ class DeleteBlockTypeFolder extends BaseJsController
             return $this->jsonError($result);
         }
 
-        return $this->jsonSuccess(t('Block folder has been deleted.'));
+        return $this->jsonSuccess(
+            t('The block type folder "%s" has been successfully deleted.', $handle) . "\n" .
+            t('Click "Build your block now!" once again.'),
+        );
     }
 }

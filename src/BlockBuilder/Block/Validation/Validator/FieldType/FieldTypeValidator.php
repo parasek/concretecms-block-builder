@@ -190,18 +190,18 @@ class FieldTypeValidator extends AbstractValidator
     private function getErrorMessages(FieldTypeContextEnum $context): array
     {
         return [
-            'label|empty' => t('There are some empty "Label" fields (%s).', $context->getTabName()),
-            'label|less_than_3_characters' => t('There are some "Label" fields which consist of less than %s characters (%s).', 3, $context->getTabName()),
+            'label|empty' => t('Some "Label" fields are empty (%s).', $context->getTabName()),
+            'label|less_than_3_characters' => t('Some "Label" fields contain fewer than %s characters (%s).', 3, $context->getTabName()),
 
-            'handle|empty' => t('There are some empty "Handle" fields (%s).', $context->getTabName()),
-            'handle|less_than_3_characters' => t('There are some "Handle" fields which consist of less than %s characters (%s).', 3, $context->getTabName()),
-            'handle|more_than_50_characters' => t('There are some "Handle" fields which consist of more than %s characters (%s).', 50, $context->getTabName()),
-            'handle|invalid_characters' => t('There are some "Handle" fields which consist of characters other than a-zA-Z_ (%s).', $context->getTabName()),
-            'handle|start_or_end_with_underscore' => t('There are some "Handle" fields which start or end with underscore (%s).', $context->getTabName()),
-            'handle|consecutive_underscores' => t('There are some "Handle" fields which consist of two or more consecutive underscores (%s).', $context->getTabName()),
-            'handle|first_character_not_lowercase' => t('There are some "Handle" fields which start with uppercase character (%s).', $context->getTabName()),
-            'handle|forbidden_word' => t('There are some "Handle" fields which are forbidden words (%s).', $context->getTabName()),
-            'handle|repeated_handle' => t('All "Handle" fields should be unique (%s).', $context->getTabName()),
+            'handle|empty' => t('Some "Handle" fields are empty (%s).', $context->getTabName()),
+            'handle|less_than_3_characters' => t('Some "Handle" fields contain fewer than %s characters (%s).', 3, $context->getTabName()),
+            'handle|more_than_50_characters' => t('Some "Handle" fields contain more than %s characters (%s).', 50, $context->getTabName()),
+            'handle|invalid_characters' => t('Some "Handle" fields contain characters other than a-zA-Z_ (%s).', $context->getTabName()),
+            'handle|start_or_end_with_underscore' => t('Some "Handle" fields start or end with an underscore (%s).', $context->getTabName()),
+            'handle|consecutive_underscores' => t('Some "Handle" fields contain two or more consecutive underscores (%s).', $context->getTabName()),
+            'handle|first_character_not_lowercase' => t('Some "Handle" fields start with an uppercase character (%s).', $context->getTabName()),
+            'handle|forbidden_word' => t('Some "Handle" fields use forbidden words (%s).', $context->getTabName()),
+            'handle|repeated_handle' => t('All "Handle" fields must be unique (%s).', $context->getTabName()),
         ];
     }
 }

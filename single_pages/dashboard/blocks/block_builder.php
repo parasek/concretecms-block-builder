@@ -39,12 +39,6 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
      data-uninstall-block-type-url="<?= h(app('url/manager')->resolve(['js/uninstall-block-type'])); ?>"
      data-delete-block-type-folder-url="<?= h(app('url/manager')->resolve(['js/delete-block-type-folder'])); ?>"
      data-confirmation-message="<?= t('Are you sure?'); ?>"
-     data-install-block-type-success-message-1="<?= t('Block has been installed.'); ?>"
-     data-install-block-type-success-message-2="<?= t('Click Rebuild and refresh block once again.'); ?>"
-     data-uninstall-block-type-success-message-1="<?= t('Block has been uninstalled.'); ?>"
-     data-uninstall-block-type-success-message-2="<?= t('Click Build your block now! once again.'); ?>"
-     data-delete-block-type-folder-success-message-1="<?= t('Block type folder has been deleted.'); ?>"
-     data-delete-block-type-folder-success-message-2="<?= t('Click Build your block now! once again.'); ?>"
 >
     <div class="ccm-dashboard-header-buttons">
         <a href="<?= h(app('url/manager')->resolve(['dashboard/blocks/block_builder'])); ?>"
@@ -60,9 +54,11 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
     <?php if (!empty($errors)): ?>
         <div class="alert alert-danger alert-dismissible" role="alert">
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="<?= t('Close'); ?>"></button>
-            <?php foreach ($errors as $errorEntry): ?>
-                <div><?= $errorEntry; ?></div>
-            <?php endforeach; ?>
+            <ul class="bb-alert-list">
+                <?php foreach ($errors as $errorEntry): ?>
+                    <li><?= nl2br($errorEntry); ?></li>
+                <?php endforeach; ?>
+            </ul>
         </div>
     <?php endif; ?>
 

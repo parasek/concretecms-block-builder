@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Concrete\Package\BlockBuilder\Controller\SinglePage\Dashboard\Blocks\BlockBuilder;
 
 use BlockBuilder\Controller\BaseDashboardController;
@@ -28,14 +30,14 @@ class Configs extends BaseDashboardController
     public function install(string $blockTypeHandle): SymfonyResponse
     {
         if (!$this->request->isMethod('post')) {
-            $this->flash('error', t('Only POST request is allowed.'));
+            $this->flash('error', t('Only POST requests are allowed.'));
         } elseif (!$this->token->validate('install_block')) {
             $this->flash('error', $this->token->getErrorMessage());
         }
 
         $bt = BlockType::installBlockType($blockTypeHandle);
 
-        $this->flash('success', t('Block "%s" has been successfully installed.', $bt->getBlockTypeName()));
+        $this->flash('success', t('The block type "%s" has been successfully installed.', $bt->getBlockTypeName()));
 
         return $this->buildRedirect('/dashboard/blocks/block_builder/configs')->send();
     }
@@ -43,16 +45,16 @@ class Configs extends BaseDashboardController
     public function uninstall($blockTypeId = 0): SymfonyResponse
     {
         if (!$this->request->isMethod('post')) {
-            $this->flash('error', t('Only POST request is allowed.'));
+            $this->flash('error', t('Only POST requests are allowed.'));
         } elseif (!$this->token->validate('uninstall_block')) {
             $this->flash('error', $this->token->getErrorMessage());
         } else {
-            $error = $this->blockTypeService->validateBlockTypeBeforeUninstall($blockTypeId);
+            $error = $this->blockTypeService->validateBlockTypeBeforeUninstall((int) $blockTypeId);
             if ($error) {
                 $this->flash('error', $error);
             } else {
-                $blockTypeName = $this->blockTypeService->uninstallBlockType($blockTypeId);
-                $this->flash('success', t('Block "%s" has been successfully uninstalled.', $blockTypeName));
+                $blockTypeName = $this->blockTypeService->uninstallBlockType((int) $blockTypeId);
+                $this->flash('success', t('The block type "%s" has been successfully uninstalled.', $blockTypeName));
             }
         }
 
@@ -62,7 +64,7 @@ class Configs extends BaseDashboardController
     public function delete_folder(?string $handle = null): SymfonyResponse
     {
         if (!$this->request->isMethod('post')) {
-            $this->flash('error', t('Only POST request is allowed.'));
+            $this->flash('error', t('Only POST requests are allowed.'));
         } elseif (!$this->token->validate('delete_folder')) {
             $this->flash('error', $this->token->getErrorMessage());
         } else {
@@ -74,7 +76,7 @@ class Configs extends BaseDashboardController
                 if ($result !== true) {
                     $this->flash('error', $result);
                 } else {
-                    $this->flash('success', t('Block type folder "%s" has been successfully deleted.', $handle));
+                    $this->flash('success', t('The block type folder "%s" has been successfully deleted.', $handle));
                 }
             }
         }

@@ -12,13 +12,13 @@
 ?>
 
 <div class="mb-4 <?= h(in_array('installBlock', $fieldsWithError) ? 'bb-has-error' : null); ?>">
-    <?= $form->label('installBlock', t('Install block after creation')); ?>
+    <?= $form->label('installBlock', t('Install the block after creation')); ?>
     <?= $form->select('installBlock', $installBlockOptions, (int) $config->installBlock); ?>
 </div>
 
 <div class="row">
     <div class="col-xl-6 mb-4 <?= h(in_array('entriesAsFirstTab', $fieldsWithError) ? 'bb-has-error' : null); ?>">
-        <?= $form->label('entriesAsFirstTab', t('Entries as first tab')); ?>
+        <?= $form->label('entriesAsFirstTab', t('Entries as the first tab')); ?>
         <?= $form->select('entriesAsFirstTab', $entriesAsFirstTabOptions, (int) $config->entriesAsFirstTab); ?>
     </div>
     <div class="col-xl-6 mb-4 <?= h(in_array('maxNumberOfEntries', $fieldsWithError) ? 'bb-has-error' : null); ?>">
@@ -33,11 +33,11 @@
 </div>
 
 <div class="mb-4 <?= h(in_array('fieldsDivider', $fieldsWithError) ? 'bb-has-error' : null); ?>">
-    <?= $form->label('fieldsDivider', t('Use horizontal line as field\'s divider')); ?>
+    <?= $form->label('fieldsDivider', t('Use a horizontal line as the field\'s divider')); ?>
     <?= $form->select('fieldsDivider', $dividerOptions, $config->fieldsDivider); ?>
 </div>
 
 <div class="mb-4 <?= h(in_array('entryFieldsDivider', $fieldsWithError) ? 'bb-has-error' : null); ?>">
-    <?= $form->label('entryFieldsDivider', t('Use horizontal line as field\'s divider in repeatable entries')); ?>
+    <?= $form->label('entryFieldsDivider', t('Use a horizontal line as the field\'s divider in repeatable entries')); ?>
     <?= $form->select('entryFieldsDivider', $dividerOptions, $config->entryFieldsDivider); ?>
 </div>

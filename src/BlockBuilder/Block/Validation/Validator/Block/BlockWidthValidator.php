@@ -16,10 +16,10 @@ class BlockWidthValidator extends AbstractValidator
         $errors = [];
 
         if (!$data['blockWidth']) {
-            $errors[] = t('Field "%s" is required (%s).', t('Block width'), NavigationTabEnum::BlockSettings->getName());
+            $errors[] = t('The field "%s" is required (%s).', t('Block width'), NavigationTabEnum::BlockSettings->getName());
         } else {
             if (!ctype_digit($data['blockWidth']) || $data['blockWidth'] < 300 || $data['blockWidth'] > 2000) {
-                $errors[] = t('Field "%s" should be a number between %s and %s (%s).', t('Block width'), 300, 2000, NavigationTabEnum::BlockSettings->getName());
+                $errors[] = t('The field "%s" should be a number between %s and %s (%s).', t('Block width'), 300, 2000, NavigationTabEnum::BlockSettings->getName());
             }
         }
 
