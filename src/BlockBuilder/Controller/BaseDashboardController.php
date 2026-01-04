@@ -11,7 +11,6 @@ use Concrete\Core\Asset\AssetList;
 use Concrete\Core\Entity\Package as PackageEntity;
 use Concrete\Core\Package\PackageService;
 use Concrete\Core\Page\Controller\DashboardPageController;
-use Concrete\Core\User\User;
 
 class BaseDashboardController extends DashboardPageController
 {
