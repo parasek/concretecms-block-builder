@@ -2,7 +2,7 @@
 
 <script type="text/template" data-field-type-partial="<?= h($handle ?? null); ?>">
 
-    <hr class="field-entry-hr">
+    <hr class="bb-field-entry-hr">
 
     <div class="">
         <label for="<%=context%>[<%=counter%>][datePickerPattern]"
