@@ -34,7 +34,6 @@ class BaseDashboardController extends DashboardPageController
         $this->loadAssets();
 
         $this->set('app', $this->app);
-        $this->set('u', $this->app->make(User::class));
         $this->set('environment', $environment);
     }
 
@@ -42,13 +41,19 @@ class BaseDashboardController extends DashboardPageController
     {
         $al = AssetList::getInstance();
 
-        $al->register('css', 'bb/styles', 'css_files/styles.css', [], $this->pkg);
-        $this->requireAsset('css', 'bb/styles');
-
         $al->register('css', 'choices/css', 'vendor/choices.js/choices.min.css', [], $this->pkg);
         $this->requireAsset('css', 'choices/css');
 
         $al->register('javascript', 'choices/js', 'vendor/choices.js/choices.min.js', [], $this->pkg);
         $this->requireAsset('javascript', 'choices/js');
+
+        $al->register('javascript', 'sortable/js', 'vendor/sortablejs/Sortable.min.js', [], $this->pkg);
+        $this->requireAsset('javascript', 'sortable/js');
+
+        $al->register('css', 'block-builder/styles', 'assets/css/styles.css', [], $this->pkg);
+        $this->requireAsset('css', 'block-builder/styles');
+
+        $al->register('javascript', 'block-builder/js', 'assets/js/block-builder.js', [], $this->pkg);
+        $this->requireAsset('javascript', 'block-builder/js');
     }
 }

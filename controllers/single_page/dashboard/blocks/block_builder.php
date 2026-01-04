@@ -14,7 +14,6 @@ use BlockBuilder\BlockGenerator\Enum\CreateBlockContextEnum;
 use BlockBuilder\Controller\BaseDashboardController;
 use BlockBuilder\DataProvider\BlockBuilderViewDataProvider;
 use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
-use Concrete\Core\Asset\AssetList;
 use Symfony\Component\HttpFoundation\Response;
 
 defined('C5_EXECUTE') or exit('Access Denied.');
@@ -38,8 +37,6 @@ class BlockBuilder extends BaseDashboardController
         $this->blockManifestService = $this->app->make(BlockManifestService::class);
         $this->factory = $this->app->make(CreateBlockDtoFactory::class);
         $this->provider = $this->app->make(BlockBuilderViewDataProvider::class);
-
-        $this->loadAssets();
 
         $this->set('errors', $this->errors);
         $this->set('fieldsWithError', $this->fieldsWithError);
@@ -158,16 +155,5 @@ class BlockBuilder extends BaseDashboardController
         foreach ($data as $key => $value) {
             $this->set($key, $value);
         }
-    }
-
-    private function loadAssets(): void
-    {
-        $al = AssetList::getInstance();
-
-        $al->register('javascript', 'block-builder/js', 'assets/js/block-builder.js', [], $this->pkg);
-        $this->requireAsset('javascript', 'block-builder/js');
-
-        $al->register('javascript', 'sortable/js', 'vendor/sortablejs/Sortable.min.js', [], $this->pkg);
-        $this->requireAsset('javascript', 'sortable/js');
     }
 }

@@ -12,7 +12,8 @@ class Controller extends Package
 {
     protected string $pkgHandle = 'block_builder';
     protected $appVersionRequired = '9.4.3';
-    protected string $pkgVersion = '2.8.2'; // TODO: Update to 3.0.0 before release
+    protected $phpVersionRequired = '8.4';
+    protected string $pkgVersion = '2.8.2'; // TODO: Update to 3.0.0 before release + increase $appVersionRequired to current
 
     protected $pkgAutoloaderRegistries = [
         'src/BlockBuilder' => 'BlockBuilder',
@@ -25,7 +26,7 @@ class Controller extends Package
 
     public function getPackageDescription(): string
     {
-        return t('Build custom Concrete CMS blocks (with optional set of repeatable entries).');
+        return t('Build custom Concrete CMS blocks with an optional set of repeatable entries.');
     }
 
     public function on_start(): void

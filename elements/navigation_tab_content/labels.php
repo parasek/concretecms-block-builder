@@ -1,7 +1,5 @@
 <?php defined('C5_EXECUTE') or exit('Access Denied.');
 
-use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
-
 /**
  * @var Concrete\Core\Form\Service\Form $form
  * @var BlockBuilder\Block\Dto\CreateBlockDto $config

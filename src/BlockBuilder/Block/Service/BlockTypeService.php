@@ -144,7 +144,7 @@ readonly class BlockTypeService
             if (!$result) {
                 return t('Failed to remove block type folder "%s"', $handle);
             }
-        } catch (Exception $e) {
+        } catch (Exception) {
             return t('Failed to remove block type folder "%s". Please check file permissions.', $handle);
         }
 

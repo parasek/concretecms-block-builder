@@ -19,7 +19,7 @@ readonly class OptionListService
 
     public function getBlockTypeSets(bool $includeEmptyOption = false): array
     {
-        // These calls ensure Concrete's translation extractor picks up these strings
+        // These t() calls ensure Concrete's translation extractor picks up these strings
         t('Basic');
         t('Navigation');
         t('Forms');
@@ -51,7 +51,6 @@ readonly class OptionListService
                     'label' => t('Keep current icon'),
                 ];
             }
-
         }
 
         $icons[] = [
@@ -148,9 +147,9 @@ readonly class OptionListService
     public function getSelectMultipleFieldTypes(bool $includeEmptyOption = false): array
     {
         $options = [
-            'default_multiselect' => t('Default Multiselect Field'),
-            'enhanced_multiselect' => t('Enhanced Multiselect Field'),
-            'checkbox_list' => t('Checkbox List'),
+            'default_multiselect' => t('Default multiselect field'),
+            'enhanced_multiselect' => t('Enhanced multiselect field'),
+            'checkbox_list' => t('Checkbox list'),
         ];
 
         if ($includeEmptyOption) {

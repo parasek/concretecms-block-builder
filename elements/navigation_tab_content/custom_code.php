@@ -57,10 +57,10 @@
         <br>
         <strong class="d-block mt-2"><?= t('Example code'); ?>:</strong>
         <code class="bb-code-block mt4">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;private function exampleMethod($exampleArgument)
-            {
-            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Your custom code
-            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+            &nbsp;&nbsp;&nbsp;&nbsp;private function exampleMethod($exampleArgument)
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;{
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Your custom code
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;}
         </code>
     </div>
 </div>

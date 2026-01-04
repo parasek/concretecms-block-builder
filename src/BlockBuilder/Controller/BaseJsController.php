@@ -6,8 +6,6 @@ namespace BlockBuilder\Controller;
 
 use Concrete\Core\Controller\Controller;
 use Concrete\Core\Http\ResponseFactoryInterface;
-use Concrete\Core\Permission\Checker as Permissions;
-use Concrete\Core\Page\Page;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 abstract class BaseJsController extends Controller
@@ -47,19 +45,5 @@ abstract class BaseJsController extends Controller
         }
 
         return null;
-    }
-
-    protected function validateReqdestMethod(string $tokenAction = 'csrf_token', string $tokenValue = ''): ?JsonResponse
-    {
-        // 1. Check Permissions (Homepage edit as proxy for admin access)
-        $p = new Permissions(Page::getByID(1));
-        if (!$p->canWrite()) {
-            return $this->jsonError(t('Access Denied.'), 401);
-        }
-
-        // 3. Check CSRF Token
-
-
-        return null; // All good
     }
 }

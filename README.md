@@ -1,12 +1,12 @@
 # Block Builder
 
-Block Builder is a free Concrete CMS addon that lets you easily create your own custom blocks (with one optional set of repeatable entries).
+Build custom Concrete CMS blocks with an optional set of repeatable entries.
 
 # How to support this project
 
-If you like Block Builder and want to support development of this addon, feel free to star [GitHub page](https://github.com/parasek/concretecms-block-builder), rate addon on [Concrete CMS Marketplace](https://marketplace.concretecms.com/marketplace/addons/block-builder/reviews) or donate via [Paypal](https://www.paypal.com/paypalme/c5center).
+If you like Block Builder and want to support development of this addon, feel free to star [GitHub page](https://github.com/parasek/concretecms-block-builder) or rate addon on [Concrete CMS Marketplace](https://market.concretecms.com/products/block-builder/49b29b3c-d119-11ee-b9df-0a97d4ce16b9).
 
-Reporting errors via [GitHub Issues](https://github.com/parasek/concretecms-block-builder/issues) or [Marketplace support forum](https://marketplace.concretecms.com/marketplace/addons/block-builder/support/) is always appreciated.
+Reporting errors via [GitHub Issues](https://github.com/parasek/concretecms-block-builder/issues) or [website](https://c5center.com/contact) is always appreciated.
 
 # Requirements
 
@@ -14,12 +14,12 @@ Latest version of Block Builder requires Concrete version 9.2.0 or higher and is
 
 For Concrete 8.2.1+ use the highest version of 1.x.x branch.
 
-Concrete CMS Marketplace: [https://www.concrete5.org/marketplace/addons/block-builder](https://www.concrete5.org/marketplace/addons/block-builder)
+Concrete CMS Marketplace: [https://market.concretecms.com/products/block-builder/49b29b3c-d119-11ee-b9df-0a97d4ce16b9](https://market.concretecms.com/products/block-builder/49b29b3c-d119-11ee-b9df-0a97d4ce16b9)
 
-GitHub: [https://github.com/parasek/c5-block-builder](https://github.com/parasek/c5-block-builder)
+GitHub: [https://github.com/parasek/concretecms-block-builder](https://github.com/parasek/concretecms-block-builder)
 
-If you are looking for version suited for Concrete5.7, check [Block Builder Legacy](https://github.com/parasek/c5-block-builder-legacy).
-It has almost the same functionality but uses pre-8.0 code/api.
+If you are looking for version suited for Concrete5.7, check [Block Builder Legacy](https://github.com/parasek/concretecms-block-builder-legacy).
+
 
 # Install the latest version with Composer
 

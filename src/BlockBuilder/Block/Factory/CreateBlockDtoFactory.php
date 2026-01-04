@@ -130,10 +130,6 @@ readonly class CreateBlockDtoFactory
             return false;
         }
 
-        if ($value === 'true' || $value === true) {
-            return true;
-        }
-
         return true;
     }
 

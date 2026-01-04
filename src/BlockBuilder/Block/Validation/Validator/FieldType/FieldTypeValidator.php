@@ -158,7 +158,7 @@ class FieldTypeValidator extends AbstractValidator
         if (str_starts_with($handle, '_') || str_ends_with($handle, '_')) {
             $errors[] = 'handle|start_or_end_with_underscore';
         }
-        if (preg_match('/[_]{2,}/', $handle)) {
+        if (preg_match('/_{2,}/', $handle)) {
             $errors[] = 'handle|consecutive_underscores';
         }
         if (!ctype_lower(mb_substr($handle, 0, 1))) {
