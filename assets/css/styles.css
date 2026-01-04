@@ -1,8 +1,7 @@
 /************************************************************/
 /* General styling
 /************************************************************/
-.bb-container,
-.bb-container-configs {
+.bb-app {
     --bs-danger: #c34d52;
     --bs-border-color: #e3e3e3;
 
@@ -255,31 +254,20 @@
 }
 
 /* choices.js adjustments */
-.bb-container .choices__inner {
+.bb-app .choices__inner {
     background: var(--bs-white);
     border-radius: var(--bb-input-border-radius);
     border-color: var(--bb-input-border-color);
 }
 
-.bb-container .is-focused .choices__inner,
-.bb-container .is-open .choices__inner {
+.bb-app .is-focused .choices__inner,
+.bb-app .is-open .choices__inner {
     border-color: var(--bb-input-focus-border-color);
 }
 
-.bb-container .choices__list--dropdown .choices__item--selectable[data-select-text],
-.bb-container .choices__list[aria-expanded] .choices__item--selectable[data-select-text] {
+.bb-app .choices__list--dropdown .choices__item--selectable[data-select-text],
+.bb-app .choices__list[aria-expanded] .choices__item--selectable[data-select-text] {
     padding-right: 20px;
-}
-
-/************************************************************/
-/* Night mode
-/************************************************************/
-[data-bs-theme='dark'] .bb-info-entry {
-    background: #373737;
-}
-
-[data-bs-theme='dark'] .bb-info-entry-title {
-    background: #454545;
 }
 
 /************************************************************/
@@ -292,6 +280,7 @@
 
 .bb-block-type {
     border: 1px solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
     padding: 20px;
 }
 
@@ -418,6 +407,55 @@
     padding-top: 30px;
 }
 
-.bb-container .bb-entry-hr {
+.bb-app .bb-entry-hr {
     margin: 0 0 1.5rem;
+}
+
+/************************************************************/
+/* Dark mode
+/************************************************************/
+[data-bs-theme='dark'] .bb-info-entry {
+    background: #373737;
+}
+
+[data-bs-theme='dark'] .bb-info-entry-title {
+    background: #454545;
+}
+
+[data-bs-theme='dark'] .bb-block-type:hover {
+    background-color: #3f3f3f;
+}
+
+[data-bs-theme='dark'] .bb-block-type-info-badge {
+    background-color: #535353 !important;
+}
+
+[data-bs-theme='dark'] .bb-code-block {
+    background: #252525;
+}
+
+[data-bs-theme='dark'] .bb-field-type-actions {
+    background: var(--bs-body-bg);
+}
+
+[data-bs-theme='dark'] .bb-entry {
+    background: var(--bs-body-bg);
+}
+
+[data-bs-theme='dark'] .bb-app .choices__inner {
+    background: var(--bs-body-bg);
+}
+
+[data-bs-theme='dark'] .bb-app .choices__list--dropdown,
+[data-bs-theme='dark'] .bb-app .choices__list[aria-expanded] {
+    background: var(--bs-body-bg);
+}
+
+[data-bs-theme='dark'] .bb-app .choices[data-type*='select-one'] .choices__input {
+    background: var(--bs-body-bg);
+}
+
+[data-bs-theme='dark'] .bb-app .choices__list--dropdown .choices__item--selectable.is-highlighted,
+[data-bs-theme='dark'] .bb-app .choices__list[aria-expanded] .choices__item--selectable.is-highlighted {
+    background: #1e1e1e;
 }

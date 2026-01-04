@@ -31,8 +31,8 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
  */
 ?>
 
-<div class="bb-container"
-     id="bbContainer"
+<div class="bb-app bb-app-builder"
+     id="bbAppBuilder"
      data-csrf-token="<?= h($controller->token->generate('csrf_token')); ?>"
      data-fields-with-errors="<?= h(json_encode($fieldsWithError ?? [])); ?>"
      data-install-block-type-url="<?= app('url/manager')->resolve(['js/install-block-type']); ?>"
@@ -172,4 +172,4 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
         'selectMultipleFieldTypes' => $selectMultipleFieldTypes,
     ], 'block_builder'); ?>
 
-</div> <?php // .bb-container ?>
+</div> <?php // .bb-app.bb-app-builder ?>

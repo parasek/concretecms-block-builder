@@ -12,7 +12,7 @@ use BlockBuilder\Environment\EnvironmentService;
  */
 
 ?>
-<div class="bb-container-configs">
+<div class="bb-app bb-app-configs">
 
     <div class="ccm-dashboard-header-buttons">
         <a href="<?= h(app('url/manager')->resolve(['dashboard/blocks/block_builder'])); ?>"
@@ -249,7 +249,7 @@ use BlockBuilder\Environment\EnvironmentService;
 
     <?php endif; ?>
 
-</div> <?php // .bb-container-configs ?>
+</div> <?php // .bb-app.bb-app-configs ?>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

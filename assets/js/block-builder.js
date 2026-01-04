@@ -2,7 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     const blockBuilder = (() => {
-        const bbContainer = document.getElementById('bbContainer');
+        const bbContainer = document.getElementById('bbAppBuilder');
         if (!bbContainer) return { init: () => {} };
 
         const globalCounter = { basic: 0, entries: 0 };
