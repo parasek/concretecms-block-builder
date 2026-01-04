@@ -2,7 +2,7 @@
 
 <script type="text/template" data-field-type-partial="<?= h($handle ?? null); ?>">
 
-    <hr class="bb-field-entry-hr">
+    <hr class="bb-entry-hr">
 
     <div class="mb-4">
         <label for="<%=context%>[<%=counter%>][numberSize]"

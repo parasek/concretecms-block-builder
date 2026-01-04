@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
             new Sortable(container, {
                 handle: '[data-move-entry]',
                 animation: 150,
-                ghostClass: 'bb-field-entry-ghost',
+                ghostClass: 'bb-entry-ghost',
             });
         };
 

@@ -10,23 +10,23 @@
 
 <script type="text/template" id="templateEntry">
 
-    <div class="bb-field-entry mb-4"
+    <div class="bb-entry mb-4"
          data-entry
          data-counter="<%-counter%>"
     >
 
-        <div class="bb-field-entry-header position-relative">
+        <div class="bb-entry-header position-relative">
 
-            <div class="bb-field-entry-header-move-entry text-body text-body-hover"
+            <div class="bb-entry-header-move-entry text-body text-body-hover"
                  data-move-entry
             ><i class="fas fa-arrows-alt"></i></div>
 
-            <div class="bb-field-entry-header-toggle-entry text-body text-body-hover"
+            <div class="bb-entry-header-toggle-entry text-body text-body-hover"
                  data-toggle-entry
                  data-action="collapse"
             ><i class="far fa-minus-square"></i></div>
 
-            <div class="bb-field-entry-header-title text-body">
+            <div class="bb-entry-header-title text-body">
                 <strong data-entry-title>
                     <% if (label) { %>
                     <%-label%>
@@ -36,14 +36,14 @@
                 </strong><i class="<%-fieldTypeIcon%> m-2 ms-2"></i><span><%-fieldTypeName%></span>
             </div>
 
-            <div class="bb-field-entry-header-remove-entry text-danger text-danger-hover"
+            <div class="bb-entry-header-remove-entry text-danger text-danger-hover"
                  data-remove-entry
                  data-confirm-text="<?= t('Are you sure?'); ?>"
             ><i class="fas fa-times"></i></div>
 
         </div>
 
-        <div class="bb-field-entry-content"
+        <div class="bb-entry-content"
              data-entry-content
         >
 
