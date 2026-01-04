@@ -52,7 +52,7 @@ class BlockHandleValidator extends AbstractValidator
                     if (!$this->blockTypeService->isBlockTypeInstalled($blockHandle)) {
                         $errors[] = t(
                                 'You cannot rebuild a block that is awaiting installation. %sInstall it%s first.',
-                                '<a href="#" class="text-success" data-install-block-type data-handle="' . $blockHandle . '"><i class="fas fa-plus-circle"></i> ',
+                                '<a href="#" class="text-success text-nowrap" data-install-block-type data-handle="' . $blockHandle . '"><i class="fas fa-plus-circle"></i> ',
                                 '</a>',
                             ) . PHP_EOL .
                             t('If you tried to rebuild the block by mistake, build it instead.');
@@ -66,7 +66,7 @@ class BlockHandleValidator extends AbstractValidator
                     if ($this->blockTypeService->isBlockTypeInstalled($blockHandle)) {
                         $errors[] = t('Are you sure you want to build the block? Maybe you meant to rebuild it?') . PHP_EOL .
                             t('A block type with that handle is already installed. %sUninstall it%s first, then build the block again.',
-                                '<a href="#" class="text-danger" data-uninstall-block-type data-handle="' . $blockHandle . '"><i class="fas fa-minus-circle"></i> ',
+                                '<a href="#" class="text-danger text-nowrap" data-uninstall-block-type data-handle="' . $blockHandle . '"><i class="fas fa-minus-circle"></i> ',
                                 '</a>',
                             ) . PHP_EOL .
                             t('Alternatively, you can use a different handle (%s).', NavigationTabEnum::BlockSettings->getName());
@@ -75,7 +75,7 @@ class BlockHandleValidator extends AbstractValidator
                             $errors[] = t(
                                 'A folder named %s already exists. %sPermanently delete that folder%s or choose a different handle (%s).',
                                 '"' . $blockHandle . '"',
-                                '<a href="#" class="text-danger" data-delete-block-type-folder data-handle="' . $blockHandle . '"><i class="far fa-trash-alt"></i> ',
+                                '<a href="#" class="text-danger text-nowrap" data-delete-block-type-folder data-handle="' . $blockHandle . '"><i class="far fa-trash-alt"></i> ',
                                 '</a>',
                                 NavigationTabEnum::BlockSettings->getName(),
                             );

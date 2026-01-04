@@ -34,7 +34,7 @@
 /************************************************************/
 /* Environment info block
 /************************************************************/
-.env-info {
+.bb-info {
     display: grid;
     grid-gap: 10px 0;
     grid-template-columns: 1fr auto auto auto;
@@ -45,7 +45,7 @@
     }
 }
 
-.env-info-row {
+.bb-info-row {
     border: 1px solid var(--bs-border-color);
     border-radius: var(--bs-border-radius);
     grid-column: 1/-1;
@@ -56,7 +56,7 @@
     }
 }
 
-.env-info-entry {
+.bb-info-entry {
     padding: 10px 20px;
     border-block-end: 1px solid var(--bs-border-color);
     background: var(--bb-gray-100);
@@ -67,7 +67,7 @@
     }
 }
 
-.env-info-entry:last-child {
+.bb-info-entry:last-child {
     border-block-end: 0;
 
     @media (min-width: 992px) {
@@ -75,11 +75,11 @@
     }
 }
 
-.env-info-entry-title {
+.bb-info-entry-title {
     background: var(--bb-gray-200);
 }
 
-.env-info-entry-value {
+.bb-info-entry-value {
     white-space: nowrap;
     margin-left: 4px;
 }
@@ -227,7 +227,7 @@
     color: var(--bs-danger) !important;
 }
 
-.footer-required-fields {
+.bb-footer-required-fields {
     margin-bottom: 100px;
 }
 
@@ -243,104 +243,104 @@
     margin-bottom: 0;
 }
 
-.block-icon-preview {
+.bb-block-icon-preview {
     border: 1px solid #ebebeb;
     border-radius: 4px;
     padding: 10px 20px 18px;
 }
 
-.block-icon-preview-image-wrapper {
+.bb-block-icon-preview-image-wrapper {
     width: 97px;
     margin: 0 auto;
 }
 
 /* choices.js adjustments */
-.ccm-ui .choices__inner {
+.bb-container .choices__inner {
     background: var(--bs-white);
     border-radius: var(--bb-input-border-radius);
     border-color: var(--bb-input-border-color);
 }
 
-.ccm-ui .is-focused .choices__inner,
-.ccm-ui .is-open .choices__inner {
+.bb-container .is-focused .choices__inner,
+.bb-container .is-open .choices__inner {
     border-color: var(--bb-input-focus-border-color);
 }
 
-.ccm-ui .choices__list--dropdown .choices__item--selectable[data-select-text],
-.ccm-ui .choices__list[aria-expanded] .choices__item--selectable[data-select-text] {
+.bb-container .choices__list--dropdown .choices__item--selectable[data-select-text],
+.bb-container .choices__list[aria-expanded] .choices__item--selectable[data-select-text] {
     padding-right: 20px;
 }
 
 /************************************************************/
 /* Night mode
 /************************************************************/
-[data-bs-theme='dark'] .env-info-entry {
+[data-bs-theme='dark'] .bb-info-entry {
     background: #373737;
 }
 
-[data-bs-theme='dark'] .env-info-entry-title {
+[data-bs-theme='dark'] .bb-info-entry-title {
     background: #454545;
 }
 
 /************************************************************/
 /* Configs
 /************************************************************/
-.block-types-title {
+.bb-block-types-title {
     font-weight: 400;
     font-size: 1.2rem;
 }
 
-.block-type {
+.bb-block-type {
     border: 1px solid var(--bs-border-color);
     padding: 20px;
 }
 
-.block-type:hover {
+.bb-block-type:hover {
     background-color: var(--bb-gray-100);
 }
 
-.block-type-icon {
+.bb-block-type-icon {
     width: 97px;
 }
 
-.block-type-info {
+.bb-block-type-info {
     @media (min-width: 1400px) {
         padding: 0 20px;
     }
 }
 
-.block-type-info-badge {
+.bb-block-type-info-badge {
     background-color: var(--bb-gray-300) !important;
     color: var(--bs-body-color);
 }
 
-.block-type-actions {
+.bb-block-type-actions {
     @media (min-width: 1600px) {
         flex-direction: row !important;
         align-items: start !important;
     }
 }
 
-.block-type-action:not(:last-child) {
+.bb-block-type-action:not(:last-child) {
     @media (min-width: 1600px) {
         margin-right: 0.5rem !important;
     }
 }
 
 @media (min-width: 1400px) and (max-width: 1599px) {
-    .block-type-action-load-config {
+    .bb-block-type-action-load-config {
         order: 1;
     }
 
-    .block-type-action-delete-folder {
+    .bb-block-type-action-delete-folder {
         order: 2;
     }
 
-    .block-type-action-uninstall {
+    .bb-block-type-action-uninstall {
         order: 3;
     }
 
-    .block-type-action-install {
+    .bb-block-type-action-install {
         order: 4;
     }
 }
@@ -348,7 +348,7 @@
 /************************************************************/
 /* Field types (Tab: Basic information / Tab: Repeatable entries)
 /************************************************************/
-.field-type-actions {
+.bb-field-type-actions {
     position: sticky;
     top: 44px;
     background: var(--bb-gray-100);
@@ -359,7 +359,7 @@
     border-radius: var(--bs-border-radius);
 }
 
-.field-type-action-add {
+.bb-field-type-action-add {
     width: 100%;
 
     @media (min-width: 1400px) {
@@ -418,6 +418,6 @@
     padding-top: 30px;
 }
 
-.ccm-ui .field-entry-hr {
+.bb-container .field-entry-hr {
     margin: 0 0 1.5rem;
 }

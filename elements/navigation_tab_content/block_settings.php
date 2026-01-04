@@ -63,11 +63,12 @@ use BlockBuilder\Environment\EnvironmentService;
             ?>
             <div class="d-xxl-flex gap-4">
                 <div class="">
-                    <div class="block-icon-preview mb-3">
+                    <div class="bb-block-icon-preview mb-3">
                         <div class="form-label text-center mb-2"><?= t('Preview'); ?></div>
-                        <div class="block-icon-preview-image-wrapper text-center">
+                        <div class="bb-block-icon-preview-image-wrapper text-center">
                             <img src="<?= h($blockIconPath); ?>"
                                  class="img-fluid"
+                                 id="blockIconPreviewImage"
                                  alt="<?= h($config->blockName); ?>"
                             >
                         </div>

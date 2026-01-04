@@ -503,7 +503,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }),
             });
 
-            const previewImg = document.querySelector('.block-icon-preview img');
+            const previewImg = document.querySelector('#blockIconPreviewImage');
             const updatePreview = (url) => {
                 if (previewImg && url) {
                     previewImg.src = url;

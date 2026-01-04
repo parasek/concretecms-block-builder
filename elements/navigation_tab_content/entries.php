@@ -7,11 +7,11 @@
  */
 ?>
 
-<div class="field-type-actions d-flex flex-column flex-xxl-row gap-xxl-4"
+<div class="bb-field-type-actions d-flex flex-column flex-xxl-row gap-xxl-4"
      data-field-type-actions
 >
 
-    <label class="field-type-action-add label mb-3 mb-xxl-0">
+    <label class="bb-field-type-action-add label mb-3 mb-xxl-0">
         <select class=""
                 data-add-entry
                 data-context="<?= h($fieldTypeContextEnum->value); ?>"

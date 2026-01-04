@@ -133,7 +133,7 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
 
         <hr>
 
-        <p class="footer-required-fields small text-muted">* <?= t('Required fields'); ?></p>
+        <p class="bb-footer-required-fields small text-muted">* <?= t('Required fields'); ?></p>
 
         <div class="ccm-dashboard-form-actions-wrapper">
             <div class="ccm-dashboard-form-actions">
