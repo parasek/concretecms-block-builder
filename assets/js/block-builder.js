@@ -464,7 +464,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             const targetEntry = getEntriesContainer(context).querySelector(`[data-entry][data-counter="${globalCounter[context] - 1}"]`);
                             if (targetEntry) {
                                 const concreteBarHeight = document.querySelector('#ccm-toolbar')?.offsetHeight || 0;
-                                const bbActionsBarHeight = document.querySelector('[data-field-type-actions]')?.offsetHeight || 0;
+                                const bbActionsBarHeight =
+                                    targetEntry.closest('[data-tab-content]').querySelector('[data-field-type-actions]')?.offsetHeight || 0;
                                 window.scrollTo({
                                     top: targetEntry.getBoundingClientRect().top + window.scrollY - concreteBarHeight - bbActionsBarHeight,
                                     behavior: 'smooth',
