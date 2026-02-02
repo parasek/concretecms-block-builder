@@ -19,6 +19,7 @@
     --bb-entry-error-border-color: #ebd9d9;
     --bb-entry-error-bg: #fff5f5;
     --bb-entry-recently-added-bg: #f4faff;
+    --bb-entry-recently-added-header-bg: #e4f3ff;
     --bb-entry-actions-icon-color: #737272;
 }
 
@@ -232,7 +233,7 @@
 
 .bb-code-block {
     display: block;
-    background: #f7f7f7;
+    background: #f9f9f9;
     padding: 15px 20px;
     border-radius: 10px;
     margin-top: 10px;
@@ -359,7 +360,6 @@
 .bb-entry {
     border-radius: var(--bs-border-radius);
     border: 1px solid var(--bs-border-color);
-    padding: 20px;
 }
 
 .bb-entry-ghost {
@@ -370,30 +370,39 @@
     background: var(--bb-entry-recently-added-bg);
 }
 
+.bb-entry[data-recently-added] .bb-entry-header {
+    background: var(--bb-entry-recently-added-header-bg);
+}
+
 .bb-entry.bb-entry-has-error {
     border-color: var(--bb-entry-error-border-color);
     background: var(--bb-entry-error-bg);
+}
+
+.bb-entry-header {
+    background: var(--bb-gray-200);
+    padding: 20px;
 }
 
 .bb-entry-header-move-entry,
 .bb-entry-header-toggle-entry,
 .bb-entry-header-remove-entry {
     position: absolute;
-    top: 3px;
+    top: 23px;
     cursor: pointer;
 }
 
 .bb-entry-header-move-entry {
-    left: 0;
+    left: 20px;
     cursor: move;
 }
 
 .bb-entry-header-toggle-entry {
-    left: 30px;
+    left: 53px;
 }
 
 .bb-entry-header-remove-entry {
-    right: 0;
+    right: 20px;
 }
 
 .bb-entry-header-title {
@@ -403,8 +412,7 @@
 
 .bb-entry-content {
     border-top: 1px solid var(--bs-border-color);
-    margin-top: 15px;
-    padding-top: 30px;
+    padding: 20px;
 }
 
 .bb-app .bb-entry-hr {
@@ -439,7 +447,11 @@
 }
 
 [data-bs-theme='dark'] .bb-entry {
-    background: var(--bs-body-bg);
+    background: #232323;
+}
+
+[data-bs-theme='dark'] .bb-entry-header {
+    background: #161616;
 }
 
 [data-bs-theme='dark'] .bb-app .choices__inner {

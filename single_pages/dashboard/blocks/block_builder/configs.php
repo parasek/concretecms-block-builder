@@ -213,7 +213,7 @@ use BlockBuilder\Environment\EnvironmentService;
                         </div>
 
                         <div class="bb-block-type-badges text-muted small mb-3 mb-xxl-0">
-                        <span class="badge small block-type-info-badge mb-1">
+                        <span class="badge small bb-block-type-info-badge mb-1">
                            <span class="me-1 text-muted"><?= t('Block Builder'); ?>:</span> <?= h($predefinedConfig->blockBuilderVersion ?? t('No info')); ?>
                         </span>
                             <span class="badge small bb-block-type-info-badge mb-1">
