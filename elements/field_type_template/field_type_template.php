@@ -79,6 +79,7 @@
                            class="form-control"
                            value="<%-handle%>"
                            maxlength="50"
+                           data-entry-handle
                     >
                     <div class="form-text"><?= t('Letters and underscores only, e.g., productName'); ?></div>
                 </div>
