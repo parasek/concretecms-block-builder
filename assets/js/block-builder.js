@@ -430,59 +430,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        const handleBlockAction = async (button, url) => {
-            const csrfToken = bbContainer.getAttribute('data-csrf-token');
-            const confirmationMessage = bbContainer.getAttribute('data-confirmation-message');
-            const handle = button.getAttribute('data-handle');
-
-            if (!confirm(confirmationMessage)) return;
-
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'X-Requested-With': 'XMLHttpRequest',
-                    },
-                    body: new URLSearchParams({ csrfToken, handle }),
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    alert(data.message);
-                } else {
-                    alert(data.message || 'Oops! Something went wrong...');
-                }
-            } catch {
-                alert('Oops! Something went wrong...');
-            }
-        };
-
-        const installBlockType = (e) => {
-            e.preventDefault();
-            const button = e.target.closest('[data-install-block-type]');
-            if (!button) return;
-
-            handleBlockAction(button, bbContainer.getAttribute('data-install-block-type-url')).then(() => {});
-        };
-
-        const uninstallBlockType = (e) => {
-            e.preventDefault();
-            const button = e.target.closest('[data-uninstall-block-type]');
-            if (!button) return;
-
-            handleBlockAction(button, bbContainer.getAttribute('data-uninstall-block-type-url')).then(() => {});
-        };
-
-        const deleteBlockTypeFolder = (e) => {
-            e.preventDefault();
-            const button = e.target.closest('[data-delete-block-type-folder]');
-            if (!button) return;
-
-            handleBlockAction(button, bbContainer.getAttribute('data-delete-block-type-folder-url')).then(() => {});
-        };
-
         const initTabs = () => {
             const navContainer = bbContainer.querySelector('#bb-tabs');
             if (!navContainer) return;
@@ -671,15 +618,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (target.closest('[data-change-select-list-generation-method]')) toggleSelectListGenerationOptions(e);
             });
 
-            document.addEventListener('click', (e) => {
-                const target = e.target;
-                const alert = target.closest('.alert');
-                if (!alert) return;
-
-                if (target.closest('[data-install-block-type]')) installBlockType(e);
-                if (target.closest('[data-uninstall-block-type]')) uninstallBlockType(e);
-                if (target.closest('[data-delete-block-type-folder]')) deleteBlockTypeFolder(e);
-            });
         };
 
         return {

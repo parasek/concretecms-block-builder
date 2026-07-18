@@ -219,7 +219,8 @@
 }
 
 /* Errors */
-.bb-has-error .form-control {
+.bb-has-error .form-control,
+.bb-has-error .form-select {
     border-color: var(--bs-danger) !important;
 }
 
@@ -290,7 +291,16 @@
 }
 
 .bb-block-type-icon {
-    width: 97px;
+    align-items: center;
+    block-size: 97px;
+    display: flex;
+    inline-size: 97px;
+    justify-content: center;
+}
+
+.bb-block-type-icon-image {
+    max-block-size: 100%;
+    max-inline-size: 100%;
 }
 
 .bb-block-type-info {
@@ -377,6 +387,10 @@
 .bb-entry.bb-entry-has-error {
     border-color: var(--bb-entry-error-border-color);
     background: var(--bb-entry-error-bg);
+}
+
+.bb-entry-has-error .bb-entry-header {
+    background: #ffe4e4;
 }
 
 .bb-entry-header {

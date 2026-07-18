@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace BlockBuilder\BlockGenerator\FileGenerator;
 
-use BlockBuilder\Block\Dto\CreateBlockDto;
-use BlockBuilder\Block\Dto\CreateBlockManifestDto;
+use BlockBuilder\BlockGenerator\BlockFileGenerationContext;
 
 interface FileGeneratorInterface
 {
-    public function getOutput(CreateBlockDto $dto, CreateBlockManifestDto $manifestDto): string;
+    /**
+     * @return iterable<GeneratedTextFile>
+     */
+    public function generate(BlockFileGenerationContext $context): iterable;
 }

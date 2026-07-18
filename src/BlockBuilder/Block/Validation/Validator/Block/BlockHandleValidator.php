@@ -4,100 +4,97 @@ declare(strict_types=1);
 
 namespace BlockBuilder\Block\Validation\Validator\Block;
 
-use BlockBuilder\Block\Service\BlockTypeService;
-use BlockBuilder\Block\Service\ReservedWordsService;
-use BlockBuilder\Block\Validation\AbstractValidator;
+use BlockBuilder\Block\ReservedWord\ReservedHandleChecker;
+use BlockBuilder\Block\Service\BlockDirectoryLocator;
+use BlockBuilder\Block\Service\BlockTypeLocator;
+use BlockBuilder\Block\Validation\ValidatorInterface;
 use BlockBuilder\Block\Validation\ValidationFeedback;
 use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
 use Symfony\Component\HttpFoundation\FileBag;
 
-class BlockHandleValidator extends AbstractValidator
+class BlockHandleValidator implements ValidatorInterface
 {
     public function __construct(
-        private readonly BlockTypeService $blockTypeService,
-        private readonly ReservedWordsService $reservedHandlesService,
+        private readonly BlockTypeLocator $blockTypeLocator,
+        private readonly BlockDirectoryLocator $blockDirectoryLocator,
+        private readonly ReservedHandleChecker $reservedHandleChecker,
     ) {
     }
 
     public function validate(array $data, ?FileBag $files = null): ValidationFeedback
     {
         $errors = [];
+        $blockHandle = is_string($data['blockHandle'] ?? null)
+            ? $data['blockHandle']
+            : '';
 
-        $blockHandle = $data['blockHandle'] ?? '';
-
-        if (!$blockHandle) {
+        if ($blockHandle === '') {
             $errors[] = t('The field "%s" is required (%s).', t('Block handle'), NavigationTabEnum::BlockSettings->getName());
-        } else {
-            if (mb_strlen($blockHandle) < 3 || mb_strlen($blockHandle) > 50) {
-                $errors[] = t('The field "%s" should be between %s and %s characters long (%s).', t('Block handle'), 3, 50, NavigationTabEnum::BlockSettings->getName());
-            }
 
-            if (!preg_match('/^[a-z_]+$/', $blockHandle)) {
-                $errors[] = t('The field "%s" should consist only of lowercase letters and underscores (%s).', t('Block handle'), NavigationTabEnum::BlockSettings->getName());
-            }
-
-            if (mb_substr($blockHandle, 0, 1, 'utf-8') == '_' || mb_substr($blockHandle, -1, 1, 'utf-8') == '_') {
-                $errors[] = t('The field "%s" should not start or end with an underscore (%s).', t('Block handle'), NavigationTabEnum::BlockSettings->getName());
-            }
-
-            if (preg_match('/_{2,}/', $blockHandle)) {
-                $errors[] = t('The field "%s" should not contain two or more consecutive underscores (%s).', t('Block handle'), NavigationTabEnum::BlockSettings->getName());
-            }
-
-            if (!empty($data['rebuildBlock'])) {
-                // Rebuild block
-                if (!$this->blockTypeService->isBlockTypeFolderAlreadyCreated(handle: $blockHandle, searchedFolder: 'application')) {
-                    $errors[] = t('A block folder named after the chosen handle does not exist. You should build your block first.');
-                } else {
-                    if (!$this->blockTypeService->isBlockTypeInstalled($blockHandle)) {
-                        $errors[] = t(
-                                'You cannot rebuild a block that is awaiting installation. %sInstall it%s first.',
-                                '<a href="#" class="text-success text-nowrap" data-install-block-type data-handle="' . $blockHandle . '"><i class="fas fa-plus-circle"></i> ',
-                                '</a>',
-                            ) . PHP_EOL .
-                            t('If you tried to rebuild the block by mistake, build it instead.');
-                    }
-                }
-            } else {
-                // Build block
-                if ($this->blockTypeService->isBlockTypeFolderAlreadyCreated(handle: $blockHandle, searchedFolder: 'concrete')) {
-                    $errors[] = t('The handle you chose is already used by another Concrete CMS block. Please choose a different handle. (%s).', NavigationTabEnum::BlockSettings->getName());
-                } else {
-                    if ($this->blockTypeService->isBlockTypeInstalled($blockHandle)) {
-                        $errors[] = t('Are you sure you want to build the block? Maybe you meant to rebuild it?') . PHP_EOL .
-                            t('A block type with that handle is already installed. %sUninstall it%s first, then build the block again.',
-                                '<a href="#" class="text-danger text-nowrap" data-uninstall-block-type data-handle="' . $blockHandle . '"><i class="fas fa-minus-circle"></i> ',
-                                '</a>',
-                            ) . PHP_EOL .
-                            t('Alternatively, you can use a different handle (%s).', NavigationTabEnum::BlockSettings->getName());
-                    } else {
-                        if ($this->blockTypeService->isBlockTypeFolderAlreadyCreated($blockHandle)) {
-                            $errors[] = t(
-                                'A folder named %s already exists. %sPermanently delete that folder%s or choose a different handle (%s).',
-                                '"' . $blockHandle . '"',
-                                '<a href="#" class="text-danger text-nowrap" data-delete-block-type-folder data-handle="' . $blockHandle . '"><i class="far fa-trash-alt"></i> ',
-                                '</a>',
-                                NavigationTabEnum::BlockSettings->getName(),
-                            );
-                        }
-                    }
-                }
-            }
-            if (!$this->reservedHandlesService->isBlockHandleAllowed($blockHandle)) {
-                $errors[] = t('Your "%s" is a forbidden word. Use a different phrase (%s).', t('Block handle'), NavigationTabEnum::BlockSettings->getName());
-            }
+            return $this->createFeedback($errors);
         }
 
-        if (!empty($errors)) {
-            foreach ($errors as $error) {
-                $this->addError(
-                    error: $error,
-                    field: 'blockHandle',
-                    tab: NavigationTabEnum::BlockSettings->getHandle(),
-                );
-            }
+        if (mb_strlen($blockHandle) < 3 || mb_strlen($blockHandle) > 50) {
+            $errors[] = t('The field "%s" should be between %s and %s characters long (%s).', t('Block handle'), 3, 50, NavigationTabEnum::BlockSettings->getName());
+        }
+        if (preg_match('/^[a-z_]+$/', $blockHandle) !== 1) {
+            $errors[] = t('The field "%s" should consist only of lowercase letters and underscores (%s).', t('Block handle'), NavigationTabEnum::BlockSettings->getName());
+        }
+        if (str_starts_with($blockHandle, '_') || str_ends_with($blockHandle, '_')) {
+            $errors[] = t('The field "%s" should not start or end with an underscore (%s).', t('Block handle'), NavigationTabEnum::BlockSettings->getName());
+        }
+        if (str_contains($blockHandle, '__')) {
+            $errors[] = t('The field "%s" should not contain two or more consecutive underscores (%s).', t('Block handle'), NavigationTabEnum::BlockSettings->getName());
         }
 
-        return $this->getValidationFeedback();
+        if ($errors !== []) {
+            return $this->createFeedback($errors);
+        }
+
+        if (!$this->reservedHandleChecker->isBlockHandleAllowed($blockHandle)) {
+            $errors[] = t('Your "%s" is a forbidden word. Use a different phrase (%s).', t('Block handle'), NavigationTabEnum::BlockSettings->getName());
+
+            return $this->createFeedback($errors);
+        }
+
+        if (!empty($data['rebuildBlock'])) {
+            if (!$this->blockDirectoryLocator->hasCollision(handle: $blockHandle, searchedFolder: 'application')) {
+                $errors[] = t('A block folder named after the chosen handle does not exist. Build the block first.');
+            } elseif (!$this->blockTypeLocator->isInstalled($blockHandle)) {
+                $errors[] = t('You cannot rebuild a block that is awaiting installation. Install it from the configuration list first.')
+                    . PHP_EOL
+                    . t('If you selected rebuild by mistake, build the block instead.');
+            }
+
+            return $this->createFeedback($errors);
+        }
+
+        if ($this->blockDirectoryLocator->hasCollision(handle: $blockHandle, searchedFolder: 'concrete')) {
+            $errors[] = t(
+                'The handle is already used by a Concrete CMS core block. Choose a different handle (%s).',
+                NavigationTabEnum::BlockSettings->getName(),
+            );
+        } elseif ($this->blockTypeLocator->isInstalled($blockHandle)) {
+            $errors[] = t('A block type with this handle is already installed. Uninstall it from the configuration list before building it again.')
+                . PHP_EOL
+                . t('Alternatively, choose a different handle (%s).', NavigationTabEnum::BlockSettings->getName());
+        } elseif ($this->blockDirectoryLocator->hasCollision(handle: $blockHandle, searchedFolder: 'application')) {
+            $errors[] = t(
+                'A block folder named "%s" already exists. Delete it from the configuration list or choose a different handle (%s).',
+                $blockHandle,
+                NavigationTabEnum::BlockSettings->getName(),
+            );
+        }
+
+        return $this->createFeedback($errors);
+    }
+
+    private function createFeedback(array $errors): ValidationFeedback
+    {
+        return new ValidationFeedback(
+            errors: $errors,
+            fieldsWithError: $errors === [] ? [] : ['blockHandle'],
+            tabsWithError: $errors === [] ? [] : [NavigationTabEnum::BlockSettings->getHandle()],
+        );
     }
 }

@@ -1,10 +1,8 @@
 <?php defined('C5_EXECUTE') or exit('Access Denied.');
 
-use BlockBuilder\Environment\EnvironmentService;
-
 /**
  * @var Concrete\Core\Form\Service\Form $form
- * @var BlockBuilder\Block\Dto\CreateBlockDto $config
+ * @var BlockBuilder\Block\Dto\BlockConfigDto $config
  * @var array $fieldsWithError
  * @var array $blockTypeSets
  * @var array $blockIcons
@@ -14,6 +12,7 @@ use BlockBuilder\Environment\EnvironmentService;
  * @var array $cacheBlockOutputForRegisteredUsersOptions
  * @var array $supportSavingNullValuesOptions
  * @var array $ignorePageThemeGridFrameworkContainerOptions
+ * @var string $blockIconPreviewPath
  */
 ?>
 
@@ -54,19 +53,12 @@ use BlockBuilder\Environment\EnvironmentService;
         </div>
         <div class="mb-4 <?= h(in_array('blockIcon', $fieldsWithError) ? 'bb-has-error' : null); ?>">
             <?= $form->label('blockIcon', t('Block icon')); ?>
-            <?php
-            if ($config->blockHandle) {
-                $blockIconPath = app(EnvironmentService::class)->getPublicPathToBlockIcon($config->blockHandle);
-            } else {
-                $blockIconPath = app(EnvironmentService::class)->getPublicPathToDefaultBlockIcon();
-            }
-            ?>
             <div class="d-xxl-flex gap-4">
                 <div class="">
                     <div class="bb-block-icon-preview mb-3">
                         <div class="form-label text-center mb-2"><?= t('Preview'); ?></div>
                         <div class="bb-block-icon-preview-image-wrapper text-center">
-                            <img src="<?= h($blockIconPath); ?>"
+                            <img src="<?= h($blockIconPreviewPath); ?>"
                                  class="img-fluid"
                                  id="blockIconPreviewImage"
                                  alt="<?= h($config->blockName); ?>"

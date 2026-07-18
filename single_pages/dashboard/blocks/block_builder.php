@@ -1,15 +1,15 @@
 <?php defined('C5_EXECUTE') or exit('Access Denied.');
 
-use BlockBuilder\BlockGenerator\Enum\CreateBlockContextEnum;
+use BlockBuilder\Block\Enum\BlockFormContextEnum;
 use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
 
 /**
  * @var Concrete\Package\BlockBuilder\Controller\SinglePage\Dashboard\Blocks\BlockBuilder $controller
  * @var BlockBuilder\Environment\Dto\EnvironmentDto $environment
- * @var BlockBuilder\Block\Dto\CreateBlockDto $config
+ * @var BlockBuilder\Block\Dto\BlockConfigDto $config
  * @var BlockBuilder\NavigationTab\Enum\NavigationTabEnum[] $navigationTabEnums
  * @var Concrete\Core\Form\Service\Form $form
- * @var BlockBuilder\FieldType\Enum\FieldTypeEnum[] $fieldTypes
+ * @var BlockBuilder\FieldType\FieldTypeInterface[] $fieldTypes
  * @var array $fieldsWithError
  * @var string $formActionPath
  * @var array $tabsWithError
@@ -28,23 +28,21 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
  * @var array $selectFieldTypes
  * @var array $selectFieldListGenerationMethods
  * @var array $selectMultipleFieldTypes
+ * @var string $newBlockUrl
+ * @var string $configsUrl
+ * @var string $blockIconPreviewPath
  */
 ?>
 
 <div class="bb-app bb-app-builder"
      id="bbAppBuilder"
-     data-csrf-token="<?= h($controller->token->generate('csrf_token')); ?>"
      data-fields-with-errors="<?= h(json_encode($fieldsWithError ?? [])); ?>"
-     data-install-block-type-url="<?= app('url/manager')->resolve(['js/install-block-type']); ?>"
-     data-uninstall-block-type-url="<?= h(app('url/manager')->resolve(['js/uninstall-block-type'])); ?>"
-     data-delete-block-type-folder-url="<?= h(app('url/manager')->resolve(['js/delete-block-type-folder'])); ?>"
-     data-confirmation-message="<?= t('Are you sure?'); ?>"
 >
     <div class="ccm-dashboard-header-buttons">
-        <a href="<?= h(app('url/manager')->resolve(['dashboard/blocks/block_builder'])); ?>"
+        <a href="<?= h($newBlockUrl); ?>"
            class="btn btn-secondary"
         ><i class="fas fa-plus me-2"></i><?= t('New block'); ?></a>
-        <a href="<?= h(app('url/manager')->resolve(['dashboard/blocks/block_builder/configs'])); ?>"
+        <a href="<?= h($configsUrl); ?>"
            class="btn btn-secondary"
         >
             <i class="fas fa-upload me-2"></i><?= t('Load config'); ?>
@@ -56,7 +54,7 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="<?= t('Close'); ?>"></button>
             <ul class="bb-alert-list">
                 <?php foreach ($errors as $errorEntry): ?>
-                    <li><?= nl2br($errorEntry); ?></li>
+                    <li><?= nl2br(h($errorEntry)); ?></li>
                 <?php endforeach; ?>
             </ul>
         </div>
@@ -64,7 +62,7 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
 
     <?php
     $infoTable = ['environment' => $environment];
-    if (in_array($controller->getAction(), [CreateBlockContextEnum::Config->value, CreateBlockContextEnum::PredefinedConfig->value], true)) {
+    if (in_array($controller->getAction(), [BlockFormContextEnum::Config->value, BlockFormContextEnum::PredefinedConfig->value], true)) {
         $infoTable = array_merge($infoTable, ['config' => $config]);
     }
     View::element('info_table', $infoTable, 'block_builder');
@@ -101,6 +99,7 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
                             'fieldsWithError' => $fieldsWithError,
                             'form' => $form,
                             'config' => $config ?? null,
+                            'blockIconPreviewPath' => $blockIconPreviewPath,
                             // Block settings
                             'blockTypeSets' => $blockTypeSets,
                             'blockIcons' => $blockIcons,
@@ -146,7 +145,7 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
                 >
                     <i class="fas fa-hammer me-lg-2"></i><span class="d-none d-lg-inline"><?= t('Build your block now!'); ?></span>
                 </button>
-                <?php if ($controller->getAction() === CreateBlockContextEnum::Config->value || $this->post('sourceAction') === CreateBlockContextEnum::Config->value): ?>
+                <?php if ($controller->getAction() === BlockFormContextEnum::Config->value || $this->post('sourceAction') === BlockFormContextEnum::Config->value): ?>
                     <button type="submit"
                             class="btn btn-secondary float-end me-4"
                             value="1"

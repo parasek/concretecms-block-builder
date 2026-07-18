@@ -1,7 +1,7 @@
 <?php defined('C5_EXECUTE') or exit('Access Denied.');
 
 /**
- * @var BlockBuilder\FieldType\Enum\FieldTypeEnum[] $fieldTypes
+ * @var BlockBuilder\FieldType\FieldTypeInterface[] $fieldTypes
  * @var BlockBuilder\FieldType\FieldTypeDtoInterface[] $fields
  * @var BlockBuilder\FieldType\Enum\FieldTypeContextEnum $fieldTypeContextEnum
  */
@@ -19,11 +19,11 @@
         >
             <option value="" data-icon="fas fa-plus"><?= t('Add a new field'); ?></option>
             <?php foreach ($fieldTypes as $fieldType): ?>
-                <option value="<?= h($fieldType->getHandle()); ?>"
-                        data-icon="<?= h($fieldType->getIcon()); ?>"
-                        data-properties="<?= h(json_encode($fieldType->getProperties())); ?>"
-                        data-default-values="<?= h(json_encode($fieldType->getDefaultValues())); ?>"
-                ><?= h($fieldType->getLabel()); ?></option>
+                <option value="<?= h($fieldType::getHandle()); ?>"
+                        data-icon="<?= h($fieldType::getIcon()); ?>"
+                        data-properties="<?= h(json_encode($fieldType::getProperties())); ?>"
+                        data-default-values="<?= h(json_encode($fieldType::getDefaultValues())); ?>"
+                ><?= h($fieldType::getLabel()); ?></option>
             <?php endforeach; ?>
         </select>
     </label>

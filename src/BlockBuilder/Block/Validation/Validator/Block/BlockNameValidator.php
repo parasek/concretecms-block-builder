@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace BlockBuilder\Block\Validation\Validator\Block;
 
-use BlockBuilder\Block\Validation\AbstractValidator;
+use BlockBuilder\Block\Validation\ValidatorInterface;
 use BlockBuilder\Block\Validation\ValidationFeedback;
 use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
 use Symfony\Component\HttpFoundation\FileBag;
 
-class BlockNameValidator extends AbstractValidator
+class BlockNameValidator implements ValidatorInterface
 {
     public function validate(array $data, ?FileBag $files = null): ValidationFeedback
     {
@@ -21,16 +21,10 @@ class BlockNameValidator extends AbstractValidator
             $errors[] = t('The field "%s" should be between %s and %s characters long (%s).', t('Block name'), 3, 100, NavigationTabEnum::BlockSettings->getName());
         }
 
-        if (!empty($errors)) {
-            foreach ($errors as $error) {
-                $this->addError(
-                    error: $error,
-                    field: 'blockName',
-                    tab: NavigationTabEnum::BlockSettings->getHandle(),
-                );
-            }
-        }
-
-        return $this->getValidationFeedback();
+        return new ValidationFeedback(
+            errors: $errors,
+            fieldsWithError: $errors === [] ? [] : ['blockName'],
+            tabsWithError: $errors === [] ? [] : [NavigationTabEnum::BlockSettings->getHandle()],
+        );
     }
 }

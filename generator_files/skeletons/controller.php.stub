@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Application\Block\{{BLOCK_HANDLE_PASCAL_CASE}};
 
 {{USE_STATEMENTS}}
@@ -8,23 +10,29 @@ defined('C5_EXECUTE') or die('Access Denied.');
 
 class Controller extends BlockController
 {
-    private string $uniqueId;
+{{BLOCK_PROPERTIES}}
+{{FIELD_PROPERTIES}}
+    private string $uniqueId = '';
 
     public function getBlockTypeName(): string
     {
-        return t('{{BLOCK_NAME}}');
+        return t({{BLOCK_NAME_LITERAL}});
     }
 
     public function getBlockTypeDescription(): string
     {
-        return t('{{BLOCK_DESCRIPTION}}');
+        return t({{BLOCK_DESCRIPTION_LITERAL}});
     }
 
     public function getSearchableContent(): string
     {
-        {{SEARCHABLE_FIELDS}}
+        $content = [];
+{{SEARCHABLE_CONTENT}}
 
-        return implode(' ', $content);
+        return implode(' ', array_filter(
+            $content,
+            static fn(mixed $value): bool => $value !== null && $value !== '',
+        ));
     }
 
     public function on_start(): void
@@ -33,56 +41,60 @@ class Controller extends BlockController
 
         $this->uniqueId = $this->app->make('helper/validation/identifier')->getString(18);
         $this->set('uniqueId', $this->uniqueId);
+{{ON_START_CONTENT}}
     }
 
     public function add(): void
     {
         $this->addEdit();
-
         $this->set('entries', []);
     }
 
     public function edit(): void
     {
         $this->addEdit();
+{{EDIT_CONTENT}}
     }
 
-    public function addEdit(): void
+    private function addEdit(): void
     {
+{{ADD_EDIT_CONTENT}}
     }
 
     public function view(): void
     {
         $this->set('app', $this->app);
+{{VIEW_CONTENT}}
     }
 
     public function save($args): void
     {
-        parent::save($args);
+        $args = is_array($args) ? $args : [];
+{{SAVE_CONTENT}}
     }
 
-    public function duplicate($newBID): void
+    public function duplicate($newBlockId): void
     {
-        parent::duplicate($newBID);
+{{DUPLICATE_CONTENT}}
     }
 
     public function delete(): void
     {
-       parent::delete();
+{{DELETE_CONTENT}}
     }
 
-    public function validate($args): \Concrete\Core\Error\ErrorList\ErrorList
+    public function validate($args): ErrorList
     {
-       $e = $this->app->make(\Concrete\Core\Error\ErrorList\ErrorList::class);
-       return $e;
+        $args = is_array($args) ? $args : [];
+        $errors = $this->app->make(ErrorList::class);
+{{VALIDATE_CONTENT}}
+
+        return $errors;
     }
 
     public function composer(): void
     {
-        $al = AssetList::getInstance();
-        $al->register('javascript', '{{BLOCK_HANDLE_KEBAB_CASE}}/auto-js', 'blocks/{{BLOCK_HANDLE}}/auto.js', [], false);
-        $this->requireAsset('javascript', '{{BLOCK_HANDLE_KEBAB_CASE}}/auto-js');
-
+{{COMPOSER_ASSETS}}
         $this->edit();
     }
 
@@ -91,13 +103,10 @@ class Controller extends BlockController
         $this->edit();
     }
 
-    private function getEntries($outputMethod = 'view'): array
+    private function getEntries(string $outputMethod = 'view'): array
     {
-        return [];
+{{GET_ENTRIES_CONTENT}}
     }
-
-    private function getEntryColumnNames(): array
-    {
-        return [];
-    }
+{{REGISTER_VIEW_ASSETS_METHOD}}
+{{CUSTOM_CONTROLLER_METHODS}}
 }

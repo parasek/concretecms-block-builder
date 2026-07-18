@@ -1,3 +1,50 @@
+# 3.0.0 (unreleased)
+- Refactored block creation into dedicated request, validation, DTO, service, and generator components for PHP 8.4.
+- Added explicit generation metadata handling without overwriting metadata when legacy configs are read.
+- Added controlled handling for missing, malformed, and invalid block configuration files.
+- Added permission, request method, CSRF, handle, folder, and installation-state checks to block installation actions.
+- Added safe validation for missing and unsupported field types and missing request fields.
+- Fixed validation state reuse, label tab highlighting, the block height validation message, nullable block icons, and missing config dates.
+- Changed controller actions to return redirect responses without sending them directly.
+- Made pre-lifecycle file generation transactional so rendering, writing, or icon failures restore the previous block folder or remove a partial new folder.
+- Centralized initial values and selectable options for the block creation form in its view data provider.
+- Added a shared marker interface for immutable field configuration DTOs.
+- Renamed the flat persisted configuration model to `BlockConfigDto` to distinguish it from runtime block-creation data.
+- Split block generation into directory transactions, generated-file writing, icon generation, and Concrete block lifecycle services.
+- Generated text files now replace their targets instead of appending content.
+- File generators now declare their own relative destination paths.
+- Added an explicit iterable collection as the registration point for generated text files.
+- Added server-side allow-list validation for global and field-specific select values.
+- Added contextual generation exceptions for directory preparation, file writing, icons, installation, and refresh failures.
+- Added safe controller-level handling and logging for block generation failures.
+- Restricted file rollback to the pre-lifecycle phase, made backup cleanup best-effort, and added state-aware stale-backup recovery.
+- Added distinct configuration-loading failures and accurate, path-safe dashboard feedback.
+- Replaced container-based factory lookup in the JSON configuration service with constructor injection.
+- Renamed the read-only JSON configuration service to `BlockConfigReader`.
+- Added controlled field DTO creation errors for missing or unknown field types, malformed field data, and invalid value types.
+- Added reusable server-side integer validation for block limits, cache lifetime, image dimensions, and editor heights.
+- Added structural validation for configuration collections, field entries, scalar properties, excluded paths, and choice-option lists before DTO mapping.
+- Made validation feedback immutable, removed reusable validator state, and introduced an explicitly ordered create-block validator collection.
+- Split create-block validation into short-circuiting request-method, CSRF, authorization, input-shape, and business-validation stages.
+- Split block type lookup, permissions, installation, uninstallation, directory lookup/removal, and icon discovery into focused services.
+- Split option lists into focused block-settings, field-type, and icon providers.
+- Separated reserved-word datasets and handle normalization from reserved-handle policy checks.
+- Renamed runtime generation DTOs to `BlockGenerationManifest` and `BlockGenerationResult`, and clarified the text-only generated-file writer name.
+- Flattened field implementation directories and moved block type lifecycle orchestration into the generator lifecycle namespace.
+- Fixed block creation without basic or repeatable fields by normalizing omitted field collections to empty arrays.
+- Replaced the draft controller-only strategy layer with a field contribution plan shared by controller, database, form, view, JavaScript, and CSS generators.
+- Added safe, collision-checked text artifact rendering for the complete generated block scaffold, with unsupported field types rejected before the block directory is modified.
+- Added generation for basic and repeatable Text fields, including schema columns, controller persistence and search code, escaped edit/view markup, translated validation, and server-side length checks.
+- Made repeatable entry replacement, duplication, and deletion transactional and server-rendered existing entry controls before JavaScript enhancement to prevent accidental data loss.
+- Hardened configuration loading with canonical source-handle checks, safe application-directory resolution, symlink rejection, and a bounded JSON file size.
+- Replaced HTML lifecycle actions in validation errors with escaped plain-text guidance and removed their obsolete AJAX routes and controllers.
+- Added path-safe rebuild exclusions and a maximum custom block icon upload size.
+- Aligned form context, generation manifest, and reserved-handle class names with their responsibilities and removed one-consumer helper services.
+- Removed the pass-through create-block request wrapper, simplified validator aggregation, and derived validation success directly from reported errors.
+- Consolidated duplicate JavaScript and CSS plan layers into a shared mutable frontend-asset builder and immutable frontend-asset plan.
+- Replaced split field-type contracts and proxy definitions with one explicit contract, a convention-based base class, and a direct field-type registry.
+- Grouped concrete field implementations under `FieldType/Type`, separate from shared contracts, factories, validation, enums, and exceptions.
+
 # 2.8.1
 - Fixed undefined PHP 8 errors for the Image field type.
 - Removed unnecessary asset loads.

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BlockBuilder\Block\Validation;
 
-class ValidationFeedback
+readonly class ValidationFeedback
 {
     public function __construct(
         public array $errors = [],

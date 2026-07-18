@@ -1,7 +1,7 @@
 <?php defined('C5_EXECUTE') or exit('Access Denied.');
 
 /**
- * @var BlockBuilder\FieldType\Enum\FieldTypeEnum[] $fieldTypes
+ * @var BlockBuilder\FieldType\FieldTypeInterface[] $fieldTypes
  * @var array $selectFieldTypes
  * @var array $selectFieldListGenerationMethods
  * @var array $selectMultipleFieldTypes
@@ -146,8 +146,8 @@
 
 <?php
 foreach ($fieldTypes as $fieldType) {
-    View::element('field_type_template/partials/' . $fieldType->getHandle(), [
-        'handle' => $fieldType->getHandle(),
+    View::element('field_type_template/partials/' . $fieldType::getHandle(), [
+        'handle' => $fieldType::getHandle(),
         'selectFieldTypes' => $selectFieldTypes,
         'selectFieldListGenerationMethods' => $selectFieldListGenerationMethods,
         'selectMultipleFieldTypes' => $selectMultipleFieldTypes,

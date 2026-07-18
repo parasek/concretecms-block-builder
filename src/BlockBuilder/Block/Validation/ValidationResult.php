@@ -7,8 +7,7 @@ namespace BlockBuilder\Block\Validation;
 readonly class ValidationResult
 {
     public function __construct(
-        public bool $isValid,
-        public ?array $data = null,
+        public array $data = [],
         public array $errors = [],
         public array $fieldsWithError = [],
         public array $tabsWithError = [],
@@ -17,6 +16,6 @@ readonly class ValidationResult
 
     public function hasErrors(): bool
     {
-        return !$this->isValid;
+        return $this->errors !== [];
     }
 }

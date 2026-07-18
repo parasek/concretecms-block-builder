@@ -2,7 +2,7 @@
 
 /**
  * @var Concrete\Core\Form\Service\Form $form
- * @var BlockBuilder\Block\Dto\CreateBlockDto $config
+ * @var BlockBuilder\Block\Dto\BlockConfigDto $config
  * @var array $fieldsWithError
  * @var array $installBlockOptions
  * @var array $entriesAsFirstTabOptions

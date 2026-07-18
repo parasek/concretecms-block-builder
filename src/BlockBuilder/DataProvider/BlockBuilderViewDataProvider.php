@@ -4,40 +4,23 @@ declare(strict_types=1);
 
 namespace BlockBuilder\DataProvider;
 
-use BlockBuilder\BlockGenerator\Enum\CreateBlockContextEnum;
-use BlockBuilder\FieldType\Enum\FieldTypeEnum;
-use BlockBuilder\Service\OptionListService;
+use BlockBuilder\Block\Enum\BlockFormContextEnum;
+use BlockBuilder\FieldType\FieldTypeRegistry;
+use BlockBuilder\Service\Option\BlockIconOptionProvider;
+use BlockBuilder\Service\Option\BlockSettingsOptionProvider;
+use BlockBuilder\Service\Option\FieldTypeOptionProvider;
 
 readonly class BlockBuilderViewDataProvider
 {
     public function __construct(
-        private OptionListService $optionListService,
+        private BlockSettingsOptionProvider $blockSettingsOptions,
+        private FieldTypeOptionProvider $fieldTypeOptions,
+        private BlockIconOptionProvider $blockIconOptions,
+        private FieldTypeRegistry $fieldTypeRegistry,
     ) {
     }
 
-    public function getOptionLists(CreateBlockContextEnum $context, string $blockHandle): array
-    {
-        return [
-            'fieldTypes' => FieldTypeEnum::cases(),
-            'blockTypeSets' => $this->optionListService->getBlockTypeSets(includeEmptyOption: true),
-            'blockIcons' => $this->optionListService->getBlockIcons(context: $context, blockHandle: $blockHandle),
-            'cacheBlockRecordOptions' => $this->optionListService->getCacheBlockRecordOptions(),
-            'cacheBlockOutputOptions' => $this->optionListService->getCacheBlockOutputOptions(),
-            'cacheBlockOutputOnPostOptions' => $this->optionListService->getCacheBlockOutputOnPostOptions(),
-            'cacheBlockOutputForRegisteredUsersOptions' => $this->optionListService->getCacheBlockOutputForRegisteredUsersOptions(),
-            'supportSavingNullValuesOptions' => $this->optionListService->getSupportSavingNullValuesOptions(),
-            'ignorePageThemeGridFrameworkContainerOptions' => $this->optionListService->getIgnorePageThemeGridFrameworkContainerOptions(),
-            'entriesAsFirstTabOptions' => $this->optionListService->getEntriesAsFirstTabOptions(),
-            'highlightMultiElementFieldsOptions' => $this->optionListService->getHighlightMultiElementFieldsOptions(),
-            'dividerOptions' => $this->optionListService->getDividerOptions(),
-            'installBlockOptions' => $this->optionListService->getInstallBlockOptions(),
-            'selectFieldTypes' => $this->optionListService->getSelectFieldTypes(),
-            'selectMultipleFieldTypes' => $this->optionListService->getSelectMultipleFieldTypes(),
-            'selectFieldListGenerationMethods' => $this->optionListService->getSelectFieldListGenerationMethods(),
-        ];
-    }
-
-    public function getDefaultValues(): array
+    public function getInitialValues(): array
     {
         return [
             'blockName' => '',
@@ -51,7 +34,7 @@ readonly class BlockBuilderViewDataProvider
             'cacheBlockOutputForRegisteredUsers' => true,
             'supportSavingNullValues' => false,
             'ignorePageThemeGridFrameworkContainer' => false,
-            'entriesAsFirstTab' => '',
+            'entriesAsFirstTab' => false,
             'highlightMultiElementFields' => true,
             'fieldsDivider' => 'never',
             'entryFieldsDivider' => 'never',
@@ -65,7 +48,6 @@ readonly class BlockBuilderViewDataProvider
             'blockHeight' => 650,
             'installBlock' => true,
             'maxNumberOfEntries' => 0,
-            // Labels
             'basicLabel' => t('Basic information'),
             'entriesLabel' => t('Entries'),
             'settingsLabel' => t('Settings'),
@@ -108,6 +90,28 @@ readonly class BlockBuilderViewDataProvider
             'noResultsMatchedLabel' => t('No results matched {0}'),
             'selectAllLabel' => t('Select All'),
             'deselectAllLabel' => t('Deselect All'),
+        ];
+    }
+
+    public function getOptionLists(BlockFormContextEnum $context, string $blockHandle): array
+    {
+        return [
+            'fieldTypes' => $this->fieldTypeRegistry->all(),
+            'blockTypeSets' => $this->blockSettingsOptions->getBlockTypeSets(includeEmptyOption: true),
+            'blockIcons' => $this->blockIconOptions->getOptions(context: $context, blockHandle: $blockHandle),
+            'cacheBlockRecordOptions' => $this->blockSettingsOptions->getBooleanOptions(),
+            'cacheBlockOutputOptions' => $this->blockSettingsOptions->getBooleanOptions(),
+            'cacheBlockOutputOnPostOptions' => $this->blockSettingsOptions->getBooleanOptions(),
+            'cacheBlockOutputForRegisteredUsersOptions' => $this->blockSettingsOptions->getBooleanOptions(),
+            'supportSavingNullValuesOptions' => $this->blockSettingsOptions->getBooleanOptions(),
+            'ignorePageThemeGridFrameworkContainerOptions' => $this->blockSettingsOptions->getBooleanOptions(),
+            'entriesAsFirstTabOptions' => $this->blockSettingsOptions->getYesNoOptions(),
+            'highlightMultiElementFieldsOptions' => $this->blockSettingsOptions->getYesNoOptions(),
+            'dividerOptions' => $this->blockSettingsOptions->getDividerOptions(),
+            'installBlockOptions' => $this->blockSettingsOptions->getYesNoOptions(),
+            'selectFieldTypes' => $this->fieldTypeOptions->getSingleChoiceTypes(),
+            'selectMultipleFieldTypes' => $this->fieldTypeOptions->getMultipleChoiceTypes(),
+            'selectFieldListGenerationMethods' => $this->fieldTypeOptions->getListGenerationMethods(),
         ];
     }
 }

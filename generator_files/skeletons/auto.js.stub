@@ -1,0 +1,461 @@
+(function () {
+    'use strict';
+
+    const containerStates = new WeakMap();
+
+{{SETUP_CODE}}
+
+    function findAdjacentElement(containerElement, selector) {
+        const previousElement = containerElement.previousElementSibling;
+        if (previousElement && previousElement.matches(selector)) {
+            return previousElement;
+        }
+
+        const nextElement = containerElement.nextElementSibling;
+        if (nextElement && nextElement.matches(selector)) {
+            return nextElement;
+        }
+
+        return null;
+    }
+
+    function parseEntryData(containerElement) {
+        const dataElement = findAdjacentElement(containerElement, 'script[data-entry-data]');
+        if (!dataElement) {
+            return {};
+        }
+
+        try {
+            const parsedData = JSON.parse(dataElement.textContent || '{}');
+
+            if (Array.isArray(parsedData)) {
+                return {entries: parsedData};
+            }
+
+            return parsedData && typeof parsedData === 'object' ? parsedData : {};
+        } catch (error) {
+            console.error('Block Builder could not parse repeatable-entry data.', error);
+
+            return {};
+        }
+    }
+
+    function findEntryTemplate(containerElement, scopeElement) {
+        return containerElement.querySelector('template[data-entry-template]')
+            || findAdjacentElement(containerElement, 'template[data-entry-template]')
+            || scopeElement.querySelector('template[data-entry-template]');
+    }
+
+    function getEntryElements(containerElement) {
+        return Array.from(containerElement.children).filter((element) => element.matches('[data-entry]'));
+    }
+
+    function calculateNextIndex(containerElement) {
+        const usedIndexes = getEntryElements(containerElement)
+            .map((entryElement) => Number.parseInt(entryElement.dataset.entryIndex || '', 10))
+            .filter((entryIndex) => Number.isInteger(entryIndex));
+
+        return usedIndexes.length > 0 ? Math.max(...usedIndexes) + 1 : 0;
+    }
+
+    function parseMaxEntries(containerElement, entryData) {
+        const configuredMaximum = containerElement.dataset.maxEntries ?? entryData.maxEntries;
+        const maximum = Number.parseInt(configuredMaximum, 10);
+
+        return Number.isInteger(maximum) && maximum > 0 ? maximum : Number.POSITIVE_INFINITY;
+    }
+
+    function normalizeMultipleValue(value) {
+        if (Array.isArray(value)) {
+            return value.map((item) => String(item));
+        }
+
+        if (typeof value === 'string' && value.includes('|')) {
+            return value.split('|');
+        }
+
+        if (value === null || typeof value === 'undefined' || value === '') {
+            return [];
+        }
+
+        return [String(value)];
+    }
+
+    function groupEntryFields(entryElement) {
+        const groupedFields = new Map();
+
+        entryElement.querySelectorAll('[data-entry-field]').forEach((fieldElement) => {
+            const fieldHandle = fieldElement.dataset.entryField;
+            if (!fieldHandle) {
+                return;
+            }
+
+            if (!groupedFields.has(fieldHandle)) {
+                groupedFields.set(fieldHandle, []);
+            }
+
+            groupedFields.get(fieldHandle).push(fieldElement);
+        });
+
+        return groupedFields;
+    }
+
+    function setFieldValue(fieldElements, value) {
+        const firstField = fieldElements[0];
+        if (!firstField) {
+            return;
+        }
+
+        if (firstField instanceof HTMLInputElement && firstField.type === 'radio') {
+            fieldElements.forEach((fieldElement) => {
+                fieldElement.checked = String(fieldElement.value) === String(value ?? '');
+            });
+
+            return;
+        }
+
+        if (firstField instanceof HTMLInputElement && firstField.type === 'checkbox') {
+            if (fieldElements.length === 1 && typeof value === 'boolean') {
+                firstField.checked = value;
+
+                return;
+            }
+
+            const selectedValues = normalizeMultipleValue(value);
+            fieldElements.forEach((fieldElement) => {
+                fieldElement.checked = selectedValues.includes(String(fieldElement.value));
+            });
+
+            return;
+        }
+
+        if (firstField instanceof HTMLSelectElement && firstField.multiple) {
+            const selectedValues = normalizeMultipleValue(value);
+            Array.from(firstField.options).forEach((optionElement) => {
+                optionElement.selected = selectedValues.includes(String(optionElement.value));
+            });
+
+            return;
+        }
+
+        fieldElements.forEach((fieldElement) => {
+            if (fieldElement instanceof HTMLInputElement && fieldElement.type === 'file') {
+                return;
+            }
+
+            if ('value' in fieldElement) {
+                fieldElement.value = value ?? '';
+            }
+        });
+    }
+
+    function populateEntry(entryElement, values) {
+        const fieldValues = values && typeof values === 'object' ? values : {};
+
+        groupEntryFields(entryElement).forEach((fieldElements, fieldHandle) => {
+            if (Object.prototype.hasOwnProperty.call(fieldValues, fieldHandle)) {
+                setFieldValue(fieldElements, fieldValues[fieldHandle]);
+            }
+        });
+    }
+
+    function readFieldValue(fieldElements) {
+        const firstField = fieldElements[0];
+        if (!firstField) {
+            return null;
+        }
+
+        if (firstField instanceof HTMLInputElement && firstField.type === 'radio') {
+            const selectedField = fieldElements.find((fieldElement) => fieldElement.checked);
+
+            return selectedField ? selectedField.value : '';
+        }
+
+        if (firstField instanceof HTMLInputElement && firstField.type === 'checkbox') {
+            if (fieldElements.length === 1) {
+                return firstField.checked;
+            }
+
+            return fieldElements
+                .filter((fieldElement) => fieldElement.checked)
+                .map((fieldElement) => fieldElement.value);
+        }
+
+        if (firstField instanceof HTMLSelectElement && firstField.multiple) {
+            return Array.from(firstField.selectedOptions).map((optionElement) => optionElement.value);
+        }
+
+        if (firstField instanceof HTMLInputElement && firstField.type === 'file') {
+            return null;
+        }
+
+        return 'value' in firstField ? firstField.value : null;
+    }
+
+    function readEntryValues(entryElement) {
+        const values = {};
+
+        groupEntryFields(entryElement).forEach((fieldElements, fieldHandle) => {
+            values[fieldHandle] = readFieldValue(fieldElements);
+        });
+
+        return values;
+    }
+
+    function getTitleSourceValue(sourceElement) {
+        if (sourceElement instanceof HTMLSelectElement) {
+            return Array.from(sourceElement.selectedOptions)
+                .map((optionElement) => optionElement.textContent.trim())
+                .filter(Boolean)
+                .join(', ');
+        }
+
+        if (sourceElement instanceof HTMLInputElement && ['checkbox', 'radio'].includes(sourceElement.type)) {
+            return sourceElement.checked ? sourceElement.value : '';
+        }
+
+        if ('value' in sourceElement) {
+            return String(sourceElement.value).trim();
+        }
+
+        return sourceElement.textContent.trim();
+    }
+
+    function updateEntryTitle(entryElement) {
+        const titleElement = entryElement.querySelector('[data-entry-title]');
+        const titleSources = Array.from(entryElement.querySelectorAll('[data-entry-title-source]'));
+        if (!titleElement || titleSources.length === 0) {
+            return;
+        }
+
+        const title = titleSources
+            .map(getTitleSourceValue)
+            .filter(Boolean)
+            .join(', ');
+        titleElement.textContent = title || entryElement.dataset.emptyEntryTitle || '';
+    }
+
+    function initializeBasicFields(rootElement) {
+{{BASIC_FIELD_INITIALIZERS}}
+    }
+
+    function initializeRepeatableEntryFields(entryElement) {
+{{REPEATABLE_FIELD_INITIALIZERS}}
+    }
+
+    function createEntry(state, values, insertionReference = null) {
+        if (getEntryElements(state.containerElement).length >= state.maxEntries) {
+            return null;
+        }
+
+        const entryIndex = state.nextIndex;
+        state.nextIndex += 1;
+
+        const renderedMarkup = state.templateElement.innerHTML
+            .split('__INDEX__')
+            .join(String(entryIndex));
+        const renderedTemplate = document.createElement('template');
+        renderedTemplate.innerHTML = renderedMarkup.trim();
+
+        const entryElement = renderedTemplate.content.querySelector('[data-entry]')
+            || renderedTemplate.content.firstElementChild;
+        if (!entryElement) {
+            console.error('Block Builder entry template must contain an element marked with data-entry.');
+
+            return null;
+        }
+
+        if (!entryElement.hasAttribute('data-entry')) {
+            entryElement.setAttribute('data-entry', '');
+        }
+        entryElement.dataset.entryIndex = String(entryIndex);
+
+        populateEntry(entryElement, values);
+        state.containerElement.insertBefore(renderedTemplate.content, insertionReference);
+        initializeRepeatableEntryFields(entryElement);
+        updateEntryTitle(entryElement);
+        updateControls(state);
+
+        return entryElement;
+    }
+
+    function updateControls(state) {
+        const entryElements = getEntryElements(state.containerElement);
+        const maximumReached = entryElements.length >= state.maxEntries;
+
+        state.scopeElement.querySelectorAll('[data-entry-count]').forEach((counterElement) => {
+            counterElement.textContent = String(entryElements.length);
+        });
+
+        state.scopeElement.querySelectorAll('[data-entry-action="add"], [data-entry-action="duplicate"]').forEach((actionElement) => {
+            if ('disabled' in actionElement) {
+                actionElement.disabled = maximumReached;
+            }
+        });
+
+        entryElements.forEach((entryElement, entryPosition) => {
+            entryElement.querySelectorAll('[data-entry-position]').forEach((positionElement) => {
+                positionElement.textContent = String(entryPosition + 1);
+            });
+
+            entryElement.querySelectorAll('[data-entry-action="move-up"]').forEach((actionElement) => {
+                if ('disabled' in actionElement) {
+                    actionElement.disabled = entryPosition === 0;
+                }
+            });
+
+            entryElement.querySelectorAll('[data-entry-action="move-down"]').forEach((actionElement) => {
+                if ('disabled' in actionElement) {
+                    actionElement.disabled = entryPosition === entryElements.length - 1;
+                }
+            });
+        });
+    }
+
+    function resolveTargetContainer(actionElement) {
+        const targetSelector = actionElement.dataset.entriesTarget;
+        if (targetSelector) {
+            try {
+                const targetElement = document.querySelector(targetSelector);
+                if (targetElement && targetElement.matches('[data-block-builder-entries]')) {
+                    return targetElement;
+                }
+            } catch (error) {
+                console.error('Block Builder received an invalid repeatable-entry target selector.', error);
+            }
+        }
+
+        const containingEntries = actionElement.closest('[data-block-builder-entries]');
+        if (containingEntries) {
+            return containingEntries;
+        }
+
+        const repeatableSection = actionElement.closest('[data-block-builder-repeatable]');
+
+        return repeatableSection
+            ? repeatableSection.querySelector('[data-block-builder-entries]')
+            : null;
+    }
+
+    function handleEntryAction(event) {
+        if (!(event.target instanceof Element)) {
+            return;
+        }
+
+        const actionElement = event.target.closest('[data-entry-action]');
+        if (!actionElement) {
+            return;
+        }
+
+        const containerElement = resolveTargetContainer(actionElement);
+        const state = containerElement ? containerStates.get(containerElement) : null;
+        if (!state) {
+            return;
+        }
+
+        event.preventDefault();
+
+        const action = actionElement.dataset.entryAction;
+        const entryElement = actionElement.closest('[data-entry]');
+
+        if (action === 'add') {
+            createEntry(state, state.defaultValues);
+        } else if (action === 'remove' && entryElement) {
+            entryElement.remove();
+            updateControls(state);
+        } else if (action === 'duplicate' && entryElement) {
+            createEntry(state, readEntryValues(entryElement), entryElement.nextSibling);
+        } else if (action === 'move-up' && entryElement) {
+            const entryElements = getEntryElements(state.containerElement);
+            const entryPosition = entryElements.indexOf(entryElement);
+            if (entryPosition > 0) {
+                state.containerElement.insertBefore(entryElement, entryElements[entryPosition - 1]);
+                updateControls(state);
+            }
+        } else if (action === 'move-down' && entryElement) {
+            const entryElements = getEntryElements(state.containerElement);
+            const entryPosition = entryElements.indexOf(entryElement);
+            if (entryPosition >= 0 && entryPosition < entryElements.length - 1) {
+                entryElements[entryPosition + 1].after(entryElement);
+                updateControls(state);
+            }
+        }
+    }
+
+    function handleTitleChange(event) {
+        if (!(event.target instanceof Element) || !event.target.matches('[data-entry-title-source]')) {
+            return;
+        }
+
+        const entryElement = event.target.closest('[data-entry]');
+        if (entryElement) {
+            updateEntryTitle(entryElement);
+        }
+    }
+
+    function initializeContainer(containerElement) {
+        if (containerStates.has(containerElement)) {
+            return;
+        }
+
+        const scopeElement = containerElement.closest('[data-block-builder-repeatable]')
+            || containerElement.parentElement
+            || containerElement;
+        const entryData = parseEntryData(containerElement);
+        const templateElement = findEntryTemplate(containerElement, scopeElement);
+        if (!templateElement) {
+            console.error('Block Builder could not find a repeatable-entry template.');
+
+            return;
+        }
+
+        const state = {
+            containerElement,
+            defaultValues: entryData.defaultValues && typeof entryData.defaultValues === 'object'
+                ? entryData.defaultValues
+                : {},
+            maxEntries: parseMaxEntries(containerElement, entryData),
+            nextIndex: calculateNextIndex(containerElement),
+            scopeElement,
+            templateElement,
+        };
+        containerStates.set(containerElement, state);
+
+        const initialEntries = Array.isArray(entryData.entries) ? entryData.entries : [];
+        if (getEntryElements(containerElement).length === 0) {
+            initialEntries.forEach((entryValues) => {
+                createEntry(state, entryValues);
+            });
+        } else {
+            getEntryElements(containerElement).forEach((entryElement) => {
+                initializeRepeatableEntryFields(entryElement);
+                updateEntryTitle(entryElement);
+            });
+        }
+
+        updateControls(state);
+    }
+
+    function initializeRepeatableEntries(rootElement = document) {
+        rootElement.querySelectorAll('[data-block-builder-entries]').forEach(initializeContainer);
+    }
+
+    function initializeGeneratedBlock(rootElement = document) {
+        initializeBasicFields(rootElement);
+        initializeRepeatableEntries(rootElement);
+    }
+
+    document.addEventListener('click', handleEntryAction);
+    document.addEventListener('input', handleTitleChange);
+    document.addEventListener('change', handleTitleChange);
+
+    initializeGeneratedBlock();
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => initializeGeneratedBlock(), {once: true});
+    }
+
+    if (globalThis.Concrete && globalThis.Concrete.event && typeof globalThis.Concrete.event.bind === 'function') {
+        globalThis.Concrete.event.bind('open.block.{{BLOCK_EVENT_NAME}}', () => initializeGeneratedBlock());
+    }
+}());

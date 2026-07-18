@@ -1,0 +1,16 @@
+<div class="mb-4">
+    <label
+        class="form-label"
+        for="<?= h($view->field('entry')); ?>-<?= h((string) $entryIndex); ?>-{{HANDLE}}"
+    ><?= h(t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}); ?></label>
+    <input
+        class="form-control"
+        id="<?= h($view->field('entry')); ?>-<?= h((string) $entryIndex); ?>-{{HANDLE}}"
+        maxlength="255"
+        name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
+        type="text"
+        value="<?= h(isset($entry[{{HANDLE_LITERAL}}]) && is_scalar($entry[{{HANDLE_LITERAL}}]) ? (string) $entry[{{HANDLE_LITERAL}}] : ''); ?>"
+        data-entry-field="{{HANDLE}}"{{TITLE_SOURCE_ATTRIBUTE}}{{REQUIRED_HTML_ATTRIBUTE}}
+    >
+{{HELP_TEXT}}
+</div>

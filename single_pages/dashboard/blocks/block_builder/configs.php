@@ -1,24 +1,26 @@
 <?php defined('C5_EXECUTE') or exit('Access Denied.');
 
-use BlockBuilder\Block\Service\BlockTypeService;
-use BlockBuilder\BlockGenerator\Enum\CreateBlockContextEnum;
-use BlockBuilder\Environment\EnvironmentService;
-
 /**
  * @var Concrete\Package\BlockBuilder\Controller\SinglePage\Dashboard\Blocks\BlockBuilder\Configs $controller
  * @var BlockBuilder\Environment\Dto\EnvironmentDto $environment
- * @var BlockBuilder\Block\Dto\CreateBlockDto[] $configs
- * @var BlockBuilder\Block\Dto\CreateBlockDto[] $predefinedConfigs
+ * @var BlockBuilder\Block\View\BlockConfigListItem[] $configItems
+ * @var BlockBuilder\Block\View\BlockConfigListItem[] $predefinedConfigItems
+ * @var string[] $configLoadingErrors
+ * @var string $newBlockUrl
  */
 
 ?>
 <div class="bb-app bb-app-configs">
 
+    <?php foreach ($configLoadingErrors as $configLoadingError): ?>
+        <div class="alert alert-danger"><?= h($configLoadingError); ?></div>
+    <?php endforeach; ?>
+
     <div class="ccm-dashboard-header-buttons">
-        <a href="<?= h(app('url/manager')->resolve(['dashboard/blocks/block_builder'])); ?>"
+        <a href="<?= h($newBlockUrl); ?>"
            class="btn btn-secondary"
         ><i class="fas fa-plus me-2"></i><?= t('New block'); ?></a>
-        <a href="<?= h(app('url/manager')->resolve(['dashboard/blocks/block_builder'])); ?>"
+        <a href="<?= h($newBlockUrl); ?>"
            class="btn btn-secondary"
         ><i class="fas fa-angle-double-left me-2"></i><?= t('Go back'); ?></a>
     </div>
@@ -29,20 +31,20 @@ use BlockBuilder\Environment\EnvironmentService;
         <?= t('Configuration files found in existing blocks'); ?>
     </div>
 
-    <?php if (!empty($configs)): ?>
+    <?php if (!empty($configItems)): ?>
 
         <div class="bb-block-types">
 
-            <?php foreach ($configs as $config): ?>
+            <?php foreach ($configItems as $item): ?>
 
                 <?php
-                $bt = app(BlockTypeService::class)->getBlockTypeObject($config->blockHandle);
+                $config = $item->config;
                 ?>
 
                 <div class="bb-block-type d-flex flex-column justify-content-xxl-between flex-xxl-row mb-3 w-100">
 
                     <div class="bb-block-type-icon mb-3">
-                        <img src="<?= h(app(EnvironmentService::class)->getPublicPathToBlockIcon($config->blockHandle)); ?>"
+                        <img src="<?= h($item->iconPath); ?>"
                              class="bb-block-type-icon-image img-fluid"
                              alt="<?= h($config->blockName); ?>"
                         >
@@ -53,7 +55,7 @@ use BlockBuilder\Environment\EnvironmentService;
                         <div class="bb-block-type-info-heading mb-1">
                             <strong class="bb-block-type-name me-2"><?= h($config->blockName); ?></strong>
 
-                            <?php if (app(BlockTypeService::class)->isBlockTypeInstalled($bt)): ?>
+                            <?php if ($item->installed): ?>
                                 <span class="bb-block-type-status badge rounded-pill small bg-success"><?= t('Installed'); ?></span>
                             <?php else: ?>
                                 <span class="bb-block-type-status badge rounded-pill small bg-danger"><?= t('Not installed'); ?></span>
@@ -70,18 +72,18 @@ use BlockBuilder\Environment\EnvironmentService;
                             <?php endif; ?>
                         </div>
 
-                        <?php if (app(BlockTypeService::class)->isBlockTypeInstalled($bt)): ?>
+                        <?php if ($item->installed): ?>
                             <div class="bb-block-type-usage text-muted small mb-2 d-xxl-flex">
                                 <div class="me-xxl-3">
                                     <?= t('Usage count'); ?>:
-                                    <?= h($bt->getCount()); ?>
+                                    <?= h($item->usageCount); ?>
                                 </div>
                                 <div class="">
                                     <?= t('Usage count on active pages'); ?>:
-                                    <a href="<?= $controller->action('search', $bt->getBlockTypeID()); ?>"
+                                    <a href="<?= h($item->usageUrl); ?>"
                                        target="_blank"
                                     >
-                                        <?= h($bt->getCount(ignoreUnapprovedVersions: true)); ?>
+                                        <?= h($item->activeUsageCount); ?>
                                     </a>
                                 </div>
                             </div>
@@ -98,7 +100,8 @@ use BlockBuilder\Environment\EnvironmentService;
                             <span class="me-1 text-muted"><?= t('PHP'); ?>:</span> <?= h($config->phpVersion ?? t('No info')); ?>
                         </span>
                             <span class="badge small bb-block-type-info-badge mb-1">
-                            <span class="me-1 text-muted"><?= t('Created At'); ?>:</span> <?= h(date('Y-m-d H:i', strtotime($config->createdAt))); ?>
+                            <span class="me-1 text-muted"><?= t('Created At'); ?>:</span>
+                            <?= h($config->createdAt ? date('Y-m-d H:i', strtotime($config->createdAt)) : t('No info')); ?>
                         </span>
                         </div>
 
@@ -106,9 +109,9 @@ use BlockBuilder\Environment\EnvironmentService;
 
                     <div class="bb-block-type-actions d-flex flex-column align-items-xxl-end">
 
-                        <?php if (!app(BlockTypeService::class)->isBlockTypeInstalled($bt)): ?>
+                        <?php if (!$item->installed): ?>
                             <div class="bb-block-type-action bb-block-type-action-install mb-2">
-                                <form action="<?= h(app('url/manager')->resolve(['/dashboard/blocks/block_builder/configs/install/' . $config->blockHandle])); ?>"
+                                <form action="<?= h($item->installUrl); ?>"
                                       method="post"
                                       data-confirm-question="<?= h(t('This will install the %s block type. Are you sure?', $config->blockName)); ?>"
                                       data-block-type-handle="<?= h($config->blockHandle); ?>"
@@ -121,9 +124,9 @@ use BlockBuilder\Environment\EnvironmentService;
                             </div>
 
                             <div class="bb-block-type-action bb-block-type-action-delete-folder mb-2">
-                                <form action="<?= h(app('url/manager')->resolve(['/dashboard/blocks/block_builder/configs/delete_folder/' . $config->blockHandle])); ?>"
+                                <form action="<?= h($item->deleteDirectoryUrl); ?>"
                                       method="post"
-                                      data-confirm-question="<?= h(t('This will permanently delete the "%s" folder. This cannot be undone. Are you sure?', DIR_FILES_BLOCK_TYPES . DIRECTORY_SEPARATOR . $config->blockHandle)); ?>"
+                                      data-confirm-question="<?= h(t('This will permanently delete the block folder "%s". This cannot be undone. Are you sure?', $config->blockHandle)); ?>"
                                       data-block-type-handle="<?= h($config->blockHandle); ?>"
                                 >
                                     <?= $controller->token->output('delete_folder'); ?>
@@ -134,12 +137,12 @@ use BlockBuilder\Environment\EnvironmentService;
                             </div>
                         <?php endif; ?>
 
-                        <?php if (app(BlockTypeService::class)->isBlockTypeInstalled($bt)): ?>
+                        <?php if ($item->installed): ?>
                             <div class="bb-block-type-action bb-block-type-action-uninstall mb-2">
-                                <form action="<?= h(app('url/manager')->resolve(['/dashboard/blocks/block_builder/configs/uninstall/' . $bt->getBlockTypeID()])); ?>"
+                                <form action="<?= h($item->uninstallUrl); ?>"
                                       method="post"
                                       data-confirm-question="<?= h(t('This will remove all instances of the "%s" block type. This cannot be undone. Are you sure?', $config->blockName)); ?>"
-                                      data-block-type-id="<?= h($bt->getBlockTypeID()); ?>"
+                                      data-block-type-id="<?= h($item->blockTypeId); ?>"
                                 >
                                     <?= $controller->token->output('uninstall_block'); ?>
                                     <button class="btn btn-danger text-nowrap"
@@ -150,7 +153,7 @@ use BlockBuilder\Environment\EnvironmentService;
                         <?php endif; ?>
 
                         <div class="bb-block-type-action bb-block-type-action-load-config mb-2">
-                            <a href="<?= h(app('url/manager')->resolve(['/dashboard/blocks/block_builder/' . CreateBlockContextEnum::Config->value . '/' . $config->blockHandle])); ?>"
+                            <a href="<?= h($item->loadUrl); ?>"
                                class="btn btn-primary"
                             >
                                 <i class="fas fa-upload me-2"></i><?= t('Load config'); ?>
@@ -175,20 +178,20 @@ use BlockBuilder\Environment\EnvironmentService;
         <?= t('Predefined configuration files'); ?>
     </div>
 
-    <?php if (!empty($predefinedConfigs)): ?>
+    <?php if (!empty($predefinedConfigItems)): ?>
 
         <div class="bb-block-types">
 
-            <?php foreach ($predefinedConfigs as $predefinedConfig): ?>
+            <?php foreach ($predefinedConfigItems as $item): ?>
 
                 <?php
-                $bt = app(BlockTypeService::class)->getBlockTypeObject($predefinedConfig->blockHandle);
+                $predefinedConfig = $item->config;
                 ?>
 
                 <div class="bb-block-type d-flex flex-column justify-content-xxl-between flex-xxl-row mb-3 w-100">
 
                     <div class="bb-block-type-icon mb-3">
-                        <img src="<?= h(app(EnvironmentService::class)->getPublicPathToDefaultBlockIcon()); ?>"
+                        <img src="<?= h($item->iconPath); ?>"
                              class="bb-block-type-icon-image img-fluid"
                              width="97"
                              height="97"
@@ -223,7 +226,8 @@ use BlockBuilder\Environment\EnvironmentService;
                             <span class="me-1 text-muted"><?= t('PHP'); ?>:</span> <?= h($predefinedConfig->phpVersion ?? t('No info')); ?>
                         </span>
                             <span class="badge small bb-block-type-info-badge mb-1">
-                            <span class="me-1 text-muted"><?= t('Created At'); ?>:</span> <?= h(date('Y-m-d H:i', strtotime($predefinedConfig->createdAt))); ?>
+                            <span class="me-1 text-muted"><?= t('Created At'); ?>:</span>
+                            <?= h($predefinedConfig->createdAt ? date('Y-m-d H:i', strtotime($predefinedConfig->createdAt)) : t('No info')); ?>
                         </span>
                         </div>
 
@@ -232,7 +236,7 @@ use BlockBuilder\Environment\EnvironmentService;
                     <div class="bb-block-type-actions d-flex flex-column align-items-xxl-end">
 
                         <div class="bb-block-type-action bb-block-type-action-load-config mb-2">
-                            <a href="<?= h(app('url/manager')->resolve(['/dashboard/blocks/block_builder/' . CreateBlockContextEnum::PredefinedConfig->value . '/' . $predefinedConfig->blockHandle])); ?>"
+                            <a href="<?= h($item->loadUrl); ?>"
                                class="btn btn-primary"
                             >
                                 <i class="fas fa-upload me-2"></i><?= t('Load config'); ?>

@@ -1,0 +1,3 @@
+<?php if (isset(${{HANDLE}}) && ${{HANDLE}} !== ''): ?>
+    <?= h(${{HANDLE}}); ?>
+<?php endif; ?>

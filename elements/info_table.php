@@ -1,7 +1,7 @@
 <?php defined('C5_EXECUTE') or exit('Access Denied.');
 
 /**
- * @var BlockBuilder\Block\Dto\CreateBlockDto $config
+ * @var BlockBuilder\Block\Dto\BlockConfigDto $config
  * @var BlockBuilder\Environment\Dto\EnvironmentDto $environment
  */
 ?>

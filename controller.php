@@ -4,7 +4,6 @@ namespace Concrete\Package\BlockBuilder;
 
 use Concrete\Core\Package\Package;
 use Concrete\Core\Page\Single as SinglePage;
-use Concrete\Core\Routing\RouterInterface;
 
 defined('C5_EXECUTE') or exit('Access Denied.');
 
@@ -27,22 +26,6 @@ class Controller extends Package
     public function getPackageDescription(): string
     {
         return t('Design, configure and build custom Concrete CMS blocks with a user‑friendly interface.');
-    }
-
-    public function on_start(): void
-    {
-        $this->app->make(RouterInterface::class)->post(
-            path: 'js/install-block-type',
-            action: 'Concrete\Package\BlockBuilder\Controller\Js\InstallBlockType::process',
-        );
-        $this->app->make(RouterInterface::class)->post(
-            path: 'js/uninstall-block-type',
-            action: 'Concrete\Package\BlockBuilder\Controller\Js\UninstallBlockType::process',
-        );
-        $this->app->make(RouterInterface::class)->post(
-            path: 'js/delete-block-type-folder',
-            action: 'Concrete\Package\BlockBuilder\Controller\Js\DeleteBlockTypeFolder::process',
-        );
     }
 
     public function install(): void

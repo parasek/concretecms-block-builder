@@ -1,0 +1,11 @@
+<div class="mb-4">
+    <?= $form->label($view->field({{HANDLE_LITERAL}}), h(t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}})); ?>
+    <?= $form->text(
+        $view->field({{HANDLE_LITERAL}}),
+        ${{HANDLE}} ?? '',
+        [
+            'maxlength' => 255,{{REQUIRED_FORM_ATTRIBUTE}}
+        ],
+    ); ?>
+{{HELP_TEXT}}
+</div>

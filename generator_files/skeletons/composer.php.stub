@@ -1,0 +1,32 @@
+<?php
+
+defined('C5_EXECUTE') or die('Access Denied.');
+
+/**
+ * @var Concrete\Core\Page\Type\Composer\Control\BlockControl $view
+ * @var string $label
+ * @var string|null $description
+ */
+$layoutSetControl = $view->getPageTypeComposerFormLayoutSetControlObject();
+$layoutSetControlId = is_object($layoutSetControl)
+    ? $layoutSetControl->getPageTypeComposerFormLayoutSetControlID()
+    : '';
+?>
+
+<div class="form-group">
+    <label class="form-label"><?= h($label) ?></label>
+    <?php if ($description !== null && $description !== ''): ?>
+        <i
+            class="fas fa-question-circle launch-tooltip"
+            title="<?= h($description) ?>"
+        ></i>
+    <?php endif; ?>
+    <div class="controls">
+        <div
+            class="ccm-ui"
+            data-page-type-composer-form-layout-set-control-id="<?= h($layoutSetControlId) ?>"
+        >
+            <?php $view->inc('form.php', ['view' => $view]); ?>
+        </div>
+    </div>
+</div>

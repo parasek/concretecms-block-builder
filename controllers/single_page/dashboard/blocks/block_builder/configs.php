@@ -4,9 +4,14 @@ declare(strict_types=1);
 
 namespace Concrete\Package\BlockBuilder\Controller\SinglePage\Dashboard\Blocks\BlockBuilder;
 
+use BlockBuilder\Block\Exception\ConfigLoadingException;
+use BlockBuilder\Block\Exception\BlockLifecycleException;
+use BlockBuilder\Block\Service\BlockDirectoryRemover;
+use BlockBuilder\Block\Service\BlockTypeInstaller;
+use BlockBuilder\Block\Service\BlockTypeLocator;
+use BlockBuilder\Block\Service\BlockTypeUninstaller;
 use BlockBuilder\Controller\BaseDashboardController;
-use Concrete\Core\Block\BlockType\BlockType;
-use Concrete\Core\Entity\Block\BlockType\BlockType as BlockTypeEntity;
+use BlockBuilder\DataProvider\BlockBuilderConfigsViewDataProvider;
 use Concrete\Core\Http\ResponseFactoryInterface;
 use Concrete\Core\Page\Search\Field\Field\ContainsBlockTypeField;
 use Concrete\Core\Url\Resolver\Manager\ResolverManagerInterface;
@@ -16,13 +21,44 @@ defined('C5_EXECUTE') or exit('Access Denied.');
 
 class Configs extends BaseDashboardController
 {
+    private BlockDirectoryRemover $blockDirectoryRemover;
+    private BlockTypeInstaller $blockTypeInstaller;
+    private BlockTypeLocator $blockTypeLocator;
+    private BlockTypeUninstaller $blockTypeUninstaller;
+    private BlockBuilderConfigsViewDataProvider $provider;
+
+    public function on_start(): void
+    {
+        parent::on_start();
+
+        $this->blockDirectoryRemover = $this->app->make(BlockDirectoryRemover::class);
+        $this->blockTypeInstaller = $this->app->make(BlockTypeInstaller::class);
+        $this->blockTypeLocator = $this->app->make(BlockTypeLocator::class);
+        $this->blockTypeUninstaller = $this->app->make(BlockTypeUninstaller::class);
+        $this->provider = $this->app->make(BlockBuilderConfigsViewDataProvider::class);
+    }
+
     public function view(): void
     {
-        $configs = $this->jsonConfigService->getConfigsFromApplicationFolder();
-        $this->set('configs', $configs);
+        $configLoadingErrors = [];
 
-        $predefinedConfigs = $this->jsonConfigService->getPredefinedConfigs();
-        $this->set('predefinedConfigs', $predefinedConfigs);
+        try {
+            $configs = $this->blockConfigReader->getConfigsFromApplicationFolder();
+        } catch (ConfigLoadingException $exception) {
+            $configs = [];
+            $configLoadingErrors[] = $this->getConfigLoadingErrorMessage($exception);
+        }
+        $this->set('configItems', $this->provider->getApplicationConfigItems($configs));
+
+        try {
+            $predefinedConfigs = $this->blockConfigReader->getPredefinedConfigs();
+        } catch (ConfigLoadingException $exception) {
+            $predefinedConfigs = [];
+            $configLoadingErrors[] = $this->getConfigLoadingErrorMessage($exception);
+        }
+        $this->set('predefinedConfigItems', $this->provider->getPredefinedConfigItems($predefinedConfigs));
+        $this->set('configLoadingErrors', array_unique($configLoadingErrors));
+        $this->set('newBlockUrl', $this->provider->getNewBlockUrl());
 
         $this->set('pageTitle', t('Block Builder') . ' - ' . t('Browse existing configs'));
     }
@@ -33,13 +69,16 @@ class Configs extends BaseDashboardController
             $this->flash('error', t('Only POST requests are allowed.'));
         } elseif (!$this->token->validate('install_block')) {
             $this->flash('error', $this->token->getErrorMessage());
+        } else {
+            try {
+                $bt = $this->blockTypeInstaller->install($blockTypeHandle);
+                $this->flash('success', t('The block type "%s" has been successfully installed.', $bt->getBlockTypeName()));
+            } catch (BlockLifecycleException $exception) {
+                $this->flash('error', $exception->getSafeDisplayMessage());
+            }
         }
 
-        $bt = BlockType::installBlockType($blockTypeHandle);
-
-        $this->flash('success', t('The block type "%s" has been successfully installed.', $bt->getBlockTypeName()));
-
-        return $this->buildRedirect('/dashboard/blocks/block_builder/configs')->send();
+        return $this->buildRedirect('/dashboard/blocks/block_builder/configs');
     }
 
     public function uninstall($blockTypeId = 0): SymfonyResponse
@@ -49,16 +88,15 @@ class Configs extends BaseDashboardController
         } elseif (!$this->token->validate('uninstall_block')) {
             $this->flash('error', $this->token->getErrorMessage());
         } else {
-            $error = $this->blockTypeService->validateBlockTypeBeforeUninstall((int) $blockTypeId);
-            if ($error) {
-                $this->flash('error', $error);
-            } else {
-                $blockTypeName = $this->blockTypeService->uninstallBlockType((int) $blockTypeId);
+            try {
+                $blockTypeName = $this->blockTypeUninstaller->uninstall((int) $blockTypeId);
                 $this->flash('success', t('The block type "%s" has been successfully uninstalled.', $blockTypeName));
+            } catch (BlockLifecycleException $exception) {
+                $this->flash('error', $exception->getSafeDisplayMessage());
             }
         }
 
-        return $this->buildRedirect('/dashboard/blocks/block_builder/configs')->send();
+        return $this->buildRedirect('/dashboard/blocks/block_builder/configs');
     }
 
     public function delete_folder(?string $handle = null): SymfonyResponse
@@ -68,25 +106,20 @@ class Configs extends BaseDashboardController
         } elseif (!$this->token->validate('delete_folder')) {
             $this->flash('error', $this->token->getErrorMessage());
         } else {
-            $error = $this->blockTypeService->validateBlockTypeFolderBeforeDeletion((string) $handle);
-            if ($error) {
-                $this->flash('error', $error);
-            } else {
-                $result = $this->blockTypeService->deleteBlockTypeFolder($handle);
-                if ($result !== true) {
-                    $this->flash('error', $result);
-                } else {
-                    $this->flash('success', t('The block type folder "%s" has been successfully deleted.', $handle));
-                }
+            try {
+                $this->blockDirectoryRemover->remove((string) $handle);
+                $this->flash('success', t('The block type folder "%s" has been successfully deleted.', $handle));
+            } catch (BlockLifecycleException $exception) {
+                $this->flash('error', $exception->getSafeDisplayMessage());
             }
         }
 
-        return $this->buildRedirect('/dashboard/blocks/block_builder/configs')->send();
+        return $this->buildRedirect('/dashboard/blocks/block_builder/configs');
     }
 
     public function search($blockTypeId = 0)
     {
-        $bt = $blockTypeId > 0 ? $this->entityManager->find(BlockTypeEntity::class, $blockTypeId) : null;
+        $bt = $blockTypeId > 0 ? $this->blockTypeLocator->find((int) $blockTypeId) : null;
         if ($bt === null) {
             $this->flash('error', t('Unable to find the block type specified.'));
 
