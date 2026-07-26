@@ -24,6 +24,7 @@ readonly class BlockConfigDto
         public bool $cacheBlockOutput,
         public int $cacheBlockOutputLifetime,
         public bool $cacheBlockOutputOnPost,
+        public bool $cacheBlockOutputOnEditMode,
         public bool $cacheBlockOutputForRegisteredUsers,
         public bool $supportSavingNullValues,
         public bool $ignorePageThemeGridFrameworkContainer,

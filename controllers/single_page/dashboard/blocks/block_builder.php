@@ -16,10 +16,7 @@ use BlockBuilder\BlockGenerator\BlockGenerator;
 use BlockBuilder\BlockGenerator\Exception\BlockGenerationException;
 use BlockBuilder\Controller\BaseDashboardController;
 use BlockBuilder\DataProvider\BlockBuilderViewDataProvider;
-use BlockBuilder\Exception\SafeDisplayExceptionInterface;
-use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
 use Psr\Log\LoggerInterface;
-use Concrete\Core\Url\Resolver\Manager\ResolverManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 defined('C5_EXECUTE') or exit('Access Denied.');
@@ -29,7 +26,7 @@ class BlockBuilder extends BaseDashboardController
     private BlockGenerator $blockGenerator;
     private BlockGenerationManifestFactory $blockGenerationManifestFactory;
     private BlockConfigDtoFactory $factory;
-    private BlockBuilderViewDataProvider $provider;
+    private BlockBuilderViewDataProvider $viewDataProvider;
     private CreateBlockRequestValidator $createBlockRequestValidator;
 
     public function on_start(): void
@@ -39,23 +36,19 @@ class BlockBuilder extends BaseDashboardController
         $this->blockGenerator = $this->app->make(BlockGenerator::class);
         $this->blockGenerationManifestFactory = $this->app->make(BlockGenerationManifestFactory::class);
         $this->factory = $this->app->make(BlockConfigDtoFactory::class);
-        $this->provider = $this->app->make(BlockBuilderViewDataProvider::class);
+        $this->viewDataProvider = $this->app->make(BlockBuilderViewDataProvider::class);
         $this->createBlockRequestValidator = $this->app->make(CreateBlockRequestValidator::class);
 
-        $urlResolver = $this->app->make(ResolverManagerInterface::class);
-        $this->set('newBlockUrl', (string) $urlResolver->resolve(['/dashboard/blocks/block_builder']));
-        $this->set('configsUrl', (string) $urlResolver->resolve(['/dashboard/blocks/block_builder/configs']));
+        $this->setViewData($this->viewDataProvider->getCommonViewData());
 
         $this->set('errors', []);
         $this->set('fieldsWithError', []);
         $this->set('tabsWithError', []);
-
-        $this->set('navigationTabEnums', NavigationTabEnum::cases());
     }
 
     public function view(): ?Response
     {
-        $config = $this->factory->fromArray($this->provider->getInitialValues());
+        $config = $this->factory->fromArray($this->viewDataProvider->getInitialValues());
         $this->set('config', $config);
 
         $response = $this->handlePostRequest();
@@ -65,7 +58,7 @@ class BlockBuilder extends BaseDashboardController
 
         $this->set('pageTitle', t('Block Builder'));
         $this->set('formActionPath', '');
-        $this->setProviderData(context: BlockFormContextEnum::NewBlock, blockHandle: $config->blockHandle);
+        $this->setFormViewData(context: BlockFormContextEnum::NewBlock, blockHandle: $config->blockHandle);
 
         return null;
     }
@@ -90,7 +83,7 @@ class BlockBuilder extends BaseDashboardController
 
         $this->set('pageTitle', t('Block Builder') . ' - ' . t('Config loaded from block "%s"', $config->blockName));
         $this->set('formActionPath', BlockFormContextEnum::Config->value . '/' . $handle);
-        $this->setProviderData(context: BlockFormContextEnum::Config, blockHandle: $config->blockHandle);
+        $this->setFormViewData(context: BlockFormContextEnum::Config, blockHandle: $config->blockHandle);
 
         return null;
     }
@@ -115,7 +108,7 @@ class BlockBuilder extends BaseDashboardController
 
         $this->set('pageTitle', t('Block Builder') . ' - ' . t('Config loaded from predefined JSON file "%s"', $config->blockName));
         $this->set('formActionPath', BlockFormContextEnum::PredefinedConfig->value . '/' . $handle);
-        $this->setProviderData(context: BlockFormContextEnum::PredefinedConfig, blockHandle: $config->blockHandle);
+        $this->setFormViewData(context: BlockFormContextEnum::PredefinedConfig, blockHandle: $config->blockHandle);
 
         return null;
     }
@@ -162,9 +155,7 @@ class BlockBuilder extends BaseDashboardController
                 );
 
                 $errors = $result->errors;
-                $errors[] = $exception instanceof SafeDisplayExceptionInterface
-                    ? $exception->getSafeDisplayMessage()
-                    : t('The block could not be generated. Please check the logs for more information.');
+                $errors[] = $exception->getMessage();
                 $this->set('errors', $errors);
                 $this->set('config', $this->factory->fromArray($result->data));
 
@@ -174,7 +165,6 @@ class BlockBuilder extends BaseDashboardController
             return $this->handleCreateBlockResponse($createBlockResult);
         }
 
-        // Create DTO from normalized request data for form persistence.
         $config = $this->factory->fromArray($result->data);
         $this->set('config', $config);
 
@@ -194,19 +184,18 @@ class BlockBuilder extends BaseDashboardController
         return $this->buildRedirect('/dashboard/blocks/block_builder/config/' . $result->blockHandle);
     }
 
-    private function setProviderData(BlockFormContextEnum $context, string $blockHandle): void
+    private function setFormViewData(BlockFormContextEnum $context, string $blockHandle): void
     {
-        $this->set(
-            'blockIconPreviewPath',
-            $blockHandle !== ''
-                ? $this->environmentService->getPublicPathToBlockIcon($blockHandle)
-                : $this->environmentService->getPublicPathToDefaultBlockIcon(),
+        $this->setViewData(
+            $this->viewDataProvider->getFormViewData(
+                context: $context,
+                blockHandle: $blockHandle,
+            ),
         );
+    }
 
-        $data = array_merge(
-            $this->provider->getOptionLists(context: $context, blockHandle: $blockHandle),
-        );
-
+    private function setViewData(array $data): void
+    {
         foreach ($data as $key => $value) {
             $this->set($key, $value);
         }

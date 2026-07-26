@@ -1,21 +1,33 @@
 <?php
 
+use Concrete\Core\Application\Application;
+use Concrete\Core\Application\Service\UserInterface;
+use Concrete\Core\Block\View\BlockView;
+use Concrete\Core\Form\Service\Form;
+use Concrete\Core\Utility\Service\Identifier;
+
 defined('C5_EXECUTE') or die('Access Denied.');
 
 /**
- * @var \Concrete\Core\Application\Application $app
- * @var \Concrete\Core\Block\View\BlockView $view
- * @var \Concrete\Core\Form\Service\Form $form
- * @var string $uniqueId
+ * @var Application $app
+ * @var BlockView $view
+ * @var Form $form
  */
+
+$userInterface = $app->make(UserInterface::class);
+$formInstanceIdentifier = $app
+    ->make(Identifier::class)
+    ->getString(18);
 ?>
 
 {{SETUP}}
 
-{{BASIC_FIELDS}}
-
-{{SETTINGS}}
-
-{{REPEATABLE_SECTION}}
+{{FORM_CONTENT}}
 
 {{VALIDATION}}
+
+<script>
+    if (globalThis.Concrete?.event && typeof globalThis.Concrete.event.publish === 'function') {
+        globalThis.Concrete.event.publish('open.block.{{BLOCK_EVENT_NAME}}');
+    }
+</script>

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace BlockBuilder\Block\Exception;
 
-use BlockBuilder\Exception\SafeDisplayException;
+use RuntimeException;
 
-class BlockLifecycleException extends SafeDisplayException
+class BlockLifecycleException extends RuntimeException
 {
 }

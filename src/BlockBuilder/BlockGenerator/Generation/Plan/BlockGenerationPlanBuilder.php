@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace BlockBuilder\BlockGenerator\Generation\Plan;
 
-final class BlockGenerationPlanBuilder
+final readonly class BlockGenerationPlanBuilder
 {
-    public readonly ControllerGenerationPlanBuilder $controller;
-    public readonly DatabaseGenerationPlanBuilder $database;
-    public readonly FormGenerationPlanBuilder $form;
-    public readonly ViewGenerationPlanBuilder $view;
-    public readonly FrontendAssetGenerationPlanBuilder $javaScript;
-    public readonly FrontendAssetGenerationPlanBuilder $css;
+    public ControllerGenerationPlanBuilder $controller;
+    public DatabaseGenerationPlanBuilder $database;
+    public FormGenerationPlanBuilder $form;
+    public ViewGenerationPlanBuilder $view;
+    public FrontendAssetGenerationPlanBuilder $javaScript;
+    public FrontendAssetGenerationPlanBuilder $css;
 
     public function __construct()
     {

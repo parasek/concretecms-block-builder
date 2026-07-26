@@ -1,0 +1,216 @@
+/* Generated block add/edit form styles, automatically loaded by Concrete CMS. */
+
+[data-block-builder-form] .tab-content {
+    min-block-size: 8rem;
+}
+
+[data-block-builder-form] .field-group-highlight {
+    padding: 1.5rem 1.5rem 0;
+    background: #fbfafa;
+    border: 1px solid #e5e5e5;
+    border-radius: 0.3125rem;
+}
+
+[data-block-builder-form] .toggle-additional-fields i,
+[data-block-builder-form] .toggle-additional-image-fields i {
+    margin-inline-end: 0.625rem;
+    transition: transform 0.2s;
+}
+
+[data-block-builder-form] .toggle-additional-fields-active,
+[data-block-builder-form] .toggle-additional-image-fields-active {
+    background: #ededed;
+    border-color: #d3d3d3;
+}
+
+[data-block-builder-form] .toggle-additional-fields-active i,
+[data-block-builder-form] .toggle-additional-image-fields-active i {
+    transform: rotate(90deg);
+}
+
+.bb-entry-toolbar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-block-end: 1rem;
+}
+
+.bb-entry-toolbar-bottom {
+    margin-block: 1rem;
+}
+
+.bb-entry-toolbar-buttons,
+.bb-entry-toolbar-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+.bb-entry-toolbar-buttons .btn {
+    inline-size: 100%;
+}
+
+.bb-entry-toolbar-links .btn-link {
+    padding-inline: 0.35rem;
+    color: #4c4f56;
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+.bb-entry-toolbar-links .btn-link:hover,
+.bb-entry-toolbar-links .btn-link:focus-visible {
+    color: #1a1d20;
+    text-decoration: none;
+}
+
+.bb-entry-toolbar-links .bb-entry-remove-all-button {
+    margin-inline-start: auto;
+    color: #c34d52;
+}
+
+.bb-entry-toolbar-links .bb-entry-remove-all-button:hover,
+.bb-entry-toolbar-links .bb-entry-remove-all-button:focus-visible {
+    color: #9f3035;
+}
+
+.bb-entry-toolbar-links .btn:disabled {
+    color: #909090;
+    pointer-events: none;
+}
+
+.bb-entry {
+    margin-block-end: 1rem;
+    padding: 0;
+    background: #fff;
+    border: 1px solid #dedede;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s, box-shadow 0.15s, opacity 0.15s;
+}
+
+.bb-entry-dragging {
+    opacity: 0.55;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 0.2rem rgb(74 144 226 / 15%);
+}
+
+.bb-entry-sort-placeholder {
+    visibility: visible !important;
+    margin-block-end: 1rem;
+    background: #eee;
+    border: 1px dashed #909090;
+    border-radius: 0.25rem;
+}
+
+.bb-entry-header {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem;
+    background: #f0f0f0;
+}
+
+.bb-entry-header-start,
+.bb-entry-header-end {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.bb-entry-title {
+    overflow: hidden;
+    min-inline-size: 0;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.bb-entry-icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    color: #4c4f56;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    inline-size: 1.25rem;
+    block-size: 1.5rem;
+}
+
+.bb-entry-icon-button:hover,
+.bb-entry-icon-button:focus-visible {
+    color: #1a1d20;
+}
+
+.ccm-ui .bb-entry-drag-handle[type=button]:not(:disabled),
+.ccm-ui .bb-entry-drag-handle[type=reset]:not(:disabled),
+.ccm-ui .bb-entry-drag-handle[type=submit]:not(:disabled),
+.ccm-ui button.bb-entry-drag-handle:not(:disabled) {
+    cursor: move;
+}
+
+.bb-entry-drag-handle:active {
+    cursor: grabbing;
+}
+
+.bb-entry-remove-button {
+    color: #c34d52;
+}
+
+.bb-entry-remove-button:hover,
+.bb-entry-remove-button:focus-visible {
+    color: #9f3035;
+}
+
+.bb-entry-content {
+    padding: 1.25rem;
+    padding-block-start: 1.75rem;
+    border-block-start: 1px solid #e3e3e3;
+}
+
+.bb-entry-content[hidden] {
+    display: none;
+}
+
+.bb-entry-count {
+    margin-block-start: 0.5rem;
+    text-align: end;
+}
+
+.bb-entry-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-block-start: 1rem;
+}
+
+[data-no-entries-message] {
+    margin-block: 1rem;
+}
+
+.ccm-ui .bootstrap-select .dropdown-toggle .bs-select-clear-selected span {
+    inset-block-start: 0.25rem;
+    inset-inline-end: 0.3125rem;
+    font-size: 1.5rem;
+    font-weight: normal;
+    line-height: 0;
+}
+
+@media (min-width: 768px) {
+    .bb-entry-toolbar {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .bb-entry-toolbar-buttons .btn {
+        inline-size: auto;
+    }
+
+    .bb-entry-options {
+        flex-direction: row;
+        align-items: center;
+        gap: 1.5rem;
+    }
+}

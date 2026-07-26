@@ -24,7 +24,7 @@ readonly class BlockTypeLifecycleService
     ) {
     }
 
-    public function apply(BlockConfigDto $config, BlockGenerationManifest $manifest): PostGenerationBlockStateEnum
+    public function installOrRefresh(BlockConfigDto $config, BlockGenerationManifest $manifest): PostGenerationBlockStateEnum
     {
         if ($manifest->shouldBlockBeRebuilt) {
             try {

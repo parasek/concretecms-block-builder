@@ -18,25 +18,27 @@ readonly class ViewPhpFileGenerator implements FileGeneratorInterface
     }
 
     /**
-     * @return iterable<GeneratedTextFile>
+     * @return list<GeneratedTextFile>
      */
-    public function generate(BlockFileGenerationContext $context): iterable
+    public function generate(BlockFileGenerationContext $context): array
     {
-        yield new GeneratedTextFile(
-            relativePath: FILENAME_BLOCK_VIEW,
-            contents: $this->stubRenderer->render('view.php.stub', [
-                '{{SETUP}}' => $this->renderFragments(
-                    $context->plan->view->getFragments(ViewGenerationPlanBuilder::SECTION_SETUP),
-                ),
-                '{{BASIC_FIELDS}}' => $this->renderFragments(
-                    $context->plan->view->getFragments(ViewGenerationPlanBuilder::SECTION_BASIC_FIELDS),
-                ),
-                '{{REPEATABLE_SECTION}}' => $context->config->entries !== []
-                    ? $this->renderRepeatableSection($context)
-                    : '',
-            ]),
-            producer: self::class,
-        );
+        return [
+            new GeneratedTextFile(
+                relativePath: FILENAME_BLOCK_VIEW,
+                contents: $this->stubRenderer->render('view.php.stub', [
+                    '{{SETUP}}' => $this->renderFragments(
+                        $context->plan->view->getFragments(ViewGenerationPlanBuilder::SECTION_SETUP),
+                    ),
+                    '{{BASIC_FIELDS}}' => $this->renderFragments(
+                        $context->plan->view->getFragments(ViewGenerationPlanBuilder::SECTION_BASIC_FIELDS),
+                    ),
+                    '{{REPEATABLE_SECTION}}' => $context->config->entries !== []
+                        ? $this->renderRepeatableSection($context)
+                        : '',
+                ]),
+                producer: self::class,
+            ),
+        ];
     }
 
     private function renderRepeatableSection(BlockFileGenerationContext $context): string

@@ -2,7 +2,7 @@
     <label
         class="form-label"
         for="<?= h($view->field('entry')); ?>-<?= h((string) $entryIndex); ?>-{{HANDLE}}"
-    ><?= h(t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}); ?></label>
+    ><?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?></label>
     <input
         class="form-control"
         id="<?= h($view->field('entry')); ?>-<?= h((string) $entryIndex); ?>-{{HANDLE}}"

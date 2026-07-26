@@ -1,5 +1,7 @@
 # 3.0.0 (unreleased)
 - Refactored block creation into dedicated request, validation, DTO, service, and generator components for PHP 8.4.
+- Added configuration and controller generation for Concrete's `btCacheBlockOutputOnEditMode` cache setting.
+- Replaced native repeatable-entry dragging with Concrete's jQuery UI Sortable behavior and a visible vertical placeholder.
 - Added explicit generation metadata handling without overwriting metadata when legacy configs are read.
 - Added controlled handling for missing, malformed, and invalid block configuration files.
 - Added permission, request method, CSRF, handle, folder, and installation-state checks to block installation actions.
@@ -44,6 +46,23 @@
 - Consolidated duplicate JavaScript and CSS plan layers into a shared mutable frontend-asset builder and immutable frontend-asset plan.
 - Replaced split field-type contracts and proxy definitions with one explicit contract, a convention-based base class, and a direct field-type registry.
 - Grouped concrete field implementations under `FieldType/Type`, separate from shared contracts, factories, validation, enums, and exceptions.
+- Centralized build-page URLs, navigation metadata, icon previews, and option lists in its view-data provider.
+- Simplified controlled dashboard exceptions to use one administrator-facing message while retaining full exception context in logs.
+- Centralized block handle length and format rules across form validation, configuration loading, and lifecycle actions.
+- Renamed the create-block validator collection to remove unnecessary business-layer terminology.
+- Clarified block lifecycle method names to describe installation, refresh, and lifecycle completion explicitly.
+- Changed generated PHP array literals from legacy `array (...)` syntax to modern short `[...]` syntax.
+- Simplified text file generators to return explicit file lists instead of lazy generators.
+- Scoped generated form-instance identifiers to `form.php` instead of storing them in every block controller.
+- Migrated generated database schemas from legacy AXMLS 0.3 to Concrete’s Doctrine XML 0.5 format.
+- Excluded repeatable-entry auto-increment values from block export and import data.
+- Added database-index generation and indexed repeatable entries by block ID and position.
+- Added Composer validation that reuses normal field validation for persisted block data.
+- Added controller-plan support for implemented interfaces, required Concrete features, and content/file-folder export metadata.
+- Added opt-in Concrete file-usage tracking with raw repeatable-entry collection and post-save tracker refresh.
+- Modernized generated form service imports and hardened text rendering against invalid non-scalar values.
+- Removed obsolete and no-op generated controller methods when their block features do not require them.
+- Added tabbed generated forms and a plain-JavaScript repeatable-entry interface with matching shared form styles.
 
 # 2.8.1
 - Fixed undefined PHP 8 errors for the Image field type.

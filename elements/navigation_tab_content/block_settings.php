@@ -9,6 +9,7 @@
  * @var array $cacheBlockRecordOptions
  * @var array $cacheBlockOutputOptions
  * @var array $cacheBlockOutputOnPostOptions
+ * @var array $cacheBlockOutputOnEditModeOptions
  * @var array $cacheBlockOutputForRegisteredUsersOptions
  * @var array $supportSavingNullValuesOptions
  * @var array $ignorePageThemeGridFrameworkContainerOptions
@@ -98,6 +99,10 @@
         <div class="mb-4 <?= h(in_array('cacheBlockOutputOnPost', $fieldsWithError) ? 'bb-has-error' : null); ?>">
             <?= $form->label('cacheBlockOutputOnPost', t('Cache block output on post')); ?>
             <?= $form->select('cacheBlockOutputOnPost', $cacheBlockOutputOnPostOptions, (int) $config->cacheBlockOutputOnPost); ?>
+        </div>
+        <div class="mb-4 <?= h(in_array('cacheBlockOutputOnEditMode', $fieldsWithError) ? 'bb-has-error' : null); ?>">
+            <?= $form->label('cacheBlockOutputOnEditMode', t('Cache block output in edit mode')); ?>
+            <?= $form->select('cacheBlockOutputOnEditMode', $cacheBlockOutputOnEditModeOptions, (int) $config->cacheBlockOutputOnEditMode); ?>
         </div>
         <div class="mb-4 <?= h(in_array('cacheBlockOutputForRegisteredUsers', $fieldsWithError) ? 'bb-has-error' : null); ?>">
             <?= $form->label('cacheBlockOutputForRegisteredUsers', t('Cache block output for registered users')); ?>

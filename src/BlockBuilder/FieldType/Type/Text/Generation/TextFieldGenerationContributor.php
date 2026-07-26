@@ -49,7 +49,7 @@ readonly class TextFieldGenerationContributor implements FieldGenerationContribu
             $context->fieldContext,
             new DatabaseColumn(
                 name: $field->handle,
-                type: 'C',
+                type: 'string',
                 size: '255',
                 order: $context->position,
             ),
@@ -202,7 +202,7 @@ readonly class TextFieldGenerationContributor implements FieldGenerationContribu
     {
         $helpText = $field->helpText !== null && $field->helpText !== ''
             ? sprintf(
-                '    <div class="form-text"><?= h(t(%s)); ?></div>',
+                '    <div class="form-text"><?= t(%s); ?></div>',
                 $this->phpLiteralFormatter->format($field->helpText),
             )
             : '';

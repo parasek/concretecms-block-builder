@@ -27,24 +27,21 @@ readonly class BlockTypeInstaller
         } catch (Throwable $throwable) {
             $this->throwLoggedFailure(
                 handle: $handle,
-                message: 'The block type installation permission could not be verified.',
-                safeDisplayMessage: t('The block type installation permission could not be verified.'),
+                message: t('The block type installation permission could not be verified.'),
                 previous: $throwable,
             );
         }
         if ($error) {
             $this->throwLoggedFailure(
                 handle: $handle,
-                message: 'Permission denied while installing a block type.' . PHP_EOL . $error,
-                safeDisplayMessage: $error,
+                message: $error,
             );
         }
 
         if (!BlockHandleFormat::isValid($handle)) {
             $this->throwLoggedFailure(
                 handle: $handle,
-                message: sprintf('Invalid block type handle "%s" supplied for installation.', $handle),
-                safeDisplayMessage: t('Invalid block type handle "%s" supplied for installation.', $handle),
+                message: t('Invalid block type handle "%s" supplied for installation.', $handle),
             );
         }
 
@@ -52,8 +49,7 @@ readonly class BlockTypeInstaller
         if ($blockTypePath === null) {
             $this->throwLoggedFailure(
                 handle: $handle,
-                message: sprintf('The block type directory for "%s" is missing, linked, or outside the application block directory.', $handle),
-                safeDisplayMessage: t('The block type directory for "%s" is missing, linked, or outside the application block directory.', $handle),
+                message: t('The block type directory for "%s" is missing, linked, or outside the application block directory.', $handle),
             );
         }
 
@@ -62,8 +58,7 @@ readonly class BlockTypeInstaller
         } catch (Throwable $throwable) {
             $this->throwLoggedFailure(
                 handle: $handle,
-                message: sprintf('Unable to determine whether block type "%s" is installed.', $handle),
-                safeDisplayMessage: t('Unable to determine whether block type "%s" is installed.', $handle),
+                message: t('Unable to determine whether block type "%s" is installed.', $handle),
                 context: ['path' => $blockTypePath],
                 previous: $throwable,
             );
@@ -71,8 +66,7 @@ readonly class BlockTypeInstaller
         if ($isInstalled) {
             $this->throwLoggedFailure(
                 handle: $handle,
-                message: sprintf('Block type "%s" is already installed.', $handle),
-                safeDisplayMessage: t('Block type "%s" is already installed.', $handle),
+                message: t('Block type "%s" is already installed.', $handle),
                 context: ['path' => $blockTypePath],
             );
         }
@@ -82,8 +76,7 @@ readonly class BlockTypeInstaller
         } catch (Throwable $throwable) {
             $this->throwLoggedFailure(
                 handle: $handle,
-                message: sprintf('Concrete CMS failed to install block type "%s".', $handle),
-                safeDisplayMessage: t('Concrete CMS failed to install block type "%s".', $handle),
+                message: t('Concrete CMS failed to install block type "%s".', $handle),
                 context: ['path' => $blockTypePath],
                 previous: $throwable,
             );
@@ -92,8 +85,7 @@ readonly class BlockTypeInstaller
         if (!$blockType instanceof BlockTypeEntity) {
             $this->throwLoggedFailure(
                 handle: $handle,
-                message: sprintf('Concrete CMS did not return a block type entity after installing "%s".', $handle),
-                safeDisplayMessage: t('Concrete CMS did not return a block type entity after installing "%s".', $handle),
+                message: t('Concrete CMS did not return a block type entity after installing "%s".', $handle),
                 context: ['path' => $blockTypePath],
             );
         }
@@ -110,11 +102,10 @@ readonly class BlockTypeInstaller
     private function throwLoggedFailure(
         string $handle,
         string $message,
-        string $safeDisplayMessage,
         array $context = [],
         ?Throwable $previous = null,
     ): never {
-        $exception = new BlockTypeInstallException($message, $safeDisplayMessage, $previous);
+        $exception = new BlockTypeInstallException(message: $message, previous: $previous);
         $this->lifecycleLogger->logFailure(
             operation: 'install',
             target: $handle,

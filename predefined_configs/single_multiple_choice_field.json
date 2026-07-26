@@ -12,6 +12,7 @@
     "cacheBlockOutput": "true",
     "cacheBlockOutputLifetime": "0",
     "cacheBlockOutputOnPost": "true",
+    "cacheBlockOutputOnEditMode": "false",
     "cacheBlockOutputForRegisteredUsers": "true",
     "supportSavingNullValues": "false",
     "ignorePageThemeGridFrameworkContainer": "false",

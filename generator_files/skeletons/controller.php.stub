@@ -8,12 +8,10 @@ namespace Application\Block\{{BLOCK_HANDLE_PASCAL_CASE}};
 
 defined('C5_EXECUTE') or die('Access Denied.');
 
-class Controller extends BlockController
+class Controller extends BlockController{{IMPLEMENTED_INTERFACES}}
 {
 {{BLOCK_PROPERTIES}}
 {{FIELD_PROPERTIES}}
-    private string $uniqueId = '';
-
     public function getBlockTypeName(): string
     {
         return t({{BLOCK_NAME_LITERAL}});
@@ -23,31 +21,15 @@ class Controller extends BlockController
     {
         return t({{BLOCK_DESCRIPTION_LITERAL}});
     }
-
-    public function getSearchableContent(): string
-    {
-        $content = [];
-{{SEARCHABLE_CONTENT}}
-
-        return implode(' ', array_filter(
-            $content,
-            static fn(mixed $value): bool => $value !== null && $value !== '',
-        ));
-    }
-
-    public function on_start(): void
-    {
-        parent::on_start();
-
-        $this->uniqueId = $this->app->make('helper/validation/identifier')->getString(18);
-        $this->set('uniqueId', $this->uniqueId);
-{{ON_START_CONTENT}}
-    }
+{{REQUIRED_FEATURES_METHOD}}
+{{SEARCHABLE_CONTENT_METHOD}}
+{{USED_FILES_METHOD}}
+{{ON_START_METHOD}}
 
     public function add(): void
     {
         $this->addEdit();
-        $this->set('entries', []);
+{{ADD_CONTENT}}
     }
 
     public function edit(): void
@@ -60,53 +42,19 @@ class Controller extends BlockController
     {
 {{ADD_EDIT_CONTENT}}
     }
-
-    public function view(): void
-    {
-        $this->set('app', $this->app);
-{{VIEW_CONTENT}}
-    }
-
-    public function save($args): void
-    {
-        $args = is_array($args) ? $args : [];
-{{SAVE_CONTENT}}
-    }
-
-    public function duplicate($newBlockId): void
-    {
-{{DUPLICATE_CONTENT}}
-    }
-
-    public function delete(): void
-    {
-{{DELETE_CONTENT}}
-    }
-
-    public function validate($args): ErrorList
-    {
-        $args = is_array($args) ? $args : [];
-        $errors = $this->app->make(ErrorList::class);
-{{VALIDATE_CONTENT}}
-
-        return $errors;
-    }
+{{VIEW_METHOD}}
+{{SAVE_METHOD}}
+{{DUPLICATE_METHOD}}
+{{DELETE_METHOD}}
+{{VALIDATION_METHODS}}
 
     public function composer(): void
     {
 {{COMPOSER_ASSETS}}
         $this->edit();
     }
-
-    public function scrapbook(): void
-    {
-        $this->edit();
-    }
-
-    private function getEntries(string $outputMethod = 'view'): array
-    {
-{{GET_ENTRIES_CONTENT}}
-    }
+{{GET_ENTRIES_METHOD}}
+{{REPEATABLE_EXPORT_IMPORT_METHODS}}
 {{REGISTER_VIEW_ASSETS_METHOD}}
 {{CUSTOM_CONTROLLER_METHODS}}
 }

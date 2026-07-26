@@ -9,10 +9,14 @@ final readonly class DatabaseGenerationPlan
     /**
      * @param DatabaseColumn[] $mainTableColumns
      * @param DatabaseColumn[] $entriesTableColumns
+     * @param DatabaseIndex[] $mainTableIndexes
+     * @param DatabaseIndex[] $entriesTableIndexes
      */
     public function __construct(
         public array $mainTableColumns,
         public array $entriesTableColumns,
+        public array $mainTableIndexes,
+        public array $entriesTableIndexes,
     ) {
     }
 }

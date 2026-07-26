@@ -5,75 +5,36 @@
 
 {{SETUP_CODE}}
 
-    function findAdjacentElement(containerElement, selector) {
-        const previousElement = containerElement.previousElementSibling;
-        if (previousElement && previousElement.matches(selector)) {
-            return previousElement;
-        }
-
-        const nextElement = containerElement.nextElementSibling;
-        if (nextElement && nextElement.matches(selector)) {
-            return nextElement;
-        }
-
-        return null;
+    function getEntries(state) {
+        return Array.from(state.container.children)
+            .filter((element) => element.matches('[data-entry]'));
     }
 
-    function parseEntryData(containerElement) {
-        const dataElement = findAdjacentElement(containerElement, 'script[data-entry-data]');
-        if (!dataElement) {
-            return {};
-        }
+    function groupFields(entry) {
+        const fields = new Map();
 
-        try {
-            const parsedData = JSON.parse(dataElement.textContent || '{}');
-
-            if (Array.isArray(parsedData)) {
-                return {entries: parsedData};
+        entry.querySelectorAll('[data-entry-field]').forEach((field) => {
+            const handle = field.dataset.entryField;
+            if (!handle) {
+                return;
             }
 
-            return parsedData && typeof parsedData === 'object' ? parsedData : {};
-        } catch (error) {
-            console.error('Block Builder could not parse repeatable-entry data.', error);
+            if (!fields.has(handle)) {
+                fields.set(handle, []);
+            }
+            fields.get(handle).push(field);
+        });
 
-            return {};
-        }
-    }
-
-    function findEntryTemplate(containerElement, scopeElement) {
-        return containerElement.querySelector('template[data-entry-template]')
-            || findAdjacentElement(containerElement, 'template[data-entry-template]')
-            || scopeElement.querySelector('template[data-entry-template]');
-    }
-
-    function getEntryElements(containerElement) {
-        return Array.from(containerElement.children).filter((element) => element.matches('[data-entry]'));
-    }
-
-    function calculateNextIndex(containerElement) {
-        const usedIndexes = getEntryElements(containerElement)
-            .map((entryElement) => Number.parseInt(entryElement.dataset.entryIndex || '', 10))
-            .filter((entryIndex) => Number.isInteger(entryIndex));
-
-        return usedIndexes.length > 0 ? Math.max(...usedIndexes) + 1 : 0;
-    }
-
-    function parseMaxEntries(containerElement, entryData) {
-        const configuredMaximum = containerElement.dataset.maxEntries ?? entryData.maxEntries;
-        const maximum = Number.parseInt(configuredMaximum, 10);
-
-        return Number.isInteger(maximum) && maximum > 0 ? maximum : Number.POSITIVE_INFINITY;
+        return fields;
     }
 
     function normalizeMultipleValue(value) {
         if (Array.isArray(value)) {
-            return value.map((item) => String(item));
+            return value.map(String);
         }
-
         if (typeof value === 'string' && value.includes('|')) {
             return value.split('|');
         }
-
         if (value === null || typeof value === 'undefined' || value === '') {
             return [];
         }
@@ -81,110 +42,74 @@
         return [String(value)];
     }
 
-    function groupEntryFields(entryElement) {
-        const groupedFields = new Map();
-
-        entryElement.querySelectorAll('[data-entry-field]').forEach((fieldElement) => {
-            const fieldHandle = fieldElement.dataset.entryField;
-            if (!fieldHandle) {
-                return;
-            }
-
-            if (!groupedFields.has(fieldHandle)) {
-                groupedFields.set(fieldHandle, []);
-            }
-
-            groupedFields.get(fieldHandle).push(fieldElement);
-        });
-
-        return groupedFields;
-    }
-
-    function setFieldValue(fieldElements, value) {
-        const firstField = fieldElements[0];
+    function setFieldValue(fields, value) {
+        const firstField = fields[0];
         if (!firstField) {
             return;
         }
 
         if (firstField instanceof HTMLInputElement && firstField.type === 'radio') {
-            fieldElements.forEach((fieldElement) => {
-                fieldElement.checked = String(fieldElement.value) === String(value ?? '');
+            fields.forEach((field) => {
+                field.checked = String(field.value) === String(value ?? '');
             });
-
             return;
         }
 
         if (firstField instanceof HTMLInputElement && firstField.type === 'checkbox') {
-            if (fieldElements.length === 1 && typeof value === 'boolean') {
-                firstField.checked = value;
-
-                return;
-            }
-
             const selectedValues = normalizeMultipleValue(value);
-            fieldElements.forEach((fieldElement) => {
-                fieldElement.checked = selectedValues.includes(String(fieldElement.value));
+            fields.forEach((field) => {
+                field.checked = fields.length === 1 && typeof value === 'boolean'
+                    ? value
+                    : selectedValues.includes(String(field.value));
             });
-
             return;
         }
 
         if (firstField instanceof HTMLSelectElement && firstField.multiple) {
             const selectedValues = normalizeMultipleValue(value);
-            Array.from(firstField.options).forEach((optionElement) => {
-                optionElement.selected = selectedValues.includes(String(optionElement.value));
+            Array.from(firstField.options).forEach((option) => {
+                option.selected = selectedValues.includes(String(option.value));
             });
-
             return;
         }
 
-        fieldElements.forEach((fieldElement) => {
-            if (fieldElement instanceof HTMLInputElement && fieldElement.type === 'file') {
-                return;
-            }
-
-            if ('value' in fieldElement) {
-                fieldElement.value = value ?? '';
+        fields.forEach((field) => {
+            if (!(field instanceof HTMLInputElement && field.type === 'file') && 'value' in field) {
+                field.value = value ?? '';
             }
         });
     }
 
-    function populateEntry(entryElement, values) {
-        const fieldValues = values && typeof values === 'object' ? values : {};
+    function populateEntry(entry, values) {
+        if (!values || typeof values !== 'object') {
+            return;
+        }
 
-        groupEntryFields(entryElement).forEach((fieldElements, fieldHandle) => {
-            if (Object.prototype.hasOwnProperty.call(fieldValues, fieldHandle)) {
-                setFieldValue(fieldElements, fieldValues[fieldHandle]);
+        groupFields(entry).forEach((fields, handle) => {
+            if (Object.prototype.hasOwnProperty.call(values, handle)) {
+                setFieldValue(fields, values[handle]);
             }
         });
     }
 
-    function readFieldValue(fieldElements) {
-        const firstField = fieldElements[0];
+    function readFieldValue(fields) {
+        const firstField = fields[0];
         if (!firstField) {
             return null;
         }
 
         if (firstField instanceof HTMLInputElement && firstField.type === 'radio') {
-            const selectedField = fieldElements.find((fieldElement) => fieldElement.checked);
-
-            return selectedField ? selectedField.value : '';
+            return fields.find((field) => field.checked)?.value ?? '';
         }
-
         if (firstField instanceof HTMLInputElement && firstField.type === 'checkbox') {
-            if (fieldElements.length === 1) {
+            if (fields.length === 1) {
                 return firstField.checked;
             }
-
-            return fieldElements
-                .filter((fieldElement) => fieldElement.checked)
-                .map((fieldElement) => fieldElement.value);
+            return fields.filter((field) => field.checked).map((field) => field.value);
         }
-
         if (firstField instanceof HTMLSelectElement && firstField.multiple) {
-            return Array.from(firstField.selectedOptions).map((optionElement) => optionElement.value);
+            return Array.from(firstField.selectedOptions).map((option) => option.value);
         }
-
         if (firstField instanceof HTMLInputElement && firstField.type === 'file') {
             return null;
         }
@@ -192,193 +117,188 @@
         return 'value' in firstField ? firstField.value : null;
     }
 
-    function readEntryValues(entryElement) {
+    function readEntry(entry) {
         const values = {};
-
-        groupEntryFields(entryElement).forEach((fieldElements, fieldHandle) => {
-            values[fieldHandle] = readFieldValue(fieldElements);
+        groupFields(entry).forEach((fields, handle) => {
+            values[handle] = readFieldValue(fields);
         });
 
         return values;
     }
 
-    function getTitleSourceValue(sourceElement) {
-        if (sourceElement instanceof HTMLSelectElement) {
-            return Array.from(sourceElement.selectedOptions)
-                .map((optionElement) => optionElement.textContent.trim())
+    function getTitleSourceValue(source) {
+        if (source instanceof HTMLSelectElement) {
+            return Array.from(source.selectedOptions)
+                .map((option) => option.textContent.trim())
                 .filter(Boolean)
                 .join(', ');
         }
-
-        if (sourceElement instanceof HTMLInputElement && ['checkbox', 'radio'].includes(sourceElement.type)) {
-            return sourceElement.checked ? sourceElement.value : '';
+        if (source instanceof HTMLInputElement && ['checkbox', 'radio'].includes(source.type)) {
+            return source.checked ? source.value : '';
         }
 
-        if ('value' in sourceElement) {
-            return String(sourceElement.value).trim();
-        }
-
-        return sourceElement.textContent.trim();
+        return 'value' in source ? String(source.value).trim() : source.textContent.trim();
     }
 
-    function updateEntryTitle(entryElement) {
-        const titleElement = entryElement.querySelector('[data-entry-title]');
-        const titleSources = Array.from(entryElement.querySelectorAll('[data-entry-title-source]'));
-        if (!titleElement || titleSources.length === 0) {
-            return;
-        }
-
-        const title = titleSources
+    function updateEntryTitle(entry, position) {
+        const title = Array.from(entry.querySelectorAll('[data-entry-title-source]'))
             .map(getTitleSourceValue)
             .filter(Boolean)
             .join(', ');
-        titleElement.textContent = title || entryElement.dataset.emptyEntryTitle || '';
+        const titleElement = entry.querySelector('[data-entry-title]');
+        if (titleElement) {
+            titleElement.textContent = `${title} #${position}` || `#${position}`;
+        }
     }
 
-    function initializeBasicFields(rootElement) {
-{{BASIC_FIELD_INITIALIZERS}}
+    function setEntryExpanded(entry, expanded) {
+        const content = entry.querySelector('[data-entry-content]');
+        const button = entry.querySelector('[data-entry-action="toggle"]');
+        if (!content || !button) {
+            return;
+        }
+
+        content.hidden = !expanded;
+        button.setAttribute('aria-expanded', String(expanded));
+        button.setAttribute(
+            'aria-label',
+            expanded ? button.dataset.collapseLabel : button.dataset.expandLabel,
+        );
+        button.setAttribute(
+            'title',
+            expanded ? button.dataset.collapseLabel : button.dataset.expandLabel,
+        );
+
+        const icon = button.querySelector('i');
+        if (icon) {
+            icon.classList.toggle('fa-minus-square', expanded);
+            icon.classList.toggle('fa-plus-square', !expanded);
+        }
     }
 
-    function initializeRepeatableEntryFields(entryElement) {
-{{REPEATABLE_FIELD_INITIALIZERS}}
+    function updateState(state) {
+        const entries = getEntries(state);
+        const maximumReached = entries.length >= state.maximum;
+        const noEntries = entries.length === 0;
+
+        state.scope.querySelectorAll('[data-entry-count]').forEach((counter) => {
+            counter.textContent = String(entries.length);
+        });
+        state.scope.querySelectorAll('[data-no-entries-message]').forEach((message) => {
+            message.hidden = !noEntries;
+        });
+        state.scope.querySelectorAll(
+            '[data-entry-action="add-top"], [data-entry-action="add-bottom"], '
+            + '[data-entry-action="duplicate"], [data-entry-action="duplicate-at-end"]',
+        ).forEach((button) => {
+            button.disabled = maximumReached;
+        });
+        state.scope.querySelectorAll('[data-entry-action="copy-last"]').forEach((button) => {
+            button.disabled = noEntries || maximumReached;
+        });
+        state.scope.querySelectorAll('[data-entry-action="remove-all"]').forEach((button) => {
+            button.disabled = noEntries;
+        });
+
+        entries.forEach((entry, index) => {
+            updateEntryTitle(entry, index + 1);
+        });
     }
 
-    function createEntry(state, values, insertionReference = null) {
-        if (getEntryElements(state.containerElement).length >= state.maxEntries) {
+    function createEntry(state, values, before = null) {
+        if (getEntries(state).length >= state.maximum) {
             return null;
         }
 
-        const entryIndex = state.nextIndex;
+        const index = state.nextIndex;
         state.nextIndex += 1;
 
-        const renderedMarkup = state.templateElement.innerHTML
+        const template = document.createElement('template');
+        template.innerHTML = state.template.innerHTML
             .split('__INDEX__')
-            .join(String(entryIndex));
-        const renderedTemplate = document.createElement('template');
-        renderedTemplate.innerHTML = renderedMarkup.trim();
-
-        const entryElement = renderedTemplate.content.querySelector('[data-entry]')
-            || renderedTemplate.content.firstElementChild;
-        if (!entryElement) {
-            console.error('Block Builder entry template must contain an element marked with data-entry.');
-
+            .join(String(index))
+            .trim();
+        const entry = template.content.querySelector('[data-entry]');
+        if (!entry) {
+            console.error('Block Builder entry template is missing its data-entry element.');
             return null;
         }
 
-        if (!entryElement.hasAttribute('data-entry')) {
-            entryElement.setAttribute('data-entry', '');
-        }
-        entryElement.dataset.entryIndex = String(entryIndex);
+        entry.dataset.entryIndex = String(index);
+        populateEntry(entry, values);
+        state.container.insertBefore(template.content, before);
+        initializeRepeatableFields(entry);
+        entry.dispatchEvent(new CustomEvent('blockbuilder:entry-added', {bubbles: true}));
 
-        populateEntry(entryElement, values);
-        state.containerElement.insertBefore(renderedTemplate.content, insertionReference);
-        initializeRepeatableEntryFields(entryElement);
-        updateEntryTitle(entryElement);
-        updateControls(state);
+        const keepCollapsed = state.scope.querySelector('[data-keep-added-collapsed]')?.checked === true;
+        setEntryExpanded(entry, !keepCollapsed);
+        updateState(state);
 
-        return entryElement;
-    }
-
-    function updateControls(state) {
-        const entryElements = getEntryElements(state.containerElement);
-        const maximumReached = entryElements.length >= state.maxEntries;
-
-        state.scopeElement.querySelectorAll('[data-entry-count]').forEach((counterElement) => {
-            counterElement.textContent = String(entryElements.length);
-        });
-
-        state.scopeElement.querySelectorAll('[data-entry-action="add"], [data-entry-action="duplicate"]').forEach((actionElement) => {
-            if ('disabled' in actionElement) {
-                actionElement.disabled = maximumReached;
-            }
-        });
-
-        entryElements.forEach((entryElement, entryPosition) => {
-            entryElement.querySelectorAll('[data-entry-position]').forEach((positionElement) => {
-                positionElement.textContent = String(entryPosition + 1);
-            });
-
-            entryElement.querySelectorAll('[data-entry-action="move-up"]').forEach((actionElement) => {
-                if ('disabled' in actionElement) {
-                    actionElement.disabled = entryPosition === 0;
-                }
-            });
-
-            entryElement.querySelectorAll('[data-entry-action="move-down"]').forEach((actionElement) => {
-                if ('disabled' in actionElement) {
-                    actionElement.disabled = entryPosition === entryElements.length - 1;
-                }
-            });
-        });
-    }
-
-    function resolveTargetContainer(actionElement) {
-        const targetSelector = actionElement.dataset.entriesTarget;
-        if (targetSelector) {
-            try {
-                const targetElement = document.querySelector(targetSelector);
-                if (targetElement && targetElement.matches('[data-block-builder-entries]')) {
-                    return targetElement;
-                }
-            } catch (error) {
-                console.error('Block Builder received an invalid repeatable-entry target selector.', error);
-            }
+        if (state.scope.querySelector('[data-disable-smooth-scroll]')?.checked !== true) {
+            entry.scrollIntoView({behavior: 'smooth', block: 'center'});
         }
 
-        const containingEntries = actionElement.closest('[data-block-builder-entries]');
-        if (containingEntries) {
-            return containingEntries;
-        }
-
-        const repeatableSection = actionElement.closest('[data-block-builder-repeatable]');
-
-        return repeatableSection
-            ? repeatableSection.querySelector('[data-block-builder-entries]')
-            : null;
+        return entry;
     }
 
-    function handleEntryAction(event) {
+    function removeEntry(state, entry) {
+        entry.dispatchEvent(new CustomEvent('blockbuilder:entry-before-remove', {bubbles: true}));
+        entry.remove();
+        updateState(state);
+    }
+
+    function confirmAction(button) {
+        return !button.dataset.confirm || globalThis.confirm(button.dataset.confirm);
+    }
+
+    function getState(element) {
+        const scope = element.closest('[data-block-builder-repeatable]');
+        const container = scope?.querySelector('[data-block-builder-entries]');
+
+        return container ? containerStates.get(container) : null;
+    }
+
+    function handleAction(event) {
         if (!(event.target instanceof Element)) {
             return;
         }
 
-        const actionElement = event.target.closest('[data-entry-action]');
-        if (!actionElement) {
-            return;
-        }
-
-        const containerElement = resolveTargetContainer(actionElement);
-        const state = containerElement ? containerStates.get(containerElement) : null;
-        if (!state) {
+        const button = event.target.closest('[data-entry-action]');
+        const state = button ? getState(button) : null;
+        if (!button || !state || button.disabled) {
             return;
         }
 
         event.preventDefault();
 
-        const action = actionElement.dataset.entryAction;
-        const entryElement = actionElement.closest('[data-entry]');
+        const action = button.dataset.entryAction;
+        const entry = button.closest('[data-entry]');
+        const entries = getEntries(state);
 
-        if (action === 'add') {
-            createEntry(state, state.defaultValues);
-        } else if (action === 'remove' && entryElement) {
-            entryElement.remove();
-            updateControls(state);
-        } else if (action === 'duplicate' && entryElement) {
-            createEntry(state, readEntryValues(entryElement), entryElement.nextSibling);
-        } else if (action === 'move-up' && entryElement) {
-            const entryElements = getEntryElements(state.containerElement);
-            const entryPosition = entryElements.indexOf(entryElement);
-            if (entryPosition > 0) {
-                state.containerElement.insertBefore(entryElement, entryElements[entryPosition - 1]);
-                updateControls(state);
-            }
-        } else if (action === 'move-down' && entryElement) {
-            const entryElements = getEntryElements(state.containerElement);
-            const entryPosition = entryElements.indexOf(entryElement);
-            if (entryPosition >= 0 && entryPosition < entryElements.length - 1) {
-                entryElements[entryPosition + 1].after(entryElement);
-                updateControls(state);
-            }
+        if (action === 'add-top') {
+            createEntry(state, state.defaults, entries[0] ?? null);
+        } else if (action === 'add-bottom') {
+            createEntry(state, state.defaults);
+        } else if (action === 'copy-last' && entries.length > 0) {
+            createEntry(state, readEntry(entries.at(-1)));
+        } else if (action === 'duplicate' && entry) {
+            createEntry(state, readEntry(entry), entry.nextElementSibling);
+        } else if (action === 'duplicate-at-end' && entry) {
+            createEntry(state, readEntry(entry));
+        } else if (action === 'remove' && entry && confirmAction(button)) {
+            removeEntry(state, entry);
+        } else if (action === 'remove-all' && confirmAction(button)) {
+            entries.forEach((currentEntry) => {
+                currentEntry.dispatchEvent(new CustomEvent('blockbuilder:entry-before-remove', {bubbles: true}));
+                currentEntry.remove();
+            });
+            updateState(state);
+        } else if (action === 'toggle' && entry) {
+            setEntryExpanded(entry, button.getAttribute('aria-expanded') !== 'true');
+        } else if (action === 'expand-all') {
+            entries.forEach((currentEntry) => setEntryExpanded(currentEntry, true));
+        } else if (action === 'collapse-all') {
+            entries.forEach((currentEntry) => setEntryExpanded(currentEntry, false));
         }
     }
 
@@ -387,75 +307,149 @@
             return;
         }
 
-        const entryElement = event.target.closest('[data-entry]');
-        if (entryElement) {
-            updateEntryTitle(entryElement);
+        const entry = event.target.closest('[data-entry]');
+        const state = entry ? getState(entry) : null;
+        if (state) {
+            updateState(state);
         }
     }
 
-    function initializeContainer(containerElement) {
-        if (containerStates.has(containerElement)) {
+    function initializeSortable(state) {
+        const jquery = globalThis.jQuery;
+        if (typeof jquery !== 'function' || typeof jquery.fn?.sortable !== 'function') {
+            console.error('Block Builder repeatable entries require jQuery UI Sortable.');
             return;
         }
 
-        const scopeElement = containerElement.closest('[data-block-builder-repeatable]')
-            || containerElement.parentElement
-            || containerElement;
-        const entryData = parseEntryData(containerElement);
-        const templateElement = findEntryTemplate(containerElement, scopeElement);
-        if (!templateElement) {
-            console.error('Block Builder could not find a repeatable-entry template.');
+        jquery(state.container).sortable({
+            axis: 'y',
+            cancel: 'input, textarea, select, option',
+            cursor: 'move',
+            forcePlaceholderSize: true,
+            handle: '[data-entry-drag-handle]',
+            items: '> [data-entry]',
+            placeholder: 'bb-entry-sort-placeholder',
+            tolerance: 'pointer',
+            start(_event, sortableData) {
+                sortableData.item.addClass('bb-entry-dragging');
+            },
+            stop(_event, sortableData) {
+                sortableData.item.removeClass('bb-entry-dragging');
+                updateState(state);
+            },
+        });
+    }
 
+    function handleMoveKeydown(event) {
+        if (
+            !(event.target instanceof Element)
+            || !event.target.matches('[data-entry-drag-handle]')
+            || !['ArrowUp', 'ArrowDown'].includes(event.key)
+        ) {
             return;
         }
 
-        const state = {
-            containerElement,
-            defaultValues: entryData.defaultValues && typeof entryData.defaultValues === 'object'
-                ? entryData.defaultValues
-                : {},
-            maxEntries: parseMaxEntries(containerElement, entryData),
-            nextIndex: calculateNextIndex(containerElement),
-            scopeElement,
-            templateElement,
-        };
-        containerStates.set(containerElement, state);
+        const entry = event.target.closest('[data-entry]');
+        const state = entry ? getState(entry) : null;
+        if (!entry || !state) {
+            return;
+        }
 
-        const initialEntries = Array.isArray(entryData.entries) ? entryData.entries : [];
-        if (getEntryElements(containerElement).length === 0) {
-            initialEntries.forEach((entryValues) => {
-                createEntry(state, entryValues);
-            });
+        const entries = getEntries(state);
+        const position = entries.indexOf(entry);
+        if (event.key === 'ArrowUp' && position > 0) {
+            event.preventDefault();
+            state.container.insertBefore(entry, entries[position - 1]);
+        } else if (event.key === 'ArrowDown' && position < entries.length - 1) {
+            event.preventDefault();
+            state.container.insertBefore(entries[position + 1], entry);
         } else {
-            getEntryElements(containerElement).forEach((entryElement) => {
-                initializeRepeatableEntryFields(entryElement);
-                updateEntryTitle(entryElement);
-            });
+            return;
         }
 
-        updateControls(state);
+        updateState(state);
+        event.target.focus();
     }
 
-    function initializeRepeatableEntries(rootElement = document) {
-        rootElement.querySelectorAll('[data-block-builder-entries]').forEach(initializeContainer);
+    function initializeBasicFields(root) {
+{{BASIC_FIELD_INITIALIZERS}}
     }
 
-    function initializeGeneratedBlock(rootElement = document) {
-        initializeBasicFields(rootElement);
-        initializeRepeatableEntries(rootElement);
+    function initializeRepeatableFields(entry) {
+{{REPEATABLE_FIELD_INITIALIZERS}}
     }
 
-    document.addEventListener('click', handleEntryAction);
+    function parseData(scope) {
+        const dataElement = scope.querySelector('script[data-entry-data]');
+        if (!dataElement) {
+            return {};
+        }
+
+        try {
+            return JSON.parse(dataElement.textContent || '{}');
+        } catch (error) {
+            console.error('Block Builder could not parse repeatable entry data.', error);
+            return {};
+        }
+    }
+
+    function initializeContainer(container) {
+        if (containerStates.has(container)) {
+            return;
+        }
+
+        const scope = container.closest('[data-block-builder-repeatable]');
+        const template = scope?.querySelector('template[data-entry-template]');
+        if (!scope || !template) {
+            return;
+        }
+
+        const data = parseData(scope);
+        const configuredMaximum = Number.parseInt(container.dataset.maxEntries ?? data.maxEntries, 10);
+        const usedIndexes = Array.from(container.querySelectorAll(':scope > [data-entry]'))
+            .map((entry) => Number.parseInt(entry.dataset.entryIndex, 10))
+            .filter(Number.isInteger);
+        const state = {
+            container,
+            defaults: data.defaultValues && typeof data.defaultValues === 'object'
+                ? data.defaultValues
+                : {},
+            maximum: Number.isInteger(configuredMaximum) && configuredMaximum > 0
+                ? configuredMaximum
+                : Number.POSITIVE_INFINITY,
+            nextIndex: usedIndexes.length > 0 ? Math.max(...usedIndexes) + 1 : 0,
+            scope,
+            template,
+        };
+        containerStates.set(container, state);
+
+        const existingEntries = getEntries(state);
+        if (existingEntries.length > 0) {
+            existingEntries.forEach((entry) => initializeRepeatableFields(entry));
+        } else if (Array.isArray(data.entries)) {
+            data.entries.forEach((values) => createEntry(state, values));
+        }
+        initializeSortable(state);
+        updateState(state);
+    }
+
+    function initialize(root = document) {
+        initializeBasicFields(root);
+        root.querySelectorAll('[data-block-builder-entries]').forEach(initializeContainer);
+    }
+
+    document.addEventListener('click', handleAction);
     document.addEventListener('input', handleTitleChange);
     document.addEventListener('change', handleTitleChange);
-
-    initializeGeneratedBlock();
+    document.addEventListener('keydown', handleMoveKeydown);
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => initializeGeneratedBlock(), {once: true});
+        document.addEventListener('DOMContentLoaded', () => initialize(), {once: true});
+    } else {
+        initialize();
     }
 
-    if (globalThis.Concrete && globalThis.Concrete.event && typeof globalThis.Concrete.event.bind === 'function') {
-        globalThis.Concrete.event.bind('open.block.{{BLOCK_EVENT_NAME}}', () => initializeGeneratedBlock());
+    if (globalThis.Concrete?.event && typeof globalThis.Concrete.event.bind === 'function') {
+        globalThis.Concrete.event.bind('open.block.{{BLOCK_EVENT_NAME}}', () => initialize());
     }
 }());

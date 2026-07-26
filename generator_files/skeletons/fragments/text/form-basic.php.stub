@@ -1,5 +1,5 @@
 <div class="mb-4">
-    <?= $form->label($view->field({{HANDLE_LITERAL}}), h(t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}})); ?>
+    <?= $form->label($view->field({{HANDLE_LITERAL}}), t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}); ?>
     <?= $form->text(
         $view->field({{HANDLE_LITERAL}}),
         ${{HANDLE}} ?? '',

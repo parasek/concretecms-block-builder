@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace BlockBuilder\DataProvider;
 
 use BlockBuilder\Block\Enum\BlockFormContextEnum;
+use BlockBuilder\Environment\EnvironmentService;
 use BlockBuilder\FieldType\FieldTypeRegistry;
+use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
 use BlockBuilder\Service\Option\BlockIconOptionProvider;
 use BlockBuilder\Service\Option\BlockSettingsOptionProvider;
 use BlockBuilder\Service\Option\FieldTypeOptionProvider;
+use Concrete\Core\Url\Resolver\Manager\ResolverManagerInterface;
 
 readonly class BlockBuilderViewDataProvider
 {
@@ -17,7 +20,18 @@ readonly class BlockBuilderViewDataProvider
         private FieldTypeOptionProvider $fieldTypeOptions,
         private BlockIconOptionProvider $blockIconOptions,
         private FieldTypeRegistry $fieldTypeRegistry,
+        private EnvironmentService $environmentService,
+        private ResolverManagerInterface $urlResolver,
     ) {
+    }
+
+    public function getCommonViewData(): array
+    {
+        return [
+            'newBlockUrl' => $this->resolve('/dashboard/blocks/block_builder'),
+            'configsUrl' => $this->resolve('/dashboard/blocks/block_builder/configs'),
+            'navigationTabEnums' => NavigationTabEnum::cases(),
+        ];
     }
 
     public function getInitialValues(): array
@@ -31,6 +45,7 @@ readonly class BlockBuilderViewDataProvider
             'cacheBlockOutput' => true,
             'cacheBlockOutputLifetime' => 0,
             'cacheBlockOutputOnPost' => true,
+            'cacheBlockOutputOnEditMode' => false,
             'cacheBlockOutputForRegisteredUsers' => true,
             'supportSavingNullValues' => false,
             'ignorePageThemeGridFrameworkContainer' => false,
@@ -93,15 +108,19 @@ readonly class BlockBuilderViewDataProvider
         ];
     }
 
-    public function getOptionLists(BlockFormContextEnum $context, string $blockHandle): array
+    public function getFormViewData(BlockFormContextEnum $context, string $blockHandle): array
     {
         return [
+            'blockIconPreviewPath' => $blockHandle !== ''
+                ? $this->environmentService->getPublicPathToBlockIcon($blockHandle)
+                : $this->environmentService->getPublicPathToDefaultBlockIcon(),
             'fieldTypes' => $this->fieldTypeRegistry->all(),
             'blockTypeSets' => $this->blockSettingsOptions->getBlockTypeSets(includeEmptyOption: true),
             'blockIcons' => $this->blockIconOptions->getOptions(context: $context, blockHandle: $blockHandle),
             'cacheBlockRecordOptions' => $this->blockSettingsOptions->getBooleanOptions(),
             'cacheBlockOutputOptions' => $this->blockSettingsOptions->getBooleanOptions(),
             'cacheBlockOutputOnPostOptions' => $this->blockSettingsOptions->getBooleanOptions(),
+            'cacheBlockOutputOnEditModeOptions' => $this->blockSettingsOptions->getBooleanOptions(),
             'cacheBlockOutputForRegisteredUsersOptions' => $this->blockSettingsOptions->getBooleanOptions(),
             'supportSavingNullValuesOptions' => $this->blockSettingsOptions->getBooleanOptions(),
             'ignorePageThemeGridFrameworkContainerOptions' => $this->blockSettingsOptions->getBooleanOptions(),
@@ -113,5 +132,10 @@ readonly class BlockBuilderViewDataProvider
             'selectMultipleFieldTypes' => $this->fieldTypeOptions->getMultipleChoiceTypes(),
             'selectFieldListGenerationMethods' => $this->fieldTypeOptions->getListGenerationMethods(),
         ];
+    }
+
+    private function resolve(string $path): string
+    {
+        return (string) $this->urlResolver->resolve([$path]);
     }
 }

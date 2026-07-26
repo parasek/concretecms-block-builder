@@ -15,7 +15,7 @@ readonly class CreateBlockRequestValidator
         private CsrfValidator $csrfValidator,
         private PermissionsValidator $permissionsValidator,
         private CreateBlockInputNormalizer $inputNormalizer,
-        private CreateBlockBusinessValidatorCollection $businessValidators,
+        private CreateBlockValidatorCollection $validators,
     ) {
     }
 
@@ -38,7 +38,7 @@ readonly class CreateBlockRequestValidator
 
         return $this->createResult(
             data: $normalizationResult->data,
-            feedback: $this->businessValidators->validate($normalizationResult->data, $files),
+            feedback: $this->validators->validate($normalizationResult->data, $files),
         );
     }
 

@@ -287,7 +287,7 @@ final class ReservedWordCatalog
         'settings',
         'label',
         'description',
-        'uniqueId',
+        'formInstanceIdentifier',
         'btTable',
         'btExportTables',
         'btInterfaceWidth',

@@ -16,7 +16,7 @@ use BlockBuilder\Block\Validation\Validator\Block\LabelsValidator;
 use BlockBuilder\Block\Validation\Validator\FieldType\FieldTypeValidator;
 use Symfony\Component\HttpFoundation\FileBag;
 
-readonly class CreateBlockBusinessValidatorCollection
+readonly class CreateBlockValidatorCollection
 {
     public function __construct(
         private BlockNameValidator $blockNameValidator,
@@ -59,7 +59,6 @@ readonly class CreateBlockBusinessValidatorCollection
             $this->blockIconValidator,
             $this->excludedFromRemovalValidator,
             $this->labelsValidator,
-
             $this->fieldTypeValidator,
         ];
     }

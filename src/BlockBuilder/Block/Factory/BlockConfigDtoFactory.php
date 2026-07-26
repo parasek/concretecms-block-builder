@@ -65,6 +65,7 @@ readonly class BlockConfigDtoFactory
             cacheBlockOutput: $this->transformTrueFalseBoolField($data['cacheBlockOutput'] ?? null),
             cacheBlockOutputLifetime: (int) ($data['cacheBlockOutputLifetime'] ?? 0),
             cacheBlockOutputOnPost: $this->transformTrueFalseBoolField($data['cacheBlockOutputOnPost'] ?? null),
+            cacheBlockOutputOnEditMode: $this->transformTrueFalseBoolField($data['cacheBlockOutputOnEditMode'] ?? null),
             cacheBlockOutputForRegisteredUsers: $this->transformTrueFalseBoolField($data['cacheBlockOutputForRegisteredUsers'] ?? null),
             supportSavingNullValues: $this->transformTrueFalseBoolField($data['supportSavingNullValues'] ?? null),
             ignorePageThemeGridFrameworkContainer: $this->transformTrueFalseBoolField($data['ignorePageThemeGridFrameworkContainer'] ?? null),

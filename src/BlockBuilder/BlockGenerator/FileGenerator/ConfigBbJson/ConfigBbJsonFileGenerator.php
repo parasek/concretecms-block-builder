@@ -12,14 +12,16 @@ use BlockBuilder\Environment\EnvironmentService;
 readonly class ConfigBbJsonFileGenerator implements FileGeneratorInterface
 {
     /**
-     * @return iterable<GeneratedTextFile>
+     * @return list<GeneratedTextFile>
      */
-    public function generate(BlockFileGenerationContext $context): iterable
+    public function generate(BlockFileGenerationContext $context): array
     {
-        yield new GeneratedTextFile(
-            relativePath: EnvironmentService::CONFIG_BB_JSON,
-            contents: json_encode($context->config, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR),
-            producer: self::class,
-        );
+        return [
+            new GeneratedTextFile(
+                relativePath: EnvironmentService::CONFIG_BB_JSON,
+                contents: json_encode($context->config, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR),
+                producer: self::class,
+            ),
+        ];
     }
 }

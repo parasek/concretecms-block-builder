@@ -7,7 +7,7 @@
  */
 ?>
 
-<div class="mb-4 <?= h(in_array('registerViewAssetsCustomCode', $fieldsWithError) ? 'bb-has-error' : null); ?>">
+<div class="bb-custom-code mb-4 <?= h(in_array('registerViewAssetsCustomCode', $fieldsWithError) ? 'bb-has-error' : null); ?>">
     <?= $form->label('registerViewAssetsCustomCode', t('Custom code inside registerViewAssets() method')); ?>
     <?= $form->textarea('registerViewAssetsCustomCode', $config->registerViewAssetsCustomCode, ['style' => 'min-height: 200px;']); ?>
     <div class="form-text">
@@ -26,7 +26,7 @@
     </div>
 </div>
 
-<div class="mb-4 <?= h(in_array('viewCustomCode', $fieldsWithError) ? 'bb-has-error' : null); ?>">
+<div class="bb-custom-code mb-4 <?= h(in_array('viewCustomCode', $fieldsWithError) ? 'bb-has-error' : null); ?>">
     <?= $form->label('viewCustomCode', t('Custom code inside view() method')); ?>
     <?= $form->textarea('viewCustomCode', $config->viewCustomCode, ['style' => 'min-height: 200px;']); ?>
     <div class="form-text">
@@ -43,7 +43,7 @@
     </div>
 </div>
 
-<div class="mb-4 <?= h(in_array('customControllerMethods', $fieldsWithError) ? 'bb-has-error' : null); ?>">
+<div class="bb-custom-code mb-4 <?= h(in_array('customControllerMethods', $fieldsWithError) ? 'bb-has-error' : null); ?>">
     <?= $form->label('customControllerMethods', t('Custom controller methods')); ?>
     <?= $form->textarea('customControllerMethods', $config->customControllerMethods, ['style' => 'min-height: 200px;']); ?>
     <div class="form-text">
@@ -63,7 +63,7 @@
     </div>
 </div>
 
-<div class="mb-4 <?= h(in_array('excludedFromRemoval', $fieldsWithError) ? 'bb-has-error' : null); ?>">
+<div class="bb-custom-code mb-4 <?= h(in_array('excludedFromRemoval', $fieldsWithError) ? 'bb-has-error' : null); ?>">
     <?= $form->label('excludedFromRemoval', t('Excluded files and folders when rebuilding block')); ?>
     <?= $form->textarea('excludedFromRemoval', implode(PHP_EOL, $config->excludedFromRemoval), ['style' => 'min-height: 200px;']); ?>
     <div class="form-text">

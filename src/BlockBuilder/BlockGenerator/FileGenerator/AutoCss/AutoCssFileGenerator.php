@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BlockBuilder\BlockGenerator\FileGenerator\FormCss;
+namespace BlockBuilder\BlockGenerator\FileGenerator\AutoCss;
 
 use BlockBuilder\BlockGenerator\BlockFileGenerationContext;
 use BlockBuilder\BlockGenerator\FileGenerator\FileGeneratorInterface;
@@ -10,18 +10,18 @@ use BlockBuilder\BlockGenerator\FileGenerator\GeneratedTextFile;
 use BlockBuilder\BlockGenerator\FileGenerator\Service\StubRenderer;
 use BlockBuilder\BlockGenerator\Generation\Plan\FrontendAssetGenerationPlanBuilder;
 
-readonly class FormCssFileGenerator implements FileGeneratorInterface
+readonly class AutoCssFileGenerator implements FileGeneratorInterface
 {
     public function __construct(private StubRenderer $stubRenderer)
     {
     }
 
     /**
-     * @return iterable<GeneratedTextFile>
+     * @return list<GeneratedTextFile>
      */
-    public function generate(BlockFileGenerationContext $context): iterable
+    public function generate(BlockFileGenerationContext $context): array
     {
-        $parts = [rtrim($this->stubRenderer->render('css_files/form.css.stub'))];
+        $parts = [rtrim($this->stubRenderer->render('auto.css.stub'))];
         foreach ([
             FrontendAssetGenerationPlanBuilder::SECTION_BASE,
             FrontendAssetGenerationPlanBuilder::SECTION_FIELDS,
@@ -33,10 +33,12 @@ readonly class FormCssFileGenerator implements FileGeneratorInterface
             }
         }
 
-        yield new GeneratedTextFile(
-            relativePath: 'css_files/form.css',
-            contents: implode(PHP_EOL . PHP_EOL, array_filter($parts)) . PHP_EOL,
-            producer: self::class,
-        );
+        return [
+            new GeneratedTextFile(
+                relativePath: 'auto.css',
+                contents: implode(PHP_EOL . PHP_EOL, array_filter($parts)) . PHP_EOL,
+                producer: self::class,
+            ),
+        ];
     }
 }

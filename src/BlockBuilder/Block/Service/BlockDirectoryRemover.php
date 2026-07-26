@@ -28,24 +28,21 @@ readonly class BlockDirectoryRemover
         } catch (Throwable $throwable) {
             $this->throwFailure(
                 handle: $handle,
-                message: 'Unable to check permission for block type directory removal.',
-                safeDisplayMessage: t('Unable to check permission for block type directory removal.'),
+                message: t('Unable to check permission for block type directory removal.'),
                 previous: $throwable,
             );
         }
         if ($error) {
             $this->throwFailure(
                 handle: $handle,
-                message: 'Permission denied while removing a block type directory.' . PHP_EOL . $error,
-                safeDisplayMessage: $error,
+                message: $error,
             );
         }
 
         if (!BlockHandleFormat::isValid($handle)) {
             $this->throwFailure(
                 handle: $handle,
-                message: sprintf('Invalid block type handle "%s" supplied for directory removal.', $handle),
-                safeDisplayMessage: t('Invalid block type handle "%s" supplied for directory removal.', $handle),
+                message: t('Invalid block type handle "%s" supplied for directory removal.', $handle),
             );
         }
 
@@ -53,8 +50,7 @@ readonly class BlockDirectoryRemover
         if ($path === null) {
             $this->throwFailure(
                 handle: $handle,
-                message: sprintf('The directory for block type "%s" is missing, linked, or outside the application block directory.', $handle),
-                safeDisplayMessage: t('The directory for block type "%s" is missing, linked, or outside the application block directory.', $handle),
+                message: t('The directory for block type "%s" is missing, linked, or outside the application block directory.', $handle),
             );
         }
         try {
@@ -62,8 +58,7 @@ readonly class BlockDirectoryRemover
         } catch (Throwable $throwable) {
             $this->throwFailure(
                 handle: $handle,
-                message: sprintf('Unable to determine whether block type "%s" is installed before directory removal.', $handle),
-                safeDisplayMessage: t('Unable to determine whether block type "%s" is installed before directory removal.', $handle),
+                message: t('Unable to determine whether block type "%s" is installed before directory removal.', $handle),
                 context: ['path' => $path],
                 previous: $throwable,
             );
@@ -71,8 +66,7 @@ readonly class BlockDirectoryRemover
         if ($isInstalled) {
             $this->throwFailure(
                 handle: $handle,
-                message: sprintf('Attempted to remove the directory of installed block type "%s".', $handle),
-                safeDisplayMessage: t('Attempted to remove the directory of installed block type "%s".', $handle),
+                message: t('Attempted to remove the directory of installed block type "%s".', $handle),
                 context: ['path' => $path],
             );
         }
@@ -84,8 +78,7 @@ readonly class BlockDirectoryRemover
         } catch (Throwable $throwable) {
             $this->throwFailure(
                 handle: $handle,
-                message: sprintf('Unable to remove block type directory "%s".', $path),
-                safeDisplayMessage: t('Unable to remove block type directory "%s".', $path),
+                message: t('Unable to remove block type directory "%s".', $path),
                 context: ['path' => $path],
                 previous: $throwable,
             );
@@ -101,11 +94,10 @@ readonly class BlockDirectoryRemover
     private function throwFailure(
         string $handle,
         string $message,
-        string $safeDisplayMessage,
         array $context = [],
         ?Throwable $previous = null,
     ): never {
-        $exception = new BlockDirectoryRemovalException($message, $safeDisplayMessage, $previous);
+        $exception = new BlockDirectoryRemovalException(message: $message, previous: $previous);
         $this->lifecycleLogger->logFailure(
             operation: 'remove_directory',
             target: $handle,

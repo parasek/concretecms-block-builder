@@ -20,6 +20,7 @@ final class CreateBlockInputNormalizer
         'cacheBlockRecord',
         'cacheBlockOutput',
         'cacheBlockOutputOnPost',
+        'cacheBlockOutputOnEditMode',
         'cacheBlockOutputForRegisteredUsers',
         'supportSavingNullValues',
         'ignorePageThemeGridFrameworkContainer',
@@ -175,6 +176,7 @@ final class CreateBlockInputNormalizer
         $feedback = new ValidationFeedbackBuilder();
         $normalizedData = [];
 
+        // Check if request contains an unsupported fields
         $allowedTopLevelFields = array_merge(
             self::STRING_FIELDS,
             self::BOOLEAN_FIELDS,
@@ -196,6 +198,7 @@ final class CreateBlockInputNormalizer
             }
         }
 
+        // Normalize top level fields
         foreach (self::STRING_FIELDS as $propertyName) {
             $normalizedData[$propertyName] = $this->normalizeString(
                 value: $data[$propertyName] ?? '',
@@ -222,6 +225,7 @@ final class CreateBlockInputNormalizer
             );
         }
 
+        // Normalize "basic"/"entries" fields
         foreach (FieldTypeContextEnum::cases() as $context) {
             $normalizedData[$context->value] = $this->normalizeFieldCollection(
                 value: $data[$context->value] ?? [],

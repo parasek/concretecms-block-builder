@@ -23,16 +23,19 @@ readonly class ScaffoldFileGenerator implements FileGeneratorInterface
     }
 
     /**
-     * @return iterable<GeneratedTextFile>
+     * @return list<GeneratedTextFile>
      */
-    public function generate(BlockFileGenerationContext $context): iterable
+    public function generate(BlockFileGenerationContext $context): array
     {
+        $generatedFiles = [];
         foreach (self::STUBS_BY_DESTINATION as $relativePath => $stubPath) {
-            yield new GeneratedTextFile(
+            $generatedFiles[] = new GeneratedTextFile(
                 relativePath: $relativePath,
                 contents: $this->stubRenderer->render($stubPath),
                 producer: self::class,
             );
         }
+
+        return $generatedFiles;
     }
 }

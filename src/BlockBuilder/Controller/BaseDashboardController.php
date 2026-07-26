@@ -65,6 +65,6 @@ class BaseDashboardController extends DashboardPageController
             ],
         );
 
-        return $exception->getSafeDisplayMessage();
+        return $exception->getMessage();
     }
 }

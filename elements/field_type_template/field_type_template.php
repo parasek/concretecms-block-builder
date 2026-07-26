@@ -96,7 +96,7 @@
                                name="<%=context%>[<%=counter%>][required]"
                                id="<%=context%>[<%=counter%>][required]"
                                value="1"
-                        <% if (parseInt(required)) { %> checked="checked" <% } %>
+                        <% if (required === true || required === 1 || required === '1') { %> checked="checked" <% } %>
                         >
                         <label for="<%=context%>[<%=counter%>][required]"
                                class="form-check-label"
@@ -111,7 +111,7 @@
                                class="form-check-input"
                                data-use-field-as-title-in-repeatable-entries
                                value="1"
-                        <% if (parseInt(titleSource)) { %> checked="checked" <% } %>
+                        <% if (titleSource === true || titleSource === 1 || titleSource === '1') { %> checked="checked" <% } %>
                         >
                         <label for="<%=context%>[<%=counter%>][titleSource]"
                                class="form-check-label"

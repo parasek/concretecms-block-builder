@@ -9,7 +9,7 @@ use BlockBuilder\BlockGenerator\BlockFileGenerationContext;
 interface FileGeneratorInterface
 {
     /**
-     * @return iterable<GeneratedTextFile>
+     * @return list<GeneratedTextFile>
      */
-    public function generate(BlockFileGenerationContext $context): iterable;
+    public function generate(BlockFileGenerationContext $context): array;
 }

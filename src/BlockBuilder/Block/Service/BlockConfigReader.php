@@ -13,6 +13,7 @@ use BlockBuilder\Block\Exception\InvalidConfigFieldDataException;
 use BlockBuilder\Block\Exception\InvalidConfigJsonException;
 use BlockBuilder\Block\Exception\UnsupportedConfigSchemaException;
 use BlockBuilder\Block\Factory\BlockConfigDtoFactory;
+use BlockBuilder\Block\Validation\BlockHandleFormat;
 use BlockBuilder\Environment\EnvironmentService;
 use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
 use JsonException;
@@ -106,7 +107,14 @@ readonly class BlockConfigReader
 
     private function loadConfig(string $path, string $sourceHandle): BlockConfigDto
     {
-        $this->validateSourceHandle($sourceHandle, $path);
+        if (!BlockHandleFormat::isValid($sourceHandle)) {
+            throw new InvalidConfigFieldDataException(
+                message: t(
+                    'The configuration file "%s" has an invalid source identifier.',
+                    $this->getConfigIdentifier($path),
+                ),
+            );
+        }
 
         $data = $this->parseJsonFile($path);
         $this->validateSchema($data, $path);
@@ -116,12 +124,7 @@ readonly class BlockConfigReader
             $config = $this->blockConfigDtoFactory->fromArray($data);
         } catch (InvalidConfigFieldDataException $exception) {
             throw new InvalidConfigFieldDataException(
-                message: sprintf(
-                    'The configuration file "%s" contains invalid field data: %s',
-                    $path,
-                    $exception->getMessage(),
-                ),
-                safeDisplayMessage: t(
+                message: t(
                     'The configuration file "%s" contains invalid field data: %s',
                     $this->getConfigIdentifier($path),
                     $exception->getMessage(),
@@ -130,8 +133,7 @@ readonly class BlockConfigReader
             );
         } catch (Throwable $throwable) {
             throw new InvalidConfigFieldDataException(
-                message: sprintf('The configuration file "%s" contains invalid field data.', $path),
-                safeDisplayMessage: t(
+                message: t(
                     'The configuration file "%s" contains invalid field data.',
                     $this->getConfigIdentifier($path),
                 ),
@@ -141,13 +143,7 @@ readonly class BlockConfigReader
 
         if ($config->blockHandle !== $sourceHandle) {
             throw new InvalidConfigFieldDataException(
-                message: sprintf(
-                    'The configuration file "%s" declares block handle "%s", but its source identifier is "%s".',
-                    $path,
-                    $config->blockHandle,
-                    $sourceHandle,
-                ),
-                safeDisplayMessage: t(
+                message: t(
                     'The configuration file "%s" declares block handle "%s", but its source identifier is "%s".',
                     $this->getConfigIdentifier($path),
                     $config->blockHandle,
@@ -163,8 +159,7 @@ readonly class BlockConfigReader
     {
         if (!file_exists($path)) {
             throw new ConfigFileMissingException(
-                message: sprintf('The configuration file "%s" could not be found.', $path),
-                safeDisplayMessage: t(
+                message: t(
                     'The configuration file "%s" could not be found.',
                     $this->getConfigIdentifier($path),
                 ),
@@ -173,8 +168,7 @@ readonly class BlockConfigReader
 
         if (!is_file($path) || is_link($path) || !is_readable($path)) {
             throw new ConfigFileUnreadableException(
-                message: sprintf('The configuration file "%s" exists but could not be read.', $path),
-                safeDisplayMessage: t(
+                message: t(
                     'The configuration file "%s" exists but could not be read.',
                     $this->getConfigIdentifier($path),
                 ),
@@ -184,8 +178,7 @@ readonly class BlockConfigReader
         $fileSize = filesize($path);
         if ($fileSize === false) {
             throw new ConfigFileUnreadableException(
-                message: sprintf('The size of configuration file "%s" could not be determined.', $path),
-                safeDisplayMessage: t(
+                message: t(
                     'The configuration file "%s" exists but could not be read.',
                     $this->getConfigIdentifier($path),
                 ),
@@ -198,8 +191,7 @@ readonly class BlockConfigReader
         $content = file_get_contents($path, false, null, 0, self::MAX_CONFIG_FILE_SIZE + 1);
         if ($content === false) {
             throw new ConfigFileUnreadableException(
-                message: sprintf('The configuration file "%s" exists but could not be read.', $path),
-                safeDisplayMessage: t(
+                message: t(
                     'The configuration file "%s" exists but could not be read.',
                     $this->getConfigIdentifier($path),
                 ),
@@ -213,12 +205,7 @@ readonly class BlockConfigReader
             $data = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
         } catch (JsonException $exception) {
             throw new InvalidConfigJsonException(
-                message: sprintf(
-                    'The configuration file "%s" contains invalid JSON: %s',
-                    $path,
-                    $exception->getMessage(),
-                ),
-                safeDisplayMessage: t(
+                message: t(
                     'The configuration file "%s" contains invalid JSON: %s',
                     $this->getConfigIdentifier($path),
                     $exception->getMessage(),
@@ -229,8 +216,7 @@ readonly class BlockConfigReader
 
         if (!is_array($data)) {
             throw new UnsupportedConfigSchemaException(
-                message: sprintf('The configuration file "%s" must contain a JSON object.', $path),
-                safeDisplayMessage: t(
+                message: t(
                     'The configuration file "%s" must contain a JSON object.',
                     $this->getConfigIdentifier($path),
                 ),
@@ -244,31 +230,25 @@ readonly class BlockConfigReader
     {
         if (array_is_list($data)) {
             throw new UnsupportedConfigSchemaException(
-                message: sprintf(
-                    'The configuration file "%s" must contain a JSON object rather than a JSON list.',
-                    $path,
-                ),
-                safeDisplayMessage: t(
+                message: t(
                     'The configuration file "%s" must contain a JSON object rather than a JSON list.',
                     $this->getConfigIdentifier($path),
                 ),
             );
         }
 
+        // At the beginning there was no version in JSON file,
+        // later it was called a "version" and now it's a "blockBuilderVersion"
         $version = $data['blockBuilderVersion'] ?? $data['version'] ?? null;
+        // Skip version checks if there is no version available
         if ($version === null) {
-            // Skip next version checks if there is no info available
             return;
         }
 
         // Example versions: 3, 3.0, 3.0.1, 3.0.1-beta, or 3.0.1+build.5.
         if (!is_string($version) || preg_match('/^\d+(?:\.\d+){0,2}(?:[-+][0-9A-Za-z.-]+)?$/', $version) !== 1) {
             throw new UnsupportedConfigSchemaException(
-                message: sprintf(
-                    'The configuration file "%s" contains invalid Block Builder version information.',
-                    $path,
-                ),
-                safeDisplayMessage: t(
+                message: t(
                     'The configuration file "%s" contains invalid Block Builder version information.',
                     $this->getConfigIdentifier($path),
                 ),
@@ -279,13 +259,7 @@ readonly class BlockConfigReader
 
         if (version_compare($version, $currentVersion, '>')) {
             throw new ConfigVersionTooNewException(
-                message: sprintf(
-                    'The configuration file "%s" uses Block Builder version "%s", which is newer than the current environment version "%s".',
-                    $path,
-                    $version,
-                    $currentVersion,
-                ),
-                safeDisplayMessage: t(
+                message: t(
                     'The configuration file "%s" uses Block Builder version "%s", which is newer than the current environment version "%s".',
                     $this->getConfigIdentifier($path),
                     $version,
@@ -301,12 +275,7 @@ readonly class BlockConfigReader
             $collectionName = $fieldTypeContext->value;
             if (!isset($data[$collectionName]) || !is_array($data[$collectionName])) {
                 throw new InvalidConfigFieldDataException(
-                    message: sprintf(
-                        'The "%s" fields in configuration file "%s" must be provided as an array.',
-                        $collectionName,
-                        $path,
-                    ),
-                    safeDisplayMessage: t(
+                    message: t(
                         'The "%s" fields in configuration file "%s" must be provided as an array.',
                         $collectionName,
                         $this->getConfigIdentifier($path),
@@ -317,12 +286,7 @@ readonly class BlockConfigReader
             foreach ($data[$collectionName] as $fieldData) {
                 if (!is_array($fieldData)) {
                     throw new InvalidConfigFieldDataException(
-                        message: sprintf(
-                            'A field in the "%s" fields of configuration file "%s" must be provided as an array.',
-                            $collectionName,
-                            $path,
-                        ),
-                        safeDisplayMessage: t(
+                        message: t(
                             'A field in the "%s" fields of configuration file "%s" must be provided as an array.',
                             $collectionName,
                             $this->getConfigIdentifier($path),
@@ -343,37 +307,10 @@ readonly class BlockConfigReader
             : $filename;
     }
 
-    private function validateSourceHandle(string $sourceHandle, string $path): void
-    {
-        if (
-            mb_strlen($sourceHandle) >= 3
-            && mb_strlen($sourceHandle) <= 50
-            && preg_match('/^[a-z]+(?:_[a-z]+)*$/', $sourceHandle) === 1
-        ) {
-            return;
-        }
-
-        throw new InvalidConfigFieldDataException(
-            message: sprintf(
-                'The configuration source identifier "%s" for file "%s" is invalid.',
-                $sourceHandle,
-                $path,
-            ),
-            safeDisplayMessage: t(
-                'The configuration file "%s" has an invalid source identifier.',
-                $this->getConfigIdentifier($path),
-            ),
-        );
-    }
-
     private function createUnsafeApplicationDirectoryException(string $blockHandle): ConfigFileUnreadableException
     {
         return new ConfigFileUnreadableException(
-            message: sprintf(
-                'The application block directory for "%s" does not exist or cannot be read safely.',
-                $blockHandle,
-            ),
-            safeDisplayMessage: t(
+            message: t(
                 'The application block directory for "%s" does not exist or cannot be read safely.',
                 $blockHandle,
             ),
@@ -385,12 +322,7 @@ readonly class BlockConfigReader
         $maximumSizeInMegabytes = intdiv(self::MAX_CONFIG_FILE_SIZE, 1_048_576);
 
         return new ConfigFileTooLargeException(
-            message: sprintf(
-                'The configuration file "%s" exceeds the maximum allowed size of %s MB.',
-                $path,
-                $maximumSizeInMegabytes,
-            ),
-            safeDisplayMessage: t(
+            message: t(
                 'The configuration file "%s" exceeds the maximum allowed size of %s MB.',
                 $this->getConfigIdentifier($path),
                 $maximumSizeInMegabytes,

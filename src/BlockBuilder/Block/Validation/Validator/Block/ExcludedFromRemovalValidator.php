@@ -18,7 +18,7 @@ class ExcludedFromRemovalValidator implements ValidatorInterface
 
         if (!empty($data['excludedFromRemoval'])) {
             $forbiddenItems = [
-                'css_files',
+                'auto.css',
                 FILENAME_BLOCK_ADD,
                 FILENAME_BLOCK_EDIT,
                 'auto.js',

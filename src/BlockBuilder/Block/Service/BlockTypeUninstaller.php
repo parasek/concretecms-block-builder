@@ -24,16 +24,14 @@ readonly class BlockTypeUninstaller
         } catch (Throwable $throwable) {
             $this->throwLoggedFailure(
                 blockTypeIdentifier: $blockTypeIdentifier,
-                message: 'The block type removal permission could not be verified.',
-                safeDisplayMessage: t('The block type removal permission could not be verified.'),
+                message: t('The block type removal permission could not be verified.'),
                 previous: $throwable,
             );
         }
         if ($error) {
             $this->throwLoggedFailure(
                 blockTypeIdentifier: $blockTypeIdentifier,
-                message: 'Permission denied while uninstalling a block type.' . PHP_EOL . $error,
-                safeDisplayMessage: $error,
+                message: $error,
             );
         }
 
@@ -42,16 +40,14 @@ readonly class BlockTypeUninstaller
         } catch (Throwable $throwable) {
             $this->throwLoggedFailure(
                 blockTypeIdentifier: $blockTypeIdentifier,
-                message: sprintf('Unable to locate block type "%s" for uninstallation.', $blockTypeIdentifier),
-                safeDisplayMessage: t('Unable to locate block type "%s" for uninstallation.', $blockTypeIdentifier),
+                message: t('Unable to locate block type "%s" for uninstallation.', $blockTypeIdentifier),
                 previous: $throwable,
             );
         }
         if (!$blockType instanceof BlockTypeEntity) {
             $this->throwLoggedFailure(
                 blockTypeIdentifier: $blockTypeIdentifier,
-                message: sprintf('Unable to find block type "%s" for uninstallation.', $blockTypeIdentifier),
-                safeDisplayMessage: t('Unable to find block type "%s" for uninstallation.', $blockTypeIdentifier),
+                message: t('Unable to find block type "%s" for uninstallation.', $blockTypeIdentifier),
             );
         }
 
@@ -62,8 +58,7 @@ readonly class BlockTypeUninstaller
         } catch (Throwable $throwable) {
             $this->throwLoggedFailure(
                 blockTypeIdentifier: $blockTypeIdentifier,
-                message: sprintf('Unable to inspect block type "%s" before uninstallation.', $blockTypeIdentifier),
-                safeDisplayMessage: t('Unable to inspect block type "%s" before uninstallation.', $blockTypeIdentifier),
+                message: t('Unable to inspect block type "%s" before uninstallation.', $blockTypeIdentifier),
                 previous: $throwable,
             );
         }
@@ -71,8 +66,7 @@ readonly class BlockTypeUninstaller
         if ($isInternal) {
             $this->throwLoggedFailure(
                 blockTypeIdentifier: $blockTypeIdentifier,
-                message: sprintf('Attempted to uninstall internal block type "%s".', $blockTypeIdentifier),
-                safeDisplayMessage: t('Attempted to uninstall internal block type "%s".', $blockTypeIdentifier),
+                message: t('Attempted to uninstall internal block type "%s".', $blockTypeIdentifier),
             );
         }
 
@@ -81,8 +75,7 @@ readonly class BlockTypeUninstaller
         } catch (Throwable $throwable) {
             $this->throwLoggedFailure(
                 blockTypeIdentifier: $blockTypeIdentifier,
-                message: sprintf('Concrete CMS failed to uninstall block type ID %s.', $blockTypeId),
-                safeDisplayMessage: t('The block type could not be uninstalled. Please check the logs for more information.'),
+                message: t('The block type could not be uninstalled. Please check the logs for more information.'),
                 context: ['blockTypeId' => $blockTypeId],
                 previous: $throwable,
             );
@@ -100,11 +93,10 @@ readonly class BlockTypeUninstaller
     private function throwLoggedFailure(
         int|string $blockTypeIdentifier,
         string $message,
-        string $safeDisplayMessage,
         array $context = [],
         ?Throwable $previous = null,
     ): never {
-        $exception = new BlockTypeUninstallException($message, $safeDisplayMessage, $previous);
+        $exception = new BlockTypeUninstallException(message: $message, previous: $previous);
         $this->lifecycleLogger->logFailure(
             operation: 'uninstall',
             target: $blockTypeIdentifier,

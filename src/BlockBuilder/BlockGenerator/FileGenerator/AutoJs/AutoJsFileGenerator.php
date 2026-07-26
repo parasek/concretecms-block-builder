@@ -18,39 +18,34 @@ readonly class AutoJsFileGenerator implements FileGeneratorInterface
     }
 
     /**
-     * @return iterable<GeneratedTextFile>
+     * @return list<GeneratedTextFile>
      */
-    public function generate(BlockFileGenerationContext $context): iterable
+    public function generate(BlockFileGenerationContext $context): array
     {
-        if (
-            $context->plan->javaScript->capabilities === []
-            && $context->plan->javaScript->fragmentsBySection === []
-        ) {
-            return;
-        }
-
-        yield new GeneratedTextFile(
-            relativePath: 'auto.js',
-            contents: $this->stubRenderer->render('auto.js.stub', [
-                '{{BLOCK_EVENT_NAME}}' => (string) $context->manifest->blockHandleKebabCase,
-                '{{SETUP_CODE}}' => $this->renderFragments(
-                    $context->plan->javaScript->getFragments(FrontendAssetGenerationPlanBuilder::SECTION_SETUP),
-                    indentation: 1,
-                    emptyComment: '// No shared JavaScript setup is required.',
-                ),
-                '{{BASIC_FIELD_INITIALIZERS}}' => $this->renderFragments(
-                    $context->plan->javaScript->getFragments(FrontendAssetGenerationPlanBuilder::SECTION_FIELDS),
-                    indentation: 2,
-                    emptyComment: '// No basic-field JavaScript initialization is required.',
-                ),
-                '{{REPEATABLE_FIELD_INITIALIZERS}}' => $this->renderFragments(
-                    $context->plan->javaScript->getFragments(FrontendAssetGenerationPlanBuilder::SECTION_REPEATABLE_ENTRIES),
-                    indentation: 2,
-                    emptyComment: '// No repeatable-field JavaScript initialization is required.',
-                ),
-            ]),
-            producer: self::class,
-        );
+        return [
+            new GeneratedTextFile(
+                relativePath: 'auto.js',
+                contents: $this->stubRenderer->render('auto.js.stub', [
+                    '{{BLOCK_EVENT_NAME}}' => (string) $context->manifest->blockHandleKebabCase,
+                    '{{SETUP_CODE}}' => $this->renderFragments(
+                        $context->plan->javaScript->getFragments(FrontendAssetGenerationPlanBuilder::SECTION_SETUP),
+                        indentation: 1,
+                        emptyComment: '// No shared JavaScript setup is required.',
+                    ),
+                    '{{BASIC_FIELD_INITIALIZERS}}' => $this->renderFragments(
+                        $context->plan->javaScript->getFragments(FrontendAssetGenerationPlanBuilder::SECTION_FIELDS),
+                        indentation: 2,
+                        emptyComment: '// No basic-field JavaScript initialization is required.',
+                    ),
+                    '{{REPEATABLE_FIELD_INITIALIZERS}}' => $this->renderFragments(
+                        $context->plan->javaScript->getFragments(FrontendAssetGenerationPlanBuilder::SECTION_REPEATABLE_ENTRIES),
+                        indentation: 2,
+                        emptyComment: '// No repeatable-field JavaScript initialization is required.',
+                    ),
+                ]),
+                producer: self::class,
+            ),
+        ];
     }
 
     /**

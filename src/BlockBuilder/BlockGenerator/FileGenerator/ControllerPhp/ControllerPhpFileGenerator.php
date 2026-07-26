@@ -13,6 +13,7 @@ use BlockBuilder\BlockGenerator\FileGenerator\Service\StubRenderer;
 use BlockBuilder\BlockGenerator\Generation\Plan\CodeFragment;
 use BlockBuilder\BlockGenerator\Generation\Plan\ControllerAsset;
 use BlockBuilder\BlockGenerator\Generation\Plan\ControllerUseStatement;
+use BlockBuilder\BlockGenerator\Generation\Plan\DatabaseColumn;
 use BlockBuilder\BlockGenerator\Generation\Plan\Enum\ControllerMethodSectionEnum;
 
 readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
@@ -27,7 +28,7 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
         'settings',
         'label',
         'description',
-        'uniqueid',
+        'forminstanceidentifier',
         'bttable',
         'btexporttables',
         'btinterfacewidth',
@@ -36,6 +37,8 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
         'btdefaultset',
         'btexportpagecolumns',
         'btexportfilecolumns',
+        'btexportcontentcolumns',
+        'btexportfilefoldercolumns',
         'btignorepagethemegridframeworkcontainer',
         'btcacheblockrecord',
         'btcacheblockoutput',
@@ -52,82 +55,101 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
     }
 
     /**
-     * @return iterable<GeneratedTextFile>
+     * @return list<GeneratedTextFile>
      */
-    public function generate(BlockFileGenerationContext $context): iterable
+    public function generate(BlockFileGenerationContext $context): array
     {
         $hasEntries = $context->config->entries !== [];
         $hasJavaScript = $context->plan->javaScript->capabilities !== []
             || $context->plan->javaScript->fragmentsBySection !== [];
-        $hasFormCss = $context->plan->css->capabilities !== []
-            || $context->plan->css->fragmentsBySection !== [];
+        $hasValidation = $hasEntries
+            || $context->plan->controller->getMethodFragments(
+                ControllerMethodSectionEnum::ValidateBasicFields->value,
+            ) !== [];
 
-        yield new GeneratedTextFile(
-            relativePath: FILENAME_BLOCK_CONTROLLER,
-            contents: $this->stubRenderer->render(self::STUB_FILE, [
-                '{{BLOCK_HANDLE_PASCAL_CASE}}' => $context->manifest->blockHandlePascalCase,
-                '{{USE_STATEMENTS}}' => $this->renderUseStatements(
-                    $context,
-                    $hasEntries,
-                    $hasJavaScript || $hasFormCss,
-                ),
-                '{{BLOCK_PROPERTIES}}' => $this->renderBlockProperties($context),
-                '{{FIELD_PROPERTIES}}' => $this->renderFieldProperties($context),
-                '{{BLOCK_NAME_LITERAL}}' => $this->phpLiteralFormatter->format($context->config->blockName),
-                '{{BLOCK_DESCRIPTION_LITERAL}}' => $this->phpLiteralFormatter->format($context->config->blockDescription ?? ''),
-                '{{SEARCHABLE_CONTENT}}' => $this->renderSearchableContent($context),
-                '{{ON_START_CONTENT}}' => $this->renderControllerFragments($context, ControllerMethodSectionEnum::OnStart),
-                '{{EDIT_CONTENT}}' => $this->combineCode([
-                    $this->renderControllerFragments(
+        return [
+            new GeneratedTextFile(
+                relativePath: FILENAME_BLOCK_CONTROLLER,
+                contents: $this->stubRenderer->render(self::STUB_FILE, [
+                    '{{BLOCK_HANDLE_PASCAL_CASE}}' => $context->manifest->blockHandlePascalCase,
+                    '{{IMPLEMENTED_INTERFACES}}' => $this->renderImplementedInterfaces($context),
+                    '{{USE_STATEMENTS}}' => $this->renderUseStatements(
                         $context,
-                        ControllerMethodSectionEnum::Edit,
-                        indentation: 0,
+                        $hasEntries,
+                        $hasJavaScript,
+                        $hasValidation,
                     ),
-                    $hasEntries ? '$this->set(\'entries\', $this->getEntries(\'edit\'));' : '',
-                ], 2),
-                '{{ADD_EDIT_CONTENT}}' => $this->combineCode([
-                    $hasFormCss ? $this->renderFormCssAsset($context) : '',
-                    $this->renderRequiredAssets($context),
-                    '$this->set(\'app\', $this->app);',
-                    $this->renderControllerFragments(
-                        $context,
-                        ControllerMethodSectionEnum::AddEdit,
-                        indentation: 0,
-                    ),
-                ], 2),
-                '{{VIEW_CONTENT}}' => $this->combineCode([
-                    $this->renderControllerFragments($context, ControllerMethodSectionEnum::View, indentation: 0),
-                    $hasEntries ? '$this->set(\'entries\', $this->getEntries());' : '',
-                    $context->config->viewCustomCode ?? '',
-                ], 2),
-                '{{SAVE_CONTENT}}' => $this->renderSaveContent($context, $hasEntries),
-                '{{DUPLICATE_CONTENT}}' => $this->renderDuplicateContent($context, $hasEntries),
-                '{{DELETE_CONTENT}}' => $this->renderDeleteContent($context, $hasEntries),
-                '{{VALIDATE_CONTENT}}' => $this->renderValidation($context, $hasEntries),
-                '{{COMPOSER_ASSETS}}' => $hasJavaScript ? $this->renderComposerAssets($context) : '',
-                '{{GET_ENTRIES_CONTENT}}' => $hasEntries ? $this->renderGetEntries($context) : $this->indentCode('return [];', 2),
-                '{{REGISTER_VIEW_ASSETS_METHOD}}' => $this->renderRegisterViewAssetsMethod($context),
-                '{{CUSTOM_CONTROLLER_METHODS}}' => $this->renderCustomControllerMethods($context),
-            ]),
-            producer: self::class,
-        );
+                    '{{BLOCK_PROPERTIES}}' => $this->renderBlockProperties($context),
+                    '{{FIELD_PROPERTIES}}' => $this->renderFieldProperties($context),
+                    '{{BLOCK_NAME_LITERAL}}' => $this->phpLiteralFormatter->format($context->config->blockName),
+                    '{{BLOCK_DESCRIPTION_LITERAL}}' => $this->phpLiteralFormatter->format($context->config->blockDescription ?? ''),
+                    '{{REQUIRED_FEATURES_METHOD}}' => $this->renderRequiredFeaturesMethod($context),
+                    '{{SEARCHABLE_CONTENT_METHOD}}' => $this->renderSearchableContentMethod($context),
+                    '{{USED_FILES_METHOD}}' => $this->renderUsedFilesMethod($context),
+                    '{{ON_START_METHOD}}' => $this->renderOnStartMethod($context),
+                    '{{ADD_CONTENT}}' => $hasEntries
+                        ? $this->indentCode('$this->set(\'entries\', []);', 2)
+                        : '',
+                    '{{EDIT_CONTENT}}' => $this->combineCode([
+                        $this->renderControllerFragments(
+                            $context,
+                            ControllerMethodSectionEnum::Edit,
+                            indentation: 0,
+                        ),
+                        $hasEntries ? '$this->set(\'entries\', $this->getEntries(\'edit\'));' : '',
+                    ], 2),
+                    '{{ADD_EDIT_CONTENT}}' => $this->combineCode([
+                        $this->renderRequiredAssets($context),
+                        '$this->set(\'app\', $this->app);',
+                        $this->renderControllerFragments(
+                            $context,
+                            ControllerMethodSectionEnum::AddEdit,
+                            indentation: 0,
+                        ),
+                    ], 2),
+                    '{{VIEW_METHOD}}' => $this->renderViewMethod($context, $hasEntries),
+                    '{{SAVE_METHOD}}' => $this->renderSaveMethod($context, $hasEntries),
+                    '{{DUPLICATE_METHOD}}' => $hasEntries ? $this->renderDuplicateMethod($context) : '',
+                    '{{DELETE_METHOD}}' => $hasEntries ? $this->renderDeleteMethod($context) : '',
+                    '{{VALIDATION_METHODS}}' => $hasValidation
+                        ? $this->renderValidationMethods($context, $hasEntries)
+                        : '',
+                    '{{COMPOSER_ASSETS}}' => $hasJavaScript ? $this->renderComposerAssets($context) : '',
+                    '{{GET_ENTRIES_METHOD}}' => $hasEntries ? $this->renderGetEntriesMethod($context) : '',
+                    '{{REPEATABLE_EXPORT_IMPORT_METHODS}}' => $hasEntries
+                        ? $this->renderRepeatableExportImportMethods($context)
+                        : '',
+                    '{{REGISTER_VIEW_ASSETS_METHOD}}' => $this->renderRegisterViewAssetsMethod($context),
+                    '{{CUSTOM_CONTROLLER_METHODS}}' => $this->renderCustomControllerMethods($context),
+                ]),
+                producer: self::class,
+            ),
+        ];
     }
 
     private function renderUseStatements(
         BlockFileGenerationContext $context,
         bool $hasEntries,
         bool $usesAssetList,
+        bool $usesErrorList,
     ): string {
         $useStatements = [
             'blockcontroller' => new ControllerUseStatement('Concrete\\Core\\Block\\BlockController'),
-            'errorlist' => new ControllerUseStatement('Concrete\\Core\\Error\\ErrorList\\ErrorList'),
         ];
 
+        if ($usesErrorList) {
+            $useStatements['errorlist'] = new ControllerUseStatement('Concrete\\Core\\Error\\ErrorList\\ErrorList');
+        }
         if ($hasEntries) {
             $useStatements['connection'] = new ControllerUseStatement('Concrete\\Core\\Database\\Connection\\Connection');
         }
         if ($usesAssetList) {
             $useStatements['assetlist'] = new ControllerUseStatement('Concrete\\Core\\Asset\\AssetList');
+        }
+        if ($this->hasRepeatableFileUsage($context)) {
+            $useStatements['aggregatetracker'] = new ControllerUseStatement(
+                'Concrete\\Core\\Statistics\\UsageTracker\\AggregateTracker',
+            );
         }
         foreach ($context->plan->controller->useStatements as $useStatement) {
             $useStatementKey = strtolower($useStatement->getKey());
@@ -175,6 +197,7 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
             'protected $btCacheBlockRecord = ' . $this->phpLiteralFormatter->format($config->cacheBlockRecord) . ';',
             'protected $btCacheBlockOutput = ' . $this->phpLiteralFormatter->format($config->cacheBlockOutput) . ';',
             'protected $btCacheBlockOutputOnPost = ' . $this->phpLiteralFormatter->format($config->cacheBlockOutputOnPost) . ';',
+            'protected $btCacheBlockOutputOnEditMode = ' . $this->phpLiteralFormatter->format($config->cacheBlockOutputOnEditMode) . ';',
             'protected $btCacheBlockOutputForRegisteredUsers = ' . $this->phpLiteralFormatter->format($config->cacheBlockOutputForRegisteredUsers) . ';',
             'protected $btCacheBlockOutputLifetime = ' . $config->cacheBlockOutputLifetime . ';',
         ];
@@ -189,8 +212,45 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
             $properties[] = 'protected $btExportFileColumns = '
                 . $this->phpLiteralFormatter->format($context->plan->controller->exportFileColumns) . ';';
         }
+        if ($context->plan->controller->exportContentColumns !== []) {
+            $properties[] = 'protected $btExportContentColumns = '
+                . $this->phpLiteralFormatter->format($context->plan->controller->exportContentColumns) . ';';
+        }
+        if ($context->plan->controller->exportFileFolderColumns !== []) {
+            $properties[] = 'protected $btExportFileFolderColumns = '
+                . $this->phpLiteralFormatter->format($context->plan->controller->exportFileFolderColumns) . ';';
+        }
 
         return $this->indentCode(implode(PHP_EOL, $properties), 1) . PHP_EOL;
+    }
+
+    private function renderImplementedInterfaces(BlockFileGenerationContext $context): string
+    {
+        if ($context->plan->controller->implementedInterfaces === []) {
+            return '';
+        }
+
+        return ' implements ' . implode(', ', $context->plan->controller->implementedInterfaces);
+    }
+
+    private function renderRequiredFeaturesMethod(BlockFileGenerationContext $context): string
+    {
+        if ($context->plan->controller->requiredFeatureConstantNames === []) {
+            return '';
+        }
+
+        $features = array_map(
+            static fn(string $featureConstantName): string => '            Features::' . $featureConstantName . ',',
+            $context->plan->controller->requiredFeatureConstantNames,
+        );
+
+        return PHP_EOL
+            . '    public function getRequiredFeatures(): array' . PHP_EOL
+            . '    {' . PHP_EOL
+            . '        return [' . PHP_EOL
+            . implode(PHP_EOL, $features) . PHP_EOL
+            . '        ];' . PHP_EOL
+            . '    }' . PHP_EOL;
     }
 
     private function renderFieldProperties(BlockFileGenerationContext $context): string
@@ -214,7 +274,7 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
             : $this->indentCode(implode(PHP_EOL, $declarations), 1) . PHP_EOL;
     }
 
-    private function renderSearchableContent(BlockFileGenerationContext $context): string
+    private function renderSearchableContentMethod(BlockFileGenerationContext $context): string
     {
         $code = [];
         foreach ($context->plan->controller->searchableBasicFields as $handle) {
@@ -231,7 +291,35 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
             $code[] = '}';
         }
 
-        return $this->indentCode(implode(PHP_EOL, $code), 2);
+        if ($code === []) {
+            return '';
+        }
+
+        $content = '$content = [];' . PHP_EOL
+            . implode(PHP_EOL, $code) . PHP_EOL . PHP_EOL
+            . 'return implode(\' \', array_filter(' . PHP_EOL
+            . '    $content,' . PHP_EOL
+            . '    static fn(mixed $value): bool => $value !== null && $value !== \'\',' . PHP_EOL
+            . '));';
+
+        return $this->renderMethod('public function getSearchableContent(): string', $content);
+    }
+
+    private function renderOnStartMethod(BlockFileGenerationContext $context): string
+    {
+        $content = $this->renderControllerFragments(
+            $context,
+            ControllerMethodSectionEnum::OnStart,
+            indentation: 0,
+        );
+        if ($content === '') {
+            return '';
+        }
+
+        return $this->renderMethod(
+            'public function on_start(): void',
+            'parent::on_start();' . PHP_EOL . PHP_EOL . $content,
+        );
     }
 
     private function renderControllerFragments(
@@ -245,16 +333,79 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
         );
     }
 
-    private function renderSaveContent(BlockFileGenerationContext $context, bool $hasEntries): string
+    private function renderUsedFilesMethod(BlockFileGenerationContext $context): string
     {
-        return $this->combineCode([
+        $basicFieldCode = $this->renderControllerFragments(
+            $context,
+            ControllerMethodSectionEnum::CollectUsedFilesFromBasicFields,
+            indentation: 0,
+        );
+        $entryCode = $this->renderControllerFragments(
+            $context,
+            ControllerMethodSectionEnum::CollectUsedFilesFromEntry,
+            indentation: 0,
+        );
+        if ($basicFieldCode === '' && $entryCode === '') {
+            return '';
+        }
+
+        $parts = ['$files = [];'];
+        if ($basicFieldCode !== '') {
+            $parts[] = $basicFieldCode;
+        }
+        if ($entryCode !== '') {
+            $parts[] = 'foreach ($this->getEntries(\'raw\') as $entry) {' . PHP_EOL
+                . $this->indentCode($entryCode, 1) . PHP_EOL
+                . '}';
+        }
+        $parts[] = 'return $files;';
+
+        return $this->renderMethod(
+            'public function getUsedFiles(): array',
+            $this->combineCode($parts, 0),
+        );
+    }
+
+    private function renderViewMethod(BlockFileGenerationContext $context, bool $hasEntries): string
+    {
+        $parts = [
             $this->renderControllerFragments(
                 $context,
-                ControllerMethodSectionEnum::SaveBasicFields,
+                ControllerMethodSectionEnum::View,
                 indentation: 0,
             ),
-            $hasEntries ? $this->renderSaveEntries($context) : 'parent::save($args);',
-        ], 2);
+            $hasEntries ? '$this->set(\'entries\', $this->getEntries());' : '',
+            trim((string) $context->config->viewCustomCode),
+        ];
+        if (array_filter($parts, static fn(string $part): bool => $part !== '') === []) {
+            return '';
+        }
+        array_unshift($parts, '$this->set(\'app\', $this->app);');
+
+        return $this->renderMethod(
+            'public function view(): void',
+            $this->combineCode($parts, 0),
+        );
+    }
+
+    private function renderSaveMethod(BlockFileGenerationContext $context, bool $hasEntries): string
+    {
+        $basicFieldCode = $this->renderControllerFragments(
+            $context,
+            ControllerMethodSectionEnum::SaveBasicFields,
+            indentation: 0,
+        );
+        if ($basicFieldCode === '' && !$hasEntries) {
+            return '';
+        }
+
+        $content = '$args = is_array($args) ? $args : [];' . PHP_EOL . PHP_EOL
+            . $this->combineCode([
+                $basicFieldCode,
+                $hasEntries ? $this->renderSaveEntries($context) : 'parent::save($args);',
+            ], 0);
+
+        return $this->renderMethod('public function save($args): void', $content);
     }
 
     private function renderSaveEntries(BlockFileGenerationContext $context): string
@@ -305,16 +456,21 @@ PHP;
             [$context->manifest->entriesDatabaseTableName, $maximumGuard, $this->indentCode($entryFragments, 2)],
             trim($code),
         );
+        if ($this->hasRepeatableFileUsage($context)) {
+            $code .= <<<'PHP'
+
+
+$aggregateUsageTracker = $this->app->make(AggregateTracker::class);
+$aggregateUsageTracker->forget($this);
+$aggregateUsageTracker->track($this);
+PHP;
+        }
 
         return $code;
     }
 
-    private function renderDuplicateContent(BlockFileGenerationContext $context, bool $hasEntries): string
+    private function renderDuplicateMethod(BlockFileGenerationContext $context): string
     {
-        if (!$hasEntries) {
-            return $this->indentCode('parent::duplicate($newBlockId);', 2);
-        }
-
         $columns = ['position'];
         foreach ($context->plan->database->entriesTableColumns as $column) {
             if (!in_array($column->name, ['id', 'bID', 'position'], true)) {
@@ -323,7 +479,7 @@ PHP;
         }
         $columnList = implode(', ', $columns);
         $code = sprintf(
-            '$database = $this->app->make(Connection::class);%1$s$database->transactional(function (Connection $database) use ($newBlockId): void {%1$s    parent::duplicate($newBlockId);%1$s    $database->executeStatement(%1$s        %2$s,%1$s        [$newBlockId, $this->bID],%1$s    );%1$s});',
+            '$database = $this->app->make(Connection::class);%1$s$database->transactional(function (Connection $database) use ($newBID): void {%1$s    parent::duplicate($newBID);%1$s    $database->executeStatement(%1$s        %2$s,%1$s        [$newBID, $this->bID],%1$s    );%1$s});',
             PHP_EOL,
             $this->phpLiteralFormatter->format(sprintf(
                 'INSERT INTO %1$s (bID, %2$s) SELECT ?, %2$s FROM %1$s WHERE bID = ?',
@@ -332,15 +488,11 @@ PHP;
             )),
         );
 
-        return $this->indentCode($code, 2);
+        return $this->renderMethod('public function duplicate($newBID): void', $code);
     }
 
-    private function renderDeleteContent(BlockFileGenerationContext $context, bool $hasEntries): string
+    private function renderDeleteMethod(BlockFileGenerationContext $context): string
     {
-        if (!$hasEntries) {
-            return $this->indentCode('parent::delete();', 2);
-        }
-
         $code = sprintf(
             '$database = $this->app->make(Connection::class);%1$s$database->transactional(function (Connection $database): void {%1$s    $database->executeStatement(%2$s, [$this->bID]);%1$s    parent::delete();%1$s});',
             PHP_EOL,
@@ -349,7 +501,7 @@ PHP;
             ),
         );
 
-        return $this->indentCode($code, 2);
+        return $this->renderMethod('public function delete(): void', $code);
     }
 
     private function renderValidation(BlockFileGenerationContext $context, bool $hasEntries): string
@@ -395,7 +547,55 @@ PHP;
             );
         }
 
-        return $this->combineCode($parts, 2);
+        return $this->combineCode($parts, 0);
+    }
+
+    private function renderComposerValidation(
+        BlockFileGenerationContext $context,
+        bool $hasEntries,
+    ): string {
+        $basicFieldColumns = array_filter(
+            $context->plan->database->mainTableColumns,
+            static fn(DatabaseColumn $column): bool => $column->name !== 'bID',
+        );
+        if ($basicFieldColumns === []) {
+            $code = '$args = [];';
+        } else {
+            $argumentLines = array_map(
+                fn(DatabaseColumn $column): string => sprintf(
+                    '    %s => $this->%s ?? null,',
+                    $this->phpLiteralFormatter->format($column->name),
+                    $column->name,
+                ),
+                $basicFieldColumns,
+            );
+            $code = '$args = [' . PHP_EOL
+                . implode(PHP_EOL, $argumentLines) . PHP_EOL
+                . '];';
+        }
+        if ($hasEntries) {
+            $code .= PHP_EOL . '$args[\'entry\'] = $this->getEntries(\'edit\');';
+        }
+        $code .= PHP_EOL . PHP_EOL . 'return $this->validate($args);';
+
+        return $code;
+    }
+
+    private function renderValidationMethods(BlockFileGenerationContext $context, bool $hasEntries): string
+    {
+        $validateMethod = $this->renderMethod(
+            'public function validate($args): ErrorList',
+            '$args = is_array($args) ? $args : [];' . PHP_EOL
+                . '$errors = $this->app->make(ErrorList::class);' . PHP_EOL
+                . $this->renderValidation($context, $hasEntries) . PHP_EOL . PHP_EOL
+                . 'return $errors;',
+        );
+        $composerValidationMethod = $this->renderMethod(
+            'public function validate_composer(): ErrorList',
+            $this->renderComposerValidation($context, $hasEntries),
+        );
+
+        return $validateMethod . $composerValidationMethod;
     }
 
     private function renderComposerAssets(BlockFileGenerationContext $context): string
@@ -409,18 +609,6 @@ PHP;
         );
 
         return $this->indentCode($code, 2) . PHP_EOL;
-    }
-
-    private function renderFormCssAsset(BlockFileGenerationContext $context): string
-    {
-        $assetHandle = $context->manifest->blockHandleKebabCase . '/form';
-
-        return sprintf(
-            '$assetList = AssetList::getInstance();%1$s$assetList->register(\'css\', %2$s, %3$s, [], false);%1$s$this->requireAsset(\'css\', %2$s);',
-            PHP_EOL,
-            $this->phpLiteralFormatter->format($assetHandle),
-            $this->phpLiteralFormatter->format('blocks/' . $context->config->blockHandle . '/css_files/form.css'),
-        );
     }
 
     private function renderRequiredAssets(BlockFileGenerationContext $context): string
@@ -440,7 +628,7 @@ PHP;
         );
     }
 
-    private function renderGetEntries(BlockFileGenerationContext $context): string
+    private function renderGetEntriesMethod(BlockFileGenerationContext $context): string
     {
         $prepareForEdit = $this->renderControllerFragments(
             $context,
@@ -455,7 +643,7 @@ PHP;
         $preparation = '';
         if ($prepareForEdit !== '' || $prepareForView !== '') {
             $preparation = sprintf(
-                'foreach ($entries as &$entry) {%1$s    if ($outputMethod === \'edit\') {%1$s%2$s%1$s    } else {%1$s%3$s%1$s    }%1$s}%1$sunset($entry);',
+                'foreach ($entries as &$entry) {%1$s    if ($outputMethod === \'edit\') {%1$s%2$s%1$s    } elseif ($outputMethod === \'view\') {%1$s%3$s%1$s    }%1$s}%1$sunset($entry);',
                 PHP_EOL,
                 $this->indentCode($prepareForEdit, 2),
                 $this->indentCode($prepareForView, 2),
@@ -470,7 +658,76 @@ PHP;
             $preparation,
         );
 
-        return $this->indentCode($code, 2);
+        return $this->renderMethod(
+            'private function getEntries(string $outputMethod = \'view\'): array',
+            $code,
+        );
+    }
+
+    private function hasRepeatableFileUsage(BlockFileGenerationContext $context): bool
+    {
+        return $context->plan->controller->getMethodFragments(
+            ControllerMethodSectionEnum::CollectUsedFilesFromEntry->value,
+        ) !== [];
+    }
+
+    private function renderRepeatableExportImportMethods(BlockFileGenerationContext $context): string
+    {
+        $autoIncrementColumnXPathExpressions = [];
+        foreach ($context->plan->database->entriesTableColumns as $column) {
+            if ($column->autoIncrement) {
+                $autoIncrementColumnXPathExpressions[] = sprintf(
+                    './data[@table="%s"]/record/%s',
+                    $context->manifest->entriesDatabaseTableName,
+                    $column->name,
+                );
+            }
+        }
+
+        if ($autoIncrementColumnXPathExpressions === []) {
+            return '';
+        }
+
+        $code = <<<'PHP'
+
+    public function export($blockNode): void
+    {
+        parent::export($blockNode);
+        $this->removeRepeatableAutoIncrementValues($blockNode);
+    }
+
+    protected function importAdditionalData($b, $blockNode): void
+    {
+        $this->removeRepeatableAutoIncrementValues($blockNode);
+        parent::importAdditionalData($b, $blockNode);
+    }
+
+    private function removeRepeatableAutoIncrementValues(\SimpleXMLElement $blockNode): void
+    {
+        foreach ({{AUTO_INCREMENT_COLUMN_XPATHS}} as $columnXPathExpression) {
+            $columnNodes = $blockNode->xpath($columnXPathExpression);
+            if ($columnNodes === false) {
+                continue;
+            }
+
+            foreach ($columnNodes as $columnNode) {
+                unset($columnNode[0]);
+            }
+        }
+    }
+PHP;
+
+        $formattedXPathExpressions = str_replace(
+            PHP_EOL,
+            PHP_EOL . '        ',
+            $this->phpLiteralFormatter->format($autoIncrementColumnXPathExpressions),
+        );
+
+        return str_replace(
+            '{{AUTO_INCREMENT_COLUMN_XPATHS}}',
+            $formattedXPathExpressions,
+            $code,
+        );
     }
 
     private function renderRegisterViewAssetsMethod(BlockFileGenerationContext $context): string
@@ -525,6 +782,15 @@ PHP;
         );
 
         return $this->indentCode($code, $indentation);
+    }
+
+    private function renderMethod(string $declaration, string $content): string
+    {
+        return PHP_EOL
+            . '    ' . $declaration . PHP_EOL
+            . '    {' . PHP_EOL
+            . $this->indentCode($content, 2) . PHP_EOL
+            . '    }' . PHP_EOL;
     }
 
     private function indentCode(string $code, int $indentation): string

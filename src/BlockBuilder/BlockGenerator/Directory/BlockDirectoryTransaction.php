@@ -13,7 +13,7 @@ final class BlockDirectoryTransaction
 {
     private const string STATE_PREPARED = 'prepared';
     private const string STATE_FILES_COMMITTED = 'files_committed';
-    private const string STATE_LIFECYCLE_APPLIED = 'lifecycle_applied';
+    private const string STATE_LIFECYCLE_COMPLETED = 'lifecycle_applied';
 
     private bool $finished = false;
     private bool $backupPrepared = false;
@@ -38,14 +38,14 @@ final class BlockDirectoryTransaction
         $this->generatedFilesCommitted = true;
     }
 
-    public function markLifecycleApplied(): void
+    public function markLifecycleCompleted(): void
     {
         if ($this->finished) {
             return;
         }
 
         try {
-            $this->writeState(self::STATE_LIFECYCLE_APPLIED);
+            $this->writeState(self::STATE_LIFECYCLE_COMPLETED);
         } catch (Throwable $throwable) {
             $this->logger->warning(
                 'Block Builder could not update the post-lifecycle transaction state for block "{blockHandle}".'
@@ -147,7 +147,7 @@ final class BlockDirectoryTransaction
                 ));
             }
 
-            if ($state === self::STATE_LIFECYCLE_APPLIED) {
+            if ($state === self::STATE_LIFECYCLE_COMPLETED) {
                 if (!is_dir($blockPath)) {
                     throw new BlockDirectoryPreparationException(sprintf(
                         'Manual recovery is required because the generated folder for block "%s" is missing after its lifecycle completed.',

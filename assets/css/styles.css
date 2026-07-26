@@ -16,10 +16,11 @@
     --bb-tab-active-bg: var(--bs-primary);
     --bb-tab-hover-bg: #2276d7;
 
-    --bb-entry-error-border-color: #ebd9d9;
+    --bb-entry-error-border-color: #e8d0d0;
     --bb-entry-error-bg: #fff5f5;
-    --bb-entry-recently-added-bg: #f4faff;
-    --bb-entry-recently-added-header-bg: #e4f3ff;
+    --bb-entry-recently-added-border-color: #dfe6eb;
+    --bb-entry-recently-added-bg: #f7fcff;
+    --bb-entry-recently-added-header-bg: #eff7fc;
     --bb-entry-actions-icon-color: #737272;
 }
 
@@ -228,15 +229,23 @@
     color: var(--bs-danger) !important;
 }
 
+/* Other */
 .bb-footer-required-fields {
     margin-bottom: 100px;
 }
 
+.bb-custom-code {
+    border: 1px solid #f0f0f0;
+    background: #fafafa;
+    border-radius: var(--bb-input-border-radius);
+    padding: 15px 20px;
+}
+
 .bb-code-block {
     display: block;
-    background: #f9f9f9;
+    background: #f3f3f3;
     padding: 15px 20px;
-    border-radius: 10px;
+    border-radius: var(--bb-input-border-radius);
     margin-top: 10px;
 }
 
@@ -378,10 +387,15 @@
 
 .bb-entry[data-recently-added] {
     background: var(--bb-entry-recently-added-bg);
+    border-color: var(--bb-entry-recently-added-border-color);
 }
 
 .bb-entry[data-recently-added] .bb-entry-header {
     background: var(--bb-entry-recently-added-header-bg);
+}
+
+.bb-entry[data-recently-added] .bb-entry-content {
+    border-color: var(--bb-entry-recently-added-border-color);
 }
 
 .bb-entry.bb-entry-has-error {
@@ -391,6 +405,10 @@
 
 .bb-entry-has-error .bb-entry-header {
     background: #ffe4e4;
+}
+
+.bb-entry-has-error .bb-entry-content {
+    border-color: var(--bb-entry-error-border-color);
 }
 
 .bb-entry-header {

@@ -10,6 +10,7 @@ use BlockBuilder\BlockGenerator\Exception\InvalidFieldGenerationDtoException;
 use BlockBuilder\BlockGenerator\Generation\Plan\BlockGenerationPlan;
 use BlockBuilder\BlockGenerator\Generation\Plan\BlockGenerationPlanBuilder;
 use BlockBuilder\BlockGenerator\Generation\Plan\DatabaseColumn;
+use BlockBuilder\BlockGenerator\Generation\Plan\DatabaseIndex;
 use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
 use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\FieldType\FieldTypeDtoInterface;
@@ -23,13 +24,25 @@ readonly class BlockGenerationPlanFactory
 
     public function create(BlockConfigDto $config, BlockGenerationManifest $manifest): BlockGenerationPlan
     {
+        // Collect all code, database, form, view, and asset contributions.
         $planBuilder = new BlockGenerationPlanBuilder();
+
+        // Expose form-scope variables to the repeatable-entry rendering closure.
         $planBuilder->form
             ->addRepeatableCapturedVariable('app')
-            ->addRepeatableCapturedVariable('uniqueId');
+            ->addRepeatableCapturedVariable('formInstanceIdentifier');
+
+        // Every generated form has a shared JavaScript and CSS foundation for fields and tabs.
+        $planBuilder->javaScript->requireCapability('generated_block_form');
+        $planBuilder->css->requireCapability('generated_block_form');
+
+        // Add the database columns required by every generated block.
         $this->addBaseDatabaseColumns($planBuilder, $config->entries !== []);
+
+        // Ensure that at most one repeatable field provides the entry title.
         $this->validateRepeatableTitleSources($config->entries);
 
+        // Add generation contributions from basic fields.
         $this->contributeFields(
             fields: $config->basic,
             fieldContext: FieldTypeContextEnum::BasicFields,
@@ -37,6 +50,8 @@ readonly class BlockGenerationPlanFactory
             manifest: $manifest,
             planBuilder: $planBuilder,
         );
+
+        // Add generation contributions from repeatable fields.
         $this->contributeFields(
             fields: $config->entries,
             fieldContext: FieldTypeContextEnum::RepeatableFields,
@@ -45,11 +60,13 @@ readonly class BlockGenerationPlanFactory
             planBuilder: $planBuilder,
         );
 
+        // Include the shared JavaScript and CSS needed by repeatable entries.
         if ($config->entries !== []) {
             $planBuilder->javaScript->requireCapability('repeatable_entries');
             $planBuilder->css->requireCapability('repeatable_entries');
         }
 
+        // Convert the completed mutable builder into an immutable generation plan.
         return $planBuilder->build();
     }
 
@@ -81,7 +98,7 @@ readonly class BlockGenerationPlanFactory
             FieldTypeContextEnum::BasicFields,
             new DatabaseColumn(
                 name: 'bID',
-                type: 'I',
+                type: 'integer',
                 primaryKey: true,
                 unsigned: true,
                 order: -1000,
@@ -96,7 +113,7 @@ readonly class BlockGenerationPlanFactory
             FieldTypeContextEnum::RepeatableFields,
             new DatabaseColumn(
                 name: 'id',
-                type: 'I',
+                type: 'integer',
                 primaryKey: true,
                 unsigned: true,
                 autoIncrement: true,
@@ -107,7 +124,7 @@ readonly class BlockGenerationPlanFactory
             FieldTypeContextEnum::RepeatableFields,
             new DatabaseColumn(
                 name: 'bID',
-                type: 'I',
+                type: 'integer',
                 unsigned: true,
                 hasDefault: true,
                 defaultValue: 0,
@@ -118,11 +135,18 @@ readonly class BlockGenerationPlanFactory
             FieldTypeContextEnum::RepeatableFields,
             new DatabaseColumn(
                 name: 'position',
-                type: 'I',
+                type: 'integer',
                 unsigned: true,
                 hasDefault: true,
                 defaultValue: 0,
                 order: -998,
+            ),
+        );
+        $planBuilder->database->addIndex(
+            FieldTypeContextEnum::RepeatableFields,
+            new DatabaseIndex(
+                name: 'bID',
+                columns: ['bID', 'position'],
             ),
         );
     }

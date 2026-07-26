@@ -9,20 +9,29 @@ use BlockBuilder\BlockGenerator\Exception\GeneratedFileDefinitionException;
 use BlockBuilder\BlockGenerator\FileGenerator\FileGeneratorInterface;
 use BlockBuilder\BlockGenerator\FileGenerator\GeneratedTextFile;
 use BlockBuilder\BlockGenerator\Generation\Plan\DatabaseColumn;
+use BlockBuilder\BlockGenerator\Generation\Plan\DatabaseIndex;
 use DOMDocument;
 use DOMElement;
 
 readonly class DbXmlFileGenerator implements FileGeneratorInterface
 {
+    private const string SCHEMA_NAMESPACE = 'http://www.concrete5.org/doctrine-xml/0.5';
+    private const string SCHEMA_INSTANCE_NAMESPACE = 'http://www.w3.org/2001/XMLSchema-instance';
+    private const string SCHEMA_LOCATION = 'https://concretecms.github.io/doctrine-xml/doctrine-xml-0.5.xsd';
+
     /**
-     * @return iterable<GeneratedTextFile>
+     * @return list<GeneratedTextFile>
      */
-    public function generate(BlockFileGenerationContext $context): iterable
+    public function generate(BlockFileGenerationContext $context): array
     {
-        $document = new DOMDocument('1.0');
+        $document = new DOMDocument('1.0', 'UTF-8');
         $document->formatOutput = true;
-        $schema = $document->createElement('schema');
-        $schema->setAttribute('version', '0.3');
+        $schema = $this->createElement($document, 'schema');
+        $schema->setAttributeNS(
+            self::SCHEMA_INSTANCE_NAMESPACE,
+            'xsi:schemaLocation',
+            self::SCHEMA_NAMESPACE . ' ' . self::SCHEMA_LOCATION,
+        );
         $document->appendChild($schema);
 
         $this->writeTable(
@@ -30,6 +39,7 @@ readonly class DbXmlFileGenerator implements FileGeneratorInterface
             $schema,
             $context->manifest->databaseTableName,
             $context->plan->database->mainTableColumns,
+            $context->plan->database->mainTableIndexes,
         );
         if ($context->plan->database->entriesTableColumns !== []) {
             $this->writeTable(
@@ -37,6 +47,7 @@ readonly class DbXmlFileGenerator implements FileGeneratorInterface
                 $schema,
                 $context->manifest->entriesDatabaseTableName,
                 $context->plan->database->entriesTableColumns,
+                $context->plan->database->entriesTableIndexes,
             );
         }
 
@@ -48,53 +59,74 @@ readonly class DbXmlFileGenerator implements FileGeneratorInterface
             ));
         }
 
-        yield new GeneratedTextFile(
-            relativePath: FILENAME_BLOCK_DB,
-            contents: $xml,
-            producer: self::class,
-        );
+        return [
+            new GeneratedTextFile(
+                relativePath: FILENAME_BLOCK_DB,
+                contents: $xml,
+                producer: self::class,
+            ),
+        ];
     }
 
     /**
      * @param DatabaseColumn[] $columns
+     * @param DatabaseIndex[] $indexes
      */
     private function writeTable(
         DOMDocument $document,
         DOMElement $schema,
         string $tableName,
         array $columns,
+        array $indexes,
     ): void
     {
-        $table = $document->createElement('table');
+        $table = $this->createElement($document, 'table');
         $table->setAttribute('name', $tableName);
         $schema->appendChild($table);
 
         foreach ($columns as $column) {
-            $field = $document->createElement('field');
+            $field = $this->createElement($document, 'field');
             $field->setAttribute('name', $column->name);
             $field->setAttribute('type', $column->type);
             $table->appendChild($field);
             if ($column->size !== null) {
                 $field->setAttribute('size', $column->size);
             }
-            if ($column->primaryKey) {
-                $field->appendChild($document->createElement('key'));
-            }
             if ($column->unsigned) {
-                $field->appendChild($document->createElement('unsigned'));
+                $field->appendChild($this->createElement($document, 'unsigned'));
             }
             if ($column->autoIncrement) {
-                $field->appendChild($document->createElement('autoincrement'));
+                $field->appendChild($this->createElement($document, 'autoincrement'));
             }
-            if ($column->notNull) {
-                $field->appendChild($document->createElement('notnull'));
+            if ($column->primaryKey) {
+                $field->appendChild($this->createElement($document, 'key'));
             }
             if ($column->hasDefault) {
-                $default = $document->createElement('default');
+                $default = $this->createElement($document, 'default');
                 $default->setAttribute('value', $this->formatDefaultValue($column->defaultValue));
                 $field->appendChild($default);
             }
+            if ($column->notNull) {
+                $field->appendChild($this->createElement($document, 'notnull'));
+            }
         }
+
+        foreach ($indexes as $indexDefinition) {
+            $indexElement = $this->createElement($document, 'index');
+            $indexElement->setAttribute('name', $indexDefinition->name);
+            $table->appendChild($indexElement);
+
+            foreach ($indexDefinition->columns as $columnName) {
+                $columnElement = $this->createElement($document, 'col');
+                $columnElement->appendChild($document->createTextNode($columnName));
+                $indexElement->appendChild($columnElement);
+            }
+        }
+    }
+
+    private function createElement(DOMDocument $document, string $name): DOMElement
+    {
+        return $document->createElementNS(self::SCHEMA_NAMESPACE, $name);
     }
 
     private function formatDefaultValue(string|int|float|bool|null $defaultValue): string

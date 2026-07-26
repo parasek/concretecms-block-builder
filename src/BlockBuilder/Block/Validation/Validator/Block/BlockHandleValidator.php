@@ -7,17 +7,18 @@ namespace BlockBuilder\Block\Validation\Validator\Block;
 use BlockBuilder\Block\ReservedWord\ReservedHandleChecker;
 use BlockBuilder\Block\Service\BlockDirectoryLocator;
 use BlockBuilder\Block\Service\BlockTypeLocator;
+use BlockBuilder\Block\Validation\BlockHandleFormat;
 use BlockBuilder\Block\Validation\ValidatorInterface;
 use BlockBuilder\Block\Validation\ValidationFeedback;
 use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
 use Symfony\Component\HttpFoundation\FileBag;
 
-class BlockHandleValidator implements ValidatorInterface
+readonly class BlockHandleValidator implements ValidatorInterface
 {
     public function __construct(
-        private readonly BlockTypeLocator $blockTypeLocator,
-        private readonly BlockDirectoryLocator $blockDirectoryLocator,
-        private readonly ReservedHandleChecker $reservedHandleChecker,
+        private BlockTypeLocator $blockTypeLocator,
+        private BlockDirectoryLocator $blockDirectoryLocator,
+        private ReservedHandleChecker $reservedHandleChecker,
     ) {
     }
 
@@ -34,16 +35,22 @@ class BlockHandleValidator implements ValidatorInterface
             return $this->createFeedback($errors);
         }
 
-        if (mb_strlen($blockHandle) < 3 || mb_strlen($blockHandle) > 50) {
-            $errors[] = t('The field "%s" should be between %s and %s characters long (%s).', t('Block handle'), 3, 50, NavigationTabEnum::BlockSettings->getName());
+        if (!BlockHandleFormat::isLengthValid($blockHandle)) {
+            $errors[] = t(
+                'The field "%s" should be between %s and %s characters long (%s).',
+                t('Block handle'),
+                BlockHandleFormat::MIN_LENGTH,
+                BlockHandleFormat::MAX_LENGTH,
+                NavigationTabEnum::BlockSettings->getName(),
+            );
         }
-        if (preg_match('/^[a-z_]+$/', $blockHandle) !== 1) {
+        if (!BlockHandleFormat::containsOnlyAllowedCharacters($blockHandle)) {
             $errors[] = t('The field "%s" should consist only of lowercase letters and underscores (%s).', t('Block handle'), NavigationTabEnum::BlockSettings->getName());
         }
-        if (str_starts_with($blockHandle, '_') || str_ends_with($blockHandle, '_')) {
+        if (!BlockHandleFormat::hasValidBoundaryCharacters($blockHandle)) {
             $errors[] = t('The field "%s" should not start or end with an underscore (%s).', t('Block handle'), NavigationTabEnum::BlockSettings->getName());
         }
-        if (str_contains($blockHandle, '__')) {
+        if (BlockHandleFormat::containsConsecutiveUnderscores($blockHandle)) {
             $errors[] = t('The field "%s" should not contain two or more consecutive underscores (%s).', t('Block handle'), NavigationTabEnum::BlockSettings->getName());
         }
 
@@ -59,11 +66,9 @@ class BlockHandleValidator implements ValidatorInterface
 
         if (!empty($data['rebuildBlock'])) {
             if (!$this->blockDirectoryLocator->hasCollision(handle: $blockHandle, searchedFolder: 'application')) {
-                $errors[] = t('A block folder named after the chosen handle does not exist. Build the block first.');
+                $errors[] = t('A block folder named after the chosen handle does not exist. Build the block instead.');
             } elseif (!$this->blockTypeLocator->isInstalled($blockHandle)) {
-                $errors[] = t('You cannot rebuild a block that is awaiting installation. Install it from the configuration list first.')
-                    . PHP_EOL
-                    . t('If you selected rebuild by mistake, build the block instead.');
+                $errors[] = t('You cannot rebuild a block that is awaiting installation. Install it from the config list first.');
             }
 
             return $this->createFeedback($errors);

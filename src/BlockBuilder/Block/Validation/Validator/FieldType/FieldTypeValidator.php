@@ -13,12 +13,12 @@ use BlockBuilder\FieldType\FieldTypeRegistry;
 use BlockBuilder\Service\Option\FieldTypeOptionProvider;
 use Symfony\Component\HttpFoundation\FileBag;
 
-class FieldTypeValidator implements ValidatorInterface
+readonly class FieldTypeValidator implements ValidatorInterface
 {
     public function __construct(
-        private readonly ReservedHandleChecker $reservedHandleChecker,
-        private readonly FieldTypeOptionProvider $fieldTypeOptions,
-        private readonly FieldTypeRegistry $fieldTypeRegistry,
+        private ReservedHandleChecker $reservedHandleChecker,
+        private FieldTypeOptionProvider $fieldTypeOptions,
+        private FieldTypeRegistry $fieldTypeRegistry,
     ) {
     }
 

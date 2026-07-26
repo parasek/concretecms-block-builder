@@ -18,6 +18,7 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
  * @var array $cacheBlockRecordOptions
  * @var array $cacheBlockOutputOptions
  * @var array $cacheBlockOutputOnPostOptions
+ * @var array $cacheBlockOutputOnEditModeOptions
  * @var array $cacheBlockOutputForRegisteredUsersOptions
  * @var array $supportSavingNullValuesOptions
  * @var array $ignorePageThemeGridFrameworkContainerOptions
@@ -106,6 +107,7 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
                             'cacheBlockRecordOptions' => $cacheBlockRecordOptions,
                             'cacheBlockOutputOptions' => $cacheBlockOutputOptions,
                             'cacheBlockOutputOnPostOptions' => $cacheBlockOutputOnPostOptions,
+                            'cacheBlockOutputOnEditModeOptions' => $cacheBlockOutputOnEditModeOptions,
                             'cacheBlockOutputForRegisteredUsersOptions' => $cacheBlockOutputForRegisteredUsersOptions,
                             'supportSavingNullValuesOptions' => $supportSavingNullValuesOptions,
                             'ignorePageThemeGridFrameworkContainerOptions' => $ignorePageThemeGridFrameworkContainerOptions,

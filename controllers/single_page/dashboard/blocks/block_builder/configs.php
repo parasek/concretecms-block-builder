@@ -25,7 +25,7 @@ class Configs extends BaseDashboardController
     private BlockTypeInstaller $blockTypeInstaller;
     private BlockTypeLocator $blockTypeLocator;
     private BlockTypeUninstaller $blockTypeUninstaller;
-    private BlockBuilderConfigsViewDataProvider $provider;
+    private BlockBuilderConfigsViewDataProvider $viewDataProvider;
 
     public function on_start(): void
     {
@@ -35,7 +35,7 @@ class Configs extends BaseDashboardController
         $this->blockTypeInstaller = $this->app->make(BlockTypeInstaller::class);
         $this->blockTypeLocator = $this->app->make(BlockTypeLocator::class);
         $this->blockTypeUninstaller = $this->app->make(BlockTypeUninstaller::class);
-        $this->provider = $this->app->make(BlockBuilderConfigsViewDataProvider::class);
+        $this->viewDataProvider = $this->app->make(BlockBuilderConfigsViewDataProvider::class);
     }
 
     public function view(): void
@@ -48,7 +48,7 @@ class Configs extends BaseDashboardController
             $configs = [];
             $configLoadingErrors[] = $this->getConfigLoadingErrorMessage($exception);
         }
-        $this->set('configItems', $this->provider->getApplicationConfigItems($configs));
+        $this->set('configItems', $this->viewDataProvider->getApplicationConfigItems($configs));
 
         try {
             $predefinedConfigs = $this->blockConfigReader->getPredefinedConfigs();
@@ -56,9 +56,9 @@ class Configs extends BaseDashboardController
             $predefinedConfigs = [];
             $configLoadingErrors[] = $this->getConfigLoadingErrorMessage($exception);
         }
-        $this->set('predefinedConfigItems', $this->provider->getPredefinedConfigItems($predefinedConfigs));
+        $this->set('predefinedConfigItems', $this->viewDataProvider->getPredefinedConfigItems($predefinedConfigs));
         $this->set('configLoadingErrors', array_unique($configLoadingErrors));
-        $this->set('newBlockUrl', $this->provider->getNewBlockUrl());
+        $this->set('newBlockUrl', $this->viewDataProvider->getNewBlockUrl());
 
         $this->set('pageTitle', t('Block Builder') . ' - ' . t('Browse existing configs'));
     }
@@ -74,7 +74,7 @@ class Configs extends BaseDashboardController
                 $bt = $this->blockTypeInstaller->install($blockTypeHandle);
                 $this->flash('success', t('The block type "%s" has been successfully installed.', $bt->getBlockTypeName()));
             } catch (BlockLifecycleException $exception) {
-                $this->flash('error', $exception->getSafeDisplayMessage());
+                $this->flash('error', $exception->getMessage());
             }
         }
 
@@ -92,7 +92,7 @@ class Configs extends BaseDashboardController
                 $blockTypeName = $this->blockTypeUninstaller->uninstall((int) $blockTypeId);
                 $this->flash('success', t('The block type "%s" has been successfully uninstalled.', $blockTypeName));
             } catch (BlockLifecycleException $exception) {
-                $this->flash('error', $exception->getSafeDisplayMessage());
+                $this->flash('error', $exception->getMessage());
             }
         }
 
@@ -110,7 +110,7 @@ class Configs extends BaseDashboardController
                 $this->blockDirectoryRemover->remove((string) $handle);
                 $this->flash('success', t('The block type folder "%s" has been successfully deleted.', $handle));
             } catch (BlockLifecycleException $exception) {
-                $this->flash('error', $exception->getSafeDisplayMessage());
+                $this->flash('error', $exception->getMessage());
             }
         }
 
