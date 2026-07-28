@@ -235,7 +235,21 @@
         updateState(state);
 
         if (state.scope.querySelector('[data-disable-smooth-scroll]')?.checked !== true) {
-            entry.scrollIntoView({behavior: 'smooth', block: 'center'});
+            const dialogContent = entry.closest('.ui-dialog-content');
+
+            if (dialogContent) {
+                const offset = 10;
+                const entryPosition =
+                    dialogContent.scrollTop
+                    + entry.getBoundingClientRect().top
+                    - dialogContent.getBoundingClientRect().top
+                    - offset;
+
+                dialogContent.scrollTo({
+                    top: entryPosition,
+                    behavior: 'smooth',
+                });
+            }
         }
 
         return entry;

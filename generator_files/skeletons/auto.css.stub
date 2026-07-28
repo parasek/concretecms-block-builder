@@ -1,5 +1,3 @@
-/* Generated block add/edit form styles, automatically loaded by Concrete CMS. */
-
 [data-block-builder-form] .tab-content {
     min-block-size: 8rem;
 }
@@ -131,6 +129,9 @@
     justify-content: center;
     padding: 0;
     color: #4c4f56;
+    fill: #4c4f56;
+    max-width: 16px;
+    max-height: 16px;
     background: transparent;
     border: 0;
     cursor: pointer;
@@ -141,6 +142,7 @@
 .bb-entry-icon-button:hover,
 .bb-entry-icon-button:focus-visible {
     color: #1a1d20;
+    fill: #1a1d20;
 }
 
 .ccm-ui .bb-entry-drag-handle[type=button]:not(:disabled),
