@@ -6,6 +6,5 @@
         [
             'maxlength' => 255,{{REQUIRED_FORM_ATTRIBUTE}}
         ],
-    ); ?>
-{{HELP_TEXT}}
+    ); ?>{{HELP_TEXT}}
 </div>

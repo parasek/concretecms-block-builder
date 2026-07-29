@@ -36,15 +36,6 @@ readonly class BlockSettingsOptionProvider
         return $this->withOptionalEmpty([0 => t('No'), 1 => t('Yes')], $includeEmptyOption);
     }
 
-    public function getDividerOptions(bool $includeEmptyOption = false): array
-    {
-        return $this->withOptionalEmpty([
-            'smart' => t('Only if the field type consists of more than 1 element (default)'),
-            'always' => t('Always'),
-            'never' => t('Never'),
-        ], $includeEmptyOption);
-    }
-
     private function withOptionalEmpty(array $options, bool $includeEmptyOption): array
     {
         return $includeEmptyOption ? ['' => '---'] + $options : $options;

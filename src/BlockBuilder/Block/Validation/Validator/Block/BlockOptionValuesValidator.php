@@ -48,11 +48,6 @@ class BlockOptionValuesValidator implements ValidatorInterface
             $this->validateOption($feedback, $data, $field, self::BOOLEAN_OPTIONS, NavigationTabEnum::BuildOptions);
         }
 
-        // Horizontal lines as dividers (two options)
-        $dividerOptions = $this->getStringKeys($this->blockSettingsOptions->getDividerOptions());
-        $this->validateOption($feedback, $data, 'fieldsDivider', $dividerOptions, NavigationTabEnum::BuildOptions);
-        $this->validateOption($feedback, $data, 'entryFieldsDivider', $dividerOptions, NavigationTabEnum::BuildOptions);
-
         // Block type set
         $this->validateOption(
             $feedback,
@@ -97,8 +92,6 @@ class BlockOptionValuesValidator implements ValidatorInterface
             'installBlock' => t('Install the block after creation'),
             'entriesAsFirstTab' => t('Entries as the first tab'),
             'highlightMultiElementFields' => t('Highlight multi-element fields'),
-            'fieldsDivider' => t('Use a horizontal line as the field\'s divider'),
-            'entryFieldsDivider' => t('Use a horizontal line as the field\'s divider in repeatable entries'),
             'blockTypeSet' => t('Block type set'),
             default => $field,
         };

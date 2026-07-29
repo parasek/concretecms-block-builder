@@ -11,6 +11,5 @@
         type="text"
         value="<?= h(isset($entry[{{HANDLE_LITERAL}}]) && is_scalar($entry[{{HANDLE_LITERAL}}]) ? (string) $entry[{{HANDLE_LITERAL}}] : ''); ?>"
         data-entry-field="{{HANDLE}}"{{TITLE_SOURCE_ATTRIBUTE}}{{REQUIRED_HTML_ATTRIBUTE}}
-    >
-{{HELP_TEXT}}
+    >{{HELP_TEXT}}
 </div>

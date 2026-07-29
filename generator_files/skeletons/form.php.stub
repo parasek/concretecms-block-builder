@@ -20,11 +20,7 @@ $formInstanceIdentifier = $app
     ->getString(18);
 ?>
 
-{{SETUP}}
-
-{{FORM_CONTENT}}
-
-{{VALIDATION}}
+{{FORM_SECTIONS}}
 
 <script>
     if (globalThis.Concrete?.event && typeof globalThis.Concrete.event.publish === 'function') {

@@ -48,7 +48,7 @@ readonly class ViewPhpFileGenerator implements FileGeneratorInterface
         );
 
         return sprintf(
-            '<?php if (isset($entries) && is_array($entries) && $entries !== []): ?>%1$s    <?php foreach ($entries as $entry): ?>%1$s%2$s%1$s    <?php endforeach; ?>%1$s<?php endif; ?>',
+            '<?php if (!empty($entries)): ?>%1$s    <?php foreach ($entries as $entry): ?>%1$s%2$s%1$s    <?php endforeach; ?>%1$s<?php endif; ?>',
             PHP_EOL,
             $this->indentCode($fields, 2),
         );

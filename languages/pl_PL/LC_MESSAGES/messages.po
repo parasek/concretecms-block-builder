@@ -420,15 +420,6 @@ msgstr ""
 "Jeśli identyfikatorem tego pola jest \"category\", to wszystkie zmienne "
 "opcji powinny być nazywane jako \"$category_options\"."
 
-#: elements/custom_code_in_option_list.php:14
-#: elements/custom_code_in_option_list.php:27
-#: single_pages/dashboard/blocks/block_builder.php:181
-#: single_pages/dashboard/blocks/block_builder.php:200
-#: single_pages/dashboard/blocks/block_builder.php:217
-#, php-format
-msgid "Use %s spaces as indentation."
-msgstr "Użyj %s spacji jako pierwszego wcięcia."
-
 #: elements/custom_code_in_option_list.php:23
 msgid "Example code for field in \"Repeatable entries\" tab"
 msgstr "Przykładowy kod dla pola w zakładce \"Powtarzalne wpisy\""
@@ -611,14 +602,6 @@ msgstr "(0 dla bez ograniczeń)"
 #: single_pages/dashboard/blocks/block_builder.php:157
 msgid "Highlight multi-element fields"
 msgstr "Wyróżnij wieloelementowe pola"
-
-#: single_pages/dashboard/blocks/block_builder.php:162
-msgid "Use horizontal line as field's divider"
-msgstr "Użyj poziomej linii do oddzielania pól"
-
-#: single_pages/dashboard/blocks/block_builder.php:167
-msgid "Use horizontal line as field's divider in repeatable entries"
-msgstr "Użyj poziomej linii do oddzielania pól w powtarzalnych wpisach"
 
 #: single_pages/dashboard/blocks/block_builder.php:174
 msgid "Custom code inside registerViewAssets() method"

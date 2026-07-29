@@ -2,12 +2,12 @@
 
 /**
  * @var Concrete\Core\Form\Service\Form $form
+ * @var Concrete\Core\Editor\EditorInterface $editor
  * @var BlockBuilder\Block\Dto\BlockConfigDto $config
  * @var array $fieldsWithError
  * @var array $installBlockOptions
  * @var array $entriesAsFirstTabOptions
  * @var array $highlightMultiElementFieldsOptions
- * @var array $dividerOptions
  */
 ?>
 
@@ -32,12 +32,18 @@
     <?= $form->select('highlightMultiElementFields', $highlightMultiElementFieldsOptions, (int) $config->highlightMultiElementFields); ?>
 </div>
 
-<div class="mb-4 <?= h(in_array('fieldsDivider', $fieldsWithError) ? 'bb-has-error' : null); ?>">
-    <?= $form->label('fieldsDivider', t('Use a horizontal line as the field\'s divider')); ?>
-    <?= $form->select('fieldsDivider', $dividerOptions, $config->fieldsDivider); ?>
+<div class="mb-4 <?= h(in_array('messageBasicTab', $fieldsWithError) ? 'bb-has-error' : null); ?>">
+    <?= $form->label('messageBasicTab', t('Message displayed in the "Basic information" tab')); ?>
+    <?= $editor->outputStandardEditor(
+        'messageBasicTab',
+        htmlspecialchars($config->messageBasicTab ?? '', ENT_QUOTES, APP_CHARSET),
+    ); ?>
 </div>
 
-<div class="mb-4 <?= h(in_array('entryFieldsDivider', $fieldsWithError) ? 'bb-has-error' : null); ?>">
-    <?= $form->label('entryFieldsDivider', t('Use a horizontal line as the field\'s divider in repeatable entries')); ?>
-    <?= $form->select('entryFieldsDivider', $dividerOptions, $config->entryFieldsDivider); ?>
+<div class="mb-4 <?= h(in_array('messageEntriesTab', $fieldsWithError) ? 'bb-has-error' : null); ?>">
+    <?= $form->label('messageEntriesTab', t('Message displayed in the "Repeatable entries" tab')); ?>
+    <?= $editor->outputStandardEditor(
+        'messageEntriesTab',
+        htmlspecialchars($config->messageEntriesTab ?? '', ENT_QUOTES, APP_CHARSET),
+    ); ?>
 </div>

@@ -202,7 +202,8 @@ readonly class TextFieldGenerationContributor implements FieldGenerationContribu
     {
         $helpText = $field->helpText !== null && $field->helpText !== ''
             ? sprintf(
-                '    <div class="form-text"><?= t(%s); ?></div>',
+                '%s    <div class="form-text"><?= t(%s); ?></div>',
+                PHP_EOL,
                 $this->phpLiteralFormatter->format($field->helpText),
             )
             : '';
@@ -234,11 +235,28 @@ readonly class TextFieldGenerationContributor implements FieldGenerationContribu
 
     private function renderViewFragment(TextFieldTypeDto $field, bool $basicField): string
     {
+        $handleLiteral = $this->phpLiteralFormatter->format($field->handle);
+        if ($basicField) {
+            $displayCondition = $field->displayZeroValue
+                ? sprintf('isset($%1$s) && $%1$s !== \'\'', $field->handle)
+                : sprintf('!empty($%s)', $field->handle);
+        } else {
+            $displayCondition = $field->displayZeroValue
+                ? sprintf('isset($entry[%1$s]) && $entry[%1$s] !== \'\'', $handleLiteral)
+                : sprintf('!empty($entry[%s])', $handleLiteral);
+        }
+
         return $this->stubRenderer->render(
             $basicField ? 'fragments/text/view-basic.php.stub' : 'fragments/text/view-repeatable.php.stub',
             $basicField
-                ? ['{{HANDLE}}' => $field->handle]
-                : ['{{HANDLE_LITERAL}}' => $this->phpLiteralFormatter->format($field->handle)],
+                ? [
+                    '{{HANDLE}}' => $field->handle,
+                    '{{DISPLAY_CONDITION}}' => $displayCondition,
+                ]
+                : [
+                    '{{HANDLE_LITERAL}}' => $handleLiteral,
+                    '{{DISPLAY_CONDITION}}' => $displayCondition,
+                ],
         );
     }
 }

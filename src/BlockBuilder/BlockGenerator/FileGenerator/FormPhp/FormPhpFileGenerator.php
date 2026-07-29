@@ -34,23 +34,26 @@ readonly class FormPhpFileGenerator implements FileGeneratorInterface
         $repeatableSection = $context->config->entries !== []
             ? $this->renderRepeatableSection($context)
             : '';
+        $formSections = array_filter([
+            $this->renderFragments(
+                $context->plan->form->getFragments(FormGenerationPlanBuilder::SECTION_SETUP),
+            ),
+            $this->renderFormContent(
+                $context,
+                $basicFields,
+                $repeatableSection,
+                $settings,
+            ),
+            $this->renderFragments(
+                $context->plan->form->getFragments(FormGenerationPlanBuilder::SECTION_VALIDATION),
+            ),
+        ], static fn(string $section): bool => $section !== '');
 
         return [
             new GeneratedTextFile(
                 relativePath: FILENAME_FORM,
                 contents: $this->stubRenderer->render('form.php.stub', [
-                    '{{SETUP}}' => $this->renderFragments(
-                        $context->plan->form->getFragments(FormGenerationPlanBuilder::SECTION_SETUP),
-                    ),
-                    '{{FORM_CONTENT}}' => $this->renderFormContent(
-                        $context,
-                        $basicFields,
-                        $repeatableSection,
-                        $settings,
-                    ),
-                    '{{VALIDATION}}' => $this->renderFragments(
-                        $context->plan->form->getFragments(FormGenerationPlanBuilder::SECTION_VALIDATION),
-                    ),
+                    '{{FORM_SECTIONS}}' => implode(PHP_EOL . PHP_EOL, $formSections),
                     '{{BLOCK_EVENT_NAME}}' => $context->manifest->blockHandleKebabCase,
                 ]),
                 producer: self::class,
@@ -67,19 +70,27 @@ readonly class FormPhpFileGenerator implements FileGeneratorInterface
         $tabs = [
             'basic-information' => [
                 'label' => $context->config->basicLabel ?: 'Basic information',
-                'content' => $basicFields,
+                'content' => $this->prependTabMessage(
+                    message: $context->config->messageBasicTab,
+                    content: $basicFields,
+                ),
             ],
         ];
         if ($repeatableSection !== '') {
             $tabs['entries'] = [
                 'label' => $context->config->entriesLabel ?: 'Entries',
-                'content' => $repeatableSection,
+                'content' => $this->prependTabMessage(
+                    message: $context->config->messageEntriesTab,
+                    content: $repeatableSection,
+                ),
             ];
         }
-        $tabs['settings'] = [
-            'label' => $context->config->settingsLabel ?: 'Settings',
-            'content' => $settings,
-        ];
+        if ($settings !== '') {
+            $tabs['settings'] = [
+                'label' => $context->config->settingsLabel ?: 'Settings',
+                'content' => $settings,
+            ];
+        }
         if ($context->config->entriesAsFirstTab && isset($tabs['entries'])) {
             $entriesTab = $tabs['entries'];
             unset($tabs['entries']);
@@ -99,23 +110,47 @@ readonly class FormPhpFileGenerator implements FileGeneratorInterface
                 $active ? 'true' : 'false',
             );
             $tabPanes[] = sprintf(
-                '<div class="tab-pane fade%s" id="<?= h(%s); ?>" role="tabpanel">%s%s%s</div>',
+                '<div class="tab-pane fade%2$s"%1$s'
+                . '     id="<?= h(%3$s); ?>"%1$s'
+                . '     role="tabpanel"%1$s'
+                . '>%1$s%4$s%1$s</div>',
+                PHP_EOL,
                 $active ? ' show active' : '',
                 $tabIdExpression,
-                PHP_EOL,
                 $this->indentCode($tab['content'], 1),
-                PHP_EOL,
             );
         }
 
-        return sprintf(
-            '<div id="form-container-<?= h($formInstanceIdentifier); ?>" data-block-builder-form>%1$s<?php%1$s'
-            . 'echo $userInterface->tabs([%1$s%2$s%1$s]);%1$s?>%1$s'
-            . '<div class="tab-content mt-4">%1$s%3$s%1$s</div>%1$s</div>',
+        $formContent = sprintf(
+            '<?php%1$secho $userInterface->tabs([%1$s%2$s%1$s]);%1$s?>%1$s'
+            . '<div class="tab-content mt-4">%1$s%3$s%1$s</div>',
             PHP_EOL,
             implode(PHP_EOL, $tabDefinitions),
             $this->indentCode(implode(PHP_EOL, $tabPanes), 1),
         );
+
+        return sprintf(
+            '<div id="form-container-<?= h($formInstanceIdentifier); ?>" data-block-builder-form>%1$s'
+            . '%2$s%1$s</div>',
+            PHP_EOL,
+            $this->indentCode($formContent, 1),
+        );
+    }
+
+    private function prependTabMessage(?string $message, string $content): string
+    {
+        if ($message === null || trim($message) === '') {
+            return $content;
+        }
+
+        $alert = sprintf(
+            '<div class="bb-tab-message alert alert-info mb-4"><?= t(%s); ?></div>',
+            $this->phpLiteralFormatter->format($message),
+        );
+
+        return $content === ''
+            ? $alert
+            : $alert . PHP_EOL . PHP_EOL . $content;
     }
 
     private function renderRepeatableSection(BlockFileGenerationContext $context): string

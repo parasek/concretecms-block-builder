@@ -43,8 +43,8 @@ final class CreateBlockInputNormalizer
         'blockDescription',
         'blockTypeSet',
         'blockIcon',
-        'fieldsDivider',
-        'entryFieldsDivider',
+        'messageBasicTab',
+        'messageEntriesTab',
         'registerViewAssetsCustomCode',
         'viewCustomCode',
         'customControllerMethods',
@@ -104,6 +104,7 @@ final class CreateBlockInputNormalizer
     private const array FIELD_BOOLEAN_PROPERTIES = [
         'required',
         'titleSource',
+        'displayZeroValue',
         'selectAddEmptyOption',
         'imageShowAltTextField',
         'imageCreateThumbnailImage',
@@ -143,6 +144,8 @@ final class CreateBlockInputNormalizer
     private const array LONG_TEXT_FIELDS = [
         'blockDescription',
         'excludedFromRemoval',
+        'messageBasicTab',
+        'messageEntriesTab',
     ];
 
     private const array CUSTOM_CODE_FIELDS = [

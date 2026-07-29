@@ -70,7 +70,7 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
         return [
             new GeneratedTextFile(
                 relativePath: FILENAME_BLOCK_CONTROLLER,
-                contents: $this->stubRenderer->render(self::STUB_FILE, [
+                contents: $this->normalizeControllerWhitespace($this->stubRenderer->render(self::STUB_FILE, [
                     '{{BLOCK_HANDLE_PASCAL_CASE}}' => $context->manifest->blockHandlePascalCase,
                     '{{IMPLEMENTED_INTERFACES}}' => $this->renderImplementedInterfaces($context),
                     '{{USE_STATEMENTS}}' => $this->renderUseStatements(
@@ -121,7 +121,7 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
                         : '',
                     '{{REGISTER_VIEW_ASSETS_METHOD}}' => $this->renderRegisterViewAssetsMethod($context),
                     '{{CUSTOM_CONTROLLER_METHODS}}' => $this->renderCustomControllerMethods($context),
-                ]),
+                ])),
                 producer: self::class,
             ),
         ];
@@ -153,10 +153,17 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
         }
         foreach ($context->plan->controller->useStatements as $useStatement) {
             $useStatementKey = strtolower($useStatement->getKey());
-            if (isset($useStatements[$useStatementKey]) && $useStatements[$useStatementKey] != $useStatement) {
+            $existingUseStatement = $useStatements[$useStatementKey] ?? null;
+            if (
+                $existingUseStatement !== null
+                && (
+                    $existingUseStatement->className !== $useStatement->className
+                    || $existingUseStatement->alias !== $useStatement->alias
+                )
+            ) {
                 throw new GenerationContributionConflictException(sprintf(
                     'Controller imports "%s" and "%s" both bind the local symbol "%s".',
-                    $useStatements[$useStatementKey]->className,
+                    $existingUseStatement->className,
                     $useStatement->className,
                     $useStatement->getKey(),
                 ));
@@ -602,7 +609,7 @@ PHP;
     {
         $assetHandle = $context->manifest->blockHandleKebabCase . '/auto-js';
         $code = sprintf(
-            '$assetList = AssetList::getInstance();%1$s$assetList->register(\'javascript\', %2$s, %3$s, [], false);%1$s$this->requireAsset(\'javascript\', %2$s);',
+            '$assetList = AssetList::getInstance();%1$s$assetList->register(\'javascript\', %2$s, %3$s);%1$s$this->requireAsset(\'javascript\', %2$s);',
             PHP_EOL,
             $this->phpLiteralFormatter->format($assetHandle),
             $this->phpLiteralFormatter->format('blocks/' . $context->config->blockHandle . '/auto.js'),
@@ -717,11 +724,16 @@ PHP;
     }
 PHP;
 
-        $formattedXPathExpressions = str_replace(
-            PHP_EOL,
-            PHP_EOL . '        ',
-            $this->phpLiteralFormatter->format($autoIncrementColumnXPathExpressions),
-        );
+        $formattedXPathExpressions = count($autoIncrementColumnXPathExpressions) === 1
+            ? sprintf(
+                '[%s]',
+                $this->phpLiteralFormatter->format($autoIncrementColumnXPathExpressions[0]),
+            )
+            : str_replace(
+                PHP_EOL,
+                PHP_EOL . '        ',
+                $this->phpLiteralFormatter->format($autoIncrementColumnXPathExpressions),
+            );
 
         return str_replace(
             '{{AUTO_INCREMENT_COLUMN_XPATHS}}',
@@ -808,5 +820,33 @@ PHP;
                 explode(PHP_EOL, trim($code)),
             ),
         );
+    }
+
+    private function normalizeControllerWhitespace(string $code): string
+    {
+        $tokens = token_get_all($code);
+        $normalizedCode = '';
+
+        foreach ($tokens as $tokenIndex => $token) {
+            if (!is_array($token) || $token[0] !== T_WHITESPACE) {
+                $normalizedCode .= is_array($token) ? $token[1] : $token;
+                continue;
+            }
+
+            $whitespace = str_replace(["\r\n", "\r"], "\n", $token[1]);
+            $whitespace = preg_replace('/\n(?:[ \t]*\n){2,}/', "\n\n", $whitespace) ?? $whitespace;
+
+            if (($tokens[$tokenIndex + 1] ?? null) === '}') {
+                $whitespace = preg_replace(
+                    '/\n(?:[ \t]*\n)+([ \t]*)$/',
+                    "\n$1",
+                    $whitespace,
+                ) ?? $whitespace;
+            }
+
+            $normalizedCode .= $whitespace;
+        }
+
+        return $normalizedCode;
     }
 }

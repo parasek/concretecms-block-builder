@@ -19,8 +19,8 @@
     "entriesAsFirstTab": "0",
     "maxNumberOfEntries": "0",
     "highlightMultiElementFields": "1",
-    "fieldsDivider": "never",
-    "entryFieldsDivider": "never",
+    "messageBasicTab": "",
+    "messageEntriesTab": "",
     "registerViewAssetsCustomCode": "",
     "viewCustomCode": "",
     "customControllerMethods": "",
@@ -74,7 +74,8 @@
             "fieldType": "text_field",
             "label": "Basic Text 1",
             "handle": "basicTextFirst",
-            "helpText": ""
+            "helpText": "",
+            "displayZeroValue": "0"
         },
         "2": {
             "fieldType": "number",
@@ -276,7 +277,8 @@
             "label": "Repeatable Text 1",
             "handle": "repeatableTextFirst",
             "titleSource": "1",
-            "helpText": ""
+            "helpText": "",
+            "displayZeroValue": "0"
         },
         "2": {
             "fieldType": "number",

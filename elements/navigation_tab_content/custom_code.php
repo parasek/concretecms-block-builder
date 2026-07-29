@@ -15,13 +15,11 @@
         <br>
         <?= t('Be careful when inserting custom code, invalid syntax can lead to errors.'); ?>
         <br>
-        <?= t('Use %s spaces for indentation.', 8); ?>
-        <br>
         <strong class="d-block mt-2"><?= t('Example code'); ?>:</strong>
         <code class="bb-code-block">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Load lightbox files
-            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$this->requireAsset('javascript', 'feature/imagery/frontend');
-            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$this->requireAsset('css', 'feature/imagery/frontend');
+            // Load lightbox files
+            <br>$this->requireAsset('javascript', 'feature/imagery/frontend');
+            <br>$this->requireAsset('css', 'feature/imagery/frontend');
         </code>
     </div>
 </div>
@@ -34,11 +32,9 @@
         <br>
         <?= t('Be careful when inserting custom code, invalid syntax can lead to errors.'); ?>
         <br>
-        <?= t('Use %s spaces for indentation.', 8); ?>
-        <br>
         <strong class="d-block mt-2"><?= t('Example code'); ?>:</strong>
         <code class="bb-code-block">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$this->set('someVariable', 'value');
+            $this->set('someVariable', 'value');
         </code>
     </div>
 </div>
@@ -51,14 +47,12 @@
         <br>
         <?= t('Be careful when inserting custom code, invalid syntax can lead to errors.'); ?>
         <br>
-        <?= t('Use %s spaces for indentation.', 4); ?>
-        <br>
         <strong class="d-block mt-2"><?= t('Example code'); ?>:</strong>
         <code class="bb-code-block mt4">
-            &nbsp;&nbsp;&nbsp;&nbsp;private function exampleMethod($exampleArgument)
-            <br>&nbsp;&nbsp;&nbsp;&nbsp;{
-            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Your custom code
-            <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+            private function exampleMethod($exampleArgument): void
+            <br>{
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;// Your custom code
+            <br>}
         </code>
     </div>
 </div>

@@ -8,6 +8,7 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
  * @var BlockBuilder\Environment\Dto\EnvironmentDto $environment
  * @var BlockBuilder\Block\Dto\BlockConfigDto $config
  * @var BlockBuilder\NavigationTab\Enum\NavigationTabEnum[] $navigationTabEnums
+ * @var Concrete\Core\Editor\EditorInterface $editor
  * @var Concrete\Core\Form\Service\Form $form
  * @var BlockBuilder\FieldType\FieldTypeInterface[] $fieldTypes
  * @var array $fieldsWithError
@@ -25,7 +26,6 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
  * @var array $installBlockOptions
  * @var array $entriesAsFirstTabOptions
  * @var array $highlightMultiElementFieldsOptions
- * @var array $dividerOptions
  * @var array $selectFieldTypes
  * @var array $selectFieldListGenerationMethods
  * @var array $selectMultipleFieldTypes
@@ -115,7 +115,7 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
                             'installBlockOptions' => $installBlockOptions,
                             'entriesAsFirstTabOptions' => $entriesAsFirstTabOptions,
                             'highlightMultiElementFieldsOptions' => $highlightMultiElementFieldsOptions,
-                            'dividerOptions' => $dividerOptions,
+                            'editor' => $editor,
                             // Tab: Basic information / Tab: Repeatable entries
                             'fieldTypes' => $fieldTypes,
                             'fieldTypeContextEnum' => $navigationTabEnum->getFieldTypeContextEnum(),

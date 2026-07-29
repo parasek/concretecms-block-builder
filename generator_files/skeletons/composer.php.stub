@@ -7,6 +7,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
  * @var string $label
  * @var string|null $description
  */
+
 $layoutSetControl = $view->getPageTypeComposerFormLayoutSetControlObject();
 $layoutSetControlId = is_object($layoutSetControl)
     ? $layoutSetControl->getPageTypeComposerFormLayoutSetControlID()

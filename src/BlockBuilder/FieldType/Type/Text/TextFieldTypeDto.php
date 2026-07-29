@@ -15,6 +15,7 @@ readonly class TextFieldTypeDto implements FieldTypeDtoInterface
         public string $handle,
         public bool $required,
         public ?string $helpText,
+        public bool $displayZeroValue,
         public bool $titleSource,
     ) {
     }

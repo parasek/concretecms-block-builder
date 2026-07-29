@@ -32,7 +32,9 @@ class TextFieldType extends AbstractFieldType
 
     public static function getDefaultValues(): array
     {
-        return [];
+        return [
+            'displayZeroValue' => 0,
+        ];
     }
 
     public static function createDtoFromArray(array $data): TextFieldTypeDto
@@ -43,6 +45,7 @@ class TextFieldType extends AbstractFieldType
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),
             helpText: trim($data['helpText'] ?? ''),
+            displayZeroValue: !empty($data['displayZeroValue']),
             titleSource: !empty($data['titleSource']),
         );
     }

@@ -87,34 +87,58 @@
         <div class="mb-4 <?= h(in_array('cacheBlockRecord', $fieldsWithError) ? 'bb-has-error' : null); ?>">
             <?= $form->label('cacheBlockRecord', t('Cache block record')); ?>
             <?= $form->select('cacheBlockRecord', $cacheBlockRecordOptions, (int) $config->cacheBlockRecord); ?>
+            <div class="form-text">
+                <?= t('When block caching is enabled, cache the block\'s database record. This can almost always be enabled.'); ?>
+            </div>
         </div>
         <div class="mb-4 <?= h(in_array('cacheBlockOutput', $fieldsWithError) ? 'bb-has-error' : null); ?>">
             <?= $form->label('cacheBlockOutput', t('Cache block output')); ?>
             <?= $form->select('cacheBlockOutput', $cacheBlockOutputOptions, (int) $config->cacheBlockOutput); ?>
+            <div class="form-text">
+                <?= t('When block caching is enabled, cache the rendered output so it can be served without running view() or querying the block database.'); ?>
+            </div>
         </div>
         <div class="mb-4 <?= h(in_array('cacheBlockOutputLifetime', $fieldsWithError) ? 'bb-has-error' : null); ?>">
             <?= $form->label('cacheBlockOutputLifetime', t('Cache block output lifetime')); ?>
             <?= $form->text('cacheBlockOutputLifetime', $config->cacheBlockOutputLifetime); ?>
+            <div class="form-text">
+                <?= t('Number of seconds before the cached output is refreshed. Use 0 for no time limit.'); ?>
+            </div>
         </div>
         <div class="mb-4 <?= h(in_array('cacheBlockOutputOnPost', $fieldsWithError) ? 'bb-has-error' : null); ?>">
             <?= $form->label('cacheBlockOutputOnPost', t('Cache block output on post')); ?>
             <?= $form->select('cacheBlockOutputOnPost', $cacheBlockOutputOnPostOptions, (int) $config->cacheBlockOutputOnPost); ?>
+            <div class="form-text">
+                <?= t('Allow cached output for HTTP POST requests. Disable this for blocks that must display POST-specific responses or error messages.'); ?>
+            </div>
         </div>
         <div class="mb-4 <?= h(in_array('cacheBlockOutputOnEditMode', $fieldsWithError) ? 'bb-has-error' : null); ?>">
             <?= $form->label('cacheBlockOutputOnEditMode', t('Cache block output in edit mode')); ?>
             <?= $form->select('cacheBlockOutputOnEditMode', $cacheBlockOutputOnEditModeOptions, (int) $config->cacheBlockOutputOnEditMode); ?>
+            <div class="form-text">
+                <?= t('Allow cached output while the page is in edit mode. Disable this if the block displays edit-mode-specific content or controls.'); ?>
+            </div>
         </div>
         <div class="mb-4 <?= h(in_array('cacheBlockOutputForRegisteredUsers', $fieldsWithError) ? 'bb-has-error' : null); ?>">
             <?= $form->label('cacheBlockOutputForRegisteredUsers', t('Cache block output for registered users')); ?>
             <?= $form->select('cacheBlockOutputForRegisteredUsers', $cacheBlockOutputForRegisteredUsersOptions, (int) $config->cacheBlockOutputForRegisteredUsers); ?>
+            <div class="form-text">
+                <?= t('Continue serving cached block output when the current user is logged in.'); ?>
+            </div>
         </div>
         <div class="mb-4 <?= h(in_array('supportSavingNullValues', $fieldsWithError) ? 'bb-has-error' : null); ?>">
             <?= $form->label('supportSavingNullValues', t('Support saving null values')); ?>
             <?= $form->select('supportSavingNullValues', $supportSavingNullValuesOptions, (int) $config->supportSavingNullValues); ?>
+            <div class="form-text">
+                <?= t('Persist NULL values passed to save() or performSave(). When disabled, fields containing NULL are skipped.'); ?>
+            </div>
         </div>
         <div class="mb-4 <?= h(in_array('ignorePageThemeGridFrameworkContainer', $fieldsWithError) ? 'bb-has-error' : null); ?>">
             <?= $form->label('ignorePageThemeGridFrameworkContainer', t('Ignore page theme grid framework container')); ?>
             <?= $form->select('ignorePageThemeGridFrameworkContainer', $ignorePageThemeGridFrameworkContainerOptions, (int) $config->ignorePageThemeGridFrameworkContainer); ?>
+            <div class="form-text">
+                <?= t('Do not wrap this block in the page theme\'s grid framework container in edit mode.'); ?>
+            </div>
         </div>
 
     </div>

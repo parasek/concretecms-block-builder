@@ -11,6 +11,7 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
 use BlockBuilder\Service\Option\BlockIconOptionProvider;
 use BlockBuilder\Service\Option\BlockSettingsOptionProvider;
 use BlockBuilder\Service\Option\FieldTypeOptionProvider;
+use Concrete\Core\Editor\EditorInterface;
 use Concrete\Core\Url\Resolver\Manager\ResolverManagerInterface;
 
 readonly class BlockBuilderViewDataProvider
@@ -22,6 +23,7 @@ readonly class BlockBuilderViewDataProvider
         private FieldTypeRegistry $fieldTypeRegistry,
         private EnvironmentService $environmentService,
         private ResolverManagerInterface $urlResolver,
+        private EditorInterface $editor,
     ) {
     }
 
@@ -51,8 +53,8 @@ readonly class BlockBuilderViewDataProvider
             'ignorePageThemeGridFrameworkContainer' => false,
             'entriesAsFirstTab' => false,
             'highlightMultiElementFields' => true,
-            'fieldsDivider' => 'never',
-            'entryFieldsDivider' => 'never',
+            'messageBasicTab' => '',
+            'messageEntriesTab' => '',
             'registerViewAssetsCustomCode' => '',
             'viewCustomCode' => '',
             'customControllerMethods' => '',
@@ -126,8 +128,8 @@ readonly class BlockBuilderViewDataProvider
             'ignorePageThemeGridFrameworkContainerOptions' => $this->blockSettingsOptions->getBooleanOptions(),
             'entriesAsFirstTabOptions' => $this->blockSettingsOptions->getYesNoOptions(),
             'highlightMultiElementFieldsOptions' => $this->blockSettingsOptions->getYesNoOptions(),
-            'dividerOptions' => $this->blockSettingsOptions->getDividerOptions(),
             'installBlockOptions' => $this->blockSettingsOptions->getYesNoOptions(),
+            'editor' => $this->editor,
             'selectFieldTypes' => $this->fieldTypeOptions->getSingleChoiceTypes(),
             'selectMultipleFieldTypes' => $this->fieldTypeOptions->getMultipleChoiceTypes(),
             'selectFieldListGenerationMethods' => $this->fieldTypeOptions->getListGenerationMethods(),

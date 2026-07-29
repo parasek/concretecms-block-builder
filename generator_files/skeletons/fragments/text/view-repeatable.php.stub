@@ -1,3 +1,3 @@
-<?php if (isset($entry[{{HANDLE_LITERAL}}]) && is_scalar($entry[{{HANDLE_LITERAL}}]) && (string) $entry[{{HANDLE_LITERAL}}] !== ''): ?>
-    <?= h((string) $entry[{{HANDLE_LITERAL}}]); ?>
+<?php if ({{DISPLAY_CONDITION}}): ?>
+    <?= h($entry[{{HANDLE_LITERAL}}]); ?>
 <?php endif; ?>
