@@ -60,9 +60,6 @@ readonly class TextFieldGenerationContributor implements FieldGenerationContribu
             $this->contributeBasicControllerCode($field, $fragmentKeyPrefix, $context->position, $planBuilder);
         } else {
             $this->contributeRepeatableControllerCode($field, $fragmentKeyPrefix, $context->position, $planBuilder);
-            if ($field->titleSource) {
-                $planBuilder->javaScript->requireCapability('repeatable_entry_titles');
-            }
         }
 
         $planBuilder->form->addFieldFragment(

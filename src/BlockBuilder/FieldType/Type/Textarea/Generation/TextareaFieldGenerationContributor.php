@@ -14,7 +14,6 @@ use BlockBuilder\BlockGenerator\Generation\Plan\CodeFragment;
 use BlockBuilder\BlockGenerator\Generation\Plan\ControllerProperty;
 use BlockBuilder\BlockGenerator\Generation\Plan\DatabaseColumn;
 use BlockBuilder\BlockGenerator\Generation\Plan\Enum\ControllerMethodSectionEnum;
-use BlockBuilder\BlockGenerator\Generation\Plan\FrontendAssetGenerationPlanBuilder;
 use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\FieldType\Type\Textarea\TextareaFieldTypeDto;
 
@@ -46,13 +45,6 @@ readonly class TextareaFieldGenerationContributor implements FieldGenerationCont
         $field = $context->fieldDto;
         $fragmentKeyPrefix = $context->fieldContext->value . '.' . $field->handle;
 
-        $planBuilder->css->addFragment(
-            FrontendAssetGenerationPlanBuilder::SECTION_FIELDS,
-            new CodeFragment(
-                key: 'textarea.auto_resize',
-                code: $this->stubRenderer->render('fragments/textarea/auto.css.stub'),
-            ),
-        );
         $planBuilder->database->addColumn(
             $context->fieldContext,
             new DatabaseColumn(
@@ -67,9 +59,6 @@ readonly class TextareaFieldGenerationContributor implements FieldGenerationCont
             $this->contributeBasicControllerCode($field, $fragmentKeyPrefix, $context->position, $planBuilder);
         } else {
             $this->contributeRepeatableControllerCode($field, $fragmentKeyPrefix, $context->position, $planBuilder);
-            if ($field->titleSource) {
-                $planBuilder->javaScript->requireCapability('repeatable_entry_titles');
-            }
         }
 
         $planBuilder->form->addFieldFragment(

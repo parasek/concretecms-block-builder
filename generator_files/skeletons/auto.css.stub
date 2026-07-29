@@ -2,6 +2,12 @@
     min-block-size: 8rem;
 }
 
+[data-block-builder-form] textarea[data-block-builder-autosize] {
+    min-block-size: 66px;
+    overflow-y: auto;
+    field-sizing: content;
+}
+
 [data-block-builder-form] .field-group-highlight {
     padding: 1.5rem 1.5rem 0;
     background: #fbfafa;

@@ -24,17 +24,13 @@ readonly class BlockGenerationPlanFactory
 
     public function create(BlockConfigDto $config, BlockGenerationManifest $manifest): BlockGenerationPlan
     {
-        // Collect all code, database, form, view, and asset contributions.
+        // Collect all controller, database, form, and view contributions.
         $planBuilder = new BlockGenerationPlanBuilder();
 
         // Expose form-scope variables to the repeatable-entry rendering closure.
         $planBuilder->form
             ->addRepeatableCapturedVariable('app')
             ->addRepeatableCapturedVariable('formInstanceIdentifier');
-
-        // Every generated form has a shared JavaScript and CSS foundation for fields and tabs.
-        $planBuilder->javaScript->requireCapability('generated_block_form');
-        $planBuilder->css->requireCapability('generated_block_form');
 
         // Add the database columns required by every generated block.
         $this->addBaseDatabaseColumns($planBuilder, $config->entries !== []);
@@ -59,12 +55,6 @@ readonly class BlockGenerationPlanFactory
             manifest: $manifest,
             planBuilder: $planBuilder,
         );
-
-        // Include the shared JavaScript and CSS needed by repeatable entries.
-        if ($config->entries !== []) {
-            $planBuilder->javaScript->requireCapability('repeatable_entries');
-            $planBuilder->css->requireCapability('repeatable_entries');
-        }
 
         // Convert the completed mutable builder into an immutable generation plan.
         return $planBuilder->build();

@@ -3,8 +3,6 @@
 
     const containerStates = new WeakMap();
 
-{{SETUP_CODE}}
-
     function getEntries(state) {
         return Array.from(state.container.children)
             .filter((element) => element.matches('[data-entry]'));
@@ -227,7 +225,6 @@
         entry.dataset.entryIndex = String(index);
         populateEntry(entry, values);
         state.container.insertBefore(template.content, before);
-        initializeRepeatableFields(entry);
         entry.dispatchEvent(new CustomEvent('blockbuilder:entry-added', {bubbles: true}));
 
         const keepCollapsed = state.scope.querySelector('[data-keep-added-collapsed]')?.checked === true;
@@ -385,14 +382,6 @@
         event.target.focus();
     }
 
-    function initializeBasicFields(root) {
-{{BASIC_FIELD_INITIALIZERS}}
-    }
-
-    function initializeRepeatableFields(entry) {
-{{REPEATABLE_FIELD_INITIALIZERS}}
-    }
-
     function parseData(scope) {
         const dataElement = scope.querySelector('script[data-entry-data]');
         if (!dataElement) {
@@ -438,9 +427,7 @@
         containerStates.set(container, state);
 
         const existingEntries = getEntries(state);
-        if (existingEntries.length > 0) {
-            existingEntries.forEach((entry) => initializeRepeatableFields(entry));
-        } else if (Array.isArray(data.entries)) {
+        if (existingEntries.length === 0 && Array.isArray(data.entries)) {
             data.entries.forEach((values) => createEntry(state, values));
         }
         initializeSortable(state);
@@ -448,7 +435,6 @@
     }
 
     function initialize(root = document) {
-        initializeBasicFields(root);
         root.querySelectorAll('[data-block-builder-entries]').forEach(initializeContainer);
     }
 

@@ -60,8 +60,6 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
     public function generate(BlockFileGenerationContext $context): array
     {
         $hasEntries = $context->config->entries !== [];
-        $hasJavaScript = $context->plan->javaScript->capabilities !== []
-            || $context->plan->javaScript->fragmentsBySection !== [];
         $hasValidation = $hasEntries
             || $context->plan->controller->getMethodFragments(
                 ControllerMethodSectionEnum::ValidateBasicFields->value,
@@ -76,7 +74,6 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
                     '{{USE_STATEMENTS}}' => $this->renderUseStatements(
                         $context,
                         $hasEntries,
-                        $hasJavaScript,
                         $hasValidation,
                     ),
                     '{{BLOCK_PROPERTIES}}' => $this->renderBlockProperties($context),
@@ -114,7 +111,7 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
                     '{{VALIDATION_METHODS}}' => $hasValidation
                         ? $this->renderValidationMethods($context, $hasEntries)
                         : '',
-                    '{{COMPOSER_ASSETS}}' => $hasJavaScript ? $this->renderComposerAssets($context) : '',
+                    '{{COMPOSER_ASSETS}}' => $this->renderComposerAssets($context),
                     '{{GET_ENTRIES_METHOD}}' => $hasEntries ? $this->renderGetEntriesMethod($context) : '',
                     '{{REPEATABLE_EXPORT_IMPORT_METHODS}}' => $hasEntries
                         ? $this->renderRepeatableExportImportMethods($context)
@@ -130,10 +127,10 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
     private function renderUseStatements(
         BlockFileGenerationContext $context,
         bool $hasEntries,
-        bool $usesAssetList,
         bool $usesErrorList,
     ): string {
         $useStatements = [
+            'assetlist' => new ControllerUseStatement('Concrete\\Core\\Asset\\AssetList'),
             'blockcontroller' => new ControllerUseStatement('Concrete\\Core\\Block\\BlockController'),
         ];
 
@@ -142,9 +139,6 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
         }
         if ($hasEntries) {
             $useStatements['connection'] = new ControllerUseStatement('Concrete\\Core\\Database\\Connection\\Connection');
-        }
-        if ($usesAssetList) {
-            $useStatements['assetlist'] = new ControllerUseStatement('Concrete\\Core\\Asset\\AssetList');
         }
         if ($this->hasRepeatableFileUsage($context)) {
             $useStatements['aggregatetracker'] = new ControllerUseStatement(

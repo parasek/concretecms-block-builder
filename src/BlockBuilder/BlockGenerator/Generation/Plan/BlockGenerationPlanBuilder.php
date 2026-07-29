@@ -10,8 +10,6 @@ final readonly class BlockGenerationPlanBuilder
     public DatabaseGenerationPlanBuilder $database;
     public FormGenerationPlanBuilder $form;
     public ViewGenerationPlanBuilder $view;
-    public FrontendAssetGenerationPlanBuilder $javaScript;
-    public FrontendAssetGenerationPlanBuilder $css;
 
     public function __construct()
     {
@@ -19,8 +17,6 @@ final readonly class BlockGenerationPlanBuilder
         $this->database = new DatabaseGenerationPlanBuilder();
         $this->form = new FormGenerationPlanBuilder();
         $this->view = new ViewGenerationPlanBuilder();
-        $this->javaScript = FrontendAssetGenerationPlanBuilder::createForJavaScript();
-        $this->css = FrontendAssetGenerationPlanBuilder::createForStylesheet();
     }
 
     public function build(): BlockGenerationPlan
@@ -30,8 +26,6 @@ final readonly class BlockGenerationPlanBuilder
             database: $this->database->build(),
             form: $this->form->build(),
             view: $this->view->build(),
-            javaScript: $this->javaScript->build(),
-            css: $this->css->build(),
         );
     }
 }

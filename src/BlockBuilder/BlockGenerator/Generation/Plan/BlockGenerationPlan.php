@@ -11,8 +11,6 @@ final readonly class BlockGenerationPlan
         public DatabaseGenerationPlan $database,
         public FormGenerationPlan $form,
         public ViewGenerationPlan $view,
-        public FrontendAssetGenerationPlan $javaScript,
-        public FrontendAssetGenerationPlan $css,
     ) {
     }
 }
