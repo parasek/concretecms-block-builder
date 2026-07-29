@@ -6,20 +6,38 @@
 
     <div class="row">
         <div class="col-xl-4">
-            <label for="<%=context%>[<%=counter%>][textareaHeight]"
+            <label for="<%=context%>[<%=counter%>][maxHeight]"
                    class="form-label"
-            ><?= t('Height'); ?></label>
+            ><?= t('Maximum height'); ?></label>
             <div class="input-group">
-                <input type="text"
-                       id="<%=context%>[<%=counter%>][textareaHeight]"
-                       name="<%=context%>[<%=counter%>][textareaHeight]"
+                <input type="number"
+                       id="<%=context%>[<%=counter%>][maxHeight]"
+                       name="<%=context%>[<%=counter%>][maxHeight]"
                        class="form-control"
-                       value="<%=textareaHeight%>"
+                       min="66"
+                       max="2000"
+                       step="1"
+                       value="<%=maxHeight%>"
                 >
                 <span class="input-group-text">px</span>
             </div>
         </div>
-        <div class="form-text"><?= t('Default height: %s', '66px'); ?></div>
+        <div class="form-text"><?= t('Leave empty for unlimited height.'); ?></div>
+    </div>
+
+    <div class="form-check mt-3">
+        <input
+            class="form-check-input"
+            id="<%=context%>[<%=counter%>][displayZeroValue]"
+            name="<%=context%>[<%=counter%>][displayZeroValue]"
+            type="checkbox"
+            value="1"
+        <% if (displayZeroValue === true || displayZeroValue === 1 || displayZeroValue === '1') { %> checked="checked" <% } %>
+        >
+        <label
+            class="form-check-label"
+            for="<%=context%>[<%=counter%>][displayZeroValue]"
+        ><?= t('Display zero ("0") in the view template'); ?></label>
     </div>
 
 </script>

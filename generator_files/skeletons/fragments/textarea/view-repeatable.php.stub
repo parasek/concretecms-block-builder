@@ -1,0 +1,3 @@
+<?php if ({{DISPLAY_CONDITION}}): ?>
+    <?= nl2br(h($entry[{{HANDLE_LITERAL}}]), false); ?>
+<?php endif; ?>

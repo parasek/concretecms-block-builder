@@ -1,0 +1,5 @@
+[data-block-builder-form] textarea[data-block-builder-autosize] {
+    min-block-size: 66px;
+    overflow-y: auto;
+    field-sizing: content;
+}

@@ -1,0 +1,7 @@
+<div class="mb-4">
+    <?= $form->label($view->field({{HANDLE_LITERAL}}), t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}); ?>
+    <?= $form->textarea(
+        $view->field({{HANDLE_LITERAL}}),
+        ${{HANDLE}} ?? ''{{FORM_OPTIONS_ARGUMENT}}
+    ); ?>{{HELP_TEXT}}
+</div>

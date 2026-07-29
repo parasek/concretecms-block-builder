@@ -132,7 +132,7 @@ final class CreateBlockInputNormalizer
 
     private const array FIELD_INTEGER_PROPERTIES = [
         'numberDisplayedDecimals',
-        'textareaHeight',
+        'maxHeight',
         'wysiwygEditorHeight',
         'htmlEditorHeight',
         'imageThumbnailWidth',

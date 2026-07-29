@@ -6,6 +6,7 @@ namespace BlockBuilder\BlockGenerator\Generation;
 
 use ArrayIterator;
 use BlockBuilder\FieldType\Type\Text\Generation\TextFieldGenerationContributor;
+use BlockBuilder\FieldType\Type\Textarea\Generation\TextareaFieldGenerationContributor;
 use IteratorAggregate;
 use Traversable;
 
@@ -16,6 +17,7 @@ readonly class FieldGenerationContributorCollection implements IteratorAggregate
 {
     public function __construct(
         private TextFieldGenerationContributor $textFieldGenerationContributor,
+        private TextareaFieldGenerationContributor $textareaFieldGenerationContributor,
     ) {
     }
 
@@ -26,6 +28,7 @@ readonly class FieldGenerationContributorCollection implements IteratorAggregate
     {
         return new ArrayIterator([
             $this->textFieldGenerationContributor,
+            $this->textareaFieldGenerationContributor,
         ]);
     }
 }

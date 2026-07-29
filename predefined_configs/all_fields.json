@@ -95,7 +95,8 @@
             "label": "Basic Textarea 1",
             "handle": "basicTextareaFirst",
             "helpText": "",
-            "textareaHeight": ""
+            "displayZeroValue": "0",
+            "maxHeight": ""
         },
         "4": {
             "fieldType": "wysiwyg_editor",
@@ -298,7 +299,8 @@
             "label": "Repeatable Textarea 1",
             "handle": "repeatableTextareaFirst",
             "helpText": "",
-            "textareaHeight": ""
+            "displayZeroValue": "0",
+            "maxHeight": ""
         },
         "4": {
             "fieldType": "wysiwyg_editor",

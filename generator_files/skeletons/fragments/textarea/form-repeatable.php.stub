@@ -1,0 +1,13 @@
+<div class="mb-4">
+    <label
+        class="form-label"
+        for="<?= h($view->field('entry')); ?>-<?= h((string) $entryIndex); ?>-{{HANDLE}}"
+    ><?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?></label>
+    <textarea
+        class="form-control"
+        id="<?= h($view->field('entry')); ?>-<?= h((string) $entryIndex); ?>-{{HANDLE}}"
+        name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
+        data-block-builder-autosize
+        data-entry-field="{{HANDLE}}"{{TITLE_SOURCE_ATTRIBUTE}}{{MAX_HEIGHT_ATTRIBUTE}}{{REQUIRED_HTML_ATTRIBUTE}}
+    ><?= h(isset($entry[{{HANDLE_LITERAL}}]) && is_scalar($entry[{{HANDLE_LITERAL}}]) ? (string) $entry[{{HANDLE_LITERAL}}] : ''); ?></textarea>{{HELP_TEXT}}
+</div>
