@@ -213,12 +213,8 @@ readonly class TextFieldGenerationContributor implements FieldGenerationContribu
         ];
         if ($basicField) {
             $replacements['{{HANDLE_LITERAL}}'] = $this->phpLiteralFormatter->format($field->handle);
-            $replacements['{{REQUIRED_FORM_ATTRIBUTE}}'] = $field->required
-                ? PHP_EOL . "            'required' => true,"
-                : '';
         } else {
             $replacements['{{HANDLE_LITERAL}}'] = $this->phpLiteralFormatter->format($field->handle);
-            $replacements['{{REQUIRED_HTML_ATTRIBUTE}}'] = $field->required ? PHP_EOL . '        required' : '';
             $replacements['{{TITLE_SOURCE_ATTRIBUTE}}'] = $field->titleSource
                 ? PHP_EOL . '        data-entry-title-source'
                 : '';

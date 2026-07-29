@@ -220,9 +220,6 @@ readonly class TextareaFieldGenerationContributor implements FieldGenerationCont
                     $field->maxHeight,
                 );
             }
-            if ($field->required) {
-                $formAttributes[] = '            \'required\' => true,';
-            }
             $replacements['{{FORM_OPTIONS_ARGUMENT}}'] = $formAttributes === []
                 ? ''
                 : sprintf(
@@ -233,9 +230,6 @@ readonly class TextareaFieldGenerationContributor implements FieldGenerationCont
         } else {
             $replacements['{{MAX_HEIGHT_ATTRIBUTE}}'] = $field->maxHeight !== null
                 ? sprintf('%s        style="max-block-size: %dpx;"', PHP_EOL, $field->maxHeight)
-                : '';
-            $replacements['{{REQUIRED_HTML_ATTRIBUTE}}'] = $field->required
-                ? PHP_EOL . '        required'
                 : '';
             $replacements['{{TITLE_SOURCE_ATTRIBUTE}}'] = $field->titleSource
                 ? PHP_EOL . '        data-entry-title-source'

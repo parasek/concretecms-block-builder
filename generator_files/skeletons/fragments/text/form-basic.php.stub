@@ -4,7 +4,7 @@
         $view->field({{HANDLE_LITERAL}}),
         ${{HANDLE}} ?? '',
         [
-            'maxlength' => 255,{{REQUIRED_FORM_ATTRIBUTE}}
+            'maxlength' => 255,
         ],
     ); ?>{{HELP_TEXT}}
 </div>
