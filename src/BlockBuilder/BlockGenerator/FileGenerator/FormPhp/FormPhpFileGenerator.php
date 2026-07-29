@@ -178,7 +178,7 @@ readonly class FormPhpFileGenerator implements FileGeneratorInterface
 
         $template = <<<'PHP'
 <?php
-$blockBuilderEntries = is_array($entries ?? null) ? array_values($entries) : [];
+$blockBuilderEntries = isset($entries) && is_array($entries) ? array_values($entries) : [];
 $translatedAddAtTopLabel = t({{ADD_AT_TOP_LABEL}});
 $translatedAddAtBottomLabel = t({{ADD_AT_BOTTOM_LABEL}});
 $translatedCopyLastLabel = t({{COPY_LAST_LABEL}});
