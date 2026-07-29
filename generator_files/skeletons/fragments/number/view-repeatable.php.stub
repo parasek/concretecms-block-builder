@@ -1,0 +1,3 @@
+<?php if ({{DISPLAY_CONDITION}}): ?>
+    <?= h(number_format((float) $entry[{{HANDLE_LITERAL}}], {{DISPLAYED_DECIMALS}}, {{DECIMAL_SEPARATOR_LITERAL}}, {{THOUSANDS_SEPARATOR_LITERAL}})); ?>
+<?php endif; ?>

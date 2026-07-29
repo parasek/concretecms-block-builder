@@ -10,6 +10,8 @@ use BlockBuilder\FieldType\AbstractFieldType;
 
 class NumberFieldType extends AbstractFieldType
 {
+    public const int MAXIMUM_DISPLAYED_DECIMALS = 20;
+
     public static function getEnum(): FieldTypeEnum
     {
         return FieldTypeEnum::Number;
@@ -33,6 +35,7 @@ class NumberFieldType extends AbstractFieldType
     public static function getDefaultValues(): array
     {
         return [
+            'displayZeroValue' => 0,
             'numberSize' => '10.2',
             'numberMin' => '0',
             'numberMax' => '99999999.99',
@@ -51,6 +54,7 @@ class NumberFieldType extends AbstractFieldType
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),
             helpText: trim($data['helpText'] ?? ''),
+            displayZeroValue: !empty($data['displayZeroValue']),
             numberSize: trim($data['numberSize'] ?? ''),
             numberStep: trim($data['numberStep'] ?? ''),
             numberMin: trim($data['numberMin'] ?? ''),
@@ -68,8 +72,14 @@ class NumberFieldType extends AbstractFieldType
             'numberStep|invalid_format' => t('Invalid entry in one of "Number/%s" fields, should be a numeric value like 1 or 0.01 (%s).', t('Step'), $context->getTabName()),
             'numberMin|invalid_format' => t('Invalid entry in one of "Number/%s" fields, should be a numeric value like 1 or 0.01 (%s).', t('Minimum'), $context->getTabName()),
             'numberMax|invalid_format' => t('Invalid entry in one of "Number/%s" fields, should be a numeric value like 1 or 0.01 (%s).', t('Maximum'), $context->getTabName()),
-            'numberDisplayedDecimals|invalid_number' => t('Invalid entry in one of "Displayed decimals" fields, should be a non-negative integer (%s).', 40, 2000, $context->getTabName()),
-            'numberDisplayedDecimalSeparator|invalid_value' => t('Invalid entry in one of "Displayed decimal separator" fields (%s).', 40, 2000, $context->getTabName()),
+            'numberStep|not_positive' => t('Some "Number/Step" fields are not greater than zero (%s).', $context->getTabName()),
+            'numberMin|greater_than_maximum' => t('Some "Number/Minimum" fields are greater than their maximum (%s).', $context->getTabName()),
+            'numberDisplayedDecimals|invalid_number' => t(
+                'Invalid entry in one of "Displayed decimals" fields, should be an integer between 0 and %s (%s).',
+                self::MAXIMUM_DISPLAYED_DECIMALS,
+                $context->getTabName(),
+            ),
+            'numberDisplayedDecimalSeparator|invalid_value' => t('Some "Displayed decimal separator" fields are empty (%s).', $context->getTabName()),
         ];
     }
 
@@ -85,38 +95,50 @@ class NumberFieldType extends AbstractFieldType
         $separator = $data['numberDisplayedDecimalSeparator'] ?? '';
 
         // Size
-        if ($size !== '') {
-            // Validates formats like "10.2" or "8.0",
-            // ensuring it doesn't start with "0"
-            if (!preg_match('/^[1-9]\d*\.\d+$/', (string) $size)) {
-                $errors[] = 'numberSize|invalid_format';
-            }
+        // Validates formats like "10.2" or "8.0", ensuring it doesn't start with "0".
+        if (!is_scalar($size) || preg_match('/^[1-9]\d*\.\d+$/', (string) $size) !== 1) {
+            $errors[] = 'numberSize|invalid_format';
         }
 
         // Step
-        if (!is_numeric($step)) {
+        if (!is_scalar($step) || !is_numeric($step) || !is_finite((float) $step)) {
             $errors[] = 'numberStep|invalid_format';
+        } elseif ((float) $step <= 0) {
+            $errors[] = 'numberStep|not_positive';
         }
 
         // Minimum
-        if (!is_numeric($min)) {
+        if (!is_scalar($min) || !is_numeric($min) || !is_finite((float) $min)) {
             $errors[] = 'numberMin|invalid_format';
         }
 
         // Maximum
-        if (!is_numeric($max)) {
+        if (!is_scalar($max) || !is_numeric($max) || !is_finite((float) $max)) {
             $errors[] = 'numberMax|invalid_format';
+        }
+        if (
+            is_scalar($min)
+            && is_scalar($max)
+            && is_numeric($min)
+            && is_numeric($max)
+            && is_finite((float) $min)
+            && is_finite((float) $max)
+            && (float) $min > (float) $max
+        ) {
+            $errors[] = 'numberMin|greater_than_maximum';
         }
 
         // Displayed decimals
-        if ($decimals !== '') {
-            if (!ctype_digit((string) $decimals)) {
-                $errors[] = 'numberDisplayedDecimals|invalid_number';
-            }
+        if (
+            !is_scalar($decimals)
+            || !ctype_digit((string) $decimals)
+            || (int) $decimals > self::MAXIMUM_DISPLAYED_DECIMALS
+        ) {
+            $errors[] = 'numberDisplayedDecimals|invalid_number';
         }
 
         // Displayed decimal separator
-        if ($separator === '') {
+        if (!is_scalar($separator) || $separator === '') {
             $errors[] = 'numberDisplayedDecimalSeparator|invalid_value';
         }
 

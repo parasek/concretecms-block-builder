@@ -4,6 +4,21 @@
 
     <hr class="bb-entry-hr">
 
+    <div class="form-check mb-4">
+        <input
+            class="form-check-input"
+            id="<%=context%>[<%=counter%>][displayZeroValue]"
+            name="<%=context%>[<%=counter%>][displayZeroValue]"
+            type="checkbox"
+            value="1"
+        <% if (displayZeroValue === true || displayZeroValue === 1 || displayZeroValue === '1') { %> checked="checked" <% } %>
+        >
+        <label
+            class="form-check-label"
+            for="<%=context%>[<%=counter%>][displayZeroValue]"
+        ><?= t('Display zero ("0") in the view template'); ?></label>
+    </div>
+
     <div class="mb-4">
         <label for="<%=context%>[<%=counter%>][numberSize]"
                class="form-label"
@@ -31,7 +46,7 @@
 
         <div class="col-lg-6">
 
-            <p class="text-body"><strong><?= t('HTML input attribute'); ?></strong></p>
+            <p class="text-body"><strong><?= t('Accepted value'); ?></strong></p>
 
             <div class="mb-4">
                 <label for="<%=context%>[<%=counter%>][numberStep]"
@@ -43,7 +58,7 @@
                        class="form-control"
                        value="<%=numberStep%>"
                 >
-                <div class="form-text"><?= t('Value "1" will force integers in the HTML field; use "0.01" when you want to use a standard money format.'); ?></div>
+                <div class="form-text"><?= t('Value "1" accepts integers; use "0.01" when you want to use a standard money format.'); ?></div>
             </div>
 
             <div class="mb-4">
