@@ -1,0 +1,14 @@
+<div class="mb-4">
+    <label class="form-label"><?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?></label>
+    <div
+        data-block-builder-concrete-selector="{{SELECTOR_TYPE}}"
+        data-selected-value="<?= (int) ($entry[{{HANDLE_LITERAL}}] ?? 0); ?>"
+        data-entry-field="{{HANDLE}}"
+    >
+        <{{COMPONENT_NAME}}
+            :{{IDENTIFIER_ATTRIBUTE}}="<?= (int) ($entry[{{HANDLE_LITERAL}}] ?? 0); ?>"
+            input-name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
+            choose-text="<?= t({{CHOOSE_LABEL_LITERAL}}); ?>"
+        ></{{COMPONENT_NAME}}>
+    </div>{{HELP_TEXT}}
+</div>

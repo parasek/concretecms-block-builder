@@ -1,0 +1,7 @@
+<?php if (!empty(${{HANDLE}}_link)): ?>
+    <a href="<?= h(${{HANDLE}}_link{{ENDING_EXPRESSION}}); ?>"
+       {{TITLE_ATTRIBUTE}}
+       {{NEW_WINDOW_ATTRIBUTE}}
+       {{NO_FOLLOW_ATTRIBUTE}}
+    >{{TEXT_CONTENT}}</a>
+<?php endif; ?>

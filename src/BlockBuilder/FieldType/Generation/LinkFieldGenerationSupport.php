@@ -129,16 +129,24 @@ private function resolveBlockBuilderLink(mixed $value): array
 {
     $link = $this->normalizeBlockBuilderLinkData($value);
     $url = '';
+    $object = false;
+    $name = '';
+    $filename = '';
 
     if ($link['link_type'] === 'link_from_sitemap' && $link['link_from_sitemap'] > 0) {
         $page = Page::getByID($link['link_from_sitemap']);
         if ($page && !$page->isError() && !$page->isInTrash()) {
+            $object = $page;
             $url = (string) $page->getCollectionLink();
+            $name = (string) $page->getCollectionName();
         }
     } elseif ($link['link_type'] === 'link_from_file_manager' && $link['link_from_file_manager'] > 0) {
         $file = File::getByID($link['link_from_file_manager']);
-        if ($file && method_exists($file, 'getURL')) {
-            $url = (string) $file->getURL();
+        $fileVersion = $file?->getApprovedVersion();
+        if ($fileVersion) {
+            $object = $file;
+            $url = (string) $fileVersion->getURL();
+            $filename = (string) $fileVersion->getFileName();
         }
     } elseif ($link['link_type'] === 'external_link' && $link['external_link'] !== '') {
         if (in_array($link['protocol'], ['http://', 'https://'], true)) {
@@ -157,6 +165,9 @@ private function resolveBlockBuilderLink(mixed $value): array
     }
 
     $link['url'] = $url;
+    $link['object'] = $object;
+    $link['name'] = $name;
+    $link['filename'] = $filename;
 
     return $link;
 }
@@ -241,7 +252,7 @@ private function getBlockBuilderLinkValidationError(mixed $value, bool $required
             'options' => ['min_range' => 1],
         ]);
         $file = $fileID === false ? null : File::getByID($fileID);
-        if (!$file || !method_exists($file, 'getURL')) {
+        if (!$file?->getApprovedVersion()) {
             return 'missing_destination';
         }
     }

@@ -15,11 +15,11 @@ readonly class LinkFromSitemapFieldTypeDto implements FieldTypeDtoInterface
         public string $handle,
         public bool $required,
         public ?string $helpText,
-        public bool $linkFromSitemapShowEndingField,
-        public bool $linkFromSitemapShowTextField,
-        public bool $linkFromSitemapShowTitleField,
-        public bool $linkFromSitemapShowNewWindowField,
-        public bool $linkFromSitemapShowNoFollowField,
+        public bool $showEndingField,
+        public bool $showTextField,
+        public bool $showTitleField,
+        public bool $showNewWindowField,
+        public bool $showNoFollowField,
     ) {
     }
 }

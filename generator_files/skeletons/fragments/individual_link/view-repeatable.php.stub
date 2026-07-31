@@ -1,0 +1,7 @@
+<?php if (!empty($entry[{{LINK_KEY_LITERAL}}])): ?>
+    <a href="<?= h($entry[{{LINK_KEY_LITERAL}}]{{ENDING_EXPRESSION}}); ?>"
+       {{TITLE_ATTRIBUTE}}
+       {{NEW_WINDOW_ATTRIBUTE}}
+       {{NO_FOLLOW_ATTRIBUTE}}
+    >{{TEXT_CONTENT}}</a>
+<?php endif; ?>

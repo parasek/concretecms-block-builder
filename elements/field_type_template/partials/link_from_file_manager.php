@@ -7,12 +7,12 @@
     <div class="form-check">
         <input type="checkbox"
                class="form-check-input"
-               name="<%=context%>[<%=counter%>][linkFromFileManagerShowEndingField]"
-               id="<%=context%>[<%=counter%>][linkFromFileManagerShowEndingField]"
+               name="<%=context%>[<%=counter%>][showEndingField]"
+               id="<%=context%>[<%=counter%>][showEndingField]"
                value="1"
-            <?= '<% if (parseInt(linkFromFileManagerShowEndingField)) { %> checked="checked" <% } %>'; ?>
+            <?= '<% if (showEndingField === true || showEndingField === 1 || showEndingField === \'1\') { %> checked="checked" <% } %>'; ?>
         >
-        <label for="<%=context%>[<%=counter%>][linkFromFileManagerShowEndingField]"
+        <label for="<%=context%>[<%=counter%>][showEndingField]"
                class="form-check-label"
         ><?= t('Show the "Custom string at the end of URL" field'); ?></label>
     </div>
@@ -20,12 +20,12 @@
     <div class="form-check">
         <input type="checkbox"
                class="form-check-input"
-               name="<%=context%>[<%=counter%>][linkFromFileManagerShowTextField]"
-               id="<%=context%>[<%=counter%>][linkFromFileManagerShowTextField]"
+               name="<%=context%>[<%=counter%>][showTextField]"
+               id="<%=context%>[<%=counter%>][showTextField]"
                value="1"
-            <?= '<% if (parseInt(linkFromFileManagerShowTextField)) { %> checked="checked" <% } %>'; ?>
+            <?= '<% if (showTextField === true || showTextField === 1 || showTextField === \'1\') { %> checked="checked" <% } %>'; ?>
         >
-        <label for="<%=context%>[<%=counter%>][linkFromFileManagerShowTextField]"
+        <label for="<%=context%>[<%=counter%>][showTextField]"
                class="form-check-label"
         ><?= t('Show the "Text" field'); ?>
             <span class="text-muted">- <?= t('The text inside the %s tag, e.g., %s', h('<a>'), h('<a href="#">Example text</a>')); ?></span></label>
@@ -34,12 +34,12 @@
     <div class="form-check">
         <input type="checkbox"
                class="form-check-input"
-               name="<%=context%>[<%=counter%>][linkFromFileManagerShowTitleField]"
-               id="<%=context%>[<%=counter%>][linkFromFileManagerShowTitleField]"
+               name="<%=context%>[<%=counter%>][showTitleField]"
+               id="<%=context%>[<%=counter%>][showTitleField]"
                value="1"
-            <?= '<% if (parseInt(linkFromFileManagerShowTitleField)) { %> checked="checked" <% } %>'; ?>
+            <?= '<% if (showTitleField === true || showTitleField === 1 || showTitleField === \'1\') { %> checked="checked" <% } %>'; ?>
         >
-        <label for="<%=context%>[<%=counter%>][linkFromFileManagerShowTitleField]"
+        <label for="<%=context%>[<%=counter%>][showTitleField]"
                class="form-check-label"
         ><?= t('Show the "Title" field'); ?>
             <span class="text-muted">- <?= t('The value of the title attribute, e.g., %s', h('<a href="#" title="Example title"></a>')); ?></span></label>
@@ -48,12 +48,12 @@
     <div class="form-check">
         <input type="checkbox"
                class="form-check-input"
-               name="<%=context%>[<%=counter%>][linkFromFileManagerShowNewWindowField]"
-               id="<%=context%>[<%=counter%>][linkFromFileManagerShowNewWindowField]"
+               name="<%=context%>[<%=counter%>][showNewWindowField]"
+               id="<%=context%>[<%=counter%>][showNewWindowField]"
                value="1"
-            <?= '<% if (parseInt(linkFromFileManagerShowNewWindowField)) { %> checked="checked" <% } %>'; ?>
+            <?= '<% if (showNewWindowField === true || showNewWindowField === 1 || showNewWindowField === \'1\') { %> checked="checked" <% } %>'; ?>
         >
-        <label for="<%=context%>[<%=counter%>][linkFromFileManagerShowNewWindowField]"
+        <label for="<%=context%>[<%=counter%>][showNewWindowField]"
                class="form-check-label"
         ><?= t('Show the "Open in new window" field'); ?></label>
     </div>
@@ -61,12 +61,12 @@
     <div class="form-check">
         <input type="checkbox"
                class="form-check-input"
-               name="<%=context%>[<%=counter%>][linkFromFileManagerShowNoFollowField]"
-               id="<%=context%>[<%=counter%>][linkFromFileManagerShowNoFollowField]"
+               name="<%=context%>[<%=counter%>][showNoFollowField]"
+               id="<%=context%>[<%=counter%>][showNoFollowField]"
                value="1"
-            <?= '<% if (parseInt(linkFromFileManagerShowNoFollowField)) { %> checked="checked" <% } %>'; ?>
+            <?= '<% if (showNoFollowField === true || showNoFollowField === 1 || showNoFollowField === \'1\') { %> checked="checked" <% } %>'; ?>
         >
-        <label for="<%=context%>[<%=counter%>][linkFromFileManagerShowNoFollowField]"
+        <label for="<%=context%>[<%=counter%>][showNoFollowField]"
                class="form-check-label"
         ><?= t('Show the "Add nofollow attribute" field'); ?></label>
     </div>

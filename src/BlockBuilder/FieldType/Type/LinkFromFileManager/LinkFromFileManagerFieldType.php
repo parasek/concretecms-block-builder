@@ -10,6 +10,14 @@ use BlockBuilder\FieldType\AbstractFieldType;
 
 class LinkFromFileManagerFieldType extends AbstractFieldType
 {
+    protected const array LEGACY_PROPERTY_ALIASES = [
+        'linkFromFileManagerShowEndingField' => 'showEndingField',
+        'linkFromFileManagerShowTextField' => 'showTextField',
+        'linkFromFileManagerShowTitleField' => 'showTitleField',
+        'linkFromFileManagerShowNewWindowField' => 'showNewWindowField',
+        'linkFromFileManagerShowNoFollowField' => 'showNoFollowField',
+    ];
+
     public static function getEnum(): FieldTypeEnum
     {
         return FieldTypeEnum::LinkFromFileManager;
@@ -32,7 +40,13 @@ class LinkFromFileManagerFieldType extends AbstractFieldType
 
     public static function getDefaultValues(): array
     {
-        return [];
+        return [
+            'showEndingField' => false,
+            'showTextField' => false,
+            'showTitleField' => false,
+            'showNewWindowField' => false,
+            'showNoFollowField' => false,
+        ];
     }
 
     public static function createDtoFromArray(array $data): LinkFromFileManagerFieldTypeDto
@@ -43,11 +57,11 @@ class LinkFromFileManagerFieldType extends AbstractFieldType
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),
             helpText: trim($data['helpText'] ?? ''),
-            linkFromFileManagerShowEndingField: !empty($data['linkFromFileManagerShowEndingField']),
-            linkFromFileManagerShowTextField: !empty($data['linkFromFileManagerShowTextField']),
-            linkFromFileManagerShowTitleField: !empty($data['linkFromFileManagerShowTitleField']),
-            linkFromFileManagerShowNewWindowField: !empty($data['linkFromFileManagerShowNewWindowField']),
-            linkFromFileManagerShowNoFollowField: !empty($data['linkFromFileManagerShowNoFollowField']),
+            showEndingField: !empty($data['showEndingField']),
+            showTextField: !empty($data['showTextField']),
+            showTitleField: !empty($data['showTitleField']),
+            showNewWindowField: !empty($data['showNewWindowField']),
+            showNoFollowField: !empty($data['showNoFollowField']),
         );
     }
 

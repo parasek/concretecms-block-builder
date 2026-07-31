@@ -1,0 +1,33 @@
+<div class="mb-4">
+    <label class="form-label" for="<?= h($view->field('entry')); ?>-<?= h((string) $entryIndex); ?>-{{HANDLE}}">
+        <?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?>
+    </label>
+    <div class="row g-3">
+        <div class="col-lg-4">
+            <select
+                class="form-select"
+                name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}_protocol]"
+                data-entry-field="{{HANDLE}}_protocol"
+                data-link-protocol
+            >
+                <?php foreach (['https://', 'http://', 'BASE_URL', 'CURRENT_PAGE', 'other'] as $protocol): ?>
+                    <option value="<?= h($protocol); ?>" <?= ($entry[{{PROTOCOL_HANDLE_LITERAL}}] ?? 'https://') === $protocol ? 'selected' : ''; ?>>
+                        <?= h($protocol === 'other' ? '----' : $protocol); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="col-lg-8">
+            <input
+                class="form-control"
+                id="<?= h($view->field('entry')); ?>-<?= h((string) $entryIndex); ?>-{{HANDLE}}"
+                name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
+                type="text"
+                value="<?= h($entry[{{HANDLE_LITERAL}}] ?? ''); ?>"
+                maxlength="255"
+                data-entry-field="{{HANDLE}}"
+                data-link-external-url
+            >
+        </div>
+    </div>{{HELP_TEXT}}
+</div>

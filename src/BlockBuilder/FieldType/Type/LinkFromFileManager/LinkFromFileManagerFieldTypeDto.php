@@ -15,11 +15,11 @@ readonly class LinkFromFileManagerFieldTypeDto implements FieldTypeDtoInterface
         public string $handle,
         public bool $required,
         public ?string $helpText,
-        public bool $linkFromFileManagerShowEndingField,
-        public bool $linkFromFileManagerShowTextField,
-        public bool $linkFromFileManagerShowTitleField,
-        public bool $linkFromFileManagerShowNewWindowField,
-        public bool $linkFromFileManagerShowNoFollowField,
+        public bool $showEndingField,
+        public bool $showTextField,
+        public bool $showTitleField,
+        public bool $showNewWindowField,
+        public bool $showNoFollowField,
     ) {
     }
 }

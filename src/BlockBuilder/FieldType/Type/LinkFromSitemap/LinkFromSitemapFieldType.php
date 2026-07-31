@@ -10,6 +10,14 @@ use BlockBuilder\FieldType\AbstractFieldType;
 
 class LinkFromSitemapFieldType extends AbstractFieldType
 {
+    protected const array LEGACY_PROPERTY_ALIASES = [
+        'linkFromSitemapShowEndingField' => 'showEndingField',
+        'linkFromSitemapShowTextField' => 'showTextField',
+        'linkFromSitemapShowTitleField' => 'showTitleField',
+        'linkFromSitemapShowNewWindowField' => 'showNewWindowField',
+        'linkFromSitemapShowNoFollowField' => 'showNoFollowField',
+    ];
+
     public static function getEnum(): FieldTypeEnum
     {
         return FieldTypeEnum::LinkFromSitemap;
@@ -32,7 +40,13 @@ class LinkFromSitemapFieldType extends AbstractFieldType
 
     public static function getDefaultValues(): array
     {
-        return [];
+        return [
+            'showEndingField' => false,
+            'showTextField' => false,
+            'showTitleField' => false,
+            'showNewWindowField' => false,
+            'showNoFollowField' => false,
+        ];
     }
 
     public static function createDtoFromArray(array $data): LinkFromSitemapFieldTypeDto
@@ -43,11 +57,11 @@ class LinkFromSitemapFieldType extends AbstractFieldType
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),
             helpText: trim($data['helpText'] ?? ''),
-            linkFromSitemapShowEndingField: !empty($data['linkFromSitemapShowEndingField']),
-            linkFromSitemapShowTextField: !empty($data['linkFromSitemapShowTextField']),
-            linkFromSitemapShowTitleField: !empty($data['linkFromSitemapShowTitleField']),
-            linkFromSitemapShowNewWindowField: !empty($data['linkFromSitemapShowNewWindowField']),
-            linkFromSitemapShowNoFollowField: !empty($data['linkFromSitemapShowNoFollowField']),
+            showEndingField: !empty($data['showEndingField']),
+            showTextField: !empty($data['showTextField']),
+            showTitleField: !empty($data['showTitleField']),
+            showNewWindowField: !empty($data['showNewWindowField']),
+            showNoFollowField: !empty($data['showNoFollowField']),
         );
     }
 

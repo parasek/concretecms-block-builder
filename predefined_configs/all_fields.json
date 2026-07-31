@@ -189,33 +189,33 @@
             "label": "Basic Link from Sitemap 1",
             "handle": "basicLinkFromSitemapFirst",
             "helpText": "",
-            "linkFromSitemapShowEndingField": "1",
-            "linkFromSitemapShowTextField": "1",
-            "linkFromSitemapShowTitleField": "1",
-            "linkFromSitemapShowNewWindowField": "1",
-            "linkFromSitemapShowNoFollowField": "1"
+            "showEndingField": "1",
+            "showTextField": "1",
+            "showTitleField": "1",
+            "showNewWindowField": "1",
+            "showNoFollowField": "1"
         },
         "13": {
             "fieldType": "link_from_file_manager",
             "label": "Basic Link from File Manager 1",
             "handle": "basicLinkFromFileManagerFirst",
             "helpText": "",
-            "linkFromFileManagerShowEndingField": "1",
-            "linkFromFileManagerShowTextField": "1",
-            "linkFromFileManagerShowTitleField": "1",
-            "linkFromFileManagerShowNewWindowField": "1",
-            "linkFromFileManagerShowNoFollowField": "1"
+            "showEndingField": "1",
+            "showTextField": "1",
+            "showTitleField": "1",
+            "showNewWindowField": "1",
+            "showNoFollowField": "1"
         },
         "14": {
             "fieldType": "external_link",
             "label": "Basic External Link 1",
             "handle": "basicExternalLinkFirst",
             "helpText": "",
-            "externalLinkShowEndingField": "1",
-            "externalLinkShowTextField": "1",
-            "externalLinkShowTitleField": "1",
-            "externalLinkShowNewWindowField": "1",
-            "externalLinkShowNoFollowField": "1"
+            "showEndingField": "1",
+            "showTextField": "1",
+            "showTitleField": "1",
+            "showNewWindowField": "1",
+            "showNoFollowField": "1"
         },
         "15": {
             "fieldType": "image",
@@ -396,33 +396,33 @@
             "label": "Repeatable Link from Sitemap 1",
             "handle": "repeatableLinkFromSitemapFirst",
             "helpText": "",
-            "linkFromSitemapShowEndingField": "1",
-            "linkFromSitemapShowTextField": "1",
-            "linkFromSitemapShowTitleField": "1",
-            "linkFromSitemapShowNewWindowField": "1",
-            "linkFromSitemapShowNoFollowField": "1"
+            "showEndingField": "1",
+            "showTextField": "1",
+            "showTitleField": "1",
+            "showNewWindowField": "1",
+            "showNoFollowField": "1"
         },
         "13": {
             "fieldType": "link_from_file_manager",
             "label": "Repeatable Link from File Manager 1",
             "handle": "repeatableLinkFromFileManagerFirst",
             "helpText": "",
-            "linkFromFileManagerShowEndingField": "1",
-            "linkFromFileManagerShowTextField": "1",
-            "linkFromFileManagerShowTitleField": "1",
-            "linkFromFileManagerShowNewWindowField": "1",
-            "linkFromFileManagerShowNoFollowField": "1"
+            "showEndingField": "1",
+            "showTextField": "1",
+            "showTitleField": "1",
+            "showNewWindowField": "1",
+            "showNoFollowField": "1"
         },
         "14": {
             "fieldType": "external_link",
             "label": "Repeatable External Link 1",
             "handle": "repeatableExternalLinkFirst",
             "helpText": "",
-            "externalLinkShowEndingField": "1",
-            "externalLinkShowTextField": "1",
-            "externalLinkShowTitleField": "1",
-            "externalLinkShowNewWindowField": "1",
-            "externalLinkShowNoFollowField": "1"
+            "showEndingField": "1",
+            "showTextField": "1",
+            "showTitleField": "1",
+            "showNewWindowField": "1",
+            "showNoFollowField": "1"
         },
         "15": {
             "fieldType": "image",

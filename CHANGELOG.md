@@ -64,6 +64,9 @@
 - Removed obsolete and no-op generated controller methods when their block features do not require them.
 - Added tabbed generated forms and a plain-JavaScript repeatable-entry interface with matching shared form styles.
 - Added basic and repeatable Flex Link generation with page, file, and external destinations, reusable compound-field controls, server-side validation, and compatibility with 2.8.1 configuration, stored JSON data, and generated view variable names.
+- Added basic and repeatable Sitemap Link, File Manager Link, and External Link generation while preserving their 2.8.1 configuration aliases, database columns, and generated `view.php` variable names.
+- Fixed saved Sitemap Link, File Manager Link, and External Link options being displayed as unchecked when their JSON values are booleans.
+- Fixed valid File Manager Link selections being rejected because Concrete file-version methods were checked on the proxying file entity.
 - Added generated `view.php` documentation for basic variables, choice-option maps, Flex Link values, and repeatable-entry array keys.
 
 # 2.8.1
