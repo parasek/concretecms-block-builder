@@ -118,8 +118,8 @@
             "handle": "basicTextareaFirst",
             "helpText": "",
             "displayZeroValue": "0",
-            "maxHeight": "",
-            "minHeight": ""
+            "minHeight": "",
+            "maxHeight": ""
         },
         "6": {
             "fieldType": "textarea",
@@ -127,16 +127,16 @@
             "handle": "basicTextareaSecond",
             "helpText": "",
             "displayZeroValue": "0",
-            "maxHeight": "120",
-            "minHeight": ""
+            "minHeight": "",
+            "maxHeight": "120"
         },
         "7": {
             "fieldType": "wysiwyg_editor",
             "label": "Basic WYSIWYG Editor 1",
             "handle": "basicWysiwygEditorFirst",
             "helpText": "",
-            "maxHeight": "",
             "minHeight": "",
+            "maxHeight": "",
             "customConfig": ""
         },
         "8": {
@@ -144,8 +144,8 @@
             "label": "Basic WYSIWYG Editor 2",
             "handle": "basicWysiwygEditorSecond",
             "helpText": "",
-            "maxHeight": "80",
             "minHeight": "",
+            "maxHeight": "80",
             "customConfig": "{\r\n  \"toolbar\": [\r\n    {\r\n      \"name\": \"document\",\r\n      \"items\": [\"Source\", \"-\"]\r\n    },\r\n    {\r\n      \"name\": \"basicstyles\",\r\n      \"items\": [\"Bold\", \"Italic\", \"Underline\", \"Strike\", \"Subscript\", \"Superscript\", \"-\", \"RemoveFormat\"]\r\n    },\r\n    {\r\n      \"name\": \"styles\",\r\n      \"items\": [\"Styles\", \"Format\"]\r\n    }\r\n  ]\r\n}"
         },
         "9": {
@@ -506,8 +506,8 @@
             "handle": "repeatableTextareaFirst",
             "helpText": "",
             "displayZeroValue": "0",
-            "maxHeight": "",
-            "minHeight": ""
+            "minHeight": "",
+            "maxHeight": ""
         },
         "6": {
             "fieldType": "textarea",
@@ -515,16 +515,16 @@
             "handle": "repeatableTextareaSecond",
             "helpText": "",
             "displayZeroValue": "0",
-            "maxHeight": "100",
-            "minHeight": ""
+            "minHeight": "",
+            "maxHeight": "100"
         },
         "7": {
             "fieldType": "wysiwyg_editor",
             "label": "Repeatable WYSIWYG Editor 1",
             "handle": "repeatableWysiwygEditorFirst",
             "helpText": "",
-            "maxHeight": "",
             "minHeight": "",
+            "maxHeight": "",
             "customConfig": ""
         },
         "8": {
@@ -532,8 +532,8 @@
             "label": "Repeatable WYSIWYG Editor 2",
             "handle": "repeatableWysiwygEditorSecond",
             "helpText": "",
-            "maxHeight": "90",
             "minHeight": "",
+            "maxHeight": "90",
             "customConfig": "{\r\n  \"toolbar\": [\r\n    {\r\n      \"name\": \"document\",\r\n      \"items\": [\"Source\", \"-\"]\r\n    },\r\n    {\r\n      \"name\": \"basicstyles\",\r\n      \"items\": [\"Bold\", \"Italic\", \"Underline\", \"Strike\", \"Subscript\", \"Superscript\", \"-\", \"RemoveFormat\"]\r\n    },\r\n    {\r\n      \"name\": \"styles\",\r\n      \"items\": [\"Styles\", \"Format\"]\r\n    }\r\n  ]\r\n}"
         },
         "9": {

@@ -15,8 +15,8 @@ readonly class WysiwygEditorFieldTypeDto implements FieldTypeDtoInterface
         public string $handle,
         public bool $required,
         public ?string $helpText,
-        public ?int $maxHeight,
         public ?int $minHeight,
+        public ?int $maxHeight,
         public ?string $customConfig,
     ) {
     }

@@ -42,8 +42,8 @@ class TextareaFieldType extends AbstractFieldType
     {
         return [
             'displayZeroValue' => 0,
-            'maxHeight' => '',
             'minHeight' => '',
+            'maxHeight' => '',
         ];
     }
 
@@ -57,22 +57,22 @@ class TextareaFieldType extends AbstractFieldType
             helpText: trim($data['helpText'] ?? ''),
             displayZeroValue: !empty($data['displayZeroValue']),
             titleSource: !empty($data['titleSource']),
-            maxHeight: !empty($data['maxHeight']) ? (int) $data['maxHeight'] : null,
             minHeight: !empty($data['minHeight']) ? (int) $data['minHeight'] : null,
+            maxHeight: !empty($data['maxHeight']) ? (int) $data['maxHeight'] : null,
         );
     }
 
     public static function getErrorMessages(FieldTypeContextEnum $context): array
     {
         return [
-            'maxHeight|invalid_number' => t(
-                'Invalid entry in one of "Textarea/Maximum height" fields, should be a number between %s and %s or empty (%s).',
+            'minHeight|invalid_number' => t(
+                'Invalid entry in one of "Textarea/Minimum height" fields, should be a number between %s and %s or empty (%s).',
                 self::MINIMUM_HEIGHT,
                 self::MAXIMUM_HEIGHT,
                 $context->getTabName(),
             ),
-            'minHeight|invalid_number' => t(
-                'Invalid entry in one of "Textarea/Minimum height" fields, should be a number between %s and %s or empty (%s).',
+            'maxHeight|invalid_number' => t(
+                'Invalid entry in one of "Textarea/Maximum height" fields, should be a number between %s and %s or empty (%s).',
                 self::MINIMUM_HEIGHT,
                 self::MAXIMUM_HEIGHT,
                 $context->getTabName(),
@@ -88,18 +88,8 @@ class TextareaFieldType extends AbstractFieldType
     {
         $errors = [];
 
-        $maximumHeight = $data['maxHeight'] ?? '';
         $minimumHeight = $data['minHeight'] ?? '';
-
-        $maximumHeightIsValid = $maximumHeight === ''
-            || IntegerValueValidator::isInRange(
-                $maximumHeight,
-                self::MINIMUM_HEIGHT,
-                self::MAXIMUM_HEIGHT,
-            );
-        if (!$maximumHeightIsValid) {
-            $errors[] = 'maxHeight|invalid_number';
-        }
+        $maximumHeight = $data['maxHeight'] ?? '';
 
         $minimumHeightIsValid = $minimumHeight === ''
             || IntegerValueValidator::isInRange(
@@ -109,6 +99,16 @@ class TextareaFieldType extends AbstractFieldType
             );
         if (!$minimumHeightIsValid) {
             $errors[] = 'minHeight|invalid_number';
+        }
+
+        $maximumHeightIsValid = $maximumHeight === ''
+            || IntegerValueValidator::isInRange(
+                $maximumHeight,
+                self::MINIMUM_HEIGHT,
+                self::MAXIMUM_HEIGHT,
+            );
+        if (!$maximumHeightIsValid) {
+            $errors[] = 'maxHeight|invalid_number';
         }
 
         if (

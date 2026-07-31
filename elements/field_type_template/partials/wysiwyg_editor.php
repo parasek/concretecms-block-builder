@@ -6,23 +6,6 @@
 
     <div class="row mb-4">
         <div class="col-xl-4">
-            <label for="<%=context%>[<%=counter%>][maxHeight]"
-                   class="form-label"
-            ><?= t('Maximum height'); ?></label>
-            <div class="input-group">
-                <input type="text"
-                       id="<%=context%>[<%=counter%>][maxHeight]"
-                       name="<%=context%>[<%=counter%>][maxHeight]"
-                       class="form-control"
-                       value="<%=maxHeight%>"
-                >
-                <span class="input-group-text">px</span>
-            </div>
-            <div class="form-text">
-                <?= t('Leave empty to allow the editor to grow without a maximum height.'); ?>
-            </div>
-        </div>
-        <div class="col-xl-4">
             <label for="<%=context%>[<%=counter%>][minHeight]"
                    class="form-label"
             ><?= t('Minimum height'); ?></label>
@@ -37,6 +20,23 @@
             </div>
             <div class="form-text">
                 <?= t('Leave empty to use the editor default minimum height.'); ?>
+            </div>
+        </div>
+        <div class="col-xl-4">
+            <label for="<%=context%>[<%=counter%>][maxHeight]"
+                   class="form-label"
+            ><?= t('Maximum height'); ?></label>
+            <div class="input-group">
+                <input type="text"
+                       id="<%=context%>[<%=counter%>][maxHeight]"
+                       name="<%=context%>[<%=counter%>][maxHeight]"
+                       class="form-control"
+                       value="<%=maxHeight%>"
+                >
+                <span class="input-group-text">px</span>
+            </div>
+            <div class="form-text">
+                <?= t('Leave empty to allow the editor to grow without a maximum height.'); ?>
             </div>
         </div>
     </div>

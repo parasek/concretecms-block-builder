@@ -17,8 +17,8 @@ readonly class TextareaFieldTypeDto implements FieldTypeDtoInterface
         public ?string $helpText,
         public bool $displayZeroValue,
         public bool $titleSource,
-        public ?int $maxHeight,
         public ?int $minHeight,
+        public ?int $maxHeight,
     ) {
     }
 }

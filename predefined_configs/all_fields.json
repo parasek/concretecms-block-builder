@@ -97,16 +97,16 @@
             "handle": "basicTextareaFirst",
             "helpText": "",
             "displayZeroValue": "0",
-            "maxHeight": "",
-            "minHeight": ""
+            "minHeight": "",
+            "maxHeight": ""
         },
         "4": {
             "fieldType": "wysiwyg_editor",
             "label": "Basic WYSIWYG Editor 1",
             "handle": "basicWysiwygEditorFirst",
             "helpText": "",
-            "maxHeight": "",
             "minHeight": "",
+            "maxHeight": "",
             "customConfig": ""
         },
         "5": {
@@ -304,16 +304,16 @@
             "handle": "repeatableTextareaFirst",
             "helpText": "",
             "displayZeroValue": "0",
-            "maxHeight": "",
-            "minHeight": ""
+            "minHeight": "",
+            "maxHeight": ""
         },
         "4": {
             "fieldType": "wysiwyg_editor",
             "label": "Repeatable WYSIWYG Editor 1",
             "handle": "repeatableWysiwygEditorFirst",
             "helpText": "",
-            "maxHeight": "",
             "minHeight": "",
+            "maxHeight": "",
             "customConfig": ""
         },
         "5": {

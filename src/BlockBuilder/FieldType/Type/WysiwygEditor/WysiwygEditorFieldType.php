@@ -43,8 +43,8 @@ class WysiwygEditorFieldType extends AbstractFieldType
     public static function getDefaultValues(): array
     {
         return [
-            'maxHeight' => '',
             'minHeight' => '',
+            'maxHeight' => '',
             'customConfig' => '',
         ];
     }
@@ -57,8 +57,8 @@ class WysiwygEditorFieldType extends AbstractFieldType
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),
             helpText: trim($data['helpText'] ?? ''),
-            maxHeight: !empty($data['maxHeight']) ? (int) $data['maxHeight'] : null,
             minHeight: !empty($data['minHeight']) ? (int) $data['minHeight'] : null,
+            maxHeight: !empty($data['maxHeight']) ? (int) $data['maxHeight'] : null,
             customConfig: $data['customConfig'] ?? '',
         );
     }
@@ -66,8 +66,8 @@ class WysiwygEditorFieldType extends AbstractFieldType
     public static function getErrorMessages(FieldTypeContextEnum $context): array
     {
         return [
-            'maxHeight|invalid_number' => t('Invalid entry in one of "WYSIWYG Editor/Maximum height" fields, should be a number between %s and %s or empty (%s).', self::MINIMUM_EDITOR_HEIGHT, self::MAXIMUM_EDITOR_HEIGHT, $context->getTabName()),
             'minHeight|invalid_number' => t('Invalid entry in one of "WYSIWYG Editor/Minimum height" fields, should be a number between %s and %s or empty (%s).', self::MINIMUM_EDITOR_HEIGHT, self::MAXIMUM_EDITOR_HEIGHT, $context->getTabName()),
+            'maxHeight|invalid_number' => t('Invalid entry in one of "WYSIWYG Editor/Maximum height" fields, should be a number between %s and %s or empty (%s).', self::MINIMUM_EDITOR_HEIGHT, self::MAXIMUM_EDITOR_HEIGHT, $context->getTabName()),
             'minHeight|greater_than_maximum' => t('The minimum height of a WYSIWYG Editor cannot be greater than its maximum height (%s).', $context->getTabName()),
             'customConfig|invalid_json' => t('Invalid entry in one of "WYSIWYG Editor/Custom editor configuration" fields, should be a valid JSON object (%s).', $context->getTabName()),
         ];
@@ -77,19 +77,9 @@ class WysiwygEditorFieldType extends AbstractFieldType
     {
         $errors = [];
 
-        $maximumHeight = $data['maxHeight'] ?? '';
         $minimumHeight = $data['minHeight'] ?? '';
+        $maximumHeight = $data['maxHeight'] ?? '';
         $customConfig = $data['customConfig'] ?? '';
-
-        $maximumHeightIsValid = $maximumHeight === ''
-            || IntegerValueValidator::isInRange(
-                $maximumHeight,
-                self::MINIMUM_EDITOR_HEIGHT,
-                self::MAXIMUM_EDITOR_HEIGHT,
-            );
-        if (!$maximumHeightIsValid) {
-            $errors[] = 'maxHeight|invalid_number';
-        }
 
         $minimumHeightIsValid = $minimumHeight === ''
             || IntegerValueValidator::isInRange(
@@ -99,6 +89,16 @@ class WysiwygEditorFieldType extends AbstractFieldType
             );
         if (!$minimumHeightIsValid) {
             $errors[] = 'minHeight|invalid_number';
+        }
+
+        $maximumHeightIsValid = $maximumHeight === ''
+            || IntegerValueValidator::isInRange(
+                $maximumHeight,
+                self::MINIMUM_EDITOR_HEIGHT,
+                self::MAXIMUM_EDITOR_HEIGHT,
+            );
+        if (!$maximumHeightIsValid) {
+            $errors[] = 'maxHeight|invalid_number';
         }
 
         if (
