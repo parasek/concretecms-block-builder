@@ -25,6 +25,19 @@ class FieldTypeDtoFactory
 
     public function fromArray(array $data): FieldTypeDtoInterface
     {
+        return $this->createDto($data, true);
+    }
+
+    /**
+     * Creates a DTO for redisplaying normalized form data that may contain business-validation errors.
+     */
+    public function fromFormArray(array $data): FieldTypeDtoInterface
+    {
+        return $this->createDto($data, false);
+    }
+
+    private function createDto(array $data, bool $validateChoiceOptions): FieldTypeDtoInterface
+    {
         if (!array_key_exists('fieldType', $data)) {
             throw new MissingFieldTypeException('Field data does not contain a "fieldType" property.');
         }
@@ -55,13 +68,15 @@ class FieldTypeDtoFactory
             }
         }
 
-        foreach (['options'] as $optionListProperty) {
-            if (array_key_exists($optionListProperty, $data)
-                && !ChoiceOptionListValidator::hasValidShape($data[$optionListProperty])
-            ) {
-                throw new MalformedFieldDataException(
-                    sprintf('Property "%s" of field type "%s" contains malformed choice options.', $optionListProperty, $fieldTypeHandle),
-                );
+        if ($validateChoiceOptions) {
+            foreach (['options'] as $optionListProperty) {
+                if (array_key_exists($optionListProperty, $data)
+                    && !ChoiceOptionListValidator::hasValidShape($data[$optionListProperty])
+                ) {
+                    throw new MalformedFieldDataException(
+                        sprintf('Property "%s" of field type "%s" contains malformed choice options.', $optionListProperty, $fieldTypeHandle),
+                    );
+                }
             }
         }
 

@@ -67,19 +67,27 @@
                class="form-label"
         ><?= t('Select options'); ?></label>
         <p class="small text-muted">
-            <?= t('Enter each option on a new line, e.g.'); ?>
-            <code class="bb-code-block">
-                <?= t('Don\'t show'); ?>
-                <br>
-                <?= t('Show'); ?>
-            </code>
-        </p>
-        <p class="small text-muted">
-            <?= t('You can also use a double colon to specify the key (the value saved in the database, only a-zA-Z0-9_ characters are permitted) and the value (the displayed text), e.g.'); ?>
+            <?= t('Enter each option on a new line'); ?>
+            <br>
+            <?= t('Use a double colon to specify the key (the value saved in the database) and the value (the displayed text). Keys must start with a letter or number and may contain letters, numbers, underscores, and hyphens.'); ?>
             <code class="bb-code-block">
                 <?= t('no :: Don\'t show'); ?>
                 <br>
                 <?= t('yes :: Show'); ?>
+            </code>
+        </p>
+        <p class="small text-muted">
+            <?= t('Although keyless options are supported, using explicit keys is recommended.'); ?>
+            <br>
+            <?= t('Keyless options receive numeric keys based on their position, starting from 1.'); ?>
+            <br>
+            <?= t('If an existing block uses keyless options, do not reorder or remove existing options, or insert new options between them. Add new options only at the end of the list.'); ?>
+            <br>
+            <?= t('Alternatively, assign explicit keys matching the options’ current numeric keys before changing the list.'); ?>
+            <code class="bb-code-block">
+                <?= t('Don\'t show'); ?>
+                <br>
+                <?= t('Show'); ?>
             </code>
         </p>
         <textarea name="<%=context%>[<%=counter%>][options]"

@@ -165,7 +165,7 @@ class BlockBuilder extends BaseDashboardController
             return $this->handleCreateBlockResponse($createBlockResult);
         }
 
-        $config = $this->factory->fromArray($result->data);
+        $config = $this->factory->fromFormArray($result->data);
         $this->set('config', $config);
 
         return null;

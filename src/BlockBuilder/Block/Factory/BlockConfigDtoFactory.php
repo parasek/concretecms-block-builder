@@ -21,15 +21,24 @@ readonly class BlockConfigDtoFactory
 
     public function fromArray(array $data): BlockConfigDto
     {
-        return $this->createFromArray($data, false);
+        return $this->createFromArray($data, false, true);
     }
 
     public function fromGenerationArray(array $data): BlockConfigDto
     {
-        return $this->createFromArray($data, true);
+        return $this->createFromArray($data, true, true);
     }
 
-    private function createFromArray(array $data, bool $isBlockBeingGenerated): BlockConfigDto
+    public function fromFormArray(array $data): BlockConfigDto
+    {
+        return $this->createFromArray($data, false, false);
+    }
+
+    private function createFromArray(
+        array $data,
+        bool $isBlockBeingGenerated,
+        bool $validateChoiceOptions,
+    ): BlockConfigDto
     {
         foreach (FieldTypeContextEnum::cases() as $fieldTypeContext) {
             $collectionName = $fieldTypeContext->value;
@@ -46,8 +55,14 @@ readonly class BlockConfigDtoFactory
             $excludedFromRemoval = $this->convertExcludedPathsToArray($excludedFromRemoval);
         }
 
-        $basic = $this->transformFieldsToDto($data[FieldTypeContextEnum::BasicFields->value] ?? []);
-        $entries = $this->transformFieldsToDto($data[FieldTypeContextEnum::RepeatableFields->value] ?? []);
+        $basic = $this->transformFieldsToDto(
+            $data[FieldTypeContextEnum::BasicFields->value] ?? [],
+            $validateChoiceOptions,
+        );
+        $entries = $this->transformFieldsToDto(
+            $data[FieldTypeContextEnum::RepeatableFields->value] ?? [],
+            $validateChoiceOptions,
+        );
 
         return new BlockConfigDto(
             blockBuilderVersion: $this->transformBlockBuilderVersion($data, $isBlockBeingGenerated, $environmentDto),
@@ -132,10 +147,12 @@ readonly class BlockConfigDtoFactory
         return array_values(array_filter(array_map('trim', $lines)));
     }
 
-    private function transformFieldsToDto(array $fields): array
+    private function transformFieldsToDto(array $fields, bool $validateChoiceOptions): array
     {
         return array_values(array_map(
-            callback: fn(array $fieldData) => $this->fieldTypeDtoFactory->fromArray($fieldData),
+            callback: fn(array $fieldData) => $validateChoiceOptions
+                ? $this->fieldTypeDtoFactory->fromArray($fieldData)
+                : $this->fieldTypeDtoFactory->fromFormArray($fieldData),
             array: $fields
         ));
     }

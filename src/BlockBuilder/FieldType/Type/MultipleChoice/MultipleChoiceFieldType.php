@@ -72,7 +72,7 @@ class MultipleChoiceFieldType extends AbstractFieldType
             'displayType|invalid_option' => t('Some "Multiple Choice Field/Type" fields contain an invalid option (%s).', $context->getTabName()),
             'listGenerationMethod|invalid_option' => t('Some "Multiple Choice Field/List generation method" fields contain an invalid option (%s).', $context->getTabName()),
             'options|empty' => t('There are some empty "Multiple Choice Field/Select options" fields (%s).', $context->getTabName()),
-            'options|invalid_data' => t('Invalid entry in one of "Multiple Choice Field/Select options" fields (%s).', $context->getTabName()),
+            'options|invalid_data' => t('Some "Multiple Choice Field/Select options" fields contain invalid options. Use one option per line. Explicit keys must use "key :: label", start with a letter or number, and contain only letters, numbers, underscores, and hyphens (%s).', $context->getTabName()),
             'defaultValue|invalid_option' => t('The default value of a Multiple Choice Field contains an option that is not configured (%s).', $context->getTabName()),
             'defaultValue|invalid_data' => t('The default value of a Multiple Choice Field must contain unique option keys separated by pipes (%s).', $context->getTabName()),
         ];
