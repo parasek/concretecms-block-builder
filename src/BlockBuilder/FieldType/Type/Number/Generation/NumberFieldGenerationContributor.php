@@ -52,7 +52,7 @@ readonly class NumberFieldGenerationContributor implements FieldGenerationContri
             new DatabaseColumn(
                 name: $field->handle,
                 type: 'decimal',
-                size: $field->numberSize,
+                size: $field->size,
                 order: $context->position,
             ),
         );
@@ -175,9 +175,9 @@ readonly class NumberFieldGenerationContributor implements FieldGenerationContri
         bool $entryField,
     ): string {
         $labelExpression = sprintf('t(%s)', $this->phpLiteralFormatter->format($field->label));
-        $minimumLiteral = $this->phpLiteralFormatter->format($field->numberMin);
-        $maximumLiteral = $this->phpLiteralFormatter->format($field->numberMax);
-        $stepLiteral = $this->phpLiteralFormatter->format($field->numberStep);
+        $minimumLiteral = $this->phpLiteralFormatter->format($field->minimum);
+        $maximumLiteral = $this->phpLiteralFormatter->format($field->maximum);
+        $stepLiteral = $this->phpLiteralFormatter->format($field->step);
 
         $invalidNumberError = $this->renderValidationError(
             $entryField,
@@ -318,13 +318,13 @@ PHP,
             '{{HELP_TEXT}}' => $helpText,
         ];
         if ($basicField) {
-            $replacements['{{MINIMUM_LITERAL}}'] = $this->phpLiteralFormatter->format($field->numberMin);
-            $replacements['{{MAXIMUM_LITERAL}}'] = $this->phpLiteralFormatter->format($field->numberMax);
-            $replacements['{{STEP_LITERAL}}'] = $this->phpLiteralFormatter->format($field->numberStep);
+            $replacements['{{MINIMUM_LITERAL}}'] = $this->phpLiteralFormatter->format($field->minimum);
+            $replacements['{{MAXIMUM_LITERAL}}'] = $this->phpLiteralFormatter->format($field->maximum);
+            $replacements['{{STEP_LITERAL}}'] = $this->phpLiteralFormatter->format($field->step);
         } else {
-            $replacements['{{MINIMUM_VALUE}}'] = (string) $field->numberMin;
-            $replacements['{{MAXIMUM_VALUE}}'] = (string) $field->numberMax;
-            $replacements['{{STEP_VALUE}}'] = (string) $field->numberStep;
+            $replacements['{{MINIMUM_VALUE}}'] = (string) $field->minimum;
+            $replacements['{{MAXIMUM_VALUE}}'] = (string) $field->maximum;
+            $replacements['{{STEP_VALUE}}'] = (string) $field->step;
         }
 
         return $this->stubRenderer->render(
@@ -357,12 +357,12 @@ PHP,
                     : ['{{HANDLE_LITERAL}}' => $handleLiteral],
                 [
                     '{{DISPLAY_CONDITION}}' => $displayCondition,
-                    '{{DISPLAYED_DECIMALS}}' => (string) $field->numberDisplayedDecimals,
+                    '{{DISPLAYED_DECIMALS}}' => (string) $field->displayedDecimals,
                     '{{DECIMAL_SEPARATOR_LITERAL}}' => $this->phpLiteralFormatter->format(
-                        $field->numberDisplayedDecimalSeparator,
+                        $field->displayedDecimalSeparator,
                     ),
                     '{{THOUSANDS_SEPARATOR_LITERAL}}' => $this->phpLiteralFormatter->format(
-                        $field->numberDisplayedThousandsSeparator,
+                        $field->displayedThousandsSeparator,
                     ),
                 ],
             ),
@@ -372,8 +372,8 @@ PHP,
     private function validateGenerationOptions(NumberFieldTypeDto $field): void
     {
         if (
-            $field->numberSize === null
-            || preg_match('/^[1-9]\d*\.\d+$/', $field->numberSize) !== 1
+            $field->size === null
+            || preg_match('/^[1-9]\d*\.\d+$/', $field->size) !== 1
         ) {
             throw new InvalidFieldGenerationDtoException(sprintf(
                 'Number field "%s" requires a decimal database size such as "10.2".',
@@ -381,9 +381,9 @@ PHP,
             ));
         }
         if (
-            $field->numberStep === null
-            || !is_numeric($field->numberStep)
-            || (float) $field->numberStep <= 0
+            $field->step === null
+            || !is_numeric($field->step)
+            || (float) $field->step <= 0
         ) {
             throw new InvalidFieldGenerationDtoException(sprintf(
                 'Number field "%s" requires a step greater than zero.',
@@ -391,11 +391,11 @@ PHP,
             ));
         }
         if (
-            $field->numberMin === null
-            || $field->numberMax === null
-            || !is_numeric($field->numberMin)
-            || !is_numeric($field->numberMax)
-            || (float) $field->numberMin > (float) $field->numberMax
+            $field->minimum === null
+            || $field->maximum === null
+            || !is_numeric($field->minimum)
+            || !is_numeric($field->maximum)
+            || (float) $field->minimum > (float) $field->maximum
         ) {
             throw new InvalidFieldGenerationDtoException(sprintf(
                 'Number field "%s" requires a valid minimum that is not greater than its maximum.',
@@ -403,8 +403,8 @@ PHP,
             ));
         }
         if (
-            $field->numberDisplayedDecimals < 0
-            || $field->numberDisplayedDecimals > NumberFieldType::MAXIMUM_DISPLAYED_DECIMALS
+            $field->displayedDecimals < 0
+            || $field->displayedDecimals > NumberFieldType::MAXIMUM_DISPLAYED_DECIMALS
         ) {
             throw new InvalidFieldGenerationDtoException(sprintf(
                 'Number field "%s" requires between 0 and %d displayed decimals.',
@@ -413,9 +413,9 @@ PHP,
             ));
         }
         if (
-            $field->numberDisplayedDecimalSeparator === null
-            || $field->numberDisplayedDecimalSeparator === ''
-            || $field->numberDisplayedThousandsSeparator === null
+            $field->displayedDecimalSeparator === null
+            || $field->displayedDecimalSeparator === ''
+            || $field->displayedThousandsSeparator === null
         ) {
             throw new InvalidFieldGenerationDtoException(sprintf(
                 'Number field "%s" requires valid display separators.',

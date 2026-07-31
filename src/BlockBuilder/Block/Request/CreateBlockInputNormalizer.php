@@ -94,7 +94,7 @@ final class CreateBlockInputNormalizer
     ];
 
     private const array FIELD_INTEGER_PROPERTIES = [
-        'numberDisplayedDecimals',
+        'displayedDecimals',
         'minHeight',
         'maxHeight',
         'htmlEditorHeight',

@@ -20,14 +20,14 @@
     </div>
 
     <div class="mb-4">
-        <label for="<%=context%>[<%=counter%>][numberSize]"
+        <label for="<%=context%>[<%=counter%>][size]"
                class="form-label"
         ><?= t('Size'); ?></label>
         <input type="text"
-               id="<%=context%>[<%=counter%>][numberSize]"
-               name="<%=context%>[<%=counter%>][numberSize]"
+               id="<%=context%>[<%=counter%>][size]"
+               name="<%=context%>[<%=counter%>][size]"
                class="form-control"
-               value="<%=numberSize%>"
+               value="<%=size%>"
         >
         <div class="form-text">
             <?= t('Size of decimal field in MySQL table.'); ?>
@@ -49,39 +49,39 @@
             <p class="text-body"><strong><?= t('Accepted value'); ?></strong></p>
 
             <div class="mb-4">
-                <label for="<%=context%>[<%=counter%>][numberStep]"
+                <label for="<%=context%>[<%=counter%>][step]"
                        class="form-label"
                 ><?= t('Step'); ?></label>
                 <input type="text"
-                       id="<%=context%>[<%=counter%>][numberStep]"
-                       name="<%=context%>[<%=counter%>][numberStep]"
+                       id="<%=context%>[<%=counter%>][step]"
+                       name="<%=context%>[<%=counter%>][step]"
                        class="form-control"
-                       value="<%=numberStep%>"
+                       value="<%=step%>"
                 >
                 <div class="form-text"><?= t('Value "1" accepts integers; use "0.01" when you want to use a standard money format.'); ?></div>
             </div>
 
             <div class="mb-4">
-                <label for="<%=context%>[<%=counter%>][numberMin]"
+                <label for="<%=context%>[<%=counter%>][minimum]"
                        class="form-label"
                 ><?= t('Minimum'); ?></label>
                 <input type="text"
-                       id="<%=context%>[<%=counter%>][numberMin]"
-                       name="<%=context%>[<%=counter%>][numberMin]"
+                       id="<%=context%>[<%=counter%>][minimum]"
+                       name="<%=context%>[<%=counter%>][minimum]"
                        class="form-control"
-                       value="<%=numberMin%>"
+                       value="<%=minimum%>"
                 >
             </div>
 
             <div class="mb-4">
-                <label for="<%=context%>[<%=counter%>][numberMax]"
+                <label for="<%=context%>[<%=counter%>][maximum]"
                        class="form-label"
                 ><?= t('Maximum'); ?></label>
                 <input type="text"
-                       id="<%=context%>[<%=counter%>][numberMax]"
-                       name="<%=context%>[<%=counter%>][numberMax]"
+                       id="<%=context%>[<%=counter%>][maximum]"
+                       name="<%=context%>[<%=counter%>][maximum]"
                        class="form-control"
-                       value="<%=numberMax%>"
+                       value="<%=maximum%>"
                 >
             </div>
 
@@ -92,14 +92,14 @@
             <p class="text-body"><strong><?= t('Displayed value in view template'); ?></strong></p>
 
             <div class="mb-4">
-                <label for="<%=context%>[<%=counter%>][numberDisplayedDecimals]"
+                <label for="<%=context%>[<%=counter%>][displayedDecimals]"
                        class="form-label"
                 ><?= t('Displayed decimals'); ?></label>
                 <input type="number"
-                       id="<%=context%>[<%=counter%>][numberDisplayedDecimals]"
-                       name="<%=context%>[<%=counter%>][numberDisplayedDecimals]"
+                       id="<%=context%>[<%=counter%>][displayedDecimals]"
+                       name="<%=context%>[<%=counter%>][displayedDecimals]"
                        class="form-control"
-                       value="<%=numberDisplayedDecimals%>"
+                       value="<%=displayedDecimals%>"
                        min="0"
                        step="1"
                 >
@@ -110,14 +110,14 @@
             </div>
 
             <div class="mb-4">
-                <label for="<%=context%>[<%=counter%>][numberDisplayedDecimalSeparator]"
+                <label for="<%=context%>[<%=counter%>][displayedDecimalSeparator]"
                        class="form-label"
                 ><?= t('Displayed decimal separator'); ?></label>
                 <input type="text"
-                       id="<%=context%>[<%=counter%>][numberDisplayedDecimalSeparator]"
-                       name="<%=context%>[<%=counter%>][numberDisplayedDecimalSeparator]"
+                       id="<%=context%>[<%=counter%>][displayedDecimalSeparator]"
+                       name="<%=context%>[<%=counter%>][displayedDecimalSeparator]"
                        class="form-control"
-                       value="<%=numberDisplayedDecimalSeparator%>"
+                       value="<%=displayedDecimalSeparator%>"
                 >
                 <div class="form-text">
                     <?= t('Usually "," (comma) or "." (dot).'); ?>
@@ -126,14 +126,14 @@
             </div>
 
             <div class="">
-                <label for="<%=context%>[<%=counter%>][numberDisplayedThousandsSeparator]"
+                <label for="<%=context%>[<%=counter%>][displayedThousandsSeparator]"
                        class="form-label"
                 ><?= t('Displayed thousands separator'); ?></label>
                 <input type="text"
-                       id="<%=context%>[<%=counter%>][numberDisplayedThousandsSeparator]"
-                       name="<%=context%>[<%=counter%>][numberDisplayedThousandsSeparator]"
+                       id="<%=context%>[<%=counter%>][displayedThousandsSeparator]"
+                       name="<%=context%>[<%=counter%>][displayedThousandsSeparator]"
                        class="form-control"
-                       value="<%=numberDisplayedThousandsSeparator%>"
+                       value="<%=displayedThousandsSeparator%>"
                 >
                 <div class="form-text">
                     <?= t('Usually " " (space), "." (dot) or "," (comma). You can also leave it empty.'); ?>

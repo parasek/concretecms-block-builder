@@ -12,6 +12,16 @@ class NumberFieldType extends AbstractFieldType
 {
     public const int MAXIMUM_DISPLAYED_DECIMALS = 20;
 
+    protected const array LEGACY_PROPERTY_ALIASES = [
+        'numberSize' => 'size',
+        'numberStep' => 'step',
+        'numberMin' => 'minimum',
+        'numberMax' => 'maximum',
+        'numberDisplayedDecimals' => 'displayedDecimals',
+        'numberDisplayedDecimalSeparator' => 'displayedDecimalSeparator',
+        'numberDisplayedThousandsSeparator' => 'displayedThousandsSeparator',
+    ];
+
     public static function getEnum(): FieldTypeEnum
     {
         return FieldTypeEnum::Number;
@@ -36,13 +46,13 @@ class NumberFieldType extends AbstractFieldType
     {
         return [
             'displayZeroValue' => 0,
-            'numberSize' => '10.2',
-            'numberMin' => '0',
-            'numberMax' => '99999999.99',
-            'numberStep' => '0.01',
-            'numberDisplayedDecimals' => '2',
-            'numberDisplayedDecimalSeparator' => ',',
-            'numberDisplayedThousandsSeparator' => ' ',
+            'size' => '10.2',
+            'minimum' => '0',
+            'maximum' => '99999999.99',
+            'step' => '0.01',
+            'displayedDecimals' => '2',
+            'displayedDecimalSeparator' => ',',
+            'displayedThousandsSeparator' => ' ',
         ];
     }
 
@@ -55,31 +65,31 @@ class NumberFieldType extends AbstractFieldType
             required: !empty($data['required']),
             helpText: trim($data['helpText'] ?? ''),
             displayZeroValue: !empty($data['displayZeroValue']),
-            numberSize: trim($data['numberSize'] ?? ''),
-            numberStep: trim($data['numberStep'] ?? ''),
-            numberMin: trim($data['numberMin'] ?? ''),
-            numberMax: trim($data['numberMax'] ?? ''),
-            numberDisplayedDecimals: (int) ($data['numberDisplayedDecimals'] ?? 0),
-            numberDisplayedDecimalSeparator: trim($data['numberDisplayedDecimalSeparator'] ?? ''),
-            numberDisplayedThousandsSeparator: trim($data['numberDisplayedThousandsSeparator'] ?? ''),
+            size: trim($data['size'] ?? ''),
+            step: trim($data['step'] ?? ''),
+            minimum: trim($data['minimum'] ?? ''),
+            maximum: trim($data['maximum'] ?? ''),
+            displayedDecimals: (int) ($data['displayedDecimals'] ?? 0),
+            displayedDecimalSeparator: trim($data['displayedDecimalSeparator'] ?? ''),
+            displayedThousandsSeparator: trim($data['displayedThousandsSeparator'] ?? ''),
         );
     }
 
     public static function getErrorMessages(FieldTypeContextEnum $context): array
     {
         return [
-            'numberSize|invalid_format' => t('Invalid entry in one of "Number/Size" fields, should be a dot-separated decimal format like 10.2 or 8.0 (%s).', $context->getTabName()),
-            'numberStep|invalid_format' => t('Invalid entry in one of "Number/%s" fields, should be a numeric value like 1 or 0.01 (%s).', t('Step'), $context->getTabName()),
-            'numberMin|invalid_format' => t('Invalid entry in one of "Number/%s" fields, should be a numeric value like 1 or 0.01 (%s).', t('Minimum'), $context->getTabName()),
-            'numberMax|invalid_format' => t('Invalid entry in one of "Number/%s" fields, should be a numeric value like 1 or 0.01 (%s).', t('Maximum'), $context->getTabName()),
-            'numberStep|not_positive' => t('Some "Number/Step" fields are not greater than zero (%s).', $context->getTabName()),
-            'numberMin|greater_than_maximum' => t('Some "Number/Minimum" fields are greater than their maximum (%s).', $context->getTabName()),
-            'numberDisplayedDecimals|invalid_number' => t(
+            'size|invalid_format' => t('Invalid entry in one of "Number/Size" fields, should be a dot-separated decimal format like 10.2 or 8.0 (%s).', $context->getTabName()),
+            'step|invalid_format' => t('Invalid entry in one of "Number/%s" fields, should be a numeric value like 1 or 0.01 (%s).', t('Step'), $context->getTabName()),
+            'minimum|invalid_format' => t('Invalid entry in one of "Number/%s" fields, should be a numeric value like 1 or 0.01 (%s).', t('Minimum'), $context->getTabName()),
+            'maximum|invalid_format' => t('Invalid entry in one of "Number/%s" fields, should be a numeric value like 1 or 0.01 (%s).', t('Maximum'), $context->getTabName()),
+            'step|not_positive' => t('Some "Number/Step" fields are not greater than zero (%s).', $context->getTabName()),
+            'minimum|greater_than_maximum' => t('Some "Number/Minimum" fields are greater than their maximum (%s).', $context->getTabName()),
+            'displayedDecimals|invalid_number' => t(
                 'Invalid entry in one of "Displayed decimals" fields, should be an integer between 0 and %s (%s).',
                 self::MAXIMUM_DISPLAYED_DECIMALS,
                 $context->getTabName(),
             ),
-            'numberDisplayedDecimalSeparator|invalid_value' => t('Some "Displayed decimal separator" fields are empty (%s).', $context->getTabName()),
+            'displayedDecimalSeparator|invalid_value' => t('Some "Displayed decimal separator" fields are empty (%s).', $context->getTabName()),
         ];
     }
 
@@ -87,45 +97,45 @@ class NumberFieldType extends AbstractFieldType
     {
         $errors = [];
 
-        $size = $data['numberSize'] ?? '';
-        $step = $data['numberStep'] ?? '';
-        $min = $data['numberMin'] ?? '';
-        $max = $data['numberMax'] ?? '';
-        $decimals = $data['numberDisplayedDecimals'] ?? '';
-        $separator = $data['numberDisplayedDecimalSeparator'] ?? '';
+        $size = $data['size'] ?? '';
+        $step = $data['step'] ?? '';
+        $minimum = $data['minimum'] ?? '';
+        $maximum = $data['maximum'] ?? '';
+        $decimals = $data['displayedDecimals'] ?? '';
+        $separator = $data['displayedDecimalSeparator'] ?? '';
 
         // Size
         // Validates formats like "10.2" or "8.0", ensuring it doesn't start with "0".
         if (!is_scalar($size) || preg_match('/^[1-9]\d*\.\d+$/', (string) $size) !== 1) {
-            $errors[] = 'numberSize|invalid_format';
+            $errors[] = 'size|invalid_format';
         }
 
         // Step
         if (!is_scalar($step) || !is_numeric($step) || !is_finite((float) $step)) {
-            $errors[] = 'numberStep|invalid_format';
+            $errors[] = 'step|invalid_format';
         } elseif ((float) $step <= 0) {
-            $errors[] = 'numberStep|not_positive';
+            $errors[] = 'step|not_positive';
         }
 
         // Minimum
-        if (!is_scalar($min) || !is_numeric($min) || !is_finite((float) $min)) {
-            $errors[] = 'numberMin|invalid_format';
+        if (!is_scalar($minimum) || !is_numeric($minimum) || !is_finite((float) $minimum)) {
+            $errors[] = 'minimum|invalid_format';
         }
 
         // Maximum
-        if (!is_scalar($max) || !is_numeric($max) || !is_finite((float) $max)) {
-            $errors[] = 'numberMax|invalid_format';
+        if (!is_scalar($maximum) || !is_numeric($maximum) || !is_finite((float) $maximum)) {
+            $errors[] = 'maximum|invalid_format';
         }
         if (
-            is_scalar($min)
-            && is_scalar($max)
-            && is_numeric($min)
-            && is_numeric($max)
-            && is_finite((float) $min)
-            && is_finite((float) $max)
-            && (float) $min > (float) $max
+            is_scalar($minimum)
+            && is_scalar($maximum)
+            && is_numeric($minimum)
+            && is_numeric($maximum)
+            && is_finite((float) $minimum)
+            && is_finite((float) $maximum)
+            && (float) $minimum > (float) $maximum
         ) {
-            $errors[] = 'numberMin|greater_than_maximum';
+            $errors[] = 'minimum|greater_than_maximum';
         }
 
         // Displayed decimals
@@ -134,12 +144,12 @@ class NumberFieldType extends AbstractFieldType
             || !ctype_digit((string) $decimals)
             || (int) $decimals > self::MAXIMUM_DISPLAYED_DECIMALS
         ) {
-            $errors[] = 'numberDisplayedDecimals|invalid_number';
+            $errors[] = 'displayedDecimals|invalid_number';
         }
 
         // Displayed decimal separator
         if (!is_scalar($separator) || $separator === '') {
-            $errors[] = 'numberDisplayedDecimalSeparator|invalid_value';
+            $errors[] = 'displayedDecimalSeparator|invalid_value';
         }
 
         return $errors;

@@ -16,13 +16,13 @@ readonly class NumberFieldTypeDto implements FieldTypeDtoInterface
         public bool $required,
         public ?string $helpText,
         public bool $displayZeroValue,
-        public ?string $numberSize,
-        public ?string $numberStep,
-        public ?string $numberMin,
-        public ?string $numberMax,
-        public int $numberDisplayedDecimals,
-        public ?string $numberDisplayedDecimalSeparator,
-        public ?string $numberDisplayedThousandsSeparator,
+        public ?string $size,
+        public ?string $step,
+        public ?string $minimum,
+        public ?string $maximum,
+        public int $displayedDecimals,
+        public ?string $displayedDecimalSeparator,
+        public ?string $displayedThousandsSeparator,
     ) {
     }
 }

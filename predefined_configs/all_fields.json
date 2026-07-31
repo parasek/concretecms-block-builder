@@ -83,13 +83,13 @@
             "handle": "basicNumberFirst",
             "helpText": "",
             "displayZeroValue": "0",
-            "numberSize": "10.2",
-            "numberStep": "0.01",
-            "numberMin": "0",
-            "numberMax": "99999999.99",
-            "numberDisplayedDecimals": "2",
-            "numberDisplayedDecimalSeparator": ",",
-            "numberDisplayedThousandsSeparator": " "
+            "size": "10.2",
+            "step": "0.01",
+            "minimum": "0",
+            "maximum": "99999999.99",
+            "displayedDecimals": "2",
+            "displayedDecimalSeparator": ",",
+            "displayedThousandsSeparator": " "
         },
         "3": {
             "fieldType": "textarea",
@@ -290,13 +290,13 @@
             "handle": "repeatableNumberFirst",
             "helpText": "",
             "displayZeroValue": "0",
-            "numberSize": "10.2",
-            "numberStep": "0.01",
-            "numberMin": "0",
-            "numberMax": "99999999.99",
-            "numberDisplayedDecimals": "2",
-            "numberDisplayedDecimalSeparator": ",",
-            "numberDisplayedThousandsSeparator": " "
+            "size": "10.2",
+            "step": "0.01",
+            "minimum": "0",
+            "maximum": "99999999.99",
+            "displayedDecimals": "2",
+            "displayedDecimalSeparator": ",",
+            "displayedThousandsSeparator": " "
         },
         "3": {
             "fieldType": "textarea",
