@@ -32,7 +32,9 @@ class FileSetFieldType extends AbstractFieldType
 
     public static function getDefaultValues(): array
     {
-        return [];
+        return [
+            'fileSetPrefix' => '',
+        ];
     }
 
     public static function createDtoFromArray(array $data): FileSetFieldTypeDto
@@ -43,7 +45,7 @@ class FileSetFieldType extends AbstractFieldType
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),
             helpText: trim($data['helpText'] ?? ''),
-            fileSetPrefix: trim($data['fileSetPrefix'] ?? ''),
+            fileSetPrefix: $data['fileSetPrefix'] ?? '',
         );
     }
 

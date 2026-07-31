@@ -1,0 +1,11 @@
+<?php if (!empty($entry[{{HANDLE_LITERAL}}])): ?>
+    <?= t('File Set ID: %s', h($entry[{{HANDLE_LITERAL}}])); ?>
+<?php endif; ?>
+
+<?php if (!empty($entry[{{FILES_KEY_LITERAL}}])): ?>
+    <?php foreach ($entry[{{FILES_KEY_LITERAL}}] as ${{FILE_VARIABLE}}): ?>
+        <a href="<?= h(${{FILE_VARIABLE}}->getURL()); ?>">
+            <?= h(${{FILE_VARIABLE}}->getTitle() ?: ${{FILE_VARIABLE}}->getFileName()); ?>
+        </a>
+    <?php endforeach; ?>
+<?php endif; ?>
