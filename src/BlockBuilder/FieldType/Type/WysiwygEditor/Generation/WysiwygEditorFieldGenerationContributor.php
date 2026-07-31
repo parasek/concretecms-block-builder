@@ -222,7 +222,7 @@ readonly class WysiwygEditorFieldGenerationContributor implements FieldGeneratio
                 order: $position,
             ),
         );
-        if ($field->minHeight !== null || $field->wysiwygEditorHeight !== null) {
+        if ($field->minHeight !== null || $field->maxHeight !== null) {
             $planBuilder->form->addFragment(
                 FormGenerationPlanBuilder::SECTION_SETUP,
                 new CodeFragment(
@@ -251,7 +251,7 @@ readonly class WysiwygEditorFieldGenerationContributor implements FieldGeneratio
 
         // Currently Concrete renders two buttons for source preview
         // (inline and popup). Let's remove one.
-        if (!$field->wysiwygCustomConfig) {
+        if (!$field->customConfig) {
             $options['removePlugins'] = 'sourcedialog';
         }
 
@@ -269,8 +269,8 @@ readonly class WysiwygEditorFieldGenerationContributor implements FieldGeneratio
         if ($field->minHeight !== null) {
             $declarations[] = sprintf('        min-height: %dpx;', $field->minHeight);
         }
-        if ($field->wysiwygEditorHeight !== null) {
-            $declarations[] = sprintf('        max-height: %dpx;', $field->wysiwygEditorHeight);
+        if ($field->maxHeight !== null) {
+            $declarations[] = sprintf('        max-height: %dpx;', $field->maxHeight);
         }
 
         return sprintf(
@@ -290,18 +290,18 @@ readonly class WysiwygEditorFieldGenerationContributor implements FieldGeneratio
      */
     private function decodeEditorOptions(WysiwygEditorFieldTypeDto $field): array
     {
-        if ($field->wysiwygCustomConfig === null || trim($field->wysiwygCustomConfig) === '') {
+        if ($field->customConfig === null || trim($field->customConfig) === '') {
             return [];
         }
 
         try {
             $configurationObject = json_decode(
-                $field->wysiwygCustomConfig,
+                $field->customConfig,
                 false,
                 512,
                 JSON_THROW_ON_ERROR,
             );
-            $options = json_decode($field->wysiwygCustomConfig, true, 512, JSON_THROW_ON_ERROR);
+            $options = json_decode($field->customConfig, true, 512, JSON_THROW_ON_ERROR);
         } catch (JsonException $exception) {
             throw new InvalidFieldGenerationDtoException(
                 sprintf('WYSIWYG editor field "%s" contains invalid editor configuration JSON.', $field->handle),

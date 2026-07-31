@@ -15,6 +15,11 @@ class WysiwygEditorFieldType extends AbstractFieldType
     private const int MINIMUM_EDITOR_HEIGHT = 40;
     private const int MAXIMUM_EDITOR_HEIGHT = 2000;
 
+    protected const array LEGACY_PROPERTY_ALIASES = [
+        'wysiwygEditorHeight' => 'maxHeight',
+        'wysiwygCustomConfig' => 'customConfig',
+    ];
+
     public static function getEnum(): FieldTypeEnum
     {
         return FieldTypeEnum::WysiwygEditor;
@@ -38,9 +43,9 @@ class WysiwygEditorFieldType extends AbstractFieldType
     public static function getDefaultValues(): array
     {
         return [
-            'wysiwygEditorHeight' => '',
+            'maxHeight' => '',
             'minHeight' => '',
-            'wysiwygCustomConfig' => '',
+            'customConfig' => '',
         ];
     }
 
@@ -52,19 +57,19 @@ class WysiwygEditorFieldType extends AbstractFieldType
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),
             helpText: trim($data['helpText'] ?? ''),
-            wysiwygEditorHeight: !empty($data['wysiwygEditorHeight']) ? (int) $data['wysiwygEditorHeight'] : null,
+            maxHeight: !empty($data['maxHeight']) ? (int) $data['maxHeight'] : null,
             minHeight: !empty($data['minHeight']) ? (int) $data['minHeight'] : null,
-            wysiwygCustomConfig: $data['wysiwygCustomConfig'] ?? '',
+            customConfig: $data['customConfig'] ?? '',
         );
     }
 
     public static function getErrorMessages(FieldTypeContextEnum $context): array
     {
         return [
-            'wysiwygEditorHeight|invalid_number' => t('Invalid entry in one of "WYSIWYG Editor/Maximum height" fields, should be a number between %s and %s or empty (%s).', self::MINIMUM_EDITOR_HEIGHT, self::MAXIMUM_EDITOR_HEIGHT, $context->getTabName()),
+            'maxHeight|invalid_number' => t('Invalid entry in one of "WYSIWYG Editor/Maximum height" fields, should be a number between %s and %s or empty (%s).', self::MINIMUM_EDITOR_HEIGHT, self::MAXIMUM_EDITOR_HEIGHT, $context->getTabName()),
             'minHeight|invalid_number' => t('Invalid entry in one of "WYSIWYG Editor/Minimum height" fields, should be a number between %s and %s or empty (%s).', self::MINIMUM_EDITOR_HEIGHT, self::MAXIMUM_EDITOR_HEIGHT, $context->getTabName()),
             'minHeight|greater_than_maximum' => t('The minimum height of a WYSIWYG Editor cannot be greater than its maximum height (%s).', $context->getTabName()),
-            'wysiwygCustomConfig|invalid_json' => t('Invalid entry in one of "WYSIWYG Editor/Custom editor configuration" fields, should be a valid JSON object (%s).', $context->getTabName()),
+            'customConfig|invalid_json' => t('Invalid entry in one of "WYSIWYG Editor/Custom editor configuration" fields, should be a valid JSON object (%s).', $context->getTabName()),
         ];
     }
 
@@ -72,9 +77,9 @@ class WysiwygEditorFieldType extends AbstractFieldType
     {
         $errors = [];
 
-        $maximumHeight = $data['wysiwygEditorHeight'] ?? '';
+        $maximumHeight = $data['maxHeight'] ?? '';
         $minimumHeight = $data['minHeight'] ?? '';
-        $customConfig = $data['wysiwygCustomConfig'] ?? '';
+        $customConfig = $data['customConfig'] ?? '';
 
         $maximumHeightIsValid = $maximumHeight === ''
             || IntegerValueValidator::isInRange(
@@ -83,7 +88,7 @@ class WysiwygEditorFieldType extends AbstractFieldType
                 self::MAXIMUM_EDITOR_HEIGHT,
             );
         if (!$maximumHeightIsValid) {
-            $errors[] = 'wysiwygEditorHeight|invalid_number';
+            $errors[] = 'maxHeight|invalid_number';
         }
 
         $minimumHeightIsValid = $minimumHeight === ''
@@ -108,15 +113,15 @@ class WysiwygEditorFieldType extends AbstractFieldType
 
         if ($customConfig !== '') {
             if (!is_string($customConfig)) {
-                $errors[] = 'wysiwygCustomConfig|invalid_json';
+                $errors[] = 'customConfig|invalid_json';
             } else {
                 try {
                     $decodedConfig = json_decode($customConfig, false, 512, JSON_THROW_ON_ERROR);
                     if (!is_object($decodedConfig)) {
-                        $errors[] = 'wysiwygCustomConfig|invalid_json';
+                        $errors[] = 'customConfig|invalid_json';
                     }
                 } catch (JsonException) {
-                    $errors[] = 'wysiwygCustomConfig|invalid_json';
+                    $errors[] = 'customConfig|invalid_json';
                 }
             }
         }

@@ -93,6 +93,17 @@ final class CreateBlockInputNormalizer
         'deselectAllLabel',
     ];
 
+    private const array FIELD_INTEGER_PROPERTIES = [
+        'numberDisplayedDecimals',
+        'minHeight',
+        'maxHeight',
+        'htmlEditorHeight',
+        'imageThumbnailWidth',
+        'imageThumbnailHeight',
+        'imageFullscreenWidth',
+        'imageFullscreenHeight',
+    ];
+
     private const array IGNORED_CONTROL_FIELDS = [
         'ccm_token',
         'sourceAction',
@@ -130,18 +141,6 @@ final class CreateBlockInputNormalizer
         'externalLinkShowNoFollowField',
     ];
 
-    private const array FIELD_INTEGER_PROPERTIES = [
-        'numberDisplayedDecimals',
-        'maxHeight',
-        'wysiwygEditorHeight',
-        'minHeight',
-        'htmlEditorHeight',
-        'imageThumbnailWidth',
-        'imageThumbnailHeight',
-        'imageFullscreenWidth',
-        'imageFullscreenHeight',
-    ];
-
     private const array LONG_TEXT_FIELDS = [
         'blockDescription',
         'excludedFromRemoval',
@@ -158,7 +157,7 @@ final class CreateBlockInputNormalizer
     private const array FIELD_LONG_TEXT_PROPERTIES = [
         'selectOptions',
         'selectMultipleOptions',
-        'wysiwygCustomConfig',
+        'customConfig',
     ];
 
     private const array FIELD_OPTION_LIST_PROPERTIES = [

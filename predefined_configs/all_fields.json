@@ -104,8 +104,9 @@
             "label": "Basic WYSIWYG Editor 1",
             "handle": "basicWysiwygEditorFirst",
             "helpText": "",
-            "wysiwygEditorHeight": "",
-            "wysiwygCustomConfig": ""
+            "maxHeight": "",
+            "minHeight": "",
+            "customConfig": ""
         },
         "5": {
             "fieldType": "select_field",
@@ -309,8 +310,9 @@
             "label": "Repeatable WYSIWYG Editor 1",
             "handle": "repeatableWysiwygEditorFirst",
             "helpText": "",
-            "wysiwygEditorHeight": "",
-            "wysiwygCustomConfig": ""
+            "maxHeight": "",
+            "minHeight": "",
+            "customConfig": ""
         },
         "5": {
             "fieldType": "select_field",

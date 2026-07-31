@@ -6,15 +6,15 @@
 
     <div class="row mb-4">
         <div class="col-xl-4">
-            <label for="<%=context%>[<%=counter%>][wysiwygEditorHeight]"
+            <label for="<%=context%>[<%=counter%>][maxHeight]"
                    class="form-label"
             ><?= t('Maximum height'); ?></label>
             <div class="input-group">
                 <input type="text"
-                       id="<%=context%>[<%=counter%>][wysiwygEditorHeight]"
-                       name="<%=context%>[<%=counter%>][wysiwygEditorHeight]"
+                       id="<%=context%>[<%=counter%>][maxHeight]"
+                       name="<%=context%>[<%=counter%>][maxHeight]"
                        class="form-control"
-                       value="<%=wysiwygEditorHeight%>"
+                       value="<%=maxHeight%>"
                 >
                 <span class="input-group-text">px</span>
             </div>
@@ -43,13 +43,13 @@
 
     <div class="">
 
-        <label for="<%=context%>[<%=counter%>][wysiwygCustomConfig]"
+        <label for="<%=context%>[<%=counter%>][customConfig]"
                class="form-label"
         ><?= t('Custom editor configuration'); ?></label>
-        <textarea id="<%=context%>[<%=counter%>][wysiwygCustomConfig]"
-                  name="<%=context%>[<%=counter%>][wysiwygCustomConfig]"
+        <textarea id="<%=context%>[<%=counter%>][customConfig]"
+                  name="<%=context%>[<%=counter%>][customConfig]"
                   class="form-control"
-        ><%=wysiwygCustomConfig%></textarea>
+        ><%=customConfig%></textarea>
         <div class="form-text">
             <?= t('The custom editor configuration should be inserted as JSON.'); ?>
             <br>
