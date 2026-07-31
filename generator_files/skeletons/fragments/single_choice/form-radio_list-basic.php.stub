@@ -1,0 +1,20 @@
+<div class="mb-4">
+    <label class="form-label"><?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?></label>
+    <input type="hidden" name="<?= h($view->field({{HANDLE_LITERAL}})); ?>" value="">
+    <?php foreach (${{OPTIONS_VARIABLE}} as $optionIndex => $optionLabel): ?>
+        <?php $optionIdentifier = $view->field({{HANDLE_LITERAL}}) . '-' . $optionIndex; ?>
+        <div class="form-check">
+            <input
+                class="form-check-input"
+                id="<?= h($optionIdentifier); ?>"
+                name="<?= h($view->field({{HANDLE_LITERAL}})); ?>"
+                type="radio"
+                value="<?= h((string) $optionIndex); ?>"
+                <?= isset(${{HANDLE}}) && (string) ${{HANDLE}} === (string) $optionIndex ? 'checked' : ''; ?>
+            >
+            <label class="form-check-label" for="<?= h($optionIdentifier); ?>">
+                <?= h($optionLabel); ?>
+            </label>
+        </div>
+    <?php endforeach; ?>{{HELP_TEXT}}
+</div>

@@ -228,9 +228,9 @@ readonly class FieldTypeValidator implements ValidatorInterface
     {
         $optionMap = match ($fieldType) {
             'select_field' => [
-                'selectType' => $this->getStringKeys($this->fieldTypeOptions->getSingleChoiceTypes()),
-                'selectAddEmptyOption' => ['0', '1'],
-                'selectListGenerationMethod' => $this->getStringKeys($this->fieldTypeOptions->getListGenerationMethods()),
+                'displayType' => $this->getStringKeys($this->fieldTypeOptions->getSingleChoiceTypes()),
+                'addEmptyOption' => ['0', '1'],
+                'listGenerationMethod' => $this->getStringKeys($this->fieldTypeOptions->getListGenerationMethods()),
             ],
             'select_multiple_field' => [
                 'selectMultipleType' => $this->getStringKeys($this->fieldTypeOptions->getMultipleChoiceTypes()),
@@ -258,9 +258,9 @@ readonly class FieldTypeValidator implements ValidatorInterface
     private function getErrorMessages(FieldTypeContextEnum $context): array
     {
         return [
-            'selectType|invalid_option' => t('Some "Single Choice Field/Type" fields contain an invalid option (%s).', $context->getTabName()),
-            'selectAddEmptyOption|invalid_option' => t('Some "Single Choice Field/Add an empty option" fields contain an invalid option (%s).', $context->getTabName()),
-            'selectListGenerationMethod|invalid_option' => t('Some "Single Choice Field/List generation method" fields contain an invalid option (%s).', $context->getTabName()),
+            'displayType|invalid_option' => t('Some "Single Choice Field/Type" fields contain an invalid option (%s).', $context->getTabName()),
+            'addEmptyOption|invalid_option' => t('Some "Single Choice Field/Add an empty option" fields contain an invalid option (%s).', $context->getTabName()),
+            'listGenerationMethod|invalid_option' => t('Some "Single Choice Field/List generation method" fields contain an invalid option (%s).', $context->getTabName()),
             'selectMultipleType|invalid_option' => t('Some "Multiple Choice Field/Type" fields contain an invalid option (%s).', $context->getTabName()),
             'selectMultipleListGenerationMethod|invalid_option' => t('Some "Multiple Choice Field/List generation method" fields contain an invalid option (%s).', $context->getTabName()),
             'fieldType|empty' => t('Some "Field type" fields are empty (%s).', $context->getTabName()),

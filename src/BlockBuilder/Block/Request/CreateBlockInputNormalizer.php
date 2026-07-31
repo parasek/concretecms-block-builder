@@ -116,7 +116,7 @@ final class CreateBlockInputNormalizer
         'required',
         'titleSource',
         'displayZeroValue',
-        'selectAddEmptyOption',
+        'addEmptyOption',
         'imageShowAltTextField',
         'imageCreateThumbnailImage',
         'imageThumbnailCrop',
@@ -155,18 +155,18 @@ final class CreateBlockInputNormalizer
     ];
 
     private const array FIELD_LONG_TEXT_PROPERTIES = [
-        'selectOptions',
+        'options',
         'selectMultipleOptions',
         'customConfig',
     ];
 
     private const array FIELD_OPTION_LIST_PROPERTIES = [
-        'selectOptions',
+        'options',
         'selectMultipleOptions',
     ];
 
     private const array FIELD_CUSTOM_CODE_PROPERTIES = [
-        'selectCustomCode',
+        'customCode',
         'selectMultipleCustomCode',
     ];
 

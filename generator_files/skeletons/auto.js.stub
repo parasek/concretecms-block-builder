@@ -2,7 +2,34 @@
     'use strict';
 
     const containerStates = new WeakMap();
+    const enhancedSelectInstances = new WeakMap();
     const htmlEditorInstances = new WeakMap();
+
+    function destroyEnhancedSelects(root) {
+        root.querySelectorAll('[data-block-builder-enhanced-select]').forEach((field) => {
+            const enhancedSelect = enhancedSelectInstances.get(field) ?? field.tomselect;
+            if (enhancedSelect && typeof enhancedSelect.destroy === 'function') {
+                enhancedSelect.destroy();
+            }
+            enhancedSelectInstances.delete(field);
+        });
+    }
+
+    function initializeEnhancedSelects(root) {
+        root.querySelectorAll('[data-block-builder-enhanced-select]').forEach((field) => {
+            if (!(field instanceof HTMLSelectElement) || enhancedSelectInstances.has(field)) {
+                return;
+            }
+            if (typeof globalThis.TomSelect !== 'function') {
+                console.error('Block Builder enhanced select fields require Tom Select.');
+                return;
+            }
+
+            enhancedSelectInstances.set(field, new globalThis.TomSelect(field, {
+                create: false,
+            }));
+        });
+    }
 
     function synchronizeHtmlEditor(field) {
         const editorState = htmlEditorInstances.get(field);
@@ -333,6 +360,7 @@
         entry.dataset.entryIndex = String(index);
         populateEntry(entry, values);
         state.container.insertBefore(template.content, before);
+        initializeEnhancedSelects(entry);
         initializeHtmlEditors(entry);
         initializeWysiwygEditors(entry);
         entry.dispatchEvent(new CustomEvent('blockbuilder:entry-added', {bubbles: true}));
@@ -364,6 +392,7 @@
 
     function removeEntry(state, entry) {
         entry.dispatchEvent(new CustomEvent('blockbuilder:entry-before-remove', {bubbles: true}));
+        destroyEnhancedSelects(entry);
         destroyHtmlEditors(entry);
         destroyWysiwygEditors(entry);
         entry.remove();
@@ -413,6 +442,7 @@
         } else if (action === 'remove-all' && confirmAction(button)) {
             entries.forEach((currentEntry) => {
                 currentEntry.dispatchEvent(new CustomEvent('blockbuilder:entry-before-remove', {bubbles: true}));
+                destroyEnhancedSelects(currentEntry);
                 destroyHtmlEditors(currentEntry);
                 destroyWysiwygEditors(currentEntry);
                 currentEntry.remove();
@@ -550,6 +580,7 @@
 
     function initialize(root = document) {
         root.querySelectorAll('[data-block-builder-entries]').forEach(initializeContainer);
+        initializeEnhancedSelects(root);
         initializeHtmlEditors(root);
         initializeWysiwygEditors(root);
     }

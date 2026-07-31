@@ -1,0 +1,18 @@
+<div class="mb-4">
+    <label
+        class="form-label"
+        for="<?= h($view->field({{HANDLE_LITERAL}})); ?>"
+    ><?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?></label>
+    <select
+        class="form-select"
+        id="<?= h($view->field({{HANDLE_LITERAL}})); ?>"
+        name="<?= h($view->field({{HANDLE_LITERAL}})); ?>"
+    >
+        <?php foreach (${{OPTIONS_VARIABLE}} as $optionKey => $optionLabel): ?>
+            <option
+                value="<?= h((string) $optionKey); ?>"
+                <?= isset(${{HANDLE}}) && (string) ${{HANDLE}} === (string) $optionKey ? 'selected' : ''; ?>
+            ><?= h($optionLabel); ?></option>
+        <?php endforeach; ?>
+    </select>{{HELP_TEXT}}
+</div>

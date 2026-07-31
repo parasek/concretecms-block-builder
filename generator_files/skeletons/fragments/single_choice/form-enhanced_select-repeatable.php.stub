@@ -1,0 +1,20 @@
+<div class="mb-4">
+    <label
+        class="form-label"
+        for="<?= h($view->field('entry')); ?>-<?= h((string) $entryIndex); ?>-{{HANDLE}}"
+    ><?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?></label>
+    <select
+        class="form-select"
+        id="<?= h($view->field('entry')); ?>-<?= h((string) $entryIndex); ?>-{{HANDLE}}"
+        name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
+        data-block-builder-enhanced-select
+        data-entry-field="{{HANDLE}}"
+    >
+        <?php foreach (${{OPTIONS_VARIABLE}} as $optionKey => $optionLabel): ?>
+            <option
+                value="<?= h((string) $optionKey); ?>"
+                <?= isset($entry[{{HANDLE_LITERAL}}]) && (string) $entry[{{HANDLE_LITERAL}}] === (string) $optionKey ? 'selected' : ''; ?>
+            ><?= h($optionLabel); ?></option>
+        <?php endforeach; ?>
+    </select>{{HELP_TEXT}}
+</div>

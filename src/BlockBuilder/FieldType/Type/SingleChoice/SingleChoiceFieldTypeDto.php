@@ -15,12 +15,12 @@ readonly class SingleChoiceFieldTypeDto implements FieldTypeDtoInterface
         public string $handle,
         public bool $required,
         public ?string $helpText,
-        public ?string $selectType,
-        public bool $selectAddEmptyOption,
-        public ?string $selectDefaultValue,
-        public ?string $selectListGenerationMethod,
-        public ?string $selectOptions,
-        public ?string $selectCustomCode,
+        public ?string $displayType,
+        public bool $addEmptyOption,
+        public ?string $defaultValue,
+        public ?string $listGenerationMethod,
+        public ?string $options,
+        public ?string $customCode,
     ) {
     }
 }

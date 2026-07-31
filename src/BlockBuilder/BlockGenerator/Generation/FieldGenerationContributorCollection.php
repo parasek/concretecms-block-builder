@@ -7,6 +7,7 @@ namespace BlockBuilder\BlockGenerator\Generation;
 use ArrayIterator;
 use BlockBuilder\FieldType\Type\HtmlEditor\Generation\HtmlEditorFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\Number\Generation\NumberFieldGenerationContributor;
+use BlockBuilder\FieldType\Type\SingleChoice\Generation\SingleChoiceFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\Text\Generation\TextFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\Textarea\Generation\TextareaFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\WysiwygEditor\Generation\WysiwygEditorFieldGenerationContributor;
@@ -21,6 +22,7 @@ readonly class FieldGenerationContributorCollection implements IteratorAggregate
     public function __construct(
         private HtmlEditorFieldGenerationContributor $htmlEditorFieldGenerationContributor,
         private NumberFieldGenerationContributor $numberFieldGenerationContributor,
+        private SingleChoiceFieldGenerationContributor $singleChoiceFieldGenerationContributor,
         private TextFieldGenerationContributor $textFieldGenerationContributor,
         private TextareaFieldGenerationContributor $textareaFieldGenerationContributor,
         private WysiwygEditorFieldGenerationContributor $wysiwygEditorFieldGenerationContributor,
@@ -35,6 +37,7 @@ readonly class FieldGenerationContributorCollection implements IteratorAggregate
         return new ArrayIterator([
             $this->htmlEditorFieldGenerationContributor,
             $this->numberFieldGenerationContributor,
+            $this->singleChoiceFieldGenerationContributor,
             $this->textFieldGenerationContributor,
             $this->textareaFieldGenerationContributor,
             $this->wysiwygEditorFieldGenerationContributor,
