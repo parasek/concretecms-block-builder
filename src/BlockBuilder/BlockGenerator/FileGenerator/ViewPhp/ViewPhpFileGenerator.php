@@ -28,6 +28,9 @@ readonly class ViewPhpFileGenerator implements FileGeneratorInterface
                 relativePath: FILENAME_BLOCK_VIEW,
                 contents: $this->stubRenderer->render('view.php.stub', [
                     '{{VARIABLE_DOCUMENTATION}}' => $this->renderVariableDocumentation($context),
+                    '{{ENTRY_DOCUMENTATION}}' => $this->renderEntryDocumentation(
+                        $context->plan->view->entryKeys,
+                    ),
                     '{{SETUP}}' => $this->renderFragments(
                         $context->plan->view->getFragments(ViewGenerationPlanBuilder::SECTION_SETUP),
                     ),
@@ -48,18 +51,11 @@ readonly class ViewPhpFileGenerator implements FileGeneratorInterface
         $fields = $this->renderFragments(
             $context->plan->view->getFragments(ViewGenerationPlanBuilder::SECTION_REPEATABLE_FIELDS),
         );
-        $body = implode(
-            PHP_EOL . PHP_EOL,
-            array_filter([
-                $this->renderEntryDocumentation($context->plan->view->entryKeys),
-                $fields,
-            ], static fn(string $part): bool => $part !== ''),
-        );
 
         return sprintf(
             '<?php if (!empty($entries)): ?>%1$s    <?php foreach ($entries as $entry): ?>%1$s%2$s%1$s    <?php endforeach; ?>%1$s<?php endif; ?>',
             PHP_EOL,
-            $this->indentCode($body, 2),
+            $this->indentCode($fields, 2),
         );
     }
 
@@ -92,7 +88,6 @@ readonly class ViewPhpFileGenerator implements FileGeneratorInterface
         }
 
         $lines = [
-            '<?php',
             '/**',
             ' * Repeatable entry fields:',
         ];
@@ -110,9 +105,8 @@ readonly class ViewPhpFileGenerator implements FileGeneratorInterface
         }
         $lines[] = ' * } $entry';
         $lines[] = ' */';
-        $lines[] = '?>';
 
-        return implode(PHP_EOL, $lines);
+        return PHP_EOL . implode(PHP_EOL, $lines) . PHP_EOL;
     }
 
     private function normalizeDescription(string $description): string
