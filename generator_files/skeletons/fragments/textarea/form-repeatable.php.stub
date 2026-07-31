@@ -8,6 +8,6 @@
         id="<?= h($view->field('entry')); ?>-<?= h((string) $entryIndex); ?>-{{HANDLE}}"
         name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
         data-block-builder-autosize
-        data-entry-field="{{HANDLE}}"{{TITLE_SOURCE_ATTRIBUTE}}{{MAX_HEIGHT_ATTRIBUTE}}
+        data-entry-field="{{HANDLE}}"{{TITLE_SOURCE_ATTRIBUTE}}{{HEIGHT_STYLE_ATTRIBUTE}}
     ><?= h(isset($entry[{{HANDLE_LITERAL}}]) && is_scalar($entry[{{HANDLE_LITERAL}}]) ? (string) $entry[{{HANDLE_LITERAL}}] : ''); ?></textarea>{{HELP_TEXT}}
 </div>

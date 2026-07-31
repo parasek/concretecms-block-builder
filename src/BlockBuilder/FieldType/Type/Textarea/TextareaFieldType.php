@@ -11,8 +11,12 @@ use BlockBuilder\FieldType\AbstractFieldType;
 
 class TextareaFieldType extends AbstractFieldType
 {
-    private const int MINIMUM_MAX_HEIGHT = 66;
-    private const int MAXIMUM_MAX_HEIGHT = 2000;
+    private const int MINIMUM_HEIGHT = 66;
+    private const int MAXIMUM_HEIGHT = 2000;
+
+    protected const array LEGACY_PROPERTY_ALIASES = [
+        'textareaHeight' => 'maxHeight',
+    ];
 
     public static function getEnum(): FieldTypeEnum
     {
@@ -39,6 +43,7 @@ class TextareaFieldType extends AbstractFieldType
         return [
             'displayZeroValue' => 0,
             'maxHeight' => '',
+            'minHeight' => '',
         ];
     }
 
@@ -53,6 +58,7 @@ class TextareaFieldType extends AbstractFieldType
             displayZeroValue: !empty($data['displayZeroValue']),
             titleSource: !empty($data['titleSource']),
             maxHeight: !empty($data['maxHeight']) ? (int) $data['maxHeight'] : null,
+            minHeight: !empty($data['minHeight']) ? (int) $data['minHeight'] : null,
         );
     }
 
@@ -61,8 +67,18 @@ class TextareaFieldType extends AbstractFieldType
         return [
             'maxHeight|invalid_number' => t(
                 'Invalid entry in one of "Textarea/Maximum height" fields, should be a number between %s and %s or empty (%s).',
-                self::MINIMUM_MAX_HEIGHT,
-                self::MAXIMUM_MAX_HEIGHT,
+                self::MINIMUM_HEIGHT,
+                self::MAXIMUM_HEIGHT,
+                $context->getTabName(),
+            ),
+            'minHeight|invalid_number' => t(
+                'Invalid entry in one of "Textarea/Minimum height" fields, should be a number between %s and %s or empty (%s).',
+                self::MINIMUM_HEIGHT,
+                self::MAXIMUM_HEIGHT,
+                $context->getTabName(),
+            ),
+            'minHeight|greater_than_maximum' => t(
+                'The minimum height of a Textarea cannot be greater than its maximum height (%s).',
                 $context->getTabName(),
             ),
         ];
@@ -72,18 +88,37 @@ class TextareaFieldType extends AbstractFieldType
     {
         $errors = [];
 
-        $maxHeight = $data['maxHeight'] ?? '';
+        $maximumHeight = $data['maxHeight'] ?? '';
+        $minimumHeight = $data['minHeight'] ?? '';
 
-        if ($maxHeight !== '') {
-            $isInvalid = !IntegerValueValidator::isInRange(
-                $maxHeight,
-                self::MINIMUM_MAX_HEIGHT,
-                self::MAXIMUM_MAX_HEIGHT,
+        $maximumHeightIsValid = $maximumHeight === ''
+            || IntegerValueValidator::isInRange(
+                $maximumHeight,
+                self::MINIMUM_HEIGHT,
+                self::MAXIMUM_HEIGHT,
             );
+        if (!$maximumHeightIsValid) {
+            $errors[] = 'maxHeight|invalid_number';
+        }
 
-            if ($isInvalid) {
-                $errors[] = 'maxHeight|invalid_number';
-            }
+        $minimumHeightIsValid = $minimumHeight === ''
+            || IntegerValueValidator::isInRange(
+                $minimumHeight,
+                self::MINIMUM_HEIGHT,
+                self::MAXIMUM_HEIGHT,
+            );
+        if (!$minimumHeightIsValid) {
+            $errors[] = 'minHeight|invalid_number';
+        }
+
+        if (
+            $minimumHeight !== ''
+            && $maximumHeight !== ''
+            && $minimumHeightIsValid
+            && $maximumHeightIsValid
+            && (int) $minimumHeight > (int) $maximumHeight
+        ) {
+            $errors[] = 'minHeight|greater_than_maximum';
         }
 
         return $errors;

@@ -118,7 +118,8 @@
             "handle": "basicTextareaFirst",
             "helpText": "",
             "displayZeroValue": "0",
-            "maxHeight": ""
+            "maxHeight": "",
+            "minHeight": ""
         },
         "6": {
             "fieldType": "textarea",
@@ -126,7 +127,8 @@
             "handle": "basicTextareaSecond",
             "helpText": "",
             "displayZeroValue": "0",
-            "maxHeight": "120"
+            "maxHeight": "120",
+            "minHeight": ""
         },
         "7": {
             "fieldType": "wysiwyg_editor",
@@ -504,7 +506,8 @@
             "handle": "repeatableTextareaFirst",
             "helpText": "",
             "displayZeroValue": "0",
-            "maxHeight": ""
+            "maxHeight": "",
+            "minHeight": ""
         },
         "6": {
             "fieldType": "textarea",
@@ -512,7 +515,8 @@
             "handle": "repeatableTextareaSecond",
             "helpText": "",
             "displayZeroValue": "0",
-            "maxHeight": "100"
+            "maxHeight": "100",
+            "minHeight": ""
         },
         "7": {
             "fieldType": "wysiwyg_editor",

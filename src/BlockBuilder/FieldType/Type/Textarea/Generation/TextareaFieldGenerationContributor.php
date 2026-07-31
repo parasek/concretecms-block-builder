@@ -210,14 +210,22 @@ readonly class TextareaFieldGenerationContributor implements FieldGenerationCont
             '{{HELP_TEXT}}' => $helpText,
         ];
 
+        $heightStyles = [];
+        if ($field->minHeight !== null) {
+            $heightStyles[] = sprintf('min-block-size: %dpx;', $field->minHeight);
+        }
+        if ($field->maxHeight !== null) {
+            $heightStyles[] = sprintf('max-block-size: %dpx;', $field->maxHeight);
+        }
+
         if ($basicField) {
             $formAttributes = [
                 '            \'data-block-builder-autosize\' => true,',
             ];
-            if ($field->maxHeight !== null) {
+            if ($heightStyles !== []) {
                 $formAttributes[] = sprintf(
-                    '            \'style\' => \'max-block-size: %dpx;\',',
-                    $field->maxHeight,
+                    '            \'style\' => %s,',
+                    $this->phpLiteralFormatter->format(implode(' ', $heightStyles)),
                 );
             }
             $replacements['{{FORM_OPTIONS_ARGUMENT}}'] = $formAttributes === []
@@ -228,8 +236,8 @@ readonly class TextareaFieldGenerationContributor implements FieldGenerationCont
                     implode(PHP_EOL, $formAttributes),
                 );
         } else {
-            $replacements['{{MAX_HEIGHT_ATTRIBUTE}}'] = $field->maxHeight !== null
-                ? sprintf('%s        style="max-block-size: %dpx;"', PHP_EOL, $field->maxHeight)
+            $replacements['{{HEIGHT_STYLE_ATTRIBUTE}}'] = $heightStyles !== []
+                ? sprintf('%s        style="%s"', PHP_EOL, implode(' ', $heightStyles))
                 : '';
             $replacements['{{TITLE_SOURCE_ATTRIBUTE}}'] = $field->titleSource
                 ? PHP_EOL . '        data-entry-title-source'
