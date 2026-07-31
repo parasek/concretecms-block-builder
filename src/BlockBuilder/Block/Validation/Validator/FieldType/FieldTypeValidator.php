@@ -47,7 +47,8 @@ readonly class FieldTypeValidator implements ValidatorInterface
         $tabsWithError = [];
 
         $uniqueHandles = [];
-        $errorMessages = $this->getErrorMessages($context);
+        $sharedErrorMessages = $this->getErrorMessages($context);
+        $errorMessagesByFieldKey = [];
         if ($context === FieldTypeContextEnum::RepeatableFields) {
             $titleSourceKeys = [];
             foreach ($fields as $fieldKey => $field) {
@@ -56,7 +57,7 @@ readonly class FieldTypeValidator implements ValidatorInterface
                 }
             }
             if (count($titleSourceKeys) > 1) {
-                $errorMessages['titleSource|multiple'] = t('Only one repeatable field can be used as the entry title source.');
+                $sharedErrorMessages['titleSource|multiple'] = t('Only one repeatable field can be used as the entry title source.');
                 foreach ($titleSourceKeys as $titleSourceKey) {
                     $errorHandles[] = $titleSourceKey . '|titleSource|multiple';
                 }
@@ -64,6 +65,8 @@ readonly class FieldTypeValidator implements ValidatorInterface
         }
 
         foreach ($fields as $key => $field) {
+            $errorMessagesByFieldKey[$key] = $sharedErrorMessages;
+
             // A. Validate fields that are shared across all Field Types
 
             // Get error handles from the label field
@@ -103,8 +106,11 @@ readonly class FieldTypeValidator implements ValidatorInterface
                     continue;
                 }
 
-                // Collect all human-readable error messages provided by the current Field Type
-                $errorMessages = array_merge($errorMessages, $fieldType::getErrorMessages($context));
+                // Keep field-specific messages scoped to the field type that produced them.
+                $errorMessagesByFieldKey[$key] = array_merge(
+                    $sharedErrorMessages,
+                    $fieldType::getErrorMessages($context),
+                );
 
                 // Get error handles from the specific Field Type implementation
                 // and prefix it with the current field key
@@ -140,8 +146,9 @@ readonly class FieldTypeValidator implements ValidatorInterface
                 $fieldsWithErrors[] = $context->value . '[' . $extractedKey . '][' . $extractedHandle . ']';
 
                 // Add tabs with errors
-                $transformedKey = $extractedHandle . '|' .$extractedErrorHandle;
-                $errors[] = $errorMessages[$transformedKey] ?? $transformedKey;
+                $transformedKey = $extractedHandle . '|' . $extractedErrorHandle;
+                $fieldErrorMessages = $errorMessagesByFieldKey[$extractedKey] ?? $sharedErrorMessages;
+                $errors[] = $fieldErrorMessages[$transformedKey] ?? $transformedKey;
             }
         }
 
