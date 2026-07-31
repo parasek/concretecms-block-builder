@@ -134,6 +134,7 @@ final class CreateBlockInputNormalizer
         'numberDisplayedDecimals',
         'maxHeight',
         'wysiwygEditorHeight',
+        'minHeight',
         'htmlEditorHeight',
         'imageThumbnailWidth',
         'imageThumbnailHeight',

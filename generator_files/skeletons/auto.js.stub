@@ -3,6 +3,62 @@
 
     const containerStates = new WeakMap();
 
+    function getWysiwygEditorInstance(field) {
+        if (!(field instanceof HTMLTextAreaElement) || !field.id) {
+            return null;
+        }
+
+        return globalThis.CKEDITOR?.instances?.[field.id] ?? null;
+    }
+
+    function synchronizeWysiwygEditor(field) {
+        const editor = getWysiwygEditorInstance(field);
+        if (editor && typeof editor.updateElement === 'function') {
+            editor.updateElement();
+        }
+    }
+
+    function destroyWysiwygEditors(root) {
+        root.querySelectorAll('[data-block-builder-wysiwyg]').forEach((field) => {
+            const editor = getWysiwygEditorInstance(field);
+            if (editor && typeof editor.destroy === 'function') {
+                editor.destroy(true);
+            }
+            field.removeAttribute('data-wysiwyg-initialized');
+        });
+    }
+
+    function initializeWysiwygEditors(root) {
+        root.querySelectorAll('[data-block-builder-wysiwyg]').forEach((field) => {
+            const existingEditor = getWysiwygEditorInstance(field);
+            if (
+                field.dataset.wysiwygInitialized === 'true'
+                && existingEditor?.element?.$ === field
+            ) {
+                return;
+            }
+
+            if (existingEditor) {
+                existingEditor.destroy(true);
+            }
+
+            const formContainer = field.closest('[data-block-builder-form]');
+            const initializer = formContainer
+                ?.blockBuilderWysiwygEditorInitializers
+                ?.[field.dataset.wysiwygHandle];
+            if (typeof initializer !== 'function') {
+                return;
+            }
+
+            try {
+                initializer(field);
+                field.dataset.wysiwygInitialized = 'true';
+            } catch (error) {
+                console.error('Block Builder could not initialize a WYSIWYG editor.', error);
+            }
+        });
+    }
+
     function getEntries(state) {
         return Array.from(state.container.children)
             .filter((element) => element.matches('[data-entry]'));
@@ -95,6 +151,8 @@
         if (!firstField) {
             return null;
         }
+
+        synchronizeWysiwygEditor(firstField);
 
         if (firstField instanceof HTMLInputElement && firstField.type === 'radio') {
             return fields.find((field) => field.checked)?.value ?? '';
@@ -225,6 +283,7 @@
         entry.dataset.entryIndex = String(index);
         populateEntry(entry, values);
         state.container.insertBefore(template.content, before);
+        initializeWysiwygEditors(entry);
         entry.dispatchEvent(new CustomEvent('blockbuilder:entry-added', {bubbles: true}));
 
         const keepCollapsed = state.scope.querySelector('[data-keep-added-collapsed]')?.checked === true;
@@ -254,6 +313,7 @@
 
     function removeEntry(state, entry) {
         entry.dispatchEvent(new CustomEvent('blockbuilder:entry-before-remove', {bubbles: true}));
+        destroyWysiwygEditors(entry);
         entry.remove();
         updateState(state);
     }
@@ -301,6 +361,7 @@
         } else if (action === 'remove-all' && confirmAction(button)) {
             entries.forEach((currentEntry) => {
                 currentEntry.dispatchEvent(new CustomEvent('blockbuilder:entry-before-remove', {bubbles: true}));
+                destroyWysiwygEditors(currentEntry);
                 currentEntry.remove();
             });
             updateState(state);
@@ -436,12 +497,22 @@
 
     function initialize(root = document) {
         root.querySelectorAll('[data-block-builder-entries]').forEach(initializeContainer);
+        initializeWysiwygEditors(root);
+    }
+
+    function handleSubmit(event) {
+        if (!(event.target instanceof HTMLFormElement)) {
+            return;
+        }
+
+        event.target.querySelectorAll('[data-block-builder-wysiwyg]').forEach(synchronizeWysiwygEditor);
     }
 
     document.addEventListener('click', handleAction);
     document.addEventListener('input', handleTitleChange);
     document.addEventListener('change', handleTitleChange);
     document.addEventListener('keydown', handleMoveKeydown);
+    document.addEventListener('submit', handleSubmit, true);
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => initialize(), {once: true});

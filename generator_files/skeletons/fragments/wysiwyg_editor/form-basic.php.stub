@@ -1,0 +1,14 @@
+<div class="mb-4 bb-wysiwyg-editor-{{HANDLE}}">
+    <label
+        class="form-label"
+        for="<?= h($view->field({{HANDLE_LITERAL}})); ?>"
+    ><?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?></label>
+    <textarea
+        class="form-control"
+        id="<?= h($view->field({{HANDLE_LITERAL}})); ?>"
+        name="<?= h($view->field({{HANDLE_LITERAL}})); ?>"
+        style="display: none;"
+        data-block-builder-wysiwyg
+        data-wysiwyg-handle="{{HANDLE}}"
+    ><?= h(isset(${{HANDLE}}) && is_scalar(${{HANDLE}}) ? (string) ${{HANDLE}} : ''); ?></textarea>{{HELP_TEXT}}
+</div>

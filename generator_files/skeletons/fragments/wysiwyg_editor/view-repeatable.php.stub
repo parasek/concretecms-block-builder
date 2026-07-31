@@ -1,0 +1,3 @@
+<?php if ({{DISPLAY_CONDITION}}): ?>
+    <?= $entry[{{HANDLE_LITERAL}}]; ?>
+<?php endif; ?>

@@ -8,6 +8,7 @@ use ArrayIterator;
 use BlockBuilder\FieldType\Type\Number\Generation\NumberFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\Text\Generation\TextFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\Textarea\Generation\TextareaFieldGenerationContributor;
+use BlockBuilder\FieldType\Type\WysiwygEditor\Generation\WysiwygEditorFieldGenerationContributor;
 use IteratorAggregate;
 use Traversable;
 
@@ -20,6 +21,7 @@ readonly class FieldGenerationContributorCollection implements IteratorAggregate
         private NumberFieldGenerationContributor $numberFieldGenerationContributor,
         private TextFieldGenerationContributor $textFieldGenerationContributor,
         private TextareaFieldGenerationContributor $textareaFieldGenerationContributor,
+        private WysiwygEditorFieldGenerationContributor $wysiwygEditorFieldGenerationContributor,
     ) {
     }
 
@@ -32,6 +34,7 @@ readonly class FieldGenerationContributorCollection implements IteratorAggregate
             $this->numberFieldGenerationContributor,
             $this->textFieldGenerationContributor,
             $this->textareaFieldGenerationContributor,
+            $this->wysiwygEditorFieldGenerationContributor,
         ]);
     }
 }

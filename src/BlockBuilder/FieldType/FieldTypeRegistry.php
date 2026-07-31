@@ -48,6 +48,7 @@ final class FieldTypeRegistry
         $this->register(new TextareaFieldType());
         $this->register(new NumberFieldType());
         $this->register(new WysiwygEditorFieldType());
+        $this->register(new HtmlEditorFieldType());
         $this->register(new SingleChoiceFieldType());
         $this->register(new MultipleChoiceFieldType());
         $this->register(new FlexLinkFieldType());
@@ -55,9 +56,8 @@ final class FieldTypeRegistry
         $this->register(new LinkFromFileManagerFieldType());
         $this->register(new ExternalLinkFieldType());
         $this->register(new ImageFieldType());
-        $this->register(new ExpressFieldType());
         $this->register(new FileSetFieldType());
-        $this->register(new HtmlEditorFieldType());
+        $this->register(new ExpressFieldType());
         $this->register(new DatePickerFieldType());
         $this->register(new ColorPickerFieldType());
         $this->register(new IconPickerFieldType());

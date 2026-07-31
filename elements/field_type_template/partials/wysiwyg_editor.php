@@ -8,7 +8,7 @@
         <div class="col-xl-4">
             <label for="<%=context%>[<%=counter%>][wysiwygEditorHeight]"
                    class="form-label"
-            ><?= t('Height'); ?></label>
+            ><?= t('Maximum height'); ?></label>
             <div class="input-group">
                 <input type="text"
                        id="<%=context%>[<%=counter%>][wysiwygEditorHeight]"
@@ -19,9 +19,24 @@
                 <span class="input-group-text">px</span>
             </div>
             <div class="form-text">
-                <?= t('Default height of the editable area: %s.', '40px'); ?>
-                <br>
-                <?= t('Editor auto-grow will be enabled if you leave this field empty.'); ?>
+                <?= t('Leave empty to allow the editor to grow without a maximum height.'); ?>
+            </div>
+        </div>
+        <div class="col-xl-4">
+            <label for="<%=context%>[<%=counter%>][minHeight]"
+                   class="form-label"
+            ><?= t('Minimum height'); ?></label>
+            <div class="input-group">
+                <input type="text"
+                       id="<%=context%>[<%=counter%>][minHeight]"
+                       name="<%=context%>[<%=counter%>][minHeight]"
+                       class="form-control"
+                       value="<%=minHeight%>"
+                >
+                <span class="input-group-text">px</span>
+            </div>
+            <div class="form-text">
+                <?= t('Leave empty to use the editor default minimum height.'); ?>
             </div>
         </div>
     </div>

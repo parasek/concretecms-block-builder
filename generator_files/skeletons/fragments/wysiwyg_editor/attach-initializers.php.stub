@@ -1,0 +1,14 @@
+<script>
+    {
+        const formContainer = document.getElementById(
+            <?= json_encode('form-container-' . $formInstanceIdentifier, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>
+        );
+        if (formContainer) {
+            formContainer.blockBuilderWysiwygEditorInitializers = {
+                <?php foreach (${{INITIALIZERS_VARIABLE}} as $fieldHandle => $initializer): ?>
+                    <?= json_encode($fieldHandle, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>: <?= $initializer; ?>,
+                <?php endforeach; ?>
+            };
+        }
+    }
+</script>
