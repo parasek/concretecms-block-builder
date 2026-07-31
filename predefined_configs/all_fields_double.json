@@ -225,66 +225,66 @@
             "label": "Basic Multiple Choice Field Default 1",
             "handle": "basicMultipleChoiceFieldDefaultFirst",
             "helpText": "",
-            "selectMultipleType": "default_multiselect",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "Don't show\r\nShow",
-            "selectMultipleCustomCode": ""
+            "displayType": "default_multiselect",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "Don't show\r\nShow",
+            "customCode": ""
         },
         "16": {
             "fieldType": "select_multiple_field",
             "label": "Basic Multiple Choice Field Default 2",
             "handle": "basicMultipleChoiceFieldDefaultSecond",
             "helpText": "",
-            "selectMultipleType": "default_multiselect",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "Don't show\r\nShow",
-            "selectMultipleCustomCode": ""
+            "displayType": "default_multiselect",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "Don't show\r\nShow",
+            "customCode": ""
         },
         "17": {
             "fieldType": "select_multiple_field",
             "label": "Basic Multiple Choice Field Enhanced 1",
             "handle": "basicMultipleChoiceFieldEnhancedFirst",
             "helpText": "",
-            "selectMultipleType": "enhanced_multiselect",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "1:: Don't show\r\n2 :: Show",
-            "selectMultipleCustomCode": ""
+            "displayType": "enhanced_multiselect",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "1:: Don't show\r\n2 :: Show",
+            "customCode": ""
         },
         "18": {
             "fieldType": "select_multiple_field",
             "label": "Basic Multiple Choice Field Enhanced 2",
             "handle": "basicMultipleChoiceFieldEnhancedSecond",
             "helpText": "",
-            "selectMultipleType": "enhanced_multiselect",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "1:: Don't show\r\n2 :: Show",
-            "selectMultipleCustomCode": ""
+            "displayType": "enhanced_multiselect",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "1:: Don't show\r\n2 :: Show",
+            "customCode": ""
         },
         "19": {
             "fieldType": "select_multiple_field",
             "label": "Basic Multiple Choice Field Checkbox List 1",
             "handle": "basicMultipleChoiceFieldCheckboxListFirst",
             "helpText": "",
-            "selectMultipleType": "checkbox_list",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "example::Example\r\nsome_data::Some data",
-            "selectMultipleCustomCode": ""
+            "displayType": "checkbox_list",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "example::Example\r\nsome_data::Some data",
+            "customCode": ""
         },
         "20": {
             "fieldType": "select_multiple_field",
             "label": "Basic Multiple Choice Field Checkbox List 2",
             "handle": "basicMultipleChoiceFieldCheckboxListSecond",
             "helpText": "",
-            "selectMultipleType": "checkbox_list",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "example::Example\r\nsome_data::Some data",
-            "selectMultipleCustomCode": ""
+            "displayType": "checkbox_list",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "example::Example\r\nsome_data::Some data",
+            "customCode": ""
         },
         "21": {
             "fieldType": "link",
@@ -613,66 +613,66 @@
             "label": "Repeatable Multiple Choice Field Default 1",
             "handle": "repeatableMultipleChoiceFieldDefaultFirst",
             "helpText": "",
-            "selectMultipleType": "default_multiselect",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "1::Yes\r\n2:: No",
-            "selectMultipleCustomCode": ""
+            "displayType": "default_multiselect",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "1::Yes\r\n2:: No",
+            "customCode": ""
         },
         "16": {
             "fieldType": "select_multiple_field",
             "label": "Repeatable Multiple Choice Field Default 2",
             "handle": "repeatableMultipleChoiceFieldDefaultSecond",
             "helpText": "",
-            "selectMultipleType": "default_multiselect",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "1::Yes\r\n2:: No",
-            "selectMultipleCustomCode": ""
+            "displayType": "default_multiselect",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "1::Yes\r\n2:: No",
+            "customCode": ""
         },
         "17": {
             "fieldType": "select_multiple_field",
             "label": "Repeatable Multiple Choice Field Enhanced 1",
             "handle": "repeatableMultipleChoiceFieldEnhancedFirst",
             "helpText": "",
-            "selectMultipleType": "enhanced_multiselect",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "Don't show\r\nShow",
-            "selectMultipleCustomCode": ""
+            "displayType": "enhanced_multiselect",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "Don't show\r\nShow",
+            "customCode": ""
         },
         "18": {
             "fieldType": "select_multiple_field",
             "label": "Repeatable Multiple Choice Field Enhanced 2",
             "handle": "repeatableMultipleChoiceFieldEnhancedSecond",
             "helpText": "",
-            "selectMultipleType": "enhanced_multiselect",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "Don't show\r\nShow",
-            "selectMultipleCustomCode": ""
+            "displayType": "enhanced_multiselect",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "Don't show\r\nShow",
+            "customCode": ""
         },
         "19": {
             "fieldType": "select_multiple_field",
             "label": "Repeatable Multiple Choice Field Checkbox List 1",
             "handle": "repeatableMultipleChoiceFieldCheckboxFirst",
             "helpText": "",
-            "selectMultipleType": "checkbox_list",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "no :: Don't show\r\nyes :: Show",
-            "selectMultipleCustomCode": ""
+            "displayType": "checkbox_list",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "no :: Don't show\r\nyes :: Show",
+            "customCode": ""
         },
         "20": {
             "fieldType": "select_multiple_field",
             "label": "Repeatable Multiple Choice Field Checkbox List 2",
             "handle": "repeatableMultipleChoiceFieldCheckboxSecond",
             "helpText": "",
-            "selectMultipleType": "checkbox_list",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "no :: Don't show\r\nyes :: Show",
-            "selectMultipleCustomCode": ""
+            "displayType": "checkbox_list",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "no :: Don't show\r\nyes :: Show",
+            "customCode": ""
         },
         "21": {
             "fieldType": "link",

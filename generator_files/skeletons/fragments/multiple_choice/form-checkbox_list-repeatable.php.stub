@@ -1,0 +1,28 @@
+<div class="mb-4">
+    <label class="form-label"><?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?></label>
+    <?php $selectedValues = isset($entry[{{HANDLE_LITERAL}}]) && is_string($entry[{{HANDLE_LITERAL}}]) && $entry[{{HANDLE_LITERAL}}] !== '' ? explode('|', $entry[{{HANDLE_LITERAL}}]) : []; ?>
+    <input
+        type="hidden"
+        name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
+        value=""
+    >
+    <?php if (!empty(${{OPTIONS_VARIABLE}}) && is_array(${{OPTIONS_VARIABLE}})): ?>
+        <?php foreach (${{OPTIONS_VARIABLE}} as $optionKey => $optionLabel): ?>
+            <?php $optionIdentifier = $view->field('entry') . '-' . $entryIndex . '-{{HANDLE}}-' . $optionKey; ?>
+            <div class="form-check">
+                <input
+                    class="form-check-input"
+                    id="<?= h($optionIdentifier); ?>"
+                    name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}][]"
+                    type="checkbox"
+                    value="<?= h((string) $optionKey); ?>"
+                    data-entry-field="{{HANDLE}}"
+                    <?= in_array((string) $optionKey, $selectedValues, true) ? 'checked' : ''; ?>
+                >
+                <label class="form-check-label" for="<?= h($optionIdentifier); ?>">
+                    <?= h($optionLabel); ?>
+                </label>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>{{HELP_TEXT}}
+</div>

@@ -1,0 +1,7 @@
+<?php if (isset(${{HANDLE}}) && ${{HANDLE}} !== ''): ?>
+    <?php $selectedValues = explode('|', ${{HANDLE}}); ?>
+    <?= t('Selected keys/values'); ?>:<br>
+    <?php foreach ($selectedValues as $selectedValue): ?>
+        <?= h($selectedValue); ?>: <?= h(${{OPTIONS_VARIABLE}}[$selectedValue] ?? ''); ?><br>
+    <?php endforeach; ?>
+<?php endif; ?>

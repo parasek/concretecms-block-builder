@@ -156,18 +156,15 @@ final class CreateBlockInputNormalizer
 
     private const array FIELD_LONG_TEXT_PROPERTIES = [
         'options',
-        'selectMultipleOptions',
         'customConfig',
     ];
 
     private const array FIELD_OPTION_LIST_PROPERTIES = [
         'options',
-        'selectMultipleOptions',
     ];
 
     private const array FIELD_CUSTOM_CODE_PROPERTIES = [
         'customCode',
-        'selectMultipleCustomCode',
     ];
 
     public function __construct(private readonly FieldTypeRegistry $fieldTypeRegistry)

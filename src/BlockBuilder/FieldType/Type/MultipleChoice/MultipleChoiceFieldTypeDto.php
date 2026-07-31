@@ -15,11 +15,11 @@ readonly class MultipleChoiceFieldTypeDto implements FieldTypeDtoInterface
         public string $handle,
         public bool $required,
         public ?string $helpText,
-        public ?string $selectMultipleType,
-        public ?string $selectMultipleDefaultValue,
-        public ?string $selectMultipleListGenerationMethod,
-        public ?string $selectMultipleOptions,
-        public ?string $selectMultipleCustomCode,
+        public ?string $displayType,
+        public ?string $defaultValue,
+        public ?string $listGenerationMethod,
+        public ?string $options,
+        public ?string $customCode,
     ) {
     }
 }

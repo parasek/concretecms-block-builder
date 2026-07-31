@@ -233,8 +233,8 @@ readonly class FieldTypeValidator implements ValidatorInterface
                 'listGenerationMethod' => $this->getStringKeys($this->fieldTypeOptions->getListGenerationMethods()),
             ],
             'select_multiple_field' => [
-                'selectMultipleType' => $this->getStringKeys($this->fieldTypeOptions->getMultipleChoiceTypes()),
-                'selectMultipleListGenerationMethod' => $this->getStringKeys($this->fieldTypeOptions->getListGenerationMethods()),
+                'displayType' => $this->getStringKeys($this->fieldTypeOptions->getMultipleChoiceTypes()),
+                'listGenerationMethod' => $this->getStringKeys($this->fieldTypeOptions->getListGenerationMethods()),
             ],
             default => [],
         };
@@ -258,11 +258,6 @@ readonly class FieldTypeValidator implements ValidatorInterface
     private function getErrorMessages(FieldTypeContextEnum $context): array
     {
         return [
-            'displayType|invalid_option' => t('Some "Single Choice Field/Type" fields contain an invalid option (%s).', $context->getTabName()),
-            'addEmptyOption|invalid_option' => t('Some "Single Choice Field/Add an empty option" fields contain an invalid option (%s).', $context->getTabName()),
-            'listGenerationMethod|invalid_option' => t('Some "Single Choice Field/List generation method" fields contain an invalid option (%s).', $context->getTabName()),
-            'selectMultipleType|invalid_option' => t('Some "Multiple Choice Field/Type" fields contain an invalid option (%s).', $context->getTabName()),
-            'selectMultipleListGenerationMethod|invalid_option' => t('Some "Multiple Choice Field/List generation method" fields contain an invalid option (%s).', $context->getTabName()),
             'fieldType|empty' => t('Some "Field type" fields are empty (%s).', $context->getTabName()),
             'fieldType|invalid' => t('Some "Field type" fields contain an unsupported value (%s).', $context->getTabName()),
             'label|empty' => t('Some "Label" fields are empty (%s).', $context->getTabName()),

@@ -111,33 +111,33 @@
             "label": "Basic Multiple Choice Field Default 1",
             "handle": "basic_multiple_choice_field_default_first",
             "helpText": "",
-            "selectMultipleType": "default_multiselect",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "Don't show\r\nShow",
-            "selectMultipleCustomCode": ""
+            "displayType": "default_multiselect",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "Don't show\r\nShow",
+            "customCode": ""
         },
         "5": {
             "fieldType": "select_multiple_field",
             "label": "Basic Multiple Choice Field Enhanced 1",
             "handle": "basic_multiple_choice_field_enhanced_first",
             "helpText": "",
-            "selectMultipleType": "enhanced_multiselect",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "1:: Don't show\r\n2 :: Show",
-            "selectMultipleCustomCode": ""
+            "displayType": "enhanced_multiselect",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "1:: Don't show\r\n2 :: Show",
+            "customCode": ""
         },
         "6": {
             "fieldType": "select_multiple_field",
             "label": "Basic Multiple Choice Field Checkbox List 1",
             "handle": "basic_multiple_choice_field_checkbox_list_first",
             "helpText": "",
-            "selectMultipleType": "checkbox_list",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "example::Example\r\nsome_data::Some data",
-            "selectMultipleCustomCode": ""
+            "displayType": "checkbox_list",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "example::Example\r\nsome_data::Some data",
+            "customCode": ""
         }
     },
     "entries": {
@@ -182,33 +182,33 @@
             "label": "Repeatable Multiple Choice Field Default 1",
             "handle": "repeatable_multiple_choice_field_default_first",
             "helpText": "",
-            "selectMultipleType": "default_multiselect",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "1::Yes\r\n2:: No",
-            "selectMultipleCustomCode": ""
+            "displayType": "default_multiselect",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "1::Yes\r\n2:: No",
+            "customCode": ""
         },
         "5": {
             "fieldType": "select_multiple_field",
             "label": "Repeatable Multiple Choice Field Enhanced 1",
             "handle": "repeatable_multiple_choice_field_enhanced_first",
             "helpText": "",
-            "selectMultipleType": "enhanced_multiselect",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "Don't show\r\nShow",
-            "selectMultipleCustomCode": ""
+            "displayType": "enhanced_multiselect",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "Don't show\r\nShow",
+            "customCode": ""
         },
         "6": {
             "fieldType": "select_multiple_field",
             "label": "Repeatable Multiple Choice Field Checkbox List 1",
             "handle": "repeatable_multiple_choice_field_checkbox_first",
             "helpText": "",
-            "selectMultipleType": "checkbox_list",
-            "selectMultipleDefaultValue": "",
-            "selectMultipleListGenerationMethod": "basic_list",
-            "selectMultipleOptions": "no :: Don't show\r\nyes :: Show",
-            "selectMultipleCustomCode": ""
+            "displayType": "checkbox_list",
+            "defaultValue": "",
+            "listGenerationMethod": "basic_list",
+            "options": "no :: Don't show\r\nyes :: Show",
+            "customCode": ""
         }
     }
 }

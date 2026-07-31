@@ -55,7 +55,7 @@ class FieldTypeDtoFactory
             }
         }
 
-        foreach (['options', 'selectMultipleOptions'] as $optionListProperty) {
+        foreach (['options'] as $optionListProperty) {
             if (array_key_exists($optionListProperty, $data)
                 && !ChoiceOptionListValidator::hasValidShape($data[$optionListProperty])
             ) {

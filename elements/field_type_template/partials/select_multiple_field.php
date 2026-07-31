@@ -1,8 +1,8 @@
 <?php defined('C5_EXECUTE') or exit('Access Denied.');
 
 /**
- * @var array $selectFieldTypes
  * @var array $selectMultipleFieldTypes
+ * @var array $selectFieldListGenerationMethods
  */
 ?>
 
@@ -11,15 +11,15 @@
     <hr class="bb-entry-hr">
 
     <div class="mb-4">
-        <label for="<%=context%>[<%=counter%>][selectMultipleType]"
+        <label for="<%=context%>[<%=counter%>][displayType]"
                class="form-label"
         ><?= t('Type'); ?></label>
-        <select name="<%=context%>[<%=counter%>][selectMultipleType]"
-                id="<%=context%>[<%=counter%>][selectMultipleType]"
+        <select name="<%=context%>[<%=counter%>][displayType]"
+                id="<%=context%>[<%=counter%>][displayType]"
                 class="form-select"
         >
             <?php foreach ($selectMultipleFieldTypes as $k => $v): ?>
-                <?php $selected = "<% if (selectMultipleType === '" . h($k) . "') { %>selected<% } %>"; ?>
+                <?php $selected = "<% if (displayType === '" . h($k) . "') { %>selected<% } %>"; ?>
                 <option value="<?= h($k); ?>" <?= $selected; ?>>
                     <?= h($v); ?>
                 </option>
@@ -28,14 +28,14 @@
     </div>
 
     <div class="mb-4">
-        <label for="<%=context%>[<%=counter%>][selectMultipleDefaultValue]"
+        <label for="<%=context%>[<%=counter%>][defaultValue]"
                class="form-label"
         ><?= t('Default value'); ?></label>
         <input type="text"
-               id="<%=context%>[<%=counter%>][selectMultipleDefaultValue]"
-               name="<%=context%>[<%=counter%>][selectMultipleDefaultValue]"
+               id="<%=context%>[<%=counter%>][defaultValue]"
+               name="<%=context%>[<%=counter%>][defaultValue]"
                class="form-control"
-               value="<%=selectMultipleDefaultValue%>"
+               value="<%=defaultValue%>"
         >
         <div class="form-text">
             <?= t('Use the pipe character (|) to separate default values.'); ?>
@@ -43,16 +43,16 @@
     </div>
 
     <div class="mb-4">
-        <label for="<%=context%>[<%=counter%>][selectMultipleListGenerationMethod]"
+        <label for="<%=context%>[<%=counter%>][listGenerationMethod]"
                class="form-label"
         ><?= t('List generation method'); ?></label>
-        <select name="<%=context%>[<%=counter%>][selectMultipleListGenerationMethod]"
-                id="<%=context%>[<%=counter%>][selectMultipleListGenerationMethod]"
+        <select name="<%=context%>[<%=counter%>][listGenerationMethod]"
+                id="<%=context%>[<%=counter%>][listGenerationMethod]"
                 class="form-select"
                 data-change-select-list-generation-method
         >
             <?php foreach ($selectFieldListGenerationMethods as $k => $v): ?>
-                <?php $selected = "<% if (selectMultipleListGenerationMethod === '" . h($k) . "') { %>selected<% } %>"; ?>
+                <?php $selected = "<% if (listGenerationMethod === '" . h($k) . "') { %>selected<% } %>"; ?>
                 <option value="<?= h($k); ?>" <?= $selected; ?>>
                     <?= h($v); ?>
                 </option>
@@ -60,10 +60,10 @@
         </select>
     </div>
 
-    <div class="<?= '<% if (selectMultipleListGenerationMethod && (selectMultipleListGenerationMethod !== \'basic_list\')) { %>d-none<% } %>'; ?>"
+    <div class="<?= '<% if (listGenerationMethod && (listGenerationMethod !== \'basic_list\')) { %>d-none<% } %>'; ?>"
          data-select-list-generation-method="basic_list"
     >
-        <label for="<%=context%>[<%=counter%>][selectMultipleOptions]"
+        <label for="<%=context%>[<%=counter%>][options]"
                class="form-label"
         ><?= t('Select options'); ?></label>
         <p class="small text-muted">
@@ -82,26 +82,26 @@
                 <?= t('yes :: Show'); ?>
             </code>
         </p>
-        <textarea name="<%=context%>[<%=counter%>][selectMultipleOptions]"
-                  id="<%=context%>[<%=counter%>][selectMultipleOptions]"
+        <textarea name="<%=context%>[<%=counter%>][options]"
+                  id="<%=context%>[<%=counter%>][options]"
                   class="form-control"
                   rows="4"
-        ><%=selectMultipleOptions%></textarea>
+        ><%=options%></textarea>
     </div>
 
 
-    <div class="<?= '<% if (!selectMultipleListGenerationMethod || (selectMultipleListGenerationMethod !== \'custom_code\')) { %>d-none<% } %>'; ?>"
+    <div class="<?= '<% if (!listGenerationMethod || (listGenerationMethod !== \'custom_code\')) { %>d-none<% } %>'; ?>"
         data-select-list-generation-method="custom_code"
     >
-        <label for="<%=context%>[<%=counter%>][selectMultipleCustomCode]"
+        <label for="<%=context%>[<%=counter%>][customCode]"
                class="form-label"
         ><?= t('Custom code'); ?></label>
         <?php View::element('custom_code_in_option_list', [], 'block_builder'); ?>
-        <textarea name="<%=context%>[<%=counter%>][selectMultipleCustomCode]"
-                  id="<%=context%>[<%=counter%>][selectMultipleCustomCode]"
+        <textarea name="<%=context%>[<%=counter%>][customCode]"
+                  id="<%=context%>[<%=counter%>][customCode]"
                   class="form-control"
                   rows="4"
-        ><%=selectMultipleCustomCode%></textarea>
+        ><%=customCode%></textarea>
     </div>
 
 </script>

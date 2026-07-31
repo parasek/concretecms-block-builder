@@ -1,0 +1,23 @@
+<div class="mb-4">
+    <label
+        class="form-label"
+        for="<?= h($view->field({{HANDLE_LITERAL}})); ?>"
+    ><?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?></label>
+    <?php $selectedValues = isset(${{HANDLE}}) && is_string(${{HANDLE}}) && ${{HANDLE}} !== '' ? explode('|', ${{HANDLE}}) : []; ?>
+    <input type="hidden" name="<?= h($view->field({{HANDLE_LITERAL}})); ?>" value="">
+    <select
+        class="form-select"
+        id="<?= h($view->field({{HANDLE_LITERAL}})); ?>"
+        name="<?= h($view->field({{HANDLE_LITERAL}})); ?>[]"
+        multiple
+    >
+        <?php if (!empty(${{OPTIONS_VARIABLE}}) && is_array(${{OPTIONS_VARIABLE}})): ?>
+            <?php foreach (${{OPTIONS_VARIABLE}} as $optionKey => $optionLabel): ?>
+                <option
+                    value="<?= h((string) $optionKey); ?>"
+                    <?= in_array((string) $optionKey, $selectedValues, true) ? 'selected' : ''; ?>
+                ><?= h($optionLabel); ?></option>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </select>{{HELP_TEXT}}
+</div>

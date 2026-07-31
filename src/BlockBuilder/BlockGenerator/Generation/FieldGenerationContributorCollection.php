@@ -6,6 +6,7 @@ namespace BlockBuilder\BlockGenerator\Generation;
 
 use ArrayIterator;
 use BlockBuilder\FieldType\Type\HtmlEditor\Generation\HtmlEditorFieldGenerationContributor;
+use BlockBuilder\FieldType\Type\MultipleChoice\Generation\MultipleChoiceFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\Number\Generation\NumberFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\SingleChoice\Generation\SingleChoiceFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\Text\Generation\TextFieldGenerationContributor;
@@ -21,6 +22,7 @@ readonly class FieldGenerationContributorCollection implements IteratorAggregate
 {
     public function __construct(
         private HtmlEditorFieldGenerationContributor $htmlEditorFieldGenerationContributor,
+        private MultipleChoiceFieldGenerationContributor $multipleChoiceFieldGenerationContributor,
         private NumberFieldGenerationContributor $numberFieldGenerationContributor,
         private SingleChoiceFieldGenerationContributor $singleChoiceFieldGenerationContributor,
         private TextFieldGenerationContributor $textFieldGenerationContributor,
@@ -36,6 +38,7 @@ readonly class FieldGenerationContributorCollection implements IteratorAggregate
     {
         return new ArrayIterator([
             $this->htmlEditorFieldGenerationContributor,
+            $this->multipleChoiceFieldGenerationContributor,
             $this->numberFieldGenerationContributor,
             $this->singleChoiceFieldGenerationContributor,
             $this->textFieldGenerationContributor,
