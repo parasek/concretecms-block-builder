@@ -2,6 +2,55 @@
     'use strict';
 
     const containerStates = new WeakMap();
+    const htmlEditorInstances = new WeakMap();
+
+    function synchronizeHtmlEditor(field) {
+        const editorState = htmlEditorInstances.get(field);
+        if (editorState) {
+            field.value = editorState.editor.getValue();
+        }
+    }
+
+    function destroyHtmlEditors(root) {
+        root.querySelectorAll('[data-block-builder-html-editor-input]').forEach((field) => {
+            const editorState = htmlEditorInstances.get(field);
+            if (!editorState) {
+                return;
+            }
+
+            editorState.resizeObserver?.disconnect();
+            editorState.editor.destroy();
+            htmlEditorInstances.delete(field);
+        });
+    }
+
+    function initializeHtmlEditors(root) {
+        root.querySelectorAll('[data-block-builder-html-editor]').forEach((container) => {
+            const inputIdentifier = container.dataset.htmlEditorInput;
+            const input = inputIdentifier ? document.getElementById(inputIdentifier) : null;
+            if (!(input instanceof HTMLTextAreaElement) || htmlEditorInstances.has(input)) {
+                return;
+            }
+            if (typeof globalThis.ace?.edit !== 'function') {
+                console.error('Block Builder HTML editors require the Concrete CMS Ace asset.');
+                return;
+            }
+
+            const editor = globalThis.ace.edit(container);
+            editor.setTheme('ace/theme/eclipse');
+            editor.getSession().setMode('ace/mode/html');
+            editor.setValue(input.value, -1);
+            editor.getSession().on('change', () => {
+                input.value = editor.getValue();
+            });
+
+            const resizeObserver = typeof ResizeObserver === 'function'
+                ? new ResizeObserver(() => editor.resize())
+                : null;
+            resizeObserver?.observe(container);
+            htmlEditorInstances.set(input, {editor, resizeObserver});
+        });
+    }
 
     function getWysiwygEditorInstance(field) {
         if (!(field instanceof HTMLTextAreaElement) || !field.id) {
@@ -152,6 +201,7 @@
             return null;
         }
 
+        synchronizeHtmlEditor(firstField);
         synchronizeWysiwygEditor(firstField);
 
         if (firstField instanceof HTMLInputElement && firstField.type === 'radio') {
@@ -283,6 +333,7 @@
         entry.dataset.entryIndex = String(index);
         populateEntry(entry, values);
         state.container.insertBefore(template.content, before);
+        initializeHtmlEditors(entry);
         initializeWysiwygEditors(entry);
         entry.dispatchEvent(new CustomEvent('blockbuilder:entry-added', {bubbles: true}));
 
@@ -313,6 +364,7 @@
 
     function removeEntry(state, entry) {
         entry.dispatchEvent(new CustomEvent('blockbuilder:entry-before-remove', {bubbles: true}));
+        destroyHtmlEditors(entry);
         destroyWysiwygEditors(entry);
         entry.remove();
         updateState(state);
@@ -361,6 +413,7 @@
         } else if (action === 'remove-all' && confirmAction(button)) {
             entries.forEach((currentEntry) => {
                 currentEntry.dispatchEvent(new CustomEvent('blockbuilder:entry-before-remove', {bubbles: true}));
+                destroyHtmlEditors(currentEntry);
                 destroyWysiwygEditors(currentEntry);
                 currentEntry.remove();
             });
@@ -497,6 +550,7 @@
 
     function initialize(root = document) {
         root.querySelectorAll('[data-block-builder-entries]').forEach(initializeContainer);
+        initializeHtmlEditors(root);
         initializeWysiwygEditors(root);
     }
 
@@ -505,6 +559,7 @@
             return;
         }
 
+        event.target.querySelectorAll('[data-block-builder-html-editor-input]').forEach(synchronizeHtmlEditor);
         event.target.querySelectorAll('[data-block-builder-wysiwyg]').forEach(synchronizeWysiwygEditor);
     }
 

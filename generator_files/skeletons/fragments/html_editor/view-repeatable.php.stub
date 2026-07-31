@@ -1,0 +1,3 @@
+<?php if (!empty($entry[{{HANDLE_LITERAL}}])): ?>
+    <?= $entry[{{HANDLE_LITERAL}}]; ?>
+<?php endif; ?>

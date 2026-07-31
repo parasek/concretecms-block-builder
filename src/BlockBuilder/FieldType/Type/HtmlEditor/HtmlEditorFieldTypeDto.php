@@ -15,7 +15,7 @@ readonly class HtmlEditorFieldTypeDto implements FieldTypeDtoInterface
         public string $handle,
         public bool $required,
         public ?string $helpText,
-        public ?int $htmlEditorHeight,
+        public ?int $height,
     ) {
     }
 }

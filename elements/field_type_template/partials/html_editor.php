@@ -6,13 +6,18 @@
 
     <div class="row">
         <div class="col-xl-4">
-            <label for="<%=context%>[<%=counter%>][htmlEditorHeight]" class="form-label"><?= t('Height'); ?></label>
+            <label for="<%=context%>[<%=counter%>][height]"
+                   class="form-label"
+            ><?= t('Height'); ?></label>
             <div class="input-group">
-                <input type="text"
-                       id="<%=context%>[<%=counter%>][htmlEditorHeight]"
-                       name="<%=context%>[<%=counter%>][htmlEditorHeight]"
+                <input type="number"
+                       id="<%=context%>[<%=counter%>][height]"
+                       name="<%=context%>[<%=counter%>][height]"
                        class="form-control"
-                       value="<%=htmlEditorHeight%>"
+                       min="40"
+                       max="2000"
+                       step="1"
+                       value="<%=height%>"
                 >
                 <span class="input-group-text">px</span>
             </div>

@@ -201,6 +201,11 @@
     margin-block: 1rem;
 }
 
+[data-block-builder-html-editor] {
+    border: 1px solid #dedede;
+    inline-size: 100%;
+}
+
 .ccm-ui .bootstrap-select .dropdown-toggle .bs-select-clear-selected span {
     inset-block-start: 0.25rem;
     inset-inline-end: 0.3125rem;

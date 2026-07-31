@@ -408,14 +408,14 @@
             "label": "Basic HTML Editor 1",
             "handle": "basicHtmlEditorFirst",
             "helpText": "",
-            "htmlEditorHeight": ""
+            "height": ""
         },
         "36": {
             "fieldType": "html_editor",
             "label": "Basic HTML Editor 2",
             "handle": "basicHtmlEditorSecond",
             "helpText": "",
-            "htmlEditorHeight": "400"
+            "height": "400"
         },
         "37": {
             "fieldType": "date_picker",
@@ -796,14 +796,14 @@
             "label": "Repeatable HTML Editor 1",
             "handle": "repeatableHtmlEditorFirst",
             "helpText": "",
-            "htmlEditorHeight": ""
+            "height": ""
         },
         "36": {
             "fieldType": "html_editor",
             "label": "Repeatable HTML Editor 2",
             "handle": "repeatableHtmlEditorSecond",
             "helpText": "",
-            "htmlEditorHeight": "400"
+            "height": "400"
         },
         "37": {
             "fieldType": "date_picker",

@@ -11,6 +11,13 @@ use BlockBuilder\FieldType\AbstractFieldType;
 
 class HtmlEditorFieldType extends AbstractFieldType
 {
+    private const int MINIMUM_EDITOR_HEIGHT = 40;
+    private const int MAXIMUM_EDITOR_HEIGHT = 2000;
+
+    protected const array LEGACY_PROPERTY_ALIASES = [
+        'htmlEditorHeight' => 'height',
+    ];
+
     public static function getEnum(): FieldTypeEnum
     {
         return FieldTypeEnum::HtmlEditor;
@@ -33,7 +40,9 @@ class HtmlEditorFieldType extends AbstractFieldType
 
     public static function getDefaultValues(): array
     {
-        return [];
+        return [
+            'height' => '',
+        ];
     }
 
     public static function createDtoFromArray(array $data): HtmlEditorFieldTypeDto
@@ -44,14 +53,19 @@ class HtmlEditorFieldType extends AbstractFieldType
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),
             helpText: trim($data['helpText'] ?? ''),
-            htmlEditorHeight: !empty($data['htmlEditorHeight']) ? (int) $data['htmlEditorHeight'] : null
+            height: !empty($data['height']) ? (int) $data['height'] : null,
         );
     }
 
     public static function getErrorMessages(FieldTypeContextEnum $context): array
     {
         return [
-            'htmlEditorHeight|invalid_number' => t('Invalid entry in one of "HTML Editor/Height" fields, should be a number between %s and %s or empty (%s).', 40, 2000, $context->getTabName()),
+            'height|invalid_number' => t(
+                'Invalid entry in one of "HTML Editor/Height" fields, should be a number between %s and %s or empty (%s).',
+                self::MINIMUM_EDITOR_HEIGHT,
+                self::MAXIMUM_EDITOR_HEIGHT,
+                $context->getTabName(),
+            ),
         ];
     }
 
@@ -59,15 +73,15 @@ class HtmlEditorFieldType extends AbstractFieldType
     {
         $errors = [];
 
-        // Height
-        $height = $data['htmlEditorHeight'] ?? '';
-
-        if ($height !== '') {
-            $isInvalid = !IntegerValueValidator::isInRange($height, 40, 2000);
-
-            if ($isInvalid) {
-                $errors[] = 'htmlEditorHeight|invalid_number';
-            }
+        $height = $data['height'] ?? '';
+        $heightIsValid = $height === ''
+            || IntegerValueValidator::isInRange(
+                $height,
+                self::MINIMUM_EDITOR_HEIGHT,
+                self::MAXIMUM_EDITOR_HEIGHT,
+            );
+        if (!$heightIsValid) {
+            $errors[] = 'height|invalid_number';
         }
 
         return $errors;

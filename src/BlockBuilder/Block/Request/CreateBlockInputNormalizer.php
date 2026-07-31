@@ -95,9 +95,9 @@ final class CreateBlockInputNormalizer
 
     private const array FIELD_INTEGER_PROPERTIES = [
         'displayedDecimals',
+        'height',
         'minHeight',
         'maxHeight',
-        'htmlEditorHeight',
         'imageThumbnailWidth',
         'imageThumbnailHeight',
         'imageFullscreenWidth',
