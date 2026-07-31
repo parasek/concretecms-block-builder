@@ -20,6 +20,13 @@ interface FieldTypeInterface
     public static function getDefaultValues(): array;
 
     /**
+     * Maps legacy configuration property names to their canonical DTO property names.
+     *
+     * @return array<string, string>
+     */
+    public static function getLegacyPropertyAliases(): array;
+
+    /**
      * @return class-string<FieldTypeDtoInterface>
      */
     public static function getDtoClass(): string;

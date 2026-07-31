@@ -102,6 +102,7 @@ final class FieldTypeRegistry
         }
 
         $fieldType::getDtoClass();
+        $fieldType::getLegacyPropertyAliases();
         $this->fieldTypesByHandle[$handle] = $fieldType;
         $this->fieldTypesByEnumName[$type->name] = $fieldType;
     }

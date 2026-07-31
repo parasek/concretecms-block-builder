@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace BlockBuilder\FieldType\Factory;
 
+use BlockBuilder\FieldType\Exception\ConflictingFieldPropertyAliasException;
 use BlockBuilder\FieldType\Exception\InvalidFieldDataTypeException;
 use BlockBuilder\FieldType\Exception\MalformedFieldDataException;
 use BlockBuilder\FieldType\Exception\MissingFieldTypeException;
 use BlockBuilder\FieldType\Exception\UnknownFieldTypeException;
 use BlockBuilder\FieldType\FieldTypeDtoInterface;
+use BlockBuilder\FieldType\FieldTypeInterface;
 use BlockBuilder\FieldType\FieldTypeRegistry;
 use BlockBuilder\FieldType\Validation\ChoiceOptionListValidator;
 use ErrorException;
@@ -36,6 +38,15 @@ class FieldTypeDtoFactory
             throw new MissingFieldTypeException('The "fieldType" property cannot be empty.');
         }
 
+        $fieldType = $this->fieldTypeRegistry->findByHandle($fieldTypeHandle);
+        if ($fieldType === null) {
+            throw new UnknownFieldTypeException(
+                sprintf('Unknown field type "%s".', $fieldTypeHandle),
+            );
+        }
+
+        $data = $this->normalizeLegacyProperties($data, $fieldType, $fieldTypeHandle);
+
         foreach ($data as $propertyName => $value) {
             if (is_array($value) || is_object($value) || is_resource($value)) {
                 throw new InvalidFieldDataTypeException(
@@ -52,13 +63,6 @@ class FieldTypeDtoFactory
                     sprintf('Property "%s" of field type "%s" contains malformed choice options.', $optionListProperty, $fieldTypeHandle),
                 );
             }
-        }
-
-        $fieldType = $this->fieldTypeRegistry->findByHandle($fieldTypeHandle);
-        if ($fieldType === null) {
-            throw new UnknownFieldTypeException(
-                sprintf('Unknown field type "%s".', $fieldTypeHandle),
-            );
         }
 
         set_error_handler(
@@ -83,5 +87,36 @@ class FieldTypeDtoFactory
         } finally {
             restore_error_handler();
         }
+    }
+
+    private function normalizeLegacyProperties(
+        array $data,
+        FieldTypeInterface $fieldType,
+        string $fieldTypeHandle,
+    ): array {
+        foreach ($fieldType::getLegacyPropertyAliases() as $legacyProperty => $canonicalProperty) {
+            if (!array_key_exists($legacyProperty, $data)) {
+                continue;
+            }
+
+            if (
+                array_key_exists($canonicalProperty, $data)
+                && $data[$canonicalProperty] !== $data[$legacyProperty]
+            ) {
+                throw new ConflictingFieldPropertyAliasException(sprintf(
+                    'Field type "%s" contains conflicting values for legacy property "%s" and canonical property "%s".',
+                    $fieldTypeHandle,
+                    $legacyProperty,
+                    $canonicalProperty,
+                ));
+            }
+
+            if (!array_key_exists($canonicalProperty, $data)) {
+                $data[$canonicalProperty] = $data[$legacyProperty];
+            }
+            unset($data[$legacyProperty]);
+        }
+
+        return $data;
     }
 }
