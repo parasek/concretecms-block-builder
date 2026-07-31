@@ -9,11 +9,13 @@
         name="<?= h($view->field({{HANDLE_LITERAL}})); ?>"
         data-block-builder-enhanced-select
     >
-        <?php foreach (${{OPTIONS_VARIABLE}} as $optionKey => $optionLabel): ?>
-            <option
-                value="<?= h((string) $optionKey); ?>"
-                <?= isset(${{HANDLE}}) && (string) ${{HANDLE}} === (string) $optionKey ? 'selected' : ''; ?>
-            ><?= h($optionLabel); ?></option>
-        <?php endforeach; ?>
+        <?php if (!empty(${{OPTIONS_VARIABLE}}) && is_array(${{OPTIONS_VARIABLE}})): ?>
+            <?php foreach (${{OPTIONS_VARIABLE}} as $optionKey => $optionLabel): ?>
+                <option
+                    value="<?= h((string) $optionKey); ?>"
+                    <?= isset(${{HANDLE}}) && (string) ${{HANDLE}} === (string) $optionKey ? 'selected' : ''; ?>
+                ><?= h($optionLabel); ?></option>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </select>{{HELP_TEXT}}
 </div>

@@ -9,11 +9,13 @@
         name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
         data-entry-field="{{HANDLE}}"
     >
-        <?php foreach (${{OPTIONS_VARIABLE}} as $optionKey => $optionLabel): ?>
-            <option
-                value="<?= h((string) $optionKey); ?>"
-                <?= isset($entry[{{HANDLE_LITERAL}}]) && (string) $entry[{{HANDLE_LITERAL}}] === (string) $optionKey ? 'selected' : ''; ?>
-            ><?= h($optionLabel); ?></option>
-        <?php endforeach; ?>
+        <?php if (!empty(${{OPTIONS_VARIABLE}}) && is_array(${{OPTIONS_VARIABLE}})): ?>
+            <?php foreach (${{OPTIONS_VARIABLE}} as $optionKey => $optionLabel): ?>
+                <option
+                    value="<?= h((string) $optionKey); ?>"
+                    <?= isset($entry[{{HANDLE_LITERAL}}]) && (string) $entry[{{HANDLE_LITERAL}}] === (string) $optionKey ? 'selected' : ''; ?>
+                ><?= h($optionLabel); ?></option>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </select>{{HELP_TEXT}}
 </div>

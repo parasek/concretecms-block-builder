@@ -5,21 +5,23 @@
         name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
         value=""
     >
-    <?php foreach (${{OPTIONS_VARIABLE}} as $optionIndex => $optionLabel): ?>
-        <?php $optionIdentifier = $view->field('entry') . '-' . $entryIndex . '-{{HANDLE}}-' . $optionIndex; ?>
-        <div class="form-check">
-            <input
-                class="form-check-input"
-                id="<?= h($optionIdentifier); ?>"
-                name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
-                type="radio"
-                value="<?= h((string) $optionIndex); ?>"
-                data-entry-field="{{HANDLE}}"
-                <?= isset($entry[{{HANDLE_LITERAL}}]) && (string) $entry[{{HANDLE_LITERAL}}] === (string) $optionIndex ? 'checked' : ''; ?>
-            >
-            <label class="form-check-label" for="<?= h($optionIdentifier); ?>">
-                <?= h($optionLabel); ?>
-            </label>
-        </div>
-    <?php endforeach; ?>{{HELP_TEXT}}
+    <?php if (!empty(${{OPTIONS_VARIABLE}}) && is_array(${{OPTIONS_VARIABLE}})): ?>
+        <?php foreach (${{OPTIONS_VARIABLE}} as $optionIndex => $optionLabel): ?>
+            <?php $optionIdentifier = $view->field('entry') . '-' . $entryIndex . '-{{HANDLE}}-' . $optionIndex; ?>
+            <div class="form-check">
+                <input
+                    class="form-check-input"
+                    id="<?= h($optionIdentifier); ?>"
+                    name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
+                    type="radio"
+                    value="<?= h((string) $optionIndex); ?>"
+                    data-entry-field="{{HANDLE}}"
+                    <?= isset($entry[{{HANDLE_LITERAL}}]) && (string) $entry[{{HANDLE_LITERAL}}] === (string) $optionIndex ? 'checked' : ''; ?>
+                >
+                <label class="form-check-label" for="<?= h($optionIdentifier); ?>">
+                    <?= h($optionLabel); ?>
+                </label>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>{{HELP_TEXT}}
 </div>
