@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BlockBuilder\BlockGenerator\Generation;
 
 use ArrayIterator;
+use BlockBuilder\FieldType\Type\FlexLink\Generation\FlexLinkFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\HtmlEditor\Generation\HtmlEditorFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\MultipleChoice\Generation\MultipleChoiceFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\Number\Generation\NumberFieldGenerationContributor;
@@ -21,6 +22,7 @@ use Traversable;
 readonly class FieldGenerationContributorCollection implements IteratorAggregate
 {
     public function __construct(
+        private FlexLinkFieldGenerationContributor $flexLinkFieldGenerationContributor,
         private HtmlEditorFieldGenerationContributor $htmlEditorFieldGenerationContributor,
         private MultipleChoiceFieldGenerationContributor $multipleChoiceFieldGenerationContributor,
         private NumberFieldGenerationContributor $numberFieldGenerationContributor,
@@ -37,6 +39,7 @@ readonly class FieldGenerationContributorCollection implements IteratorAggregate
     public function getIterator(): Traversable
     {
         return new ArrayIterator([
+            $this->flexLinkFieldGenerationContributor,
             $this->htmlEditorFieldGenerationContributor,
             $this->multipleChoiceFieldGenerationContributor,
             $this->numberFieldGenerationContributor,

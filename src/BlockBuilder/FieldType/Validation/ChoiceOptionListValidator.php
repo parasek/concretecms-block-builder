@@ -37,7 +37,7 @@ final class ChoiceOptionListValidator
             }
 
             [$key, $label] = array_map('trim', $parts);
-            if ($label === '' || preg_match('/^[a-zA-Z0-9][a-zA-Z0-9_]*$/', $key) !== 1) {
+            if ($label === '' || preg_match('/^[a-zA-Z0-9][a-zA-Z0-9_-]*$/', $key) !== 1) {
                 return false;
             }
         }

@@ -4,6 +4,40 @@
     const containerStates = new WeakMap();
     const enhancedSelectInstances = new WeakMap();
     const htmlEditorInstances = new WeakMap();
+    const concreteSelectorInstances = new WeakMap();
+
+    function destroyConcreteSelectors(root) {
+        root.querySelectorAll('[data-block-builder-concrete-selector]').forEach((container) => {
+            const instance = concreteSelectorInstances.get(container);
+            if (instance && typeof instance.$destroy === 'function') {
+                instance.$destroy();
+            }
+            concreteSelectorInstances.delete(container);
+        });
+    }
+
+    function initializeConcreteSelectors(root) {
+        root.querySelectorAll('[data-block-builder-concrete-selector]').forEach((container) => {
+            if (concreteSelectorInstances.has(container)) {
+                return;
+            }
+            if (typeof globalThis.Concrete?.Vue?.activateContext !== 'function') {
+                console.error('Block Builder link fields require the Concrete CMS Vue context.');
+                return;
+            }
+
+            globalThis.Concrete.Vue.activateContext('cms', (Vue, config) => {
+                if (!container.isConnected || concreteSelectorInstances.has(container)) {
+                    return;
+                }
+
+                concreteSelectorInstances.set(container, new Vue({
+                    el: container,
+                    components: config.components,
+                }));
+            });
+        });
+    }
 
     function destroyEnhancedSelects(root) {
         root.querySelectorAll('[data-block-builder-enhanced-select]').forEach((field) => {
@@ -149,10 +183,12 @@
                 return;
             }
 
-            if (!fields.has(handle)) {
-                fields.set(handle, []);
+            const subfield = field.dataset.entrySubfield ?? '';
+            const groupKey = `${handle}\u0000${subfield}`;
+            if (!fields.has(groupKey)) {
+                fields.set(groupKey, {handle, subfield, fields: []});
             }
-            fields.get(handle).push(field);
+            fields.get(groupKey).fields.push(field);
         });
 
         return fields;
@@ -175,6 +211,17 @@
     function setFieldValue(fields, value) {
         const firstField = fields[0];
         if (!firstField) {
+            return;
+        }
+
+        if (firstField.matches('[data-block-builder-concrete-selector]')) {
+            const selectedValue = String(value ?? '0');
+            const selectorType = firstField.dataset.blockBuilderConcreteSelector;
+            const component = firstField.querySelector(
+                selectorType === 'page' ? 'concrete-page-input' : 'concrete-file-input',
+            );
+            firstField.dataset.selectedValue = selectedValue;
+            component?.setAttribute(selectorType === 'page' ? ':page-id' : ':file-id', selectedValue);
             return;
         }
 
@@ -215,9 +262,16 @@
             return;
         }
 
-        groupFields(entry).forEach((fields, handle) => {
-            if (Object.prototype.hasOwnProperty.call(values, handle)) {
-                setFieldValue(fields, values[handle]);
+        groupFields(entry).forEach((group) => {
+            if (!Object.prototype.hasOwnProperty.call(values, group.handle)) {
+                return;
+            }
+
+            const value = group.subfield
+                ? values[group.handle]?.[group.subfield]
+                : values[group.handle];
+            if (!group.subfield || (values[group.handle] && typeof values[group.handle] === 'object')) {
+                setFieldValue(group.fields, value);
             }
         });
     }
@@ -230,6 +284,12 @@
 
         synchronizeHtmlEditor(firstField);
         synchronizeWysiwygEditor(firstField);
+
+        if (firstField.matches('[data-block-builder-concrete-selector]')) {
+            const selectedInput = firstField.querySelector('input[type="hidden"][name]');
+
+            return selectedInput?.value ?? firstField.dataset.selectedValue ?? '0';
+        }
 
         if (firstField instanceof HTMLInputElement && firstField.type === 'radio') {
             return fields.find((field) => field.checked)?.value ?? '';
@@ -252,11 +312,89 @@
 
     function readEntry(entry) {
         const values = {};
-        groupFields(entry).forEach((fields, handle) => {
-            values[handle] = readFieldValue(fields);
+        groupFields(entry).forEach((group) => {
+            const value = readFieldValue(group.fields);
+            if (group.subfield) {
+                if (!values[group.handle] || typeof values[group.handle] !== 'object') {
+                    values[group.handle] = {};
+                }
+                values[group.handle][group.subfield] = value;
+            } else {
+                values[group.handle] = value;
+            }
         });
 
         return values;
+    }
+
+    function updateLinkField(container) {
+        const linkType = container.querySelector('[data-link-type]')?.value ?? '';
+        const additionalValue = container.querySelector('[data-link-additional-value]');
+        const showAdditionalFields = additionalValue?.value === '1';
+        const toggle = container.querySelector('[data-link-toggle-additional]');
+
+        container.querySelectorAll('[data-link-type-panel]').forEach((panel) => {
+            panel.hidden = panel.dataset.linkTypePanel !== linkType;
+        });
+        if (toggle) {
+            toggle.hidden = linkType === '';
+            toggle.classList.toggle('active', showAdditionalFields);
+            const label = toggle.querySelector('[data-link-toggle-label]');
+            if (label) {
+                label.textContent = showAdditionalFields
+                    ? toggle.dataset.hideLabel
+                    : toggle.dataset.showLabel;
+            }
+        }
+        container.querySelectorAll('[data-link-additional-fields]').forEach((fields) => {
+            fields.hidden = linkType === '' || !showAdditionalFields;
+        });
+    }
+
+    function initializeLinkFields(root) {
+        root.querySelectorAll('[data-block-builder-link]').forEach(updateLinkField);
+    }
+
+    function handleLinkClick(event) {
+        if (!(event.target instanceof Element)) {
+            return;
+        }
+
+        const toggle = event.target.closest('[data-link-toggle-additional]');
+        const container = toggle?.closest('[data-block-builder-link]');
+        const additionalValue = container?.querySelector('[data-link-additional-value]');
+        if (!toggle || !container || !additionalValue) {
+            return;
+        }
+
+        event.preventDefault();
+        additionalValue.value = additionalValue.value === '1' ? '0' : '1';
+        additionalValue.dispatchEvent(new Event('change', {bubbles: true}));
+        updateLinkField(container);
+    }
+
+    function handleLinkChange(event) {
+        if (!(event.target instanceof Element)) {
+            return;
+        }
+
+        const container = event.target.closest('[data-block-builder-link]');
+        if (container && event.target.matches('[data-link-type], [data-link-additional-value]')) {
+            updateLinkField(container);
+        }
+    }
+
+    function handleExternalLinkInput(event) {
+        if (!(event.target instanceof HTMLInputElement) || !event.target.matches('[data-link-external-url]')) {
+            return;
+        }
+
+        const protocol = event.target.closest('[data-block-builder-link]')?.querySelector('[data-link-protocol]');
+        const protocolMatch = event.target.value.match(/^(https?:\/\/)/i);
+        if (protocol instanceof HTMLSelectElement && protocolMatch) {
+            protocol.value = protocolMatch[1].toLowerCase();
+            event.target.value = event.target.value.slice(protocolMatch[1].length);
+        }
     }
 
     function getTitleSourceValue(source) {
@@ -363,6 +501,8 @@
         initializeEnhancedSelects(entry);
         initializeHtmlEditors(entry);
         initializeWysiwygEditors(entry);
+        initializeConcreteSelectors(entry);
+        initializeLinkFields(entry);
         entry.dispatchEvent(new CustomEvent('blockbuilder:entry-added', {bubbles: true}));
 
         const keepCollapsed = state.scope.querySelector('[data-keep-added-collapsed]')?.checked === true;
@@ -395,6 +535,7 @@
         destroyEnhancedSelects(entry);
         destroyHtmlEditors(entry);
         destroyWysiwygEditors(entry);
+        destroyConcreteSelectors(entry);
         entry.remove();
         updateState(state);
     }
@@ -445,6 +586,7 @@
                 destroyEnhancedSelects(currentEntry);
                 destroyHtmlEditors(currentEntry);
                 destroyWysiwygEditors(currentEntry);
+                destroyConcreteSelectors(currentEntry);
                 currentEntry.remove();
             });
             updateState(state);
@@ -583,6 +725,8 @@
         initializeEnhancedSelects(root);
         initializeHtmlEditors(root);
         initializeWysiwygEditors(root);
+        initializeConcreteSelectors(root);
+        initializeLinkFields(root);
     }
 
     function handleSubmit(event) {
@@ -595,8 +739,11 @@
     }
 
     document.addEventListener('click', handleAction);
+    document.addEventListener('click', handleLinkClick);
     document.addEventListener('input', handleTitleChange);
+    document.addEventListener('input', handleExternalLinkInput);
     document.addEventListener('change', handleTitleChange);
+    document.addEventListener('change', handleLinkChange);
     document.addEventListener('keydown', handleMoveKeydown);
     document.addEventListener('submit', handleSubmit, true);
 

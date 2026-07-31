@@ -1,0 +1,9 @@
+<?php if (!empty(${{HANDLE}}_link)): ?>
+    <a href="<?= h(${{HANDLE}}_link . ${{HANDLE}}_ending); ?>"
+       title="<?= h(${{HANDLE}}_title); ?>"
+       <?= ${{HANDLE}}_new_window; ?>
+       <?= ${{HANDLE}}_no_follow; ?>
+    >
+        <?= nl2br(h(${{HANDLE}}_text), false); ?>
+    </a>
+<?php endif; ?>
