@@ -11,6 +11,20 @@ use BlockBuilder\FieldType\AbstractFieldType;
 
 class ImageFieldType extends AbstractFieldType
 {
+    protected const array LEGACY_PROPERTY_ALIASES = [
+        'imageShowAltTextField' => 'showAltTextField',
+        'imageCreateThumbnailImage' => 'createThumbnailImage',
+        'imageThumbnailWidth' => 'thumbnailWidth',
+        'imageThumbnailHeight' => 'thumbnailHeight',
+        'imageThumbnailCrop' => 'thumbnailCrop',
+        'imageThumbnailEditable' => 'thumbnailEditable',
+        'imageCreateFullscreenImage' => 'createFullscreenImage',
+        'imageFullscreenWidth' => 'fullscreenWidth',
+        'imageFullscreenHeight' => 'fullscreenHeight',
+        'imageFullscreenCrop' => 'fullscreenCrop',
+        'imageFullscreenEditable' => 'fullscreenEditable',
+    ];
+
     public static function getEnum(): FieldTypeEnum
     {
         return FieldTypeEnum::Image;
@@ -34,19 +48,17 @@ class ImageFieldType extends AbstractFieldType
     public static function getDefaultValues(): array
     {
         return [
-            'imageShowAltTextField' => 1,
-            'imageCreateFullscreenImage' => 1,
-            'imageCreateThumbnailImage' => 1,
-
-            'imageThumbnailWidth' => 480,
-            'imageThumbnailHeight' => 270,
-            'imageThumbnailCrop' => 1,
-            'imageThumbnailEditable' => 1,
-
-            'imageFullscreenWidth' => 1920,
-            'imageFullscreenHeight' => 1080,
-            'imageFullscreenCrop' => 0,
-            'imageFullscreenEditable' => 1,
+            'showAltTextField' => true,
+            'createThumbnailImage' => true,
+            'thumbnailWidth' => 480,
+            'thumbnailHeight' => 270,
+            'thumbnailCrop' => true,
+            'thumbnailEditable' => true,
+            'createFullscreenImage' => true,
+            'fullscreenWidth' => 1920,
+            'fullscreenHeight' => 1080,
+            'fullscreenCrop' => false,
+            'fullscreenEditable' => true,
         ];
     }
 
@@ -58,32 +70,32 @@ class ImageFieldType extends AbstractFieldType
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),
             helpText: trim($data['helpText'] ?? ''),
-            imageShowAltTextField: !empty($data['imageShowAltTextField']),
-            imageCreateThumbnailImage: !empty($data['imageCreateThumbnailImage']),
-            imageThumbnailWidth: !empty($data['imageThumbnailWidth']) ? (int) $data['imageThumbnailWidth'] : null,
-            imageThumbnailHeight: !empty($data['imageThumbnailHeight']) ? (int) $data['imageThumbnailHeight'] : null,
-            imageThumbnailCrop: !empty($data['imageThumbnailCrop']),
-            imageThumbnailEditable: !empty($data['imageThumbnailEditable']),
-            imageCreateFullscreenImage: !empty($data['imageCreateFullscreenImage']),
-            imageFullscreenWidth: !empty($data['imageFullscreenWidth']) ? (int) $data['imageFullscreenWidth'] : null,
-            imageFullscreenHeight: !empty($data['imageFullscreenHeight']) ? (int) $data['imageFullscreenHeight'] : null,
-            imageFullscreenCrop: !empty($data['imageFullscreenCrop']),
-            imageFullscreenEditable: !empty($data['imageFullscreenEditable']),
+            showAltTextField: !empty($data['showAltTextField']),
+            createThumbnailImage: !empty($data['createThumbnailImage']),
+            thumbnailWidth: !empty($data['thumbnailWidth']) ? (int) $data['thumbnailWidth'] : null,
+            thumbnailHeight: !empty($data['thumbnailHeight']) ? (int) $data['thumbnailHeight'] : null,
+            thumbnailCrop: !empty($data['thumbnailCrop']),
+            thumbnailEditable: !empty($data['thumbnailEditable']),
+            createFullscreenImage: !empty($data['createFullscreenImage']),
+            fullscreenWidth: !empty($data['fullscreenWidth']) ? (int) $data['fullscreenWidth'] : null,
+            fullscreenHeight: !empty($data['fullscreenHeight']) ? (int) $data['fullscreenHeight'] : null,
+            fullscreenCrop: !empty($data['fullscreenCrop']),
+            fullscreenEditable: !empty($data['fullscreenEditable']),
         );
     }
 
     public static function getErrorMessages(FieldTypeContextEnum $context): array
     {
         return [
-            'imageThumbnailOptions|empty_width_and_height' => t('Invalid entry in one of "Image/Generate thumbnail" fields, you should provide width, height or both (%s).', $context->getTabName()),
-            'imageThumbnailOptions|crop_requires_width_and_height' => t('Invalid entry in one of "Image/Generate thumbnail" fields, you should provide width and height if you want to crop image (%s).', $context->getTabName()),
-            'imageThumbnailWidth|invalid_number' => t('Invalid entry in one of "Image/Generate thumbnail/Width" fields, should be a number greater than 0 or empty (%s).', $context->getTabName()),
-            'imageThumbnailHeight|invalid_number' => t('Invalid entry in one of "Image/Generate thumbnail/Height" fields, should be a number greater than 0 or empty (%s).', $context->getTabName()),
+            'thumbnailOptions|empty_width_and_height' => t('Invalid entry in one of "Image/Generate thumbnail" fields, you should provide width, height or both (%s).', $context->getTabName()),
+            'thumbnailOptions|crop_requires_width_and_height' => t('Invalid entry in one of "Image/Generate thumbnail" fields, you should provide width and height if you want to crop image (%s).', $context->getTabName()),
+            'thumbnailWidth|invalid_number' => t('Invalid entry in one of "Image/Generate thumbnail/Width" fields, should be a number greater than 0 or empty (%s).', $context->getTabName()),
+            'thumbnailHeight|invalid_number' => t('Invalid entry in one of "Image/Generate thumbnail/Height" fields, should be a number greater than 0 or empty (%s).', $context->getTabName()),
 
-            'imageFullscreenOptions|empty_width_and_height' => t('Invalid entry in one of "Image/Generate fullscreen thumbnail" fields, you should provide width, height or both (%s).', $context->getTabName()),
-            'imageFullscreenOptions|crop_requires_width_and_height' => t('Invalid entry in one of "Image/Generate fullscreen thumbnail" fields, you should provide width and height if you want to crop image (%s).', $context->getTabName()),
-            'imageFullscreenWidth|invalid_number' => t('Invalid entry in one of "Image/Generate fullscreen thumbnail/Width" fields, should be a number greater than 0 or empty (%s).', $context->getTabName()),
-            'imageFullscreenHeight|invalid_number' => t('Invalid entry in one of "Image/Generate fullscreen thumbnail/Height" fields, should be a number greater than 0 or empty (%s).', $context->getTabName()),
+            'fullscreenOptions|empty_width_and_height' => t('Invalid entry in one of "Image/Generate fullscreen thumbnail" fields, you should provide width, height or both (%s).', $context->getTabName()),
+            'fullscreenOptions|crop_requires_width_and_height' => t('Invalid entry in one of "Image/Generate fullscreen thumbnail" fields, you should provide width and height if you want to crop image (%s).', $context->getTabName()),
+            'fullscreenWidth|invalid_number' => t('Invalid entry in one of "Image/Generate fullscreen thumbnail/Width" fields, should be a number greater than 0 or empty (%s).', $context->getTabName()),
+            'fullscreenHeight|invalid_number' => t('Invalid entry in one of "Image/Generate fullscreen thumbnail/Height" fields, should be a number greater than 0 or empty (%s).', $context->getTabName()),
         ];
     }
 
@@ -92,19 +104,19 @@ class ImageFieldType extends AbstractFieldType
         return array_merge(
             $this->validateImageDimensions(
                 data: $data,
-                createImageKey: 'imageCreateThumbnailImage',
-                widthKey: 'imageThumbnailWidth',
-                heightKey: 'imageThumbnailHeight',
-                cropKey: 'imageThumbnailCrop',
-                optionsKey: 'imageThumbnailOptions',
+                createImageKey: 'createThumbnailImage',
+                widthKey: 'thumbnailWidth',
+                heightKey: 'thumbnailHeight',
+                cropKey: 'thumbnailCrop',
+                optionsKey: 'thumbnailOptions',
             ),
             $this->validateImageDimensions(
                 data: $data,
-                createImageKey: 'imageCreateFullscreenImage',
-                widthKey: 'imageFullscreenWidth',
-                heightKey: 'imageFullscreenHeight',
-                cropKey: 'imageFullscreenCrop',
-                optionsKey: 'imageFullscreenOptions',
+                createImageKey: 'createFullscreenImage',
+                widthKey: 'fullscreenWidth',
+                heightKey: 'fullscreenHeight',
+                cropKey: 'fullscreenCrop',
+                optionsKey: 'fullscreenOptions',
             )
         );
     }

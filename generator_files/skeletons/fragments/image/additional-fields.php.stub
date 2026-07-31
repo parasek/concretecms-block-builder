@@ -1,0 +1,23 @@
+<div class="flex-shrink-0">
+    <button
+        class="btn btn-secondary"
+        type="button"
+        data-image-additional-toggle
+        data-show-label="<?= t({{SHOW_LABEL_LITERAL}}); ?>"
+        data-hide-label="<?= t({{HIDE_LABEL_LITERAL}}); ?>"
+        aria-expanded="<?= !empty({{STATE_EXPRESSION}}) ? 'true' : 'false'; ?>"
+    >
+        <i class="fas fa-caret-right" aria-hidden="true"></i>
+        <span data-image-additional-toggle-label>
+            <?= !empty({{STATE_EXPRESSION}}) ? t({{HIDE_LABEL_LITERAL}}) : t({{SHOW_LABEL_LITERAL}}); ?>
+        </span>
+    </button>
+    <input
+        name="{{STATE_NAME}}"
+        type="hidden"
+        value="<?= !empty({{STATE_EXPRESSION}}) ? '1' : '0'; ?>"
+        data-image-additional-state{{STATE_ENTRY_FIELD}}
+    >
+</div>
+<div class="w-100 mt-3" data-image-additional-fields <?= empty({{STATE_EXPRESSION}}) ? 'hidden' : ''; ?>>{{FIELDS}}
+</div>

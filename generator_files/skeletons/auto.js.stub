@@ -39,6 +39,62 @@
         });
     }
 
+    function updateImageDimensionFields(toggle) {
+        const group = toggle.closest('[data-image-dimension-group]');
+        const fields = group?.querySelector('[data-image-dimension-fields]');
+        if (fields) {
+            fields.hidden = !toggle.checked;
+        }
+    }
+
+    function initializeImageDimensionFields(root) {
+        root.querySelectorAll('[data-image-dimension-toggle]').forEach(updateImageDimensionFields);
+    }
+
+    function handleImageDimensionChange(event) {
+        if (event.target instanceof HTMLInputElement && event.target.matches('[data-image-dimension-toggle]')) {
+            updateImageDimensionFields(event.target);
+        }
+    }
+
+    function updateImageAdditionalFields(toggle, expanded) {
+        const container = toggle.parentElement?.nextElementSibling;
+        const state = toggle.parentElement?.querySelector('[data-image-additional-state]');
+        const label = toggle.querySelector('[data-image-additional-toggle-label]');
+        toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+        if (container?.matches('[data-image-additional-fields]')) {
+            container.hidden = !expanded;
+        }
+        if (state instanceof HTMLInputElement) {
+            state.value = expanded ? '1' : '0';
+        }
+        if (label) {
+            label.textContent = expanded ? toggle.dataset.hideLabel ?? '' : toggle.dataset.showLabel ?? '';
+        }
+        toggle.querySelector('i')?.classList.toggle('fa-rotate-90', expanded);
+    }
+
+    function initializeImageAdditionalFields(root) {
+        root.querySelectorAll('[data-image-additional-toggle]').forEach((toggle) => {
+            const state = toggle.parentElement?.querySelector('[data-image-additional-state]');
+            const expanded = state instanceof HTMLInputElement
+                ? state.value === '1'
+                : toggle.getAttribute('aria-expanded') === 'true';
+            updateImageAdditionalFields(toggle, expanded);
+        });
+    }
+
+    function handleImageAdditionalFieldsClick(event) {
+        const toggle = event.target instanceof Element
+            ? event.target.closest('[data-image-additional-toggle]')
+            : null;
+        if (!toggle) {
+            return;
+        }
+
+        updateImageAdditionalFields(toggle, toggle.getAttribute('aria-expanded') !== 'true');
+    }
+
     function destroyEnhancedSelects(root) {
         root.querySelectorAll('[data-block-builder-enhanced-select]').forEach((field) => {
             const enhancedSelect = enhancedSelectInstances.get(field) ?? field.tomselect;
@@ -503,6 +559,8 @@
         initializeWysiwygEditors(entry);
         initializeConcreteSelectors(entry);
         initializeLinkFields(entry);
+        initializeImageDimensionFields(entry);
+        initializeImageAdditionalFields(entry);
         entry.dispatchEvent(new CustomEvent('blockbuilder:entry-added', {bubbles: true}));
 
         const keepCollapsed = state.scope.querySelector('[data-keep-added-collapsed]')?.checked === true;
@@ -727,6 +785,8 @@
         initializeWysiwygEditors(root);
         initializeConcreteSelectors(root);
         initializeLinkFields(root);
+        initializeImageDimensionFields(root);
+        initializeImageAdditionalFields(root);
     }
 
     function handleSubmit(event) {
@@ -740,10 +800,12 @@
 
     document.addEventListener('click', handleAction);
     document.addEventListener('click', handleLinkClick);
+    document.addEventListener('click', handleImageAdditionalFieldsClick);
     document.addEventListener('input', handleTitleChange);
     document.addEventListener('input', handleExternalLinkInput);
     document.addEventListener('change', handleTitleChange);
     document.addEventListener('change', handleLinkChange);
+    document.addEventListener('change', handleImageDimensionChange);
     document.addEventListener('keydown', handleMoveKeydown);
     document.addEventListener('submit', handleSubmit, true);
 

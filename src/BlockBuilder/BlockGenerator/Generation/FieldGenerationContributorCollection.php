@@ -8,6 +8,7 @@ use ArrayIterator;
 use BlockBuilder\FieldType\Type\ExternalLink\Generation\ExternalLinkFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\FlexLink\Generation\FlexLinkFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\HtmlEditor\Generation\HtmlEditorFieldGenerationContributor;
+use BlockBuilder\FieldType\Type\Image\Generation\ImageFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\LinkFromFileManager\Generation\LinkFromFileManagerFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\LinkFromSitemap\Generation\LinkFromSitemapFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\MultipleChoice\Generation\MultipleChoiceFieldGenerationContributor;
@@ -28,6 +29,7 @@ readonly class FieldGenerationContributorCollection implements IteratorAggregate
         private ExternalLinkFieldGenerationContributor $externalLinkFieldGenerationContributor,
         private FlexLinkFieldGenerationContributor $flexLinkFieldGenerationContributor,
         private HtmlEditorFieldGenerationContributor $htmlEditorFieldGenerationContributor,
+        private ImageFieldGenerationContributor $imageFieldGenerationContributor,
         private LinkFromFileManagerFieldGenerationContributor $linkFromFileManagerFieldGenerationContributor,
         private LinkFromSitemapFieldGenerationContributor $linkFromSitemapFieldGenerationContributor,
         private MultipleChoiceFieldGenerationContributor $multipleChoiceFieldGenerationContributor,
@@ -48,6 +50,7 @@ readonly class FieldGenerationContributorCollection implements IteratorAggregate
             $this->externalLinkFieldGenerationContributor,
             $this->flexLinkFieldGenerationContributor,
             $this->htmlEditorFieldGenerationContributor,
+            $this->imageFieldGenerationContributor,
             $this->linkFromFileManagerFieldGenerationContributor,
             $this->linkFromSitemapFieldGenerationContributor,
             $this->multipleChoiceFieldGenerationContributor,

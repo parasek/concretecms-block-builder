@@ -389,6 +389,14 @@ PHP;
         $maximumCounter = $config->maxNumberOfEntries > 0
             ? sprintf(' / <span title="<?= h($translatedMaximumLabel); ?>">%d</span>', $config->maxNumberOfEntries)
             : '';
+        $repeatableDefaultValues = $this->phpLiteralFormatter->format(
+            $context->plan->form->repeatableDefaultValues,
+        );
+        $repeatableDefaultValues = str_replace(
+            PHP_EOL,
+            PHP_EOL . str_repeat('    ', 3),
+            $repeatableDefaultValues,
+        );
 
         return strtr($template, [
             '{{ADD_AT_TOP_LABEL}}' => $this->phpLiteralFormatter->format($labels['addAtTop']),
@@ -408,10 +416,8 @@ PHP;
             '{{MAXIMUM_COUNTER}}' => $maximumCounter,
             '{{MAXIMUM_ENTRIES}}' => (string) $config->maxNumberOfEntries,
             '{{REPEATABLE_CAPTURE_LIST}}' => $this->renderRepeatableCaptureList($context),
-            '{{REPEATABLE_DEFAULT_VALUES}}' => $this->phpLiteralFormatter->format(
-                $context->plan->form->repeatableDefaultValues,
-            ),
-            '{{REPEATABLE_FIELDS}}' => $this->indentCode($fieldFragments, 4),
+            '{{REPEATABLE_DEFAULT_VALUES}}' => $repeatableDefaultValues,
+            '{{REPEATABLE_FIELDS}}' => $this->indentCode($fieldFragments, 2),
         ]);
     }
 

@@ -68,6 +68,8 @@
 - Fixed saved Sitemap Link, File Manager Link, and External Link options being displayed as unchecked when their JSON values are booleans.
 - Fixed valid File Manager Link selections being rejected because Concrete file-version methods were checked on the proxying file entity.
 - Added generated `view.php` documentation for basic variables, choice-option maps, Flex Link values, and repeatable-entry array keys.
+- Added basic and repeatable Image generation with image-only file selection, file tracking, collapsible per-image alt text and dimension overrides, repeatable-field-wide defaults in the Settings tab, original/thumbnail/fullscreen view data, and 2.8.1 configuration and view-variable compatibility.
+- Fixed generated Image fields passing a file version instead of the Concrete file entity to the thumbnail helper.
 
 # 2.8.1
 - Fixed undefined PHP 8 errors for the Image field type.

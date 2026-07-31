@@ -1,0 +1,7 @@
+<?php if (!empty($entry[{{LINK_KEY_LITERAL}}])): ?>
+    <img src="<?= h($entry[{{LINK_KEY_LITERAL}}]); ?>"
+         alt="<?= h($entry[{{ALT_KEY_LITERAL}}] ?? ''); ?>"
+         width="<?= h($entry[{{WIDTH_KEY_LITERAL}}] ?? 0); ?>"
+         height="<?= h($entry[{{HEIGHT_KEY_LITERAL}}] ?? 0); ?>"
+    >
+<?php endif; ?>

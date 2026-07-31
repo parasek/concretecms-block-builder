@@ -1,0 +1,18 @@
+<div class="mb-4">
+    <label class="form-label"><?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?></label>
+    <div class="d-flex flex-wrap align-items-center gap-2">
+        <div
+            class="flex-grow-1"
+            data-block-builder-concrete-selector="file"
+            data-selected-value="<?= (int) ($entry[{{HANDLE_LITERAL}}] ?? 0); ?>"
+            data-entry-field="{{HANDLE}}"
+        >
+            <concrete-file-input
+                :filters='<?= json_encode([["field" => "type", "type" => \Concrete\Core\File\Type\Type::T_IMAGE]]); ?>'
+                :file-id="<?= (int) ($entry[{{HANDLE_LITERAL}}] ?? 0); ?>"
+                input-name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
+                choose-text="<?= t('Choose Image'); ?>"
+            ></concrete-file-input>
+        </div>{{ADDITIONAL_FIELDS}}
+    </div>{{HELP_TEXT}}
+</div>
