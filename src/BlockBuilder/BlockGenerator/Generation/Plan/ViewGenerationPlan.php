@@ -8,9 +8,14 @@ final readonly class ViewGenerationPlan
 {
     /**
      * @param array<string, CodeFragment[]> $fragmentsBySection
+     * @param ViewVariableDocumentation[] $variables
+     * @param ViewVariableDocumentation[] $entryKeys
      */
-    public function __construct(public array $fragmentsBySection)
-    {
+    public function __construct(
+        public array $fragmentsBySection,
+        public array $variables,
+        public array $entryKeys,
+    ) {
     }
 
     /**

@@ -14,6 +14,7 @@ use BlockBuilder\BlockGenerator\Generation\Plan\CodeFragment;
 use BlockBuilder\BlockGenerator\Generation\Plan\ControllerProperty;
 use BlockBuilder\BlockGenerator\Generation\Plan\DatabaseColumn;
 use BlockBuilder\BlockGenerator\Generation\Plan\Enum\ControllerMethodSectionEnum;
+use BlockBuilder\BlockGenerator\Generation\Plan\ViewVariableDocumentation;
 use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
 use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\FieldType\Generation\LinkFieldGenerationSupport;
@@ -82,6 +83,28 @@ final readonly class FlexLinkFieldGenerationContributor implements FieldGenerati
                 $field->handle,
                 $this->getDefaultLinkData(),
             );
+        }
+
+        $viewVariables = [
+            '_link' => sprintf('Resolved URL for %s', $field->label),
+            '_ending' => sprintf('URL suffix for %s', $field->label),
+            '_text' => sprintf('Link text for %s', $field->label),
+            '_title' => sprintf('Title attribute for %s', $field->label),
+            '_new_window' => sprintf('Generated target attribute for %s', $field->label),
+            '_no_follow' => sprintf('Generated rel attribute for %s', $field->label),
+        ];
+        $documentationOffset = 0;
+        foreach ($viewVariables as $suffix => $description) {
+            $planBuilder->view->addFieldVariable(
+                $context->fieldContext,
+                new ViewVariableDocumentation(
+                    name: $field->handle . $suffix,
+                    type: 'string',
+                    description: $description,
+                    order: ($context->position * 10) + $documentationOffset,
+                ),
+            );
+            $documentationOffset++;
         }
 
         $planBuilder->form->addFieldFragment(

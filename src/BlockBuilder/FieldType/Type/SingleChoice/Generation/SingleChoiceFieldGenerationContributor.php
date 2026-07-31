@@ -14,6 +14,7 @@ use BlockBuilder\BlockGenerator\Generation\Plan\CodeFragment;
 use BlockBuilder\BlockGenerator\Generation\Plan\ControllerProperty;
 use BlockBuilder\BlockGenerator\Generation\Plan\DatabaseColumn;
 use BlockBuilder\BlockGenerator\Generation\Plan\Enum\ControllerMethodSectionEnum;
+use BlockBuilder\BlockGenerator\Generation\Plan\ViewVariableDocumentation;
 use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\FieldType\Type\SingleChoice\SingleChoiceFieldTypeDto;
 
@@ -103,6 +104,23 @@ readonly class SingleChoiceFieldGenerationContributor implements FieldGeneration
                 ->addRepeatableCapturedVariable($optionNames['view'])
                 ->addRepeatableDefaultValue($field->handle, $field->defaultValue ?? '');
         }
+
+        $planBuilder->view
+            ->addFieldVariable(
+                $context->fieldContext,
+                new ViewVariableDocumentation(
+                    name: $field->handle,
+                    type: 'string|null',
+                    description: $field->label,
+                    order: $context->position * 10,
+                ),
+            )
+            ->addVariable(new ViewVariableDocumentation(
+                name: $optionNames['view'],
+                type: 'array<array-key, string>',
+                description: sprintf('Option labels for %s', $field->label),
+                order: ($context->isBasicField() ? 0 : 100_000) + ($context->position * 10) + 1,
+            ));
 
         $planBuilder->form->addFieldFragment(
             $context->fieldContext,

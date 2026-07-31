@@ -14,6 +14,7 @@ use BlockBuilder\BlockGenerator\Generation\Plan\CodeFragment;
 use BlockBuilder\BlockGenerator\Generation\Plan\ControllerProperty;
 use BlockBuilder\BlockGenerator\Generation\Plan\DatabaseColumn;
 use BlockBuilder\BlockGenerator\Generation\Plan\Enum\ControllerMethodSectionEnum;
+use BlockBuilder\BlockGenerator\Generation\Plan\ViewVariableDocumentation;
 use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\FieldType\Type\Text\TextFieldTypeDto;
 
@@ -61,6 +62,16 @@ readonly class TextFieldGenerationContributor implements FieldGenerationContribu
         } else {
             $this->contributeRepeatableControllerCode($field, $fragmentKeyPrefix, $context->position, $planBuilder);
         }
+
+        $planBuilder->view->addFieldVariable(
+            $context->fieldContext,
+            new ViewVariableDocumentation(
+                name: $field->handle,
+                type: 'string|null',
+                description: $field->label,
+                order: $context->position * 10,
+            ),
+        );
 
         $planBuilder->form->addFieldFragment(
             $context->fieldContext,

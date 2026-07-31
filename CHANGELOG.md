@@ -64,6 +64,7 @@
 - Removed obsolete and no-op generated controller methods when their block features do not require them.
 - Added tabbed generated forms and a plain-JavaScript repeatable-entry interface with matching shared form styles.
 - Added basic and repeatable Flex Link generation with page, file, and external destinations, reusable compound-field controls, server-side validation, and compatibility with 2.8.1 configuration, stored JSON data, and generated view variable names.
+- Added generated `view.php` documentation for basic variables, choice-option maps, Flex Link values, and repeatable-entry array keys.
 
 # 2.8.1
 - Fixed undefined PHP 8 errors for the Image field type.

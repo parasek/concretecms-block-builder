@@ -16,6 +16,7 @@ use BlockBuilder\BlockGenerator\Generation\Plan\ControllerUseStatement;
 use BlockBuilder\BlockGenerator\Generation\Plan\DatabaseColumn;
 use BlockBuilder\BlockGenerator\Generation\Plan\Enum\ControllerMethodSectionEnum;
 use BlockBuilder\BlockGenerator\Generation\Plan\FormGenerationPlanBuilder;
+use BlockBuilder\BlockGenerator\Generation\Plan\ViewVariableDocumentation;
 use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\FieldType\Type\WysiwygEditor\WysiwygEditorFieldTypeDto;
 use Concrete\Core\Editor\LinkAbstractor;
@@ -69,6 +70,16 @@ readonly class WysiwygEditorFieldGenerationContributor implements FieldGeneratio
         } else {
             $this->contributeRepeatableControllerCode($field, $fragmentKeyPrefix, $context->position, $planBuilder);
         }
+
+        $planBuilder->view->addFieldVariable(
+            $context->fieldContext,
+            new ViewVariableDocumentation(
+                name: $field->handle,
+                type: 'string|null',
+                description: $field->label,
+                order: $context->position * 10,
+            ),
+        );
 
         $this->contributeEditorInitializer($field, $fragmentKeyPrefix, $context->position, $planBuilder);
         $planBuilder->form->addFieldFragment(
