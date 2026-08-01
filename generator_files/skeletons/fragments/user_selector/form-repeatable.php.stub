@@ -1,0 +1,14 @@
+<div class="mb-4">
+    <div class="form-label"><?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?></div>
+    <div
+        data-block-builder-concrete-selector="user"
+        data-selected-value="<?= (int) ($entry[{{HANDLE_LITERAL}}] ?? 0); ?>"
+        data-entry-field="{{HANDLE}}"
+    >
+        <concrete-user-input
+            :user-id="<?= (int) ($entry[{{HANDLE_LITERAL}}] ?? 0); ?>"
+            choose-text="<?= t('Choose a User'); ?>"
+            input-name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
+        ></concrete-user-input>
+    </div>{{HELP_TEXT}}
+</div>

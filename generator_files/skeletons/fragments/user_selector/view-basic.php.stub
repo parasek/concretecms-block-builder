@@ -1,0 +1,3 @@
+<?php if (${{HANDLE}} instanceof \Concrete\Core\User\UserInfo): ?>
+    <?= h(${{HANDLE}}->getUserDisplayName()); ?>
+<?php endif; ?>

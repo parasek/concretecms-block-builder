@@ -21,6 +21,7 @@ use BlockBuilder\FieldType\Type\Number\NumberFieldType;
 use BlockBuilder\FieldType\Type\SingleChoice\SingleChoiceFieldType;
 use BlockBuilder\FieldType\Type\Text\TextFieldType;
 use BlockBuilder\FieldType\Type\Textarea\TextareaFieldType;
+use BlockBuilder\FieldType\Type\UserSelector\UserSelectorFieldType;
 use BlockBuilder\FieldType\Type\WysiwygEditor\WysiwygEditorFieldType;
 use LogicException;
 
@@ -61,6 +62,7 @@ final class FieldTypeRegistry
         $this->register(new DatePickerFieldType());
         $this->register(new ColorPickerFieldType());
         $this->register(new IconPickerFieldType());
+        $this->register(new UserSelectorFieldType());
 
         if (count($this->fieldTypesByEnumName) !== count(FieldTypeEnum::cases())) {
             throw new LogicException('Every field type enum case must have exactly one registered field type.');

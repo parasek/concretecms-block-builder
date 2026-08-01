@@ -326,6 +326,7 @@
                 file: ['concrete-file-input', ':file-id'],
                 icon: ['icon-selector', 'selected'],
                 page: ['concrete-page-input', ':page-id'],
+                user: ['concrete-user-input', ':user-id'],
             }[selectorType];
             const selectedValue = String(value ?? (selectorType === 'icon' ? '' : '0'));
             firstField.dataset.selectedValue = selectedValue;

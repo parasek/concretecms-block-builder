@@ -21,6 +21,7 @@ use BlockBuilder\FieldType\Type\Number\Generation\NumberFieldGenerationContribut
 use BlockBuilder\FieldType\Type\SingleChoice\Generation\SingleChoiceFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\Text\Generation\TextFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\Textarea\Generation\TextareaFieldGenerationContributor;
+use BlockBuilder\FieldType\Type\UserSelector\Generation\UserSelectorFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\WysiwygEditor\Generation\WysiwygEditorFieldGenerationContributor;
 use IteratorAggregate;
 use Traversable;
@@ -47,6 +48,7 @@ readonly class FieldGenerationContributorCollection implements IteratorAggregate
         private SingleChoiceFieldGenerationContributor $singleChoiceFieldGenerationContributor,
         private TextFieldGenerationContributor $textFieldGenerationContributor,
         private TextareaFieldGenerationContributor $textareaFieldGenerationContributor,
+        private UserSelectorFieldGenerationContributor $userSelectorFieldGenerationContributor,
         private WysiwygEditorFieldGenerationContributor $wysiwygEditorFieldGenerationContributor,
     ) {
     }
@@ -73,6 +75,7 @@ readonly class FieldGenerationContributorCollection implements IteratorAggregate
             $this->singleChoiceFieldGenerationContributor,
             $this->textFieldGenerationContributor,
             $this->textareaFieldGenerationContributor,
+            $this->userSelectorFieldGenerationContributor,
             $this->wysiwygEditorFieldGenerationContributor,
         ]);
     }
