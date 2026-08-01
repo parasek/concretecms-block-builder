@@ -159,8 +159,10 @@ final class CreateBlockInputNormalizer
         'customCode',
     ];
 
-    public function __construct(private readonly FieldTypeRegistry $fieldTypeRegistry)
-    {
+    public function __construct(
+        private readonly FieldTypeRegistry $fieldTypeRegistry,
+        private readonly BlockFormFieldLabelProvider $fieldLabelProvider,
+    ) {
     }
 
     public function normalize(array $data): CreateBlockInputNormalizationResult
@@ -369,7 +371,11 @@ final class CreateBlockInputNormalizer
         }
 
         $feedback->addError(
-            error: t('The field "%s" exceeds the maximum allowed length of %s characters.', $propertyName, $maximumLength),
+            error: t(
+                'The field "%s" exceeds the maximum allowed length of %s characters.',
+                $this->fieldLabelProvider->getLabel($propertyName),
+                $maximumLength,
+            ),
             field: $fieldPath ?? $propertyName,
             tab: $tab,
         );
@@ -449,7 +455,11 @@ final class CreateBlockInputNormalizer
         }
 
         $feedback->addError(
-            error: t('The field "%s" may contain at most %s options.', $propertyName, self::MAX_OPTIONS_PER_FIELD),
+            error: t(
+                'The field "%s" may contain at most %s options.',
+                $this->fieldLabelProvider->getLabel($propertyName),
+                self::MAX_OPTIONS_PER_FIELD,
+            ),
             field: $fieldPath,
             tab: $tab,
         );
@@ -464,7 +474,10 @@ final class CreateBlockInputNormalizer
         ?string $tab,
     ): void {
         $feedback->addError(
-            error: t('The field "%s" has an invalid value type.', $propertyName),
+            error: t(
+                'The field "%s" has an invalid value type.',
+                $this->fieldLabelProvider->getLabel($propertyName),
+            ),
             field: $fieldPath ?? $propertyName,
             tab: $tab,
         );
@@ -477,7 +490,11 @@ final class CreateBlockInputNormalizer
         string $propertyName,
     ): void {
         $feedback->addError(
-            error: t('A field in the "%s" collection has an invalid "%s" value.', $context->value, $propertyName),
+            error: t(
+                'A field in the "%s" collection has an invalid "%s" value.',
+                $context->value,
+                $this->fieldLabelProvider->getLabel($propertyName),
+            ),
             field: sprintf('%s[%s][%s]', $context->value, $fieldIndex, $propertyName),
             tab: $context->getTabHandle(),
         );

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BlockBuilder\Block\Validation\Validator\Block;
 
+use BlockBuilder\Block\Request\BlockFormFieldLabelProvider;
 use BlockBuilder\Block\Validation\ValidatorInterface;
 use BlockBuilder\Block\Validation\ValidationFeedback;
 use BlockBuilder\Block\Validation\ValidationFeedbackBuilder;
@@ -33,6 +34,7 @@ class BlockOptionValuesValidator implements ValidatorInterface
 
     public function __construct(
         private readonly BlockSettingsOptionProvider $blockSettingsOptions,
+        private readonly BlockFormFieldLabelProvider $fieldLabelProvider,
     ) {
     }
 
@@ -73,28 +75,14 @@ class BlockOptionValuesValidator implements ValidatorInterface
         }
 
         $feedback->addError(
-            error: t('The field "%s" contains an invalid option (%s).', $this->getFieldLabel($field), $tab->getName()),
+            error: t(
+                'The field "%s" contains an invalid option (%s).',
+                $this->fieldLabelProvider->getLabel($field),
+                $tab->getName(),
+            ),
             field: $field,
             tab: $tab->getHandle(),
         );
-    }
-
-    private function getFieldLabel(string $field): string
-    {
-        return match ($field) {
-            'cacheBlockRecord' => t('Cache block record'),
-            'cacheBlockOutput' => t('Cache block output'),
-            'cacheBlockOutputOnPost' => t('Cache block output on post'),
-            'cacheBlockOutputOnEditMode' => t('Cache block output in edit mode'),
-            'cacheBlockOutputForRegisteredUsers' => t('Cache block output for registered users'),
-            'supportSavingNullValues' => t('Support saving null values'),
-            'ignorePageThemeGridFrameworkContainer' => t('Ignore page theme grid framework container'),
-            'installBlock' => t('Install the block after creation'),
-            'entriesAsFirstTab' => t('Entries as the first tab'),
-            'highlightMultiElementFields' => t('Highlight multi-element fields'),
-            'blockTypeSet' => t('Block type set'),
-            default => $field,
-        };
     }
 
     private function getStringKeys(array $options): array
