@@ -80,7 +80,6 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
                     '{{FIELD_PROPERTIES}}' => $this->renderFieldProperties($context),
                     '{{BLOCK_NAME_LITERAL}}' => $this->phpLiteralFormatter->format($context->config->blockName),
                     '{{BLOCK_DESCRIPTION_LITERAL}}' => $this->phpLiteralFormatter->format($context->config->blockDescription ?? ''),
-                    '{{REQUIRED_FEATURES_METHOD}}' => $this->renderRequiredFeaturesMethod($context),
                     '{{SEARCHABLE_CONTENT_METHOD}}' => $this->renderSearchableContentMethod($context),
                     '{{USED_FILES_METHOD}}' => $this->renderUsedFilesMethod($context),
                     '{{ON_START_METHOD}}' => $this->renderOnStartMethod($context),
@@ -237,26 +236,6 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
         }
 
         return ' implements ' . implode(', ', $context->plan->controller->implementedInterfaces);
-    }
-
-    private function renderRequiredFeaturesMethod(BlockFileGenerationContext $context): string
-    {
-        if ($context->plan->controller->requiredFeatureConstantNames === []) {
-            return '';
-        }
-
-        $features = array_map(
-            static fn(string $featureConstantName): string => '            Features::' . $featureConstantName . ',',
-            $context->plan->controller->requiredFeatureConstantNames,
-        );
-
-        return PHP_EOL
-            . '    public function getRequiredFeatures(): array' . PHP_EOL
-            . '    {' . PHP_EOL
-            . '        return [' . PHP_EOL
-            . implode(PHP_EOL, $features) . PHP_EOL
-            . '        ];' . PHP_EOL
-            . '    }' . PHP_EOL;
     }
 
     private function renderFieldProperties(BlockFileGenerationContext $context): string

@@ -295,7 +295,6 @@ PHP,
         BlockGenerationPlanBuilder $planBuilder,
     ): void {
         $planBuilder->controller
-            ->addRequiredFeature('FILES')
             ->addExportFileColumn($field->handle)
             ->addFileUsageFragment(
                 $context->fieldContext,

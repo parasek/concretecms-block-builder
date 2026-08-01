@@ -59,10 +59,6 @@ final readonly class FlexLinkFieldGenerationContributor implements FieldGenerati
                 order: $context->position,
             ),
         );
-        $planBuilder->controller
-            ->addRequiredFeature('PAGES')
-            ->addRequiredFeature('FILES');
-
         if ($context->isBasicField()) {
             $this->contributeBasicControllerCode(
                 field: $field,

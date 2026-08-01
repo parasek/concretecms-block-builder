@@ -8,8 +8,6 @@ use BlockBuilder\BlockGenerator\Generation\Plan\Enum\ControllerMethodSectionEnum
 use BlockBuilder\BlockGenerator\Generation\Plan\Support\SectionedCodeFragmentBuilder;
 use BlockBuilder\BlockGenerator\Generation\Plan\Support\UniqueContributionCollection;
 use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
-use Concrete\Core\Feature\Features;
-use Concrete\Core\Feature\UsesFeatureInterface;
 use Concrete\Core\File\Tracker\FileTrackableInterface;
 use InvalidArgumentException;
 
@@ -22,7 +20,6 @@ final class ControllerGenerationPlanBuilder
     private UniqueContributionCollection $exportFileColumns;
     private UniqueContributionCollection $exportContentColumns;
     private UniqueContributionCollection $exportFileFolderColumns;
-    private UniqueContributionCollection $requiredFeatureConstantNames;
     private UniqueContributionCollection $searchableBasicFields;
     private UniqueContributionCollection $searchableRepeatableFields;
     private UniqueContributionCollection $assets;
@@ -37,7 +34,6 @@ final class ControllerGenerationPlanBuilder
         $this->exportFileColumns = new UniqueContributionCollection('controller file export columns');
         $this->exportContentColumns = new UniqueContributionCollection('controller content export columns');
         $this->exportFileFolderColumns = new UniqueContributionCollection('controller file-folder export columns');
-        $this->requiredFeatureConstantNames = new UniqueContributionCollection('controller required features');
         $this->searchableBasicFields = new UniqueContributionCollection('controller searchable basic fields');
         $this->searchableRepeatableFields = new UniqueContributionCollection('controller searchable repeatable fields');
         $this->assets = new UniqueContributionCollection('controller assets');
@@ -98,28 +94,6 @@ final class ControllerGenerationPlanBuilder
         return $this;
     }
 
-    public function addRequiredFeature(string $featureConstantName): self
-    {
-        if (
-            preg_match('/^[A-Z][A-Z0-9_]*$/', $featureConstantName) !== 1
-            || !defined(Features::class . '::' . $featureConstantName)
-        ) {
-            throw new InvalidArgumentException(sprintf(
-                'Unknown Concrete feature constant "%s".',
-                $featureConstantName,
-            ));
-        }
-
-        $this->addUseStatement(new ControllerUseStatement(Features::class));
-        $this->addImplementedInterface(UsesFeatureInterface::class);
-        $this->requiredFeatureConstantNames->add(
-            strtolower($featureConstantName),
-            $featureConstantName,
-        );
-
-        return $this;
-    }
-
     public function addFileUsageFragment(FieldTypeContextEnum $context, CodeFragment $fragment): self
     {
         $this->addImplementedInterface(FileTrackableInterface::class);
@@ -175,7 +149,6 @@ final class ControllerGenerationPlanBuilder
             exportFileColumns: $this->exportFileColumns->values(),
             exportContentColumns: $this->exportContentColumns->values(),
             exportFileFolderColumns: $this->exportFileFolderColumns->values(),
-            requiredFeatureConstantNames: $this->requiredFeatureConstantNames->values(),
             searchableBasicFields: $this->searchableBasicFields->values(),
             searchableRepeatableFields: $this->searchableRepeatableFields->values(),
             assets: $this->assets->values(),

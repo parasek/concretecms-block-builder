@@ -160,11 +160,9 @@ abstract readonly class AbstractIndividualLinkFieldGenerationContributor impleme
     ): void {
         if ($this->getFieldType() === FieldTypeEnum::LinkFromSitemap) {
             $planBuilder->controller
-                ->addRequiredFeature('PAGES')
                 ->addExportPageColumn($field->handle);
         } elseif ($this->getFieldType() === FieldTypeEnum::LinkFromFileManager) {
             $planBuilder->controller
-                ->addRequiredFeature('FILES')
                 ->addExportFileColumn($field->handle)
                 ->addFileUsageFragment(
                     $context->fieldContext,

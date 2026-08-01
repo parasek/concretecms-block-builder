@@ -77,7 +77,6 @@ final readonly class FilesFromFolderFieldGenerationContributor implements FieldG
             ),
         );
         $planBuilder->controller
-            ->addRequiredFeature('FILES')
             ->addExportFileFolderColumn($field->handle)
             ->addMethodFragment(
                 ControllerMethodSectionEnum::AddEdit->value,

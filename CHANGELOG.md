@@ -63,7 +63,7 @@
 - Excluded repeatable-entry auto-increment values from block export and import data.
 - Added database-index generation and indexed repeatable entries by block ID and position.
 - Added Composer validation that reuses normal field validation for persisted block data.
-- Added controller-plan support for implemented interfaces, required Concrete features, and content/file-folder export metadata.
+- Added controller-plan support for implemented interfaces and content/file-folder export metadata.
 - Added opt-in Concrete file-usage tracking with raw repeatable-entry collection and post-save tracker refresh.
 - Modernized generated form service imports and hardened text rendering against invalid non-scalar values.
 - Removed obsolete and no-op generated controller methods when their block features do not require them.

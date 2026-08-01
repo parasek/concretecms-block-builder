@@ -14,7 +14,6 @@ final readonly class ControllerGenerationPlan
      * @param string[] $exportFileColumns
      * @param string[] $exportContentColumns
      * @param string[] $exportFileFolderColumns
-     * @param string[] $requiredFeatureConstantNames
      * @param string[] $searchableBasicFields
      * @param string[] $searchableRepeatableFields
      * @param ControllerAsset[] $assets
@@ -28,7 +27,6 @@ final readonly class ControllerGenerationPlan
         public array $exportFileColumns,
         public array $exportContentColumns,
         public array $exportFileFolderColumns,
-        public array $requiredFeatureConstantNames,
         public array $searchableBasicFields,
         public array $searchableRepeatableFields,
         public array $assets,

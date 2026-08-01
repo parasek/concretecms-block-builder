@@ -71,7 +71,6 @@ final readonly class FileSetFieldGenerationContributor implements FieldGeneratio
             ),
         );
         $planBuilder->controller
-            ->addRequiredFeature('FILES')
             ->addMethodFragment(
                 ControllerMethodSectionEnum::AddEdit->value,
                 new CodeFragment(

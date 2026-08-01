@@ -69,7 +69,6 @@ final readonly class ExpressFieldGenerationContributor implements FieldGeneratio
             ),
         );
         $planBuilder->controller
-            ->addRequiredFeature('EXPRESS')
             ->addMethodFragment(
                 ControllerMethodSectionEnum::AddEdit->value,
                 new CodeFragment(
