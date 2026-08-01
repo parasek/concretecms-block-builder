@@ -15,7 +15,7 @@ readonly class ExpressFieldTypeDto implements FieldTypeDtoInterface
         public string $handle,
         public bool $required,
         public ?string $helpText,
-        public ?string $expressHandle,
+        public string $expressHandle,
     ) {
     }
 }

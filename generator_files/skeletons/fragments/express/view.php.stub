@@ -1,0 +1,154 @@
+<?php if (!empty({{ENTRY_IDENTIFIER_EXPRESSION}})): ?>
+    <?php
+    ${{ENTRY_VARIABLE}} = \Concrete\Core\Support\Facade\Express::getEntry({{ENTRY_IDENTIFIER_EXPRESSION}});
+    /** @var \Concrete\Core\Entity\Express\Entry|null ${{ENTRY_VARIABLE}} */
+    ?>
+
+    <?php if (${{ENTRY_VARIABLE}} instanceof \Concrete\Core\Entity\Express\Entry): ?>
+        <?php
+        // These examples show how to display attributes from an Express object.
+        // Delete unnecessary examples and change the handles to match your Express object.
+        ?>
+
+        <p style="background: #dadada;">Text:</p>
+        <?php if (!empty(${{ENTRY_VARIABLE}}->getAttribute('example_text'))): ?>
+            <?= h(${{ENTRY_VARIABLE}}->getAttribute('example_text')); ?>
+        <?php endif; ?>
+
+        <p style="background: #dadada;">Duration:</p>
+        <?php if (!empty(${{ENTRY_VARIABLE}}->getAttribute('example_duration'))): ?>
+            <?= h(${{ENTRY_VARIABLE}}->getAttribute('example_duration')); ?>
+        <?php endif; ?>
+
+        <p style="background: #dadada;">Text Area:</p>
+        <?php if (!empty(${{ENTRY_VARIABLE}}->getAttribute('example_text_area'))): ?>
+            <p>Plain Text:</p>
+            <?= nl2br(h(${{ENTRY_VARIABLE}}->getAttribute('example_text_area'))); ?>
+            <p>------------------------------------------------------------</p>
+            <p>Rich Text - Default Setting:</p>
+            <?= ${{ENTRY_VARIABLE}}->getAttribute('example_text_area'); ?>
+        <?php endif; ?>
+
+        <p style="background: #dadada;">Checkbox:</p>
+        <?php if (!empty(${{ENTRY_VARIABLE}}->getAttribute('example_checkbox'))): ?>
+            <?= h(${{ENTRY_VARIABLE}}->getAttribute('example_checkbox')); ?>
+            <p>------------------------------------------------------------</p>
+            <p>Label:</p>
+            <?php
+            $attributeKey = ${{ENTRY_VARIABLE}}->getAttributeValueObject('example_checkbox')->getAttributeKey();
+            $attributeSettings = $attributeKey->getAttributeKeySettings();
+            /** @var \Concrete\Core\Entity\Attribute\Key\Settings\BooleanSettings $attributeSettings */
+            $checkboxLabel = $attributeSettings->getCheckboxLabel();
+            ?>
+            <?= h($checkboxLabel); ?>
+        <?php endif; ?>
+
+        <p style="background: #dadada;">Date/Time:</p>
+        <?php if (!empty(${{ENTRY_VARIABLE}}->getAttribute('example_date_time'))): ?>
+            <p>Default date (honours multilingual settings):</p>
+            <?= h(${{ENTRY_VARIABLE}}->getAttribute('example_date_time', 'display')); ?>
+            <p>------------------------------------------------------------</p>
+            <p>Custom format:</p>
+            <?= h(date(
+                'd.m.Y H:i:s',
+                strtotime(${{ENTRY_VARIABLE}}->getAttributeValueObject('example_date_time')->getPlainTextValue()),
+            )); ?>
+        <?php endif; ?>
+
+        <p style="background: #dadada;">Image/File:</p>
+        <?php if (!empty(${{ENTRY_VARIABLE}}->getAttribute('example_image_file'))): ?>
+            <?php
+            $expressFile = \Concrete\Core\File\File::getByID(
+                ${{ENTRY_VARIABLE}}->getAttribute('example_image_file'),
+            );
+            /** @var \Concrete\Core\Entity\File\File|\Concrete\Core\Entity\File\Version|null $expressFile */
+            ?>
+            <p>Basic info:</p>
+            <?php if (is_object($expressFile)): ?>
+                <?php
+                echo 'File ID: ' . h($expressFile->getFileID()) . '<br>';
+                echo 'File Name: ' . h($expressFile->getFileName()) . '<br>';
+
+                echo 'Full URL: ' . h($expressFile->getURL()) . '<br>';
+                echo 'Tracked URL: ' . h($expressFile->getDownloadURL()) . '<br>';
+                echo 'Relative Path: ' . h($expressFile->getRelativePath()) . '<br>';
+                echo 'Full Relative Path: ' . h($_SERVER['DOCUMENT_ROOT'] . $expressFile->getRelativePath()) . '<br>';
+
+                echo 'Title: ' . h($expressFile->getTitle()) . '<br>';
+                echo 'Description: ' . h($expressFile->getDescription()) . '<br>';
+                echo 'Tags (string): ' . h($expressFile->getTags()) . '<br>';
+                echo 'Tags (array):<br>';
+                var_dump($expressFile->getTagsList());
+                echo '<br>';
+
+                echo 'File Size: ' . h($expressFile->getSize()) . '<br>';
+                echo 'Full File Size: ' . h($expressFile->getFullSize()) . '<br>';
+                echo 'Extension: ' . h($expressFile->getExtension()) . '<br>';
+                echo 'Type: ' . h($expressFile->getType()) . '<br>';
+                echo 'Mime: ' . h($expressFile->getMimeType()) . '<br>';
+                echo 'Display Type: ' . h($expressFile->getDisplayType()) . '<br>';
+                echo 'Generic Type Text: ' . h($expressFile->getGenericTypeText()) . '<br>';
+
+                echo 'Width: ' . h($expressFile->getAttribute('width')) . '<br>';
+                echo 'Height: ' . h($expressFile->getAttribute('height')) . '<br>';
+                echo 'Duration: ' . h($expressFile->getAttribute('duration')) . '<br>';
+                ?>
+            <?php endif; ?>
+
+            <p>------------------------------------------------------------</p>
+            <p>Thumbnail from Image Helper:</p>
+            <?php if (is_object($expressFile) && $expressFile->canEdit()): ?>
+                <?php $expressThumbnail = $application->make('helper/image')->getThumbnail($expressFile, 100, 75, true); ?>
+                <img
+                    src="<?= h($expressThumbnail->src); ?>"
+                    width="<?= h($expressThumbnail->width); ?>"
+                    height="<?= h($expressThumbnail->height); ?>"
+                    alt="<?= h($expressFile->getTitle()); ?>"
+                >
+            <?php endif; ?>
+
+            <p>------------------------------------------------------------</p>
+            <p>Default picture tag:</p>
+            <?php if (is_object($expressFile) && $expressFile->canEdit()): ?>
+                <?= $application->make('html/image', ['f' => $expressFile])->getTag(); ?>
+            <?php endif; ?>
+
+            <p>------------------------------------------------------------</p>
+            <p>Concrete Thumbnail (Dashboard / System &amp; Settings / Files / Thumbnails):</p>
+            <?php if (is_object($expressFile) && $expressFile->canEdit()): ?>
+                <?php $expressThumbnailType = \Concrete\Core\File\Image\Thumbnail\Type\Type::getByHandle('file_manager_listing'); ?>
+                <?php if ($expressThumbnailType instanceof \Concrete\Core\Entity\File\Image\Thumbnail\Type\Type): ?>
+                    <?php $expressThumbnailSource = $expressFile->getThumbnailURL($expressThumbnailType->getBaseVersion()); ?>
+                    <img
+                        src="<?= h($expressThumbnailSource); ?>"
+                        width="<?= h($expressThumbnailType->getWidth()); ?>"
+                        height="<?= h($expressThumbnailType->getHeight()); ?>"
+                        alt="<?= h($expressFile->getTitle()); ?>"
+                    >
+                <?php endif; ?>
+            <?php endif; ?>
+        <?php endif; ?>
+
+        <p style="background: #dadada;">Option List:</p>
+        <?php if (!empty(${{ENTRY_VARIABLE}}->getAttribute('example_option_list'))): ?>
+            <?php foreach (${{ENTRY_VARIABLE}}->getAttribute('example_option_list') as $optionLabel): ?>
+                <?= h($optionLabel); ?><br>
+            <?php endforeach; ?>
+        <?php endif; ?>
+
+        <p style="background: #dadada;">Page Selector:</p>
+        <?php if (!empty(${{ENTRY_VARIABLE}}->getAttribute('example_page_selector'))): ?>
+            <?php $expressPage = \Concrete\Core\Page\Page::getByID(${{ENTRY_VARIABLE}}->getAttribute('example_page_selector')); ?>
+            <?php if (is_object($expressPage) && !$expressPage->isError() && !$expressPage->isInTrash()): ?>
+                <?php
+                echo 'Page ID: ' . h($expressPage->getCollectionID()) . '<br>';
+                echo 'Name: ' . h($expressPage->getCollectionName()) . '<br>';
+                echo 'Description: ' . h($expressPage->getCollectionDescription()) . '<br>';
+                echo 'Link: ' . h($expressPage->getCollectionLink()) . '<br>';
+                echo 'Handle: ' . h($expressPage->getCollectionHandle()) . '<br>';
+                echo 'Example Page Attribute: ' . h($expressPage->getAttribute('page_attribute_handle')) . '<br>';
+                ?>
+            <?php endif; ?>
+        <?php endif; ?>
+    <?php endif; ?>
+<?php endif; ?>

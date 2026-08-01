@@ -32,7 +32,9 @@ class ExpressFieldType extends AbstractFieldType
 
     public static function getDefaultValues(): array
     {
-        return [];
+        return [
+            'expressHandle' => '',
+        ];
     }
 
     public static function createDtoFromArray(array $data): ExpressFieldTypeDto
@@ -43,7 +45,7 @@ class ExpressFieldType extends AbstractFieldType
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),
             helpText: trim($data['helpText'] ?? ''),
-            expressHandle: trim($data['expressHandle'] ?? ''),
+            expressHandle: trim((string) ($data['expressHandle'] ?? '')),
         );
     }
 
@@ -51,6 +53,7 @@ class ExpressFieldType extends AbstractFieldType
     {
         return [
             'expressHandle|empty' => t('There are some empty "Express object handle" fields (%s).', $context->getTabName()),
+            'expressHandle|invalid' => t('There are some invalid "Express object handle" fields (%s). Use lowercase letters, numbers, and underscores, starting with a letter.', $context->getTabName()),
         ];
     }
 
@@ -59,8 +62,13 @@ class ExpressFieldType extends AbstractFieldType
         $errors = [];
 
         // Handle
-        if (empty($data['expressHandle'])) {
+        $expressHandle = is_scalar($data['expressHandle'] ?? null)
+            ? trim((string) $data['expressHandle'])
+            : '';
+        if ($expressHandle === '') {
             $errors[] = 'expressHandle|empty';
+        } elseif (preg_match('/^[a-z][a-z0-9_]*$/', $expressHandle) !== 1) {
+            $errors[] = 'expressHandle|invalid';
         }
 
         return $errors;

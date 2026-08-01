@@ -273,11 +273,16 @@
         if (firstField.matches('[data-block-builder-concrete-selector]')) {
             const selectedValue = String(value ?? '0');
             const selectorType = firstField.dataset.blockBuilderConcreteSelector;
-            const component = firstField.querySelector(
-                selectorType === 'page' ? 'concrete-page-input' : 'concrete-file-input',
-            );
+            const selectorConfiguration = {
+                express: ['concrete-express-entry-input', 'entry-id'],
+                file: ['concrete-file-input', ':file-id'],
+                page: ['concrete-page-input', ':page-id'],
+            }[selectorType];
             firstField.dataset.selectedValue = selectedValue;
-            component?.setAttribute(selectorType === 'page' ? ':page-id' : ':file-id', selectedValue);
+            if (selectorConfiguration) {
+                firstField.querySelector(selectorConfiguration[0])
+                    ?.setAttribute(selectorConfiguration[1], selectedValue);
+            }
             return;
         }
 

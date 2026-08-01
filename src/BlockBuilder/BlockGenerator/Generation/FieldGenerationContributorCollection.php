@@ -6,6 +6,7 @@ namespace BlockBuilder\BlockGenerator\Generation;
 
 use ArrayIterator;
 use BlockBuilder\FieldType\Type\ExternalLink\Generation\ExternalLinkFieldGenerationContributor;
+use BlockBuilder\FieldType\Type\Express\Generation\ExpressFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\FileSet\Generation\FileSetFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\FlexLink\Generation\FlexLinkFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\HtmlEditor\Generation\HtmlEditorFieldGenerationContributor;
@@ -28,6 +29,7 @@ readonly class FieldGenerationContributorCollection implements IteratorAggregate
 {
     public function __construct(
         private ExternalLinkFieldGenerationContributor $externalLinkFieldGenerationContributor,
+        private ExpressFieldGenerationContributor $expressFieldGenerationContributor,
         private FileSetFieldGenerationContributor $fileSetFieldGenerationContributor,
         private FlexLinkFieldGenerationContributor $flexLinkFieldGenerationContributor,
         private HtmlEditorFieldGenerationContributor $htmlEditorFieldGenerationContributor,
@@ -50,6 +52,7 @@ readonly class FieldGenerationContributorCollection implements IteratorAggregate
     {
         return new ArrayIterator([
             $this->externalLinkFieldGenerationContributor,
+            $this->expressFieldGenerationContributor,
             $this->fileSetFieldGenerationContributor,
             $this->flexLinkFieldGenerationContributor,
             $this->htmlEditorFieldGenerationContributor,
