@@ -225,6 +225,12 @@
     border-color: var(--bs-danger) !important;
 }
 
+.bb-has-error .input-group-text {
+    color: var(--bs-white) !important;
+    background: var(--bs-danger) !important;
+    border-color: var(--bs-danger) !important;
+}
+
 .bb-has-error label {
     color: var(--bs-danger) !important;
 }
