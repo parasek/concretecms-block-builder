@@ -4,14 +4,15 @@
 
     <hr class="bb-entry-hr">
 
-    <div class="mb-4">
-        <label class="form-label" for="<%=context%>[<%=counter%>][defaultValue]"><?= t('Default value'); ?></label>
-        <input class="form-control" id="<%=context%>[<%=counter%>][defaultValue]" name="<%=context%>[<%=counter%>][defaultValue]" type="text" value="<%=defaultValue%>">
-    </div>
-
-    <div class="mb-4">
-        <label class="form-label" for="<%=context%>[<%=counter%>][placeholder]"><?= t('Placeholder'); ?></label>
-        <input class="form-control" id="<%=context%>[<%=counter%>][placeholder]" maxlength="255" name="<%=context%>[<%=counter%>][placeholder]" type="text" value="<%=placeholder%>">
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <label class="form-label" for="<%=context%>[<%=counter%>][defaultValue]"><?= t('Default value'); ?></label>
+            <input class="form-control" id="<%=context%>[<%=counter%>][defaultValue]" name="<%=context%>[<%=counter%>][defaultValue]" type="text" value="<%=defaultValue%>">
+        </div>
+        <div class="col-lg-6 mb-4">
+            <label class="form-label" for="<%=context%>[<%=counter%>][placeholder]"><?= t('Placeholder'); ?></label>
+            <input class="form-control" id="<%=context%>[<%=counter%>][placeholder]" maxlength="255" name="<%=context%>[<%=counter%>][placeholder]" type="text" value="<%=placeholder%>">
+        </div>
     </div>
 
     <div class="row">
@@ -25,21 +26,6 @@
             <input class="form-control" id="<%=context%>[<%=counter%>][suffix]" maxlength="100" name="<%=context%>[<%=counter%>][suffix]" type="text" value="<%=suffix%>">
             <div class="form-text"><?= t('Text displayed after the input, such as a percent sign.'); ?></div>
         </div>
-    </div>
-
-    <div class="form-check mb-4">
-        <input
-            class="form-check-input"
-            id="<%=context%>[<%=counter%>][displayZeroValue]"
-            name="<%=context%>[<%=counter%>][displayZeroValue]"
-            type="checkbox"
-            value="1"
-        <% if (displayZeroValue === true || displayZeroValue === 1 || displayZeroValue === '1') { %> checked="checked" <% } %>
-        >
-        <label
-            class="form-check-label"
-            for="<%=context%>[<%=counter%>][displayZeroValue]"
-        ><?= t('Display zero ("0") in the view template'); ?></label>
     </div>
 
     <div class="mb-4">
@@ -148,7 +134,7 @@
                 </div>
             </div>
 
-            <div class="">
+            <div class="mb-4">
                 <label for="<%=context%>[<%=counter%>][displayedThousandsSeparator]"
                        class="form-label"
                 ><?= t('Displayed thousands separator'); ?></label>
@@ -162,6 +148,21 @@
                     <?= t('Usually " " (space), "." (dot) or "," (comma). You can also leave it empty.'); ?>
                     <br><?= t('Argument of PHP function number_format()'); ?>
                 </div>
+            </div>
+
+            <div class="form-check mb-4">
+                <input
+                    class="form-check-input"
+                    id="<%=context%>[<%=counter%>][displayZeroValue]"
+                    name="<%=context%>[<%=counter%>][displayZeroValue]"
+                    type="checkbox"
+                    value="1"
+                <% if (displayZeroValue === true || displayZeroValue === 1 || displayZeroValue === '1') { %> checked="checked" <% } %>
+                >
+                <label
+                    class="form-check-label"
+                    for="<%=context%>[<%=counter%>][displayZeroValue]"
+                ><?= t('Display zero ("0") in the view template'); ?></label>
             </div>
 
         </div>
