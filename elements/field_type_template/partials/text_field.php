@@ -1,4 +1,9 @@
-<?php defined('C5_EXECUTE') or exit('Access Denied.'); ?>
+<?php defined('C5_EXECUTE') or exit('Access Denied.');
+
+/**
+ * @var array<string, string> $textAdditionalValidations
+ */
+?>
 
 <script type="text/template" data-field-type-partial="<?= h($handle ?? null); ?>">
 
@@ -12,6 +17,16 @@
     <div class="mb-4">
         <label class="form-label" for="<%=context%>[<%=counter%>][placeholder]"><?= t('Placeholder'); ?></label>
         <input class="form-control" id="<%=context%>[<%=counter%>][placeholder]" maxlength="255" name="<%=context%>[<%=counter%>][placeholder]" type="text" value="<%=placeholder%>">
+    </div>
+
+    <div class="mb-4">
+        <label class="form-label" for="<%=context%>[<%=counter%>][additionalValidation]"><?= t('Additional validation'); ?></label>
+        <select class="form-select" id="<%=context%>[<%=counter%>][additionalValidation]" name="<%=context%>[<%=counter%>][additionalValidation]">
+            <?php foreach ($textAdditionalValidations as $validationHandle => $validationLabel): ?>
+                <?php $selected = "<% if (additionalValidation === '" . h($validationHandle) . "') { %>selected<% } %>"; ?>
+                <option value="<?= h($validationHandle); ?>" <?= $selected; ?>><?= h($validationLabel); ?></option>
+            <?php endforeach; ?>
+        </select>
     </div>
 
     <div class="row">

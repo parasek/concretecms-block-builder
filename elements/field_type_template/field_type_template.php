@@ -5,6 +5,7 @@
  * @var array $selectFieldTypes
  * @var array $selectFieldListGenerationMethods
  * @var array $selectMultipleFieldTypes
+ * @var array $textAdditionalValidations
  */
 ?>
 
@@ -161,6 +162,7 @@ foreach ($fieldTypes as $fieldType) {
         'selectFieldTypes' => $selectFieldTypes,
         'selectFieldListGenerationMethods' => $selectFieldListGenerationMethods,
         'selectMultipleFieldTypes' => $selectMultipleFieldTypes,
+        'textAdditionalValidations' => $textAdditionalValidations,
     ], 'block_builder');
 }
 ?>

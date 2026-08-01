@@ -130,6 +130,7 @@ readonly class BlockBuilderViewDataProvider
             'highlightMultiElementFieldsOptions' => $this->blockSettingsOptions->getYesNoOptions(),
             'installBlockOptions' => $this->blockSettingsOptions->getYesNoOptions(),
             'editor' => $this->editor,
+            'textAdditionalValidations' => $this->fieldTypeOptions->getTextAdditionalValidations(),
             'selectFieldTypes' => $this->fieldTypeOptions->getSingleChoiceTypes(),
             'selectMultipleFieldTypes' => $this->fieldTypeOptions->getMultipleChoiceTypes(),
             'selectFieldListGenerationMethods' => $this->fieldTypeOptions->getListGenerationMethods(),

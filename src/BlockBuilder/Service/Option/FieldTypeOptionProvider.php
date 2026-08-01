@@ -6,6 +6,16 @@ namespace BlockBuilder\Service\Option;
 
 readonly class FieldTypeOptionProvider
 {
+    public function getTextAdditionalValidations(): array
+    {
+        return [
+            'none' => t('None'),
+            'phone' => t('Phone'),
+            'email' => t('Email'),
+            'url' => t('URL'),
+        ];
+    }
+
     public function getSingleChoiceTypes(bool $includeEmptyOption = false): array
     {
         return $this->withOptionalEmpty([

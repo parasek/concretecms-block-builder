@@ -40,6 +40,7 @@ class TextFieldType extends AbstractFieldType
             'displayZeroValue' => 0,
             'defaultValue' => '',
             'placeholder' => '',
+            'additionalValidation' => 'none',
             'minimumLength' => '',
             'maximumLength' => (string) self::MAXIMUM_LENGTH,
             'prefix' => '',
@@ -58,6 +59,7 @@ class TextFieldType extends AbstractFieldType
             displayZeroValue: !empty($data['displayZeroValue']),
             defaultValue: (string) ($data['defaultValue'] ?? ''),
             placeholder: trim((string) ($data['placeholder'] ?? '')),
+            additionalValidation: trim((string) ($data['additionalValidation'] ?? 'none')),
             minimumLength: ($data['minimumLength'] ?? '') !== '' ? (int) $data['minimumLength'] : null,
             maximumLength: ($data['maximumLength'] ?? '') !== '' ? (int) $data['maximumLength'] : self::MAXIMUM_LENGTH,
             prefix: trim($data['prefix'] ?? ''),
@@ -71,10 +73,12 @@ class TextFieldType extends AbstractFieldType
         return [
             'prefix|too_long' => t('Some "Field prefix" values contain more than %s characters (%s).', self::MAXIMUM_AFFIX_LENGTH, $context->getTabName()),
             'suffix|too_long' => t('Some "Field suffix" values contain more than %s characters (%s).', self::MAXIMUM_AFFIX_LENGTH, $context->getTabName()),
+            'additionalValidation|invalid_option' => t('Some "Text/Additional validation" fields contain an invalid option (%s).', $context->getTabName()),
             'minimumLength|invalid_number' => t('Some "Text/Minimum length" fields must contain a number between 0 and %s or be empty (%s).', self::MAXIMUM_LENGTH, $context->getTabName()),
             'maximumLength|invalid_number' => t('Some "Text/Maximum length" fields must contain a number between 1 and %s (%s).', self::MAXIMUM_LENGTH, $context->getTabName()),
             'minimumLength|greater_than_maximum' => t('The minimum length of a Text field cannot be greater than its maximum length (%s).', $context->getTabName()),
             'defaultValue|outside_length' => t('Some "Text/Default value" fields do not satisfy their configured minimum or maximum length (%s).', $context->getTabName()),
+            'defaultValue|invalid_additional_validation' => t('Some "Text/Default value" fields do not satisfy the selected additional validation (%s).', $context->getTabName()),
         ];
     }
 
@@ -110,15 +114,30 @@ class TextFieldType extends AbstractFieldType
 
         $defaultValue = $data['defaultValue'] ?? '';
         if (is_scalar($defaultValue) && (string) $defaultValue !== '' && $maximumIsValid) {
-            $defaultLength = mb_strlen(trim((string) $defaultValue));
+            $defaultValue = trim((string) $defaultValue);
+            $defaultLength = mb_strlen($defaultValue);
             if (
                 ($minimumIsValid && $minimumLength !== '' && $defaultLength < (int) $minimumLength)
                 || $defaultLength > (int) $maximumLength
             ) {
                 $errors[] = 'defaultValue|outside_length';
             }
+            if (!$this->passesAdditionalValidation($defaultValue, $data['additionalValidation'] ?? 'none')) {
+                $errors[] = 'defaultValue|invalid_additional_validation';
+            }
         }
 
         return $errors;
+    }
+
+    private function passesAdditionalValidation(string $value, mixed $additionalValidation): bool
+    {
+        return match ($additionalValidation) {
+            'none' => true,
+            'phone' => preg_match('/^(?=.*\d)[0-9+().\s-]+$/D', $value) === 1,
+            'email' => filter_var($value, FILTER_VALIDATE_EMAIL) !== false,
+            'url' => filter_var($value, FILTER_VALIDATE_URL) !== false,
+            default => true,
+        };
     }
 }

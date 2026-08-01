@@ -18,6 +18,7 @@ readonly class TextFieldTypeDto implements FieldTypeDtoInterface
         public bool $displayZeroValue,
         public string $defaultValue,
         public string $placeholder,
+        public string $additionalValidation,
         public ?int $minimumLength,
         public int $maximumLength,
         public string $prefix,

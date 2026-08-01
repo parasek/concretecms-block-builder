@@ -227,6 +227,9 @@ readonly class FieldTypeValidator implements ValidatorInterface
     private function validateFieldTypeOptions(array $field, ?string $fieldType): array
     {
         $optionMap = match ($fieldType) {
+            'text_field' => [
+                'additionalValidation' => $this->getStringKeys($this->fieldTypeOptions->getTextAdditionalValidations()),
+            ],
             'select_field' => [
                 'displayType' => $this->getStringKeys($this->fieldTypeOptions->getSingleChoiceTypes()),
                 'addEmptyOption' => ['0', '1'],

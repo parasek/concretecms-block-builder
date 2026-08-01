@@ -1,4 +1,5 @@
 ##### 3.0.0 (unreleased)
+- Added optional phone, email, and URL validation to generated Text fields.
 - Restored optional visual highlighting for compound Flex Link, link, and Image form fields.
 - Added configurable placeholders to generated Text, Textarea, and Number fields.
 - Refactored block creation into dedicated request, validation, DTO, service, and generator components for PHP 8.4.

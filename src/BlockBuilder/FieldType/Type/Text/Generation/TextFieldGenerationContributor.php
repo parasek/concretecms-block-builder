@@ -216,6 +216,31 @@ readonly class TextFieldGenerationContributor implements FieldGenerationContribu
         $lines[] = sprintf('    %sif ($textLength > %d) {', $hasPreviousCondition ? 'else' : '', $field->maximumLength);
         $lines[] = sprintf('        $errors->add(t(%s, %s%s, %d));', $this->phpLiteralFormatter->format('The field "%s"' . $entryText . ' must contain at most %s characters.'), $label, $entryArguments, $field->maximumLength);
         $lines[] = '    }';
+        if ($field->additionalValidation !== 'none') {
+            $invalidValueCondition = match ($field->additionalValidation) {
+                'phone' => 'preg_match(\'/^(?=.*\d)[0-9+().\s-]+$/D\', $textValue) !== 1',
+                'email' => 'filter_var($textValue, FILTER_VALIDATE_EMAIL) === false',
+                'url' => 'filter_var($textValue, FILTER_VALIDATE_URL) === false',
+                default => throw new InvalidFieldGenerationDtoException(sprintf(
+                    'Text field "%s" uses unsupported additional validation "%s".',
+                    $field->handle,
+                    $field->additionalValidation,
+                )),
+            };
+            $validationMessage = match ($field->additionalValidation) {
+                'phone' => 'The field "%s"' . $entryText . ' must contain a valid phone number.',
+                'email' => 'The field "%s"' . $entryText . ' must contain a valid email address.',
+                'url' => 'The field "%s"' . $entryText . ' must contain a valid URL.',
+            };
+            $lines[] = sprintf('    elseif ($textValue !== \'\' && %s) {', $invalidValueCondition);
+            $lines[] = sprintf(
+                '        $errors->add(t(%s, %s%s));',
+                $this->phpLiteralFormatter->format($validationMessage),
+                $label,
+                $entryArguments,
+            );
+            $lines[] = '    }';
+        }
         $lines[] = '}';
 
         return implode(PHP_EOL, $lines);
