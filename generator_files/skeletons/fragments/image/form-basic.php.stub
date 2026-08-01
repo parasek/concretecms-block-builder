@@ -1,6 +1,6 @@
 <div class="mb-4{{HIGHLIGHT_CLASS}}">
     <label class="form-label"><?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?></label>
-    <div class="d-flex flex-wrap align-items-center gap-2">
+    <div class="d-flex flex-wrap align-items-center gap-4 mb-4">
         <div
             class="flex-grow-1"
             data-block-builder-concrete-selector="file"

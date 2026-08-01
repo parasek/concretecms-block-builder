@@ -19,5 +19,5 @@
         data-image-additional-state{{STATE_ENTRY_FIELD}}
     >
 </div>
-<div class="w-100 mt-3" data-image-additional-fields <?= empty({{STATE_EXPRESSION}}) ? 'hidden' : ''; ?>>{{FIELDS}}
+<div class="w-100" data-image-additional-fields <?= empty({{STATE_EXPRESSION}}) ? 'hidden' : ''; ?>>{{FIELDS}}
 </div>
