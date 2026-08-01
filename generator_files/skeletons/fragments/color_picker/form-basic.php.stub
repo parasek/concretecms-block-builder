@@ -1,17 +1,19 @@
 <div class="mb-4">
     <label class="form-label" for="<?= h($view->field({{HANDLE_LITERAL}})); ?>"><?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?></label>
-    <input
-        class="form-control"
-        id="<?= h($view->field({{HANDLE_LITERAL}})); ?>"
-        name="<?= h($view->field({{HANDLE_LITERAL}})); ?>"
-        type="text"
-        value="<?= h(${{HANDLE}} ?? ''); ?>"
-        data-block-builder-color-picker
-        data-cancel-text="<?= t('Cancel'); ?>"
-        data-choose-text="<?= t('Choose'); ?>"
-        data-toggle-palette-more-text="<?= t('more'); ?>"
-        data-toggle-palette-less-text="<?= t('less'); ?>"
-        data-no-color-selected-text="<?= t('No Color Selected'); ?>"
-        data-clear-text="<?= t('Clear Color Selection'); ?>"
-    >{{HELP_TEXT}}
+    <div>
+        <input
+            class="form-control"
+            id="<?= h($view->field({{HANDLE_LITERAL}})); ?>"
+            name="<?= h($view->field({{HANDLE_LITERAL}})); ?>"
+            type="text"
+            value="<?= h(${{HANDLE}} ?? ''); ?>"
+            data-block-builder-color-picker
+            data-cancel-text="<?= t('Cancel'); ?>"
+            data-choose-text="<?= t('Choose'); ?>"
+            data-toggle-palette-more-text="<?= t('more'); ?>"
+            data-toggle-palette-less-text="<?= t('less'); ?>"
+            data-no-color-selected-text="<?= t('No Color Selected'); ?>"
+            data-clear-text="<?= t('Clear Color Selection'); ?>"
+        >{{HELP_TEXT}}
+    </div>
 </div>
