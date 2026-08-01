@@ -19,7 +19,7 @@
                         <th scope="col"><?= t('Name'); ?></th>
                         <th scope="col"><?= t('Handle'); ?></th>
                         <th scope="col"><?= t('SVG content'); ?></th>
-                        <th class="text-end" scope="col"><?= t('Actions'); ?></th>
+                        <th class="text-center" scope="col"><?= t('Actions'); ?></th>
                     </tr>
                 </thead>
                 <tbody data-svg-icon-definition-rows>
@@ -53,7 +53,7 @@
                                 rows="4"
                             ><%-icon.svg || ''%></textarea>
                         </td>
-                        <td class="text-end">
+                        <td class="text-center">
                             <button class="btn btn-danger" type="button" data-remove-svg-icon>
                                 <i class="fas fa-times" aria-hidden="true"></i>
                                 <span class="visually-hidden"><?= t('Remove icon'); ?></span>
