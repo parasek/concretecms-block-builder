@@ -367,13 +367,32 @@ PHP;
 
     private function renderCustomOptionsInitialization(MultipleChoiceFieldTypeDto $field, string $localVariable): string
     {
-        $customCode = trim((string) $field->customCode);
+        $customCode = $this->prepareCustomCode((string) $field->customCode);
 
         return sprintf(
             '$%1$s = [];%2$s%3$s',
             $localVariable,
             $customCode === '' ? '' : PHP_EOL,
             $customCode,
+        );
+    }
+
+    private function prepareCustomCode(string $code): string
+    {
+        if (trim($code) === '') {
+            return '';
+        }
+
+        $code = rtrim(str_replace(["\r\n", "\r"], PHP_EOL, $code), "\r\n");
+
+        return implode(
+            PHP_EOL,
+            array_map(
+                static fn(string $line): string => str_starts_with($line, '        ')
+                    ? substr($line, 8)
+                    : $line,
+                explode(PHP_EOL, $code),
+            ),
         );
     }
 

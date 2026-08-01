@@ -369,24 +369,30 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
 
     private function renderViewMethod(BlockFileGenerationContext $context, bool $hasEntries): string
     {
-        $parts = [
+        $generatedParts = [
             $this->renderControllerFragments(
                 $context,
                 ControllerMethodSectionEnum::View,
                 indentation: 0,
             ),
             $hasEntries ? '$this->set(\'entries\', $this->getEntries());' : '',
-            trim((string) $context->config->viewCustomCode),
         ];
-        if (array_filter($parts, static fn(string $part): bool => $part !== '') === []) {
+        $customCode = $this->prepareCustomCode((string) $context->config->viewCustomCode);
+        if (array_filter($generatedParts, static fn(string $part): bool => $part !== '') === [] && $customCode === '') {
             return '';
         }
-        array_unshift($parts, '$this->set(\'app\', $this->app);');
+        array_unshift($generatedParts, '$this->set(\'app\', $this->app);');
 
-        return $this->renderMethod(
-            'public function view(): void',
-            $this->combineCode($parts, 0),
-        );
+        $methodParts = [$this->combineCode($generatedParts, 2)];
+        if ($customCode !== '') {
+            $methodParts[] = $customCode;
+        }
+
+        return PHP_EOL
+            . '    public function view(): void' . PHP_EOL
+            . '    {' . PHP_EOL
+            . implode(PHP_EOL . PHP_EOL, $methodParts) . PHP_EOL
+            . '    }' . PHP_EOL;
     }
 
     private function renderSaveMethod(BlockFileGenerationContext $context, bool $hasEntries): string
@@ -738,22 +744,28 @@ PHP;
 
     private function renderRegisterViewAssetsMethod(BlockFileGenerationContext $context): string
     {
-        $methodCode = $this->combineCode([
-            $this->renderControllerFragments(
-                $context,
-                ControllerMethodSectionEnum::RegisterViewAssets,
-                indentation: 0,
-            ),
-            (string) $context->config->registerViewAssetsCustomCode,
-        ], 2);
-        if ($methodCode === '') {
+        $methodParts = [];
+        $generatedCode = $this->renderControllerFragments(
+            $context,
+            ControllerMethodSectionEnum::RegisterViewAssets,
+            indentation: 2,
+        );
+        if ($generatedCode !== '') {
+            $methodParts[] = $generatedCode;
+        }
+
+        $customCode = $this->prepareCustomCode((string) $context->config->registerViewAssetsCustomCode);
+        if ($customCode !== '') {
+            $methodParts[] = $customCode;
+        }
+        if ($methodParts === []) {
             return '';
         }
 
         return PHP_EOL
             . '    public function registerViewAssets($outputContent = \'\'): void' . PHP_EOL
             . '    {' . PHP_EOL
-            . $methodCode . PHP_EOL
+            . implode(PHP_EOL . PHP_EOL, $methodParts) . PHP_EOL
             . '    }' . PHP_EOL;
     }
 
@@ -767,11 +779,29 @@ PHP;
         if ($additionalFragments !== '') {
             $parts[] = $additionalFragments;
         }
-        if (trim((string) $context->config->customControllerMethods) !== '') {
-            $parts[] = trim((string) $context->config->customControllerMethods);
+        $customCode = $this->prepareCustomCode((string) $context->config->customControllerMethods);
+        if ($customCode !== '') {
+            $parts[] = $customCode;
         }
 
-        return $parts === [] ? '' : PHP_EOL . $this->combineCode($parts, 1) . PHP_EOL;
+        if ($parts === []) {
+            return '';
+        }
+
+        if ($additionalFragments !== '') {
+            $parts[0] = $this->indentCode($parts[0], 1);
+        }
+
+        return PHP_EOL . implode(PHP_EOL . PHP_EOL, $parts) . PHP_EOL;
+    }
+
+    private function prepareCustomCode(string $code): string
+    {
+        if (trim($code) === '') {
+            return '';
+        }
+
+        return rtrim(str_replace(["\r\n", "\r"], PHP_EOL, $code), "\r\n");
     }
 
     /**
