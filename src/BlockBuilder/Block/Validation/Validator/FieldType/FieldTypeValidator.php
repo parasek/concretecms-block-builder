@@ -239,6 +239,9 @@ readonly class FieldTypeValidator implements ValidatorInterface
                 'displayType' => $this->getStringKeys($this->fieldTypeOptions->getMultipleChoiceTypes()),
                 'listGenerationMethod' => $this->getStringKeys($this->fieldTypeOptions->getListGenerationMethods()),
             ],
+            'files_from_folder' => [
+                'fileOrder' => $this->getStringKeys($this->fieldTypeOptions->getFilesFromFolderOrders()),
+            ],
             default => [],
         };
 

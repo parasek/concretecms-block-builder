@@ -6,6 +6,7 @@
  * @var array $selectFieldListGenerationMethods
  * @var array $selectMultipleFieldTypes
  * @var array $textAdditionalValidations
+ * @var array $filesFromFolderOrders
  */
 ?>
 
@@ -163,6 +164,7 @@ foreach ($fieldTypes as $fieldType) {
         'selectFieldListGenerationMethods' => $selectFieldListGenerationMethods,
         'selectMultipleFieldTypes' => $selectMultipleFieldTypes,
         'textAdditionalValidations' => $textAdditionalValidations,
+        'filesFromFolderOrders' => $filesFromFolderOrders,
     ], 'block_builder');
 }
 ?>

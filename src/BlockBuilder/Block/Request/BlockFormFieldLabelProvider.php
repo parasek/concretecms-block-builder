@@ -98,6 +98,7 @@ final readonly class BlockFormFieldLabelProvider
             'minuteInterval' => t('Minute interval'),
             'expressHandle' => t('Express object handle'),
             'fileSetPrefix' => t('File Set prefix'),
+            'fileOrder' => t('File order'),
             'showEndingField' => t('Show the "Custom string at the end of URL" field'),
             'showTextField' => t('Show the "Text" field'),
             'showTitleField' => t('Show the "Title" field'),

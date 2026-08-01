@@ -30,6 +30,7 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
  * @var array $selectFieldListGenerationMethods
  * @var array $selectMultipleFieldTypes
  * @var array $textAdditionalValidations
+ * @var array $filesFromFolderOrders
  * @var string $newBlockUrl
  * @var string $configsUrl
  * @var string $blockIconPreviewPath
@@ -173,6 +174,7 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
         'selectFieldListGenerationMethods' => $selectFieldListGenerationMethods,
         'selectMultipleFieldTypes' => $selectMultipleFieldTypes,
         'textAdditionalValidations' => $textAdditionalValidations,
+        'filesFromFolderOrders' => $filesFromFolderOrders,
     ], 'block_builder'); ?>
 
 </div> <?php // .bb-app.bb-app-builder ?>

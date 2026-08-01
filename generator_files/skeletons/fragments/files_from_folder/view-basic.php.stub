@@ -1,0 +1,11 @@
+<?php if (!empty(${{HANDLE}})): ?>
+    <?= t('Folder ID: %s', h(${{HANDLE}})); ?>
+<?php endif; ?>
+
+<?php if (!empty(${{HANDLE}}_files)): ?>
+    <?php foreach (${{HANDLE}}_files as ${{FILE_VARIABLE}}): ?>
+        <a href="<?= h(${{FILE_VARIABLE}}->getURL()); ?>">
+            <?= h(${{FILE_VARIABLE}}->getTitle() ?: ${{FILE_VARIABLE}}->getFileName()); ?>
+        </a>
+    <?php endforeach; ?>
+<?php endif; ?>

@@ -21,6 +21,7 @@ enum FieldTypeEnum: string implements JsonSerializable
     case Image = 'image';
     case Express = 'express';
     case FileSet = 'file_set';
+    case FilesFromFolder = 'files_from_folder';
     case HtmlEditor = 'html_editor';
     case DatePicker = 'date_picker';
     case ColorPicker = 'color_picker';

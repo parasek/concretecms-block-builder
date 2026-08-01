@@ -10,6 +10,7 @@ use BlockBuilder\FieldType\Type\DatePicker\DatePickerFieldType;
 use BlockBuilder\FieldType\Type\Express\ExpressFieldType;
 use BlockBuilder\FieldType\Type\ExternalLink\ExternalLinkFieldType;
 use BlockBuilder\FieldType\Type\FileSet\FileSetFieldType;
+use BlockBuilder\FieldType\Type\FilesFromFolder\FilesFromFolderFieldType;
 use BlockBuilder\FieldType\Type\FlexLink\FlexLinkFieldType;
 use BlockBuilder\FieldType\Type\HtmlEditor\HtmlEditorFieldType;
 use BlockBuilder\FieldType\Type\IconPicker\IconPickerFieldType;
@@ -59,6 +60,7 @@ final class FieldTypeRegistry
         $this->register(new ExternalLinkFieldType());
         $this->register(new ImageFieldType());
         $this->register(new FileSetFieldType());
+        $this->register(new FilesFromFolderFieldType());
         $this->register(new ExpressFieldType());
         $this->register(new DatePickerFieldType());
         $this->register(new ColorPickerFieldType());

@@ -42,6 +42,16 @@ readonly class FieldTypeOptionProvider
         ], $includeEmptyOption);
     }
 
+    public function getFilesFromFolderOrders(): array
+    {
+        return [
+            'file_manager' => t('Like in File Manager'),
+            'ascending' => t('Ascending'),
+            'descending' => t('Descending'),
+            'random' => t('Random'),
+        ];
+    }
+
     private function withOptionalEmpty(array $options, bool $includeEmptyOption): array
     {
         return $includeEmptyOption ? ['' => '---'] + $options : $options;

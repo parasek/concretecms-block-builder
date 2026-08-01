@@ -1,4 +1,5 @@
 ##### 3.0.0 (unreleased)
+- Added a Files From Folder field with direct-child file listing and configurable File Manager, ascending, descending, or random ordering.
 - Added an SVG Icon Picker field with sanitized custom icon definitions, generated select controls, and live previews.
 - Added optional phone, email, and URL validation to generated Text fields.
 - Restored optional visual highlighting for compound Flex Link, link, and Image form fields.

@@ -134,6 +134,7 @@ readonly class BlockBuilderViewDataProvider
             'selectFieldTypes' => $this->fieldTypeOptions->getSingleChoiceTypes(),
             'selectMultipleFieldTypes' => $this->fieldTypeOptions->getMultipleChoiceTypes(),
             'selectFieldListGenerationMethods' => $this->fieldTypeOptions->getListGenerationMethods(),
+            'filesFromFolderOrders' => $this->fieldTypeOptions->getFilesFromFolderOrders(),
         ];
     }
 

@@ -1,0 +1,21 @@
+<div class="mb-4">
+    <label
+        class="form-label"
+        for="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
+    ><?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?></label>
+    <select
+        class="form-select"
+        id="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
+        name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
+        data-entry-field="{{HANDLE}}"
+    >
+        <?php if (!empty(${{OPTION_VARIABLE}})): ?>
+            <?php foreach (${{OPTION_VARIABLE}} as $folderID => $folderName): ?>
+                <option
+                    value="<?= h((string) $folderID); ?>"
+                    <?= (int) ($entry[{{HANDLE_LITERAL}}] ?? 0) === (int) $folderID ? 'selected' : ''; ?>
+                ><?= h($folderName); ?></option>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </select>{{HELP_TEXT}}
+</div>

@@ -10,6 +10,7 @@ use BlockBuilder\FieldType\Type\ExternalLink\Generation\ExternalLinkFieldGenerat
 use BlockBuilder\FieldType\Type\DatePicker\Generation\DatePickerFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\Express\Generation\ExpressFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\FileSet\Generation\FileSetFieldGenerationContributor;
+use BlockBuilder\FieldType\Type\FilesFromFolder\Generation\FilesFromFolderFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\FlexLink\Generation\FlexLinkFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\HtmlEditor\Generation\HtmlEditorFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\IconPicker\Generation\IconPickerFieldGenerationContributor;
@@ -38,6 +39,7 @@ readonly class FieldGenerationContributorCollection implements IteratorAggregate
         private ExternalLinkFieldGenerationContributor $externalLinkFieldGenerationContributor,
         private ExpressFieldGenerationContributor $expressFieldGenerationContributor,
         private FileSetFieldGenerationContributor $fileSetFieldGenerationContributor,
+        private FilesFromFolderFieldGenerationContributor $filesFromFolderFieldGenerationContributor,
         private FlexLinkFieldGenerationContributor $flexLinkFieldGenerationContributor,
         private HtmlEditorFieldGenerationContributor $htmlEditorFieldGenerationContributor,
         private IconPickerFieldGenerationContributor $iconPickerFieldGenerationContributor,
@@ -66,6 +68,7 @@ readonly class FieldGenerationContributorCollection implements IteratorAggregate
             $this->externalLinkFieldGenerationContributor,
             $this->expressFieldGenerationContributor,
             $this->fileSetFieldGenerationContributor,
+            $this->filesFromFolderFieldGenerationContributor,
             $this->flexLinkFieldGenerationContributor,
             $this->htmlEditorFieldGenerationContributor,
             $this->iconPickerFieldGenerationContributor,
