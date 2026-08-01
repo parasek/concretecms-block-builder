@@ -1,0 +1,3 @@
+<?php if (!empty($entry[{{HANDLE_LITERAL}}])): ?>
+    <?= h({{FORMATTER_CALL}}); ?>
+<?php endif; ?>

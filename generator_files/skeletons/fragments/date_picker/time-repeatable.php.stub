@@ -1,0 +1,33 @@
+        <div class="col-auto">
+            <select
+                class="form-select"
+                id="<?= h($view->field('entry') . '-' . $entryIndex . '-{{HANDLE}}-hour'); ?>"
+                name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}_hour]"
+                aria-label="<?= t('Hour'); ?>"
+                data-entry-field="{{HANDLE}}_hour"
+            >
+                <?php for ($datePickerHour = 0; $datePickerHour < 24; ++$datePickerHour): ?>
+                    <option
+                        value="<?= $datePickerHour; ?>"
+                        <?= (int) ($entry[{{HOUR_LITERAL}}] ?? 0) === $datePickerHour ? 'selected' : ''; ?>
+                    ><?= sprintf('%02d', $datePickerHour); ?></option>
+                <?php endfor; ?>
+            </select>
+        </div>
+        <div class="col-auto">:</div>
+        <div class="col-auto">
+            <select
+                class="form-select"
+                id="<?= h($view->field('entry') . '-' . $entryIndex . '-{{HANDLE}}-minute'); ?>"
+                name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}_minute]"
+                aria-label="<?= t('Minute'); ?>"
+                data-entry-field="{{HANDLE}}_minute"
+            >
+                <?php for ($datePickerMinute = 0; $datePickerMinute < 60; $datePickerMinute += {{MINUTE_INTERVAL}}): ?>
+                    <option
+                        value="<?= $datePickerMinute; ?>"
+                        <?= (int) ($entry[{{MINUTE_LITERAL}}] ?? 0) === $datePickerMinute ? 'selected' : ''; ?>
+                    ><?= sprintf('%02d', $datePickerMinute); ?></option>
+                <?php endfor; ?>
+            </select>
+        </div>

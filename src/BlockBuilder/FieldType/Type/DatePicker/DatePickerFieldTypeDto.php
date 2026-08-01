@@ -15,7 +15,11 @@ readonly class DatePickerFieldTypeDto implements FieldTypeDtoInterface
         public string $handle,
         public bool $required,
         public ?string $helpText,
-        public ?string $datePickerPattern,
+        public string $datePattern,
+        public string $minDate,
+        public string $maxDate,
+        public bool $attachTimeSelector,
+        public int $minuteInterval,
     ) {
     }
 }

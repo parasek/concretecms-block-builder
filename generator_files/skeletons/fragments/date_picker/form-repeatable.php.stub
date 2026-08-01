@@ -1,0 +1,18 @@
+<div class="mb-4">
+    <label
+        class="form-label"
+        for="<?= h($view->field('entry') . '-' . $entryIndex . '-{{HANDLE}}'); ?>"
+    ><?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?></label>
+    <div class="row g-2 align-items-center">
+        <div class="col-auto">
+            <input
+                class="form-control"
+                id="<?= h($view->field('entry') . '-' . $entryIndex . '-{{HANDLE}}'); ?>"
+                name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
+                type="date"
+                value="<?= h($entry[{{HANDLE_LITERAL}}] ?? ''); ?>"
+                data-entry-field="{{HANDLE}}"
+{{DATE_LIMIT_ATTRIBUTES}}            >
+        </div>{{TIME_FIELDS}}
+    </div>{{HELP_TEXT}}
+</div>

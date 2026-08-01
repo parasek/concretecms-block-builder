@@ -6,6 +6,7 @@ namespace BlockBuilder\BlockGenerator\Generation;
 
 use ArrayIterator;
 use BlockBuilder\FieldType\Type\ExternalLink\Generation\ExternalLinkFieldGenerationContributor;
+use BlockBuilder\FieldType\Type\DatePicker\Generation\DatePickerFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\Express\Generation\ExpressFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\FileSet\Generation\FileSetFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\FlexLink\Generation\FlexLinkFieldGenerationContributor;
@@ -28,6 +29,7 @@ use Traversable;
 readonly class FieldGenerationContributorCollection implements IteratorAggregate
 {
     public function __construct(
+        private DatePickerFieldGenerationContributor $datePickerFieldGenerationContributor,
         private ExternalLinkFieldGenerationContributor $externalLinkFieldGenerationContributor,
         private ExpressFieldGenerationContributor $expressFieldGenerationContributor,
         private FileSetFieldGenerationContributor $fileSetFieldGenerationContributor,
@@ -51,6 +53,7 @@ readonly class FieldGenerationContributorCollection implements IteratorAggregate
     public function getIterator(): Traversable
     {
         return new ArrayIterator([
+            $this->datePickerFieldGenerationContributor,
             $this->externalLinkFieldGenerationContributor,
             $this->expressFieldGenerationContributor,
             $this->fileSetFieldGenerationContributor,
