@@ -1,12 +1,13 @@
 (function () {
     'use strict';
 
-    const containerStates = new WeakMap();
+    const repeatableStates = new WeakMap();
     const enhancedSelectInstances = new WeakMap();
     const htmlEditorInstances = new WeakMap();
     const concreteSelectorInstances = new WeakMap();
     const colorPickerInstances = new WeakSet();
 
+    // Field widgets
     function destroyColorPickers(root) {
         const jquery = globalThis.jQuery;
         if (typeof jquery !== 'function' || typeof jquery.fn?.spectrum !== 'function') {
@@ -61,9 +62,9 @@
         }
 
         const counter = field.closest('.mb-4')?.querySelector('[data-block-builder-character-counter]');
-        const current = counter?.querySelector('[data-character-count-current]');
-        if (current) {
-            current.textContent = String(Array.from(field.value).length);
+        const currentCount = counter?.querySelector('[data-character-count-current]');
+        if (currentCount) {
+            currentCount.textContent = String(Array.from(field.value).length);
         }
     }
 
@@ -80,6 +81,10 @@
         const previewContainer = picker?.querySelector('[data-svg-icon-preview-container]');
         const preview = previewContainer?.querySelector('[data-svg-icon-preview]');
         const previewSource = select.selectedOptions[0]?.dataset.svgIconPreview ?? '';
+
+        if (!(preview instanceof HTMLImageElement)) {
+            return;
+        }
 
         if (previewSource === '') {
             preview.removeAttribute('src');
@@ -141,6 +146,10 @@
     }
 
     function updateImageDimensionFields(toggle) {
+        if (!(toggle instanceof HTMLInputElement)) {
+            return;
+        }
+
         const group = toggle.closest('[data-image-dimension-group]');
         const fields = group?.querySelector('[data-image-dimension-fields]');
         if (fields) {
@@ -326,12 +335,13 @@
         });
     }
 
-    function getEntries(state) {
-        return Array.from(state.container.children)
+    // Repeatable field values
+    function getRepeatableEntries(state) {
+        return Array.from(state.entriesContainer.children)
             .filter((element) => element.matches('[data-entry]'));
     }
 
-    function groupFields(entry) {
+    function groupEntryFields(entry) {
         const fields = new Map();
 
         entry.querySelectorAll('[data-entry-field]').forEach((field) => {
@@ -341,7 +351,7 @@
             }
 
             const subfield = field.dataset.entrySubfield ?? '';
-            const groupKey = `${handle}\u0000${subfield}`;
+            const groupKey = `${handle}:${subfield}`;
             if (!fields.has(groupKey)) {
                 fields.set(groupKey, {handle, subfield, fields: []});
             }
@@ -351,21 +361,21 @@
         return fields;
     }
 
-    function normalizeMultipleValue(value) {
+    function normalizeMultipleFieldValue(value) {
         if (Array.isArray(value)) {
             return value.map(String);
         }
         if (typeof value === 'string' && value.includes('|')) {
             return value.split('|');
         }
-        if (value === null || typeof value === 'undefined' || value === '') {
+        if (value === null || value === undefined || value === '') {
             return [];
         }
 
         return [String(value)];
     }
 
-    function setFieldValue(fields, value) {
+    function setEntryFieldValue(fields, value) {
         const firstField = fields[0];
         if (!firstField) {
             return;
@@ -373,18 +383,18 @@
 
         if (firstField.matches('[data-block-builder-concrete-selector]')) {
             const selectorType = firstField.dataset.blockBuilderConcreteSelector;
-            const selectorConfiguration = {
-                express: ['concrete-express-entry-input', 'entry-id'],
-                file: ['concrete-file-input', ':file-id'],
-                icon: ['icon-selector', 'selected'],
-                page: ['concrete-page-input', ':page-id'],
-                user: ['concrete-user-input', ':user-id'],
+            const concreteSelectorConfiguration = {
+                express: {element: 'concrete-express-entry-input', valueAttribute: 'entry-id'},
+                file: {element: 'concrete-file-input', valueAttribute: ':file-id'},
+                icon: {element: 'icon-selector', valueAttribute: 'selected'},
+                page: {element: 'concrete-page-input', valueAttribute: ':page-id'},
+                user: {element: 'concrete-user-input', valueAttribute: ':user-id'},
             }[selectorType];
             const selectedValue = String(value ?? (selectorType === 'icon' ? '' : '0'));
             firstField.dataset.selectedValue = selectedValue;
-            if (selectorConfiguration) {
-                firstField.querySelector(selectorConfiguration[0])
-                    ?.setAttribute(selectorConfiguration[1], selectedValue);
+            if (concreteSelectorConfiguration) {
+                firstField.querySelector(concreteSelectorConfiguration.element)
+                    ?.setAttribute(concreteSelectorConfiguration.valueAttribute, selectedValue);
             }
             return;
         }
@@ -397,7 +407,7 @@
         }
 
         if (firstField instanceof HTMLInputElement && firstField.type === 'checkbox') {
-            const selectedValues = normalizeMultipleValue(value);
+            const selectedValues = normalizeMultipleFieldValue(value);
             fields.forEach((field) => {
                 field.checked = fields.length === 1 && typeof value === 'boolean'
                     ? value
@@ -407,7 +417,7 @@
         }
 
         if (firstField instanceof HTMLSelectElement && firstField.multiple) {
-            const selectedValues = normalizeMultipleValue(value);
+            const selectedValues = normalizeMultipleFieldValue(value);
             Array.from(firstField.options).forEach((option) => {
                 option.selected = selectedValues.includes(String(option.value));
             });
@@ -426,7 +436,7 @@
             return;
         }
 
-        groupFields(entry).forEach((group) => {
+        groupEntryFields(entry).forEach((group) => {
             if (!Object.prototype.hasOwnProperty.call(values, group.handle)) {
                 return;
             }
@@ -435,12 +445,12 @@
                 ? values[group.handle]?.[group.subfield]
                 : values[group.handle];
             if (!group.subfield || (values[group.handle] && typeof values[group.handle] === 'object')) {
-                setFieldValue(group.fields, value);
+                setEntryFieldValue(group.fields, value);
             }
         });
     }
 
-    function readFieldValue(fields) {
+    function readEntryFieldValue(fields) {
         const firstField = fields[0];
         if (!firstField) {
             return null;
@@ -483,8 +493,8 @@
 
     function readEntry(entry) {
         const values = {};
-        groupFields(entry).forEach((group) => {
-            const value = readFieldValue(group.fields);
+        groupEntryFields(entry).forEach((group) => {
+            const value = readEntryFieldValue(group.fields);
             if (group.subfield) {
                 if (!values[group.handle] || typeof values[group.handle] !== 'object') {
                     values[group.handle] = {};
@@ -498,6 +508,7 @@
         return values;
     }
 
+    // Link fields
     function updateLinkField(container) {
         const linkType = container.querySelector('[data-link-type]')?.value ?? '';
         const additionalValue = container.querySelector('[data-link-additional-value]');
@@ -568,10 +579,33 @@
         }
     }
 
+    // Shared widget lifecycle
+    function initializeFieldWidgets(root) {
+        initializeEnhancedSelects(root);
+        initializeColorPickers(root);
+        initializeCharacterCounters(root);
+        initializeSvgIconPreviews(root);
+        initializeHtmlEditors(root);
+        initializeWysiwygEditors(root);
+        initializeConcreteSelectors(root);
+        initializeLinkFields(root);
+        initializeImageDimensionFields(root);
+        initializeImageAdditionalFields(root);
+    }
+
+    function destroyFieldWidgets(root) {
+        destroyEnhancedSelects(root);
+        destroyColorPickers(root);
+        destroyHtmlEditors(root);
+        destroyWysiwygEditors(root);
+        destroyConcreteSelectors(root);
+    }
+
+    // Repeatable entry interface
     function getTitleSourceValue(source) {
         if (source instanceof HTMLSelectElement) {
             return Array.from(source.selectedOptions)
-                .map((option) => option.textContent.trim())
+                .map((option) => (option.textContent ?? '').trim())
                 .filter(Boolean)
                 .join(', ');
         }
@@ -579,7 +613,9 @@
             return source.checked ? source.value : '';
         }
 
-        return 'value' in source ? String(source.value).trim() : source.textContent.trim();
+        return 'value' in source
+            ? String(source.value).trim()
+            : (source.textContent ?? '').trim();
     }
 
     function updateEntryTitle(entry, position) {
@@ -589,7 +625,7 @@
             .join(', ');
         const titleElement = entry.querySelector('[data-entry-title]');
         if (titleElement) {
-            titleElement.textContent = `${title} #${position}` || `#${position}`;
+            titleElement.textContent = title === '' ? `#${position}` : `${title} #${position}`;
         }
     }
 
@@ -618,27 +654,27 @@
         }
     }
 
-    function updateState(state) {
-        const entries = getEntries(state);
-        const maximumReached = entries.length >= state.maximum;
+    function updateRepeatableState(state) {
+        const entries = getRepeatableEntries(state);
+        const maxEntriesReached = entries.length >= state.maxEntries;
         const noEntries = entries.length === 0;
 
-        state.scope.querySelectorAll('[data-entry-count]').forEach((counter) => {
+        state.repeatable.querySelectorAll('[data-entry-count]').forEach((counter) => {
             counter.textContent = String(entries.length);
         });
-        state.scope.querySelectorAll('[data-no-entries-message]').forEach((message) => {
+        state.repeatable.querySelectorAll('[data-no-entries-message]').forEach((message) => {
             message.hidden = !noEntries;
         });
-        state.scope.querySelectorAll(
+        state.repeatable.querySelectorAll(
             '[data-entry-action="add-top"], [data-entry-action="add-bottom"], '
             + '[data-entry-action="duplicate"], [data-entry-action="duplicate-at-end"]',
         ).forEach((button) => {
-            button.disabled = maximumReached;
+            button.disabled = maxEntriesReached;
         });
-        state.scope.querySelectorAll('[data-entry-action="copy-last"]').forEach((button) => {
-            button.disabled = noEntries || maximumReached;
+        state.repeatable.querySelectorAll('[data-entry-action="copy-last"]').forEach((button) => {
+            button.disabled = noEntries || maxEntriesReached;
         });
-        state.scope.querySelectorAll('[data-entry-action="remove-all"]').forEach((button) => {
+        state.repeatable.querySelectorAll('[data-entry-action="remove-all"]').forEach((button) => {
             button.disabled = noEntries;
         });
 
@@ -647,18 +683,18 @@
         });
     }
 
-    function createEntry(state, values, before = null) {
-        if (getEntries(state).length >= state.maximum) {
+    function createEntry(state, values, beforeEntry = null) {
+        if (getRepeatableEntries(state).length >= state.maxEntries) {
             return null;
         }
 
-        const index = state.nextIndex;
+        const entryIndex = state.nextIndex;
         state.nextIndex += 1;
 
         const template = document.createElement('template');
-        template.innerHTML = state.template.innerHTML
+        template.innerHTML = state.entryTemplate.innerHTML
             .split('__INDEX__')
-            .join(String(index))
+            .join(String(entryIndex))
             .trim();
         const entry = template.content.querySelector('[data-entry]');
         if (!entry) {
@@ -666,38 +702,29 @@
             return null;
         }
 
-        entry.dataset.entryIndex = String(index);
+        entry.dataset.entryIndex = String(entryIndex);
         populateEntry(entry, values);
-        state.container.insertBefore(template.content, before);
-        initializeEnhancedSelects(entry);
-        initializeColorPickers(entry);
-        initializeCharacterCounters(entry);
-        initializeSvgIconPreviews(entry);
-        initializeHtmlEditors(entry);
-        initializeWysiwygEditors(entry);
-        initializeConcreteSelectors(entry);
-        initializeLinkFields(entry);
-        initializeImageDimensionFields(entry);
-        initializeImageAdditionalFields(entry);
+        state.entriesContainer.insertBefore(template.content, beforeEntry);
+        initializeFieldWidgets(entry);
         entry.dispatchEvent(new CustomEvent('blockbuilder:entry-added', {bubbles: true}));
 
-        const keepCollapsed = state.scope.querySelector('[data-keep-added-collapsed]')?.checked === true;
+        const keepCollapsed = state.repeatable.querySelector('[data-keep-added-collapsed]')?.checked === true;
         setEntryExpanded(entry, !keepCollapsed);
-        updateState(state);
+        updateRepeatableState(state);
 
-        if (state.scope.querySelector('[data-disable-smooth-scroll]')?.checked !== true) {
+        if (state.repeatable.querySelector('[data-disable-smooth-scroll]')?.checked !== true) {
             const dialogContent = entry.closest('.ui-dialog-content');
 
             if (dialogContent) {
-                const offset = 10;
-                const entryPosition =
+                const scrollOffset = 10;
+                const entryScrollTop =
                     dialogContent.scrollTop
                     + entry.getBoundingClientRect().top
                     - dialogContent.getBoundingClientRect().top
-                    - offset;
+                    - scrollOffset;
 
                 dialogContent.scrollTo({
-                    top: entryPosition,
+                    top: entryScrollTop,
                     behavior: 'smooth',
                 });
             }
@@ -706,35 +733,35 @@
         return entry;
     }
 
-    function removeEntry(state, entry) {
+    function removeEntryElement(entry) {
         entry.dispatchEvent(new CustomEvent('blockbuilder:entry-before-remove', {bubbles: true}));
-        destroyEnhancedSelects(entry);
-        destroyColorPickers(entry);
-        destroyHtmlEditors(entry);
-        destroyWysiwygEditors(entry);
-        destroyConcreteSelectors(entry);
+        destroyFieldWidgets(entry);
         entry.remove();
-        updateState(state);
     }
 
-    function confirmAction(button) {
+    function removeEntry(state, entry) {
+        removeEntryElement(entry);
+        updateRepeatableState(state);
+    }
+
+    function confirmEntryAction(button) {
         return !button.dataset.confirm || globalThis.confirm(button.dataset.confirm);
     }
 
-    function getState(element) {
-        const scope = element.closest('[data-block-builder-repeatable]');
-        const container = scope?.querySelector('[data-block-builder-entries]');
+    function getRepeatableState(element) {
+        const repeatable = element.closest('[data-block-builder-repeatable]');
+        const entriesContainer = repeatable?.querySelector('[data-block-builder-entries]');
 
-        return container ? containerStates.get(container) : null;
+        return entriesContainer ? repeatableStates.get(entriesContainer) : null;
     }
 
-    function handleAction(event) {
+    function handleEntryActionClick(event) {
         if (!(event.target instanceof Element)) {
             return;
         }
 
         const button = event.target.closest('[data-entry-action]');
-        const state = button ? getState(button) : null;
+        const state = button ? getRepeatableState(button) : null;
         if (!button || !state || button.disabled) {
             return;
         }
@@ -743,31 +770,23 @@
 
         const action = button.dataset.entryAction;
         const entry = button.closest('[data-entry]');
-        const entries = getEntries(state);
+        const entries = getRepeatableEntries(state);
 
         if (action === 'add-top') {
-            createEntry(state, state.defaults, entries[0] ?? null);
+            createEntry(state, state.defaultValues, entries[0] ?? null);
         } else if (action === 'add-bottom') {
-            createEntry(state, state.defaults);
+            createEntry(state, state.defaultValues);
         } else if (action === 'copy-last' && entries.length > 0) {
             createEntry(state, readEntry(entries.at(-1)));
         } else if (action === 'duplicate' && entry) {
             createEntry(state, readEntry(entry), entry.nextElementSibling);
         } else if (action === 'duplicate-at-end' && entry) {
             createEntry(state, readEntry(entry));
-        } else if (action === 'remove' && entry && confirmAction(button)) {
+        } else if (action === 'remove' && entry && confirmEntryAction(button)) {
             removeEntry(state, entry);
-        } else if (action === 'remove-all' && confirmAction(button)) {
-            entries.forEach((currentEntry) => {
-                currentEntry.dispatchEvent(new CustomEvent('blockbuilder:entry-before-remove', {bubbles: true}));
-                destroyEnhancedSelects(currentEntry);
-                destroyColorPickers(currentEntry);
-                destroyHtmlEditors(currentEntry);
-                destroyWysiwygEditors(currentEntry);
-                destroyConcreteSelectors(currentEntry);
-                currentEntry.remove();
-            });
-            updateState(state);
+        } else if (action === 'remove-all' && confirmEntryAction(button)) {
+            entries.forEach(removeEntryElement);
+            updateRepeatableState(state);
         } else if (action === 'toggle' && entry) {
             setEntryExpanded(entry, button.getAttribute('aria-expanded') !== 'true');
         } else if (action === 'expand-all') {
@@ -777,26 +796,29 @@
         }
     }
 
-    function handleTitleChange(event) {
+    function handleEntryTitleChange(event) {
         if (!(event.target instanceof Element) || !event.target.matches('[data-entry-title-source]')) {
             return;
         }
 
         const entry = event.target.closest('[data-entry]');
-        const state = entry ? getState(entry) : null;
+        const state = entry ? getRepeatableState(entry) : null;
         if (state) {
-            updateState(state);
+            const position = getRepeatableEntries(state).indexOf(entry);
+            if (position >= 0) {
+                updateEntryTitle(entry, position + 1);
+            }
         }
     }
 
-    function initializeSortable(state) {
+    function initializeEntrySorting(state) {
         const jquery = globalThis.jQuery;
         if (typeof jquery !== 'function' || typeof jquery.fn?.sortable !== 'function') {
             console.error('Block Builder repeatable entries require jQuery UI Sortable.');
             return;
         }
 
-        jquery(state.container).sortable({
+        jquery(state.entriesContainer).sortable({
             axis: 'y',
             cancel: 'input, textarea, select, option',
             cursor: 'move',
@@ -810,12 +832,12 @@
             },
             stop(_event, sortableData) {
                 sortableData.item.removeClass('bb-entry-dragging');
-                updateState(state);
+                updateRepeatableState(state);
             },
         });
     }
 
-    function handleMoveKeydown(event) {
+    function handleEntryMoveKeydown(event) {
         if (
             !(event.target instanceof Element)
             || !event.target.matches('[data-entry-drag-handle]')
@@ -825,29 +847,29 @@
         }
 
         const entry = event.target.closest('[data-entry]');
-        const state = entry ? getState(entry) : null;
+        const state = entry ? getRepeatableState(entry) : null;
         if (!entry || !state) {
             return;
         }
 
-        const entries = getEntries(state);
-        const position = entries.indexOf(entry);
-        if (event.key === 'ArrowUp' && position > 0) {
+        const entries = getRepeatableEntries(state);
+        const entryPosition = entries.indexOf(entry);
+        if (event.key === 'ArrowUp' && entryPosition > 0) {
             event.preventDefault();
-            state.container.insertBefore(entry, entries[position - 1]);
-        } else if (event.key === 'ArrowDown' && position < entries.length - 1) {
+            state.entriesContainer.insertBefore(entry, entries[entryPosition - 1]);
+        } else if (event.key === 'ArrowDown' && entryPosition < entries.length - 1) {
             event.preventDefault();
-            state.container.insertBefore(entries[position + 1], entry);
+            state.entriesContainer.insertBefore(entries[entryPosition + 1], entry);
         } else {
             return;
         }
 
-        updateState(state);
+        updateRepeatableState(state);
         event.target.focus();
     }
 
-    function parseData(scope) {
-        const dataElement = scope.querySelector('script[data-entry-data]');
+    function parseRepeatableData(repeatable) {
+        const dataElement = repeatable.querySelector('script[data-entry-data]');
         if (!dataElement) {
             return {};
         }
@@ -860,58 +882,48 @@
         }
     }
 
-    function initializeContainer(container) {
-        if (containerStates.has(container)) {
+    function initializeRepeatable(entriesContainer) {
+        if (repeatableStates.has(entriesContainer)) {
             return;
         }
 
-        const scope = container.closest('[data-block-builder-repeatable]');
-        const template = scope?.querySelector('template[data-entry-template]');
-        if (!scope || !template) {
+        const repeatable = entriesContainer.closest('[data-block-builder-repeatable]');
+        const entryTemplate = repeatable?.querySelector('template[data-entry-template]');
+        if (!repeatable || !entryTemplate) {
             return;
         }
 
-        const data = parseData(scope);
-        const configuredMaximum = Number.parseInt(container.dataset.maxEntries ?? data.maxEntries, 10);
-        const usedIndexes = Array.from(container.querySelectorAll(':scope > [data-entry]'))
+        const repeatableData = parseRepeatableData(repeatable);
+        const configuredMaxEntries = Number.parseInt(
+            entriesContainer.dataset.maxEntries ?? repeatableData.maxEntries,
+            10,
+        );
+        const usedIndexes = Array.from(entriesContainer.querySelectorAll(':scope > [data-entry]'))
             .map((entry) => Number.parseInt(entry.dataset.entryIndex, 10))
             .filter(Number.isInteger);
         const state = {
-            container,
-            defaults: data.defaultValues && typeof data.defaultValues === 'object'
-                ? data.defaultValues
+            entriesContainer,
+            defaultValues: repeatableData.defaultValues && typeof repeatableData.defaultValues === 'object'
+                ? repeatableData.defaultValues
                 : {},
-            maximum: Number.isInteger(configuredMaximum) && configuredMaximum > 0
-                ? configuredMaximum
+            maxEntries: Number.isInteger(configuredMaxEntries) && configuredMaxEntries > 0
+                ? configuredMaxEntries
                 : Number.POSITIVE_INFINITY,
             nextIndex: usedIndexes.length > 0 ? Math.max(...usedIndexes) + 1 : 0,
-            scope,
-            template,
+            repeatable,
+            entryTemplate,
         };
-        containerStates.set(container, state);
+        repeatableStates.set(entriesContainer, state);
 
-        const existingEntries = getEntries(state);
-        if (existingEntries.length === 0 && Array.isArray(data.entries)) {
-            data.entries.forEach((values) => createEntry(state, values));
+        const existingEntries = getRepeatableEntries(state);
+        if (existingEntries.length === 0 && Array.isArray(repeatableData.entries)) {
+            repeatableData.entries.forEach((values) => createEntry(state, values));
         }
-        initializeSortable(state);
-        updateState(state);
+        initializeEntrySorting(state);
+        updateRepeatableState(state);
     }
 
-    function initialize(root = document) {
-        root.querySelectorAll('[data-block-builder-entries]').forEach(initializeContainer);
-        initializeEnhancedSelects(root);
-        initializeColorPickers(root);
-        initializeCharacterCounters(root);
-        initializeSvgIconPreviews(root);
-        initializeHtmlEditors(root);
-        initializeWysiwygEditors(root);
-        initializeConcreteSelectors(root);
-        initializeLinkFields(root);
-        initializeImageDimensionFields(root);
-        initializeImageAdditionalFields(root);
-    }
-
+    // Form initialization
     function handleSubmit(event) {
         if (!(event.target instanceof HTMLFormElement)) {
             return;
@@ -921,26 +933,41 @@
         event.target.querySelectorAll('[data-block-builder-wysiwyg]').forEach(synchronizeWysiwygEditor);
     }
 
-    document.addEventListener('click', handleAction);
-    document.addEventListener('click', handleLinkClick);
-    document.addEventListener('click', handleImageAdditionalFieldsClick);
-    document.addEventListener('input', handleTitleChange);
-    document.addEventListener('input', handleExternalLinkInput);
-    document.addEventListener('input', handleCharacterCountInput);
-    document.addEventListener('change', handleTitleChange);
-    document.addEventListener('change', handleLinkChange);
-    document.addEventListener('change', handleImageDimensionChange);
-    document.addEventListener('change', handleSvgIconChange);
-    document.addEventListener('keydown', handleMoveKeydown);
-    document.addEventListener('submit', handleSubmit, true);
+    function initializeBlockBuilderForm(formContainer) {
+        if (formContainer.dataset.blockBuilderInitialized === 'true') {
+            return;
+        }
+
+        formContainer.querySelectorAll('[data-block-builder-entries]').forEach(initializeRepeatable);
+        initializeFieldWidgets(formContainer);
+
+        formContainer.addEventListener('click', handleEntryActionClick);
+        formContainer.addEventListener('click', handleLinkClick);
+        formContainer.addEventListener('click', handleImageAdditionalFieldsClick);
+        formContainer.addEventListener('input', handleEntryTitleChange);
+        formContainer.addEventListener('input', handleExternalLinkInput);
+        formContainer.addEventListener('input', handleCharacterCountInput);
+        formContainer.addEventListener('change', handleEntryTitleChange);
+        formContainer.addEventListener('change', handleLinkChange);
+        formContainer.addEventListener('change', handleImageDimensionChange);
+        formContainer.addEventListener('change', handleSvgIconChange);
+        formContainer.addEventListener('keydown', handleEntryMoveKeydown);
+        formContainer.closest('form')?.addEventListener('submit', handleSubmit, true);
+
+        formContainer.dataset.blockBuilderInitialized = 'true';
+    }
+
+    function initializeBlockBuilder(root = document) {
+        root.querySelectorAll('[data-block-builder-form]').forEach(initializeBlockBuilderForm);
+    }
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => initialize(), {once: true});
+        document.addEventListener('DOMContentLoaded', () => initializeBlockBuilder(), {once: true});
     } else {
-        initialize();
+        initializeBlockBuilder();
     }
 
     if (globalThis.Concrete?.event && typeof globalThis.Concrete.event.bind === 'function') {
-        globalThis.Concrete.event.bind('open.block.{{BLOCK_EVENT_NAME}}', () => initialize());
+        globalThis.Concrete.event.bind('open.block.{{BLOCK_EVENT_NAME}}', () => initializeBlockBuilder());
     }
 }());
