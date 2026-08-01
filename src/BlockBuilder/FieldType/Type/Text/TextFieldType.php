@@ -39,6 +39,7 @@ class TextFieldType extends AbstractFieldType
         return [
             'displayZeroValue' => 0,
             'defaultValue' => '',
+            'placeholder' => '',
             'minimumLength' => '',
             'maximumLength' => (string) self::MAXIMUM_LENGTH,
             'prefix' => '',
@@ -56,6 +57,7 @@ class TextFieldType extends AbstractFieldType
             helpText: trim($data['helpText'] ?? ''),
             displayZeroValue: !empty($data['displayZeroValue']),
             defaultValue: (string) ($data['defaultValue'] ?? ''),
+            placeholder: trim((string) ($data['placeholder'] ?? '')),
             minimumLength: ($data['minimumLength'] ?? '') !== '' ? (int) $data['minimumLength'] : null,
             maximumLength: ($data['maximumLength'] ?? '') !== '' ? (int) $data['maximumLength'] : self::MAXIMUM_LENGTH,
             prefix: trim($data['prefix'] ?? ''),

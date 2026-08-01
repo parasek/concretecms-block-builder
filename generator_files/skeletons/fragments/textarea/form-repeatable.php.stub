@@ -5,7 +5,7 @@
     ><?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?></label>
     <textarea
         class="form-control"
-        id="<?= h($view->field('entry')); ?>-<?= h((string) $entryIndex); ?>-{{HANDLE}}"
+        id="<?= h($view->field('entry')); ?>-<?= h((string) $entryIndex); ?>-{{HANDLE}}"{{PLACEHOLDER_ATTRIBUTE}}
         data-block-builder-character-count
         data-character-count-maximum="{{MAXIMUM_LENGTH_VALUE}}"
         name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"

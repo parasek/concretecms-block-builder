@@ -48,6 +48,7 @@ class NumberFieldType extends AbstractFieldType
         return [
             'displayZeroValue' => 0,
             'defaultValue' => '',
+            'placeholder' => '',
             'prefix' => '',
             'suffix' => '',
             'size' => '10.2',
@@ -70,6 +71,7 @@ class NumberFieldType extends AbstractFieldType
             helpText: trim($data['helpText'] ?? ''),
             displayZeroValue: !empty($data['displayZeroValue']),
             defaultValue: trim((string) ($data['defaultValue'] ?? '')),
+            placeholder: trim((string) ($data['placeholder'] ?? '')),
             prefix: trim($data['prefix'] ?? ''),
             suffix: trim($data['suffix'] ?? ''),
             size: trim($data['size'] ?? ''),

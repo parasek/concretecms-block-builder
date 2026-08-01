@@ -5,7 +5,7 @@
             $view->field({{HANDLE_LITERAL}}),
             ${{HANDLE}} ?? '',
             [
-                'maxlength' => {{MAXIMUM_LENGTH}},
+                'maxlength' => {{MAXIMUM_LENGTH}},{{PLACEHOLDER_OPTION}}
                 'data-block-builder-character-count' => true,
                 'data-character-count-maximum' => '{{MAXIMUM_LENGTH}}',
             ],

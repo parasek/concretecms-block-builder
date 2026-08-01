@@ -17,6 +17,7 @@ readonly class NumberFieldTypeDto implements FieldTypeDtoInterface
         public ?string $helpText,
         public bool $displayZeroValue,
         public string $defaultValue,
+        public string $placeholder,
         public string $prefix,
         public string $suffix,
         public ?string $size,

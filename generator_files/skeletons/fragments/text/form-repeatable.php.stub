@@ -6,7 +6,7 @@
     <div class="input-group">
 {{PREFIX}}        <input
             class="form-control"
-            id="<?= h($view->field('entry')); ?>-<?= h((string) $entryIndex); ?>-{{HANDLE}}"
+            id="<?= h($view->field('entry')); ?>-<?= h((string) $entryIndex); ?>-{{HANDLE}}"{{PLACEHOLDER_ATTRIBUTE}}
             maxlength="{{MAXIMUM_LENGTH}}"
             name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
             type="text"

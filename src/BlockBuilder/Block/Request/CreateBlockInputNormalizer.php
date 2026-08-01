@@ -13,6 +13,7 @@ final class CreateBlockInputNormalizer
     private const int MAX_FIELDS_PER_COLLECTION = 100;
     private const int MAX_OPTIONS_PER_FIELD = 1_000;
     private const int MAX_DEFAULT_STRING_LENGTH = 10_000;
+    private const int MAX_PLACEHOLDER_LENGTH = 255;
     private const int MAX_LONG_TEXT_LENGTH = 100_000;
     private const int MAX_CUSTOM_CODE_LENGTH = 500_000;
 
@@ -518,6 +519,10 @@ final class CreateBlockInputNormalizer
 
     private function getFieldPropertyMaximumLength(string $propertyName): int
     {
+        if ($propertyName === 'placeholder') {
+            return self::MAX_PLACEHOLDER_LENGTH;
+        }
+
         if (in_array($propertyName, self::FIELD_CUSTOM_CODE_PROPERTIES, true)) {
             return self::MAX_CUSTOM_CODE_LENGTH;
         }

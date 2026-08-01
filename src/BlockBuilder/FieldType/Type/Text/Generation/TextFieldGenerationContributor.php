@@ -247,8 +247,14 @@ readonly class TextFieldGenerationContributor implements FieldGenerationContribu
         ];
         if ($basicField) {
             $replacements['{{HANDLE_LITERAL}}'] = $this->phpLiteralFormatter->format($field->handle);
+            $replacements['{{PLACEHOLDER_OPTION}}'] = $field->placeholder === ''
+                ? ''
+                : PHP_EOL . '                \'placeholder\' => t(' . $this->phpLiteralFormatter->format($field->placeholder) . '),';
         } else {
             $replacements['{{HANDLE_LITERAL}}'] = $this->phpLiteralFormatter->format($field->handle);
+            $replacements['{{PLACEHOLDER_ATTRIBUTE}}'] = $field->placeholder === ''
+                ? ''
+                : PHP_EOL . '            placeholder="<?= t(' . $this->phpLiteralFormatter->format($field->placeholder) . '); ?>"';
             $replacements['{{TITLE_SOURCE_ATTRIBUTE}}'] = $field->titleSource
                 ? PHP_EOL . '            data-entry-title-source'
                 : '';

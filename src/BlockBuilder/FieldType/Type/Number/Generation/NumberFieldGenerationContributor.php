@@ -344,10 +344,16 @@ PHP,
                 : PHP_EOL . '        <span class="input-group-text"><?= h(' . $this->phpLiteralFormatter->format($field->suffix) . '); ?></span>',
         ];
         if ($basicField) {
+            $replacements['{{PLACEHOLDER_OPTION}}'] = $field->placeholder === ''
+                ? ''
+                : PHP_EOL . '                \'placeholder\' => t(' . $this->phpLiteralFormatter->format($field->placeholder) . '),';
             $replacements['{{MINIMUM_LITERAL}}'] = $this->phpLiteralFormatter->format($field->minimum);
             $replacements['{{MAXIMUM_LITERAL}}'] = $this->phpLiteralFormatter->format($field->maximum);
             $replacements['{{STEP_LITERAL}}'] = $this->phpLiteralFormatter->format($field->step);
         } else {
+            $replacements['{{PLACEHOLDER_ATTRIBUTE}}'] = $field->placeholder === ''
+                ? ''
+                : PHP_EOL . '            placeholder="<?= t(' . $this->phpLiteralFormatter->format($field->placeholder) . '); ?>"';
             $replacements['{{MINIMUM_VALUE}}'] = (string) $field->minimum;
             $replacements['{{MAXIMUM_VALUE}}'] = (string) $field->maximum;
             $replacements['{{STEP_VALUE}}'] = (string) $field->step;

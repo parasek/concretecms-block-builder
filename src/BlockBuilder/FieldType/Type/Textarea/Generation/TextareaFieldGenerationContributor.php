@@ -255,6 +255,9 @@ readonly class TextareaFieldGenerationContributor implements FieldGenerationCont
                 '            \'data-block-builder-character-count\' => true,',
                 '            \'data-character-count-maximum\' => ' . $this->phpLiteralFormatter->format($field->maximumLength === null ? '' : (string) $field->maximumLength) . ',',
             ];
+            if ($field->placeholder !== '') {
+                $formAttributes[] = '            \'placeholder\' => t(' . $this->phpLiteralFormatter->format($field->placeholder) . '),';
+            }
             if ($field->maximumLength !== null) {
                 $formAttributes[] = sprintf('            \'maxlength\' => %d,', $field->maximumLength);
             }
@@ -272,6 +275,9 @@ readonly class TextareaFieldGenerationContributor implements FieldGenerationCont
                     implode(PHP_EOL, $formAttributes),
                 );
         } else {
+            $replacements['{{PLACEHOLDER_ATTRIBUTE}}'] = $field->placeholder === ''
+                ? ''
+                : PHP_EOL . '        placeholder="<?= t(' . $this->phpLiteralFormatter->format($field->placeholder) . '); ?>"';
             $replacements['{{MAXIMUM_LENGTH_ATTRIBUTE}}'] = $field->maximumLength === null
                 ? ''
                 : PHP_EOL . '        maxlength="' . $field->maximumLength . '"';

@@ -7,7 +7,7 @@
             [
                 'min' => {{MINIMUM_LITERAL}},
                 'max' => {{MAXIMUM_LITERAL}},
-                'step' => {{STEP_LITERAL}},
+                'step' => {{STEP_LITERAL}},{{PLACEHOLDER_OPTION}}
             ],
         ); ?>{{SUFFIX}}
     </div>{{HELP_TEXT}}

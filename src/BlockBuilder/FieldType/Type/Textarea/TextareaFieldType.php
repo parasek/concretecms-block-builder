@@ -44,6 +44,7 @@ class TextareaFieldType extends AbstractFieldType
         return [
             'displayZeroValue' => 0,
             'defaultValue' => '',
+            'placeholder' => '',
             'minimumLength' => '',
             'maximumLength' => '',
             'minHeight' => '',
@@ -61,6 +62,7 @@ class TextareaFieldType extends AbstractFieldType
             helpText: trim($data['helpText'] ?? ''),
             displayZeroValue: !empty($data['displayZeroValue']),
             defaultValue: (string) ($data['defaultValue'] ?? ''),
+            placeholder: trim((string) ($data['placeholder'] ?? '')),
             minimumLength: ($data['minimumLength'] ?? '') !== '' ? (int) $data['minimumLength'] : null,
             maximumLength: ($data['maximumLength'] ?? '') !== '' ? (int) $data['maximumLength'] : null,
             titleSource: !empty($data['titleSource']),

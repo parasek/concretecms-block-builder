@@ -117,6 +117,7 @@ final readonly class BlockFormFieldLabelProvider
             'displayType' => t('Type'),
             'addEmptyOption' => t('Add an empty option'),
             'defaultValue' => t('Default value'),
+            'placeholder' => t('Placeholder'),
             'listGenerationMethod' => t('List generation method'),
             'options' => t('Select options'),
             'customCode' => t('Custom code'),

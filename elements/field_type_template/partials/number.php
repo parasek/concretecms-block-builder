@@ -9,6 +9,11 @@
         <input class="form-control" id="<%=context%>[<%=counter%>][defaultValue]" name="<%=context%>[<%=counter%>][defaultValue]" type="text" value="<%=defaultValue%>">
     </div>
 
+    <div class="mb-4">
+        <label class="form-label" for="<%=context%>[<%=counter%>][placeholder]"><?= t('Placeholder'); ?></label>
+        <input class="form-control" id="<%=context%>[<%=counter%>][placeholder]" maxlength="255" name="<%=context%>[<%=counter%>][placeholder]" type="text" value="<%=placeholder%>">
+    </div>
+
     <div class="row">
         <div class="col-lg-6 mb-4">
             <label class="form-label" for="<%=context%>[<%=counter%>][prefix]"><?= t('Field prefix'); ?></label>
