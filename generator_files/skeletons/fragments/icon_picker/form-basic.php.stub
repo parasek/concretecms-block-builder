@@ -1,0 +1,14 @@
+<div class="mb-4">
+    <div class="form-label"><?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?></div>
+    <div
+        data-block-builder-concrete-selector="icon"
+        data-selected-value="<?= h(${{HANDLE}} ?? ''); ?>"
+    >
+        <icon-selector
+            name="<?= h($view->field({{HANDLE_LITERAL}})); ?>"
+            selected="<?= h(${{HANDLE}} ?? ''); ?>"
+            title="<?= t('Choose Icon'); ?>"
+            empty-option-label="<?= tc('Icon', '** None Selected'); ?>"
+        ></icon-selector>
+    </div>{{HELP_TEXT}}
+</div>

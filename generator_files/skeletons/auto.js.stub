@@ -71,7 +71,7 @@
                 return;
             }
             if (typeof globalThis.Concrete?.Vue?.activateContext !== 'function') {
-                console.error('Block Builder link fields require the Concrete CMS Vue context.');
+                console.error('Block Builder selector fields require the Concrete CMS Vue context.');
                 return;
             }
 
@@ -320,13 +320,14 @@
         }
 
         if (firstField.matches('[data-block-builder-concrete-selector]')) {
-            const selectedValue = String(value ?? '0');
             const selectorType = firstField.dataset.blockBuilderConcreteSelector;
             const selectorConfiguration = {
                 express: ['concrete-express-entry-input', 'entry-id'],
                 file: ['concrete-file-input', ':file-id'],
+                icon: ['icon-selector', 'selected'],
                 page: ['concrete-page-input', ':page-id'],
             }[selectorType];
+            const selectedValue = String(value ?? (selectorType === 'icon' ? '' : '0'));
             firstField.dataset.selectedValue = selectedValue;
             if (selectorConfiguration) {
                 firstField.querySelector(selectorConfiguration[0])
@@ -396,9 +397,16 @@
         synchronizeWysiwygEditor(firstField);
 
         if (firstField.matches('[data-block-builder-concrete-selector]')) {
-            const selectedInput = firstField.querySelector('input[type="hidden"][name]');
+            const selectorType = firstField.dataset.blockBuilderConcreteSelector;
+            const selectedControl = firstField.querySelector(
+                selectorType === 'icon'
+                    ? 'select[name]'
+                    : 'input[type="hidden"][name]',
+            );
 
-            return selectedInput?.value ?? firstField.dataset.selectedValue ?? '0';
+            return selectedControl?.value
+                ?? firstField.dataset.selectedValue
+                ?? (selectorType === 'icon' ? '' : '0');
         }
 
         if (firstField instanceof HTMLInputElement && firstField.type === 'radio') {

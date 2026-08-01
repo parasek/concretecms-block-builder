@@ -738,15 +738,22 @@ PHP;
 
     private function renderRegisterViewAssetsMethod(BlockFileGenerationContext $context): string
     {
-        $customCode = trim((string) $context->config->registerViewAssetsCustomCode);
-        if ($customCode === '') {
+        $methodCode = $this->combineCode([
+            $this->renderControllerFragments(
+                $context,
+                ControllerMethodSectionEnum::RegisterViewAssets,
+                indentation: 0,
+            ),
+            (string) $context->config->registerViewAssetsCustomCode,
+        ], 2);
+        if ($methodCode === '') {
             return '';
         }
 
         return PHP_EOL
             . '    public function registerViewAssets($outputContent = \'\'): void' . PHP_EOL
             . '    {' . PHP_EOL
-            . $this->indentCode($customCode, 2) . PHP_EOL
+            . $methodCode . PHP_EOL
             . '    }' . PHP_EOL;
     }
 

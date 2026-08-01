@@ -18,5 +18,6 @@ enum ControllerMethodSectionEnum: string
     case CollectUsedFilesFromEntry = 'collect_used_files_from_entry';
     case PrepareEntryForEdit = 'prepare_entry_for_edit';
     case PrepareEntryForView = 'prepare_entry_for_view';
+    case RegisterViewAssets = 'register_view_assets';
     case AdditionalMethods = 'additional_methods';
 }
