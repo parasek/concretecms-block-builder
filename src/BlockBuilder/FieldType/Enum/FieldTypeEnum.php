@@ -25,6 +25,7 @@ enum FieldTypeEnum: string implements JsonSerializable
     case DatePicker = 'date_picker';
     case ColorPicker = 'color_picker';
     case IconPicker = 'icon_picker';
+    case SvgIconPicker = 'svg_icon_picker';
     case UserSelector = 'user_selector';
 
     public function jsonSerialize(): string

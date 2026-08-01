@@ -587,6 +587,23 @@ document.addEventListener('DOMContentLoaded', () => {
             updatePreview(element.value);
         };
 
+        const addSvgIconDefinition = (button) => {
+            const container = button.closest('[data-svg-icon-definitions]');
+            const rows = container?.querySelector('[data-svg-icon-definition-rows]');
+            const template = container?.querySelector('template[data-svg-icon-definition-template]');
+            if (!container || !rows || !(template instanceof HTMLTemplateElement)) return;
+
+            const nextIndex = Number.parseInt(container.dataset.nextIconIndex || '0', 10);
+            const rowTemplate = template.innerHTML.replaceAll('__ICON_INDEX__', String(nextIndex));
+            rows.insertAdjacentHTML('beforeend', rowTemplate);
+            container.dataset.nextIconIndex = String(nextIndex + 1);
+            rows.lastElementChild?.querySelector('input')?.focus();
+        };
+
+        const removeSvgIconDefinition = (button) => {
+            button.closest('[data-svg-icon-definition-row]')?.remove();
+        };
+
         const bindFunctions = () => {
             bbContainer.addEventListener('click', (e) => {
                 const target = e.target;
@@ -598,6 +615,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (target.closest('[data-expand-all]')) expandAllEntries(e);
                 if (target.closest('[data-collapse-all]')) collapseAllEntries(e);
                 if (target.closest('[data-remove-all]')) removeAllEntries(e);
+                if (target.closest('[data-add-svg-icon]')) addSvgIconDefinition(target.closest('[data-add-svg-icon]'));
+                if (target.closest('[data-remove-svg-icon]')) removeSvgIconDefinition(target.closest('[data-remove-svg-icon]'));
             });
 
             bbContainer.addEventListener('input', (e) => {

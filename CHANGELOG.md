@@ -1,4 +1,5 @@
 ##### 3.0.0 (unreleased)
+- Added an SVG Icon Picker field with sanitized custom icon definitions, generated select controls, and live previews.
 - Added optional phone, email, and URL validation to generated Text fields.
 - Restored optional visual highlighting for compound Flex Link, link, and Image form fields.
 - Added configurable placeholders to generated Text, Textarea, and Number fields.

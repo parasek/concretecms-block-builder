@@ -1,0 +1,34 @@
+<?php
+${{SVG_VARIABLE}} = match ($entry[{{HANDLE_LITERAL}}] ?? '') {
+{{PREVIEW_MAP}}
+    default => '',
+};
+?>
+<div class="mb-4" data-block-builder-svg-icon-picker>
+    <label
+        class="form-label"
+        for="<?= h($view->field('entry') . '-' . $entryIndex . '-{{HANDLE}}'); ?>"
+    ><?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?></label>
+    <div class="d-flex align-items-center gap-3">
+        <select
+            class="form-select"
+            id="<?= h($view->field('entry') . '-' . $entryIndex . '-{{HANDLE}}'); ?>"
+            name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
+            data-entry-field="{{HANDLE}}"
+            data-svg-icon-select
+        >
+            <option value=""><?= tc('SVG icon', '** None Selected'); ?></option>
+{{OPTIONS}}
+        </select>
+        <div class="bb-svg-icon-preview-container flex-shrink-0" data-svg-icon-preview-container>
+            <img
+                class="bb-svg-icon-preview d-block<?= ${{SVG_VARIABLE}} === '' ? ' invisible' : ''; ?>"
+                data-svg-icon-preview
+                alt=""
+                <?php if (${{SVG_VARIABLE}} !== ''): ?>
+                    src="<?= h(${{SVG_VARIABLE}}); ?>"
+                <?php endif; ?>
+            >
+        </div>
+    </div>{{HELP_TEXT}}
+</div>

@@ -37,7 +37,7 @@ readonly class BlockConfigDtoFactory
     private function createFromArray(
         array $data,
         bool $isBlockBeingGenerated,
-        bool $validateChoiceOptions,
+        bool $validateFieldData,
     ): BlockConfigDto
     {
         foreach (FieldTypeContextEnum::cases() as $fieldTypeContext) {
@@ -57,11 +57,11 @@ readonly class BlockConfigDtoFactory
 
         $basic = $this->transformFieldsToDto(
             $data[FieldTypeContextEnum::BasicFields->value] ?? [],
-            $validateChoiceOptions,
+            $validateFieldData,
         );
         $entries = $this->transformFieldsToDto(
             $data[FieldTypeContextEnum::RepeatableFields->value] ?? [],
-            $validateChoiceOptions,
+            $validateFieldData,
         );
 
         return new BlockConfigDto(
@@ -147,10 +147,10 @@ readonly class BlockConfigDtoFactory
         return array_values(array_filter(array_map('trim', $lines)));
     }
 
-    private function transformFieldsToDto(array $fields, bool $validateChoiceOptions): array
+    private function transformFieldsToDto(array $fields, bool $validateFieldData): array
     {
         return array_values(array_map(
-            callback: fn(array $fieldData) => $validateChoiceOptions
+            callback: fn(array $fieldData) => $validateFieldData
                 ? $this->fieldTypeDtoFactory->fromArray($fieldData)
                 : $this->fieldTypeDtoFactory->fromFormArray($fieldData),
             array: $fields

@@ -71,6 +71,36 @@
         root.querySelectorAll('[data-block-builder-character-count]').forEach(updateCharacterCounter);
     }
 
+    function updateSvgIconPreview(select) {
+        if (!(select instanceof HTMLSelectElement)) {
+            return;
+        }
+
+        const picker = select.closest('[data-block-builder-svg-icon-picker]');
+        const previewContainer = picker?.querySelector('[data-svg-icon-preview-container]');
+        const preview = previewContainer?.querySelector('[data-svg-icon-preview]');
+        const previewSource = select.selectedOptions[0]?.dataset.svgIconPreview ?? '';
+
+        if (previewSource === '') {
+            preview.removeAttribute('src');
+            preview.classList.add('invisible');
+            return;
+        }
+
+        preview.src = previewSource;
+        preview.classList.remove('invisible');
+    }
+
+    function initializeSvgIconPreviews(root) {
+        root.querySelectorAll('[data-svg-icon-select]').forEach(updateSvgIconPreview);
+    }
+
+    function handleSvgIconChange(event) {
+        if (event.target instanceof HTMLSelectElement && event.target.matches('[data-svg-icon-select]')) {
+            updateSvgIconPreview(event.target);
+        }
+    }
+
     function handleCharacterCountInput(event) {
         if (event.target instanceof Element && event.target.matches('[data-block-builder-character-count]')) {
             updateCharacterCounter(event.target);
@@ -642,6 +672,7 @@
         initializeEnhancedSelects(entry);
         initializeColorPickers(entry);
         initializeCharacterCounters(entry);
+        initializeSvgIconPreviews(entry);
         initializeHtmlEditors(entry);
         initializeWysiwygEditors(entry);
         initializeConcreteSelectors(entry);
@@ -872,6 +903,7 @@
         initializeEnhancedSelects(root);
         initializeColorPickers(root);
         initializeCharacterCounters(root);
+        initializeSvgIconPreviews(root);
         initializeHtmlEditors(root);
         initializeWysiwygEditors(root);
         initializeConcreteSelectors(root);
@@ -898,6 +930,7 @@
     document.addEventListener('change', handleTitleChange);
     document.addEventListener('change', handleLinkChange);
     document.addEventListener('change', handleImageDimensionChange);
+    document.addEventListener('change', handleSvgIconChange);
     document.addEventListener('keydown', handleMoveKeydown);
     document.addEventListener('submit', handleSubmit, true);
 

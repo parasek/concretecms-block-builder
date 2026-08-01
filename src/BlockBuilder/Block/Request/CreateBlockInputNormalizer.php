@@ -12,7 +12,11 @@ final class CreateBlockInputNormalizer
 {
     private const int MAX_FIELDS_PER_COLLECTION = 100;
     private const int MAX_OPTIONS_PER_FIELD = 1_000;
+    private const int MAX_SVG_ICONS_PER_FIELD = 100;
     private const int MAX_DEFAULT_STRING_LENGTH = 10_000;
+    private const int MAX_SVG_ICON_NAME_LENGTH = 100;
+    private const int MAX_SVG_ICON_HANDLE_LENGTH = 50;
+    private const int MAX_SVG_CONTENT_LENGTH = 100_000;
     private const int MAX_PLACEHOLDER_LENGTH = 255;
     private const int MAX_LONG_TEXT_LENGTH = 100_000;
     private const int MAX_CUSTOM_CODE_LENGTH = 500_000;
@@ -318,6 +322,16 @@ final class CreateBlockInputNormalizer
                 }
 
                 $propertyValue = $fieldData[$propertyName] ?? null;
+                if ($propertyName === 'icons') {
+                    $normalizedField[$propertyName] = $this->normalizeSvgIcons(
+                        value: $propertyValue ?? [],
+                        context: $context,
+                        fieldIndex: $fieldIndex,
+                        feedback: $feedback,
+                    );
+                    continue;
+                }
+
                 if (in_array($propertyName, self::FIELD_BOOLEAN_PROPERTIES, true)) {
                     $normalizedField[$propertyName] = $this->normalizeBoolean(
                         value: $propertyValue,
@@ -354,6 +368,94 @@ final class CreateBlockInputNormalizer
         }
 
         return $normalizedFields;
+    }
+
+    /**
+     * @return array<int, array{name: string, handle: string, svg: string}>
+     */
+    private function normalizeSvgIcons(
+        mixed $value,
+        FieldTypeContextEnum $context,
+        int $fieldIndex,
+        ValidationFeedbackBuilder $feedback,
+    ): array {
+        $fieldPath = sprintf('%s[%s][icons]', $context->value, $fieldIndex);
+        if (!is_array($value)) {
+            $this->addInvalidScalarFeedback($feedback, 'icons', $fieldPath, $context->getTabHandle());
+
+            return [];
+        }
+
+        foreach (array_keys($value) as $iconIndex) {
+            if (!is_int($iconIndex) && (!is_string($iconIndex) || !ctype_digit($iconIndex))) {
+                $feedback->addError(
+                    error: t('The field "%s" must use numeric icon indexes.', $this->fieldLabelProvider->getLabel('icons')),
+                    field: $fieldPath,
+                    tab: $context->getTabHandle(),
+                );
+                break;
+            }
+        }
+
+        if (count($value) > self::MAX_SVG_ICONS_PER_FIELD) {
+            $feedback->addError(
+                error: t(
+                    'The field "%s" may contain at most %s icons.',
+                    $this->fieldLabelProvider->getLabel('icons'),
+                    self::MAX_SVG_ICONS_PER_FIELD,
+                ),
+                field: $fieldPath,
+                tab: $context->getTabHandle(),
+            );
+            $value = array_slice($value, 0, self::MAX_SVG_ICONS_PER_FIELD);
+        }
+
+        $normalizedIcons = [];
+        foreach (array_values($value) as $iconIndex => $icon) {
+            if (!is_array($icon)) {
+                $this->addInvalidScalarFeedback($feedback, 'icons', $fieldPath, $context->getTabHandle());
+                continue;
+            }
+
+            foreach (array_keys($icon) as $propertyName) {
+                if (!is_string($propertyName) || !in_array($propertyName, ['name', 'handle', 'svg'], true)) {
+                    $feedback->addError(
+                        error: t('The field "%s" contains an unsupported icon property.', $this->fieldLabelProvider->getLabel('icons')),
+                        field: $fieldPath,
+                        tab: $context->getTabHandle(),
+                    );
+                }
+            }
+
+            $normalizedIcons[] = [
+                'name' => $this->normalizeString(
+                    value: $icon['name'] ?? '',
+                    propertyName: 'svgIconName',
+                    maximumLength: self::MAX_SVG_ICON_NAME_LENGTH,
+                    feedback: $feedback,
+                    fieldPath: sprintf('%s[%s][name]', $fieldPath, $iconIndex),
+                    tab: $context->getTabHandle(),
+                ),
+                'handle' => $this->normalizeString(
+                    value: $icon['handle'] ?? '',
+                    propertyName: 'svgIconHandle',
+                    maximumLength: self::MAX_SVG_ICON_HANDLE_LENGTH,
+                    feedback: $feedback,
+                    fieldPath: sprintf('%s[%s][handle]', $fieldPath, $iconIndex),
+                    tab: $context->getTabHandle(),
+                ),
+                'svg' => $this->normalizeString(
+                    value: $icon['svg'] ?? '',
+                    propertyName: 'svgContent',
+                    maximumLength: self::MAX_SVG_CONTENT_LENGTH,
+                    feedback: $feedback,
+                    fieldPath: sprintf('%s[%s][svg]', $fieldPath, $iconIndex),
+                    tab: $context->getTabHandle(),
+                ),
+            ];
+        }
+
+        return $normalizedIcons;
     }
 
     private function normalizeString(

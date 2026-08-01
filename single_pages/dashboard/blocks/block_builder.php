@@ -29,6 +29,7 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
  * @var array $selectFieldTypes
  * @var array $selectFieldListGenerationMethods
  * @var array $selectMultipleFieldTypes
+ * @var array $textAdditionalValidations
  * @var string $newBlockUrl
  * @var string $configsUrl
  * @var string $blockIconPreviewPath
@@ -171,6 +172,7 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
         'selectFieldTypes' => $selectFieldTypes,
         'selectFieldListGenerationMethods' => $selectFieldListGenerationMethods,
         'selectMultipleFieldTypes' => $selectMultipleFieldTypes,
+        'textAdditionalValidations' => $textAdditionalValidations,
     ], 'block_builder'); ?>
 
 </div> <?php // .bb-app.bb-app-builder ?>

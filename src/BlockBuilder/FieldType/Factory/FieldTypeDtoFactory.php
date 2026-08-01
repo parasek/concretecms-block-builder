@@ -9,9 +9,11 @@ use BlockBuilder\FieldType\Exception\InvalidFieldDataTypeException;
 use BlockBuilder\FieldType\Exception\MalformedFieldDataException;
 use BlockBuilder\FieldType\Exception\MissingFieldTypeException;
 use BlockBuilder\FieldType\Exception\UnknownFieldTypeException;
+use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\FieldType\FieldTypeDtoInterface;
 use BlockBuilder\FieldType\FieldTypeInterface;
 use BlockBuilder\FieldType\FieldTypeRegistry;
+use BlockBuilder\FieldType\Type\SvgIconPicker\SvgIconSanitizer;
 use BlockBuilder\FieldType\Validation\ChoiceOptionListValidator;
 use ErrorException;
 use Throwable;
@@ -36,7 +38,7 @@ class FieldTypeDtoFactory
         return $this->createDto($data, false);
     }
 
-    private function createDto(array $data, bool $validateChoiceOptions): FieldTypeDtoInterface
+    private function createDto(array $data, bool $validateFieldData): FieldTypeDtoInterface
     {
         if (!array_key_exists('fieldType', $data)) {
             throw new MissingFieldTypeException('Field data does not contain a "fieldType" property.');
@@ -61,6 +63,15 @@ class FieldTypeDtoFactory
         $data = $this->normalizeLegacyProperties($data, $fieldType, $fieldTypeHandle);
 
         foreach ($data as $propertyName => $value) {
+            if (
+                is_array($value)
+                && $propertyName === 'icons'
+                && $fieldTypeHandle === FieldTypeEnum::SvgIconPicker->value
+            ) {
+                $this->validateSvgIconDefinitions($value, $fieldTypeHandle);
+                continue;
+            }
+
             if (is_array($value) || is_object($value) || is_resource($value)) {
                 throw new InvalidFieldDataTypeException(
                     sprintf('Property "%s" of field type "%s" has an unsupported data type.', $propertyName, $fieldTypeHandle),
@@ -68,7 +79,11 @@ class FieldTypeDtoFactory
             }
         }
 
-        if ($validateChoiceOptions) {
+        if ($validateFieldData) {
+            if ($fieldTypeHandle === FieldTypeEnum::SvgIconPicker->value) {
+                $data['icons'] = $this->sanitizeSvgIconDefinitions($data['icons'] ?? [], $fieldTypeHandle);
+            }
+
             foreach (['options'] as $optionListProperty) {
                 if (array_key_exists($optionListProperty, $data)
                     && !ChoiceOptionListValidator::hasValidShape($data[$optionListProperty])
@@ -102,6 +117,53 @@ class FieldTypeDtoFactory
         } finally {
             restore_error_handler();
         }
+    }
+
+    private function validateSvgIconDefinitions(array $icons, string $fieldTypeHandle): void
+    {
+        if (!array_is_list($icons)) {
+            throw new MalformedFieldDataException(
+                sprintf('Property "icons" of field type "%s" must be a list.', $fieldTypeHandle),
+            );
+        }
+
+        foreach ($icons as $icon) {
+            if (
+                !is_array($icon)
+                || count($icon) !== 3
+                || array_diff(['name', 'handle', 'svg'], array_keys($icon)) !== []
+            ) {
+                throw new MalformedFieldDataException(
+                    sprintf('Property "icons" of field type "%s" contains a malformed icon definition.', $fieldTypeHandle),
+                );
+            }
+            foreach ($icon as $value) {
+                if (!is_string($value)) {
+                    throw new InvalidFieldDataTypeException(
+                        sprintf('Property "icons" of field type "%s" contains a value with an invalid data type.', $fieldTypeHandle),
+                    );
+                }
+            }
+        }
+    }
+
+    private function sanitizeSvgIconDefinitions(array $icons, string $fieldTypeHandle): array
+    {
+        foreach ($icons as $iconIndex => $icon) {
+            $sanitizedSvg = SvgIconSanitizer::sanitize($icon['svg']);
+            if ($sanitizedSvg === null) {
+                throw new MalformedFieldDataException(
+                    sprintf(
+                        'Property "icons" of field type "%s" contains invalid SVG content at index %s.',
+                        $fieldTypeHandle,
+                        $iconIndex,
+                    ),
+                );
+            }
+            $icons[$iconIndex]['svg'] = $sanitizedSvg;
+        }
+
+        return $icons;
     }
 
     private function normalizeLegacyProperties(

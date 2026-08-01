@@ -206,6 +206,18 @@
     inline-size: 100%;
 }
 
+.bb-svg-icon-preview-container {
+    flex-basis: 42px;
+    block-size: 42px;
+    inline-size: 42px;
+}
+
+.bb-svg-icon-preview {
+    block-size: 42px;
+    inline-size: 42px;
+    object-fit: contain;
+}
+
 .ccm-ui .bootstrap-select .dropdown-toggle .bs-select-clear-selected span {
     inset-block-start: 0.25rem;
     inset-inline-end: 0.3125rem;

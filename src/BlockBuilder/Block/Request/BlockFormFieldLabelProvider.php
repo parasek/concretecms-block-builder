@@ -130,6 +130,10 @@ final readonly class BlockFormFieldLabelProvider
             'displayedDecimalSeparator' => t('Displayed decimal separator'),
             'displayedThousandsSeparator' => t('Displayed thousands separator'),
             'customConfig' => t('Custom editor configuration'),
+            'icons' => t('SVG icons'),
+            'svgIconName' => t('SVG icon name'),
+            'svgIconHandle' => t('SVG icon handle'),
+            'svgContent' => t('SVG content'),
             default => $fieldHandle,
         };
     }

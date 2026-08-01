@@ -19,6 +19,7 @@ use BlockBuilder\FieldType\Type\LinkFromSitemap\Generation\LinkFromSitemapFieldG
 use BlockBuilder\FieldType\Type\MultipleChoice\Generation\MultipleChoiceFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\Number\Generation\NumberFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\SingleChoice\Generation\SingleChoiceFieldGenerationContributor;
+use BlockBuilder\FieldType\Type\SvgIconPicker\Generation\SvgIconPickerFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\Text\Generation\TextFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\Textarea\Generation\TextareaFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\UserSelector\Generation\UserSelectorFieldGenerationContributor;
@@ -46,6 +47,7 @@ readonly class FieldGenerationContributorCollection implements IteratorAggregate
         private MultipleChoiceFieldGenerationContributor $multipleChoiceFieldGenerationContributor,
         private NumberFieldGenerationContributor $numberFieldGenerationContributor,
         private SingleChoiceFieldGenerationContributor $singleChoiceFieldGenerationContributor,
+        private SvgIconPickerFieldGenerationContributor $svgIconPickerFieldGenerationContributor,
         private TextFieldGenerationContributor $textFieldGenerationContributor,
         private TextareaFieldGenerationContributor $textareaFieldGenerationContributor,
         private UserSelectorFieldGenerationContributor $userSelectorFieldGenerationContributor,
@@ -73,6 +75,7 @@ readonly class FieldGenerationContributorCollection implements IteratorAggregate
             $this->multipleChoiceFieldGenerationContributor,
             $this->numberFieldGenerationContributor,
             $this->singleChoiceFieldGenerationContributor,
+            $this->svgIconPickerFieldGenerationContributor,
             $this->textFieldGenerationContributor,
             $this->textareaFieldGenerationContributor,
             $this->userSelectorFieldGenerationContributor,
