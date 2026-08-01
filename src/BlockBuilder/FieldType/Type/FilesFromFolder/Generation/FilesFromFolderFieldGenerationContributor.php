@@ -52,7 +52,7 @@ final readonly class FilesFromFolderFieldGenerationContributor implements FieldG
     ): void {
         if (!$context->fieldDto instanceof FilesFromFolderFieldTypeDto) {
             throw new InvalidFieldGenerationDtoException(sprintf(
-                'Files From Folder field generation requires DTO "%s"; "%s" was provided.',
+                'Files from Folder field generation requires DTO "%s"; "%s" was provided.',
                 FilesFromFolderFieldTypeDto::class,
                 $context->fieldDto::class,
             ));
