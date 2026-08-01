@@ -447,6 +447,32 @@
     padding: 20px;
 }
 
+.bb-handle-input {
+    position: relative;
+}
+
+.bb-handle-autogeneration-overlay {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding-inline: 1rem;
+    color: #fff;
+    background: rgba(var(--bs-success-rgb), 0.92);
+    border-radius: var(--bb-input-border-radius);
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+.bb-entry[data-handle-generated='1'] .bb-handle-autogeneration-overlay {
+    opacity: 1;
+    visibility: visible;
+}
+
 .bb-app .bb-entry-hr {
     margin: 0 0 1.5rem;
 }
