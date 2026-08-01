@@ -13,6 +13,7 @@ class TextareaFieldType extends AbstractFieldType
 {
     private const int MINIMUM_HEIGHT = 66;
     private const int MAXIMUM_HEIGHT = 2000;
+    private const int MAXIMUM_LENGTH = 65535;
 
     protected const array LEGACY_PROPERTY_ALIASES = [
         'textareaHeight' => 'maxHeight',
@@ -42,6 +43,9 @@ class TextareaFieldType extends AbstractFieldType
     {
         return [
             'displayZeroValue' => 0,
+            'defaultValue' => '',
+            'minimumLength' => '',
+            'maximumLength' => '',
             'minHeight' => '',
             'maxHeight' => '',
         ];
@@ -56,6 +60,9 @@ class TextareaFieldType extends AbstractFieldType
             required: !empty($data['required']),
             helpText: trim($data['helpText'] ?? ''),
             displayZeroValue: !empty($data['displayZeroValue']),
+            defaultValue: (string) ($data['defaultValue'] ?? ''),
+            minimumLength: ($data['minimumLength'] ?? '') !== '' ? (int) $data['minimumLength'] : null,
+            maximumLength: ($data['maximumLength'] ?? '') !== '' ? (int) $data['maximumLength'] : null,
             titleSource: !empty($data['titleSource']),
             minHeight: !empty($data['minHeight']) ? (int) $data['minHeight'] : null,
             maxHeight: !empty($data['maxHeight']) ? (int) $data['maxHeight'] : null,
@@ -81,6 +88,10 @@ class TextareaFieldType extends AbstractFieldType
                 'The minimum height of a Textarea cannot be greater than its maximum height (%s).',
                 $context->getTabName(),
             ),
+            'minimumLength|invalid_number' => t('Some "Textarea/Minimum length" fields must contain a number between 0 and %s or be empty (%s).', self::MAXIMUM_LENGTH, $context->getTabName()),
+            'maximumLength|invalid_number' => t('Some "Textarea/Maximum length" fields must contain a number between 1 and %s or be empty (%s).', self::MAXIMUM_LENGTH, $context->getTabName()),
+            'minimumLength|greater_than_maximum' => t('The minimum length of a Textarea cannot be greater than its maximum length (%s).', $context->getTabName()),
+            'defaultValue|outside_length' => t('Some "Textarea/Default value" fields do not satisfy their configured minimum or maximum length (%s).', $context->getTabName()),
         ];
     }
 
@@ -90,6 +101,8 @@ class TextareaFieldType extends AbstractFieldType
 
         $minimumHeight = $data['minHeight'] ?? '';
         $maximumHeight = $data['maxHeight'] ?? '';
+        $minimumLength = $data['minimumLength'] ?? '';
+        $maximumLength = $data['maximumLength'] ?? '';
 
         $minimumHeightIsValid = $minimumHeight === ''
             || IntegerValueValidator::isInRange(
@@ -119,6 +132,37 @@ class TextareaFieldType extends AbstractFieldType
             && (int) $minimumHeight > (int) $maximumHeight
         ) {
             $errors[] = 'minHeight|greater_than_maximum';
+        }
+
+        $minimumLengthIsValid = $minimumLength === ''
+            || IntegerValueValidator::isInRange($minimumLength, 0, self::MAXIMUM_LENGTH);
+        $maximumLengthIsValid = $maximumLength === ''
+            || IntegerValueValidator::isInRange($maximumLength, 1, self::MAXIMUM_LENGTH);
+        if (!$minimumLengthIsValid) {
+            $errors[] = 'minimumLength|invalid_number';
+        }
+        if (!$maximumLengthIsValid) {
+            $errors[] = 'maximumLength|invalid_number';
+        }
+        if (
+            $minimumLength !== ''
+            && $maximumLength !== ''
+            && $minimumLengthIsValid
+            && $maximumLengthIsValid
+            && (int) $minimumLength > (int) $maximumLength
+        ) {
+            $errors[] = 'minimumLength|greater_than_maximum';
+        }
+
+        $defaultValue = $data['defaultValue'] ?? '';
+        if (is_scalar($defaultValue) && (string) $defaultValue !== '') {
+            $defaultLength = mb_strlen(trim((string) $defaultValue));
+            if (
+                ($minimumLengthIsValid && $minimumLength !== '' && $defaultLength < (int) $minimumLength)
+                || ($maximumLengthIsValid && $maximumLength !== '' && $defaultLength > (int) $maximumLength)
+            ) {
+                $errors[] = 'defaultValue|outside_length';
+            }
         }
 
         return $errors;

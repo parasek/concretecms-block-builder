@@ -15,6 +15,7 @@ readonly class IconPickerFieldTypeDto implements FieldTypeDtoInterface
         public string $handle,
         public bool $required,
         public ?string $helpText,
+        public string $defaultValue,
     ) {
     }
 }

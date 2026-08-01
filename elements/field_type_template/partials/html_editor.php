@@ -4,6 +4,11 @@
 
     <hr class="bb-entry-hr">
 
+    <div class="mb-4">
+        <label class="form-label" for="<%=context%>[<%=counter%>][defaultValue]"><?= t('Default value'); ?></label>
+        <textarea class="form-control font-monospace" id="<%=context%>[<%=counter%>][defaultValue]" name="<%=context%>[<%=counter%>][defaultValue]" rows="4"><%=defaultValue%></textarea>
+    </div>
+
     <div class="row">
         <div class="col-xl-4">
             <label for="<%=context%>[<%=counter%>][height]"

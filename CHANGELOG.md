@@ -70,6 +70,9 @@
 - Added generated `view.php` documentation for basic variables, choice-option maps, Flex Link values, and repeatable-entry array keys.
 - Added basic and repeatable Image generation with image-only file selection, file tracking, collapsible per-image alt text and dimension overrides, repeatable-field-wide defaults in the Settings tab, original/thumbnail/fullscreen view data, and 2.8.1 configuration and view-variable compatibility.
 - Fixed generated Image fields passing a file version instead of the Concrete file entity to the thumbnail helper.
+- Added configurable field prefixes and suffixes to generated Text and Number form controls.
+- Added add-form and repeatable-entry default values for Text, Textarea, Number, WYSIWYG Editor, HTML Editor, Color Picker, and Icon Picker fields.
+- Added configurable Text and Textarea length limits with live character counters in generated forms.
 
 # 2.8.1
 - Fixed undefined PHP 8 errors for the Image field type.

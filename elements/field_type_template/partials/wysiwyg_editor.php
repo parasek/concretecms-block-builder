@@ -4,6 +4,12 @@
 
     <hr class="bb-entry-hr">
 
+    <div class="mb-4">
+        <label class="form-label" for="<%=context%>[<%=counter%>][defaultValue]"><?= t('Default value'); ?></label>
+        <textarea class="form-control" id="<%=context%>[<%=counter%>][defaultValue]" name="<%=context%>[<%=counter%>][defaultValue]" rows="4"><%=defaultValue%></textarea>
+        <div class="form-text"><?= t('You may enter HTML supported by the WYSIWYG editor.'); ?></div>
+    </div>
+
     <div class="row mb-4">
         <div class="col-xl-4">
             <label for="<%=context%>[<%=counter%>][minHeight]"

@@ -41,6 +41,7 @@ class HtmlEditorFieldType extends AbstractFieldType
     public static function getDefaultValues(): array
     {
         return [
+            'defaultValue' => '',
             'height' => '',
         ];
     }
@@ -53,6 +54,7 @@ class HtmlEditorFieldType extends AbstractFieldType
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),
             helpText: trim($data['helpText'] ?? ''),
+            defaultValue: (string) ($data['defaultValue'] ?? ''),
             height: !empty($data['height']) ? (int) $data['height'] : null,
         );
     }

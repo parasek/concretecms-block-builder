@@ -3,13 +3,18 @@
         class="form-label"
         for="<?= h($view->field('entry')); ?>-<?= h((string) $entryIndex); ?>-{{HANDLE}}"
     ><?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?></label>
-    <input
-        class="form-control"
-        id="<?= h($view->field('entry')); ?>-<?= h((string) $entryIndex); ?>-{{HANDLE}}"
-        maxlength="255"
-        name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
-        type="text"
-        value="<?= h(isset($entry[{{HANDLE_LITERAL}}]) && is_scalar($entry[{{HANDLE_LITERAL}}]) ? (string) $entry[{{HANDLE_LITERAL}}] : ''); ?>"
-        data-entry-field="{{HANDLE}}"{{TITLE_SOURCE_ATTRIBUTE}}
-    >{{HELP_TEXT}}
+    <div class="input-group">
+{{PREFIX}}        <input
+            class="form-control"
+            id="<?= h($view->field('entry')); ?>-<?= h((string) $entryIndex); ?>-{{HANDLE}}"
+            maxlength="{{MAXIMUM_LENGTH}}"
+            name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
+            type="text"
+            value="<?= h(isset($entry[{{HANDLE_LITERAL}}]) && is_scalar($entry[{{HANDLE_LITERAL}}]) ? (string) $entry[{{HANDLE_LITERAL}}] : ''); ?>"
+            data-entry-field="{{HANDLE}}"
+            data-block-builder-character-count
+            data-character-count-maximum="{{MAXIMUM_LENGTH}}"{{TITLE_SOURCE_ATTRIBUTE}}
+        >{{SUFFIX}}
+    </div>
+    <div class="form-text text-end" data-block-builder-character-counter><span data-character-count-current>0</span>{{COUNTER_MAXIMUM}} <?= t('chars'); ?></div>{{HELP_TEXT}}
 </div>

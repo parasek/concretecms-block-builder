@@ -63,6 +63,7 @@ readonly class NumberFieldGenerationContributor implements FieldGenerationContri
             $this->contributeBasicControllerCode($field, $fragmentKeyPrefix, $context->position, $planBuilder);
         } else {
             $this->contributeRepeatableControllerCode($field, $fragmentKeyPrefix, $context->position, $planBuilder);
+            $planBuilder->form->addRepeatableDefaultValue($field->handle, $field->defaultValue);
         }
 
         $planBuilder->view->addFieldVariable(
@@ -106,6 +107,14 @@ readonly class NumberFieldGenerationContributor implements FieldGenerationContri
             declaration: sprintf('protected int|float|string|null $%s = null;', $field->handle),
             order: $position,
         ));
+        $planBuilder->controller->addMethodFragment(
+            ControllerMethodSectionEnum::Add->value,
+            new CodeFragment(
+                key: $fragmentKeyPrefix,
+                code: sprintf('$this->set(%s, %s);', $handleLiteral, $this->phpLiteralFormatter->format($field->defaultValue)),
+                order: $position,
+            ),
+        );
         $planBuilder->controller->addMethodFragment(
             ControllerMethodSectionEnum::AddEdit->value,
             new CodeFragment(
@@ -327,6 +336,12 @@ PHP,
             '{{LABEL_LITERAL}}' => $this->phpLiteralFormatter->format($field->label),
             '{{REQUIRED_LABEL_SUFFIX}}' => $field->required ? ' . \' *\'' : '',
             '{{HELP_TEXT}}' => $helpText,
+            '{{PREFIX}}' => $field->prefix === ''
+                ? ''
+                : '        <span class="input-group-text"><?= h(' . $this->phpLiteralFormatter->format($field->prefix) . '); ?></span>' . PHP_EOL,
+            '{{SUFFIX}}' => $field->suffix === ''
+                ? ''
+                : PHP_EOL . '        <span class="input-group-text"><?= h(' . $this->phpLiteralFormatter->format($field->suffix) . '); ?></span>',
         ];
         if ($basicField) {
             $replacements['{{MINIMUM_LITERAL}}'] = $this->phpLiteralFormatter->format($field->minimum);

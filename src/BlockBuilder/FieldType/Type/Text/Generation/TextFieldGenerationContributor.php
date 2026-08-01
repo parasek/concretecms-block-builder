@@ -61,6 +61,7 @@ readonly class TextFieldGenerationContributor implements FieldGenerationContribu
             $this->contributeBasicControllerCode($field, $fragmentKeyPrefix, $context->position, $planBuilder);
         } else {
             $this->contributeRepeatableControllerCode($field, $fragmentKeyPrefix, $context->position, $planBuilder);
+            $planBuilder->form->addRepeatableDefaultValue($field->handle, $field->defaultValue);
         }
 
         $planBuilder->view->addFieldVariable(
@@ -104,6 +105,14 @@ readonly class TextFieldGenerationContributor implements FieldGenerationContribu
             declaration: sprintf('protected ?string $%s = null;', $field->handle),
             order: $position,
         ));
+        $planBuilder->controller->addMethodFragment(
+            ControllerMethodSectionEnum::Add->value,
+            new CodeFragment(
+                key: $fragmentKeyPrefix,
+                code: sprintf('$this->set(%s, %s);', $handleLiteral, $this->phpLiteralFormatter->format($field->defaultValue)),
+                order: $position,
+            ),
+        );
         $planBuilder->controller->addMethodFragment(
             ControllerMethodSectionEnum::AddEdit->value,
             new CodeFragment(
@@ -168,42 +177,48 @@ readonly class TextFieldGenerationContributor implements FieldGenerationContribu
 
     private function renderBasicValidation(TextFieldTypeDto $field, string $handleLiteral): string
     {
-        $translatedLabel = sprintf('t(%s)', $this->phpLiteralFormatter->format($field->label));
-        if ($field->required) {
-            return sprintf(
-                'if (!isset($args[%1$s]) || !is_scalar($args[%1$s]) || trim((string) $args[%1$s]) === \'\') {%2$s    $errors->add(t(\'The field "%%s" is required.\', %3$s));%2$s} elseif (mb_strlen(trim((string) $args[%1$s])) > 255) {%2$s    $errors->add(t(\'The field "%%s" must contain at most %%s characters.\', %3$s, 255));%2$s}',
-                $handleLiteral,
-                PHP_EOL,
-                $translatedLabel,
-            );
-        }
-
-        return sprintf(
-            'if (array_key_exists(%1$s, $args) && $args[%1$s] !== null && !is_scalar($args[%1$s])) {%2$s    $errors->add(t(\'The field "%%s" contains an invalid value.\', %3$s));%2$s} elseif (isset($args[%1$s]) && mb_strlen(trim((string) $args[%1$s])) > 255) {%2$s    $errors->add(t(\'The field "%%s" must contain at most %%s characters.\', %3$s, 255));%2$s}',
-            $handleLiteral,
-            PHP_EOL,
-            $translatedLabel,
-        );
+        return $this->renderLengthValidation($field, '$args', $handleLiteral, false);
     }
 
     private function renderEntryValidation(TextFieldTypeDto $field, string $handleLiteral): string
     {
-        $translatedLabel = sprintf('t(%s)', $this->phpLiteralFormatter->format($field->label));
-        if ($field->required) {
-            return sprintf(
-                'if (!isset($entry[%1$s]) || !is_scalar($entry[%1$s]) || trim((string) $entry[%1$s]) === \'\') {%2$s    $errors->add(t(\'The field "%%s" is required in entry %%s.\', %3$s, $entryPosition + 1));%2$s} elseif (mb_strlen(trim((string) $entry[%1$s])) > 255) {%2$s    $errors->add(t(\'The field "%%s" in entry %%s must contain at most %%s characters.\', %3$s, $entryPosition + 1, 255));%2$s}',
-                $handleLiteral,
-                PHP_EOL,
-                $translatedLabel,
-            );
-        }
+        return $this->renderLengthValidation($field, '$entry', $handleLiteral, true);
+    }
 
-        return sprintf(
-            'if (array_key_exists(%1$s, $entry) && $entry[%1$s] !== null && !is_scalar($entry[%1$s])) {%2$s    $errors->add(t(\'The field "%%s" contains an invalid value in entry %%s.\', %3$s, $entryPosition + 1));%2$s} elseif (isset($entry[%1$s]) && mb_strlen(trim((string) $entry[%1$s])) > 255) {%2$s    $errors->add(t(\'The field "%%s" in entry %%s must contain at most %%s characters.\', %3$s, $entryPosition + 1, 255));%2$s}',
-            $handleLiteral,
-            PHP_EOL,
-            $translatedLabel,
-        );
+    private function renderLengthValidation(
+        TextFieldTypeDto $field,
+        string $sourceVariable,
+        string $handleLiteral,
+        bool $repeatable,
+    ): string {
+        $label = sprintf('t(%s)', $this->phpLiteralFormatter->format($field->label));
+        $entryArguments = $repeatable ? ', $entryPosition + 1' : '';
+        $entryText = $repeatable ? ' in entry %s' : '';
+        $lines = [
+            sprintf('$textValue = %s[%s] ?? null;', $sourceVariable, $handleLiteral),
+            'if ($textValue !== null && !is_scalar($textValue)) {',
+            sprintf('    $errors->add(t(%s, %s%s));', $this->phpLiteralFormatter->format('The field "%s" contains an invalid value' . $entryText . '.'), $label, $entryArguments),
+            '} else {',
+            '    $textValue = trim((string) ($textValue ?? \'\'));',
+            '    $textLength = mb_strlen($textValue);',
+        ];
+        if ($field->required) {
+            $lines[] = '    if ($textValue === \'\') {';
+            $lines[] = sprintf('        $errors->add(t(%s, %s%s));', $this->phpLiteralFormatter->format('The field "%s" is required' . $entryText . '.'), $label, $entryArguments);
+            $lines[] = '    }';
+        }
+        if ($field->minimumLength !== null && $field->minimumLength > 0) {
+            $lines[] = sprintf('    %sif ($textValue !== \'\' && $textLength < %d) {', $field->required ? 'else' : '', $field->minimumLength);
+            $lines[] = sprintf('        $errors->add(t(%s, %s%s, %d));', $this->phpLiteralFormatter->format('The field "%s"' . $entryText . ' must contain at least %s characters.'), $label, $entryArguments, $field->minimumLength);
+            $lines[] = '    }';
+        }
+        $hasPreviousCondition = $field->required || ($field->minimumLength !== null && $field->minimumLength > 0);
+        $lines[] = sprintf('    %sif ($textLength > %d) {', $hasPreviousCondition ? 'else' : '', $field->maximumLength);
+        $lines[] = sprintf('        $errors->add(t(%s, %s%s, %d));', $this->phpLiteralFormatter->format('The field "%s"' . $entryText . ' must contain at most %s characters.'), $label, $entryArguments, $field->maximumLength);
+        $lines[] = '    }';
+        $lines[] = '}';
+
+        return implode(PHP_EOL, $lines);
     }
 
     private function renderFormFragment(TextFieldTypeDto $field, bool $basicField): string
@@ -221,13 +236,21 @@ readonly class TextFieldGenerationContributor implements FieldGenerationContribu
             '{{LABEL_LITERAL}}' => $this->phpLiteralFormatter->format($field->label),
             '{{REQUIRED_LABEL_SUFFIX}}' => $field->required ? ' . \' *\'' : '',
             '{{HELP_TEXT}}' => $helpText,
+            '{{PREFIX}}' => $field->prefix === ''
+                ? ''
+                : '        <span class="input-group-text"><?= h(' . $this->phpLiteralFormatter->format($field->prefix) . '); ?></span>' . PHP_EOL,
+            '{{SUFFIX}}' => $field->suffix === ''
+                ? ''
+                : PHP_EOL . '        <span class="input-group-text"><?= h(' . $this->phpLiteralFormatter->format($field->suffix) . '); ?></span>',
+            '{{MAXIMUM_LENGTH}}' => (string) $field->maximumLength,
+            '{{COUNTER_MAXIMUM}}' => '/<span>' . $field->maximumLength . '</span>',
         ];
         if ($basicField) {
             $replacements['{{HANDLE_LITERAL}}'] = $this->phpLiteralFormatter->format($field->handle);
         } else {
             $replacements['{{HANDLE_LITERAL}}'] = $this->phpLiteralFormatter->format($field->handle);
             $replacements['{{TITLE_SOURCE_ATTRIBUTE}}'] = $field->titleSource
-                ? PHP_EOL . '        data-entry-title-source'
+                ? PHP_EOL . '            data-entry-title-source'
                 : '';
         }
 

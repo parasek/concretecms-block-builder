@@ -64,7 +64,7 @@ final readonly class IconPickerFieldGenerationContributor implements FieldGenera
             $this->contributeBasicControllerCode($field, $fragmentKeyPrefix, $context->position, $planBuilder);
         } else {
             $this->contributeRepeatableControllerCode($field, $fragmentKeyPrefix, $context->position, $planBuilder);
-            $planBuilder->form->addRepeatableDefaultValue($field->handle, '');
+            $planBuilder->form->addRepeatableDefaultValue($field->handle, $field->defaultValue);
         }
 
         $planBuilder->view->addFieldVariable(
@@ -148,6 +148,14 @@ PHP,
                 declaration: sprintf('protected ?string $%s = null;', $field->handle),
                 order: $position,
             ))
+            ->addMethodFragment(
+                ControllerMethodSectionEnum::Add->value,
+                new CodeFragment(
+                    key: $fragmentKeyPrefix,
+                    code: sprintf('$this->set(%s, %s);', $handleLiteral, $this->phpLiteralFormatter->format($field->defaultValue)),
+                    order: $position,
+                ),
+            )
             ->addMethodFragment(
                 ControllerMethodSectionEnum::AddEdit->value,
                 new CodeFragment(

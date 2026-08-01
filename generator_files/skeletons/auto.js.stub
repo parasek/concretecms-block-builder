@@ -55,6 +55,28 @@
         });
     }
 
+    function updateCharacterCounter(field) {
+        if (!(field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement)) {
+            return;
+        }
+
+        const counter = field.closest('.mb-4')?.querySelector('[data-block-builder-character-counter]');
+        const current = counter?.querySelector('[data-character-count-current]');
+        if (current) {
+            current.textContent = String(Array.from(field.value).length);
+        }
+    }
+
+    function initializeCharacterCounters(root) {
+        root.querySelectorAll('[data-block-builder-character-count]').forEach(updateCharacterCounter);
+    }
+
+    function handleCharacterCountInput(event) {
+        if (event.target instanceof Element && event.target.matches('[data-block-builder-character-count]')) {
+            updateCharacterCounter(event.target);
+        }
+    }
+
     function destroyConcreteSelectors(root) {
         root.querySelectorAll('[data-block-builder-concrete-selector]').forEach((container) => {
             const instance = concreteSelectorInstances.get(container);
@@ -619,6 +641,7 @@
         state.container.insertBefore(template.content, before);
         initializeEnhancedSelects(entry);
         initializeColorPickers(entry);
+        initializeCharacterCounters(entry);
         initializeHtmlEditors(entry);
         initializeWysiwygEditors(entry);
         initializeConcreteSelectors(entry);
@@ -848,6 +871,7 @@
         root.querySelectorAll('[data-block-builder-entries]').forEach(initializeContainer);
         initializeEnhancedSelects(root);
         initializeColorPickers(root);
+        initializeCharacterCounters(root);
         initializeHtmlEditors(root);
         initializeWysiwygEditors(root);
         initializeConcreteSelectors(root);
@@ -870,6 +894,7 @@
     document.addEventListener('click', handleImageAdditionalFieldsClick);
     document.addEventListener('input', handleTitleChange);
     document.addEventListener('input', handleExternalLinkInput);
+    document.addEventListener('input', handleCharacterCountInput);
     document.addEventListener('change', handleTitleChange);
     document.addEventListener('change', handleLinkChange);
     document.addEventListener('change', handleImageDimensionChange);

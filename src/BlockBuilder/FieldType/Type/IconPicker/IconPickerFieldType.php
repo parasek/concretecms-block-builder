@@ -32,7 +32,7 @@ class IconPickerFieldType extends AbstractFieldType
 
     public static function getDefaultValues(): array
     {
-        return [];
+        return ['defaultValue' => ''];
     }
 
     public static function createDtoFromArray(array $data): IconPickerFieldTypeDto
@@ -43,16 +43,32 @@ class IconPickerFieldType extends AbstractFieldType
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),
             helpText: trim($data['helpText'] ?? ''),
+            defaultValue: trim((string) ($data['defaultValue'] ?? '')),
         );
     }
 
     public static function getErrorMessages(FieldTypeContextEnum $context): array
     {
-        return [];
+        return [
+            'defaultValue|invalid_icon' => t('Some "Icon Picker/Default value" fields contain invalid icon classes (%s).', $context->getTabName()),
+        ];
     }
 
     public function validate(array $data): array
     {
-        return [];
+        $defaultValue = $data['defaultValue'] ?? '';
+        if (!is_scalar($defaultValue)) {
+            return ['defaultValue|invalid_icon'];
+        }
+
+        $icon = trim((string) $defaultValue);
+        if ($icon === '') {
+            return [];
+        }
+
+        return strlen($icon) <= 255
+            && preg_match('/^[A-Za-z][A-Za-z0-9_-]*(?:\s+[A-Za-z][A-Za-z0-9_-]*)*$/D', $icon) === 1
+                ? []
+                : ['defaultValue|invalid_icon'];
     }
 }

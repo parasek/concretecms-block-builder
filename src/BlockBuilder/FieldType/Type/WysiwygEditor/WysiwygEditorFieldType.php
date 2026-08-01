@@ -43,6 +43,7 @@ class WysiwygEditorFieldType extends AbstractFieldType
     public static function getDefaultValues(): array
     {
         return [
+            'defaultValue' => '',
             'minHeight' => '',
             'maxHeight' => '',
             'customConfig' => '',
@@ -57,6 +58,7 @@ class WysiwygEditorFieldType extends AbstractFieldType
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),
             helpText: trim($data['helpText'] ?? ''),
+            defaultValue: (string) ($data['defaultValue'] ?? ''),
             minHeight: !empty($data['minHeight']) ? (int) $data['minHeight'] : null,
             maxHeight: !empty($data['maxHeight']) ? (int) $data['maxHeight'] : null,
             customConfig: $data['customConfig'] ?? '',

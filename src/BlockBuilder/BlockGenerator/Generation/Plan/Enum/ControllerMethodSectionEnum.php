@@ -7,6 +7,7 @@ namespace BlockBuilder\BlockGenerator\Generation\Plan\Enum;
 enum ControllerMethodSectionEnum: string
 {
     case OnStart = 'on_start';
+    case Add = 'add';
     case Edit = 'edit';
     case AddEdit = 'add_edit';
     case View = 'view';

@@ -4,6 +4,30 @@
 
     <hr class="bb-entry-hr">
 
+    <div class="mb-4">
+        <label class="form-label" for="<%=context%>[<%=counter%>][defaultValue]"><?= t('Default value'); ?></label>
+        <textarea class="form-control" id="<%=context%>[<%=counter%>][defaultValue]" name="<%=context%>[<%=counter%>][defaultValue]" rows="3"><%=defaultValue%></textarea>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <label class="form-label" for="<%=context%>[<%=counter%>][minimumLength]"><?= t('Minimum length'); ?></label>
+            <div class="input-group">
+                <input class="form-control" id="<%=context%>[<%=counter%>][minimumLength]" min="0" max="65535" name="<%=context%>[<%=counter%>][minimumLength]" step="1" type="number" value="<%=minimumLength%>">
+                <span class="input-group-text"><?= t('chars'); ?></span>
+            </div>
+            <div class="form-text"><?= t('Leave empty for no minimum length.'); ?></div>
+        </div>
+        <div class="col-lg-6 mb-4">
+            <label class="form-label" for="<%=context%>[<%=counter%>][maximumLength]"><?= t('Maximum length'); ?></label>
+            <div class="input-group">
+                <input class="form-control" id="<%=context%>[<%=counter%>][maximumLength]" min="1" max="65535" name="<%=context%>[<%=counter%>][maximumLength]" step="1" type="number" value="<%=maximumLength%>">
+                <span class="input-group-text"><?= t('chars'); ?></span>
+            </div>
+            <div class="form-text"><?= t('Leave empty for no maximum length.'); ?></div>
+        </div>
+    </div>
+
     <div class="row mb-4">
         <div class="col-xl-4">
             <label for="<%=context%>[<%=counter%>][minHeight]"

@@ -84,9 +84,14 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
                     '{{SEARCHABLE_CONTENT_METHOD}}' => $this->renderSearchableContentMethod($context),
                     '{{USED_FILES_METHOD}}' => $this->renderUsedFilesMethod($context),
                     '{{ON_START_METHOD}}' => $this->renderOnStartMethod($context),
-                    '{{ADD_CONTENT}}' => $hasEntries
-                        ? $this->indentCode('$this->set(\'entries\', []);', 2)
-                        : '',
+                    '{{ADD_CONTENT}}' => $this->combineCode([
+                        $this->renderControllerFragments(
+                            $context,
+                            ControllerMethodSectionEnum::Add,
+                            indentation: 0,
+                        ),
+                        $hasEntries ? '$this->set(\'entries\', []);' : '',
+                    ], 2),
                     '{{EDIT_CONTENT}}' => $this->combineCode([
                         $this->renderControllerFragments(
                             $context,

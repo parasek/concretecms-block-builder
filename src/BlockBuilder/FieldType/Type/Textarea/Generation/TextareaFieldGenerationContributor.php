@@ -60,6 +60,7 @@ readonly class TextareaFieldGenerationContributor implements FieldGenerationCont
             $this->contributeBasicControllerCode($field, $fragmentKeyPrefix, $context->position, $planBuilder);
         } else {
             $this->contributeRepeatableControllerCode($field, $fragmentKeyPrefix, $context->position, $planBuilder);
+            $planBuilder->form->addRepeatableDefaultValue($field->handle, $field->defaultValue);
         }
 
         $planBuilder->view->addFieldVariable(
@@ -103,6 +104,14 @@ readonly class TextareaFieldGenerationContributor implements FieldGenerationCont
             declaration: sprintf('protected ?string $%s = null;', $field->handle),
             order: $position,
         ));
+        $planBuilder->controller->addMethodFragment(
+            ControllerMethodSectionEnum::Add->value,
+            new CodeFragment(
+                key: $fragmentKeyPrefix,
+                code: sprintf('$this->set(%s, %s);', $handleLiteral, $this->phpLiteralFormatter->format($field->defaultValue)),
+                order: $position,
+            ),
+        );
         $planBuilder->controller->addMethodFragment(
             ControllerMethodSectionEnum::AddEdit->value,
             new CodeFragment(
@@ -165,42 +174,50 @@ readonly class TextareaFieldGenerationContributor implements FieldGenerationCont
 
     private function renderBasicValidation(TextareaFieldTypeDto $field, string $handleLiteral): string
     {
-        $translatedLabel = sprintf('t(%s)', $this->phpLiteralFormatter->format($field->label));
-        if ($field->required) {
-            return sprintf(
-                'if (!isset($args[%1$s]) || !is_scalar($args[%1$s]) || trim((string) $args[%1$s]) === \'\') {%2$s    $errors->add(t(\'The field "%%s" is required.\', %3$s));%2$s}',
-                $handleLiteral,
-                PHP_EOL,
-                $translatedLabel,
-            );
-        }
-
-        return sprintf(
-            'if (array_key_exists(%1$s, $args) && $args[%1$s] !== null && !is_scalar($args[%1$s])) {%2$s    $errors->add(t(\'The field "%%s" contains an invalid value.\', %3$s));%2$s}',
-            $handleLiteral,
-            PHP_EOL,
-            $translatedLabel,
-        );
+        return $this->renderLengthValidation($field, '$args', $handleLiteral, false);
     }
 
     private function renderEntryValidation(TextareaFieldTypeDto $field, string $handleLiteral): string
     {
-        $translatedLabel = sprintf('t(%s)', $this->phpLiteralFormatter->format($field->label));
-        if ($field->required) {
-            return sprintf(
-                'if (!isset($entry[%1$s]) || !is_scalar($entry[%1$s]) || trim((string) $entry[%1$s]) === \'\') {%2$s    $errors->add(t(\'The field "%%s" is required in entry %%s.\', %3$s, $entryPosition + 1));%2$s}',
-                $handleLiteral,
-                PHP_EOL,
-                $translatedLabel,
-            );
-        }
+        return $this->renderLengthValidation($field, '$entry', $handleLiteral, true);
+    }
 
-        return sprintf(
-            'if (array_key_exists(%1$s, $entry) && $entry[%1$s] !== null && !is_scalar($entry[%1$s])) {%2$s    $errors->add(t(\'The field "%%s" contains an invalid value in entry %%s.\', %3$s, $entryPosition + 1));%2$s}',
-            $handleLiteral,
-            PHP_EOL,
-            $translatedLabel,
-        );
+    private function renderLengthValidation(
+        TextareaFieldTypeDto $field,
+        string $sourceVariable,
+        string $handleLiteral,
+        bool $repeatable,
+    ): string {
+        $label = sprintf('t(%s)', $this->phpLiteralFormatter->format($field->label));
+        $entryArguments = $repeatable ? ', $entryPosition + 1' : '';
+        $entryText = $repeatable ? ' in entry %s' : '';
+        $lines = [
+            sprintf('$textareaValue = %s[%s] ?? null;', $sourceVariable, $handleLiteral),
+            'if ($textareaValue !== null && !is_scalar($textareaValue)) {',
+            sprintf('    $errors->add(t(%s, %s%s));', $this->phpLiteralFormatter->format('The field "%s" contains an invalid value' . $entryText . '.'), $label, $entryArguments),
+            '} else {',
+            '    $textareaValue = trim((string) ($textareaValue ?? \'\'));',
+            '    $textareaLength = mb_strlen($textareaValue);',
+        ];
+        if ($field->required) {
+            $lines[] = '    if ($textareaValue === \'\') {';
+            $lines[] = sprintf('        $errors->add(t(%s, %s%s));', $this->phpLiteralFormatter->format('The field "%s" is required' . $entryText . '.'), $label, $entryArguments);
+            $lines[] = '    }';
+        }
+        if ($field->minimumLength !== null && $field->minimumLength > 0) {
+            $lines[] = sprintf('    %sif ($textareaValue !== \'\' && $textareaLength < %d) {', $field->required ? 'else' : '', $field->minimumLength);
+            $lines[] = sprintf('        $errors->add(t(%s, %s%s, %d));', $this->phpLiteralFormatter->format('The field "%s"' . $entryText . ' must contain at least %s characters.'), $label, $entryArguments, $field->minimumLength);
+            $lines[] = '    }';
+        }
+        if ($field->maximumLength !== null) {
+            $hasPreviousCondition = $field->required || ($field->minimumLength !== null && $field->minimumLength > 0);
+            $lines[] = sprintf('    %sif ($textareaLength > %d) {', $hasPreviousCondition ? 'else' : '', $field->maximumLength);
+            $lines[] = sprintf('        $errors->add(t(%s, %s%s, %d));', $this->phpLiteralFormatter->format('The field "%s"' . $entryText . ' must contain at most %s characters.'), $label, $entryArguments, $field->maximumLength);
+            $lines[] = '    }';
+        }
+        $lines[] = '}';
+
+        return implode(PHP_EOL, $lines);
     }
 
     private function renderFormFragment(TextareaFieldTypeDto $field, bool $basicField): string
@@ -219,6 +236,9 @@ readonly class TextareaFieldGenerationContributor implements FieldGenerationCont
             '{{LABEL_LITERAL}}' => $this->phpLiteralFormatter->format($field->label),
             '{{REQUIRED_LABEL_SUFFIX}}' => $field->required ? ' . \' *\'' : '',
             '{{HELP_TEXT}}' => $helpText,
+            '{{COUNTER_MAXIMUM}}' => $field->maximumLength === null
+                ? ''
+                : '/<span>' . $field->maximumLength . '</span>',
         ];
 
         $heightStyles = [];
@@ -232,7 +252,12 @@ readonly class TextareaFieldGenerationContributor implements FieldGenerationCont
         if ($basicField) {
             $formAttributes = [
                 '            \'data-block-builder-autosize\' => true,',
+                '            \'data-block-builder-character-count\' => true,',
+                '            \'data-character-count-maximum\' => ' . $this->phpLiteralFormatter->format($field->maximumLength === null ? '' : (string) $field->maximumLength) . ',',
             ];
+            if ($field->maximumLength !== null) {
+                $formAttributes[] = sprintf('            \'maxlength\' => %d,', $field->maximumLength);
+            }
             if ($heightStyles !== []) {
                 $formAttributes[] = sprintf(
                     '            \'style\' => %s,',
@@ -247,6 +272,12 @@ readonly class TextareaFieldGenerationContributor implements FieldGenerationCont
                     implode(PHP_EOL, $formAttributes),
                 );
         } else {
+            $replacements['{{MAXIMUM_LENGTH_ATTRIBUTE}}'] = $field->maximumLength === null
+                ? ''
+                : PHP_EOL . '        maxlength="' . $field->maximumLength . '"';
+            $replacements['{{MAXIMUM_LENGTH_VALUE}}'] = $field->maximumLength === null
+                ? ''
+                : (string) $field->maximumLength;
             $replacements['{{HEIGHT_STYLE_ATTRIBUTE}}'] = $heightStyles !== []
                 ? sprintf('%s        style="%s"', PHP_EOL, implode(' ', $heightStyles))
                 : '';

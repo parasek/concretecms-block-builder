@@ -3,15 +3,17 @@
         class="form-label"
         for="<?= h($view->field('entry')); ?>-<?= h((string) $entryIndex); ?>-{{HANDLE}}"
     ><?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?></label>
-    <input
-        class="form-control"
-        id="<?= h($view->field('entry')); ?>-<?= h((string) $entryIndex); ?>-{{HANDLE}}"
-        min="{{MINIMUM_VALUE}}"
-        max="{{MAXIMUM_VALUE}}"
-        step="{{STEP_VALUE}}"
-        name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
-        type="number"
-        value="<?= h(isset($entry[{{HANDLE_LITERAL}}]) && is_scalar($entry[{{HANDLE_LITERAL}}]) ? (string) $entry[{{HANDLE_LITERAL}}] : ''); ?>"
-        data-entry-field="{{HANDLE}}"
-    >{{HELP_TEXT}}
+    <div class="input-group">
+{{PREFIX}}        <input
+            class="form-control"
+            id="<?= h($view->field('entry')); ?>-<?= h((string) $entryIndex); ?>-{{HANDLE}}"
+            min="{{MINIMUM_VALUE}}"
+            max="{{MAXIMUM_VALUE}}"
+            step="{{STEP_VALUE}}"
+            name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
+            type="number"
+            value="<?= h(isset($entry[{{HANDLE_LITERAL}}]) && is_scalar($entry[{{HANDLE_LITERAL}}]) ? (string) $entry[{{HANDLE_LITERAL}}] : ''); ?>"
+            data-entry-field="{{HANDLE}}"
+        >{{SUFFIX}}
+    </div>{{HELP_TEXT}}
 </div>

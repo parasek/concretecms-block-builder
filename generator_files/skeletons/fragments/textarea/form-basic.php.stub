@@ -3,5 +3,6 @@
     <?= $form->textarea(
         $view->field({{HANDLE_LITERAL}}),
         ${{HANDLE}} ?? ''{{FORM_OPTIONS_ARGUMENT}}
-    ); ?>{{HELP_TEXT}}
+    ); ?>
+    <div class="form-text text-end" data-block-builder-character-counter><span data-character-count-current>0</span>{{COUNTER_MAXIMUM}} <?= t('chars'); ?></div>{{HELP_TEXT}}
 </div>

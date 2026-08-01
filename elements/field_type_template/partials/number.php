@@ -4,6 +4,24 @@
 
     <hr class="bb-entry-hr">
 
+    <div class="mb-4">
+        <label class="form-label" for="<%=context%>[<%=counter%>][defaultValue]"><?= t('Default value'); ?></label>
+        <input class="form-control" id="<%=context%>[<%=counter%>][defaultValue]" name="<%=context%>[<%=counter%>][defaultValue]" type="text" value="<%=defaultValue%>">
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <label class="form-label" for="<%=context%>[<%=counter%>][prefix]"><?= t('Field prefix'); ?></label>
+            <input class="form-control" id="<%=context%>[<%=counter%>][prefix]" maxlength="100" name="<%=context%>[<%=counter%>][prefix]" type="text" value="<%=prefix%>">
+            <div class="form-text"><?= t('Text displayed before the input, such as a currency symbol.'); ?></div>
+        </div>
+        <div class="col-lg-6 mb-4">
+            <label class="form-label" for="<%=context%>[<%=counter%>][suffix]"><?= t('Field suffix'); ?></label>
+            <input class="form-control" id="<%=context%>[<%=counter%>][suffix]" maxlength="100" name="<%=context%>[<%=counter%>][suffix]" type="text" value="<%=suffix%>">
+            <div class="form-text"><?= t('Text displayed after the input, such as a percent sign.'); ?></div>
+        </div>
+    </div>
+
     <div class="form-check mb-4">
         <input
             class="form-check-input"

@@ -99,6 +99,8 @@ final class CreateBlockInputNormalizer
         'minHeight',
         'maxHeight',
         'minuteInterval',
+        'minimumLength',
+        'maximumLength',
         'thumbnailWidth',
         'thumbnailHeight',
         'fullscreenWidth',
@@ -149,6 +151,7 @@ final class CreateBlockInputNormalizer
     private const array FIELD_LONG_TEXT_PROPERTIES = [
         'options',
         'customConfig',
+        'defaultValue',
     ];
 
     private const array FIELD_OPTION_LIST_PROPERTIES = [

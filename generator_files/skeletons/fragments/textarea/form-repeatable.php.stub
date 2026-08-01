@@ -6,8 +6,11 @@
     <textarea
         class="form-control"
         id="<?= h($view->field('entry')); ?>-<?= h((string) $entryIndex); ?>-{{HANDLE}}"
+        data-block-builder-character-count
+        data-character-count-maximum="{{MAXIMUM_LENGTH_VALUE}}"
         name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
         data-block-builder-autosize
-        data-entry-field="{{HANDLE}}"{{TITLE_SOURCE_ATTRIBUTE}}{{HEIGHT_STYLE_ATTRIBUTE}}
-    ><?= h(isset($entry[{{HANDLE_LITERAL}}]) && is_scalar($entry[{{HANDLE_LITERAL}}]) ? (string) $entry[{{HANDLE_LITERAL}}] : ''); ?></textarea>{{HELP_TEXT}}
+        data-entry-field="{{HANDLE}}"{{TITLE_SOURCE_ATTRIBUTE}}{{HEIGHT_STYLE_ATTRIBUTE}}{{MAXIMUM_LENGTH_ATTRIBUTE}}
+    ><?= h(isset($entry[{{HANDLE_LITERAL}}]) && is_scalar($entry[{{HANDLE_LITERAL}}]) ? (string) $entry[{{HANDLE_LITERAL}}] : ''); ?></textarea>
+    <div class="form-text text-end" data-block-builder-character-counter><span data-character-count-current>0</span>{{COUNTER_MAXIMUM}} <?= t('chars'); ?></div>{{HELP_TEXT}}
 </div>

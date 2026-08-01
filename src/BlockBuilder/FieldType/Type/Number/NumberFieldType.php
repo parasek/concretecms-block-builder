@@ -11,6 +11,7 @@ use BlockBuilder\FieldType\AbstractFieldType;
 class NumberFieldType extends AbstractFieldType
 {
     public const int MAXIMUM_DISPLAYED_DECIMALS = 20;
+    public const int MAXIMUM_AFFIX_LENGTH = 100;
 
     protected const array LEGACY_PROPERTY_ALIASES = [
         'numberSize' => 'size',
@@ -46,6 +47,9 @@ class NumberFieldType extends AbstractFieldType
     {
         return [
             'displayZeroValue' => 0,
+            'defaultValue' => '',
+            'prefix' => '',
+            'suffix' => '',
             'size' => '10.2',
             'minimum' => '0',
             'maximum' => '99999999.99',
@@ -65,6 +69,9 @@ class NumberFieldType extends AbstractFieldType
             required: !empty($data['required']),
             helpText: trim($data['helpText'] ?? ''),
             displayZeroValue: !empty($data['displayZeroValue']),
+            defaultValue: trim((string) ($data['defaultValue'] ?? '')),
+            prefix: trim($data['prefix'] ?? ''),
+            suffix: trim($data['suffix'] ?? ''),
             size: trim($data['size'] ?? ''),
             step: trim($data['step'] ?? ''),
             minimum: trim($data['minimum'] ?? ''),
@@ -90,6 +97,11 @@ class NumberFieldType extends AbstractFieldType
                 $context->getTabName(),
             ),
             'displayedDecimalSeparator|invalid_value' => t('Some "Displayed decimal separator" fields are empty (%s).', $context->getTabName()),
+            'defaultValue|invalid_number' => t('Some "Number/Default value" fields contain an invalid number (%s).', $context->getTabName()),
+            'defaultValue|outside_range' => t('Some "Number/Default value" fields are outside their configured minimum and maximum (%s).', $context->getTabName()),
+            'defaultValue|invalid_step' => t('Some "Number/Default value" fields do not match their configured step (%s).', $context->getTabName()),
+            'prefix|too_long' => t('Some "Field prefix" values contain more than %s characters (%s).', self::MAXIMUM_AFFIX_LENGTH, $context->getTabName()),
+            'suffix|too_long' => t('Some "Field suffix" values contain more than %s characters (%s).', self::MAXIMUM_AFFIX_LENGTH, $context->getTabName()),
         ];
     }
 
@@ -103,6 +115,14 @@ class NumberFieldType extends AbstractFieldType
         $maximum = $data['maximum'] ?? '';
         $decimals = $data['displayedDecimals'] ?? '';
         $separator = $data['displayedDecimalSeparator'] ?? '';
+        $defaultValue = $data['defaultValue'] ?? '';
+
+        foreach (['prefix', 'suffix'] as $propertyName) {
+            $value = $data[$propertyName] ?? '';
+            if (!is_scalar($value) || mb_strlen(trim((string) $value)) > self::MAXIMUM_AFFIX_LENGTH) {
+                $errors[] = $propertyName . '|too_long';
+            }
+        }
 
         // Size
         // Validates formats like "10.2" or "8.0", ensuring it doesn't start with "0".
@@ -150,6 +170,23 @@ class NumberFieldType extends AbstractFieldType
         // Displayed decimal separator
         if (!is_scalar($separator) || $separator === '') {
             $errors[] = 'displayedDecimalSeparator|invalid_value';
+        }
+
+        if ($defaultValue !== '') {
+            if (!is_scalar($defaultValue) || !is_numeric($defaultValue) || !is_finite((float) $defaultValue)) {
+                $errors[] = 'defaultValue|invalid_number';
+            } elseif (
+                is_numeric($minimum)
+                && is_numeric($maximum)
+                && ((float) $defaultValue < (float) $minimum || (float) $defaultValue > (float) $maximum)
+            ) {
+                $errors[] = 'defaultValue|outside_range';
+            } elseif (is_numeric($minimum) && is_numeric($step) && (float) $step > 0) {
+                $stepPosition = ((float) $defaultValue - (float) $minimum) / (float) $step;
+                if (!is_finite($stepPosition) || abs($stepPosition - round($stepPosition)) > 1.0E-9) {
+                    $errors[] = 'defaultValue|invalid_step';
+                }
+            }
         }
 
         return $errors;
