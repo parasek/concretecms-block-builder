@@ -1,0 +1,21 @@
+<div class="mb-4">
+    <label
+        class="form-label"
+        for="<?= h($view->field('entry') . '-' . $entryIndex . '-{{HANDLE}}'); ?>"
+    ><?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?></label>
+    <input
+        class="form-control"
+        id="<?= h($view->field('entry') . '-' . $entryIndex . '-{{HANDLE}}'); ?>"
+        name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
+        type="text"
+        value="<?= h($entry[{{HANDLE_LITERAL}}] ?? ''); ?>"
+        data-entry-field="{{HANDLE}}"
+        data-block-builder-color-picker
+        data-cancel-text="<?= t('Cancel'); ?>"
+        data-choose-text="<?= t('Choose'); ?>"
+        data-toggle-palette-more-text="<?= t('more'); ?>"
+        data-toggle-palette-less-text="<?= t('less'); ?>"
+        data-no-color-selected-text="<?= t('No Color Selected'); ?>"
+        data-clear-text="<?= t('Clear Color Selection'); ?>"
+    >{{HELP_TEXT}}
+</div>

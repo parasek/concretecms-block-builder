@@ -5,6 +5,55 @@
     const enhancedSelectInstances = new WeakMap();
     const htmlEditorInstances = new WeakMap();
     const concreteSelectorInstances = new WeakMap();
+    const colorPickerInstances = new WeakSet();
+
+    function destroyColorPickers(root) {
+        const jquery = globalThis.jQuery;
+        if (typeof jquery !== 'function' || typeof jquery.fn?.spectrum !== 'function') {
+            return;
+        }
+
+        root.querySelectorAll('[data-block-builder-color-picker]').forEach((field) => {
+            if (!colorPickerInstances.has(field)) {
+                return;
+            }
+            jquery(field).spectrum('destroy');
+            colorPickerInstances.delete(field);
+        });
+    }
+
+    function initializeColorPickers(root) {
+        const jquery = globalThis.jQuery;
+        root.querySelectorAll('[data-block-builder-color-picker]').forEach((field) => {
+            if (!(field instanceof HTMLInputElement) || colorPickerInstances.has(field)) {
+                return;
+            }
+            if (typeof jquery !== 'function' || typeof jquery.fn?.spectrum !== 'function') {
+                console.error('Block Builder color fields require the Concrete CMS color picker asset.');
+                return;
+            }
+
+            jquery(field).spectrum({
+                allowEmpty: true,
+                appendTo: '.ui-dialog',
+                cancelText: field.dataset.cancelText ?? 'Cancel',
+                chooseText: field.dataset.chooseText ?? 'Choose',
+                className: 'ccm-widget-colorpicker',
+                clearText: field.dataset.clearText ?? 'Clear Color Selection',
+                noColorSelectedText: field.dataset.noColorSelectedText ?? 'No Color Selected',
+                preferredFormat: 'hex',
+                showAlpha: true,
+                showInitial: true,
+                showInput: true,
+                showPalette: false,
+                togglePaletteLessText: field.dataset.togglePaletteLessText ?? 'less',
+                togglePaletteMoreText: field.dataset.togglePaletteMoreText ?? 'more',
+                type: 'color',
+                value: field.value,
+            });
+            colorPickerInstances.add(field);
+        });
+    }
 
     function destroyConcreteSelectors(root) {
         root.querySelectorAll('[data-block-builder-concrete-selector]').forEach((container) => {
@@ -560,6 +609,7 @@
         populateEntry(entry, values);
         state.container.insertBefore(template.content, before);
         initializeEnhancedSelects(entry);
+        initializeColorPickers(entry);
         initializeHtmlEditors(entry);
         initializeWysiwygEditors(entry);
         initializeConcreteSelectors(entry);
@@ -596,6 +646,7 @@
     function removeEntry(state, entry) {
         entry.dispatchEvent(new CustomEvent('blockbuilder:entry-before-remove', {bubbles: true}));
         destroyEnhancedSelects(entry);
+        destroyColorPickers(entry);
         destroyHtmlEditors(entry);
         destroyWysiwygEditors(entry);
         destroyConcreteSelectors(entry);
@@ -647,6 +698,7 @@
             entries.forEach((currentEntry) => {
                 currentEntry.dispatchEvent(new CustomEvent('blockbuilder:entry-before-remove', {bubbles: true}));
                 destroyEnhancedSelects(currentEntry);
+                destroyColorPickers(currentEntry);
                 destroyHtmlEditors(currentEntry);
                 destroyWysiwygEditors(currentEntry);
                 destroyConcreteSelectors(currentEntry);
@@ -786,6 +838,7 @@
     function initialize(root = document) {
         root.querySelectorAll('[data-block-builder-entries]').forEach(initializeContainer);
         initializeEnhancedSelects(root);
+        initializeColorPickers(root);
         initializeHtmlEditors(root);
         initializeWysiwygEditors(root);
         initializeConcreteSelectors(root);
