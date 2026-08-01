@@ -75,7 +75,7 @@ final readonly class ExpressFieldGenerationContributor implements FieldGeneratio
                     key: $fragmentKeyPrefix . '.entity',
                     code: sprintf(
                         '$expressEntity = $this->%1$s(%2$s);%3$s'
-                        . '$this->set(%4$s, $expressEntity instanceof ExpressEntity ? (int) $expressEntity->getID() : 0);',
+                        . '$this->set(%4$s, $expressEntity instanceof ExpressEntity ? (string) $expressEntity->getID() : \'\');',
                         self::GET_ENTITY_METHOD,
                         $this->phpLiteralFormatter->format($field->expressHandle),
                         PHP_EOL,
@@ -99,7 +99,7 @@ final readonly class ExpressFieldGenerationContributor implements FieldGeneratio
             new CodeFragment(
                 key: $fragmentKeyPrefix . '.entity',
                 code: sprintf(
-                    '<?php $%1$s = isset($%1$s) ? (int) $%1$s : 0; ?>',
+                    '<?php $%1$s = isset($%1$s) && is_scalar($%1$s) ? (string) $%1$s : \'\'; ?>',
                     $entityIdentifierVariable,
                 ),
                 order: $context->position,

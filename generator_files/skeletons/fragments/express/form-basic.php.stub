@@ -1,12 +1,12 @@
 <div class="mb-4">
     <label class="form-label"><?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?></label>
-    <?php if (${{ENTITY_IDENTIFIER_VARIABLE}} > 0): ?>
+    <?php if (${{ENTITY_IDENTIFIER_VARIABLE}} !== ''): ?>
         <div
             data-block-builder-concrete-selector="express"
             data-selected-value="<?= (int) (${{HANDLE}} ?? 0); ?>"
         >
             <concrete-express-entry-input
-                entity-id="<?= ${{ENTITY_IDENTIFIER_VARIABLE}}; ?>"
+                entity-id="<?= h(${{ENTITY_IDENTIFIER_VARIABLE}}); ?>"
                 entry-id="<?= (int) (${{HANDLE}} ?? 0); ?>"
                 input-name="<?= h($view->field({{HANDLE_LITERAL}})); ?>"
                 choose-text="<?= t('Choose Entry'); ?>"
