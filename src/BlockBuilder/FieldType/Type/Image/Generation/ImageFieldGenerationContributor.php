@@ -968,6 +968,7 @@ PHP,
         if ($field->fullscreenEditable) {
             $additionalFields[] = $this->renderInlineDimensionsFragment($context, $field, true);
         }
+        $highlightField = $context->config->highlightMultiElementFields && $additionalFields !== [];
 
         $additionalFieldsMarkup = '';
         if ($additionalFields !== []) {
@@ -1000,6 +1001,7 @@ PHP,
         return $this->stubRenderer->render(
             'fragments/image/form-' . ($basicField ? 'basic' : 'repeatable') . '.php.stub',
             [
+                '{{HIGHLIGHT_CLASS}}' => $highlightField ? ' field-group-highlight' : '',
                 '{{HANDLE}}' => $field->handle,
                 '{{HANDLE_LITERAL}}' => $this->phpLiteralFormatter->format($field->handle),
                 '{{LABEL_LITERAL}}' => $this->phpLiteralFormatter->format($field->label),

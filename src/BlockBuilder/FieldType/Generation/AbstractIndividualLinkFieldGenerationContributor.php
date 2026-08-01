@@ -618,7 +618,16 @@ abstract readonly class AbstractIndividualLinkFieldGenerationContributor impleme
     {
         $basic = $context->isBasicField();
         $destination = $this->indentCode($this->renderDestinationField($field, $basic));
+        $highlightField = $context->config->highlightMultiElementFields && (
+            $this->getFieldType() === FieldTypeEnum::ExternalLink
+            || $field->showEndingField
+            || $field->showTextField
+            || $field->showTitleField
+            || $field->showNewWindowField
+            || $field->showNoFollowField
+        );
         $replacements = [
+            '{{HIGHLIGHT_CLASS}}' => $highlightField ? ' field-group-highlight' : '',
             '{{DESTINATION_FIELD}}' => $destination,
             '{{ENDING_FIELD}}' => $field->showEndingField
                 ? PHP_EOL . $this->indentCode(

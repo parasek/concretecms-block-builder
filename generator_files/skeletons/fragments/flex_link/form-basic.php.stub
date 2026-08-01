@@ -1,5 +1,5 @@
 <?php $blockBuilderLink = isset(${{HANDLE}}) && is_array(${{HANDLE}}) ? ${{HANDLE}} : []; ?>
-<div class="bb-link-field mb-4" data-block-builder-link>
+<div class="bb-link-field mb-4{{HIGHLIGHT_CLASS}}" data-block-builder-link>
     <label
         class="form-label"
         for="<?= h($view->field({{HANDLE_LITERAL}})); ?>-link-type"

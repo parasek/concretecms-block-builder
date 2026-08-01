@@ -1,3 +1,3 @@
-<div class="bb-link-field" data-block-builder-link>
+<div class="bb-link-field{{HIGHLIGHT_CLASS}}" data-block-builder-link>
 {{DESTINATION_FIELD}}{{ENDING_FIELD}}{{TEXT_FIELD}}{{TITLE_FIELD}}{{NEW_WINDOW_FIELD}}{{NO_FOLLOW_FIELD}}
 </div>

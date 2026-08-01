@@ -365,6 +365,7 @@ final readonly class FlexLinkFieldGenerationContributor implements FieldGenerati
             '{{NO_FOLLOW_LABEL_LITERAL}}' => $this->formatLabel($config->noFollowLabel, 'Add nofollow attribute'),
             '{{YES_LABEL_LITERAL}}' => $this->formatLabel($config->yesLabel, 'Yes'),
             '{{NO_LABEL_LITERAL}}' => $this->formatLabel($config->noLabel, 'No'),
+            '{{HIGHLIGHT_CLASS}}' => $config->highlightMultiElementFields ? ' field-group-highlight' : '',
         ];
 
         return $this->stubRenderer->render(

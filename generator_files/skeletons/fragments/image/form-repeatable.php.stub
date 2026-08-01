@@ -1,4 +1,4 @@
-<div class="mb-4">
+<div class="mb-4{{HIGHLIGHT_CLASS}}">
     <label class="form-label"><?= t({{LABEL_LITERAL}}){{REQUIRED_LABEL_SUFFIX}}; ?></label>
     <div class="d-flex flex-wrap align-items-center gap-2">
         <div

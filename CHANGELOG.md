@@ -1,4 +1,5 @@
 ##### 3.0.0 (unreleased)
+- Restored optional visual highlighting for compound Flex Link, link, and Image form fields.
 - Added configurable placeholders to generated Text, Textarea, and Number fields.
 - Refactored block creation into dedicated request, validation, DTO, service, and generator components for PHP 8.4.
 - Added configuration and controller generation for Concrete's `btCacheBlockOutputOnEditMode` cache setting.
