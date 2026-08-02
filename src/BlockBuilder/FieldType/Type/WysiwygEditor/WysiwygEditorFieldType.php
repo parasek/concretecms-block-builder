@@ -20,14 +20,9 @@ class WysiwygEditorFieldType extends AbstractFieldType
         'wysiwygCustomConfig' => 'customConfig',
     ];
 
-    public static function getEnum(): FieldTypeEnum
+    public static function getFieldType(): FieldTypeEnum
     {
         return FieldTypeEnum::WysiwygEditor;
-    }
-
-    public static function getHandle(): string
-    {
-        return 'wysiwyg_editor';
     }
 
     public static function getLabel(): string
@@ -37,7 +32,7 @@ class WysiwygEditorFieldType extends AbstractFieldType
 
     public static function getIcon(): string
     {
-        return t('far fa-window-maximize');
+        return 'far fa-window-maximize';
     }
 
     public static function getDefaultValues(): array
@@ -53,7 +48,7 @@ class WysiwygEditorFieldType extends AbstractFieldType
     public static function createDtoFromArray(array $data): WysiwygEditorFieldTypeDto
     {
         return new WysiwygEditorFieldTypeDto(
-            fieldType: self::getEnum(),
+            fieldType: self::getFieldType(),
             label: trim($data['label'] ?? ''),
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),

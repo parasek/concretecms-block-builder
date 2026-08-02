@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BlockBuilder\BlockGenerator\Directory;
 
 use BlockBuilder\Block\Dto\BlockConfigDto;
-use BlockBuilder\Block\Dto\BlockGenerationManifest;
+use BlockBuilder\BlockGenerator\BlockGenerationManifest;
 use BlockBuilder\BlockGenerator\Exception\BlockDirectoryPreparationException;
 use Concrete\Core\File\Service\File as FileService;
 use Psr\Log\LoggerInterface;
@@ -28,7 +28,7 @@ readonly class BlockDirectoryManager
         try {
             $this->recoverStaleBackups($config->blockHandle, $manifest->blockPath);
 
-            $backupPath = $manifest->shouldBlockBeRebuilt
+            $backupPath = $manifest->shouldRebuildBlock
                 ? $manifest->blockPath . '.block-builder-backup-' . bin2hex(random_bytes(8))
                 : null;
 

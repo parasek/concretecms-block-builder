@@ -48,7 +48,7 @@ readonly class BlockBuilderConfigsViewDataProvider
 
     private function createApplicationItem(BlockConfigDto $config): BlockConfigListItem
     {
-        $blockType = $this->blockTypeLocator->find($config->blockHandle);
+        $blockType = $this->blockTypeLocator->findByIdentifier($config->blockHandle);
         $installed = $blockType instanceof BlockTypeEntity;
         $blockTypeId = $installed ? $blockType->getBlockTypeID() : null;
 

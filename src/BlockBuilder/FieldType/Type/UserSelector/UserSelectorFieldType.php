@@ -10,14 +10,9 @@ use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 
 class UserSelectorFieldType extends AbstractFieldType
 {
-    public static function getEnum(): FieldTypeEnum
+    public static function getFieldType(): FieldTypeEnum
     {
         return FieldTypeEnum::UserSelector;
-    }
-
-    public static function getHandle(): string
-    {
-        return 'user_selector';
     }
 
     public static function getLabel(): string
@@ -38,7 +33,7 @@ class UserSelectorFieldType extends AbstractFieldType
     public static function createDtoFromArray(array $data): UserSelectorFieldTypeDto
     {
         return new UserSelectorFieldTypeDto(
-            fieldType: self::getEnum(),
+            fieldType: self::getFieldType(),
             label: trim($data['label'] ?? ''),
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),

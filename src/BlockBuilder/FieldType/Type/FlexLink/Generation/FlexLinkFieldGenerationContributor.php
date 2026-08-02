@@ -82,20 +82,33 @@ final readonly class FlexLinkFieldGenerationContributor implements FieldGenerati
         }
 
         $viewVariables = [
-            '_link' => sprintf('Resolved URL for %s', $field->label),
-            '_ending' => sprintf('URL suffix for %s', $field->label),
-            '_text' => sprintf('Link text for %s', $field->label),
-            '_title' => sprintf('Title attribute for %s', $field->label),
-            '_new_window' => sprintf('Generated target attribute for %s', $field->label),
-            '_no_follow' => sprintf('Generated rel attribute for %s', $field->label),
+            '' => ['int|string', sprintf('Resolved destination for %s', $field->label)],
+            '_name' => ['string', sprintf('Resolved page name for %s', $field->label)],
+            '_filename' => ['string', sprintf('Resolved filename for %s', $field->label)],
+            '_link' => ['string', sprintf('Resolved URL for %s', $field->label)],
+            '_link_type' => ['string', sprintf('Selected link type for %s', $field->label)],
+            '_protocol' => ['string', sprintf('Selected URL protocol for %s', $field->label)],
+            '_ending' => ['string', sprintf('URL suffix for %s', $field->label)],
+            '_text' => ['string', sprintf('Link text for %s', $field->label)],
+            '_title' => ['string', sprintf('Title attribute for %s', $field->label)],
+            '_new_window' => ['string', sprintf('Generated target attribute for %s', $field->label)],
+            '_no_follow' => ['string', sprintf('Generated rel attribute for %s', $field->label)],
         ];
+        if ($context->isBasicField()) {
+            $viewVariables = [
+                '_object' => [
+                    '\\Concrete\\Core\\Page\\Page|\\Concrete\\Core\\Entity\\File\\File|false',
+                    sprintf('Resolved page or file object for %s', $field->label),
+                ],
+            ] + $viewVariables;
+        }
         $documentationOffset = 0;
-        foreach ($viewVariables as $suffix => $description) {
+        foreach ($viewVariables as $suffix => [$type, $description]) {
             $planBuilder->view->addFieldVariable(
                 $context->fieldContext,
                 new ViewVariableDocumentation(
                     name: $field->handle . $suffix,
-                    type: 'string',
+                    type: $type,
                     description: $description,
                     order: ($context->position * 10) + $documentationOffset,
                 ),
@@ -288,25 +301,23 @@ final readonly class FlexLinkFieldGenerationContributor implements FieldGenerati
     private function renderBasicViewPreparation(FlexLinkFieldTypeDto $field): string
     {
         $handle = $field->handle;
+        $variableName = fn(string $suffix): string => $this->phpLiteralFormatter->format($handle . $suffix);
 
-        return sprintf(
-            '$linkData = $this->%1$s($this->%2$s ?? \'\');%3$s'
-            . '$this->set(%4$s, $linkData[\'url\']);%3$s'
-            . '$this->set(%5$s, $linkData[\'ending\']);%3$s'
-            . '$this->set(%6$s, $linkData[\'text\']);%3$s'
-            . '$this->set(%7$s, $linkData[\'title\']);%3$s'
-            . '$this->set(%8$s, $linkData[\'new_window\'] ? \'target="_blank"\' : \'\');%3$s'
-            . '$this->set(%9$s, $linkData[\'no_follow\'] ? \'rel="nofollow"\' : \'\');',
-            LinkFieldGenerationSupport::RESOLVE_METHOD,
-            $handle,
-            PHP_EOL,
-            $this->phpLiteralFormatter->format($handle . '_link'),
-            $this->phpLiteralFormatter->format($handle . '_ending'),
-            $this->phpLiteralFormatter->format($handle . '_text'),
-            $this->phpLiteralFormatter->format($handle . '_title'),
-            $this->phpLiteralFormatter->format($handle . '_new_window'),
-            $this->phpLiteralFormatter->format($handle . '_no_follow'),
-        );
+        return implode(PHP_EOL, [
+            sprintf('$linkData = $this->%s($this->%s ?? \'\');', LinkFieldGenerationSupport::RESOLVE_METHOD, $handle),
+            sprintf('$this->set(%s, %s);', $variableName(''), $this->renderResolvedDestinationExpression()),
+            sprintf('$this->set(%s, $linkData[\'object\']);', $variableName('_object')),
+            sprintf('$this->set(%s, $linkData[\'name\']);', $variableName('_name')),
+            sprintf('$this->set(%s, $linkData[\'filename\']);', $variableName('_filename')),
+            sprintf('$this->set(%s, $linkData[\'url\']);', $variableName('_link')),
+            sprintf('$this->set(%s, $linkData[\'link_type\']);', $variableName('_link_type')),
+            sprintf('$this->set(%s, $linkData[\'protocol\']);', $variableName('_protocol')),
+            sprintf('$this->set(%s, $linkData[\'ending\']);', $variableName('_ending')),
+            sprintf('$this->set(%s, $linkData[\'text\']);', $variableName('_text')),
+            sprintf('$this->set(%s, $linkData[\'title\']);', $variableName('_title')),
+            sprintf('$this->set(%s, $linkData[\'new_window\'] ? \'target="_blank"\' : \'\');', $variableName('_new_window')),
+            sprintf('$this->set(%s, $linkData[\'no_follow\'] ? \'rel="nofollow"\' : \'\');', $variableName('_no_follow')),
+        ]);
     }
 
     private function renderRepeatableViewPreparation(
@@ -314,25 +325,34 @@ final readonly class FlexLinkFieldGenerationContributor implements FieldGenerati
         string $handleLiteral,
     ): string {
         $handle = $field->handle;
+        $entryKey = fn(string $suffix): string => $this->phpLiteralFormatter->format($handle . $suffix);
 
-        return sprintf(
-            '$linkData = $this->%1$s($entry[%2$s] ?? \'\');%3$s'
-            . '$entry[%4$s] = $linkData[\'url\'];%3$s'
-            . '$entry[%5$s] = $linkData[\'ending\'];%3$s'
-            . '$entry[%6$s] = $linkData[\'text\'];%3$s'
-            . '$entry[%7$s] = $linkData[\'title\'];%3$s'
-            . '$entry[%8$s] = $linkData[\'new_window\'] ? \'target="_blank"\' : \'\';%3$s'
-            . '$entry[%9$s] = $linkData[\'no_follow\'] ? \'rel="nofollow"\' : \'\';',
-            LinkFieldGenerationSupport::RESOLVE_METHOD,
-            $handleLiteral,
-            PHP_EOL,
-            $this->phpLiteralFormatter->format($handle . '_link'),
-            $this->phpLiteralFormatter->format($handle . '_ending'),
-            $this->phpLiteralFormatter->format($handle . '_text'),
-            $this->phpLiteralFormatter->format($handle . '_title'),
-            $this->phpLiteralFormatter->format($handle . '_new_window'),
-            $this->phpLiteralFormatter->format($handle . '_no_follow'),
-        );
+        return implode(PHP_EOL, [
+            sprintf('$linkData = $this->%s($entry[%s] ?? \'\');', LinkFieldGenerationSupport::RESOLVE_METHOD, $handleLiteral),
+            sprintf('$entry[%s] = %s;', $entryKey(''), $this->renderResolvedDestinationExpression()),
+            sprintf('$entry[%s] = $linkData[\'name\'];', $entryKey('_name')),
+            sprintf('$entry[%s] = $linkData[\'filename\'];', $entryKey('_filename')),
+            sprintf('$entry[%s] = $linkData[\'url\'];', $entryKey('_link')),
+            sprintf('$entry[%s] = $linkData[\'link_type\'];', $entryKey('_link_type')),
+            sprintf('$entry[%s] = $linkData[\'protocol\'];', $entryKey('_protocol')),
+            sprintf('$entry[%s] = $linkData[\'ending\'];', $entryKey('_ending')),
+            sprintf('$entry[%s] = $linkData[\'text\'];', $entryKey('_text')),
+            sprintf('$entry[%s] = $linkData[\'title\'];', $entryKey('_title')),
+            sprintf('$entry[%s] = $linkData[\'new_window\'] ? \'target="_blank"\' : \'\';', $entryKey('_new_window')),
+            sprintf('$entry[%s] = $linkData[\'no_follow\'] ? \'rel="nofollow"\' : \'\';', $entryKey('_no_follow')),
+        ]);
+    }
+
+    private function renderResolvedDestinationExpression(): string
+    {
+        return <<<'PHP'
+match ($linkData['link_type']) {
+    'link_from_sitemap' => $linkData['link_from_sitemap'],
+    'link_from_file_manager' => $linkData['link_from_file_manager'],
+    'external_link' => $linkData['external_link'],
+    default => '',
+}
+PHP;
     }
 
     private function renderFormFragment(FieldGenerationContext $context): string

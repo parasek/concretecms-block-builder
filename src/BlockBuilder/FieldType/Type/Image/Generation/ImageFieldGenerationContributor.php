@@ -21,6 +21,7 @@ use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\FieldType\Type\Image\ImageFieldTypeDto;
 use Concrete\Core\File\File;
 use Concrete\Core\File\Type\Type;
+use Concrete\Core\Permission\Response\Response as PermissionResponse;
 
 final readonly class ImageFieldGenerationContributor implements FieldGenerationContributorInterface
 {
@@ -100,6 +101,7 @@ final readonly class ImageFieldGenerationContributor implements FieldGenerationC
         $planBuilder->controller
             ->addUseStatement(new ControllerUseStatement(File::class))
             ->addUseStatement(new ControllerUseStatement(Type::class, 'FileType'))
+            ->addUseStatement(new ControllerUseStatement(PermissionResponse::class, 'PermissionResponse'))
             ->addMethodFragment(
                 ControllerMethodSectionEnum::AdditionalMethods->value,
                 new CodeFragment(
@@ -150,7 +152,7 @@ PHP,
                 new CodeFragment(
                     key: 'image.validate_file',
                     code: <<<'PHP'
-private function isValidBlockBuilderImage(mixed $fileID): bool
+private function isValidBlockBuilderImage(mixed $fileID, bool $checkPermissions = false): bool
 {
     if (!is_scalar($fileID) || (int) $fileID < 1) {
         return false;
@@ -159,8 +161,15 @@ private function isValidBlockBuilderImage(mixed $fileID): bool
     $file = File::getByID((int) $fileID);
     $fileVersion = is_object($file) ? $file->getApprovedVersion() : null;
 
-    return is_object($fileVersion)
-        && $fileVersion->getTypeObject()->getGenericType() === FileType::T_IMAGE;
+    if (
+        !is_object($fileVersion)
+        || $fileVersion->getTypeObject()->getGenericType() !== FileType::T_IMAGE
+    ) {
+        return false;
+    }
+
+    return !$checkPermissions
+        || PermissionResponse::getResponse($file)->validate('view_file_in_file_manager');
 }
 PHP,
                 ),
@@ -689,7 +698,7 @@ PHP,
         if ($repeatable) {
             if (!$field->required) {
                 return sprintf(
-                    '$imageFileID = %1$s;%2$sif ((int) $imageFileID > 0 && !$this->%3$s($imageFileID)) {%2$s    $errors->add(t(\'The field "%%s" must reference a valid image in entry %%s.\', %4$s, $entryPosition + 1));%2$s}',
+                    '$imageFileID = %1$s;%2$sif ((int) $imageFileID > 0 && !$this->%3$s($imageFileID, true)) {%2$s    $errors->add(t(\'The field "%%s" must reference a valid image in entry %%s.\', %4$s, $entryPosition + 1));%2$s}',
                     $valueExpression,
                     PHP_EOL,
                     self::VALIDATE_FILE_METHOD,
@@ -698,7 +707,7 @@ PHP,
             }
 
             return sprintf(
-                '$imageFileID = %1$s;%2$sif ((int) $imageFileID < 1) {%2$s    $errors->add(t(\'The field "%%s" is required in entry %%s.\', %3$s, $entryPosition + 1));%2$s} elseif (!$this->%4$s($imageFileID)) {%2$s    $errors->add(t(\'The field "%%s" must reference a valid image in entry %%s.\', %3$s, $entryPosition + 1));%2$s}',
+                '$imageFileID = %1$s;%2$sif ((int) $imageFileID < 1) {%2$s    $errors->add(t(\'The field "%%s" is required in entry %%s.\', %3$s, $entryPosition + 1));%2$s} elseif (!$this->%4$s($imageFileID, true)) {%2$s    $errors->add(t(\'The field "%%s" must reference a valid image in entry %%s.\', %3$s, $entryPosition + 1));%2$s}',
                 $valueExpression,
                 PHP_EOL,
                 $label,
@@ -708,7 +717,7 @@ PHP,
 
         if (!$field->required) {
             return sprintf(
-                '$imageFileID = %1$s;%2$sif ((int) $imageFileID > 0 && !$this->%3$s($imageFileID)) {%2$s    $errors->add(t(\'The field "%%s" must reference a valid image.\', %4$s));%2$s}',
+                '$imageFileID = %1$s;%2$sif ((int) $imageFileID > 0 && !$this->%3$s($imageFileID, true)) {%2$s    $errors->add(t(\'The field "%%s" must reference a valid image.\', %4$s));%2$s}',
                 $valueExpression,
                 PHP_EOL,
                 self::VALIDATE_FILE_METHOD,
@@ -717,7 +726,7 @@ PHP,
         }
 
         return sprintf(
-            '$imageFileID = %1$s;%2$sif ((int) $imageFileID < 1) {%2$s    $errors->add(t(\'The field "%%s" is required.\', %3$s));%2$s} elseif (!$this->%4$s($imageFileID)) {%2$s    $errors->add(t(\'The field "%%s" must reference a valid image.\', %3$s));%2$s}',
+            '$imageFileID = %1$s;%2$sif ((int) $imageFileID < 1) {%2$s    $errors->add(t(\'The field "%%s" is required.\', %3$s));%2$s} elseif (!$this->%4$s($imageFileID, true)) {%2$s    $errors->add(t(\'The field "%%s" must reference a valid image.\', %3$s));%2$s}',
             $valueExpression,
             PHP_EOL,
             $label,

@@ -14,6 +14,7 @@ use BlockBuilder\Block\Exception\InvalidConfigJsonException;
 use BlockBuilder\Block\Exception\UnsupportedConfigSchemaException;
 use BlockBuilder\Block\Factory\BlockConfigDtoFactory;
 use BlockBuilder\Block\Validation\BlockHandleFormat;
+use BlockBuilder\Block\Validation\BlockConfigLimits;
 use BlockBuilder\Environment\EnvironmentService;
 use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
 use JsonException;
@@ -80,9 +81,7 @@ readonly class BlockConfigReader
             );
         }
 
-        $this->sortByDateAndHandle($configs);
-
-        return $configs;
+        return $this->sortByDateAndHandle($configs);
     }
 
     public function getPredefinedConfigs(): array
@@ -237,6 +236,42 @@ readonly class BlockConfigReader
             );
         }
 
+        $allowedProperties = [
+            ...array_keys(get_class_vars(BlockConfigDto::class)),
+            // Supported names used by 2.8.1 and earlier configuration files.
+            'version',
+            'urlEndingHelpText',
+            'fieldsDivider',
+            'entryFieldsDivider',
+            'scroll',
+        ];
+        $unsupportedProperties = array_diff(array_keys($data), $allowedProperties);
+        if ($unsupportedProperties !== []) {
+            throw new UnsupportedConfigSchemaException(
+                message: t(
+                    'The configuration file "%s" contains an unsupported property "%s".',
+                    $this->getConfigIdentifier($path),
+                    (string) reset($unsupportedProperties),
+                ),
+            );
+        }
+
+        foreach ($data as $propertyName => $value) {
+            if (
+                is_string($propertyName)
+                && is_string($value)
+                && mb_strlen($value) > BlockConfigLimits::getTopLevelStringMaximum($propertyName)
+            ) {
+                throw new UnsupportedConfigSchemaException(
+                    message: t(
+                        'The property "%s" in configuration file "%s" exceeds the maximum allowed length.',
+                        $propertyName,
+                        $this->getConfigIdentifier($path),
+                    ),
+                );
+            }
+        }
+
         // At the beginning there was no version in JSON file,
         // later it was called a "version" and now it's a "blockBuilderVersion"
         $version = $data['blockBuilderVersion'] ?? $data['version'] ?? null;
@@ -283,12 +318,108 @@ readonly class BlockConfigReader
                 );
             }
 
-            foreach ($data[$collectionName] as $fieldData) {
+            if (count($data[$collectionName]) > BlockConfigLimits::MAX_FIELDS_PER_COLLECTION) {
+                throw new InvalidConfigFieldDataException(
+                    message: t(
+                        'The "%s" fields in configuration file "%s" may contain at most %s fields.',
+                        $collectionName,
+                        $this->getConfigIdentifier($path),
+                        BlockConfigLimits::MAX_FIELDS_PER_COLLECTION,
+                    ),
+                );
+            }
+
+            foreach ($data[$collectionName] as $fieldIndex => $fieldData) {
                 if (!is_array($fieldData)) {
                     throw new InvalidConfigFieldDataException(
                         message: t(
                             'A field in the "%s" fields of configuration file "%s" must be provided as an array.',
                             $collectionName,
+                            $this->getConfigIdentifier($path),
+                        ),
+                    );
+                }
+
+                $this->validateFieldDataLimits($fieldData, $fieldIndex, $collectionName, $path);
+            }
+        }
+    }
+
+    private function validateFieldDataLimits(
+        array $fieldData,
+        int|string $fieldIndex,
+        string $collectionName,
+        string $path,
+    ): void {
+        foreach ($fieldData as $propertyName => $value) {
+            if (!is_string($propertyName)) {
+                continue;
+            }
+
+            if (
+                is_string($value)
+                && mb_strlen($value) > BlockConfigLimits::getFieldStringMaximum($propertyName)
+            ) {
+                throw new InvalidConfigFieldDataException(
+                    message: t(
+                        'Property "%s" of field %s in the "%s" fields of configuration file "%s" exceeds the maximum allowed length.',
+                        $propertyName,
+                        $fieldIndex,
+                        $collectionName,
+                        $this->getConfigIdentifier($path),
+                    ),
+                );
+            }
+
+            if ($propertyName === 'options' && is_string($value)) {
+                $options = preg_split('/\R/u', $value);
+                if (is_array($options) && count($options) > BlockConfigLimits::MAX_OPTIONS_PER_FIELD) {
+                    throw new InvalidConfigFieldDataException(
+                        message: t(
+                            'Field %s in the "%s" fields of configuration file "%s" may contain at most %s options.',
+                            $fieldIndex,
+                            $collectionName,
+                            $this->getConfigIdentifier($path),
+                            BlockConfigLimits::MAX_OPTIONS_PER_FIELD,
+                        ),
+                    );
+                }
+            }
+        }
+
+        $icons = $fieldData['icons'] ?? null;
+        if (!is_array($icons)) {
+            return;
+        }
+        if (count($icons) > BlockConfigLimits::MAX_SVG_ICONS_PER_FIELD) {
+            throw new InvalidConfigFieldDataException(
+                message: t(
+                    'Field %s in the "%s" fields of configuration file "%s" may contain at most %s SVG icons.',
+                    $fieldIndex,
+                    $collectionName,
+                    $this->getConfigIdentifier($path),
+                    BlockConfigLimits::MAX_SVG_ICONS_PER_FIELD,
+                ),
+            );
+        }
+
+        $maximumLengths = [
+            'name' => BlockConfigLimits::MAX_SVG_ICON_NAME_LENGTH,
+            'handle' => BlockConfigLimits::MAX_SVG_ICON_HANDLE_LENGTH,
+            'svg' => BlockConfigLimits::MAX_SVG_CONTENT_LENGTH,
+        ];
+        foreach ($icons as $icon) {
+            if (!is_array($icon)) {
+                continue;
+            }
+            foreach ($maximumLengths as $propertyName => $maximumLength) {
+                $value = $icon[$propertyName] ?? null;
+                if (is_string($value) && mb_strlen($value) > $maximumLength) {
+                    throw new InvalidConfigFieldDataException(
+                        message: t(
+                            'An SVG icon property "%s" in field %s of configuration file "%s" exceeds the maximum allowed length.',
+                            $propertyName,
+                            $fieldIndex,
                             $this->getConfigIdentifier($path),
                         ),
                     );
@@ -330,19 +461,22 @@ readonly class BlockConfigReader
         );
     }
 
-    private function sortByDateAndHandle(array &$blockTypes): void
+    private function sortByDateAndHandle(array $configs): array
     {
-        // Sort by creation date descending and then by handle ascending
-        usort($blockTypes, function (BlockConfigDto $a, BlockConfigDto $b) {
-            $dateA = $a->createdAt ?? '0000-00-00'; // Sort null dates as earliest (will be put at the end)
-            $dateB = $b->createdAt ?? '0000-00-00';
+        // Sort by creation date descending and then by handle ascending.
+        usort($configs, static function (BlockConfigDto $firstConfig, BlockConfigDto $secondConfig): int {
+            // Treat missing dates as the earliest so they appear last.
+            $firstDate = $firstConfig->createdAt ?? '0000-00-00';
+            $secondDate = $secondConfig->createdAt ?? '0000-00-00';
 
-            if ($dateA === $dateB) {
-                return strcmp($a->blockHandle, $b->blockHandle); // Sort by handle ascending if dates are equal
+            if ($firstDate === $secondDate) {
+                return strcmp($firstConfig->blockHandle, $secondConfig->blockHandle);
             }
 
-            return $dateB <=> $dateA; // Sort by createdAt descending
+            return $secondDate <=> $firstDate;
         });
+
+        return $configs;
     }
 
     private function getPredefinedConfigsPath(): string

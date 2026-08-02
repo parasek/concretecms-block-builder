@@ -13,9 +13,9 @@ use Concrete\Core\Package\PackageService;
 use Concrete\Core\Page\Controller\DashboardPageController;
 use Psr\Log\LoggerInterface;
 
-class BaseDashboardController extends DashboardPageController
+abstract class BaseDashboardController extends DashboardPageController
 {
-    protected PackageEntity $pkg;
+    protected PackageEntity $package;
     protected EnvironmentService $environmentService;
     protected BlockConfigReader $blockConfigReader;
 
@@ -27,7 +27,7 @@ class BaseDashboardController extends DashboardPageController
         $this->blockConfigReader = $this->app->make(BlockConfigReader::class);
 
         $environment = $this->environmentService->getEnvironment();
-        $this->pkg = $this->app->make(PackageService::class)->getByHandle($environment->packageHandle);
+        $this->package = $this->app->make(PackageService::class)->getByHandle($environment->packageHandle);
 
         $this->loadAssets();
 
@@ -37,21 +37,21 @@ class BaseDashboardController extends DashboardPageController
 
     private function loadAssets(): void
     {
-        $al = AssetList::getInstance();
+        $assetList = AssetList::getInstance();
 
-        $al->register('css', 'choices/css', 'vendor/choices.js/choices.min.css', [], $this->pkg);
+        $assetList->register('css', 'choices/css', 'vendor/choices.js/choices.min.css', [], $this->package);
         $this->requireAsset('css', 'choices/css');
 
-        $al->register('javascript', 'choices/js', 'vendor/choices.js/choices.min.js', [], $this->pkg);
+        $assetList->register('javascript', 'choices/js', 'vendor/choices.js/choices.min.js', [], $this->package);
         $this->requireAsset('javascript', 'choices/js');
 
-        $al->register('javascript', 'sortable/js', 'vendor/sortablejs/Sortable.min.js', [], $this->pkg);
+        $assetList->register('javascript', 'sortable/js', 'vendor/sortablejs/Sortable.min.js', [], $this->package);
         $this->requireAsset('javascript', 'sortable/js');
 
-        $al->register('css', 'block-builder/styles', 'assets/css/styles.css', [], $this->pkg);
+        $assetList->register('css', 'block-builder/styles', 'assets/css/styles.css', [], $this->package);
         $this->requireAsset('css', 'block-builder/styles');
 
-        $al->register('javascript', 'block-builder/js', 'assets/js/block-builder.js', [], $this->pkg);
+        $assetList->register('javascript', 'block-builder/js', 'assets/js/block-builder.js', [], $this->package);
         $this->requireAsset('javascript', 'block-builder/js');
     }
 

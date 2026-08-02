@@ -94,7 +94,7 @@ final class FormGenerationPlanBuilder
 
         if (
             array_key_exists($fieldHandle, $this->repeatableDefaultValues)
-            && $this->repeatableDefaultValues[$fieldHandle] != $value
+            && $this->repeatableDefaultValues[$fieldHandle] !== $value
         ) {
             throw new GenerationContributionConflictException(sprintf(
                 'Conflicting repeatable default values were provided for field "%s".',

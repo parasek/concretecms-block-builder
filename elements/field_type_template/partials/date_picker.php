@@ -10,29 +10,29 @@
             <div class="form-check">
                 <input
                     class="form-check-input"
-                    id="<%=context%>[<%=counter%>][attachTimeSelector]"
-                    name="<%=context%>[<%=counter%>][attachTimeSelector]"
+                    id="<%-context%>[<%-counter%>][attachTimeSelector]"
+                    name="<%-context%>[<%-counter%>][attachTimeSelector]"
                     type="checkbox"
                     value="1"
                 <% if (attachTimeSelector === true || attachTimeSelector === 1 || attachTimeSelector === '1') { %> checked="checked" <% } %>
                 >
                 <label
                     class="form-check-label"
-                    for="<%=context%>[<%=counter%>][attachTimeSelector]"
+                    for="<%-context%>[<%-counter%>][attachTimeSelector]"
                 ><?= t('Attach time selector'); ?></label>
             </div>
         </div>
         <div class="col-md-6">
             <label
                 class="form-label"
-                for="<%=context%>[<%=counter%>][minuteInterval]"
+                for="<%-context%>[<%-counter%>][minuteInterval]"
             ><?= t('Minute interval'); ?></label>
             <input
                 class="form-control"
-                id="<%=context%>[<%=counter%>][minuteInterval]"
-                name="<%=context%>[<%=counter%>][minuteInterval]"
+                id="<%-context%>[<%-counter%>][minuteInterval]"
+                name="<%-context%>[<%-counter%>][minuteInterval]"
                 type="number"
-                value="<%=minuteInterval%>"
+                value="<%-minuteInterval%>"
                 min="1"
                 max="60"
                 step="1"
@@ -47,40 +47,40 @@
         <div class="col-md-6">
             <label
                 class="form-label"
-                for="<%=context%>[<%=counter%>][minDate]"
+                for="<%-context%>[<%-counter%>][minDate]"
             ><?= t('Minimum date'); ?></label>
             <input
                 class="form-control"
-                id="<%=context%>[<%=counter%>][minDate]"
-                name="<%=context%>[<%=counter%>][minDate]"
+                id="<%-context%>[<%-counter%>][minDate]"
+                name="<%-context%>[<%-counter%>][minDate]"
                 type="date"
-                value="<%=minDate%>"
+                value="<%-minDate%>"
             >
         </div>
         <div class="col-md-6">
             <label
                 class="form-label"
-                for="<%=context%>[<%=counter%>][maxDate]"
+                for="<%-context%>[<%-counter%>][maxDate]"
             ><?= t('Maximum date'); ?></label>
             <input
                 class="form-control"
-                id="<%=context%>[<%=counter%>][maxDate]"
-                name="<%=context%>[<%=counter%>][maxDate]"
+                id="<%-context%>[<%-counter%>][maxDate]"
+                name="<%-context%>[<%-counter%>][maxDate]"
                 type="date"
-                value="<%=maxDate%>"
+                value="<%-maxDate%>"
             >
         </div>
     </div>
 
     <div class="mb-4">
-        <label for="<%=context%>[<%=counter%>][datePattern]"
+        <label for="<%-context%>[<%-counter%>][datePattern]"
                class="form-label"
         ><?= t('PHP date pattern'); ?></label>
         <input type="text"
-               id="<%=context%>[<%=counter%>][datePattern]"
-               name="<%=context%>[<%=counter%>][datePattern]"
+               id="<%-context%>[<%-counter%>][datePattern]"
+               name="<%-context%>[<%-counter%>][datePattern]"
                class="form-control"
-               value="<%=datePattern%>"
+               value="<%-datePattern%>"
         >
         <div class="form-text">
             <?= t('Leave empty to use Concrete CMS\'s localized date format in the view template.'); ?>

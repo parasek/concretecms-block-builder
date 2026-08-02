@@ -62,6 +62,15 @@ class FieldTypeDtoFactory
 
         $data = $this->normalizeLegacyProperties($data, $fieldType, $fieldTypeHandle);
 
+        $unsupportedProperties = array_diff(array_keys($data), $fieldType::getProperties());
+        if ($unsupportedProperties !== []) {
+            throw new MalformedFieldDataException(sprintf(
+                'Field type "%s" contains an unsupported property "%s".',
+                $fieldTypeHandle,
+                (string) reset($unsupportedProperties),
+            ));
+        }
+
         foreach ($data as $propertyName => $value) {
             if (
                 is_array($value)

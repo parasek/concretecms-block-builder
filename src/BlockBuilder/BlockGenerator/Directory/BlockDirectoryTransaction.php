@@ -13,7 +13,7 @@ final class BlockDirectoryTransaction
 {
     private const string STATE_PREPARED = 'prepared';
     private const string STATE_FILES_COMMITTED = 'files_committed';
-    private const string STATE_LIFECYCLE_COMPLETED = 'lifecycle_applied';
+    private const string STATE_LIFECYCLE_COMPLETED = 'lifecycle_completed';
 
     private bool $finished = false;
     private bool $backupPrepared = false;
@@ -69,7 +69,8 @@ final class BlockDirectoryTransaction
 
         try {
             if ($this->backupPrepared && $this->backupPath !== null) {
-                $this->filesystem->remove([$this->backupPath, $this->getStatePath()]);
+                $this->filesystem->remove($this->backupPath);
+                $this->filesystem->remove($this->getStatePath());
             }
         } catch (Throwable $throwable) {
             $this->logger->warning(

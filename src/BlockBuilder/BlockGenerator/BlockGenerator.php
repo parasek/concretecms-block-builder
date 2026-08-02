@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace BlockBuilder\BlockGenerator;
 
 use BlockBuilder\Block\Dto\BlockConfigDto;
-use BlockBuilder\Block\Dto\BlockGenerationManifest;
-use BlockBuilder\Block\Dto\BlockGenerationResult;
+use BlockBuilder\Block\Service\BlockHandleLockManager;
 use BlockBuilder\BlockGenerator\Directory\BlockDirectoryManager;
 use BlockBuilder\BlockGenerator\Exception\BlockGenerationException;
 use BlockBuilder\BlockGenerator\FileGenerator\FileGeneratorCollection;
 use BlockBuilder\BlockGenerator\FileGenerator\GeneratedTextFileCollection;
+use BlockBuilder\BlockGenerator\FileGenerator\GeneratedTextFileWriter;
 use BlockBuilder\BlockGenerator\Generation\BlockGenerationPlanFactory;
 use BlockBuilder\BlockGenerator\Lifecycle\BlockTypeLifecycleService;
 use Throwable;
@@ -24,10 +24,29 @@ readonly class BlockGenerator
         private FileGeneratorCollection $fileGenerators,
         private BlockIconGenerator $blockIconGenerator,
         private BlockTypeLifecycleService $blockTypeLifecycleService,
+        private BlockHandleLockManager $blockHandleLockManager,
     ) {
     }
 
-    public function create(BlockConfigDto $config, BlockGenerationManifest $manifest): BlockGenerationResult
+    public function generate(BlockConfigDto $config, BlockGenerationManifest $manifest): BlockGenerationResult
+    {
+        try {
+            $blockHandleLock = $this->blockHandleLockManager->acquire($config->blockHandle);
+        } catch (Throwable $throwable) {
+            throw new BlockGenerationException(
+                message: sprintf('Unable to acquire the generation lock for block "%s".', $config->blockHandle),
+                previous: $throwable,
+            );
+        }
+
+        try {
+            return $this->generateWhileLocked($config, $manifest);
+        } finally {
+            $blockHandleLock->release();
+        }
+    }
+
+    private function generateWhileLocked(BlockConfigDto $config, BlockGenerationManifest $manifest): BlockGenerationResult
     {
         // Prepare the shared configuration, manifest, and field-generation plan.
         $fileGenerationContext = $this->createFileGenerationContext($config, $manifest);

@@ -5,24 +5,24 @@
     <hr class="bb-entry-hr">
 
     <div class="mb-4">
-        <label class="form-label" for="<%=context%>[<%=counter%>][defaultValue]"><?= t('Default value'); ?></label>
-        <textarea class="form-control font-monospace" id="<%=context%>[<%=counter%>][defaultValue]" name="<%=context%>[<%=counter%>][defaultValue]" rows="4"><%=defaultValue%></textarea>
+        <label class="form-label" for="<%-context%>[<%-counter%>][defaultValue]"><?= t('Default value'); ?></label>
+        <textarea class="form-control font-monospace" id="<%-context%>[<%-counter%>][defaultValue]" name="<%-context%>[<%-counter%>][defaultValue]" rows="4"><%-defaultValue%></textarea>
     </div>
 
     <div class="row">
         <div class="col-xl-4">
-            <label for="<%=context%>[<%=counter%>][height]"
+            <label for="<%-context%>[<%-counter%>][height]"
                    class="form-label"
             ><?= t('Height'); ?></label>
             <div class="input-group">
                 <input type="number"
-                       id="<%=context%>[<%=counter%>][height]"
-                       name="<%=context%>[<%=counter%>][height]"
+                       id="<%-context%>[<%-counter%>][height]"
+                       name="<%-context%>[<%-counter%>][height]"
                        class="form-control"
                        min="40"
                        max="2000"
                        step="1"
-                       value="<%=height%>"
+                       value="<%-height%>"
                 >
                 <span class="input-group-text">px</span>
             </div>

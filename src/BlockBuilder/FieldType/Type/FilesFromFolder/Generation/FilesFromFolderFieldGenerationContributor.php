@@ -149,9 +149,13 @@ final readonly class FilesFromFolderFieldGenerationContributor implements FieldG
                     code: <<<'PHP'
 private function getBlockBuilderFileFolders(): array
 {
-    $fileSystem = new Filesystem();
-    $rootFolder = $fileSystem->getRootFolder();
+    $filesystem = new Filesystem();
+    $rootFolder = $filesystem->getRootFolder();
     $options = [0 => t('----')];
+    if (!$rootFolder instanceof FileFolder) {
+        return $options;
+    }
+
     $folders = $rootFolder->getHierarchicalNodesOfType(treeNodeTypeHandle: 'file_folder', returnNodeObjects: true);
 
     foreach ($folders as $folderData) {

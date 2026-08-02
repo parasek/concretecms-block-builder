@@ -19,14 +19,9 @@ class MultipleChoiceFieldType extends AbstractFieldType
         'selectMultipleCustomCode' => 'customCode',
     ];
 
-    public static function getEnum(): FieldTypeEnum
+    public static function getFieldType(): FieldTypeEnum
     {
         return FieldTypeEnum::MultipleChoice;
-    }
-
-    public static function getHandle(): string
-    {
-        return 'select_multiple_field';
     }
 
     public static function getLabel(): string
@@ -36,7 +31,7 @@ class MultipleChoiceFieldType extends AbstractFieldType
 
     public static function getIcon(): string
     {
-        return t('fas fa-check-square');
+        return 'fas fa-check-square';
     }
 
     public static function getDefaultValues(): array
@@ -53,7 +48,7 @@ class MultipleChoiceFieldType extends AbstractFieldType
     public static function createDtoFromArray(array $data): MultipleChoiceFieldTypeDto
     {
         return new MultipleChoiceFieldTypeDto(
-            fieldType: self::getEnum(),
+            fieldType: self::getFieldType(),
             label: trim($data['label'] ?? ''),
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),

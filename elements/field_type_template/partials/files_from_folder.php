@@ -10,12 +10,12 @@
     <div>
         <label
             class="form-label"
-            for="<%=context%>[<%=counter%>][fileOrder]"
+            for="<%-context%>[<%-counter%>][fileOrder]"
         ><?= t('File order'); ?></label>
         <select
             class="form-select"
-            id="<%=context%>[<%=counter%>][fileOrder]"
-            name="<%=context%>[<%=counter%>][fileOrder]"
+            id="<%-context%>[<%-counter%>][fileOrder]"
+            name="<%-context%>[<%-counter%>][fileOrder]"
         >
             <?php foreach ($filesFromFolderOrders as $value => $label): ?>
                 <option

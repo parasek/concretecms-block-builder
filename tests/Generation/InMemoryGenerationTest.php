@@ -1,0 +1,105 @@
+<?php
+
+declare(strict_types=1);
+
+namespace BlockBuilder\Tests\Generation;
+
+use BlockBuilder\Tests\Support\BlockBuilderTestCase;
+use DOMDocument;
+use PhpParser\Error as PhpParserError;
+use PhpParser\ParserFactory;
+
+final class InMemoryGenerationTest extends BlockBuilderTestCase
+{
+    public function testAllFieldTypesGenerateValidTextFilesInMemory(): void
+    {
+        $config = $this->createAllFieldTypesConfig();
+        $generationContext = $this->createGenerationContext($config);
+        $generatedFiles = $this->generateTextFiles($generationContext);
+        $filesByPath = [];
+        foreach ($generatedFiles as $generatedFile) {
+            $filesByPath[$generatedFile->relativePath] = $generatedFile->contents;
+            self::assertDoesNotMatchRegularExpression(
+                '/\{\{[A-Z][A-Z0-9_]*\}\}/',
+                $generatedFile->contents,
+                sprintf('Generated file "%s" contains a stub placeholder.', $generatedFile->relativePath),
+            );
+        }
+
+        self::assertSame([
+            'add.php',
+            'auto.css',
+            'auto.js',
+            'composer.php',
+            'config-bb.json',
+            'controller.php',
+            'db.xml',
+            'edit.php',
+            'form.php',
+            'scrapbook.php',
+            'view.php',
+        ], array_keys($filesByPath));
+        self::assertContains('app', $generationContext->plan->form->repeatableCapturedVariableNames);
+        self::assertGreaterThanOrEqual(
+            2,
+            substr_count($filesByPath['controller.php'], '$this->set(\'app\', $this->app);'),
+            'The generated controller must expose $app to both block forms and view.php.',
+        );
+        self::assertStringContainsString(
+            'use ($app,',
+            $filesByPath['form.php'],
+            'The repeatable-entry renderer must capture the application service.',
+        );
+        self::assertStringContainsString(
+            'canViewPageInSitemap()',
+            $filesByPath['controller.php'],
+            'Page-link validation must enforce the editor sitemap permission.',
+        );
+        self::assertStringContainsString(
+            "validate('view_file_in_file_manager')",
+            $filesByPath['controller.php'],
+            'File-backed field validation must enforce the editor File Manager permission.',
+        );
+        self::assertStringContainsString(
+            "validate('view_express_entry')",
+            $filesByPath['controller.php'],
+            'Express-field validation must enforce the editor entry permission.',
+        );
+        self::assertStringContainsString(
+            'if (!$rootFolder instanceof FileFolder)',
+            $filesByPath['controller.php'],
+            'Files from Folder must tolerate a missing File Manager root folder.',
+        );
+        self::assertStringNotContainsString('DOCUMENT_ROOT', $filesByPath['view.php']);
+        self::assertStringNotContainsString('var_dump(', $filesByPath['view.php']);
+
+        $parser = (new ParserFactory())->createForNewestSupportedVersion();
+        foreach ($filesByPath as $relativePath => $contents) {
+            if (!str_ends_with($relativePath, '.php')) {
+                continue;
+            }
+            try {
+                self::assertNotNull($parser->parse($contents));
+            } catch (PhpParserError $error) {
+                self::fail(sprintf('Generated file "%s" is invalid PHP: %s', $relativePath, $error->getMessage()));
+            }
+        }
+
+        $decodedConfig = json_decode($filesByPath['config-bb.json'], true, flags: JSON_THROW_ON_ERROR);
+        self::assertSame($config->blockHandle, $decodedConfig['blockHandle']);
+        self::assertCount(count($config->basic), $decodedConfig['basic']);
+        self::assertCount(count($config->entries), $decodedConfig['entries']);
+
+        $databaseDocument = new DOMDocument();
+        self::assertTrue($databaseDocument->loadXML($filesByPath['db.xml']));
+        self::assertSame('schema', $databaseDocument->documentElement?->localName);
+        self::assertSame(
+            'http://www.concrete5.org/doctrine-xml/0.5',
+            $databaseDocument->documentElement?->namespaceURI,
+        );
+        self::assertSame(2, $databaseDocument->getElementsByTagNameNS(
+            'http://www.concrete5.org/doctrine-xml/0.5',
+            'table',
+        )->length);
+    }
+}

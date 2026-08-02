@@ -40,11 +40,6 @@ final class FieldTypeRegistry
      */
     private array $fieldTypesByHandle = [];
 
-    /**
-     * @var array<string, FieldTypeInterface>
-     */
-    private array $fieldTypesByEnumName = [];
-
     public function __construct()
     {
         $this->register(new TextFieldType());
@@ -68,7 +63,7 @@ final class FieldTypeRegistry
         $this->register(new SvgIconPickerFieldType());
         $this->register(new UserSelectorFieldType());
 
-        if (count($this->fieldTypesByEnumName) !== count(FieldTypeEnum::cases())) {
+        if (count($this->fieldTypesByHandle) !== count(FieldTypeEnum::cases())) {
             throw new LogicException('Every field type enum case must have exactly one registered field type.');
         }
     }
@@ -78,12 +73,12 @@ final class FieldTypeRegistry
      */
     public function all(): array
     {
-        return array_values($this->fieldTypesByEnumName);
+        return array_values($this->fieldTypesByHandle);
     }
 
     public function get(FieldTypeEnum $type): FieldTypeInterface
     {
-        return $this->fieldTypesByEnumName[$type->name];
+        return $this->fieldTypesByHandle[$type->value];
     }
 
     public function findByHandle(string $handle): ?FieldTypeInterface
@@ -93,23 +88,14 @@ final class FieldTypeRegistry
 
     private function register(FieldTypeInterface $fieldType): void
     {
-        $type = $fieldType::getEnum();
-        $handle = $fieldType::getHandle();
-        if ($handle !== $type->value) {
-            throw new LogicException(sprintf(
-                'Field type "%s" uses handle "%s", but its enum uses "%s".',
-                $fieldType::class,
-                $handle,
-                $type->value,
-            ));
-        }
-        if (isset($this->fieldTypesByHandle[$handle]) || isset($this->fieldTypesByEnumName[$type->name])) {
+        $type = $fieldType::getFieldType();
+        $handle = $type->value;
+        if (isset($this->fieldTypesByHandle[$handle])) {
             throw new LogicException(sprintf('Field type "%s" is registered more than once.', $handle));
         }
 
         $fieldType::getDtoClass();
         $fieldType::getLegacyPropertyAliases();
         $this->fieldTypesByHandle[$handle] = $fieldType;
-        $this->fieldTypesByEnumName[$type->name] = $fieldType;
     }
 }

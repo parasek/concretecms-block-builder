@@ -11,28 +11,28 @@
     <hr class="bb-entry-hr">
 
     <div class="mb-4">
-        <label for="<%=context%>[<%=counter%>][displayType]"
+        <label for="<%-context%>[<%-counter%>][displayType]"
                class="form-label"
         ><?= t('Type'); ?></label>
-        <select name="<%=context%>[<%=counter%>][displayType]"
-                id="<%=context%>[<%=counter%>][displayType]"
+        <select name="<%-context%>[<%-counter%>][displayType]"
+                id="<%-context%>[<%-counter%>][displayType]"
                 class="form-select"
         >
-            <?php foreach ($selectFieldTypes as $k => $v): ?>
-                <?php $selected = "<% if (displayType === '" . h($k) . "') { %>selected<% } %>"; ?>
-                <option value="<?= h($k); ?>" <?= $selected; ?>>
-                    <?= h($v); ?>
+            <?php foreach ($selectFieldTypes as $optionValue => $optionLabel): ?>
+                <?php $selected = "<% if (displayType === '" . h($optionValue) . "') { %>selected<% } %>"; ?>
+                <option value="<?= h($optionValue); ?>" <?= $selected; ?>>
+                    <?= h($optionLabel); ?>
                 </option>
             <?php endforeach; ?>
         </select>
     </div>
 
     <div class="mb-4">
-        <label for="<%=context%>[<%=counter%>][addEmptyOption]"
+        <label for="<%-context%>[<%-counter%>][addEmptyOption]"
                class="form-label"
         ><?= t('Add an empty option'); ?></label>
-        <select name="<%=context%>[<%=counter%>][addEmptyOption]"
-                id="<%=context%>[<%=counter%>][addEmptyOption]"
+        <select name="<%-context%>[<%-counter%>][addEmptyOption]"
+                id="<%-context%>[<%-counter%>][addEmptyOption]"
                 class="form-select"
         >
             <?php $selectedNo = "<% if (!addEmptyOption) { %>selected<% } %>"; ?>
@@ -50,30 +50,30 @@
     </div>
 
     <div class="mb-4">
-        <label for="<%=context%>[<%=counter%>][defaultValue]"
+        <label for="<%-context%>[<%-counter%>][defaultValue]"
                class="form-label"
         ><?= t('Default value'); ?></label>
         <input type="text"
-               id="<%=context%>[<%=counter%>][defaultValue]"
-               name="<%=context%>[<%=counter%>][defaultValue]"
+               id="<%-context%>[<%-counter%>][defaultValue]"
+               name="<%-context%>[<%-counter%>][defaultValue]"
                class="form-control"
-               value="<%=defaultValue%>"
+               value="<%-defaultValue%>"
         >
     </div>
 
     <div class="mb-4">
-        <label for="<%=context%>[<%=counter%>][listGenerationMethod]"
+        <label for="<%-context%>[<%-counter%>][listGenerationMethod]"
                class="form-label"
         ><?= t('List generation method'); ?></label>
-        <select name="<%=context%>[<%=counter%>][listGenerationMethod]"
-                id="<%=context%>[<%=counter%>][listGenerationMethod]"
+        <select name="<%-context%>[<%-counter%>][listGenerationMethod]"
+                id="<%-context%>[<%-counter%>][listGenerationMethod]"
                 class="form-select"
                 data-change-select-list-generation-method
         >
-            <?php foreach ($selectFieldListGenerationMethods as $k => $v): ?>
-                <?php $selected = "<% if (listGenerationMethod === '" . h($k) . "') { %>selected<% } %>"; ?>
-                <option value="<?= h($k); ?>" <?= $selected; ?>>
-                    <?= h($v); ?>
+            <?php foreach ($selectFieldListGenerationMethods as $optionValue => $optionLabel): ?>
+                <?php $selected = "<% if (listGenerationMethod === '" . h($optionValue) . "') { %>selected<% } %>"; ?>
+                <option value="<?= h($optionValue); ?>" <?= $selected; ?>>
+                    <?= h($optionLabel); ?>
                 </option>
             <?php endforeach; ?>
         </select>
@@ -83,7 +83,7 @@
          data-select-list-generation-method="basic_list"
     >
         <div class="mb-4">
-            <label for="<%=context%>[<%=counter%>][options]"
+            <label for="<%-context%>[<%-counter%>][options]"
                    class="form-label"
             ><?= t('Select options'); ?></label>
             <p class="small text-muted">
@@ -110,26 +110,26 @@
                     <?= t('Show'); ?>
                 </code>
             </p>
-            <textarea name="<%=context%>[<%=counter%>][options]"
-                      id="<%=context%>[<%=counter%>][options]"
+            <textarea name="<%-context%>[<%-counter%>][options]"
+                      id="<%-context%>[<%-counter%>][options]"
                       class="form-control"
                       rows="4"
-            ><%=options%></textarea>
+            ><%-options%></textarea>
         </div>
     </div>
 
     <div class="<?= '<% if (!listGenerationMethod || (listGenerationMethod !== \'custom_code\')) { %>d-none<% } %>'; ?>"
         data-select-list-generation-method="custom_code"
     >
-        <label for="<%=context%>[<%=counter%>][customCode]"
+        <label for="<%-context%>[<%-counter%>][customCode]"
                class="form-label"
         ><?= t('Custom code'); ?></label>
         <?php View::element('custom_code_in_option_list', [], 'block_builder'); ?>
-        <textarea name="<%=context%>[<%=counter%>][customCode]"
-                  id="<%=context%>[<%=counter%>][customCode]"
+        <textarea name="<%-context%>[<%-counter%>][customCode]"
+                  id="<%-context%>[<%-counter%>][customCode]"
                   class="form-control"
                   rows="4"
-        ><%=customCode%></textarea>
+        ><%-customCode%></textarea>
     </div>
 
 </script>

@@ -13,21 +13,21 @@ readonly class BlockTypePermissionChecker
     {
     }
 
-    public function getInstallationError(): string|false
+    public function getInstallationErrorMessage(): ?string
     {
         return Permissions::getByHandle('install_packages')->validate()
-            ? false
+            ? null
             : t('You do not have permission to install custom block types or add-ons.');
     }
 
-    public function getRemovalError(): string|false
+    public function getRemovalErrorMessage(): ?string
     {
         if (!$this->user->isSuperUser()) {
             return t('Only the super user may remove block types.');
         }
 
         return Permissions::getByHandle('uninstall_packages')->validate()
-            ? false
+            ? null
             : t('You do not have permission to uninstall packages.');
     }
 }

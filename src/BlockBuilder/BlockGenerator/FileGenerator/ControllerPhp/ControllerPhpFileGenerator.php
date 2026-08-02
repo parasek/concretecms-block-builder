@@ -43,6 +43,7 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
         'btcacheblockrecord',
         'btcacheblockoutput',
         'btcacheblockoutputonpost',
+        'btcacheblockoutputoneditmode',
         'btcacheblockoutputforregisteredusers',
         'btcacheblockoutputlifetime',
         'supportsavingnullvalues',
@@ -354,6 +355,7 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
     private function renderViewMethod(BlockFileGenerationContext $context, bool $hasEntries): string
     {
         $generatedParts = [
+            '$this->set(\'app\', $this->app);',
             $this->renderControllerFragments(
                 $context,
                 ControllerMethodSectionEnum::View,
@@ -362,10 +364,6 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
             $hasEntries ? '$this->set(\'entries\', $this->getEntries());' : '',
         ];
         $customCode = $this->prepareCustomCode((string) $context->config->viewCustomCode);
-        if (array_filter($generatedParts, static fn(string $part): bool => $part !== '') === [] && $customCode === '') {
-            return '';
-        }
-        array_unshift($generatedParts, '$this->set(\'app\', $this->app);');
 
         $methodParts = [$this->combineCode($generatedParts, 2)];
         if ($customCode !== '') {

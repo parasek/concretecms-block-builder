@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace BlockBuilder\BlockGenerator;
+namespace BlockBuilder\BlockGenerator\FileGenerator;
 
+use BlockBuilder\BlockGenerator\BlockFileGenerationContext;
 use BlockBuilder\BlockGenerator\Exception\GeneratedFileWriteException;
-use BlockBuilder\BlockGenerator\FileGenerator\GeneratedTextFile;
-use BlockBuilder\BlockGenerator\FileGenerator\GeneratedTextFileCollection;
 use Symfony\Component\Filesystem\Filesystem;
 use Throwable;
 

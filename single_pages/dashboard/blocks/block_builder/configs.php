@@ -111,9 +111,10 @@
 
                         <?php if (!$item->installed): ?>
                             <div class="bb-block-type-action bb-block-type-action-install mb-2">
+                                <?php $installConfirmationQuestion = t('This will install the %s block type. Are you sure?', $config->blockName); ?>
                                 <form action="<?= h($item->installUrl); ?>"
                                       method="post"
-                                      data-confirm-question="<?= h(t('This will install the %s block type. Are you sure?', $config->blockName)); ?>"
+                                      data-confirm-question="<?= h($installConfirmationQuestion); ?>"
                                       data-block-type-handle="<?= h($config->blockHandle); ?>"
                                 >
                                     <?= $controller->token->output('install_block'); ?>
@@ -124,9 +125,10 @@
                             </div>
 
                             <div class="bb-block-type-action bb-block-type-action-delete-folder mb-2">
+                                <?php $deleteConfirmationQuestion = t('This will permanently delete the block folder "%s". This cannot be undone. Are you sure?', $config->blockHandle); ?>
                                 <form action="<?= h($item->deleteDirectoryUrl); ?>"
                                       method="post"
-                                      data-confirm-question="<?= h(t('This will permanently delete the block folder "%s". This cannot be undone. Are you sure?', $config->blockHandle)); ?>"
+                                      data-confirm-question="<?= h($deleteConfirmationQuestion); ?>"
                                       data-block-type-handle="<?= h($config->blockHandle); ?>"
                                 >
                                     <?= $controller->token->output('delete_folder'); ?>
@@ -139,9 +141,10 @@
 
                         <?php if ($item->installed): ?>
                             <div class="bb-block-type-action bb-block-type-action-uninstall mb-2">
+                                <?php $uninstallConfirmationQuestion = t('This will remove all instances of the "%s" block type. This cannot be undone. Are you sure?', $config->blockName); ?>
                                 <form action="<?= h($item->uninstallUrl); ?>"
                                       method="post"
-                                      data-confirm-question="<?= h(t('This will remove all instances of the "%s" block type. This cannot be undone. Are you sure?', $config->blockName)); ?>"
+                                      data-confirm-question="<?= h($uninstallConfirmationQuestion); ?>"
                                       data-block-type-id="<?= h($item->blockTypeId); ?>"
                                 >
                                     <?= $controller->token->output('uninstall_block'); ?>

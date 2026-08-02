@@ -37,6 +37,19 @@ readonly class BlockIconValidator implements ValidatorInterface
             return $feedback->build();
         }
 
+        if ($customIcon !== null) {
+            $feedback->addError(
+                error: t(
+                    'The uploaded "Custom block icon" value is invalid (%s).',
+                    NavigationTabEnum::BlockSettings->getName(),
+                ),
+                field: 'customBlockIcon',
+                tab: NavigationTabEnum::BlockSettings->getHandle(),
+            );
+
+            return $feedback->build();
+        }
+
         $this->validateSelectedIcon($feedback, $data);
 
         return $feedback->build();

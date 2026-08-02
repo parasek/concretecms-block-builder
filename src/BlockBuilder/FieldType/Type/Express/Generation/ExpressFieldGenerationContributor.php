@@ -22,6 +22,7 @@ use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\FieldType\Type\Express\ExpressFieldTypeDto;
 use Concrete\Core\Entity\Express\Entity as ExpressEntity;
 use Concrete\Core\Entity\Express\Entry as ExpressEntry;
+use Concrete\Core\Permission\Response\Response as PermissionResponse;
 use Concrete\Core\Support\Facade\Express;
 
 final readonly class ExpressFieldGenerationContributor implements FieldGenerationContributorInterface
@@ -141,6 +142,7 @@ PHP,
         $planBuilder->controller
             ->addUseStatement(new ControllerUseStatement(ExpressEntity::class, 'ExpressEntity'))
             ->addUseStatement(new ControllerUseStatement(ExpressEntry::class, 'ExpressEntry'))
+            ->addUseStatement(new ControllerUseStatement(PermissionResponse::class, 'PermissionResponse'))
             ->addUseStatement(new ControllerUseStatement(Express::class))
             ->addMethodFragment(
                 ControllerMethodSectionEnum::AdditionalMethods->value,
@@ -328,15 +330,15 @@ PHP,
         $validation = $field->required
             ? sprintf(
                 'if (!$hasExpressEntry) {%1$s    $errors->add(t(\'The field "%%s" is required%2$s.\', %3$s%4$s));%1$s}'
-                . ' elseif (!$expressEntry instanceof ExpressEntry) {%1$s    $errors->add(t(\'The field "%%s" contains an invalid Express entry%2$s.\', %3$s%4$s));%1$s}',
+                . ' elseif (!$canViewExpressEntry) {%1$s    $errors->add(t(\'The field "%%s" contains an invalid or unavailable Express entry%2$s.\', %3$s%4$s));%1$s}',
                 PHP_EOL,
                 $entryMessage,
                 $label,
                 $entryArgument,
             )
             : sprintf(
-                'if ($hasExpressEntry && !$expressEntry instanceof ExpressEntry) {%1$s'
-                . '    $errors->add(t(\'The field "%%s" contains an invalid Express entry%2$s.\', %3$s%4$s));%1$s}',
+                'if ($hasExpressEntry && !$canViewExpressEntry) {%1$s'
+                . '    $errors->add(t(\'The field "%%s" contains an invalid or unavailable Express entry%2$s.\', %3$s%4$s));%1$s}',
                 PHP_EOL,
                 $entryMessage,
                 $label,
@@ -347,6 +349,8 @@ PHP,
             '$expressEntryValue = %1$s[%2$s] ?? null;%3$s'
             . '$hasExpressEntry = $expressEntryValue !== null && $expressEntryValue !== \'\' && $expressEntryValue !== 0 && $expressEntryValue !== \'0\';%3$s'
             . '$expressEntry = $hasExpressEntry ? $this->%4$s($expressEntryValue, %5$s) : null;%3$s'
+            . '$canViewExpressEntry = $expressEntry instanceof ExpressEntry%3$s'
+            . '    && PermissionResponse::getResponse($expressEntry)->validate(\'view_express_entry\');%3$s'
             . '%6$s',
             $sourceVariable,
             $handleLiteral,

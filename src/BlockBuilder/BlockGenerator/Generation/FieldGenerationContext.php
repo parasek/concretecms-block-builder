@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace BlockBuilder\BlockGenerator\Generation;
 
 use BlockBuilder\Block\Dto\BlockConfigDto;
-use BlockBuilder\Block\Dto\BlockGenerationManifest;
+use BlockBuilder\BlockGenerator\BlockGenerationManifest;
 use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
 use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\FieldType\FieldTypeDtoInterface;

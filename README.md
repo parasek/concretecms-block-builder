@@ -16,12 +16,16 @@ or the [Contact form](https://c5center.com/contact) is greatly appreciated.
 
 | Block Builder version | Concrete CMS version  | PHP version   |
 |-----------------------|-----------------------|---------------|
-| 3.0.0 or higher       | X.X.X or higher (TBA) | 8.4 or higher |
+| 3.0.0 or higher       | 9.5.2 or higher       | 8.4 or higher |
 | 2.5.0 - 2.8.1 (EOL)   | 9.2.0 - (TBA)         | 7.2 - 8.4     |
 | 2.2.0 - 2.4.0 (EOL)   | 9.1.0 - 9.1.x         | 7.2 - 8.4     |
 | 2.0.0 - 2.1.2 (EOL)   | 9.0.0 - 9.0.x         | 7.2 - 7.4     |
 | 1.0.3 - 1.4.0 (EOL)   | 8.2.1 or higher       | 5.5 - 7.4     |
 | 1.2.1-legacy (EOL)    | 5.7.5 or higher       | 5.3 - 7.1     |
+
+# Security
+
+Block Builder can place custom PHP code in generated block controllers. Grant access to its dashboard pages and the `install_packages` permission only to fully trusted administrators who are allowed to execute server-side code.
 
 <br>Concrete CMS Marketplace: https://market.concretecms.com/products/block-builder/49b29b3c-d119-11ee-b9df-0a97d4ce16b9
 
@@ -32,6 +36,10 @@ Legacy GitHub repository: https://github.com/parasek/concretecms-block-builder-l
 # Install the latest version with Composer
 
 `composer require parasek/block_builder`
+
+# Tests
+
+See [tests/README.md](tests/README.md) for the PHPUnit command, coverage, and release smoke-test checklist.
 
 # Features
 
@@ -53,10 +61,13 @@ This addon speeds up block development by generating the necessary files through
     - Image
     - Express
     - File Set
+    - Files from Folder
     - HTML Editor
     - Date Picker
     - Color Picker
     - Icon Picker
+    - SVG Icon Picker
+    - User Selector
 - All field types can be used as standalone fields or as part of a repeatable set.
 - You can use the configuration of previously created blocks as a starting point for new ones.
 - Refresh and rebuild blocks when a new Concrete version is released.

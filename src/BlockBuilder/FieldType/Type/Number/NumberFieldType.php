@@ -23,14 +23,9 @@ class NumberFieldType extends AbstractFieldType
         'numberDisplayedThousandsSeparator' => 'displayedThousandsSeparator',
     ];
 
-    public static function getEnum(): FieldTypeEnum
+    public static function getFieldType(): FieldTypeEnum
     {
         return FieldTypeEnum::Number;
-    }
-
-    public static function getHandle(): string
-    {
-        return 'number';
     }
 
     public static function getLabel(): string
@@ -40,7 +35,7 @@ class NumberFieldType extends AbstractFieldType
 
     public static function getIcon(): string
     {
-        return t('fas fa-hashtag');
+        return 'fas fa-hashtag';
     }
 
     public static function getDefaultValues(): array
@@ -64,7 +59,7 @@ class NumberFieldType extends AbstractFieldType
     public static function createDtoFromArray(array $data): NumberFieldTypeDto
     {
         return new NumberFieldTypeDto(
-            fieldType: self::getEnum(),
+            fieldType: self::getFieldType(),
             label: trim($data['label'] ?? ''),
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),

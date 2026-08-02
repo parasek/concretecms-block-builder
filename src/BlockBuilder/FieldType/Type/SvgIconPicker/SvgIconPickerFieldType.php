@@ -4,24 +4,16 @@ declare(strict_types=1);
 
 namespace BlockBuilder\FieldType\Type\SvgIconPicker;
 
+use BlockBuilder\Block\Validation\BlockConfigLimits;
 use BlockBuilder\FieldType\AbstractFieldType;
 use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
 use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 
 class SvgIconPickerFieldType extends AbstractFieldType
 {
-    private const int MAX_ICONS = 100;
-    private const int MAX_NAME_LENGTH = 100;
-    private const int MAX_HANDLE_LENGTH = 50;
-
-    public static function getEnum(): FieldTypeEnum
+    public static function getFieldType(): FieldTypeEnum
     {
         return FieldTypeEnum::SvgIconPicker;
-    }
-
-    public static function getHandle(): string
-    {
-        return 'svg_icon_picker';
     }
 
     public static function getLabel(): string
@@ -55,7 +47,7 @@ class SvgIconPickerFieldType extends AbstractFieldType
         }
 
         return new SvgIconPickerFieldTypeDto(
-            fieldType: self::getEnum(),
+            fieldType: self::getFieldType(),
             label: trim($data['label'] ?? ''),
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),
@@ -68,7 +60,7 @@ class SvgIconPickerFieldType extends AbstractFieldType
     {
         return [
             'icons|empty' => t('Some "SVG Icon Picker/Icons" fields do not contain any icons (%s).', $context->getTabName()),
-            'icons|too_many' => t('Some "SVG Icon Picker/Icons" fields contain more than %s icons (%s).', self::MAX_ICONS, $context->getTabName()),
+            'icons|too_many' => t('Some "SVG Icon Picker/Icons" fields contain more than %s icons (%s).', BlockConfigLimits::MAX_SVG_ICONS_PER_FIELD, $context->getTabName()),
             'icons|invalid_definition' => t('Some "SVG Icon Picker/Icons" fields contain incomplete or invalid icon definitions (%s).', $context->getTabName()),
             'icons|invalid_handle' => t('Some "SVG Icon Picker/Icons" fields contain invalid icon handles (%s).', $context->getTabName()),
             'icons|duplicate_handle' => t('Icon handles in each "SVG Icon Picker/Icons" field must be unique (%s).', $context->getTabName()),
@@ -82,7 +74,7 @@ class SvgIconPickerFieldType extends AbstractFieldType
         if (!is_array($icons) || $icons === []) {
             return ['icons|empty'];
         }
-        if (count($icons) > self::MAX_ICONS) {
+        if (count($icons) > BlockConfigLimits::MAX_SVG_ICONS_PER_FIELD) {
             return ['icons|too_many'];
         }
 
@@ -104,11 +96,11 @@ class SvgIconPickerFieldType extends AbstractFieldType
 
             $name = trim($name);
             $handle = trim($handle);
-            if ($name === '' || mb_strlen($name) > self::MAX_NAME_LENGTH) {
+            if ($name === '' || mb_strlen($name) > BlockConfigLimits::MAX_SVG_ICON_NAME_LENGTH) {
                 $errors[] = 'icons|invalid_definition';
             }
             if (
-                strlen($handle) > self::MAX_HANDLE_LENGTH
+                strlen($handle) > BlockConfigLimits::MAX_SVG_ICON_HANDLE_LENGTH
                 || preg_match('/^[a-z][a-z0-9]*(?:[-_][a-z0-9]+)*$/D', $handle) !== 1
             ) {
                 $errors[] = 'icons|invalid_handle';

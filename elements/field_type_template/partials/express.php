@@ -5,15 +5,15 @@
     <hr class="bb-entry-hr">
 
     <div class="">
-        <label for="<%=context%>[<%=counter%>][expressHandle]"
+        <label for="<%-context%>[<%-counter%>][expressHandle]"
                class="form-label"
         ><?= t('Express object handle'); ?> *</label>
 
         <input type="text"
-               id="<%=context%>[<%=counter%>][expressHandle]"
-               name="<%=context%>[<%=counter%>][expressHandle]"
+               id="<%-context%>[<%-counter%>][expressHandle]"
+               name="<%-context%>[<%-counter%>][expressHandle]"
                class="form-control"
-               value="<%=expressHandle%>"
+               value="<%-expressHandle%>"
         >
     </div>
 

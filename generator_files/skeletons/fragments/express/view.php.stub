@@ -72,14 +72,10 @@
                 echo 'Full URL: ' . h($expressFile->getURL()) . '<br>';
                 echo 'Tracked URL: ' . h($expressFile->getDownloadURL()) . '<br>';
                 echo 'Relative Path: ' . h($expressFile->getRelativePath()) . '<br>';
-                echo 'Full Relative Path: ' . h($_SERVER['DOCUMENT_ROOT'] . $expressFile->getRelativePath()) . '<br>';
 
                 echo 'Title: ' . h($expressFile->getTitle()) . '<br>';
                 echo 'Description: ' . h($expressFile->getDescription()) . '<br>';
                 echo 'Tags (string): ' . h($expressFile->getTags()) . '<br>';
-                echo 'Tags (array):<br>';
-                var_dump($expressFile->getTagsList());
-                echo '<br>';
 
                 echo 'File Size: ' . h($expressFile->getSize()) . '<br>';
                 echo 'Full File Size: ' . h($expressFile->getFullSize()) . '<br>';

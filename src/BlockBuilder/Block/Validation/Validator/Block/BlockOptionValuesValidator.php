@@ -55,7 +55,7 @@ class BlockOptionValuesValidator implements ValidatorInterface
             $feedback,
             $data,
             'blockTypeSet',
-            $this->getStringKeys($this->blockSettingsOptions->getBlockTypeSets(includeEmptyOption: true)),
+            $this->getAllowedOptionValues($this->blockSettingsOptions->getBlockTypeSets(includeEmptyOption: true)),
             NavigationTabEnum::BlockSettings,
         );
 
@@ -85,7 +85,7 @@ class BlockOptionValuesValidator implements ValidatorInterface
         );
     }
 
-    private function getStringKeys(array $options): array
+    private function getAllowedOptionValues(array $options): array
     {
         return array_map('strval', array_keys($options));
     }

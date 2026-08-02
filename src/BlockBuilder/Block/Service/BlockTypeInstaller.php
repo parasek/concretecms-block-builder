@@ -15,6 +15,7 @@ readonly class BlockTypeInstaller
     public function __construct(
         private BlockTypePermissionChecker $permissionChecker,
         private BlockDirectoryLocator $directoryLocator,
+        private BlockOwnershipChecker $blockOwnershipChecker,
         private BlockTypeLocator $blockTypeLocator,
         private BlockLifecycleLogger $lifecycleLogger,
     ) {
@@ -23,7 +24,7 @@ readonly class BlockTypeInstaller
     public function install(string $handle): BlockTypeEntity
     {
         try {
-            $error = $this->permissionChecker->getInstallationError();
+            $error = $this->permissionChecker->getInstallationErrorMessage();
         } catch (Throwable $throwable) {
             $this->throwLoggedFailure(
                 handle: $handle,
@@ -50,6 +51,13 @@ readonly class BlockTypeInstaller
             $this->throwLoggedFailure(
                 handle: $handle,
                 message: t('The block type directory for "%s" is missing, linked, or outside the application block directory.', $handle),
+            );
+        }
+        if (!$this->blockOwnershipChecker->isOwnedApplicationBlock($handle)) {
+            $this->throwLoggedFailure(
+                handle: $handle,
+                message: t('Only block types with a valid matching Block Builder configuration can be installed here.'),
+                context: ['path' => $blockTypePath],
             );
         }
 

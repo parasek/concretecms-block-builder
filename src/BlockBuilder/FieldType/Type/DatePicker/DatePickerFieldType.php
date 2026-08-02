@@ -14,14 +14,9 @@ class DatePickerFieldType extends AbstractFieldType
         'datePickerPattern' => 'datePattern',
     ];
 
-    public static function getEnum(): FieldTypeEnum
+    public static function getFieldType(): FieldTypeEnum
     {
         return FieldTypeEnum::DatePicker;
-    }
-
-    public static function getHandle(): string
-    {
-        return 'date_picker';
     }
 
     public static function getLabel(): string
@@ -31,7 +26,7 @@ class DatePickerFieldType extends AbstractFieldType
 
     public static function getIcon(): string
     {
-        return t('fas fa-calendar-alt');
+        return 'fas fa-calendar-alt';
     }
 
     public static function getDefaultValues(): array
@@ -48,7 +43,7 @@ class DatePickerFieldType extends AbstractFieldType
     public static function createDtoFromArray(array $data): DatePickerFieldTypeDto
     {
         return new DatePickerFieldTypeDto(
-            fieldType: self::getEnum(),
+            fieldType: self::getFieldType(),
             label: trim($data['label'] ?? ''),
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),

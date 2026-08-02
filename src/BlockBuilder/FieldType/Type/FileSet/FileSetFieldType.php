@@ -10,14 +10,9 @@ use BlockBuilder\FieldType\AbstractFieldType;
 
 class FileSetFieldType extends AbstractFieldType
 {
-    public static function getEnum(): FieldTypeEnum
+    public static function getFieldType(): FieldTypeEnum
     {
         return FieldTypeEnum::FileSet;
-    }
-
-    public static function getHandle(): string
-    {
-        return 'file_set';
     }
 
     public static function getLabel(): string
@@ -27,7 +22,7 @@ class FileSetFieldType extends AbstractFieldType
 
     public static function getIcon(): string
     {
-        return t('fas fa-clone');
+        return 'fas fa-clone';
     }
 
     public static function getDefaultValues(): array
@@ -40,7 +35,7 @@ class FileSetFieldType extends AbstractFieldType
     public static function createDtoFromArray(array $data): FileSetFieldTypeDto
     {
         return new FileSetFieldTypeDto(
-            fieldType: self::getEnum(),
+            fieldType: self::getFieldType(),
             label: trim($data['label'] ?? ''),
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),

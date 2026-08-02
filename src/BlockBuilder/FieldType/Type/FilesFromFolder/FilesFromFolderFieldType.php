@@ -10,14 +10,9 @@ use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 
 final class FilesFromFolderFieldType extends AbstractFieldType
 {
-    public static function getEnum(): FieldTypeEnum
+    public static function getFieldType(): FieldTypeEnum
     {
         return FieldTypeEnum::FilesFromFolder;
-    }
-
-    public static function getHandle(): string
-    {
-        return 'files_from_folder';
     }
 
     public static function getLabel(): string
@@ -40,7 +35,7 @@ final class FilesFromFolderFieldType extends AbstractFieldType
     public static function createDtoFromArray(array $data): FilesFromFolderFieldTypeDto
     {
         return new FilesFromFolderFieldTypeDto(
-            fieldType: self::getEnum(),
+            fieldType: self::getFieldType(),
             label: trim($data['label'] ?? ''),
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),

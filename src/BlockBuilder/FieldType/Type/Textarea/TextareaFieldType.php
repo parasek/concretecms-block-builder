@@ -19,14 +19,9 @@ class TextareaFieldType extends AbstractFieldType
         'textareaHeight' => 'maxHeight',
     ];
 
-    public static function getEnum(): FieldTypeEnum
+    public static function getFieldType(): FieldTypeEnum
     {
         return FieldTypeEnum::Textarea;
-    }
-
-    public static function getHandle(): string
-    {
-        return 'textarea';
     }
 
     public static function getLabel(): string
@@ -36,7 +31,7 @@ class TextareaFieldType extends AbstractFieldType
 
     public static function getIcon(): string
     {
-        return t('fas fa-align-justify');
+        return 'fas fa-align-justify';
     }
 
     public static function getDefaultValues(): array
@@ -55,7 +50,7 @@ class TextareaFieldType extends AbstractFieldType
     public static function createDtoFromArray(array $data): TextareaFieldTypeDto
     {
         return new TextareaFieldTypeDto(
-            fieldType: self::getEnum(),
+            fieldType: self::getFieldType(),
             label: trim($data['label'] ?? ''),
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),

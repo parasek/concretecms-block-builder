@@ -34,121 +34,121 @@ readonly class FieldTypeValidator implements ValidatorInterface
             // keys generated in templates will start from 0.
             $fields = array_values($fields);
 
-            $this->processContextFields($feedback, $fields, $context);
+            $this->validateFieldsInContext($feedback, $fields, $context);
         }
 
         return $feedback->build();
     }
 
-    private function processContextFields(ValidationFeedbackBuilder $feedback, array $fields, FieldTypeContextEnum $context): void
+    private function validateFieldsInContext(ValidationFeedbackBuilder $feedback, array $fields, FieldTypeContextEnum $context): void
     {
-        $errorHandles = [];
+        $errorKeys = [];
         $fieldsWithErrors = [];
-        $tabsWithError = [];
+        $tabsWithErrors = [];
 
-        $uniqueHandles = [];
+        $normalizedHandles = [];
         $sharedErrorMessages = $this->getErrorMessages($context);
-        $errorMessagesByFieldKey = [];
+        $errorMessagesByFieldIndex = [];
         if ($context === FieldTypeContextEnum::RepeatableFields) {
-            $titleSourceKeys = [];
-            foreach ($fields as $fieldKey => $field) {
+            $titleSourceFieldIndices = [];
+            foreach ($fields as $fieldIndex => $field) {
                 if (is_array($field) && !empty($field['titleSource'])) {
-                    $titleSourceKeys[] = $fieldKey;
+                    $titleSourceFieldIndices[] = $fieldIndex;
                 }
             }
-            if (count($titleSourceKeys) > 1) {
+            if (count($titleSourceFieldIndices) > 1) {
                 $sharedErrorMessages['titleSource|multiple'] = t('Only one repeatable field can be used as the entry title source.');
-                foreach ($titleSourceKeys as $titleSourceKey) {
-                    $errorHandles[] = $titleSourceKey . '|titleSource|multiple';
+                foreach ($titleSourceFieldIndices as $fieldIndex) {
+                    $errorKeys[] = $fieldIndex . '|titleSource|multiple';
                 }
             }
         }
 
-        foreach ($fields as $key => $field) {
-            $errorMessagesByFieldKey[$key] = $sharedErrorMessages;
+        foreach ($fields as $fieldIndex => $field) {
+            $errorMessagesByFieldIndex[$fieldIndex] = $sharedErrorMessages;
 
             // A. Validate fields that are shared across all Field Types
 
-            // Get error handles from the label field
+            // Get error keys from the label field
             // and prefix it with the current field key
             $label = isset($field['label']) && is_string($field['label']) ? $field['label'] : '';
             $labelErrors = $this->validateLabel($label);
-            $keyedLabelErrors = [];
+            $indexedLabelErrorKeys = [];
             foreach ($labelErrors as $labelError) {
-                $keyedLabelErrors[] = $key . '|' . $labelError;
+                $indexedLabelErrorKeys[] = $fieldIndex . '|' . $labelError;
             }
 
-            // Get error handles from the handle field
+            // Get error keys from the handle field
             // and prefix it with the current field key
             $handle = isset($field['handle']) && is_string($field['handle']) ? $field['handle'] : '';
-            $handleErrors = $this->validateHandle($handle, $uniqueHandles);
-            $keyedHandleErrors = [];
+            $handleErrors = $this->validateHandle($handle, $normalizedHandles);
+            $indexedHandleErrorKeys = [];
             foreach ($handleErrors as $handleError) {
-                $keyedHandleErrors[] = $key . '|' . $handleError;
+                $indexedHandleErrorKeys[] = $fieldIndex . '|' . $handleError;
             }
 
-            $errorHandles = array_merge($errorHandles, $keyedLabelErrors, $keyedHandleErrors);
+            $errorKeys = array_merge($errorKeys, $indexedLabelErrorKeys, $indexedHandleErrorKeys);
 
             // B. Validate fields specific to the current Field Type
-            $fieldTypeValue = isset($field['fieldType']) && is_string($field['fieldType'])
+            $fieldTypeHandle = isset($field['fieldType']) && is_string($field['fieldType'])
                 ? $field['fieldType']
                 : null;
-            foreach ($this->validateFieldTypeOptions($field, $fieldTypeValue) as $optionError) {
-                $errorHandles[] = $key . '|' . $optionError;
+            foreach ($this->validateAllowedOptions($field, $fieldTypeHandle) as $optionError) {
+                $errorKeys[] = $fieldIndex . '|' . $optionError;
             }
 
-            if (!$fieldTypeValue) {
-                $errorHandles[] = $key . '|fieldType|empty';
+            if ($fieldTypeHandle === null || $fieldTypeHandle === '') {
+                $errorKeys[] = $fieldIndex . '|fieldType|empty';
             } else {
-                $fieldType = $this->fieldTypeRegistry->findByHandle($fieldTypeValue);
+                $fieldType = $this->fieldTypeRegistry->findByHandle($fieldTypeHandle);
                 if ($fieldType === null) {
-                    $errorHandles[] = $key . '|fieldType|invalid';
+                    $errorKeys[] = $fieldIndex . '|fieldType|invalid';
                     continue;
                 }
 
                 // Keep field-specific messages scoped to the field type that produced them.
-                $errorMessagesByFieldKey[$key] = array_merge(
+                $errorMessagesByFieldIndex[$fieldIndex] = array_merge(
                     $sharedErrorMessages,
                     $fieldType::getErrorMessages($context),
                 );
 
-                // Get error handles from the specific Field Type implementation
+                // Get error keys from the specific Field Type implementation
                 // and prefix it with the current field key
-                $fieldTypeErrorHandles = $fieldType->validate($field);
-                $keyedFieldTypeErrorHandles = [];
-                foreach ($fieldTypeErrorHandles as $errorItem) {
-                    $keyedFieldTypeErrorHandles[] = $key . '|' . $errorItem;
+                $fieldTypeErrorKeys = $fieldType->validate($field);
+                $indexedFieldTypeErrorKeys = [];
+                foreach ($fieldTypeErrorKeys as $errorKey) {
+                    $indexedFieldTypeErrorKeys[] = $fieldIndex . '|' . $errorKey;
                 }
 
-                $errorHandles = array_merge(
-                    $errorHandles,
-                    $keyedFieldTypeErrorHandles,
+                $errorKeys = array_merge(
+                    $errorKeys,
+                    $indexedFieldTypeErrorKeys,
                 );
             }
 
             // Add an entry to the array that collects unique handles
             if ($handle !== '') {
-                $uniqueHandles[] = strtolower($handle);
+                $normalizedHandles[] = strtolower($handle);
             }
         }
 
-        // Add tabs and fields with errors (based on error handles)
+        // Add tabs and fields with errors based on error keys.
         $errors = [];
-        if (!empty($errorHandles)) {
-            $tabsWithError[] = $context->getTabHandle();
-            foreach ($errorHandles as $errorHandle) {
-                $errorHandleData = explode('|', $errorHandle);
-                $extractedKey = $errorHandleData[0] ?? null;
-                $extractedHandle = $errorHandleData[1] ?? null;
-                $extractedErrorHandle = $errorHandleData[2] ?? null;
+        if ($errorKeys !== []) {
+            $tabsWithErrors[] = $context->getTabHandle();
+            foreach ($errorKeys as $errorKey) {
+                $errorKeyParts = explode('|', $errorKey);
+                $fieldIndex = $errorKeyParts[0] ?? null;
+                $propertyName = $errorKeyParts[1] ?? null;
+                $errorCode = $errorKeyParts[2] ?? null;
 
                 // Add fields with errors
-                $fieldsWithErrors[] = $context->value . '[' . $extractedKey . '][' . $extractedHandle . ']';
+                $fieldsWithErrors[] = $context->value . '[' . $fieldIndex . '][' . $propertyName . ']';
 
                 // Add tabs with errors
-                $transformedKey = $extractedHandle . '|' . $extractedErrorHandle;
-                $fieldErrorMessages = $errorMessagesByFieldKey[$extractedKey] ?? $sharedErrorMessages;
-                $errors[] = $fieldErrorMessages[$transformedKey] ?? $transformedKey;
+                $messageKey = $propertyName . '|' . $errorCode;
+                $fieldErrorMessages = $errorMessagesByFieldIndex[$fieldIndex] ?? $sharedErrorMessages;
+                $errors[] = $fieldErrorMessages[$messageKey] ?? $messageKey;
             }
         }
 
@@ -156,7 +156,7 @@ readonly class FieldTypeValidator implements ValidatorInterface
             feedback: $feedback,
             errors: array_unique($errors),
             fields: array_unique($fieldsWithErrors),
-            tabs: array_unique($tabsWithError),
+            tabs: array_unique($tabsWithErrors),
         );
     }
 
@@ -164,7 +164,7 @@ readonly class FieldTypeValidator implements ValidatorInterface
     {
         $errors = [];
 
-        if (!$label) {
+        if ($label === '') {
             $errors[] = 'label|empty';
         } elseif (mb_strlen($label) < 3) {
             $errors[] = 'label|less_than_3_characters';
@@ -177,7 +177,7 @@ readonly class FieldTypeValidator implements ValidatorInterface
     {
         $errors = [];
 
-        if (!$handle) {
+        if ($handle === '') {
             $errors[] = 'handle|empty';
 
             return $errors;
@@ -189,13 +189,13 @@ readonly class FieldTypeValidator implements ValidatorInterface
         if (mb_strlen($handle) > 50) {
             $errors[] = 'handle|more_than_50_characters';
         }
-        if (!preg_match('/^[a-zA-Z_]+$/', $handle)) {
+        if (preg_match('/^[a-zA-Z_]+$/', $handle) !== 1) {
             $errors[] = 'handle|invalid_characters';
         }
         if (str_starts_with($handle, '_') || str_ends_with($handle, '_')) {
             $errors[] = 'handle|start_or_end_with_underscore';
         }
-        if (preg_match('/_{2,}/', $handle)) {
+        if (preg_match('/_{2,}/', $handle) === 1) {
             $errors[] = 'handle|consecutive_underscores';
         }
         if (!ctype_lower(mb_substr($handle, 0, 1))) {
@@ -224,39 +224,39 @@ readonly class FieldTypeValidator implements ValidatorInterface
         }
     }
 
-    private function validateFieldTypeOptions(array $field, ?string $fieldType): array
+    private function validateAllowedOptions(array $field, ?string $fieldTypeHandle): array
     {
-        $optionMap = match ($fieldType) {
+        $allowedValuesByProperty = match ($fieldTypeHandle) {
             'text_field' => [
-                'additionalValidation' => $this->getStringKeys($this->fieldTypeOptions->getTextAdditionalValidations()),
+                'additionalValidation' => $this->getAllowedOptionValues($this->fieldTypeOptions->getTextAdditionalValidations()),
             ],
             'select_field' => [
-                'displayType' => $this->getStringKeys($this->fieldTypeOptions->getSingleChoiceTypes()),
+                'displayType' => $this->getAllowedOptionValues($this->fieldTypeOptions->getSingleChoiceTypes()),
                 'addEmptyOption' => ['0', '1'],
-                'listGenerationMethod' => $this->getStringKeys($this->fieldTypeOptions->getListGenerationMethods()),
+                'listGenerationMethod' => $this->getAllowedOptionValues($this->fieldTypeOptions->getListGenerationMethods()),
             ],
             'select_multiple_field' => [
-                'displayType' => $this->getStringKeys($this->fieldTypeOptions->getMultipleChoiceTypes()),
-                'listGenerationMethod' => $this->getStringKeys($this->fieldTypeOptions->getListGenerationMethods()),
+                'displayType' => $this->getAllowedOptionValues($this->fieldTypeOptions->getMultipleChoiceTypes()),
+                'listGenerationMethod' => $this->getAllowedOptionValues($this->fieldTypeOptions->getListGenerationMethods()),
             ],
             'files_from_folder' => [
-                'fileOrder' => $this->getStringKeys($this->fieldTypeOptions->getFilesFromFolderOrders()),
+                'fileOrder' => $this->getAllowedOptionValues($this->fieldTypeOptions->getFilesFromFolderOrders()),
             ],
             default => [],
         };
 
         $errors = [];
-        foreach ($optionMap as $handle => $allowedValues) {
-            $value = $field[$handle] ?? null;
+        foreach ($allowedValuesByProperty as $propertyName => $allowedValues) {
+            $value = $field[$propertyName] ?? null;
             if (!is_scalar($value) || !in_array((string) $value, $allowedValues, true)) {
-                $errors[] = $handle . '|invalid_option';
+                $errors[] = $propertyName . '|invalid_option';
             }
         }
 
         return $errors;
     }
 
-    private function getStringKeys(array $options): array
+    private function getAllowedOptionValues(array $options): array
     {
         return array_map('strval', array_keys($options));
     }

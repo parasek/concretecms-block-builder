@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace BlockBuilder\Block\Enum;
+namespace BlockBuilder\BlockGenerator\Enum;
 
 /**
- * Represents state of block after a generation process.
+ * Represents the state of a block after generation.
  */
 enum PostGenerationBlockStateEnum: string
 {

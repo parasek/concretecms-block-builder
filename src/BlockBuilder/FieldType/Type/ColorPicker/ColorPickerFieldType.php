@@ -10,14 +10,9 @@ use BlockBuilder\FieldType\AbstractFieldType;
 
 class ColorPickerFieldType extends AbstractFieldType
 {
-    public static function getEnum(): FieldTypeEnum
+    public static function getFieldType(): FieldTypeEnum
     {
         return FieldTypeEnum::ColorPicker;
-    }
-
-    public static function getHandle(): string
-    {
-        return 'color_picker';
     }
 
     public static function getLabel(): string
@@ -27,7 +22,7 @@ class ColorPickerFieldType extends AbstractFieldType
 
     public static function getIcon(): string
     {
-        return t('fas fa-palette');
+        return 'fas fa-palette';
     }
 
     public static function getDefaultValues(): array
@@ -38,7 +33,7 @@ class ColorPickerFieldType extends AbstractFieldType
     public static function createDtoFromArray(array $data): ColorPickerFieldTypeDto
     {
         return new ColorPickerFieldTypeDto(
-            fieldType: self::getEnum(),
+            fieldType: self::getFieldType(),
             label: trim($data['label'] ?? ''),
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),

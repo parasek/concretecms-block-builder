@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace BlockBuilder\FieldType\Type\SvgIconPicker;
 
+use BlockBuilder\Block\Validation\BlockConfigLimits;
 use DOMDocument;
 use enshrined\svgSanitize\Sanitizer;
 use Throwable;
 
 final readonly class SvgIconSanitizer
 {
-    public const int MAX_SVG_LENGTH = 100_000;
-
     public static function sanitize(string $svg): ?string
     {
         $svg = trim($svg);
-        if ($svg === '' || strlen($svg) > self::MAX_SVG_LENGTH) {
+        if ($svg === '' || strlen($svg) > BlockConfigLimits::MAX_SVG_CONTENT_LENGTH) {
             return null;
         }
 

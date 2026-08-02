@@ -29,13 +29,13 @@ readonly class EnvironmentService
 
     public function getEnvironment(): EnvironmentDto
     {
-        $pkg = $this->packageService->getByHandle(self::PACKAGE_HANDLE);
+        $package = $this->packageService->getByHandle(self::PACKAGE_HANDLE);
 
         return new EnvironmentDto(
-            blockBuilderVersion: $pkg->getPackageVersion(),
+            blockBuilderVersion: $package->getPackageVersion(),
             concreteVersion: $this->config->get('concrete.version'),
             phpVersion: $this->systemInfo->getPhpVersion(),
-            packageHandle: $pkg->getPackageHandle(),
+            packageHandle: $package->getPackageHandle(),
         );
     }
 

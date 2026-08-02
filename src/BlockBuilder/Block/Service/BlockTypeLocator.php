@@ -9,11 +9,11 @@ use Concrete\Core\Entity\Block\BlockType\BlockType as BlockTypeEntity;
 
 readonly class BlockTypeLocator
 {
-    public function find(null|int|string $handleOrId): ?BlockTypeEntity
+    public function findByIdentifier(null|int|string $blockTypeIdentifier): ?BlockTypeEntity
     {
         $blockType = match (true) {
-            is_int($handleOrId), is_string($handleOrId) && ctype_digit($handleOrId) => BlockType::getByID((int) $handleOrId),
-            is_string($handleOrId) => BlockType::getByHandle($handleOrId),
+            is_int($blockTypeIdentifier), is_string($blockTypeIdentifier) && ctype_digit($blockTypeIdentifier) => BlockType::getByID((int) $blockTypeIdentifier),
+            is_string($blockTypeIdentifier) => BlockType::getByHandle($blockTypeIdentifier),
             default => null,
         };
 
@@ -22,6 +22,6 @@ readonly class BlockTypeLocator
 
     public function isInstalled(null|BlockTypeEntity|int|string $blockType): bool
     {
-        return $blockType instanceof BlockTypeEntity || $this->find($blockType) !== null;
+        return $blockType instanceof BlockTypeEntity || $this->findByIdentifier($blockType) !== null;
     }
 }

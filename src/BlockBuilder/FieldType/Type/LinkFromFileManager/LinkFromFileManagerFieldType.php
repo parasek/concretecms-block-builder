@@ -18,14 +18,9 @@ class LinkFromFileManagerFieldType extends AbstractFieldType
         'linkFromFileManagerShowNoFollowField' => 'showNoFollowField',
     ];
 
-    public static function getEnum(): FieldTypeEnum
+    public static function getFieldType(): FieldTypeEnum
     {
         return FieldTypeEnum::LinkFromFileManager;
-    }
-
-    public static function getHandle(): string
-    {
-        return 'link_from_file_manager';
     }
 
     public static function getLabel(): string
@@ -35,7 +30,7 @@ class LinkFromFileManagerFieldType extends AbstractFieldType
 
     public static function getIcon(): string
     {
-        return t('fas fa-folder-open');
+        return 'fas fa-folder-open';
     }
 
     public static function getDefaultValues(): array
@@ -52,7 +47,7 @@ class LinkFromFileManagerFieldType extends AbstractFieldType
     public static function createDtoFromArray(array $data): LinkFromFileManagerFieldTypeDto
     {
         return new LinkFromFileManagerFieldTypeDto(
-            fieldType: self::getEnum(),
+            fieldType: self::getFieldType(),
             label: trim($data['label'] ?? ''),
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),

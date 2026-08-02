@@ -18,14 +18,9 @@ class HtmlEditorFieldType extends AbstractFieldType
         'htmlEditorHeight' => 'height',
     ];
 
-    public static function getEnum(): FieldTypeEnum
+    public static function getFieldType(): FieldTypeEnum
     {
         return FieldTypeEnum::HtmlEditor;
-    }
-
-    public static function getHandle(): string
-    {
-        return 'html_editor';
     }
 
     public static function getLabel(): string
@@ -35,7 +30,7 @@ class HtmlEditorFieldType extends AbstractFieldType
 
     public static function getIcon(): string
     {
-        return t('fas fa-code');
+        return 'fas fa-code';
     }
 
     public static function getDefaultValues(): array
@@ -49,7 +44,7 @@ class HtmlEditorFieldType extends AbstractFieldType
     public static function createDtoFromArray(array $data): HtmlEditorFieldTypeDto
     {
         return new HtmlEditorFieldTypeDto(
-            fieldType: self::getEnum(),
+            fieldType: self::getFieldType(),
             label: trim($data['label'] ?? ''),
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),

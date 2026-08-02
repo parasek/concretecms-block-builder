@@ -10,14 +10,9 @@ use BlockBuilder\FieldType\AbstractFieldType;
 
 class ExpressFieldType extends AbstractFieldType
 {
-    public static function getEnum(): FieldTypeEnum
+    public static function getFieldType(): FieldTypeEnum
     {
         return FieldTypeEnum::Express;
-    }
-
-    public static function getHandle(): string
-    {
-        return 'express';
     }
 
     public static function getLabel(): string
@@ -27,7 +22,7 @@ class ExpressFieldType extends AbstractFieldType
 
     public static function getIcon(): string
     {
-        return t('fas fa-database');
+        return 'fas fa-database';
     }
 
     public static function getDefaultValues(): array
@@ -40,7 +35,7 @@ class ExpressFieldType extends AbstractFieldType
     public static function createDtoFromArray(array $data): ExpressFieldTypeDto
     {
         return new ExpressFieldTypeDto(
-            fieldType: self::getEnum(),
+            fieldType: self::getFieldType(),
             label: trim($data['label'] ?? ''),
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),

@@ -36,7 +36,7 @@ readonly class BlockBuilderViewDataProvider
         ];
     }
 
-    public function getInitialValues(): array
+    public function getDefaultFormValues(): array
     {
         return [
             'blockName' => '',

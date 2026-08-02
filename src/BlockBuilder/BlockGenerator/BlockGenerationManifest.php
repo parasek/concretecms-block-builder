@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace BlockBuilder\Block\Dto;
+namespace BlockBuilder\BlockGenerator;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 readonly class BlockGenerationManifest
 {
     public function __construct(
-        public bool $shouldBlockBeInstalled,
-        public bool $shouldBlockBeRebuilt,
+        public bool $shouldInstallBlock,
+        public bool $shouldRebuildBlock,
         public string $blockHandlePascalCase,
         public string $blockHandleKebabCase,
         public string $blockPath,

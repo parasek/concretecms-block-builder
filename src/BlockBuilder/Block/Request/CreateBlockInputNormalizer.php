@@ -4,23 +4,13 @@ declare(strict_types=1);
 
 namespace BlockBuilder\Block\Request;
 
+use BlockBuilder\Block\Validation\BlockConfigLimits;
 use BlockBuilder\Block\Validation\ValidationFeedbackBuilder;
 use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
 use BlockBuilder\FieldType\FieldTypeRegistry;
 
 final class CreateBlockInputNormalizer
 {
-    private const int MAX_FIELDS_PER_COLLECTION = 100;
-    private const int MAX_OPTIONS_PER_FIELD = 1_000;
-    private const int MAX_SVG_ICONS_PER_FIELD = 100;
-    private const int MAX_DEFAULT_STRING_LENGTH = 10_000;
-    private const int MAX_SVG_ICON_NAME_LENGTH = 100;
-    private const int MAX_SVG_ICON_HANDLE_LENGTH = 50;
-    private const int MAX_SVG_CONTENT_LENGTH = 100_000;
-    private const int MAX_PLACEHOLDER_LENGTH = 255;
-    private const int MAX_LONG_TEXT_LENGTH = 100_000;
-    private const int MAX_CUSTOM_CODE_LENGTH = 500_000;
-
     private const array BOOLEAN_FIELDS = [
         'cacheBlockRecord',
         'cacheBlockOutput',
@@ -140,31 +130,8 @@ final class CreateBlockInputNormalizer
         'showNoFollowField',
     ];
 
-    private const array LONG_TEXT_FIELDS = [
-        'blockDescription',
-        'excludedFromRemoval',
-        'messageBasicTab',
-        'messageEntriesTab',
-    ];
-
-    private const array CUSTOM_CODE_FIELDS = [
-        'registerViewAssetsCustomCode',
-        'viewCustomCode',
-        'customControllerMethods',
-    ];
-
-    private const array FIELD_LONG_TEXT_PROPERTIES = [
-        'options',
-        'customConfig',
-        'defaultValue',
-    ];
-
     private const array FIELD_OPTION_LIST_PROPERTIES = [
         'options',
-    ];
-
-    private const array FIELD_CUSTOM_CODE_PROPERTIES = [
-        'customCode',
     ];
 
     public function __construct(
@@ -178,7 +145,7 @@ final class CreateBlockInputNormalizer
         $feedback = new ValidationFeedbackBuilder();
         $normalizedData = [];
 
-        // Check if request contains an unsupported fields
+        // Check whether the request contains unsupported fields.
         $allowedTopLevelFields = array_merge(
             self::STRING_FIELDS,
             self::BOOLEAN_FIELDS,
@@ -205,17 +172,17 @@ final class CreateBlockInputNormalizer
             $normalizedData[$propertyName] = $this->normalizeString(
                 value: $data[$propertyName] ?? '',
                 propertyName: $propertyName,
-                maximumLength: $this->getTopLevelMaximumLength($propertyName),
+                maximumLength: BlockConfigLimits::getTopLevelStringMaximum($propertyName),
                 feedback: $feedback,
             );
         }
 
         foreach (self::BOOLEAN_FIELDS as $propertyName) {
-            $normalizedData[$propertyName] = $this->normalizeBoolean(
+            $normalizedData[$propertyName] = $this->normalizeBooleanFormValue(
                 value: $data[$propertyName] ?? null,
                 propertyName: $propertyName,
                 feedback: $feedback,
-                missingValue: $propertyName === 'rebuildBlock' ? '0' : '',
+                valueWhenMissing: $propertyName === 'rebuildBlock' ? '0' : '',
             );
         }
 
@@ -268,13 +235,13 @@ final class CreateBlockInputNormalizer
             }
         }
 
-        if (count($value) > self::MAX_FIELDS_PER_COLLECTION) {
+        if (count($value) > BlockConfigLimits::MAX_FIELDS_PER_COLLECTION) {
             $feedback->addError(
-                error: t('The field collection "%s" may contain at most %s fields.', $context->value, self::MAX_FIELDS_PER_COLLECTION),
+                error: t('The field collection "%s" may contain at most %s fields.', $context->value, BlockConfigLimits::MAX_FIELDS_PER_COLLECTION),
                 field: null,
                 tab: $context->getTabHandle(),
             );
-            $value = array_slice($value, 0, self::MAX_FIELDS_PER_COLLECTION);
+            $value = array_slice($value, 0, BlockConfigLimits::MAX_FIELDS_PER_COLLECTION);
         }
 
         $normalizedFields = [];
@@ -315,7 +282,7 @@ final class CreateBlockInputNormalizer
                 }
             }
 
-            $normalizedField = ['fieldType' => $fieldType::getHandle()];
+            $normalizedField = ['fieldType' => $fieldType::getFieldType()->value];
             foreach ($allowedProperties as $propertyName) {
                 if ($propertyName === 'fieldType') {
                     continue;
@@ -333,7 +300,7 @@ final class CreateBlockInputNormalizer
                 }
 
                 if (in_array($propertyName, self::FIELD_BOOLEAN_PROPERTIES, true)) {
-                    $normalizedField[$propertyName] = $this->normalizeBoolean(
+                    $normalizedField[$propertyName] = $this->normalizeBooleanFormValue(
                         value: $propertyValue,
                         propertyName: $propertyName,
                         feedback: $feedback,
@@ -357,7 +324,7 @@ final class CreateBlockInputNormalizer
                 $normalizedField[$propertyName] = $this->normalizeFieldString(
                     value: $propertyValue ?? '',
                     propertyName: $propertyName,
-                    maximumLength: $this->getFieldPropertyMaximumLength($propertyName),
+                    maximumLength: BlockConfigLimits::getFieldStringMaximum($propertyName),
                     feedback: $feedback,
                     fieldPath: sprintf('%s[%s][%s]', $context->value, $fieldIndex, $propertyName),
                     tab: $context->getTabHandle(),
@@ -397,17 +364,17 @@ final class CreateBlockInputNormalizer
             }
         }
 
-        if (count($value) > self::MAX_SVG_ICONS_PER_FIELD) {
+        if (count($value) > BlockConfigLimits::MAX_SVG_ICONS_PER_FIELD) {
             $feedback->addError(
                 error: t(
                     'The field "%s" may contain at most %s icons.',
                     $this->fieldLabelProvider->getLabel('icons'),
-                    self::MAX_SVG_ICONS_PER_FIELD,
+                    BlockConfigLimits::MAX_SVG_ICONS_PER_FIELD,
                 ),
                 field: $fieldPath,
                 tab: $context->getTabHandle(),
             );
-            $value = array_slice($value, 0, self::MAX_SVG_ICONS_PER_FIELD);
+            $value = array_slice($value, 0, BlockConfigLimits::MAX_SVG_ICONS_PER_FIELD);
         }
 
         $normalizedIcons = [];
@@ -431,7 +398,7 @@ final class CreateBlockInputNormalizer
                 'name' => $this->normalizeString(
                     value: $icon['name'] ?? '',
                     propertyName: 'svgIconName',
-                    maximumLength: self::MAX_SVG_ICON_NAME_LENGTH,
+                    maximumLength: BlockConfigLimits::MAX_SVG_ICON_NAME_LENGTH,
                     feedback: $feedback,
                     fieldPath: sprintf('%s[%s][name]', $fieldPath, $iconIndex),
                     tab: $context->getTabHandle(),
@@ -439,7 +406,7 @@ final class CreateBlockInputNormalizer
                 'handle' => $this->normalizeString(
                     value: $icon['handle'] ?? '',
                     propertyName: 'svgIconHandle',
-                    maximumLength: self::MAX_SVG_ICON_HANDLE_LENGTH,
+                    maximumLength: BlockConfigLimits::MAX_SVG_ICON_HANDLE_LENGTH,
                     feedback: $feedback,
                     fieldPath: sprintf('%s[%s][handle]', $fieldPath, $iconIndex),
                     tab: $context->getTabHandle(),
@@ -447,7 +414,7 @@ final class CreateBlockInputNormalizer
                 'svg' => $this->normalizeString(
                     value: $icon['svg'] ?? '',
                     propertyName: 'svgContent',
-                    maximumLength: self::MAX_SVG_CONTENT_LENGTH,
+                    maximumLength: BlockConfigLimits::MAX_SVG_CONTENT_LENGTH,
                     feedback: $feedback,
                     fieldPath: sprintf('%s[%s][svg]', $fieldPath, $iconIndex),
                     tab: $context->getTabHandle(),
@@ -489,16 +456,16 @@ final class CreateBlockInputNormalizer
         return mb_substr($value, 0, $maximumLength);
     }
 
-    private function normalizeBoolean(
+    private function normalizeBooleanFormValue(
         mixed $value,
         string $propertyName,
         ValidationFeedbackBuilder $feedback,
         ?string $fieldPath = null,
         ?string $tab = null,
-        string $missingValue = '0',
+        string $valueWhenMissing = '0',
     ): string {
         if ($value === null || $value === '') {
-            return $missingValue;
+            return $valueWhenMissing;
         }
 
         if (in_array($value, ['1', 1, true], true)) {
@@ -556,7 +523,7 @@ final class CreateBlockInputNormalizer
         }
 
         $lines = preg_split('/\R/u', $normalizedValue);
-        if (!is_array($lines) || count($lines) <= self::MAX_OPTIONS_PER_FIELD) {
+        if (!is_array($lines) || count($lines) <= BlockConfigLimits::MAX_OPTIONS_PER_FIELD) {
             return $normalizedValue;
         }
 
@@ -564,13 +531,13 @@ final class CreateBlockInputNormalizer
             error: t(
                 'The field "%s" may contain at most %s options.',
                 $this->fieldLabelProvider->getLabel($propertyName),
-                self::MAX_OPTIONS_PER_FIELD,
+                BlockConfigLimits::MAX_OPTIONS_PER_FIELD,
             ),
             field: $fieldPath,
             tab: $tab,
         );
 
-        return implode(PHP_EOL, array_slice($lines, 0, self::MAX_OPTIONS_PER_FIELD));
+        return implode(PHP_EOL, array_slice($lines, 0, BlockConfigLimits::MAX_OPTIONS_PER_FIELD));
     }
 
     private function addInvalidScalarFeedback(
@@ -604,35 +571,5 @@ final class CreateBlockInputNormalizer
             field: sprintf('%s[%s][%s]', $context->value, $fieldIndex, $propertyName),
             tab: $context->getTabHandle(),
         );
-    }
-
-    private function getTopLevelMaximumLength(string $propertyName): int
-    {
-        if (in_array($propertyName, self::CUSTOM_CODE_FIELDS, true)) {
-            return self::MAX_CUSTOM_CODE_LENGTH;
-        }
-
-        if (in_array($propertyName, self::LONG_TEXT_FIELDS, true)) {
-            return self::MAX_LONG_TEXT_LENGTH;
-        }
-
-        return self::MAX_DEFAULT_STRING_LENGTH;
-    }
-
-    private function getFieldPropertyMaximumLength(string $propertyName): int
-    {
-        if ($propertyName === 'placeholder') {
-            return self::MAX_PLACEHOLDER_LENGTH;
-        }
-
-        if (in_array($propertyName, self::FIELD_CUSTOM_CODE_PROPERTIES, true)) {
-            return self::MAX_CUSTOM_CODE_LENGTH;
-        }
-
-        if (in_array($propertyName, self::FIELD_LONG_TEXT_PROPERTIES, true)) {
-            return self::MAX_LONG_TEXT_LENGTH;
-        }
-
-        return self::MAX_DEFAULT_STRING_LENGTH;
     }
 }

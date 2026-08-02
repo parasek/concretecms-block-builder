@@ -19,7 +19,7 @@
         >
             <option value="" data-icon="fas fa-plus"><?= t('Add a new field'); ?></option>
             <?php foreach ($fieldTypes as $fieldType): ?>
-                <option value="<?= h($fieldType::getHandle()); ?>"
+                <option value="<?= h($fieldType::getFieldType()->value); ?>"
                         data-icon="<?= h($fieldType::getIcon()); ?>"
                         data-properties="<?= h(json_encode($fieldType::getProperties())); ?>"
                         data-default-values="<?= h(json_encode($fieldType::getDefaultValues())); ?>"

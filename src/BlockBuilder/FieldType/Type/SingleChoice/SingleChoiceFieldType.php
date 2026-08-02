@@ -20,14 +20,9 @@ class SingleChoiceFieldType extends AbstractFieldType
         'selectCustomCode' => 'customCode',
     ];
 
-    public static function getEnum(): FieldTypeEnum
+    public static function getFieldType(): FieldTypeEnum
     {
         return FieldTypeEnum::SingleChoice;
-    }
-
-    public static function getHandle(): string
-    {
-        return 'select_field';
     }
 
     public static function getLabel(): string
@@ -37,7 +32,7 @@ class SingleChoiceFieldType extends AbstractFieldType
 
     public static function getIcon(): string
     {
-        return t('fas fa-check-circle');
+        return 'fas fa-check-circle';
     }
 
     public static function getDefaultValues(): array
@@ -55,7 +50,7 @@ class SingleChoiceFieldType extends AbstractFieldType
     public static function createDtoFromArray(array $data): SingleChoiceFieldTypeDto
     {
         return new SingleChoiceFieldTypeDto(
-            fieldType: self::getEnum(),
+            fieldType: self::getFieldType(),
             label: trim($data['label'] ?? ''),
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),

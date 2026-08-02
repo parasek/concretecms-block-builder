@@ -9,9 +9,7 @@ use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 
 interface FieldTypeInterface
 {
-    public static function getEnum(): FieldTypeEnum;
-
-    public static function getHandle(): string;
+    public static function getFieldType(): FieldTypeEnum;
 
     public static function getLabel(): string;
 

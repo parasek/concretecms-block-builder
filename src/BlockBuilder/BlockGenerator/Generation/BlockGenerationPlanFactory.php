@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace BlockBuilder\BlockGenerator\Generation;
 
 use BlockBuilder\Block\Dto\BlockConfigDto;
-use BlockBuilder\Block\Dto\BlockGenerationManifest;
+use BlockBuilder\BlockGenerator\BlockGenerationManifest;
 use BlockBuilder\BlockGenerator\Exception\InvalidFieldGenerationDtoException;
 use BlockBuilder\BlockGenerator\Generation\Plan\BlockGenerationPlan;
 use BlockBuilder\BlockGenerator\Generation\Plan\BlockGenerationPlanBuilder;
 use BlockBuilder\BlockGenerator\Generation\Plan\DatabaseColumn;
 use BlockBuilder\BlockGenerator\Generation\Plan\DatabaseIndex;
 use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
-use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\FieldType\FieldTypeDtoInterface;
 
 readonly class BlockGenerationPlanFactory
@@ -68,9 +67,7 @@ readonly class BlockGenerationPlanFactory
         $titleSourceHandles = [];
         foreach ($fields as $fieldDto) {
             if (property_exists($fieldDto, 'titleSource') && $fieldDto->titleSource === true) {
-                $titleSourceHandles[] = property_exists($fieldDto, 'handle')
-                    ? (string) $fieldDto->handle
-                    : $fieldDto::class;
+                $titleSourceHandles[] = $fieldDto->handle;
             }
         }
 
@@ -152,12 +149,11 @@ readonly class BlockGenerationPlanFactory
         BlockGenerationPlanBuilder $planBuilder,
     ): void {
         foreach ($fields as $position => $fieldDto) {
-            $fieldType = $this->getFieldType($fieldDto);
             $this->contributorRegistry->contribute(
                 new FieldGenerationContext(
                     config: $config,
                     manifest: $manifest,
-                    fieldType: $fieldType,
+                    fieldType: $fieldDto->fieldType,
                     fieldDto: $fieldDto,
                     fieldContext: $fieldContext,
                     position: $position,
@@ -165,17 +161,5 @@ readonly class BlockGenerationPlanFactory
                 $planBuilder,
             );
         }
-    }
-
-    private function getFieldType(FieldTypeDtoInterface $fieldDto): FieldTypeEnum
-    {
-        if (!property_exists($fieldDto, 'fieldType') || !$fieldDto->fieldType instanceof FieldTypeEnum) {
-            throw new InvalidFieldGenerationDtoException(sprintf(
-                'Field DTO "%s" does not expose a valid field type.',
-                $fieldDto::class,
-            ));
-        }
-
-        return $fieldDto->fieldType;
     }
 }

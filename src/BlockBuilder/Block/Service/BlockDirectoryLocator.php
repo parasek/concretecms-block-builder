@@ -15,7 +15,7 @@ readonly class BlockDirectoryLocator
     ) {
     }
 
-    public function getApplicationPath(string $handle): string
+    public function getApplicationBlockPath(string $handle): string
     {
         return DIR_FILES_BLOCK_TYPES . DIRECTORY_SEPARATOR . $handle;
     }
@@ -23,7 +23,7 @@ readonly class BlockDirectoryLocator
     public function getSafeApplicationBlockDirectory(string $handle): ?string
     {
         $rootPath = realpath(DIR_FILES_BLOCK_TYPES);
-        $candidatePath = $this->getApplicationPath($handle);
+        $candidatePath = $this->getApplicationBlockPath($handle);
 
         if ($rootPath === false || !is_dir($candidatePath) || is_link($candidatePath)) {
             return null;
@@ -37,27 +37,25 @@ readonly class BlockDirectoryLocator
         return $resolvedPath;
     }
 
-    public function hasCollision(string $handle, ?string $searchedFolder = null): bool
+    public function hasApplicationBlockCollision(string $handle): bool
     {
-        $paths = [];
-        if ($searchedFolder === null || $searchedFolder === 'application') {
-            $paths[DIR_FILES_BLOCK_TYPES . DIRECTORY_SEPARATOR . $handle] = DIR_FILES_BLOCK_TYPES;
-        }
-        if ($searchedFolder === null || $searchedFolder === 'concrete') {
-            $paths[DIR_FILES_BLOCK_TYPES_CORE . DIRECTORY_SEPARATOR . $handle] = DIR_FILES_BLOCK_TYPES_CORE;
+        return $this->hasCollisionInDirectory($handle, DIR_FILES_BLOCK_TYPES);
+    }
+
+    public function hasCoreBlockCollision(string $handle): bool
+    {
+        return $this->hasCollisionInDirectory($handle, DIR_FILES_BLOCK_TYPES_CORE);
+    }
+
+    private function hasCollisionInDirectory(string $handle, string $basePath): bool
+    {
+        if (is_dir($basePath . DIRECTORY_SEPARATOR . $handle)) {
+            return true;
         }
 
-        foreach (array_keys($paths) as $path) {
-            if (is_dir($path)) {
+        foreach ($this->fileService->getDirectoryContents($basePath) as $folder) {
+            if ($this->handleNormalizer->normalize($handle) === $this->handleNormalizer->normalize($folder)) {
                 return true;
-            }
-        }
-
-        foreach (array_unique(array_values($paths)) as $basePath) {
-            foreach ($this->fileService->getDirectoryContents($basePath) as $folder) {
-                if ($this->handleNormalizer->normalize($handle) === $this->handleNormalizer->normalize($folder)) {
-                    return true;
-                }
             }
         }
 

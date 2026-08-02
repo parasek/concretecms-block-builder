@@ -10,14 +10,9 @@ use BlockBuilder\FieldType\AbstractFieldType;
 
 class IconPickerFieldType extends AbstractFieldType
 {
-    public static function getEnum(): FieldTypeEnum
+    public static function getFieldType(): FieldTypeEnum
     {
         return FieldTypeEnum::IconPicker;
-    }
-
-    public static function getHandle(): string
-    {
-        return 'icon_picker';
     }
 
     public static function getLabel(): string
@@ -27,7 +22,7 @@ class IconPickerFieldType extends AbstractFieldType
 
     public static function getIcon(): string
     {
-        return t('fab fa-redhat');
+        return 'fab fa-redhat';
     }
 
     public static function getDefaultValues(): array
@@ -38,7 +33,7 @@ class IconPickerFieldType extends AbstractFieldType
     public static function createDtoFromArray(array $data): IconPickerFieldTypeDto
     {
         return new IconPickerFieldTypeDto(
-            fieldType: self::getEnum(),
+            fieldType: self::getFieldType(),
             label: trim($data['label'] ?? ''),
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),

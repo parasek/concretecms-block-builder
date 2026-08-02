@@ -1,6 +1,16 @@
 ##### 3.0.0 (unreleased)
+- Raised the minimum requirements to Concrete CMS 9.5.2 and PHP 8.4.
+- Added a User Selector field backed by Concrete's user selector widget.
 - Added a Files from Folder field with direct-child file listing and configurable File Manager, ascending, descending, or random ordering.
 - Added an SVG Icon Picker field with sanitized custom icon definitions, generated select controls, and live previews.
+- Added an in-memory PHPUnit suite covering the 2.8.1 config schema and view-variable contract, every registered field type, and generated PHP, JSON, and Doctrine XML.
+- Preserved the complete 2.8.1 Flex Link view-variable contract for rebuilt blocks and made `$app` available to every generated `view.php`.
+- Prevented field handles from shadowing generated export and edit-mode cache controller properties.
+- Serialized generation, uninstallation, and directory removal per block handle, safely replaced retained icons, and made stale-backup cleanup recoverable.
+- Restricted rebuild, install, uninstall, and directory-removal actions to matching Block Builder configurations.
+- Enforced editor permissions for submitted page, file, image, and Express selectors and removed debug output and server paths from generated Express examples.
+- Escaped loaded field values in dashboard templates and rejected unknown or oversized configuration data while retaining the 2.8.1 schema aliases.
+- Simplified field-type metadata to one canonical `getFieldType()` method and moved runtime generation values out of the persisted DTO namespace.
 - Added optional phone, email, and URL validation to generated Text fields.
 - Restored optional visual highlighting for compound Flex Link, link, and Image form fields.
 - Added configurable placeholders to generated Text, Textarea, and Number fields.

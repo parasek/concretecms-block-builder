@@ -5,15 +5,15 @@
     <hr class="bb-entry-hr">
 
     <div class="">
-        <label for="<%=context%>[<%=counter%>][fileSetPrefix]"
+        <label for="<%-context%>[<%-counter%>][fileSetPrefix]"
                class="form-label"
         ><?= t('Restrict File Set selection to those starting with:'); ?></label>
 
         <input type="text"
-               id="<%=context%>[<%=counter%>][fileSetPrefix]"
-               name="<%=context%>[<%=counter%>][fileSetPrefix]"
+               id="<%-context%>[<%-counter%>][fileSetPrefix]"
+               name="<%-context%>[<%-counter%>][fileSetPrefix]"
                class="form-control"
-               value="<%=fileSetPrefix%>"
+               value="<%-fileSetPrefix%>"
         >
     </div>
 

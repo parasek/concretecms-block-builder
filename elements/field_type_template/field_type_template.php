@@ -105,12 +105,12 @@
                     <div class="form-check">
                         <input type="checkbox"
                                class="form-check-input"
-                               name="<%=context%>[<%=counter%>][required]"
-                               id="<%=context%>[<%=counter%>][required]"
+                               name="<%-context%>[<%-counter%>][required]"
+                               id="<%-context%>[<%-counter%>][required]"
                                value="1"
                         <% if (required === true || required === 1 || required === '1') { %> checked="checked" <% } %>
                         >
-                        <label for="<%=context%>[<%=counter%>][required]"
+                        <label for="<%-context%>[<%-counter%>][required]"
                                class="form-check-label"
                         ><?= t('Required'); ?></label>
                     </div>
@@ -118,14 +118,14 @@
                     <% if (context === 'entries' && ['text_field', 'textarea'].includes(fieldTypeHandle)) { %>
                     <div class="form-check">
                         <input type="checkbox"
-                               name="<%=context%>[<%=counter%>][titleSource]"
-                               id="<%=context%>[<%=counter%>][titleSource]"
+                               name="<%-context%>[<%-counter%>][titleSource]"
+                               id="<%-context%>[<%-counter%>][titleSource]"
                                class="form-check-input"
                                data-use-field-as-title-in-repeatable-entries
                                value="1"
                         <% if (titleSource === true || titleSource === 1 || titleSource === '1') { %> checked="checked" <% } %>
                         >
-                        <label for="<%=context%>[<%=counter%>][titleSource]"
+                        <label for="<%-context%>[<%-counter%>][titleSource]"
                                class="form-check-label"
                         ><?= t('Use this field as title in repeatable entries'); ?></label>
                     </div>
@@ -134,14 +134,14 @@
                 </div>
 
                 <div class="col-lg-6 mb-4">
-                    <label for="<%=context%>[<%=counter%>][helpText]"
+                    <label for="<%-context%>[<%-counter%>][helpText]"
                            class="form-label"
                     ><?= t('Help text'); ?></label>
                     <input type="text"
-                           id="<%=context%>[<%=counter%>][helpText]"
-                           name="<%=context%>[<%=counter%>][helpText]"
+                           id="<%-context%>[<%-counter%>][helpText]"
+                           name="<%-context%>[<%-counter%>][helpText]"
                            class="form-control"
-                           value="<%=helpText%>"
+                           value="<%-helpText%>"
                     >
                     <div class="form-text"><?= t('This is a preview of the help text.'); ?></div>
                 </div>
@@ -158,8 +158,8 @@
 
 <?php
 foreach ($fieldTypes as $fieldType) {
-    View::element('field_type_template/partials/' . $fieldType::getHandle(), [
-        'handle' => $fieldType::getHandle(),
+    View::element('field_type_template/partials/' . $fieldType::getFieldType()->value, [
+        'handle' => $fieldType::getFieldType()->value,
         'selectFieldTypes' => $selectFieldTypes,
         'selectFieldListGenerationMethods' => $selectFieldListGenerationMethods,
         'selectMultipleFieldTypes' => $selectMultipleFieldTypes,

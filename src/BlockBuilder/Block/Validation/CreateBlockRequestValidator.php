@@ -19,7 +19,11 @@ readonly class CreateBlockRequestValidator
     ) {
     }
 
-    public function validate(array $data, FileBag $files): ValidationResult
+    public function validate(
+        array $data,
+        FileBag $files,
+        ?string $rebuildSourceHandle = null,
+    ): ValidationResult
     {
         $feedback = $this->csrfValidator->validate($data, $files);
         if ($feedback->errors !== []) {
@@ -36,9 +40,14 @@ readonly class CreateBlockRequestValidator
             return $this->createResult($normalizationResult->data, $normalizationResult->feedback);
         }
 
+        $normalizedData = $normalizationResult->data;
+        $normalizedData['rebuildSourceHandle'] = $rebuildSourceHandle;
+        $feedback = $this->validators->validate($normalizedData, $files);
+        unset($normalizedData['rebuildSourceHandle']);
+
         return $this->createResult(
-            data: $normalizationResult->data,
-            feedback: $this->validators->validate($normalizationResult->data, $files),
+            data: $normalizedData,
+            feedback: $feedback,
         );
     }
 

@@ -18,14 +18,9 @@ class ExternalLinkFieldType extends AbstractFieldType
         'externalLinkShowNoFollowField' => 'showNoFollowField',
     ];
 
-    public static function getEnum(): FieldTypeEnum
+    public static function getFieldType(): FieldTypeEnum
     {
         return FieldTypeEnum::ExternalLink;
-    }
-
-    public static function getHandle(): string
-    {
-        return 'external_link';
     }
 
     public static function getLabel(): string
@@ -35,7 +30,7 @@ class ExternalLinkFieldType extends AbstractFieldType
 
     public static function getIcon(): string
     {
-        return t('fas fa-external-link-alt');
+        return 'fas fa-external-link-alt';
     }
 
     public static function getDefaultValues(): array
@@ -52,7 +47,7 @@ class ExternalLinkFieldType extends AbstractFieldType
     public static function createDtoFromArray(array $data): ExternalLinkFieldTypeDto
     {
         return new ExternalLinkFieldTypeDto(
-            fieldType: self::getEnum(),
+            fieldType: self::getFieldType(),
             label: trim($data['label'] ?? ''),
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),

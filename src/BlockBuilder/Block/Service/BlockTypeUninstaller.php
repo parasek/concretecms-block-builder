@@ -13,14 +13,16 @@ readonly class BlockTypeUninstaller
     public function __construct(
         private BlockTypePermissionChecker $permissionChecker,
         private BlockTypeLocator $blockTypeLocator,
+        private BlockOwnershipChecker $blockOwnershipChecker,
         private BlockLifecycleLogger $lifecycleLogger,
+        private BlockHandleLockManager $blockHandleLockManager,
     ) {
     }
 
     public function uninstall(int|string $blockTypeIdentifier): string
     {
         try {
-            $error = $this->permissionChecker->getRemovalError();
+            $error = $this->permissionChecker->getRemovalErrorMessage();
         } catch (Throwable $throwable) {
             $this->throwLoggedFailure(
                 blockTypeIdentifier: $blockTypeIdentifier,
@@ -36,7 +38,7 @@ readonly class BlockTypeUninstaller
         }
 
         try {
-            $blockType = $this->blockTypeLocator->find($blockTypeIdentifier);
+            $blockType = $this->blockTypeLocator->findByIdentifier($blockTypeIdentifier);
         } catch (Throwable $throwable) {
             $this->throwLoggedFailure(
                 blockTypeIdentifier: $blockTypeIdentifier,
@@ -55,6 +57,7 @@ readonly class BlockTypeUninstaller
             $isInternal = $blockType->isBlockTypeInternal();
             $blockTypeName = $blockType->getBlockTypeName();
             $blockTypeId = $blockType->getBlockTypeID();
+            $blockTypeHandle = $blockType->getBlockTypeHandle();
         } catch (Throwable $throwable) {
             $this->throwLoggedFailure(
                 blockTypeIdentifier: $blockTypeIdentifier,
@@ -70,15 +73,46 @@ readonly class BlockTypeUninstaller
             );
         }
 
+        if (!is_string($blockTypeHandle)) {
+            $this->throwLoggedFailure(
+                blockTypeIdentifier: $blockTypeIdentifier,
+                message: t('The block type handle could not be determined before uninstallation.'),
+                context: ['blockTypeId' => $blockTypeId],
+            );
+        }
+
         try {
-            $blockType->delete();
+            $blockHandleLock = $this->blockHandleLockManager->acquire($blockTypeHandle);
         } catch (Throwable $throwable) {
             $this->throwLoggedFailure(
                 blockTypeIdentifier: $blockTypeIdentifier,
-                message: t('The block type could not be uninstalled. Please check the logs for more information.'),
+                message: t('Unable to acquire the operation lock before uninstalling block type "%s".', $blockTypeHandle),
                 context: ['blockTypeId' => $blockTypeId],
                 previous: $throwable,
             );
+        }
+
+        try {
+            if (!$this->blockOwnershipChecker->isOwnedApplicationBlock($blockTypeHandle)) {
+                $this->throwLoggedFailure(
+                    blockTypeIdentifier: $blockTypeIdentifier,
+                    message: t('Only block types with a valid matching Block Builder configuration can be uninstalled here.'),
+                    context: ['blockTypeId' => $blockTypeId],
+                );
+            }
+
+            try {
+                $blockType->delete();
+            } catch (Throwable $throwable) {
+                $this->throwLoggedFailure(
+                    blockTypeIdentifier: $blockTypeIdentifier,
+                    message: t('The block type could not be uninstalled. Please check the logs for more information.'),
+                    context: ['blockTypeId' => $blockTypeId],
+                    previous: $throwable,
+                );
+            }
+        } finally {
+            $blockHandleLock->release();
         }
 
         $this->lifecycleLogger->logSuccess(

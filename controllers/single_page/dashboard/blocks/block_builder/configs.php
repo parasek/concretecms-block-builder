@@ -15,7 +15,7 @@ use BlockBuilder\DataProvider\BlockBuilderConfigsViewDataProvider;
 use Concrete\Core\Http\ResponseFactoryInterface;
 use Concrete\Core\Page\Search\Field\Field\ContainsBlockTypeField;
 use Concrete\Core\Url\Resolver\Manager\ResolverManagerInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 defined('C5_EXECUTE') or exit('Access Denied.');
 
@@ -63,7 +63,7 @@ class Configs extends BaseDashboardController
         $this->set('pageTitle', t('Block Builder') . ' - ' . t('Browse existing configs'));
     }
 
-    public function install(string $blockTypeHandle): SymfonyResponse
+    public function install(string $blockTypeHandle): RedirectResponse
     {
         if (!$this->request->isMethod('post')) {
             $this->flash('error', t('Only POST requests are allowed.'));
@@ -71,8 +71,8 @@ class Configs extends BaseDashboardController
             $this->flash('error', $this->token->getErrorMessage());
         } else {
             try {
-                $bt = $this->blockTypeInstaller->install($blockTypeHandle);
-                $this->flash('success', t('The block type "%s" has been successfully installed.', $bt->getBlockTypeName()));
+                $blockType = $this->blockTypeInstaller->install($blockTypeHandle);
+                $this->flash('success', t('The block type "%s" has been successfully installed.', $blockType->getBlockTypeName()));
             } catch (BlockLifecycleException $exception) {
                 $this->flash('error', $exception->getMessage());
             }
@@ -81,7 +81,7 @@ class Configs extends BaseDashboardController
         return $this->buildRedirect('/dashboard/blocks/block_builder/configs');
     }
 
-    public function uninstall($blockTypeId = 0): SymfonyResponse
+    public function uninstall($blockTypeId = 0): RedirectResponse
     {
         if (!$this->request->isMethod('post')) {
             $this->flash('error', t('Only POST requests are allowed.'));
@@ -99,7 +99,7 @@ class Configs extends BaseDashboardController
         return $this->buildRedirect('/dashboard/blocks/block_builder/configs');
     }
 
-    public function delete_folder(?string $handle = null): SymfonyResponse
+    public function delete_folder(?string $handle = null): RedirectResponse
     {
         if (!$this->request->isMethod('post')) {
             $this->flash('error', t('Only POST requests are allowed.'));
@@ -119,8 +119,8 @@ class Configs extends BaseDashboardController
 
     public function search($blockTypeId = 0)
     {
-        $bt = $blockTypeId > 0 ? $this->blockTypeLocator->find((int) $blockTypeId) : null;
-        if ($bt === null) {
+        $blockType = $blockTypeId > 0 ? $this->blockTypeLocator->findByIdentifier((int) $blockTypeId) : null;
+        if ($blockType === null) {
             $this->flash('error', t('Unable to find the block type specified.'));
 
             return $this->app->make(ResponseFactoryInterface::class)->redirect(
@@ -128,16 +128,16 @@ class Configs extends BaseDashboardController
                 302,
             );
         }
-        $field = new ContainsBlockTypeField();
-        $qs = [
-            'field' => [$field->getKey()],
-            'btID' => $bt->getBlockTypeID(),
+        $blockTypeSearchField = new ContainsBlockTypeField();
+        $queryParameters = [
+            'field' => [$blockTypeSearchField->getKey()],
+            'btID' => $blockType->getBlockTypeID(),
         ];
-        $url = $this->app->make(ResolverManagerInterface::class)->resolve(['/dashboard/sitemap/search/advanced_search']);
-        $url = $url->setQuery($qs);
+        $searchUrl = $this->app->make(ResolverManagerInterface::class)->resolve(['/dashboard/sitemap/search/advanced_search']);
+        $searchUrl = $searchUrl->setQuery($queryParameters);
 
         return $this->app->make(ResponseFactoryInterface::class)->redirect(
-            $url,
+            $searchUrl,
             302,
         );
     }

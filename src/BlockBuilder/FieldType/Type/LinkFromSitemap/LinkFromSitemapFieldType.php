@@ -18,14 +18,9 @@ class LinkFromSitemapFieldType extends AbstractFieldType
         'linkFromSitemapShowNoFollowField' => 'showNoFollowField',
     ];
 
-    public static function getEnum(): FieldTypeEnum
+    public static function getFieldType(): FieldTypeEnum
     {
         return FieldTypeEnum::LinkFromSitemap;
-    }
-
-    public static function getHandle(): string
-    {
-        return 'link_from_sitemap';
     }
 
     public static function getLabel(): string
@@ -35,7 +30,7 @@ class LinkFromSitemapFieldType extends AbstractFieldType
 
     public static function getIcon(): string
     {
-        return t('fas fa-sitemap');
+        return 'fas fa-sitemap';
     }
 
     public static function getDefaultValues(): array
@@ -52,7 +47,7 @@ class LinkFromSitemapFieldType extends AbstractFieldType
     public static function createDtoFromArray(array $data): LinkFromSitemapFieldTypeDto
     {
         return new LinkFromSitemapFieldTypeDto(
-            fieldType: self::getEnum(),
+            fieldType: self::getFieldType(),
             label: trim($data['label'] ?? ''),
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),

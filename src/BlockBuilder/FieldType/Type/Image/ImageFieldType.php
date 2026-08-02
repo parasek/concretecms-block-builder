@@ -25,14 +25,9 @@ class ImageFieldType extends AbstractFieldType
         'imageFullscreenEditable' => 'fullscreenEditable',
     ];
 
-    public static function getEnum(): FieldTypeEnum
+    public static function getFieldType(): FieldTypeEnum
     {
         return FieldTypeEnum::Image;
-    }
-
-    public static function getHandle(): string
-    {
-        return 'image';
     }
 
     public static function getLabel(): string
@@ -42,7 +37,7 @@ class ImageFieldType extends AbstractFieldType
 
     public static function getIcon(): string
     {
-        return t('fas fa-image');
+        return 'fas fa-image';
     }
 
     public static function getDefaultValues(): array
@@ -65,7 +60,7 @@ class ImageFieldType extends AbstractFieldType
     public static function createDtoFromArray(array $data): ImageFieldTypeDto
     {
         return new ImageFieldTypeDto(
-            fieldType: self::getEnum(),
+            fieldType: self::getFieldType(),
             label: trim($data['label'] ?? ''),
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),

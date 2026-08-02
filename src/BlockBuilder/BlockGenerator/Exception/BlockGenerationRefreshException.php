@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace BlockBuilder\BlockGenerator\Exception;
 
-class BlockTypeInstallationException extends BlockGenerationException
+class BlockGenerationRefreshException extends BlockGenerationException
 {
 }

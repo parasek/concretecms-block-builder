@@ -16,47 +16,75 @@ readonly class BlockDirectoryRemover
         private FileService $fileService,
         private BlockTypePermissionChecker $permissionChecker,
         private BlockDirectoryLocator $directoryLocator,
+        private BlockOwnershipChecker $blockOwnershipChecker,
         private BlockTypeLocator $blockTypeLocator,
         private BlockLifecycleLogger $lifecycleLogger,
+        private BlockHandleLockManager $blockHandleLockManager,
     ) {
     }
 
     public function remove(string $handle): void
     {
         try {
-            $error = $this->permissionChecker->getRemovalError();
+            $error = $this->permissionChecker->getRemovalErrorMessage();
         } catch (Throwable $throwable) {
-            $this->throwFailure(
+            $this->throwLoggedFailure(
                 handle: $handle,
                 message: t('Unable to check permission for block type directory removal.'),
                 previous: $throwable,
             );
         }
         if ($error) {
-            $this->throwFailure(
+            $this->throwLoggedFailure(
                 handle: $handle,
                 message: $error,
             );
         }
 
         if (!BlockHandleFormat::isValid($handle)) {
-            $this->throwFailure(
+            $this->throwLoggedFailure(
                 handle: $handle,
                 message: t('Invalid block type handle "%s" supplied for directory removal.', $handle),
             );
         }
 
+        try {
+            $blockHandleLock = $this->blockHandleLockManager->acquire($handle);
+        } catch (Throwable $throwable) {
+            $this->throwLoggedFailure(
+                handle: $handle,
+                message: t('Unable to acquire the directory operation lock for block type "%s".', $handle),
+                previous: $throwable,
+            );
+        }
+
+        try {
+            $this->removeWhileLocked($handle);
+        } finally {
+            $blockHandleLock->release();
+        }
+    }
+
+    private function removeWhileLocked(string $handle): void
+    {
         $path = $this->directoryLocator->getSafeApplicationBlockDirectory($handle);
         if ($path === null) {
-            $this->throwFailure(
+            $this->throwLoggedFailure(
                 handle: $handle,
                 message: t('The directory for block type "%s" is missing, linked, or outside the application block directory.', $handle),
+            );
+        }
+        if (!$this->blockOwnershipChecker->isOwnedApplicationBlock($handle)) {
+            $this->throwLoggedFailure(
+                handle: $handle,
+                message: t('The directory for block type "%s" does not contain a valid matching Block Builder configuration.', $handle),
+                context: ['path' => $path],
             );
         }
         try {
             $isInstalled = $this->blockTypeLocator->isInstalled($handle);
         } catch (Throwable $throwable) {
-            $this->throwFailure(
+            $this->throwLoggedFailure(
                 handle: $handle,
                 message: t('Unable to determine whether block type "%s" is installed before directory removal.', $handle),
                 context: ['path' => $path],
@@ -64,7 +92,7 @@ readonly class BlockDirectoryRemover
             );
         }
         if ($isInstalled) {
-            $this->throwFailure(
+            $this->throwLoggedFailure(
                 handle: $handle,
                 message: t('Attempted to remove the directory of installed block type "%s".', $handle),
                 context: ['path' => $path],
@@ -76,7 +104,7 @@ readonly class BlockDirectoryRemover
                 throw new RuntimeException(sprintf('File service returned false while removing "%s".', $path));
             }
         } catch (Throwable $throwable) {
-            $this->throwFailure(
+            $this->throwLoggedFailure(
                 handle: $handle,
                 message: t('Unable to remove block type directory "%s".', $path),
                 context: ['path' => $path],
@@ -91,7 +119,7 @@ readonly class BlockDirectoryRemover
         );
     }
 
-    private function throwFailure(
+    private function throwLoggedFailure(
         string $handle,
         string $message,
         array $context = [],

@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace BlockBuilder\BlockGenerator\Lifecycle;
 
 use BlockBuilder\Block\Dto\BlockConfigDto;
-use BlockBuilder\Block\Dto\BlockGenerationManifest;
-use BlockBuilder\Block\Enum\PostGenerationBlockStateEnum;
 use BlockBuilder\Block\Service\BlockTypeInstaller;
 use BlockBuilder\Block\Service\BlockTypeLocator;
-use BlockBuilder\BlockGenerator\Exception\BlockTypeInstallationException;
-use BlockBuilder\BlockGenerator\Exception\BlockTypeRefreshException;
+use BlockBuilder\BlockGenerator\BlockGenerationManifest;
+use BlockBuilder\BlockGenerator\Enum\PostGenerationBlockStateEnum;
+use BlockBuilder\BlockGenerator\Exception\BlockGenerationInstallationException;
+use BlockBuilder\BlockGenerator\Exception\BlockGenerationRefreshException;
 use Concrete\Core\Entity\Block\BlockType\BlockType as BlockTypeEntity;
 use Doctrine\ORM\EntityManagerInterface;
 use Throwable;
@@ -26,27 +26,27 @@ readonly class BlockTypeLifecycleService
 
     public function installOrRefresh(BlockConfigDto $config, BlockGenerationManifest $manifest): PostGenerationBlockStateEnum
     {
-        if ($manifest->shouldBlockBeRebuilt) {
+        if ($manifest->shouldRebuildBlock) {
             try {
-                $blockType = $this->blockTypeLocator->find($config->blockHandle);
+                $blockType = $this->blockTypeLocator->findByIdentifier($config->blockHandle);
                 if (!$blockType instanceof BlockTypeEntity) {
-                    throw new BlockTypeRefreshException(
+                    throw new BlockGenerationRefreshException(
                         sprintf('Unable to find block type "%s" before refresh.', $config->blockHandle),
                     );
                 }
 
                 $blockType = $this->entityManager->find(BlockTypeEntity::class, $blockType->getBlockTypeID());
                 if (!$blockType instanceof BlockTypeEntity) {
-                    throw new BlockTypeRefreshException(
+                    throw new BlockGenerationRefreshException(
                         sprintf('Unable to load block type "%s" before refresh.', $config->blockHandle),
                     );
                 }
 
                 $blockType->refresh();
-            } catch (BlockTypeRefreshException $exception) {
+            } catch (BlockGenerationRefreshException $exception) {
                 throw $exception;
             } catch (Throwable $throwable) {
-                throw new BlockTypeRefreshException(
+                throw new BlockGenerationRefreshException(
                     message: sprintf('Unable to refresh block type "%s".', $config->blockHandle),
                     previous: $throwable,
                 );
@@ -55,11 +55,11 @@ readonly class BlockTypeLifecycleService
             return PostGenerationBlockStateEnum::Rebuilt;
         }
 
-        if ($manifest->shouldBlockBeInstalled) {
+        if ($manifest->shouldInstallBlock) {
             try {
                 $this->blockTypeInstaller->install($config->blockHandle);
             } catch (Throwable $throwable) {
-                throw new BlockTypeInstallationException(
+                throw new BlockGenerationInstallationException(
                     message: sprintf('Unable to install block type "%s".', $config->blockHandle),
                     previous: $throwable,
                 );

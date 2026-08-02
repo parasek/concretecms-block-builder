@@ -14,14 +14,9 @@ class TextFieldType extends AbstractFieldType
     public const int MAXIMUM_AFFIX_LENGTH = 100;
     public const int MAXIMUM_LENGTH = 255;
 
-    public static function getEnum(): FieldTypeEnum
+    public static function getFieldType(): FieldTypeEnum
     {
         return FieldTypeEnum::Text;
-    }
-
-    public static function getHandle(): string
-    {
-        return 'text_field';
     }
 
     public static function getLabel(): string
@@ -31,7 +26,7 @@ class TextFieldType extends AbstractFieldType
 
     public static function getIcon(): string
     {
-        return t('fas fa-font');
+        return 'fas fa-font';
     }
 
     public static function getDefaultValues(): array
@@ -51,7 +46,7 @@ class TextFieldType extends AbstractFieldType
     public static function createDtoFromArray(array $data): TextFieldTypeDto
     {
         return new TextFieldTypeDto(
-            fieldType: self::getEnum(),
+            fieldType: self::getFieldType(),
             label: trim($data['label'] ?? ''),
             handle: trim($data['handle'] ?? ''),
             required: !empty($data['required']),

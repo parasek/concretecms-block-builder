@@ -88,8 +88,8 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
                 <?php endforeach; ?>
             </ul>
 
-            <?php foreach ($navigationTabEnums as $k => $navigationTabEnum): ?>
-                <div class="ccm-tab-content <?php if (!$k): ?>active<?php endif; ?>"
+            <?php foreach ($navigationTabEnums as $tabIndex => $navigationTabEnum): ?>
+                <div class="ccm-tab-content <?php if ($tabIndex === 0): ?>active<?php endif; ?>"
                      id="ccm-tab-content-<?= h($navigationTabEnum->getHandle()); ?>"
                      data-tab-content
                      style="display: none;"

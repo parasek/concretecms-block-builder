@@ -6,6 +6,7 @@ namespace BlockBuilder\Block\Validation\Validator\Block;
 
 use BlockBuilder\Block\ReservedWord\ReservedHandleChecker;
 use BlockBuilder\Block\Service\BlockDirectoryLocator;
+use BlockBuilder\Block\Service\BlockOwnershipChecker;
 use BlockBuilder\Block\Service\BlockTypeLocator;
 use BlockBuilder\Block\Validation\BlockHandleFormat;
 use BlockBuilder\Block\Validation\ValidatorInterface;
@@ -18,6 +19,7 @@ readonly class BlockHandleValidator implements ValidatorInterface
     public function __construct(
         private BlockTypeLocator $blockTypeLocator,
         private BlockDirectoryLocator $blockDirectoryLocator,
+        private BlockOwnershipChecker $blockOwnershipChecker,
         private ReservedHandleChecker $reservedHandleChecker,
     ) {
     }
@@ -65,8 +67,11 @@ readonly class BlockHandleValidator implements ValidatorInterface
         }
 
         if (!empty($data['rebuildBlock'])) {
-            if (!$this->blockDirectoryLocator->hasCollision(handle: $blockHandle, searchedFolder: 'application')) {
-                $errors[] = t('A block folder named after the chosen handle does not exist. Build the block instead.');
+            $rebuildSourceHandle = $data['rebuildSourceHandle'] ?? null;
+            if (!is_string($rebuildSourceHandle) || $rebuildSourceHandle !== $blockHandle) {
+                $errors[] = t('A block can only be rebuilt from its own loaded configuration.');
+            } elseif (!$this->blockOwnershipChecker->isOwnedApplicationBlock($blockHandle)) {
+                $errors[] = t('The selected block does not have a valid Block Builder configuration. Build it as a new block instead.');
             } elseif (!$this->blockTypeLocator->isInstalled($blockHandle)) {
                 $errors[] = t('You cannot rebuild a block that is awaiting installation. Install it from the config list first.');
             }
@@ -74,16 +79,14 @@ readonly class BlockHandleValidator implements ValidatorInterface
             return $this->createFeedback($errors);
         }
 
-        if ($this->blockDirectoryLocator->hasCollision(handle: $blockHandle, searchedFolder: 'concrete')) {
+        if ($this->blockDirectoryLocator->hasCoreBlockCollision($blockHandle)) {
             $errors[] = t(
                 'The handle is already used by a Concrete CMS core block. Choose a different handle (%s).',
                 NavigationTabEnum::BlockSettings->getName(),
             );
         } elseif ($this->blockTypeLocator->isInstalled($blockHandle)) {
-            $errors[] = t('A block type with this handle is already installed. Uninstall it from the configuration list before building it again.')
-                . PHP_EOL
-                . t('Alternatively, choose a different handle (%s).', NavigationTabEnum::BlockSettings->getName());
-        } elseif ($this->blockDirectoryLocator->hasCollision(handle: $blockHandle, searchedFolder: 'application')) {
+            $errors[] = t('A block type with this handle is already installed. Uninstall it from the configuration list before building it again. Alternatively, choose a different handle (%s).', NavigationTabEnum::BlockSettings->getName());
+        } elseif ($this->blockDirectoryLocator->hasApplicationBlockCollision($blockHandle)) {
             $errors[] = t(
                 'A block folder named "%s" already exists. Delete it from the configuration list or choose a different handle (%s).',
                 $blockHandle,

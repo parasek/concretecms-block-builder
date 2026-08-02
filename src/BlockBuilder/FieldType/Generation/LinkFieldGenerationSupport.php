@@ -10,6 +10,9 @@ use BlockBuilder\BlockGenerator\Generation\Plan\ControllerUseStatement;
 use BlockBuilder\BlockGenerator\Generation\Plan\Enum\ControllerMethodSectionEnum;
 use Concrete\Core\File\File;
 use Concrete\Core\Page\Page;
+use Concrete\Core\Permission\Response\FileResponse;
+use Concrete\Core\Permission\Response\PageResponse;
+use Concrete\Core\Permission\Response\Response as PermissionResponse;
 
 /**
  * Shared persisted-data and generated-controller conventions for link field types.
@@ -33,6 +36,9 @@ final readonly class LinkFieldGenerationSupport
         $planBuilder->controller
             ->addUseStatement(new ControllerUseStatement(File::class))
             ->addUseStatement(new ControllerUseStatement(Page::class))
+            ->addUseStatement(new ControllerUseStatement(FileResponse::class))
+            ->addUseStatement(new ControllerUseStatement(PageResponse::class))
+            ->addUseStatement(new ControllerUseStatement(PermissionResponse::class, 'PermissionResponse'))
             ->addMethodFragment(
                 ControllerMethodSectionEnum::AdditionalMethods->value,
                 new CodeFragment(
@@ -246,6 +252,12 @@ private function getBlockBuilderLinkValidationError(mixed $value, bool $required
         if (!$page || $page->isError() || $page->isInTrash()) {
             return 'missing_destination';
         }
+
+        /** @var PageResponse $pagePermissions */
+        $pagePermissions = PermissionResponse::getResponse($page);
+        if (!$pagePermissions->canViewPageInSitemap()) {
+            return 'missing_destination';
+        }
     }
     if ($linkType === 'link_from_file_manager') {
         $fileID = filter_var($value['link_from_file_manager'] ?? null, FILTER_VALIDATE_INT, [
@@ -253,6 +265,12 @@ private function getBlockBuilderLinkValidationError(mixed $value, bool $required
         ]);
         $file = $fileID === false ? null : File::getByID($fileID);
         if (!$file?->getApprovedVersion()) {
+            return 'missing_destination';
+        }
+
+        /** @var FileResponse $filePermissions */
+        $filePermissions = PermissionResponse::getResponse($file);
+        if (!$filePermissions->validate('view_file_in_file_manager')) {
             return 'missing_destination';
         }
     }

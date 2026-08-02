@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace Concrete\Package\BlockBuilder\Controller\SinglePage\Dashboard\Blocks;
 
-use BlockBuilder\Block\Dto\BlockGenerationResult;
 use BlockBuilder\Block\Enum\BlockFormContextEnum;
-use BlockBuilder\Block\Enum\PostGenerationBlockStateEnum;
 use BlockBuilder\Block\Exception\ConfigLoadingException;
 use BlockBuilder\Block\Factory\BlockConfigDtoFactory;
 use BlockBuilder\Block\Validation\BlockHandleFormat;
 use BlockBuilder\Block\Validation\CreateBlockRequestValidator;
 use BlockBuilder\BlockGenerator\BlockGenerationManifestFactory;
+use BlockBuilder\BlockGenerator\BlockGenerationResult;
 use BlockBuilder\BlockGenerator\BlockGenerator;
+use BlockBuilder\BlockGenerator\Enum\PostGenerationBlockStateEnum;
 use BlockBuilder\BlockGenerator\Exception\BlockGenerationException;
 use BlockBuilder\Controller\BaseDashboardController;
 use BlockBuilder\DataProvider\BlockBuilderViewDataProvider;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 
 defined('C5_EXECUTE') or exit('Access Denied.');
@@ -25,7 +26,7 @@ class BlockBuilder extends BaseDashboardController
 {
     private BlockGenerator $blockGenerator;
     private BlockGenerationManifestFactory $blockGenerationManifestFactory;
-    private BlockConfigDtoFactory $factory;
+    private BlockConfigDtoFactory $blockConfigDtoFactory;
     private BlockBuilderViewDataProvider $viewDataProvider;
     private CreateBlockRequestValidator $createBlockRequestValidator;
 
@@ -35,7 +36,7 @@ class BlockBuilder extends BaseDashboardController
 
         $this->blockGenerator = $this->app->make(BlockGenerator::class);
         $this->blockGenerationManifestFactory = $this->app->make(BlockGenerationManifestFactory::class);
-        $this->factory = $this->app->make(BlockConfigDtoFactory::class);
+        $this->blockConfigDtoFactory = $this->app->make(BlockConfigDtoFactory::class);
         $this->viewDataProvider = $this->app->make(BlockBuilderViewDataProvider::class);
         $this->createBlockRequestValidator = $this->app->make(CreateBlockRequestValidator::class);
 
@@ -48,7 +49,7 @@ class BlockBuilder extends BaseDashboardController
 
     public function view(): ?Response
     {
-        $config = $this->factory->fromArray($this->viewDataProvider->getInitialValues());
+        $config = $this->blockConfigDtoFactory->fromArray($this->viewDataProvider->getDefaultFormValues());
         $this->set('config', $config);
 
         $response = $this->handlePostRequest();
@@ -76,7 +77,7 @@ class BlockBuilder extends BaseDashboardController
         }
         $this->set('config', $config);
 
-        $response = $this->handlePostRequest();
+        $response = $this->handlePostRequest(rebuildSourceHandle: $handle);
         if ($response) {
             return $response;
         }
@@ -113,33 +114,35 @@ class BlockBuilder extends BaseDashboardController
         return null;
     }
 
-    private function handlePostRequest(): ?Response
+    private function handlePostRequest(?string $rebuildSourceHandle = null): ?Response
     {
         if (!$this->request->isMethod('POST')) {
             return null;
         }
 
-        $result = $this->createBlockRequestValidator->validate(
+        $validationResult = $this->createBlockRequestValidator->validate(
             data: $this->post(),
             files: $this->request->files,
+            rebuildSourceHandle: $rebuildSourceHandle,
         );
 
-        $this->set('errors', $result->errors);
-        $this->set('fieldsWithError', $result->fieldsWithError);
-        $this->set('tabsWithError', $result->tabsWithError);
+        $this->set('errors', $validationResult->errors);
+        $this->set('fieldsWithError', $validationResult->fieldsWithError);
+        $this->set('tabsWithError', $validationResult->tabsWithError);
 
-        if (!$result->hasErrors()) {
-            $dto = $this->factory->fromGenerationArray($result->data);
+        if (!$validationResult->hasErrors()) {
+            $blockConfig = $this->blockConfigDtoFactory->fromGenerationArray($validationResult->data);
+            $customBlockIcon = $this->request->files->get('customBlockIcon');
             $manifest = $this->blockGenerationManifestFactory->create(
-                config: $dto,
-                rebuildBlock: !empty($result->data['rebuildBlock']),
-                blockIcon: $result->data['blockIcon'] ?? null,
-                customBlockIcon: $this->request->files->get('customBlockIcon'),
+                config: $blockConfig,
+                shouldRebuildBlock: !empty($validationResult->data['rebuildBlock']),
+                blockIconPublicPath: $validationResult->data['blockIcon'] ?? null,
+                customBlockIcon: $customBlockIcon instanceof UploadedFile ? $customBlockIcon : null,
             );
 
             try {
-                $createBlockResult = $this->blockGenerator->create(
-                    config: $dto,
+                $generationResult = $this->blockGenerator->generate(
+                    config: $blockConfig,
                     manifest: $manifest,
                 );
             } catch (BlockGenerationException $exception) {
@@ -148,40 +151,40 @@ class BlockBuilder extends BaseDashboardController
                         . PHP_EOL
                         . '{errorMessage}',
                     [
-                        'blockHandle' => $dto->blockHandle,
+                        'blockHandle' => $blockConfig->blockHandle,
                         'errorMessage' => $exception->getMessage(),
                         'exception' => $exception,
                     ],
                 );
 
-                $errors = $result->errors;
+                $errors = $validationResult->errors;
                 $errors[] = $exception->getMessage();
                 $this->set('errors', $errors);
-                $this->set('config', $this->factory->fromArray($result->data));
+                $this->set('config', $this->blockConfigDtoFactory->fromArray($validationResult->data));
 
                 return null;
             }
 
-            return $this->handleCreateBlockResponse($createBlockResult);
+            return $this->handleGenerationResponse($generationResult);
         }
 
-        $config = $this->factory->fromFormArray($result->data);
+        $config = $this->blockConfigDtoFactory->fromFormArray($validationResult->data);
         $this->set('config', $config);
 
         return null;
     }
 
-    private function handleCreateBlockResponse(BlockGenerationResult $result): Response
+    private function handleGenerationResponse(BlockGenerationResult $generationResult): Response
     {
-        $message = match ($result->postGenerationBlockState) {
-            PostGenerationBlockStateEnum::Rebuilt => t('The block "%s" has been successfully rebuilt and refreshed.', $result->blockName),
-            PostGenerationBlockStateEnum::CreatedAndInstalled => t('The block type "%s" has been successfully created and installed.', $result->blockName),
-            PostGenerationBlockStateEnum::Created => t('The block type "%s" has been successfully created. Please install it manually now.', $result->blockName),
+        $message = match ($generationResult->postGenerationBlockState) {
+            PostGenerationBlockStateEnum::Rebuilt => t('The block "%s" has been successfully rebuilt and refreshed.', $generationResult->blockName),
+            PostGenerationBlockStateEnum::CreatedAndInstalled => t('The block type "%s" has been successfully created and installed.', $generationResult->blockName),
+            PostGenerationBlockStateEnum::Created => t('The block type "%s" has been successfully created. Please install it manually now.', $generationResult->blockName),
         };
 
         $this->flash('success', $message);
 
-        return $this->buildRedirect('/dashboard/blocks/block_builder/config/' . $result->blockHandle);
+        return $this->buildRedirect('/dashboard/blocks/block_builder/config/' . $generationResult->blockHandle);
     }
 
     private function setFormViewData(BlockFormContextEnum $context, string $blockHandle): void

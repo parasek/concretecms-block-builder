@@ -7,9 +7,9 @@
     <% const svgIcons = Array.isArray(icons) ? icons : []; %>
     <div
         class="mb-4"
-        id="<%=context%>[<%=counter%>][icons]"
+        id="<%-context%>[<%-counter%>][icons]"
         data-svg-icon-definitions
-        data-next-icon-index="<%=svgIcons.length%>"
+        data-next-icon-index="<%-svgIcons.length%>"
     >
         <div class="form-label"><?= t('SVG icons'); ?> *</div>
         <div class="table-responsive">
@@ -28,8 +28,8 @@
                         <td>
                             <input
                                 class="form-control"
-                                id="<%=context%>[<%=counter%>][icons][<%=iconIndex%>][name]"
-                                name="<%=context%>[<%=counter%>][icons][<%=iconIndex%>][name]"
+                                id="<%-context%>[<%-counter%>][icons][<%-iconIndex%>][name]"
+                                name="<%-context%>[<%-counter%>][icons][<%-iconIndex%>][name]"
                                 type="text"
                                 value="<%-icon.name || ''%>"
                                 maxlength="100"
@@ -38,8 +38,8 @@
                         <td>
                             <input
                                 class="form-control"
-                                id="<%=context%>[<%=counter%>][icons][<%=iconIndex%>][handle]"
-                                name="<%=context%>[<%=counter%>][icons][<%=iconIndex%>][handle]"
+                                id="<%-context%>[<%-counter%>][icons][<%-iconIndex%>][handle]"
+                                name="<%-context%>[<%-counter%>][icons][<%-iconIndex%>][handle]"
                                 type="text"
                                 value="<%-icon.handle || ''%>"
                                 maxlength="50"
@@ -48,8 +48,8 @@
                         <td>
                             <textarea
                                 class="form-control font-monospace"
-                                id="<%=context%>[<%=counter%>][icons][<%=iconIndex%>][svg]"
-                                name="<%=context%>[<%=counter%>][icons][<%=iconIndex%>][svg]"
+                                id="<%-context%>[<%-counter%>][icons][<%-iconIndex%>][svg]"
+                                name="<%-context%>[<%-counter%>][icons][<%-iconIndex%>][svg]"
                                 rows="4"
                             ><%-icon.svg || ''%></textarea>
                         </td>
@@ -74,8 +74,8 @@
                 <td>
                     <input
                         class="form-control"
-                        id="<%=context%>[<%=counter%>][icons][__ICON_INDEX__][name]"
-                        name="<%=context%>[<%=counter%>][icons][__ICON_INDEX__][name]"
+                        id="<%-context%>[<%-counter%>][icons][__ICON_INDEX__][name]"
+                        name="<%-context%>[<%-counter%>][icons][__ICON_INDEX__][name]"
                         type="text"
                         maxlength="100"
                     >
@@ -83,8 +83,8 @@
                 <td>
                     <input
                         class="form-control"
-                        id="<%=context%>[<%=counter%>][icons][__ICON_INDEX__][handle]"
-                        name="<%=context%>[<%=counter%>][icons][__ICON_INDEX__][handle]"
+                        id="<%-context%>[<%-counter%>][icons][__ICON_INDEX__][handle]"
+                        name="<%-context%>[<%-counter%>][icons][__ICON_INDEX__][handle]"
                         type="text"
                         maxlength="50"
                     >
@@ -92,8 +92,8 @@
                 <td>
                     <textarea
                         class="form-control font-monospace"
-                        id="<%=context%>[<%=counter%>][icons][__ICON_INDEX__][svg]"
-                        name="<%=context%>[<%=counter%>][icons][__ICON_INDEX__][svg]"
+                        id="<%-context%>[<%-counter%>][icons][__ICON_INDEX__][svg]"
+                        name="<%-context%>[<%-counter%>][icons][__ICON_INDEX__][svg]"
                         rows="4"
                     ></textarea>
                 </td>

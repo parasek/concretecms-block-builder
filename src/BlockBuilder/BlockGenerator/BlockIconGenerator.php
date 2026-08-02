@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace BlockBuilder\BlockGenerator;
 
-use BlockBuilder\Block\Dto\BlockGenerationManifest;
 use BlockBuilder\BlockGenerator\Exception\BlockIconGenerationException;
 use BlockBuilder\Environment\EnvironmentService;
 use Symfony\Component\Filesystem\Filesystem;
@@ -21,21 +20,28 @@ readonly class BlockIconGenerator
     public function generate(BlockGenerationManifest $manifest): void
     {
         $destination = $manifest->blockPath . DIRECTORY_SEPARATOR . FILENAME_BLOCK_ICON;
+        $temporaryPath = null;
 
         try {
             if ($manifest->customBlockIcon !== null) {
-                $manifest->customBlockIcon->move(dirname($destination), basename($destination));
+                $source = $manifest->customBlockIcon->getPathname();
             } elseif ($manifest->blockIconPath !== null && is_file($manifest->blockIconPath)) {
-                $this->copyUnlessSourceIsDestination($manifest->blockIconPath, $destination);
+                $source = $manifest->blockIconPath;
+            } elseif (is_file($destination)) {
+                $source = $destination;
+            } else {
+                $source = DIR_BASE . $this->environmentService->getPublicPathToDefaultBlockIcon();
             }
 
-            if (!is_file($destination)) {
-                $this->copyUnlessSourceIsDestination(
-                    DIR_BASE . $this->environmentService->getPublicPathToDefaultBlockIcon(),
-                    $destination,
-                );
-            }
-
+            $temporaryPath = $this->filesystem->tempnam(
+                dirname($destination),
+                '.block-builder-icon-',
+                '.png',
+            );
+            $this->filesystem->copy($source, $temporaryPath, true);
+            $this->assertValidPng($temporaryPath);
+            $this->replaceDestination($temporaryPath, $destination);
+            $temporaryPath = null;
             $this->assertValidPng($destination);
         } catch (Throwable $throwable) {
             if ($throwable instanceof BlockIconGenerationException) {
@@ -46,19 +52,29 @@ readonly class BlockIconGenerator
                 message: sprintf('Unable to generate block icon at "%s".', $destination),
                 previous: $throwable,
             );
+        } finally {
+            if ($temporaryPath !== null && (file_exists($temporaryPath) || is_link($temporaryPath))) {
+                try {
+                    $this->filesystem->remove($temporaryPath);
+                } catch (Throwable) {
+                    // Keep the original generation failure as the reported error.
+                }
+            }
         }
     }
 
-    private function copyUnlessSourceIsDestination(string $source, string $destination): void
+    private function replaceDestination(string $source, string $destination): void
     {
-        $resolvedSource = realpath($source);
-        $resolvedDestination = realpath($destination);
-
-        if ($resolvedSource !== false && $resolvedSource === $resolvedDestination) {
-            return;
+        if (file_exists($destination) || is_link($destination)) {
+            if (!is_file($destination) && !is_link($destination)) {
+                throw new BlockIconGenerationException(
+                    sprintf('The block icon destination "%s" is not a file.', $destination),
+                );
+            }
+            $this->filesystem->remove($destination);
         }
 
-        $this->filesystem->copy($source, $destination, true);
+        $this->filesystem->rename($source, $destination);
     }
 
     private function assertValidPng(string $path): void
