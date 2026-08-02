@@ -15,6 +15,8 @@ final class BlockDirectoryTransaction
     private const string STATE_FILES_COMMITTED = 'files_committed';
     private const string STATE_LIFECYCLE_COMPLETED = 'lifecycle_completed';
 
+    private const int MAX_STATE_BYTES = 64;
+
     private bool $finished = false;
     private bool $backupPrepared = false;
     private bool $generatedFilesCommitted = false;
@@ -97,7 +99,15 @@ final class BlockDirectoryTransaction
 
         if ($this->backupPath === null) {
             $this->filesystem->remove($this->blockPath);
-        } elseif ($this->backupPrepared && file_exists($this->backupPath)) {
+        } elseif ($this->backupPrepared) {
+            if (!is_dir($this->backupPath) || is_link($this->backupPath)) {
+                throw new BlockDirectoryPreparationException(sprintf(
+                    'Unable to roll back block "%s" because its prepared backup "%s" is missing or is not a physical directory.',
+                    $this->blockHandle,
+                    $this->backupPath,
+                ));
+            }
+
             $this->filesystem->remove($this->blockPath);
             $this->filesystem->rename($this->backupPath, $this->blockPath);
             $this->filesystem->remove($this->getStatePath());
@@ -125,9 +135,18 @@ final class BlockDirectoryTransaction
         LoggerInterface $logger,
     ): void {
         $statePath = self::getStatePathForBackup($backupPath);
-        $state = is_file($statePath) ? trim((string) file_get_contents($statePath)) : null;
 
         try {
+            if (!is_dir($backupPath) || is_link($backupPath)) {
+                throw new BlockDirectoryPreparationException(sprintf(
+                    'Manual recovery is required because backup "%s" for block "%s" is missing or is not a physical directory.',
+                    $backupPath,
+                    $blockHandle,
+                ));
+            }
+
+            $state = self::readStateSafely($statePath, $blockHandle);
+
             if ($state === self::STATE_PREPARED) {
                 $filesystem->remove($blockPath);
                 $filesystem->rename($backupPath, $blockPath);
@@ -149,9 +168,9 @@ final class BlockDirectoryTransaction
             }
 
             if ($state === self::STATE_LIFECYCLE_COMPLETED) {
-                if (!is_dir($blockPath)) {
+                if (!is_dir($blockPath) || is_link($blockPath)) {
                     throw new BlockDirectoryPreparationException(sprintf(
-                        'Manual recovery is required because the generated folder for block "%s" is missing after its lifecycle completed.',
+                        'Manual recovery is required because the generated folder for block "%s" is missing or unsafe after its lifecycle completed.',
                         $blockHandle,
                     ));
                 }
@@ -195,5 +214,37 @@ final class BlockDirectoryTransaction
     private static function getStatePathForBackup(string $backupPath): string
     {
         return $backupPath . '.state';
+    }
+
+    private static function readStateSafely(string $statePath, string $blockHandle): ?string
+    {
+        clearstatcache(true, $statePath);
+        if (!file_exists($statePath) && !is_link($statePath)) {
+            return null;
+        }
+
+        $metadata = lstat($statePath);
+        if (
+            $metadata === false
+            || ($metadata['mode'] & 0170000) !== 0100000
+            || is_link($statePath)
+            || !is_readable($statePath)
+            || $metadata['size'] > self::MAX_STATE_BYTES
+        ) {
+            throw new BlockDirectoryPreparationException(sprintf(
+                'Manual recovery is required because the transaction state marker for block "%s" is missing or unsafe.',
+                $blockHandle,
+            ));
+        }
+
+        $state = file_get_contents($statePath);
+        if ($state === false || strlen($state) > self::MAX_STATE_BYTES) {
+            throw new BlockDirectoryPreparationException(sprintf(
+                'Manual recovery is required because the transaction state marker for block "%s" could not be read safely.',
+                $blockHandle,
+            ));
+        }
+
+        return trim($state);
     }
 }

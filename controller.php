@@ -15,7 +15,7 @@ class Controller extends Package
     protected string $pkgHandle = 'block_builder';
     protected $appVersionRequired = '9.5.2';
     protected $phpVersionRequired = '8.4';
-    protected string $pkgVersion = '2.8.2'; // TODO: Update to 3.0.0 before release + increase $appVersionRequired to current
+    protected string $pkgVersion = '3.0.0';
 
     protected $pkgAutoloaderRegistries = [
         'src/BlockBuilder' => 'BlockBuilder',

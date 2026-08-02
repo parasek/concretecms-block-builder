@@ -99,16 +99,28 @@ readonly class BlockDirectoryManager
 
     private function recoverStaleBackups(string $blockHandle, string $blockPath): void
     {
-        $backupPaths = glob($blockPath . '.block-builder-backup-*', GLOB_ONLYDIR);
-        if ($backupPaths === false || $backupPaths === []) {
+        $artifactPaths = glob($blockPath . '.block-builder-backup-*');
+        if ($artifactPaths === false || $artifactPaths === []) {
             return;
         }
 
+        $backupPaths = [];
+        foreach ($artifactPaths as $artifactPath) {
+            $backupPath = str_ends_with($artifactPath, '.state')
+                ? substr($artifactPath, 0, -strlen('.state'))
+                : $artifactPath;
+            $backupPaths[$backupPath] = true;
+        }
+        $backupPaths = array_keys($backupPaths);
         sort($backupPaths, SORT_STRING);
         if (count($backupPaths) > 1) {
             $this->logger->error(
                 'Block Builder found multiple stale backups for block "{blockHandle}".',
-                ['blockHandle' => $blockHandle, 'backupPaths' => $backupPaths],
+                [
+                    'blockHandle' => $blockHandle,
+                    'backupPaths' => $backupPaths,
+                    'artifactPaths' => $artifactPaths,
+                ],
             );
 
             throw new BlockDirectoryPreparationException(

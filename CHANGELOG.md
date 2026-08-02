@@ -4,6 +4,11 @@
 - Added a Files from Folder field with direct-child file listing and configurable File Manager, ascending, descending, or random ordering.
 - Added an SVG Icon Picker field with sanitized custom icon definitions, generated select controls, and live previews.
 - Added an in-memory PHPUnit suite covering the 2.8.1 config schema and view-variable contract, every registered field type, and generated PHP, JSON, and Doctrine XML.
+- Expanded the fast suite with boundary, validation, request-security, generated-artifact, lifecycle-service, and filesystem transaction regressions.
+- Added fail-closed disposable Concrete integration and browser suites covering installation, generation, persistence, rebuild, duplication, deletion, upgrade, dashboard behavior, CSRF forms, and accessibility smoke checks.
+- Added PHP and Concrete version matrices, line/branch/changed-line coverage baseline reports with provisional ratchet targets, scheduled mutation testing, and retained browser diagnostics in CI.
+- Hardened transaction recovery against missing, linked, and unsafe backups, destinations, and state markers, and stopped generation when orphaned transaction artifacts require manual recovery.
+- Removed non-fragment SVG href and CSS references after sanitization so remote, data, file, and script-like references cannot survive in custom icon definitions.
 - Preserved the complete 2.8.1 Flex Link view-variable contract for rebuilt blocks and made `$app` available to every generated `view.php`.
 - Prevented field handles from shadowing generated export and edit-mode cache controller properties.
 - Serialized generation, uninstallation, and directory removal per block handle, safely replaced retained icons, and made stale-backup cleanup recoverable.

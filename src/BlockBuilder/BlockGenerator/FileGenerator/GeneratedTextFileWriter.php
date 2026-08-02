@@ -50,6 +50,13 @@ readonly class GeneratedTextFileWriter
         GeneratedTextFile $generatedFile,
         BlockFileGenerationContext $context,
     ): void {
+        if (is_link($context->manifest->blockPath)) {
+            throw new GeneratedFileWriteException(sprintf(
+                'Refusing to write generated files for block "%s" because its destination directory is a symbolic link.',
+                $context->config->blockHandle,
+            ));
+        }
+
         $resolvedBlockPath = realpath($context->manifest->blockPath);
         if ($resolvedBlockPath === false || !is_dir($resolvedBlockPath)) {
             throw new GeneratedFileWriteException(sprintf(

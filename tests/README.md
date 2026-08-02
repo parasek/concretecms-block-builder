@@ -1,19 +1,282 @@
 # Block Builder tests
 
-Run the package test suite from the Concrete CMS project root:
+The package uses three deliberately separated test layers. The default PHPUnit command is read-only with respect to Concrete: it neither installs the package nor connects to the database. Integration and browser tests run only against a marked disposable site.
+
+## Fast PHPUnit suite
+
+Run from the Concrete project root:
 
 ```bash
 vendor/bin/phpunit -c public/packages/block_builder/phpunit.xml.dist
 ```
 
-The suite uses the project's existing development dependencies. It does not install the package, connect to the database, or write generated block files.
+The default configuration explicitly excludes `tests/Integration` and `tests/Browser`. It covers configuration compatibility and limits, field registration and validation, generated-file contracts, request security, locking, and filesystem transactions without booting an installed CMS.
 
-It checks:
+## Coverage baseline and provisional targets
 
-- loading and canonicalizing the real 2.8.1 all-fields configuration;
-- the legacy `view.php` variable and repeatable-entry key contract;
-- registration and in-memory generation of every field type;
-- generated PHP syntax, JSON round trips, and Doctrine XML structure;
-- request/config validation, dashboard escaping, icon replacement, locking, and directory recovery.
+Coverage requires Xdebug with coverage mode enabled:
 
-Before a release, also run a database-backed dashboard smoke test: build the all-fields preset, add and edit the block, rebuild a 2.8.1 block while retaining its old `view.php`, and exercise install, uninstall, and folder deletion. Those Concrete lifecycle and browser-widget flows are intentionally outside this isolated suite.
+```bash
+XDEBUG_MODE=coverage vendor/bin/phpunit -c public/packages/block_builder/phpunit.coverage.xml.dist
+BLOCK_BUILDER_COVERAGE_REPORT_ONLY=1 php public/packages/block_builder/tests/Quality/assert-coverage.php public/packages/block_builder/build/coverage/clover.xml
+```
+
+The first Xdebug CI run establishes a trustworthy baseline. Until that baseline is measured, CI reports these provisional targets without failing solely because a percentage is lower:
+
+- 85% overall executable-line coverage;
+- 75% overall branch coverage;
+- 95% line and 90% branch coverage in configuration factories/services/validation, block generation, and SVG icon sanitization;
+- 90% coverage for changed executable lines when a base commit is passed as the second argument.
+
+Missing, malformed, or internally inconsistent coverage data still fails CI. After the first baseline is reviewed, the targets should be ratcheted to measured values and `BLOCK_BUILDER_COVERAGE_REPORT_ONLY=1` removed. Running the assertion command without that variable enforces the configured percentages immediately.
+
+HTML, Clover, Cobertura, and text reports are written below `build/coverage`, which is ignored by Git. The current development container has no coverage driver, so coverage must run in CI or another Xdebug-enabled environment.
+
+## Complete disposable run in GitHub Actions
+
+The safest way to run every destructive test layer is the `Tests` GitHub Actions workflow in `.github/workflows/tests.yml`. Include the current package changes and `tests/Browser/package-lock.json` in a branch, push it, and either open a pull request or select **Actions → Tests → Run workflow**.
+
+GitHub Actions creates a fresh Concrete project and MariaDB database for each job. Pull requests and manually dispatched workflows run the integration matrix and Chromium browser tests. The weekly schedule additionally runs Firefox. The dedicated upgrade job builds a real `2.8.1` installation and verifies its upgrade to `3.0.0`. The temporary projects, databases, and browser processes disappear with the runner.
+
+GitHub Actions cannot test uncommitted local changes. Use the procedure below when the exact working tree must be tested before it is committed.
+
+## Disposable CMS integration suite
+
+The integration suite performs real database DDL and writes generated blocks. It must never point at a development site. Each run needs a fresh official Concrete Composer project, a dedicated MariaDB database and database-only user, and a fresh `application/blocks` directory.
+
+The guarded bootstrap requires all of the following before Concrete is booted:
+
+- `BLOCK_BUILDER_INTEGRATION=1`;
+- an absolute `BLOCK_BUILDER_INTEGRATION_PUBLIC_ROOT` with no symbolic-link components;
+- an absolute `BLOCK_BUILDER_INTEGRATION_BLOCKS_ROOT` that exactly matches that site's `application/blocks` directory;
+- a `BLOCK_BUILDER_INTEGRATION_DATABASE_NAME` beginning with `block_builder_test_`;
+- a unique `BLOCK_BUILDER_INTEGRATION_SITE_ID`;
+- an atomically-created mode-0600 JSON marker in the disposable project root, outside the public document root, whose site ID, database, public root, and blocks root exactly match those values;
+- a bounded, regular, non-linked `application/config/database.php` whose default connection names exactly that database, with no environment-specific database override files;
+- an active Doctrine connection whose database name exactly matches the guarded name.
+
+Invoking `phpunit.integration.xml.dist` without every guard is an error, not a skipped test. The suite also verifies that the package running the tests is the package installed inside the disposable site.
+
+### Local prerequisites
+
+The local provisioning scripts require:
+
+- Linux or WSL with Bash, `realpath`, `rsync`, and `curl`;
+- PHP 8.4 or 8.5 with the DOM, Fileinfo, GD, Intl, Mbstring, MySQL, and ZIP extensions;
+- Composer 2;
+- Docker, or another isolated loopback MariaDB 11.4 server;
+- Node.js 24 and npm for browser tests.
+
+The commands below download Composer dependencies, create a Concrete installation, start a database container, and write only inside a newly-created temporary directory and database. Run every local command block in the same dedicated Bash shell so that its variables, cleanup function, and guard values remain available. Start from the Block Builder package root:
+
+```bash
+cd /absolute/path/to/concrete/public/packages/block_builder
+
+export BLOCK_BUILDER_TEST_SOURCE_ROOT="$(pwd -P)"
+export BLOCK_BUILDER_TEST_RUN_IDENTIFIER="$(date +%s)"
+export BLOCK_BUILDER_TEST_TEMP_ROOT="$(mktemp -d /tmp/block-builder-tests.XXXXXXXX)"
+
+export RUNNER_TEMP="$BLOCK_BUILDER_TEST_TEMP_ROOT"
+export GITHUB_ENV="$BLOCK_BUILDER_TEST_TEMP_ROOT/github-env"
+touch "$GITHUB_ENV"
+
+export BLOCK_BUILDER_CI_SITE_ROOT="$BLOCK_BUILDER_TEST_TEMP_ROOT/block-builder-site"
+export BLOCK_BUILDER_CI_SOURCE_ROOT="$BLOCK_BUILDER_TEST_SOURCE_ROOT"
+export BLOCK_BUILDER_CI_CORE_CONSTRAINT="^9.5.2"
+
+printf 'Disposable test root: %s\n' "$BLOCK_BUILDER_TEST_TEMP_ROOT"
+bash .github/scripts/prepare-concrete-site.sh
+```
+
+`BLOCK_BUILDER_CI_SITE_ROOT` must not exist before preparation and must resolve strictly below `RUNNER_TEMP`. Neither path may contain symbolic-link components. The preparation script creates a separate official Concrete Composer project and copies the current Block Builder working tree into it.
+
+Start an isolated MariaDB container. Loopback port `3306` must be unused. If another database already occupies it, stop that service or use GitHub Actions; do not point the disposable-site installer at the development database.
+
+```bash
+export BLOCK_BUILDER_TEST_DATABASE_CONTAINER="block-builder-mariadb-$BLOCK_BUILDER_TEST_RUN_IDENTIFIER"
+export BLOCK_BUILDER_TEST_DATABASE_NAME="block_builder_test_local_$BLOCK_BUILDER_TEST_RUN_IDENTIFIER"
+export BLOCK_BUILDER_TEST_SITE_IDENTIFIER="block-builder-local-$BLOCK_BUILDER_TEST_RUN_IDENTIFIER"
+
+block_builder_cleanup_disposable_services() {
+    if [[ "${BLOCK_BUILDER_BROWSER_SERVER_PROCESS_IDENTIFIER:-}" =~ ^[0-9]+$ ]]; then
+        kill -- "$BLOCK_BUILDER_BROWSER_SERVER_PROCESS_IDENTIFIER" 2>/dev/null || true
+        wait "$BLOCK_BUILDER_BROWSER_SERVER_PROCESS_IDENTIFIER" 2>/dev/null || true
+        unset BLOCK_BUILDER_BROWSER_SERVER_PROCESS_IDENTIFIER
+    fi
+
+    if [[ -n "${BLOCK_BUILDER_TEST_DATABASE_CONTAINER:-}" ]] \
+        && docker container inspect "$BLOCK_BUILDER_TEST_DATABASE_CONTAINER" >/dev/null 2>&1
+    then
+        docker stop "$BLOCK_BUILDER_TEST_DATABASE_CONTAINER" >/dev/null || true
+    fi
+}
+
+trap block_builder_cleanup_disposable_services EXIT
+
+docker run --detach --rm \
+    --name "$BLOCK_BUILDER_TEST_DATABASE_CONTAINER" \
+    --publish 127.0.0.1:3306:3306 \
+    --env MARIADB_ROOT_PASSWORD=disposable-root-password \
+    --env MARIADB_DATABASE="$BLOCK_BUILDER_TEST_DATABASE_NAME" \
+    --env MARIADB_USER=block_builder_integration \
+    --env MARIADB_PASSWORD=integration-database-password \
+    mariadb:11.4
+
+for BLOCK_BUILDER_TEST_DATABASE_ATTEMPT in $(seq 1 30)
+do
+    if docker exec "$BLOCK_BUILDER_TEST_DATABASE_CONTAINER" \
+        healthcheck.sh --connect --innodb_initialized
+    then
+        break
+    fi
+
+    if [[ "$(docker inspect --format '{{.State.Running}}' \
+        "$BLOCK_BUILDER_TEST_DATABASE_CONTAINER" 2>/dev/null)" != "true" ]]
+    then
+        docker logs "$BLOCK_BUILDER_TEST_DATABASE_CONTAINER"
+        exit 1
+    fi
+
+    if [[ "$BLOCK_BUILDER_TEST_DATABASE_ATTEMPT" -eq 30 ]]; then
+        docker logs "$BLOCK_BUILDER_TEST_DATABASE_CONTAINER"
+        exit 1
+    fi
+
+    sleep 2
+done
+
+unset BLOCK_BUILDER_TEST_DATABASE_ATTEMPT
+```
+
+Install Concrete and Block Builder into the disposable site. This also creates the guarded mode-0600 marker; do not create a marker in a development project.
+
+```bash
+export BLOCK_BUILDER_CI_DATABASE_SERVER="127.0.0.1"
+export BLOCK_BUILDER_CI_DATABASE_USERNAME="block_builder_integration"
+export BLOCK_BUILDER_CI_DATABASE_PASSWORD="integration-database-password"
+export BLOCK_BUILDER_CI_DATABASE_NAME="$BLOCK_BUILDER_TEST_DATABASE_NAME"
+export BLOCK_BUILDER_CI_ADMIN_PASSWORD="disposable-admin-password"
+export BLOCK_BUILDER_CI_SITE_ID="$BLOCK_BUILDER_TEST_SITE_IDENTIFIER"
+
+bash .github/scripts/install-disposable-site.sh
+```
+
+Export the integration guard values. GitHub Actions imports these values from `GITHUB_ENV` automatically; local shells must export them explicitly.
+
+```bash
+export BLOCK_BUILDER_CI_PACKAGE_ROOT="$BLOCK_BUILDER_CI_SITE_ROOT/public/packages/block_builder"
+export BLOCK_BUILDER_INTEGRATION=1
+export BLOCK_BUILDER_INTEGRATION_PUBLIC_ROOT="$BLOCK_BUILDER_CI_SITE_ROOT/public"
+export BLOCK_BUILDER_INTEGRATION_BLOCKS_ROOT="$BLOCK_BUILDER_CI_SITE_ROOT/public/application/blocks"
+export BLOCK_BUILDER_INTEGRATION_DATABASE_NAME="$BLOCK_BUILDER_TEST_DATABASE_NAME"
+export BLOCK_BUILDER_INTEGRATION_SITE_ID="$BLOCK_BUILDER_TEST_SITE_IDENTIFIER"
+```
+
+Run the integration suite with the disposable project's PHPUnit executable and copied package configuration:
+
+```bash
+"$BLOCK_BUILDER_CI_SITE_ROOT/vendor/bin/phpunit" \
+    -c "$BLOCK_BUILDER_CI_PACKAGE_ROOT/phpunit.integration.xml.dist"
+```
+
+The lifecycle scenario generates and installs a fixture block, persists and edits basic and repeatable values, verifies repeatable order, duplicates it, rebuilds it while retaining an excluded custom file, verifies data survives schema refresh, deletes both instances, uninstalls the type, and removes its folder. The all-fields scenario additionally saves and renders representative scalar, rich-text, choice, color, icon, and SVG values in both basic and repeatable contexts. Teardown repeats the environment and database guards and cleans only handles that the running test claimed after proving both the block type and path were absent.
+
+Package installation checks also verify both dashboard pages, package ownership, version `3.0.0`, and the hidden navigation attribute. The normal local integration command does not create the legacy fixture required by `UpgradeCompatibilityIntegration`. Run the dedicated CI upgrade job for the complete `2.8.1` to `3.0.0` scenario.
+
+## Browser suite
+
+Playwright runs only when `BLOCK_BUILDER_BROWSER_DISPOSABLE=1` and the base URL uses `localhost`, `127.0.0.1`, or `::1`. A guarded PHP router exposes a test-only environment probe, and every test verifies that its header and JSON site identifier match `BLOCK_BUILDER_BROWSER_SITE_ID` before authentication or mutation.
+
+The suite checks authentication, config discovery, dashboard accessibility, tab/hash hydration, block and field handle generation/override, basic and repeatable field behavior, failed-form retention, valid PNG validation, stored-XSS escaping, and lifecycle behavior. The lifecycle case proves valid forms are POST/CSRF guarded and that GET, missing-token, and invalid-token requests leave both installation and folder state unchanged before exact-handle UI cleanup.
+
+The reviewed dependency manifests are `tests/Browser/package.json` and `tests/Browser/package-lock.json`. Install the locked dependencies and Chromium inside the copied disposable package, matching CI:
+
+```bash
+npm --prefix "$BLOCK_BUILDER_CI_PACKAGE_ROOT/tests/Browser" ci
+npm --prefix "$BLOCK_BUILDER_CI_PACKAGE_ROOT/tests/Browser" exec -- \
+    playwright install --with-deps chromium
+```
+
+The `--with-deps` browser installation can require elevated privileges because it installs operating-system browser libraries.
+
+After completing the disposable integration-site setup above, start the guarded server in the same shell so that it inherits all `BLOCK_BUILDER_INTEGRATION_*` variables. Loopback port `8080` must be free and must not be changed because the disposable Concrete site was installed with `http://127.0.0.1:8080` as its canonical URL.
+
+```bash
+BLOCK_BUILDER_BROWSER_SERVER_PUBLIC_ROOT="$BLOCK_BUILDER_CI_SITE_ROOT/public" \
+BLOCK_BUILDER_BROWSER_SERVER_SITE_ID="$BLOCK_BUILDER_INTEGRATION_SITE_ID" \
+php -S 127.0.0.1:8080 \
+    -t "$BLOCK_BUILDER_CI_SITE_ROOT/public" \
+    "$BLOCK_BUILDER_CI_PACKAGE_ROOT/.github/scripts/disposable-browser-router.php" \
+    > "$BLOCK_BUILDER_TEST_TEMP_ROOT/browser-server.log" 2>&1 &
+
+export BLOCK_BUILDER_BROWSER_SERVER_PROCESS_IDENTIFIER="$!"
+```
+
+Verify that the guarded probe identifies the expected disposable site:
+
+```bash
+curl --fail \
+    --retry 20 \
+    --retry-delay 1 \
+    --retry-connrefused \
+    --header 'X-Block-Builder-Test-Probe: 1' \
+    "http://127.0.0.1:8080/__block_builder_test_environment"
+```
+
+Export the browser guard and disposable administrator credentials, then run Chromium:
+
+```bash
+export BLOCK_BUILDER_BROWSER_DISPOSABLE=1
+export BLOCK_BUILDER_BROWSER_BASE_URL="http://127.0.0.1:8080"
+export BLOCK_BUILDER_BROWSER_ADMIN_USERNAME="admin"
+export BLOCK_BUILDER_BROWSER_ADMIN_PASSWORD="disposable-admin-password"
+export BLOCK_BUILDER_BROWSER_SITE_ID="$BLOCK_BUILDER_TEST_SITE_IDENTIFIER"
+
+npm --prefix "$BLOCK_BUILDER_CI_PACKAGE_ROOT/tests/Browser" run test:chromium
+```
+
+To run Firefox or both configured browsers:
+
+```bash
+npm --prefix "$BLOCK_BUILDER_CI_PACKAGE_ROOT/tests/Browser" exec -- \
+    playwright install --with-deps firefox
+npm --prefix "$BLOCK_BUILDER_CI_PACKAGE_ROOT/tests/Browser" run test:firefox
+npm --prefix "$BLOCK_BUILDER_CI_PACKAGE_ROOT/tests/Browser" test
+```
+
+Traces, screenshots, videos, and the HTML report are written below `$BLOCK_BUILDER_CI_PACKAGE_ROOT/tests/Browser/playwright-report` and `$BLOCK_BUILDER_CI_PACKAGE_ROOT/tests/Browser/test-results`. The PHP server log is written to `$BLOCK_BUILDER_TEST_TEMP_ROOT/browser-server.log`.
+
+Always run the cleanup function after success, test failure, or interruption. The `EXIT` trap is a final backstop when the shell closes. It targets only the saved PHP process identifier and uniquely-named disposable database container:
+
+```bash
+block_builder_cleanup_disposable_services
+trap - EXIT
+```
+
+The `--rm` database container is removed when it stops. The temporary Concrete project remains at the exact path printed before provisioning. Inspect that path before removing it, never reuse the disposable site or database, and never redirect these environment variables to a development installation.
+
+## Mutation testing
+
+`infection.json5.dist` limits mutation testing to the critical configuration, validation, generation, transaction, lifecycle, and SVG icon sanitization code and requires an 80% mutation score and an 80% covered-code mutation score. The scheduled workflow installs Infection only inside its disposable Composer project and publishes the report from `build/infection`.
+
+A local Infection installation is a Composer dependency operation and requires explicit approval. Once available in the disposable project, use its explicit executable and package configuration paths:
+
+```bash
+"$BLOCK_BUILDER_CI_SITE_ROOT/vendor/bin/infection" \
+    --configuration="$BLOCK_BUILDER_CI_PACKAGE_ROOT/infection.json5.dist" \
+    --threads=max
+```
+
+## CI matrix
+
+`.github/workflows/tests.yml` provides:
+
+- fast tests on PHP 8.4 with Concrete 9.5.2 and PHP 8.5 with the latest compatible Concrete 9.x;
+- Xdebug line, branch, critical-area, and changed-line baseline reports with provisional ratchet targets;
+- serial CMS integration tests on the minimum and latest dependency sets, each with its own MariaDB service;
+- a guarded real upgrade from the reviewed Block Builder `2.8.1` tag to `3.0.0`;
+- Chromium browser tests for pull requests and Chromium plus Firefox on the weekly schedule using the reviewed lockfile;
+- weekly and manually dispatched mutation testing;
+- coverage, mutation, browser trace, screenshot, video, and server-log artifacts.
+
+Visual review across dashboard themes and assistive-technology usability remain release checks that require human evaluation.

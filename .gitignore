@@ -1,1 +1,7 @@
 /.phpunit.result.cache
+/.phpunit.cache/
+/build/
+/infection.json5
+/tests/Browser/node_modules/
+/tests/Browser/playwright-report/
+/tests/Browser/test-results/

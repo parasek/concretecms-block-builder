@@ -1,0 +1,331 @@
+name: Tests
+
+on:
+    push:
+    pull_request:
+    workflow_dispatch:
+    schedule:
+        - cron: '23 3 * * 1'
+
+permissions:
+    contents: read
+
+concurrency:
+    group: block-builder-tests-${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    fast:
+        name: Fast / PHP ${{ matrix.php }} / Concrete ${{ matrix.core }}
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                include:
+                    - php: '8.4'
+                      core: '9.5.2'
+                    - php: '8.5'
+                      core: '^9.5.2'
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+            - uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  extensions: dom, fileinfo, gd, intl, mbstring, mysql, zip
+                  coverage: none
+                  tools: composer:v2
+            - name: Prepare isolated Concrete project
+              env:
+                  BLOCK_BUILDER_CI_SITE_ROOT: ${{ runner.temp }}/block-builder-site
+                  BLOCK_BUILDER_CI_SOURCE_ROOT: ${{ github.workspace }}
+                  BLOCK_BUILDER_CI_CORE_CONSTRAINT: ${{ matrix.core }}
+              run: bash .github/scripts/prepare-concrete-site.sh
+            - name: Run fast tests
+              run: |
+                  "${BLOCK_BUILDER_CI_SITE_ROOT}/vendor/bin/phpunit" -c "${BLOCK_BUILDER_CI_PACKAGE_ROOT}/phpunit.xml.dist"
+            - name: Exercise destructive-path guards
+              run: bash "${BLOCK_BUILDER_CI_PACKAGE_ROOT}/tests/Quality/disposable-path-guard-test.sh"
+            - name: Exercise disposable marker guards
+              run: bash "${BLOCK_BUILDER_CI_PACKAGE_ROOT}/tests/Quality/environment-marker-test.sh"
+
+    coverage:
+        name: Coverage baseline
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+            - uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '8.4'
+                  extensions: dom, fileinfo, gd, intl, mbstring, mysql, zip
+                  coverage: xdebug
+                  tools: composer:v2
+            - name: Prepare isolated Concrete project
+              env:
+                  BLOCK_BUILDER_CI_SITE_ROOT: ${{ runner.temp }}/block-builder-site
+                  BLOCK_BUILDER_CI_SOURCE_ROOT: ${{ github.workspace }}
+                  BLOCK_BUILDER_CI_CORE_CONSTRAINT: '^9.5.2'
+              run: bash .github/scripts/prepare-concrete-site.sh
+            - name: Generate coverage reports
+              env:
+                  XDEBUG_MODE: coverage
+              run: |
+                  "${BLOCK_BUILDER_CI_SITE_ROOT}/vendor/bin/phpunit" -c "${BLOCK_BUILDER_CI_PACKAGE_ROOT}/phpunit.coverage.xml.dist"
+            - name: Report provisional coverage targets
+              env:
+                  BASE_COMMIT: ${{ github.event.pull_request.base.sha }}
+                  BLOCK_BUILDER_COVERAGE_GIT_ROOT: ${{ github.workspace }}
+                  BLOCK_BUILDER_COVERAGE_REPORT_ONLY: '1'
+              run: |
+                  arguments=("${BLOCK_BUILDER_CI_PACKAGE_ROOT}/build/coverage/clover.xml")
+                  if [[ -n "${BASE_COMMIT}" ]]; then
+                      arguments+=("${BASE_COMMIT}")
+                  fi
+                  php "${BLOCK_BUILDER_CI_PACKAGE_ROOT}/tests/Quality/assert-coverage.php" "${arguments[@]}"
+            - name: Upload coverage report
+              if: always()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: coverage
+                  path: ${{ runner.temp }}/block-builder-site/public/packages/block_builder/build/coverage
+                  if-no-files-found: warn
+
+    integration:
+        name: Integration / PHP ${{ matrix.php }} / Concrete ${{ matrix.core }}
+        needs: fast
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                include:
+                    - php: '8.4'
+                      core: '9.5.2'
+                      browser: false
+                      database: block_builder_test_minimum
+                      site: block-builder-integration-minimum
+                    - php: '8.5'
+                      core: '^9.5.2'
+                      browser: true
+                      database: block_builder_test_latest
+                      site: block-builder-integration-latest
+        services:
+            mariadb:
+                image: mariadb:11.4
+                env:
+                    MARIADB_ROOT_PASSWORD: integration-root-password
+                    MARIADB_DATABASE: ${{ matrix.database }}
+                    MARIADB_USER: block_builder_integration
+                    MARIADB_PASSWORD: integration-database-password
+                ports:
+                    - 3306:3306
+                options: >-
+                    --health-cmd="healthcheck.sh --connect --innodb_initialized"
+                    --health-interval=10s
+                    --health-timeout=5s
+                    --health-retries=10
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+            - uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  extensions: dom, fileinfo, gd, intl, mbstring, mysql, zip
+                  coverage: none
+                  tools: composer:v2
+            - name: Prepare isolated Concrete project
+              env:
+                  BLOCK_BUILDER_CI_SITE_ROOT: ${{ runner.temp }}/block-builder-site
+                  BLOCK_BUILDER_CI_SOURCE_ROOT: ${{ github.workspace }}
+                  BLOCK_BUILDER_CI_CORE_CONSTRAINT: ${{ matrix.core }}
+              run: bash .github/scripts/prepare-concrete-site.sh
+            - name: Install disposable Concrete site and package
+              env:
+                  BLOCK_BUILDER_CI_DATABASE_SERVER: 127.0.0.1
+                  BLOCK_BUILDER_CI_DATABASE_USERNAME: block_builder_integration
+                  BLOCK_BUILDER_CI_DATABASE_PASSWORD: integration-database-password
+                  BLOCK_BUILDER_CI_DATABASE_NAME: ${{ matrix.database }}
+                  BLOCK_BUILDER_CI_ADMIN_PASSWORD: disposable-admin-password
+                  BLOCK_BUILDER_CI_SITE_ID: ${{ matrix.site }}
+              run: bash .github/scripts/install-disposable-site.sh
+            - name: Run serial CMS integration tests
+              run: |
+                  "${BLOCK_BUILDER_CI_SITE_ROOT}/vendor/bin/phpunit" -c "${BLOCK_BUILDER_CI_PACKAGE_ROOT}/phpunit.integration.xml.dist"
+            - uses: actions/setup-node@v4
+              if: matrix.browser
+              with:
+                  node-version: '24'
+            - name: Require reviewed browser lockfile
+              if: matrix.browser
+              run: |
+                  if [[ ! -f "${BLOCK_BUILDER_CI_PACKAGE_ROOT}/tests/Browser/package-lock.json" ]]; then
+                      echo 'Browser tests require a reviewed package-lock.json. Generate it only after approving the documented npm command.' >&2
+                      exit 1
+                  fi
+            - name: Install browser test dependencies
+              if: matrix.browser
+              run: npm --prefix "${BLOCK_BUILDER_CI_PACKAGE_ROOT}/tests/Browser" ci
+            - name: Install Playwright browsers
+              if: matrix.browser
+              run: npm --prefix "${BLOCK_BUILDER_CI_PACKAGE_ROOT}/tests/Browser" exec -- playwright install --with-deps chromium firefox
+            - name: Start disposable web server
+              if: matrix.browser
+              run: |
+                  BLOCK_BUILDER_BROWSER_SERVER_PUBLIC_ROOT="${BLOCK_BUILDER_CI_SITE_ROOT}/public" \
+                  BLOCK_BUILDER_BROWSER_SERVER_SITE_ID="${{ matrix.site }}" \
+                  php -S 127.0.0.1:8080 \
+                      -t "${BLOCK_BUILDER_CI_SITE_ROOT}/public" \
+                      "${BLOCK_BUILDER_CI_PACKAGE_ROOT}/.github/scripts/disposable-browser-router.php" \
+                      > "${RUNNER_TEMP}/block-builder-server.log" 2>&1 &
+                  echo "BLOCK_BUILDER_CI_SERVER_PID=$!" >> "${GITHUB_ENV}"
+                  curl --fail --retry 20 --retry-delay 1 --retry-connrefused \
+                      -H 'X-Block-Builder-Test-Probe: 1' \
+                      http://127.0.0.1:8080/__block_builder_test_environment > /dev/null
+            - name: Run browser tests
+              if: matrix.browser
+              env:
+                  BLOCK_BUILDER_BROWSER_DISPOSABLE: '1'
+                  BLOCK_BUILDER_BROWSER_BASE_URL: http://127.0.0.1:8080
+                  BLOCK_BUILDER_BROWSER_ADMIN_USERNAME: admin
+                  BLOCK_BUILDER_BROWSER_ADMIN_PASSWORD: disposable-admin-password
+                  BLOCK_BUILDER_BROWSER_SITE_ID: ${{ matrix.site }}
+              run: |
+                  if [[ "${{ github.event_name }}" == 'schedule' ]]; then
+                      npm --prefix "${BLOCK_BUILDER_CI_PACKAGE_ROOT}/tests/Browser" test
+                  else
+                      npm --prefix "${BLOCK_BUILDER_CI_PACKAGE_ROOT}/tests/Browser" run test:chromium
+                  fi
+            - name: Upload browser diagnostics
+              if: always() && matrix.browser
+              uses: actions/upload-artifact@v4
+              with:
+                  name: browser-diagnostics
+                  path: |
+                      ${{ runner.temp }}/block-builder-site/public/packages/block_builder/tests/Browser/playwright-report
+                      ${{ runner.temp }}/block-builder-site/public/packages/block_builder/tests/Browser/test-results
+                      ${{ runner.temp }}/block-builder-server.log
+                  if-no-files-found: warn
+
+    upgrade:
+        name: Upgrade / Block Builder 2.8.1 to 3.0.0
+        needs: fast
+        runs-on: ubuntu-latest
+        services:
+            mariadb:
+                image: mariadb:11.4
+                env:
+                    MARIADB_ROOT_PASSWORD: integration-root-password
+                    MARIADB_DATABASE: block_builder_test_upgrade
+                    MARIADB_USER: block_builder_integration
+                    MARIADB_PASSWORD: integration-database-password
+                ports:
+                    - 3306:3306
+                options: >-
+                    --health-cmd="healthcheck.sh --connect --innodb_initialized"
+                    --health-interval=10s
+                    --health-timeout=5s
+                    --health-retries=10
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+            - uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '8.4'
+                  extensions: dom, fileinfo, gd, intl, mbstring, mysql, zip
+                  coverage: none
+                  tools: composer:v2
+            - name: Materialize the reviewed 2.8.1 release
+              run: git worktree add --detach "${RUNNER_TEMP}/block-builder-legacy" 2.8.1
+            - name: Prepare isolated Concrete project with 2.8.1
+              env:
+                  BLOCK_BUILDER_CI_SITE_ROOT: ${{ runner.temp }}/block-builder-site
+                  BLOCK_BUILDER_CI_SOURCE_ROOT: ${{ runner.temp }}/block-builder-legacy
+                  BLOCK_BUILDER_CI_CORE_CONSTRAINT: '^9.5.2'
+              run: bash .github/scripts/prepare-concrete-site.sh
+            - name: Install disposable site and legacy package
+              env:
+                  BLOCK_BUILDER_CI_DATABASE_SERVER: 127.0.0.1
+                  BLOCK_BUILDER_CI_DATABASE_USERNAME: block_builder_integration
+                  BLOCK_BUILDER_CI_DATABASE_PASSWORD: integration-database-password
+                  BLOCK_BUILDER_CI_DATABASE_NAME: block_builder_test_upgrade
+                  BLOCK_BUILDER_CI_ADMIN_PASSWORD: disposable-admin-password
+                  BLOCK_BUILDER_CI_SITE_ID: block-builder-integration-upgrade
+                  BLOCK_BUILDER_CI_MARKER_SCRIPT_ROOT: ${{ github.workspace }}
+              run: bash .github/scripts/install-disposable-site.sh
+            - name: Verify legacy package version
+              run: >-
+                  php tests/Integration/assert-installed-package-version.php
+                  127.0.0.1
+                  block_builder_test_upgrade
+                  block_builder_integration
+                  integration-database-password
+                  2.8.1
+            - name: Generate and populate a legacy block fixture
+              run: php tests/Integration/create-legacy-upgrade-fixture.php
+            - name: Overlay current package sources
+              env:
+                  BLOCK_BUILDER_CI_SOURCE_ROOT: ${{ github.workspace }}
+                  BLOCK_BUILDER_CI_DATABASE_SERVER: 127.0.0.1
+                  BLOCK_BUILDER_CI_DATABASE_USERNAME: block_builder_integration
+                  BLOCK_BUILDER_CI_DATABASE_PASSWORD: integration-database-password
+                  BLOCK_BUILDER_CI_DATABASE_NAME: block_builder_test_upgrade
+                  BLOCK_BUILDER_CI_LEGACY_VERSION: 2.8.1
+              run: bash .github/scripts/overlay-current-package.sh
+            - name: Run Concrete package upgrade
+              run: |
+                  "${BLOCK_BUILDER_CI_SITE_ROOT}/vendor/bin/concrete" c5:package:update block_builder
+            - name: Verify upgraded package version
+              run: >-
+                  php tests/Integration/assert-installed-package-version.php
+                  127.0.0.1
+                  block_builder_test_upgrade
+                  block_builder_integration
+                  integration-database-password
+                  3.0.0
+            - name: Verify upgraded dashboard and legacy block data
+              env:
+                  BLOCK_BUILDER_INTEGRATION_EXPECT_UPGRADE_FIXTURE: '1'
+              run: |
+                  "${BLOCK_BUILDER_CI_SITE_ROOT}/vendor/bin/phpunit" \
+                      -c "${BLOCK_BUILDER_CI_PACKAGE_ROOT}/phpunit.integration.xml.dist" \
+                      --filter '/(?:PackageInstallationIntegration|UpgradeCompatibilityIntegration)/'
+
+    mutation:
+        name: Critical mutation gate
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '8.4'
+                  extensions: dom, fileinfo, gd, intl, mbstring, mysql, pcntl, zip
+                  coverage: xdebug
+                  tools: composer:v2
+            - name: Prepare isolated Concrete project
+              env:
+                  BLOCK_BUILDER_CI_SITE_ROOT: ${{ runner.temp }}/block-builder-site
+                  BLOCK_BUILDER_CI_SOURCE_ROOT: ${{ github.workspace }}
+                  BLOCK_BUILDER_CI_CORE_CONSTRAINT: '^9.5.2'
+              run: bash .github/scripts/prepare-concrete-site.sh
+            - name: Install mutation runner in disposable project
+              run: |
+                  composer --working-dir="${BLOCK_BUILDER_CI_SITE_ROOT}" config allow-plugins.infection/extension-installer true
+                  composer --working-dir="${BLOCK_BUILDER_CI_SITE_ROOT}" require --dev --no-interaction --with-all-dependencies 'infection/infection:^0.31'
+            - name: Run critical mutation gate
+              env:
+                  XDEBUG_MODE: coverage
+              run: |
+                  cd "${BLOCK_BUILDER_CI_PACKAGE_ROOT}"
+                  "${BLOCK_BUILDER_CI_SITE_ROOT}/vendor/bin/infection" --configuration=infection.json5.dist --threads=max --logger-github
+            - name: Upload mutation report
+              if: always()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: mutation-report
+                  path: ${{ runner.temp }}/block-builder-site/public/packages/block_builder/build/infection
+                  if-no-files-found: warn

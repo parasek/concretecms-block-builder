@@ -46,7 +46,7 @@ final class PredefinedConfigTest extends BlockBuilderTestCase
 
         $config = $this->createBlockConfigDtoFactory()->fromArray($data);
         self::assertSame(
-            $contents,
+            rtrim($contents, "\r\n"),
             json_encode($config, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR),
         );
     }

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="../../../vendor/phpunit/phpunit/phpunit.xsd"
-         bootstrap="tests/bootstrap.php"
+         bootstrap="tests/Integration/bootstrap.php"
          cacheResult="false"
          colors="true"
+         executionOrder="default"
+         failOnWarning="true"
 >
     <testsuites>
-        <testsuite name="Block Builder">
-            <directory suffix="Test.php">tests</directory>
-            <exclude>tests/Browser</exclude>
-            <exclude>tests/Integration</exclude>
+        <testsuite name="Block Builder disposable Concrete integration">
+            <directory suffix="Integration.php">tests/Integration</directory>
         </testsuite>
     </testsuites>
 </phpunit>
