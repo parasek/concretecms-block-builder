@@ -40,6 +40,10 @@ final class LegacyConfigCompatibilityTest extends BlockBuilderTestCase
         self::assertTrue($config->cacheBlockRecord);
         self::assertFalse($config->supportSavingNullValues);
         self::assertSame(['templates'], $config->excludedFromRemoval);
+        self::assertSame(
+            '(e.g. #contact-form or ?ccm_paging_p=2)',
+            $config->urlEndingHelpTextLabel,
+        );
         self::assertCount(21, $config->basic);
         self::assertCount(21, $config->entries);
 
@@ -112,10 +116,64 @@ final class LegacyConfigCompatibilityTest extends BlockBuilderTestCase
         self::assertArrayNotHasKey('fieldsDivider', $canonicalData);
         self::assertArrayNotHasKey('entryFieldsDivider', $canonicalData);
         self::assertArrayNotHasKey('scroll', $canonicalData);
+        self::assertArrayHasKey('urlEndingHelpTextLabel', $canonicalData);
+        self::assertArrayNotHasKey('urlEndingHelpText', $canonicalData);
+        self::assertSame(
+            '(e.g. #contact-form or ?ccm_paging_p=2)',
+            $canonicalData['urlEndingHelpTextLabel'],
+        );
 
         $canonicalNumber = $canonicalData['basic'][1];
         self::assertArrayHasKey('size', $canonicalNumber);
         self::assertArrayNotHasKey('numberSize', $canonicalNumber);
+    }
+
+    public function testPublicReaderLoadsLegacyPredefinedConfig(): void
+    {
+        $config = $this->getService(BlockConfigReader::class)->getPredefinedConfig(
+            'single_multiple_choice_field',
+        );
+
+        self::assertSame('2.8.1', $config->blockBuilderVersion);
+        self::assertSame('single_multiple_choice_field', $config->blockHandle);
+        self::assertSame(
+            '(e.g. #contact-form or ?ccm_paging_p=2)',
+            $config->urlEndingHelpTextLabel,
+        );
+        self::assertCount(6, $config->basic);
+        self::assertCount(6, $config->entries);
+    }
+
+    public function testVersionlessLegacyConfigRemainsSupported(): void
+    {
+        $legacyData = $this->loadJsonFixture('all-fields-2.8.1.json');
+        unset($legacyData['version'], $legacyData['blockBuilderVersion']);
+
+        (new ReflectionMethod(BlockConfigReader::class, 'validateSchema'))->invoke(
+            $this->getService(BlockConfigReader::class),
+            $legacyData,
+            'all_fields/config-bb.json',
+        );
+        $config = $this->createBlockConfigDtoFactory()->fromArray($legacyData);
+
+        self::assertNull($config->blockBuilderVersion);
+    }
+
+    public function testCanonicalTopLevelPropertiesTakePrecedenceOverLegacyProperties(): void
+    {
+        $legacyData = $this->loadJsonFixture('all-fields-2.8.1.json');
+        $legacyData['blockBuilderVersion'] = '2.9.0';
+        $legacyData['urlEndingHelpTextLabel'] = 'Canonical URL ending help text';
+
+        (new ReflectionMethod(BlockConfigReader::class, 'validateSchema'))->invoke(
+            $this->getService(BlockConfigReader::class),
+            $legacyData,
+            'all_fields/config-bb.json',
+        );
+        $config = $this->createBlockConfigDtoFactory()->fromArray($legacyData);
+
+        self::assertSame('2.9.0', $config->blockBuilderVersion);
+        self::assertSame('Canonical URL ending help text', $config->urlEndingHelpTextLabel);
     }
 
     public function testUnknownFieldPropertiesAreRejectedAfterLegacyAliasesAreNormalized(): void
