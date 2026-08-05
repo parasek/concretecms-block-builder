@@ -45,6 +45,7 @@ fi
 
 public_root="${BLOCK_BUILDER_CI_SITE_ROOT}/public"
 blocks_root="${public_root}/application/blocks"
+files_root="${public_root}/application/files"
 package_root="${public_root}/packages/block_builder"
 marker_script_root="${BLOCK_BUILDER_CI_MARKER_SCRIPT_ROOT:-${package_root}}"
 block_builder_assert_no_symlink_components "${package_root}" 'The disposable package root'
@@ -54,6 +55,17 @@ if [[ "${package_root}" != "${public_root}/packages/block_builder" || ! -f "${pa
     exit 2
 fi
 marker_script_root="$(block_builder_resolve_existing_directory "${marker_script_root}" 'The marker script root')"
+
+block_builder_assert_no_symlink_components "${files_root}" 'The disposable files root'
+if [[ -e "${files_root}" && ! -d "${files_root}" ]]; then
+    echo "The disposable files root is not a directory: ${files_root}" >&2
+    exit 2
+fi
+mkdir -p -- "${files_root}"
+if [[ ! -w "${files_root}" ]]; then
+    echo "The disposable files root is not writable: ${files_root}" >&2
+    exit 2
+fi
 
 (
     cd "${public_root}"
