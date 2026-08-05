@@ -277,6 +277,7 @@ jobs:
               run: bash .github/scripts/overlay-current-package.sh
             - name: Run Concrete package upgrade
               run: |
+                  cd "${BLOCK_BUILDER_CI_SITE_ROOT}/public"
                   "${BLOCK_BUILDER_CI_SITE_ROOT}/vendor/bin/concrete" c5:package:update block_builder
             - name: Verify upgraded package version
               run: >-

@@ -55,24 +55,28 @@ if [[ "${package_root}" != "${public_root}/packages/block_builder" || ! -f "${pa
 fi
 marker_script_root="$(block_builder_resolve_existing_directory "${marker_script_root}" 'The marker script root')"
 
-"${BLOCK_BUILDER_CI_SITE_ROOT}/vendor/bin/concrete" c5:install \
-    --db-server="${BLOCK_BUILDER_CI_DATABASE_SERVER}" \
-    --db-username="${BLOCK_BUILDER_CI_DATABASE_USERNAME}" \
-    --db-password="${BLOCK_BUILDER_CI_DATABASE_PASSWORD}" \
-    --db-database="${BLOCK_BUILDER_CI_DATABASE_NAME}" \
-    --timezone=UTC \
-    --site='Block Builder integration' \
-    --canonical-url='http://127.0.0.1:8080' \
-    --starting-point=atomik_blank \
-    --session-handler=database \
-    --admin-email='admin@example.test' \
-    --admin-password="${BLOCK_BUILDER_CI_ADMIN_PASSWORD}" \
-    --language=en_US \
-    --site-locale=en_US \
-    --disable-marketplace-connect \
-    --ignore-warnings
+(
+    cd "${public_root}"
 
-"${BLOCK_BUILDER_CI_SITE_ROOT}/vendor/bin/concrete" c5:package:install block_builder --languages=no
+    "${BLOCK_BUILDER_CI_SITE_ROOT}/vendor/bin/concrete" c5:install \
+        --db-server="${BLOCK_BUILDER_CI_DATABASE_SERVER}" \
+        --db-username="${BLOCK_BUILDER_CI_DATABASE_USERNAME}" \
+        --db-password="${BLOCK_BUILDER_CI_DATABASE_PASSWORD}" \
+        --db-database="${BLOCK_BUILDER_CI_DATABASE_NAME}" \
+        --timezone=UTC \
+        --site='Block Builder integration' \
+        --canonical-url='http://127.0.0.1:8080' \
+        --starting-point=atomik_blank \
+        --session-handler=database \
+        --admin-email='admin@example.test' \
+        --admin-password="${BLOCK_BUILDER_CI_ADMIN_PASSWORD}" \
+        --language=en_US \
+        --site-locale=en_US \
+        --disable-marketplace-connect \
+        --ignore-warnings
+
+    "${BLOCK_BUILDER_CI_SITE_ROOT}/vendor/bin/concrete" c5:package:install block_builder --languages=no
+)
 
 if [[ ! -f "${marker_script_root}/tests/Integration/create-environment-marker.php" ]]; then
     echo "The disposable marker helper is missing from: ${marker_script_root}" >&2
