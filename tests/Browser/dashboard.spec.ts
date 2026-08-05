@@ -22,6 +22,22 @@ async function addFieldThroughChoices(
     await fieldTypeChoice.click();
 }
 
+async function submitBuildForm(page: Page, builder: Locator): Promise<void> {
+    const buildButton = builder.locator('button[name="buildBlock"]');
+    await Promise.all([
+        page.waitForNavigation({ waitUntil: 'domcontentloaded' }),
+        buildButton.evaluate((button: HTMLButtonElement) => {
+            const form = button.form;
+            if (!form) {
+                throw new Error('The build button is not associated with a form.');
+            }
+
+            form.noValidate = true;
+            form.requestSubmit(button);
+        }),
+    ]);
+}
+
 async function removeGeneratedFixtureThroughDashboard(page: Page): Promise<void> {
     for (let action = 0; action < 2; action += 1) {
         await page.goto('/index.php/dashboard/blocks/block_builder/configs');
@@ -167,8 +183,14 @@ test.describe('authenticated Block Builder dashboard', () => {
 
     test('failed POST retains values, focuses the error tab, and accepts a valid PNG upload', async ({ page }) => {
         const builder = page.locator('#bbAppBuilder');
-        await builder.locator('#blockName').fill('Retained browser name');
-        await builder.locator('#blockHandle').fill('retained_browser_handle');
+        const blockName = builder.locator('#blockName');
+        const blockHandle = builder.locator('#blockHandle');
+        await blockName.fill('Retained browser name');
+        await blockName.blur();
+        await expect(blockHandle).toHaveValue('retained_browser_name');
+        await blockHandle.fill('retained_browser_handle');
+        await blockHandle.blur();
+        await expect(blockHandle).toHaveValue('retained_browser_handle');
         await builder.locator('#blockDescription').fill('Retained browser description');
 
         const iconBytes = await page.evaluate(async () => {
@@ -194,19 +216,7 @@ test.describe('authenticated Block Builder dashboard', () => {
         await builder.locator('[data-bb-tab="labels"]').click();
         await builder.locator('#addAtTheTopLabel').fill('');
         await builder.locator('#addAtTheBottomLabel').fill('');
-        const buildButton = builder.locator('button[name="buildBlock"]');
-        await Promise.all([
-            page.waitForNavigation({ waitUntil: 'domcontentloaded' }),
-            buildButton.evaluate((button: HTMLButtonElement) => {
-                const form = button.form;
-                if (!form) {
-                    throw new Error('The build button is not associated with a form.');
-                }
-
-                form.noValidate = true;
-                form.requestSubmit(button);
-            }),
-        ]);
+        await submitBuildForm(page, builder);
 
         await expect(page).toHaveURL(/#labels$/);
         await expect(page.locator('[data-bb-tab="labels"]')).toHaveClass(/bb-tab-has-error/);
@@ -234,10 +244,7 @@ test.describe('authenticated Block Builder dashboard', () => {
             await builder.locator('[data-bb-tab="build-options"]').click();
             await expect(builder.locator('#ccm-tab-content-build-options')).toBeVisible();
             await builder.locator('#installBlock').selectOption('0');
-            await Promise.all([
-                page.waitForNavigation({ waitUntil: 'domcontentloaded' }),
-                builder.locator('button[name="buildBlock"]').click({ noWaitAfter: true }),
-            ]);
+            await submitBuildForm(page, builder);
             await expect(page).toHaveURL(/\/dashboard\/blocks\/block_builder\/config\/block_builder_browser_fixture/);
 
             await page.goto('/index.php/dashboard/blocks/block_builder/configs');
