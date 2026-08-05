@@ -55,9 +55,14 @@ if (!$superUser instanceof User || !$superUser->isSuperUser()) {
 }
 $application->instance(User::class, $superUser);
 
-$package = $application->make(PackageService::class)->getByHandle('block_builder');
+$packageService = $application->make(PackageService::class);
+$package = $packageService->getByHandle('block_builder');
 if (!$package instanceof PackageEntity || !$package->isPackageInstalled() || $package->getPackageVersion() !== '2.8.1') {
     throw new RuntimeException('The legacy fixture helper requires installed Block Builder 2.8.1 sources.');
+}
+$packageController = $packageService->getClass('block_builder');
+if (!$packageController instanceof \Concrete\Package\BlockBuilder\Controller) {
+    throw new RuntimeException('The installed legacy Block Builder package controller could not be loaded.');
 }
 if (!class_exists(\BlockBuilder\Generator::class)) {
     throw new RuntimeException('The installed legacy Block Builder generator is unavailable.');
