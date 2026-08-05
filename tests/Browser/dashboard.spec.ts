@@ -194,9 +194,18 @@ test.describe('authenticated Block Builder dashboard', () => {
         await builder.locator('[data-bb-tab="labels"]').click();
         await builder.locator('#addAtTheTopLabel').fill('');
         await builder.locator('#addAtTheBottomLabel').fill('');
+        const buildButton = builder.locator('button[name="buildBlock"]');
         await Promise.all([
             page.waitForNavigation({ waitUntil: 'domcontentloaded' }),
-            builder.locator('button[name="buildBlock"]').click({ noWaitAfter: true }),
+            buildButton.evaluate((button: HTMLButtonElement) => {
+                const form = button.form;
+                if (!form) {
+                    throw new Error('The build button is not associated with a form.');
+                }
+
+                form.noValidate = true;
+                form.requestSubmit(button);
+            }),
         ]);
 
         await expect(page).toHaveURL(/#labels$/);
@@ -222,10 +231,12 @@ test.describe('authenticated Block Builder dashboard', () => {
             const builder = page.locator('#bbAppBuilder');
             await builder.locator('#blockName').fill(storedName);
             await builder.locator('#blockHandle').fill(generatedFixtureHandle);
+            await builder.locator('[data-bb-tab="build-options"]').click();
+            await expect(builder.locator('#ccm-tab-content-build-options')).toBeVisible();
             await builder.locator('#installBlock').selectOption('0');
             await Promise.all([
-                page.waitForNavigation(),
-                builder.locator('button[name="buildBlock"]').click(),
+                page.waitForNavigation({ waitUntil: 'domcontentloaded' }),
+                builder.locator('button[name="buildBlock"]').click({ noWaitAfter: true }),
             ]);
             await expect(page).toHaveURL(/\/dashboard\/blocks\/block_builder\/config\/block_builder_browser_fixture/);
 
