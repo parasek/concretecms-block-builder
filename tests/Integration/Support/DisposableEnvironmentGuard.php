@@ -331,12 +331,18 @@ final readonly class DisposableEnvironmentGuard
                 throw new RuntimeException('The disposable Concrete configuration directory must not contain symbolic links.');
             }
             if ($entry !== 'database.php' && str_ends_with($entry, '.database.php')) {
-                throw new RuntimeException('Environment-specific database configuration overrides are not allowed in disposable integration sites.');
+                throw new RuntimeException(sprintf(
+                    'Environment-specific database configuration overrides are not allowed in disposable integration sites: %s',
+                    $entry,
+                ));
             }
             if (is_dir($entryPath)) {
                 $environmentDatabasePath = $entryPath . DIRECTORY_SEPARATOR . 'database.php';
                 if (file_exists($environmentDatabasePath) || is_link($environmentDatabasePath)) {
-                    throw new RuntimeException('Environment-specific database configuration overrides are not allowed in disposable integration sites.');
+                    throw new RuntimeException(sprintf(
+                        'Environment-specific database configuration overrides are not allowed in disposable integration sites: %s',
+                        $entry . DIRECTORY_SEPARATOR . 'database.php',
+                    ));
                 }
             }
         }

@@ -37,6 +37,24 @@ if [[ "${created_site_root}" != "${BLOCK_BUILDER_CI_SITE_ROOT}" ]]; then
     exit 2
 fi
 
+live_database_override="${BLOCK_BUILDER_CI_SITE_ROOT}/public/application/config/live.database.php"
+quarantined_live_database_override="${BLOCK_BUILDER_CI_SITE_ROOT}/live.database.php.disabled"
+block_builder_assert_no_symlink_components "${live_database_override}" 'The live database override'
+if [[ -e "${live_database_override}" || -L "${live_database_override}" ]]; then
+    if [[ -L "${live_database_override}" || ! -f "${live_database_override}" ]]; then
+        echo "The live database override is not a regular, non-linked file: ${live_database_override}" >&2
+        exit 2
+    fi
+    if [[ -e "${quarantined_live_database_override}" || -L "${quarantined_live_database_override}" ]]; then
+        echo "The live database override quarantine target already exists: ${quarantined_live_database_override}" >&2
+        exit 2
+    fi
+
+    mv -- "${live_database_override}" "${quarantined_live_database_override}"
+fi
+unset live_database_override
+unset quarantined_live_database_override
+
 composer --working-dir="${BLOCK_BUILDER_CI_SITE_ROOT}" require \
     --no-interaction \
     --no-update \
