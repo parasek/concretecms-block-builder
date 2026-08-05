@@ -65,7 +65,7 @@ $criticalMetrics = [
     'conditionals' => 0,
     'coveredconditionals' => 0,
 ];
-$fileNodes = $xpath->query('/coverage/project/package/file');
+$fileNodes = $xpath->query('/coverage/project/file | /coverage/project/package/file');
 if ($fileNodes === false) {
     fwrite(STDERR, "The Clover report file list could not be read.\n");
     exit(2);

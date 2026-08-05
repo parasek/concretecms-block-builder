@@ -114,6 +114,31 @@ final class CoverageGateTest extends TestCase
     }
 
     /**
+     * Confirms that critical files placed directly below the Clover project element are included,
+     * as well as files grouped inside a package element.
+     */
+    public function testDirectProjectFilesAreIncludedInCriticalCoverage(): void
+    {
+        $cloverPath = $this->writeCloverReport(
+            overallStatements: 100,
+            overallCoveredStatements: 85,
+            overallConditionals: 100,
+            overallCoveredConditionals: 75,
+            criticalStatements: 100,
+            criticalCoveredStatements: 95,
+            criticalConditionals: 100,
+            criticalCoveredConditionals: 90,
+            criticalFileIsNestedInPackage: false,
+        );
+
+        $result = $this->runCoverageGate($cloverPath);
+
+        self::assertSame(0, $result['exitCode'], $result['errorOutput']);
+        self::assertStringContainsString('Critical lines: 95.00%', $result['output']);
+        self::assertStringContainsString('Critical branches: 90.00%', $result['output']);
+    }
+
+    /**
      * Confirms that malformed coverage XML fails even in report-only mode rather than silently
      * passing without trustworthy measurements.
      */
@@ -171,24 +196,32 @@ final class CoverageGateTest extends TestCase
         int $criticalCoveredStatements,
         int $criticalConditionals,
         int $criticalCoveredConditionals,
+        bool $criticalFileIsNestedInPackage = true,
     ): string {
         $cloverPath = $this->temporaryDirectory . DIRECTORY_SEPARATOR . 'clover.xml';
+        $criticalFile = sprintf(
+            '<file name="/workspace/src/BlockBuilder/Block/Service/Example.php">'
+            . '<metrics statements="%d" coveredstatements="%d" conditionals="%d" coveredconditionals="%d"/>'
+            . '</file>',
+            $criticalStatements,
+            $criticalCoveredStatements,
+            $criticalConditionals,
+            $criticalCoveredConditionals,
+        );
+        $criticalFileContainer = $criticalFileIsNestedInPackage
+            ? '<package name="critical">' . $criticalFile . '</package>'
+            : $criticalFile;
         $contents = sprintf(
             '<?xml version="1.0" encoding="UTF-8"?>'
             . '<coverage><project>'
             . '<metrics statements="%d" coveredstatements="%d" conditionals="%d" coveredconditionals="%d"/>'
-            . '<package name="critical"><file name="/workspace/src/BlockBuilder/Block/Service/Example.php">'
-            . '<metrics statements="%d" coveredstatements="%d" conditionals="%d" coveredconditionals="%d"/>'
-            . '</file></package>'
+            . '%s'
             . '</project></coverage>',
             $overallStatements,
             $overallCoveredStatements,
             $overallConditionals,
             $overallCoveredConditionals,
-            $criticalStatements,
-            $criticalCoveredStatements,
-            $criticalConditionals,
-            $criticalCoveredConditionals,
+            $criticalFileContainer,
         );
         self::assertSame(strlen($contents), file_put_contents($cloverPath, $contents));
 
