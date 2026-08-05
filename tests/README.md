@@ -224,7 +224,7 @@ npm --prefix "$BLOCK_BUILDER_CI_PACKAGE_ROOT/tests/Browser" exec -- \
 
 The `--with-deps` browser installation can require elevated privileges because it installs operating-system browser libraries.
 
-After completing the disposable integration-site setup above, start the guarded server in the same shell so that it inherits all `BLOCK_BUILDER_INTEGRATION_*` variables. Loopback port `8080` must be free and must not be changed because the disposable Concrete site was installed with `http://127.0.0.1:8080` as its canonical URL.
+After completing the disposable integration-site setup above, start the guarded server in the same shell so that it inherits all `BLOCK_BUILDER_INTEGRATION_*` variables. Loopback port `8080` must be free and must not be changed because the disposable Concrete site was installed with `http://127.0.0.1:8080/` as its canonical URL.
 
 ```bash
 BLOCK_BUILDER_BROWSER_SERVER_PUBLIC_ROOT="$BLOCK_BUILDER_CI_SITE_ROOT/public" \

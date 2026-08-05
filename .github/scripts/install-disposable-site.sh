@@ -77,7 +77,7 @@ fi
         --db-database="${BLOCK_BUILDER_CI_DATABASE_NAME}" \
         --timezone=UTC \
         --site='Block Builder integration' \
-        --canonical-url='http://127.0.0.1:8080' \
+        --canonical-url='http://127.0.0.1:8080/' \
         --starting-point=atomik_blank \
         --session-handler=database \
         --admin-email='admin@example.test' \
