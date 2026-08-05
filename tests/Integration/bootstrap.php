@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use BlockBuilder\Tests\Integration\Support\DisposableEnvironmentGuard;
 use Concrete\Core\Foundation\ClassAutoloader;
+use Concrete\Core\Package\PackageService;
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'Support' . DIRECTORY_SEPARATOR . 'DisposableEnvironmentGuard.php';
 
@@ -41,6 +42,14 @@ $application->instance(ClassAutoloader::class, ClassAutoloader::getInstance());
 
 $connection = $application->make(Concrete\Core\Database\Connection\Connection::class);
 $guard->assertActiveDatabase($connection);
+
+$packageController = $application->make(PackageService::class)->getClass('block_builder');
+if (!$packageController instanceof Concrete\Package\BlockBuilder\Controller) {
+    throw new RuntimeException('The installed Block Builder package controller could not be loaded.');
+}
+if (!class_exists(BlockBuilder\Block\Factory\BlockConfigDtoFactory::class)) {
+    throw new RuntimeException('The installed Block Builder package autoloader could not load package classes.');
+}
 
 $GLOBALS['blockBuilderIntegrationApplication'] = $application;
 $GLOBALS['blockBuilderIntegrationEnvironmentGuard'] = $guard;
