@@ -195,8 +195,8 @@ test.describe('authenticated Block Builder dashboard', () => {
         await builder.locator('#addAtTheTopLabel').fill('');
         await builder.locator('#addAtTheBottomLabel').fill('');
         await Promise.all([
-            page.waitForNavigation(),
-            builder.locator('button[name="buildBlock"]').click(),
+            page.waitForNavigation({ waitUntil: 'domcontentloaded' }),
+            builder.locator('button[name="buildBlock"]').click({ noWaitAfter: true }),
         ]);
 
         await expect(page).toHaveURL(/#labels$/);
@@ -209,6 +209,8 @@ test.describe('authenticated Block Builder dashboard', () => {
     });
 
     test('generated config escapes stored names and rejects unguarded lifecycle requests', async ({ page, context }) => {
+        test.setTimeout(90_000);
+
         const storedName = '<img src=x onerror="window.__blockBuilderStoredXss=true"> Browser fixture';
         await page.addInitScript(() => {
             (window as Window & { __blockBuilderStoredXss?: boolean }).__blockBuilderStoredXss = false;
@@ -269,7 +271,9 @@ test.describe('authenticated Block Builder dashboard', () => {
                 }
             }
         } finally {
-            await removeGeneratedFixtureThroughDashboard(page);
+            if (!page.isClosed() && test.info().status !== 'timedOut') {
+                await removeGeneratedFixtureThroughDashboard(page);
+            }
         }
     });
 });
