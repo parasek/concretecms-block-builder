@@ -42,11 +42,17 @@ composer --working-dir="${BLOCK_BUILDER_CI_SITE_ROOT}" require \
     --no-update \
     "concrete5/core:${BLOCK_BUILDER_CI_CORE_CONSTRAINT}"
 
+# Codeberg's archive API is unreliable under concurrent CI downloads. Install this one dependency
+# from the immutable Git source reference selected by Composer, while retaining dist archives for
+# every other dependency.
+composer --working-dir="${BLOCK_BUILDER_CI_SITE_ROOT}" config --unset preferred-install
+composer --working-dir="${BLOCK_BUILDER_CI_SITE_ROOT}" config preferred-install.ssddanbrown/htmldiff source
+composer --working-dir="${BLOCK_BUILDER_CI_SITE_ROOT}" config 'preferred-install.*' dist
+
 composer_update_arguments=(
     update
     --with-all-dependencies
     --no-interaction
-    --prefer-dist
     --no-progress
 )
 if [[ -f "${BLOCK_BUILDER_CI_SITE_ROOT}/composer.lock" ]]; then

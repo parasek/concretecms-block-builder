@@ -39,7 +39,9 @@ jobs:
             - name: Restore Composer download cache
               uses: actions/cache@v5
               with:
-                  path: ~/.cache/composer/files
+                  path: |
+                      ~/.cache/composer/files
+                      ~/.cache/composer/vcs
                   key: composer-dist-${{ runner.os }}-php-${{ matrix.php }}-${{ hashFiles('composer.json', '.github/scripts/prepare-concrete-site.sh') }}
                   restore-keys: |
                       composer-dist-${{ runner.os }}-php-${{ matrix.php }}-
@@ -73,7 +75,9 @@ jobs:
             - name: Restore Composer download cache
               uses: actions/cache@v5
               with:
-                  path: ~/.cache/composer/files
+                  path: |
+                      ~/.cache/composer/files
+                      ~/.cache/composer/vcs
                   key: composer-dist-${{ runner.os }}-php-8.4-${{ hashFiles('composer.json', '.github/scripts/prepare-concrete-site.sh') }}
                   restore-keys: |
                       composer-dist-${{ runner.os }}-php-8.4-
@@ -153,7 +157,9 @@ jobs:
             - name: Restore Composer download cache
               uses: actions/cache@v5
               with:
-                  path: ~/.cache/composer/files
+                  path: |
+                      ~/.cache/composer/files
+                      ~/.cache/composer/vcs
                   key: composer-dist-${{ runner.os }}-php-${{ matrix.php }}-${{ hashFiles('composer.json', '.github/scripts/prepare-concrete-site.sh') }}
                   restore-keys: |
                       composer-dist-${{ runner.os }}-php-${{ matrix.php }}-
@@ -262,7 +268,9 @@ jobs:
             - name: Restore Composer download cache
               uses: actions/cache@v5
               with:
-                  path: ~/.cache/composer/files
+                  path: |
+                      ~/.cache/composer/files
+                      ~/.cache/composer/vcs
                   key: composer-dist-${{ runner.os }}-php-8.4-${{ hashFiles('composer.json', '.github/scripts/prepare-concrete-site.sh') }}
                   restore-keys: |
                       composer-dist-${{ runner.os }}-php-8.4-
@@ -338,7 +346,9 @@ jobs:
             - name: Restore Composer download cache
               uses: actions/cache@v5
               with:
-                  path: ~/.cache/composer/files
+                  path: |
+                      ~/.cache/composer/files
+                      ~/.cache/composer/vcs
                   key: composer-dist-${{ runner.os }}-php-8.4-${{ hashFiles('composer.json', '.github/scripts/prepare-concrete-site.sh') }}
                   restore-keys: |
                       composer-dist-${{ runner.os }}-php-8.4-
