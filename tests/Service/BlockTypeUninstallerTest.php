@@ -18,6 +18,12 @@ use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;
 use Throwable;
 
+/**
+ * Test type: Block type uninstallation service unit test.
+ *
+ * Verifies permission, lookup, internal-type, ownership, and locking safeguards together with
+ * deletion results, failure wrapping, lifecycle logging, and reliable lock release.
+ */
 final class BlockTypeUninstallerTest extends TestCase
 {
     private const int BLOCK_TYPE_ID = 42;
@@ -39,6 +45,10 @@ final class BlockTypeUninstallerTest extends TestCase
         (new Filesystem())->remove($this->lockDirectory);
     }
 
+    /**
+     * Confirms that a permission-check exception is wrapped and logged before the block type is
+     * looked up.
+     */
     public function testPermissionCheckExceptionIsWrappedAndLoggedBeforeLookup(): void
     {
         $permissionFailure = new RuntimeException('permission infrastructure failed');
@@ -53,6 +63,10 @@ final class BlockTypeUninstallerTest extends TestCase
         $this->assertSingleFailureLog($state, $exception);
     }
 
+    /**
+     * Confirms that denied permissions return a logged uninstall failure without looking up or
+     * deleting a block type.
+     */
     public function testDeniedPermissionIsReturnedAsALoggedUninstallFailure(): void
     {
         $state = new BlockTypeUninstallerTestState();
@@ -66,6 +80,9 @@ final class BlockTypeUninstallerTest extends TestCase
         $this->assertSingleFailureLog($state, $exception);
     }
 
+    /**
+     * Confirms that a block-type lookup exception is wrapped with its original cause and logged.
+     */
     public function testLocatorExceptionIsWrappedWithOriginalCauseAndLogged(): void
     {
         $locatorFailure = new RuntimeException('block type lookup failed');
@@ -80,6 +97,9 @@ final class BlockTypeUninstallerTest extends TestCase
         $this->assertSingleFailureLog($state, $exception);
     }
 
+    /**
+     * Confirms that an unknown block-type identifier produces a clear logged uninstall failure.
+     */
     public function testMissingBlockTypeIsReportedAndLogged(): void
     {
         $state = new BlockTypeUninstallerTestState();
@@ -91,6 +111,10 @@ final class BlockTypeUninstallerTest extends TestCase
         $this->assertSingleFailureLog($state, $exception, [], 'missing_block');
     }
 
+    /**
+     * Confirms that an exception while reading block-type metadata is wrapped with its original
+     * cause and logged.
+     */
     public function testEntityInspectionExceptionIsWrappedWithOriginalCauseAndLogged(): void
     {
         $inspectionFailure = new RuntimeException('entity inspection failed');
@@ -106,6 +130,10 @@ final class BlockTypeUninstallerTest extends TestCase
         $this->assertSingleFailureLog($state, $exception);
     }
 
+    /**
+     * Confirms that a core/internal block type is rejected before acquiring a lock or deleting
+     * anything.
+     */
     public function testInternalBlockTypeIsRejectedBeforeLockingOrDeletion(): void
     {
         $state = new BlockTypeUninstallerTestState();
@@ -120,6 +148,10 @@ final class BlockTypeUninstallerTest extends TestCase
         $this->assertSingleFailureLog($state, $exception);
     }
 
+    /**
+     * Confirms that a block entity without a usable handle is logged by identifier and never
+     * reaches locking or deletion.
+     */
     public function testMissingEntityHandleIsLoggedWithIdentifierAndDoesNotAcquireALock(): void
     {
         $state = new BlockTypeUninstallerTestState();
@@ -138,6 +170,10 @@ final class BlockTypeUninstallerTest extends TestCase
         );
     }
 
+    /**
+     * Confirms that failure to acquire the block handle lock is wrapped and logged without
+     * deleting the block type.
+     */
     public function testLockAcquisitionFailureIsWrappedLoggedAndDoesNotDelete(): void
     {
         $state = new BlockTypeUninstallerTestState();
@@ -160,6 +196,10 @@ final class BlockTypeUninstallerTest extends TestCase
         );
     }
 
+    /**
+     * Confirms that a block type not owned by Block Builder is preserved, reported, and followed
+     * by lock release.
+     */
     public function testUnownedBlockTypeIsLoggedDoesNotDeleteAndReleasesTheLock(): void
     {
         $state = new BlockTypeUninstallerTestState();
@@ -180,6 +220,10 @@ final class BlockTypeUninstallerTest extends TestCase
         $this->assertHandleLockIsAvailable(self::BLOCK_HANDLE);
     }
 
+    /**
+     * Confirms that a delete exception is wrapped and logged while retaining the original cause
+     * and releasing the handle lock.
+     */
     public function testDeleteExceptionIsWrappedLoggedAndReleasesTheLock(): void
     {
         $deleteFailure = new RuntimeException('entity deletion failed');
@@ -200,6 +244,10 @@ final class BlockTypeUninstallerTest extends TestCase
         $this->assertHandleLockIsAvailable(self::BLOCK_HANDLE);
     }
 
+    /**
+     * Confirms that a successful uninstall returns the block name, logs completion, and releases
+     * the handle lock.
+     */
     public function testSuccessfulUninstallReturnsNameLogsSuccessAndReleasesTheLock(): void
     {
         $state = new BlockTypeUninstallerTestState();

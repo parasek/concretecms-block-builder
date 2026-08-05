@@ -16,11 +16,21 @@ use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Throwable;
 
+/**
+ * Test type: Block type installation service unit test.
+ *
+ * Verifies that installation enforces permissions, safe handles and paths, package ownership, and
+ * non-installed state while wrapping and logging failures with their original cause.
+ */
 final class BlockTypeInstallerTest extends TestCase
 {
     private const string BLOCK_HANDLE = 'example_block';
     private const string BLOCK_PATH = '/application/blocks/example_block';
 
+    /**
+     * Confirms that a permission-check exception is wrapped and logged before any block directory
+     * lookup occurs.
+     */
     public function testPermissionCheckExceptionIsWrappedAndLoggedBeforeFilesystemLookup(): void
     {
         $permissionFailure = new RuntimeException('permission infrastructure failed');
@@ -35,6 +45,10 @@ final class BlockTypeInstallerTest extends TestCase
         $this->assertSingleFailureLog($state, $exception);
     }
 
+    /**
+     * Confirms that denied permissions return a logged installation failure without inspecting
+     * the filesystem.
+     */
     public function testDeniedPermissionIsReturnedAsALoggedInstallationFailure(): void
     {
         $state = new BlockTypeInstallerTestState();
@@ -48,6 +62,10 @@ final class BlockTypeInstallerTest extends TestCase
         $this->assertSingleFailureLog($state, $exception);
     }
 
+    /**
+     * Confirms that an invalid block handle is rejected before its application directory is
+     * resolved.
+     */
     public function testInvalidHandleIsRejectedBeforeFilesystemLookup(): void
     {
         $state = new BlockTypeInstallerTestState();
@@ -59,6 +77,9 @@ final class BlockTypeInstallerTest extends TestCase
         $this->assertSingleFailureLog($state, $exception, [], 'Invalid Handle');
     }
 
+    /**
+     * Confirms that a missing or unsafe application block directory is rejected and logged.
+     */
     public function testMissingOrUnsafeDirectoryIsRejectedAndLogged(): void
     {
         $state = new BlockTypeInstallerTestState();
@@ -71,6 +92,10 @@ final class BlockTypeInstallerTest extends TestCase
         $this->assertSingleFailureLog($state, $exception);
     }
 
+    /**
+     * Confirms that Block Builder refuses to install an unowned directory and logs its validated
+     * path for diagnosis.
+     */
     public function testUnownedDirectoryIsRejectedAndLoggedWithItsSafePath(): void
     {
         $state = new BlockTypeInstallerTestState();
@@ -86,6 +111,10 @@ final class BlockTypeInstallerTest extends TestCase
         $this->assertSingleFailureLog($state, $exception, ['path' => self::BLOCK_PATH]);
     }
 
+    /**
+     * Confirms that an installed-block lookup exception is wrapped with its original cause and
+     * logged as an installation failure.
+     */
     public function testInstalledLookupExceptionIsWrappedWithOriginalCauseAndLogged(): void
     {
         $lookupFailure = new RuntimeException('installed lookup failed');
@@ -103,6 +132,10 @@ final class BlockTypeInstallerTest extends TestCase
         $this->assertSingleFailureLog($state, $exception, ['path' => self::BLOCK_PATH]);
     }
 
+    /**
+     * Confirms that an already installed block is rejected and logged without invoking Concrete's
+     * static installer.
+     */
     public function testAlreadyInstalledBlockIsRejectedAndLoggedWithoutCallingStaticInstaller(): void
     {
         $state = new BlockTypeInstallerTestState();

@@ -9,8 +9,21 @@ use Concrete\Core\Entity\Package as PackageEntity;
 use Concrete\Core\Package\PackageService;
 use Concrete\Core\Page\Page;
 
+/**
+ * Test type: Package installation and environment integration test.
+ *
+ * Verifies the installed package version and dashboard pages, then confirms that Concrete's
+ * active paths and database all belong to the guarded disposable installation.
+ */
 final class PackageInstallationIntegration extends ConcreteIntegrationTestCase
 {
+    /**
+     * Confirms that Block Builder was installed correctly in the disposable Concrete site.
+     *
+     * The test loads the installed package and its two dashboard pages. It expects package version
+     * 3.0.0, verifies that both pages belong to Block Builder, and confirms that the Configs page
+     * remains hidden from normal dashboard navigation.
+     */
     public function testDisposableSiteContainsInstalledPackageAndDashboardPages(): void
     {
         self::assertTrue($this->application->isInstalled());
@@ -30,6 +43,13 @@ final class PackageInstallationIntegration extends ConcreteIntegrationTestCase
         self::assertTrue((bool) $configsPage->getAttribute('exclude_nav'));
     }
 
+    /**
+     * Confirms that the test is running only inside the approved disposable environment.
+     *
+     * The test compares Concrete's active public, generated-block, package, and database locations
+     * with the locations approved by the environment guard. Every location must belong to the
+     * disposable installation so the suite cannot accidentally use a development or production site.
+     */
     public function testRuntimePathsRemainInsideDisposableInstallation(): void
     {
         self::assertSame($this->environmentGuard->publicRoot, realpath(DIR_BASE));

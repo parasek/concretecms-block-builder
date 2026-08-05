@@ -17,6 +17,12 @@ use Concrete\Core\Block\BlockType\BlockType;
 use Concrete\Core\Entity\Block\BlockType\BlockType as BlockTypeEntity;
 use JsonException;
 
+/**
+ * Test type: Generated block lifecycle integration test.
+ *
+ * Exercises generation, installation, persistence, editing, duplication, rebuilding, deletion,
+ * uninstallation, and directory removal while checking that data and retained files stay safe.
+ */
 final class GeneratedBlockLifecycleIntegration extends ConcreteIntegrationTestCase
 {
     private const string BLOCK_HANDLE = 'block_builder_integration_fixture';
@@ -33,6 +39,15 @@ final class GeneratedBlockLifecycleIntegration extends ConcreteIntegrationTestCa
     }
 
     /**
+     * Exercises the complete lifecycle of a generated block in the disposable Concrete site.
+     *
+     * The test starts with no existing fixture, generates and installs the block, and confirms
+     * that its files, database tables, and block type were created. It then creates and edits a
+     * real block instance, checks its basic and repeatable values, duplicates it, and verifies the
+     * copied data. Next, it rebuilds the block and confirms that existing data and an excluded
+     * custom file are preserved. Finally, it deletes both instances, verifies that their data was
+     * removed, uninstalls the block type, and removes the generated block directory.
+     *
      * @throws JsonException
      */
     public function testGenerateInstallPersistRebuildDuplicateDeleteAndUninstallLifecycle(): void

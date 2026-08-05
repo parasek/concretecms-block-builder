@@ -10,8 +10,17 @@ use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\FieldType\Type\Text\TextFieldType;
 use BlockBuilder\Tests\Support\BlockBuilderTestCase;
 
+/**
+ * Test type: Generated controller property validation unit test.
+ *
+ * Verifies that a user-defined field cannot overwrite a controller property reserved by Concrete
+ * CMS, preventing generated code from silently changing the controller's runtime behavior.
+ */
 final class ReservedControllerPropertyTest extends BlockBuilderTestCase
 {
+    /**
+     * Verifies that a generated field cannot reuse Concrete's reserved cacheOutputOnEditMode property.
+     */
     public function testFieldCannotShadowCacheOutputOnEditModeProperty(): void
     {
         $config = $this->createBlockConfigDtoFactory()->fromGenerationArray([

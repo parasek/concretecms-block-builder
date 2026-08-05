@@ -10,8 +10,17 @@ use BlockBuilder\Block\Service\BlockConfigReader;
 use BlockBuilder\Tests\Support\BlockBuilderTestCase;
 use ReflectionMethod;
 
+/**
+ * Test type: Configuration schema validation component test.
+ *
+ * Verifies that the block configuration schema rejects unknown top-level properties and field
+ * collections that exceed the supported limit.
+ */
 final class BlockConfigReaderSchemaTest extends BlockBuilderTestCase
 {
+    /**
+     * Confirms that a misspelled or otherwise unknown top-level configuration property is rejected.
+     */
     public function testUnknownTopLevelPropertiesAreRejected(): void
     {
         $configPath = dirname(__DIR__, 2)
@@ -35,6 +44,9 @@ final class BlockConfigReaderSchemaTest extends BlockBuilderTestCase
         );
     }
 
+    /**
+     * Confirms that a configuration cannot contain more fields than the supported collection limit.
+     */
     public function testOversizedFieldCollectionsAreRejected(): void
     {
         $configPath = 'oversized/config-bb.json';

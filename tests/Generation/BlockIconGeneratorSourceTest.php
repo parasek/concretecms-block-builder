@@ -12,6 +12,12 @@ use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+/**
+ * Test type: Block icon source-selection filesystem component test.
+ *
+ * Verifies icon-source precedence and fallbacks, rejects invalid sources and destinations, wraps
+ * copy failures, and always cleans temporary uploaded files when generation cannot complete.
+ */
 final class BlockIconGeneratorSourceTest extends BlockBuilderTestCase
 {
     private Filesystem $filesystem;
@@ -49,6 +55,9 @@ final class BlockIconGeneratorSourceTest extends BlockBuilderTestCase
         parent::tearDown();
     }
 
+    /**
+     * Verifies that an uploaded icon is chosen before a selected preset or existing block icon.
+     */
     public function testUploadedIconTakesPrecedenceOverSelectedAndExistingIcons(): void
     {
         $blockPath = $this->createBlockDirectoryWithIcon($this->packageIconPath);
@@ -63,6 +72,9 @@ final class BlockIconGeneratorSourceTest extends BlockBuilderTestCase
         $this->assertNoTemporaryIconsRemain($blockPath);
     }
 
+    /**
+     * Verifies that a selected preset icon replaces an existing block icon when no upload is supplied.
+     */
     public function testSelectedIconTakesPrecedenceOverExistingIcon(): void
     {
         $blockPath = $this->createBlockDirectoryWithIcon($this->packageIconPath);
@@ -76,6 +88,9 @@ final class BlockIconGeneratorSourceTest extends BlockBuilderTestCase
         $this->assertNoTemporaryIconsRemain($blockPath);
     }
 
+    /**
+     * Verifies that an existing block icon is kept when no uploaded or selected icon is provided.
+     */
     public function testExistingIconIsRetainedWhenNoNewSourceIsProvided(): void
     {
         $blockPath = $this->createBlockDirectoryWithIcon($this->packageIconPath);
@@ -87,6 +102,9 @@ final class BlockIconGeneratorSourceTest extends BlockBuilderTestCase
         $this->assertNoTemporaryIconsRemain($blockPath);
     }
 
+    /**
+     * Verifies that the package default icon is copied when a block has no other icon source.
+     */
     public function testDefaultPackageIconIsUsedWhenDestinationHasNoIcon(): void
     {
         $blockPath = $this->temporaryDirectory . DIRECTORY_SEPARATOR . 'example_block';
@@ -101,6 +119,9 @@ final class BlockIconGeneratorSourceTest extends BlockBuilderTestCase
         $this->assertNoTemporaryIconsRemain($blockPath);
     }
 
+    /**
+     * Verifies that a missing selected icon leaves the existing block icon in place.
+     */
     public function testMissingSelectedIconFallsBackToExistingIcon(): void
     {
         $blockPath = $this->createBlockDirectoryWithIcon($this->packageIconPath);
@@ -115,6 +136,9 @@ final class BlockIconGeneratorSourceTest extends BlockBuilderTestCase
         $this->assertNoTemporaryIconsRemain($blockPath);
     }
 
+    /**
+     * Verifies that an invalid upload preserves the existing icon and removes its temporary file.
+     */
     public function testInvalidUploadedIconDoesNotReplaceExistingIconAndCleansTemporaryFile(): void
     {
         $blockPath = $this->createBlockDirectoryWithIcon($this->packageIconPath);
@@ -135,6 +159,9 @@ final class BlockIconGeneratorSourceTest extends BlockBuilderTestCase
         $this->assertNoTemporaryIconsRemain($blockPath);
     }
 
+    /**
+     * Verifies that choosing an invalid preset fails explicitly instead of silently using another icon.
+     */
     public function testInvalidSelectedIconDoesNotFallBackAfterSelection(): void
     {
         $blockPath = $this->createBlockDirectoryWithIcon($this->packageIconPath);
@@ -154,6 +181,9 @@ final class BlockIconGeneratorSourceTest extends BlockBuilderTestCase
         }
     }
 
+    /**
+     * Verifies that an icon destination occupied by a directory is rejected and temporary files are removed.
+     */
     public function testDirectoryAtIconDestinationIsRejectedAndTemporaryFileIsCleaned(): void
     {
         $blockPath = $this->temporaryDirectory . DIRECTORY_SEPARATOR . 'example_block';
@@ -171,6 +201,9 @@ final class BlockIconGeneratorSourceTest extends BlockBuilderTestCase
         }
     }
 
+    /**
+     * Verifies that a copy failure is reported as an icon error and leaves no temporary icon behind.
+     */
     public function testFilesystemCopyFailureIsWrappedAndTemporaryFileIsCleaned(): void
     {
         $blockPath = $this->createBlockDirectoryWithIcon($this->packageIconPath);

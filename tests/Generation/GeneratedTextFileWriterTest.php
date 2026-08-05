@@ -14,6 +14,12 @@ use BlockBuilder\Tests\Support\BlockBuilderTestCase;
 use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;
 
+/**
+ * Test type: Generated text-file writer filesystem security test.
+ *
+ * Verifies normal writes and nested-directory creation while rejecting missing roots, symbolic
+ * links, invalid ancestors, and hard-link replacements, with useful context on write failures.
+ */
 final class GeneratedTextFileWriterTest extends BlockBuilderTestCase
 {
     private Filesystem $filesystem;
@@ -37,6 +43,9 @@ final class GeneratedTextFileWriterTest extends BlockBuilderTestCase
         parent::tearDown();
     }
 
+    /**
+     * Verifies that generated files are written and any required nested directories are created.
+     */
     public function testWritesFilesAndCreatesNestedDirectories(): void
     {
         $blockPath = $this->createBlockDirectory();
@@ -54,6 +63,9 @@ final class GeneratedTextFileWriterTest extends BlockBuilderTestCase
         self::assertSame('form', $this->readFile($blockPath . DIRECTORY_SEPARATOR . 'nested' . DIRECTORY_SEPARATOR . 'form.php'));
     }
 
+    /**
+     * Verifies that writing fails when the block root is missing and does not create that root implicitly.
+     */
     public function testMissingBlockDirectoryIsRejectedWithoutCreatingIt(): void
     {
         $blockPath = $this->temporaryDirectory . DIRECTORY_SEPARATOR . 'missing';
@@ -68,6 +80,9 @@ final class GeneratedTextFileWriterTest extends BlockBuilderTestCase
         self::assertDirectoryDoesNotExist($blockPath);
     }
 
+    /**
+     * Verifies that a symlinked block root is rejected without writing into its target directory.
+     */
     public function testSymbolicLinkBlockRootIsRejectedWithoutWritingToTarget(): void
     {
         $externalPath = $this->temporaryDirectory . DIRECTORY_SEPARATOR . 'external';
@@ -88,6 +103,9 @@ final class GeneratedTextFileWriterTest extends BlockBuilderTestCase
         self::assertTrue(is_link($blockPath));
     }
 
+    /**
+     * Verifies that a symlink in a destination's parent path is rejected without writing through it.
+     */
     public function testSymbolicLinkAncestorIsRejectedWithoutWritingToTarget(): void
     {
         $blockPath = $this->createBlockDirectory();
@@ -104,6 +122,9 @@ final class GeneratedTextFileWriterTest extends BlockBuilderTestCase
         self::assertTrue(is_link($linkedPath));
     }
 
+    /**
+     * Verifies that a symlinked destination file is rejected without modifying its target file.
+     */
     public function testSymbolicLinkDestinationIsRejectedWithoutModifyingTarget(): void
     {
         $blockPath = $this->createBlockDirectory();
@@ -120,6 +141,9 @@ final class GeneratedTextFileWriterTest extends BlockBuilderTestCase
         self::assertTrue(is_link($destination));
     }
 
+    /**
+     * Verifies that a regular file where a parent directory is required prevents the generated write.
+     */
     public function testRegularFileInIntermediatePathIsRejected(): void
     {
         $blockPath = $this->createBlockDirectory();
@@ -136,6 +160,9 @@ final class GeneratedTextFileWriterTest extends BlockBuilderTestCase
         self::assertSame('not a directory', $this->readFile($intermediatePath));
     }
 
+    /**
+     * Verifies that replacing a hard-linked destination does not alter the file referenced by its other name.
+     */
     public function testReplacingHardLinkDoesNotModifyItsOtherName(): void
     {
         $blockPath = $this->createBlockDirectory();
@@ -152,6 +179,9 @@ final class GeneratedTextFileWriterTest extends BlockBuilderTestCase
         self::assertSame('generated', $this->readFile($destination));
     }
 
+    /**
+     * Verifies that write errors report the destination and producer while retaining the filesystem exception.
+     */
     public function testFilesystemFailureIsWrappedWithPathProducerAndPreviousException(): void
     {
         $blockPath = $this->createBlockDirectory();

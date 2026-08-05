@@ -7,9 +7,17 @@ namespace BlockBuilder\Tests\Config;
 use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\Tests\Support\BlockBuilderTestCase;
 
+/**
+ * Test type: Predefined configuration contract test.
+ *
+ * Verifies that shipped configuration presets use the canonical schema and collectively cover
+ * every registered field type.
+ */
 final class PredefinedConfigTest extends BlockBuilderTestCase
 {
     /**
+     * Confirms that each shipped preset uses current metadata, serializes canonically, and includes every field type.
+     *
      * @dataProvider predefinedConfigProvider
      */
     public function testPredefinedConfigUsesCanonicalSchemaAndCoversEveryFieldType(

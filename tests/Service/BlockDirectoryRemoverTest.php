@@ -18,6 +18,12 @@ use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;
 use Throwable;
 
+/**
+ * Test type: Block directory removal service unit test.
+ *
+ * Verifies permission, handle, path, ownership, installation-state, locking, deletion, and
+ * lifecycle-logging behavior for safe generated block directory removal.
+ */
 final class BlockDirectoryRemoverTest extends TestCase
 {
     private const string BLOCK_HANDLE = 'example_block';
@@ -38,6 +44,10 @@ final class BlockDirectoryRemoverTest extends TestCase
         (new Filesystem())->remove($this->lockDirectory);
     }
 
+    /**
+     * Confirms that an exception during permission checking is wrapped, logged, and stops all
+     * filesystem and locking work.
+     */
     public function testPermissionCheckExceptionIsWrappedAndLoggedBeforeAnyOtherWork(): void
     {
         $permissionFailure = new RuntimeException('permission infrastructure failed');
@@ -53,6 +63,10 @@ final class BlockDirectoryRemoverTest extends TestCase
         $this->assertSingleFailureLog($state, $exception);
     }
 
+    /**
+     * Confirms that denied permissions produce a logged removal failure without touching the
+     * block directory.
+     */
     public function testDeniedPermissionIsReturnedAsALoggedRemovalFailure(): void
     {
         $state = new BlockDirectoryRemoverTestState();
@@ -66,6 +80,10 @@ final class BlockDirectoryRemoverTest extends TestCase
         $this->assertSingleFailureLog($state, $exception);
     }
 
+    /**
+     * Confirms that an invalid block handle is rejected before constructing a path or acquiring a
+     * lifecycle lock.
+     */
     public function testInvalidHandleIsRejectedBeforeAPathOrLockIsUsed(): void
     {
         $state = new BlockDirectoryRemoverTestState();
@@ -78,6 +96,10 @@ final class BlockDirectoryRemoverTest extends TestCase
         $this->assertSingleFailureLog($state, $exception, [], 'Invalid Handle');
     }
 
+    /**
+     * Confirms that failure to acquire the handle lock is wrapped and logged without attempting
+     * directory removal.
+     */
     public function testLockAcquisitionFailureIsWrappedAndLogged(): void
     {
         $state = new BlockDirectoryRemoverTestState();
@@ -94,6 +116,10 @@ final class BlockDirectoryRemoverTest extends TestCase
         $this->assertSingleFailureLog($state, $exception);
     }
 
+    /**
+     * Confirms that a missing or unsafe block directory is reported and that its handle lock is
+     * always released.
+     */
     public function testMissingOrUnsafeDirectoryIsLoggedAndReleasesTheHandleLock(): void
     {
         $state = new BlockDirectoryRemoverTestState();
@@ -107,6 +133,10 @@ final class BlockDirectoryRemoverTest extends TestCase
         $this->assertHandleLockIsAvailable(self::BLOCK_HANDLE);
     }
 
+    /**
+     * Confirms that a directory not owned by Block Builder is preserved, logged with its safe
+     * path, and followed by lock release.
+     */
     public function testUnownedDirectoryIsLoggedWithItsPathAndReleasesTheHandleLock(): void
     {
         $state = new BlockDirectoryRemoverTestState();
@@ -123,6 +153,10 @@ final class BlockDirectoryRemoverTest extends TestCase
         $this->assertHandleLockIsAvailable(self::BLOCK_HANDLE);
     }
 
+    /**
+     * Confirms that an installed-block lookup exception is wrapped and logged while still
+     * releasing the acquired handle lock.
+     */
     public function testInstalledLookupExceptionIsWrappedLoggedAndReleasesTheHandleLock(): void
     {
         $lookupFailure = new RuntimeException('installed lookup failed');
@@ -141,6 +175,10 @@ final class BlockDirectoryRemoverTest extends TestCase
         $this->assertHandleLockIsAvailable(self::BLOCK_HANDLE);
     }
 
+    /**
+     * Confirms that the directory of an installed block type is never removed and its lock is
+     * released.
+     */
     public function testInstalledBlockDirectoryIsNotRemovedAndReleasesTheHandleLock(): void
     {
         $state = new BlockDirectoryRemoverTestState();
@@ -154,6 +192,10 @@ final class BlockDirectoryRemoverTest extends TestCase
         $this->assertHandleLockIsAvailable(self::BLOCK_HANDLE);
     }
 
+    /**
+     * Confirms that a false recursive-delete result becomes a logged failure and does not leak the
+     * handle lock.
+     */
     public function testFalseFileServiceResultIsWrappedLoggedAndReleasesTheHandleLock(): void
     {
         $state = new BlockDirectoryRemoverTestState();
@@ -169,6 +211,10 @@ final class BlockDirectoryRemoverTest extends TestCase
         $this->assertHandleLockIsAvailable(self::BLOCK_HANDLE);
     }
 
+    /**
+     * Confirms that a filesystem exception is retained as the original cause of the removal
+     * failure and that the handle lock is released.
+     */
     public function testFileServiceExceptionIsWrappedWithOriginalCauseAndReleasesTheHandleLock(): void
     {
         $removeFailure = new RuntimeException('filesystem mutation failed');
@@ -183,6 +229,10 @@ final class BlockDirectoryRemoverTest extends TestCase
         $this->assertHandleLockIsAvailable(self::BLOCK_HANDLE);
     }
 
+    /**
+     * Confirms that a valid uninstalled owned block is recursively removed, logged as successful,
+     * and followed by lock release.
+     */
     public function testSuccessfulRemovalUsesRecursiveDirectoryDeletionLogsSuccessAndReleasesTheLock(): void
     {
         $state = new BlockDirectoryRemoverTestState();

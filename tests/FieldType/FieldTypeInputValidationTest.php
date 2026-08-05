@@ -10,8 +10,17 @@ use BlockBuilder\Block\Validation\Validator\FieldType\FieldTypeValidator;
 use BlockBuilder\FieldType\FieldTypeRegistry;
 use BlockBuilder\Tests\Support\BlockBuilderTestCase;
 
+/**
+ * Test type: Field input normalization and validation component test.
+ *
+ * Verifies that submitted field definitions are bounded, normalized, and reported with useful
+ * validation errors when their shape, values, or relationships are invalid.
+ */
 final class FieldTypeInputValidationTest extends BlockBuilderTestCase
 {
+    /**
+     * Confirms that an oversized basic-field submission is reported and safely truncated to the field limit.
+     */
     public function testNormalizerCapsOversizedFieldCollections(): void
     {
         $field = $this->createField('text_field', 'exampleText');
@@ -28,6 +37,9 @@ final class FieldTypeInputValidationTest extends BlockBuilderTestCase
         self::assertCount(BlockConfigLimits::MAX_FIELDS_PER_COLLECTION, $result->data['basic']);
     }
 
+    /**
+     * Confirms that an oversized choice list is reported against the form field and truncated to the option limit.
+     */
     public function testNormalizerCapsOversizedChoiceOptionLists(): void
     {
         $field = $this->createField('select_field', 'exampleChoice', [
@@ -50,6 +62,9 @@ final class FieldTypeInputValidationTest extends BlockBuilderTestCase
         );
     }
 
+    /**
+     * Confirms that excessive SVG icons and overlong icon names are reported and truncated to safe limits.
+     */
     public function testNormalizerCapsSvgIconsAndTheirProperties(): void
     {
         $icons = [];
@@ -84,6 +99,10 @@ final class FieldTypeInputValidationTest extends BlockBuilderTestCase
         );
     }
 
+    /**
+     * Confirms that malformed collection indexes, shapes, and unknown field or icon properties
+     * are reported and removed.
+     */
     public function testNormalizerRejectsMalformedIndexesAndUnsupportedProperties(): void
     {
         $field = $this->createField('svg_icon_picker', 'exampleIcons', [
@@ -132,6 +151,9 @@ final class FieldTypeInputValidationTest extends BlockBuilderTestCase
         ], $result->feedback->tabsWithError);
     }
 
+    /**
+     * Confirms that arrays submitted where scalar form values are expected produce readable labels and safe defaults.
+     */
     public function testNormalizerRejectsNestedScalarValuesUsingFormLabels(): void
     {
         $field = $this->createField('text_field', 'exampleText', [
@@ -157,6 +179,9 @@ final class FieldTypeInputValidationTest extends BlockBuilderTestCase
         self::assertSame('', $result->data['basic'][0]['placeholder']);
     }
 
+    /**
+     * Confirms that malformed and unsupported field-type values become validation feedback instead of exceptions.
+     */
     public function testNormalizerReportsMalformedAndUnknownFieldTypesWithoutThrowing(): void
     {
         $result = $this->getService(CreateBlockInputNormalizer::class)->normalize([
@@ -179,6 +204,9 @@ final class FieldTypeInputValidationTest extends BlockBuilderTestCase
         self::assertSame([], $result->data['basic']);
     }
 
+    /**
+     * Confirms that invalid enumerated options for each covered field type are reported at their exact form paths.
+     */
     public function testValidatorRejectsEveryFieldTypeOptionOutsideItsAllowList(): void
     {
         $feedback = $this->getService(FieldTypeValidator::class)->validate([
@@ -227,6 +255,9 @@ final class FieldTypeInputValidationTest extends BlockBuilderTestCase
         self::assertSame(['tab-basic-information'], $feedback->tabsWithError);
     }
 
+    /**
+     * Confirms that duplicate handles and multiple title sources are reported only for the affected repeatable fields.
+     */
     public function testDuplicateHandlesAndMultipleTitleSourcesAreScopedToRepeatableFields(): void
     {
         $feedback = $this->getService(FieldTypeValidator::class)->validate([

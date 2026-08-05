@@ -9,6 +9,12 @@ use BlockBuilder\FieldType\FieldTypeDtoInterface;
 use BlockBuilder\FieldType\Type\Image\ImageFieldTypeDto;
 use BlockBuilder\Tests\Support\BlockBuilderTestCase;
 
+/**
+ * Test type: Legacy generated-view compatibility contract test.
+ *
+ * Verifies that current generation still exposes the public view variables and helper suffixes
+ * promised by version 2.8.1 for all basic and repeatable field types.
+ */
 final class LegacyViewVariableContractTest extends BlockBuilderTestCase
 {
     private const array COMMON_LINK_SUFFIXES = [
@@ -38,6 +44,9 @@ final class LegacyViewVariableContractTest extends BlockBuilderTestCase
         '_thumbnailHeight',
     ];
 
+    /**
+     * Verifies that current generation preserves the public view variables promised by version 2.8.1.
+     */
     public function testGenerationPlanPreservesVersion281PublicViewContract(): void
     {
         $config = $this->createBlockConfigDtoFactory()->fromArray(

@@ -9,8 +9,17 @@ use DOMDocument;
 use PhpParser\Error as PhpParserError;
 use PhpParser\ParserFactory;
 
+/**
+ * Test type: In-memory generated-output contract test.
+ *
+ * Generates every supported field type without writing files and verifies the resulting PHP,
+ * XML, JSON, and template outputs are structurally valid and contain required block artifacts.
+ */
 final class InMemoryGenerationTest extends BlockBuilderTestCase
 {
+    /**
+     * Verifies that every supported field type produces valid, complete block files without disk writes.
+     */
     public function testAllFieldTypesGenerateValidTextFilesInMemory(): void
     {
         $config = $this->createAllFieldTypesConfig();

@@ -6,8 +6,18 @@ namespace BlockBuilder\Tests;
 
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Test type: Package release metadata contract test.
+ *
+ * Verifies that the controller and Composer PHP/Concrete requirements agree and that the package
+ * version remains aligned with every current predefined configuration shipped for new blocks.
+ */
 final class PackageMetadataTest extends TestCase
 {
+    /**
+     * Confirms that the declared release version and platform requirements match Composer and
+     * that every current predefined configuration carries the same package version.
+     */
     public function testReleaseMetadataAndCurrentPresetsStayAligned(): void
     {
         $packageRoot = dirname(__DIR__);

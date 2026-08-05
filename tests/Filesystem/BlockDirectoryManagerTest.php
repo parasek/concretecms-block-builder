@@ -17,6 +17,12 @@ use RecursiveIteratorIterator;
 use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;
 
+/**
+ * Test type: Block directory preparation filesystem component test.
+ *
+ * Verifies that new and rebuilt block directories are prepared safely, preserve custom files,
+ * create recoverable backups, reject symbolic links, and stop when stale recovery data is found.
+ */
 final class BlockDirectoryManagerTest extends BlockBuilderTestCase
 {
     private Filesystem $filesystem;
@@ -40,6 +46,9 @@ final class BlockDirectoryManagerTest extends BlockBuilderTestCase
         parent::tearDown();
     }
 
+    /**
+     * Verifies that preparing a new block creates its directory and a transaction that can roll it back.
+     */
     public function testPreparingNewBlockCreatesRollbackCapableDirectory(): void
     {
         $blockPath = $this->temporaryDirectory . DIRECTORY_SEPARATOR . 'new_block';
@@ -57,6 +66,8 @@ final class BlockDirectoryManagerTest extends BlockBuilderTestCase
     }
 
     /**
+     * Verifies that a new block cannot overwrite an existing file or directory at its destination.
+     *
      * @dataProvider existingNewBlockDestinationProvider
      */
     public function testPreparingNewBlockRejectsExistingDestination(string $destinationType): void
@@ -85,6 +96,9 @@ final class BlockDirectoryManagerTest extends BlockBuilderTestCase
         ];
     }
 
+    /**
+     * Verifies that a symlink destination is rejected without changing the directory it points to.
+     */
     public function testPreparingNewBlockRejectsSymlinkDestinationWithoutTouchingTarget(): void
     {
         $targetPath = $this->temporaryDirectory . DIRECTORY_SEPARATOR . 'target';
@@ -109,6 +123,9 @@ final class BlockDirectoryManagerTest extends BlockBuilderTestCase
         self::assertTrue(is_link($blockPath));
     }
 
+    /**
+     * Verifies that rebuild preparation backs up the original block and removes only generated files.
+     */
     public function testPreparingRebuildMirrorsOriginalAndRemovesOnlyGeneratedContents(): void
     {
         $blockPath = $this->temporaryDirectory . DIRECTORY_SEPARATOR . 'existing_block';
@@ -142,6 +159,9 @@ final class BlockDirectoryManagerTest extends BlockBuilderTestCase
         self::assertSame([], $this->findBackupDirectories($blockPath));
     }
 
+    /**
+     * Verifies that rebuild preparation removes an icon that is not marked as application-owned.
+     */
     public function testPreparingRebuildRemovesIconWhenItIsNotAnApplicationBlockIcon(): void
     {
         $blockPath = $this->temporaryDirectory . DIRECTORY_SEPARATOR . 'existing_block';
@@ -162,6 +182,9 @@ final class BlockDirectoryManagerTest extends BlockBuilderTestCase
         self::assertSame('old icon', $this->readFile($blockPath . DIRECTORY_SEPARATOR . FILENAME_BLOCK_ICON));
     }
 
+    /**
+     * Verifies that a failed rebuild preparation restores the original block directory unchanged.
+     */
     public function testPreparationFailureRestoresOriginalDirectory(): void
     {
         $blockPath = $this->temporaryDirectory . DIRECTORY_SEPARATOR . 'existing_block';
@@ -197,6 +220,9 @@ final class BlockDirectoryManagerTest extends BlockBuilderTestCase
         self::assertSame([], $this->findBackupDirectories($blockPath));
     }
 
+    /**
+     * Verifies that rebuilding through a symlink is rejected without changing its target.
+     */
     public function testPreparingRebuildRejectsSymlinkDestinationWithoutTouchingTarget(): void
     {
         $targetPath = $this->temporaryDirectory . DIRECTORY_SEPARATOR . 'target';
@@ -221,6 +247,9 @@ final class BlockDirectoryManagerTest extends BlockBuilderTestCase
         }
     }
 
+    /**
+     * Verifies that multiple stale backups stop automatic preparation and require manual recovery.
+     */
     public function testMultipleStaleBackupsRequireManualRecovery(): void
     {
         $blockPath = $this->temporaryDirectory . DIRECTORY_SEPARATOR . 'existing_block';
@@ -245,6 +274,9 @@ final class BlockDirectoryManagerTest extends BlockBuilderTestCase
         }
     }
 
+    /**
+     * Verifies that an orphaned recovery-state marker prevents generation until it is handled manually.
+     */
     public function testOrphanedStateMarkerRequiresManualRecovery(): void
     {
         $blockPath = $this->temporaryDirectory . DIRECTORY_SEPARATOR . 'existing_block';

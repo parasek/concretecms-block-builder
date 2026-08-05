@@ -11,9 +11,17 @@ use BlockBuilder\FieldType\FieldTypeRegistry;
 use BlockBuilder\FieldType\Type\SvgIconPicker\SvgIconSanitizer;
 use BlockBuilder\Tests\Support\BlockBuilderTestCase;
 
+/**
+ * Test type: Field validation and SVG security component test.
+ *
+ * Verifies shared and field-specific validation feedback, accepted boundary values, and safe SVG
+ * sanitization of executable, external, imported, or entity-based content.
+ */
 final class FieldTypeValidationRulesTest extends BlockBuilderTestCase
 {
     /**
+     * Confirms that each shared field rule produces the intended message, form path, and tab marker.
+     *
      * @dataProvider sharedFieldRuleProvider
      */
     public function testSharedFieldRulesMapToTheCorrectFeedback(
@@ -109,6 +117,9 @@ final class FieldTypeValidationRulesTest extends BlockBuilderTestCase
         ];
     }
 
+    /**
+     * Confirms that labels and handles exactly at their valid minimum and maximum boundaries pass validation.
+     */
     public function testSharedFieldBoundariesAreAccepted(): void
     {
         $fieldType = $this->getService(FieldTypeRegistry::class)->findByHandle('text_field');
@@ -134,6 +145,8 @@ final class FieldTypeValidationRulesTest extends BlockBuilderTestCase
     }
 
     /**
+     * Confirms that every field-specific invalid value maps to its declared messages and exact form paths.
+     *
      * @dataProvider fieldSpecificRuleProvider
      */
     public function testEveryFieldSpecificRuleMapsToTheCorrectFeedback(
@@ -383,6 +396,9 @@ final class FieldTypeValidationRulesTest extends BlockBuilderTestCase
         ];
     }
 
+    /**
+     * Confirms that the data provider includes a regression case for every registered field-specific error key.
+     */
     public function testProviderCoversEveryDeclaredFieldSpecificError(): void
     {
         $coveredKeysByFieldType = [];
@@ -408,6 +424,9 @@ final class FieldTypeValidationRulesTest extends BlockBuilderTestCase
         }
     }
 
+    /**
+     * Confirms that SVG scripts and event-handler attributes are removed while the document remains usable.
+     */
     public function testSvgSanitizerRemovesExecutableContent(): void
     {
         $sanitizedSvg = SvgIconSanitizer::sanitize(
@@ -424,6 +443,8 @@ final class FieldTypeValidationRulesTest extends BlockBuilderTestCase
     }
 
     /**
+     * Confirms that external, local-path, data, and executable references are removed from SVG link attributes.
+     *
      * @dataProvider externalSvgReferenceProvider
      */
     public function testSvgSanitizerRemovesExternalReferences(string $attribute, string $reference): void
@@ -467,6 +488,8 @@ final class FieldTypeValidationRulesTest extends BlockBuilderTestCase
     }
 
     /**
+     * Confirms that unsafe resource URLs are removed from presentation attributes, inline styles, and style elements.
+     *
      * @dataProvider externalCssSvgReferenceProvider
      */
     public function testSvgSanitizerRemovesExternalCssReferences(string $content, string $reference): void
@@ -506,6 +529,9 @@ final class FieldTypeValidationRulesTest extends BlockBuilderTestCase
         ];
     }
 
+    /**
+     * Confirms that CSS imports and escape-obfuscated external URLs cannot bypass SVG sanitization.
+     */
     public function testSvgSanitizerRemovesObfuscatedAndImportedCssReferences(): void
     {
         $sanitizedSvg = SvgIconSanitizer::sanitize(
@@ -522,6 +548,9 @@ final class FieldTypeValidationRulesTest extends BlockBuilderTestCase
         self::assertDoesNotMatchRegularExpression('/(?:^|\s)style\s*=/i', $sanitizedSvg);
     }
 
+    /**
+     * Confirms that safe href and xlink references to elements inside the same SVG are preserved.
+     */
     public function testSvgSanitizerPreservesLocalFragmentReferences(): void
     {
         $sanitizedSvg = SvgIconSanitizer::sanitize(
@@ -536,6 +565,9 @@ final class FieldTypeValidationRulesTest extends BlockBuilderTestCase
         self::assertStringContainsString('xlink:href="#icon"', $sanitizedSvg);
     }
 
+    /**
+     * Confirms that safe CSS references to definitions inside the same SVG survive sanitization.
+     */
     public function testSvgSanitizerPreservesLocalFragmentCssReferences(): void
     {
         $sanitizedSvg = SvgIconSanitizer::sanitize(
@@ -552,6 +584,9 @@ final class FieldTypeValidationRulesTest extends BlockBuilderTestCase
         self::assertStringContainsString('style="stroke:url(&quot;#paint&quot;)"', $sanitizedSvg);
     }
 
+    /**
+     * Confirms that an XML external entity cannot make the sanitizer read or expose a local file.
+     */
     public function testSvgSanitizerDoesNotExpandXmlExternalEntities(): void
     {
         $svg = '<?xml version="1.0"?>'

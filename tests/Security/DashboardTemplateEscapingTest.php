@@ -9,8 +9,18 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
 
+/**
+ * Test type: Dashboard template escaping security contract test.
+ *
+ * Scans dashboard templates to ensure raw Underscore interpolation is reserved for trusted,
+ * pre-rendered partial markup rather than user-controlled values.
+ */
 final class DashboardTemplateEscapingTest extends TestCase
 {
+    /**
+     * Scans field templates and confirms that raw interpolation is used only for the trusted
+     * pre-rendered partial-content value.
+     */
     public function testOnlyPreRenderedPartialMarkupUsesRawUnderscoreInterpolation(): void
     {
         $templateRoot = dirname(__DIR__, 2)

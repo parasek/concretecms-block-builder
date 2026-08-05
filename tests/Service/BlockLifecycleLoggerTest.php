@@ -10,8 +10,18 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 
+/**
+ * Test type: Block lifecycle logging service unit test.
+ *
+ * Verifies that successful and failed lifecycle operations use the expected log levels, protected
+ * context, exact exceptions, and useful error messages.
+ */
 final class BlockLifecycleLoggerTest extends TestCase
 {
+    /**
+     * Confirms that successful lifecycle operations use notice level and that trusted operation,
+     * target, and user context cannot be overwritten by caller-supplied context.
+     */
     public function testSuccessIsLoggedAtNoticeLevelWithProtectedLifecycleContext(): void
     {
         $logger = $this->createMock(LoggerInterface::class);
@@ -44,6 +54,10 @@ final class BlockLifecycleLoggerTest extends TestCase
         );
     }
 
+    /**
+     * Confirms that lifecycle failures use warning level and preserve the exact trusted exception
+     * and error message instead of caller-supplied replacements.
+     */
     public function testFailureIsLoggedAtWarningLevelWithExactExceptionAndErrorMessage(): void
     {
         $failure = new RuntimeException('simulated lifecycle failure');

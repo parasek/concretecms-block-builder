@@ -10,8 +10,17 @@ use BlockBuilder\Tests\Support\BlockBuilderTestCase;
 use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+/**
+ * Test type: Generation manifest factory unit test.
+ *
+ * Verifies that configuration values become the expected file paths, class and table names,
+ * lifecycle flags, and icon metadata, and that unsafe block handles are rejected.
+ */
 final class BlockGenerationManifestFactoryTest extends BlockBuilderTestCase
 {
+    /**
+     * Verifies that a block configuration produces the expected names, paths, tables, flags, and icon data.
+     */
     public function testManifestDerivesNamesPathsTablesAndFlagsFromConfiguration(): void
     {
         $config = $this->withInstallBlock($this->createAllFieldTypesConfig(), true);
@@ -57,6 +66,9 @@ final class BlockGenerationManifestFactoryTest extends BlockBuilderTestCase
         self::assertSame('btAllFieldTypesTestEntries', $manifest->entriesDatabaseTableName);
     }
 
+    /**
+     * Verifies that disabled lifecycle flags stay false and an absent icon remains absent in the manifest.
+     */
     public function testManifestPreservesFalseFlagsAndMissingIcons(): void
     {
         $config = $this->withInstallBlock($this->createAllFieldTypesConfig(), false);
@@ -71,6 +83,8 @@ final class BlockGenerationManifestFactoryTest extends BlockBuilderTestCase
     }
 
     /**
+     * Verifies that unsafe block handles are rejected before any manifest values are derived.
+     *
      * @dataProvider invalidHandleProvider
      */
     public function testInvalidHandleIsRejectedBeforeManifestDerivation(string $blockHandle): void

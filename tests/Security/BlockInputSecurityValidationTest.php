@@ -12,6 +12,12 @@ use BlockBuilder\Tests\Support\BlockBuilderTestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\FileBag;
 
+/**
+ * Test type: Block input security validation unit test.
+ *
+ * Verifies safe label, removal-exclusion, and uploaded icon validation against malformed or
+ * deceptive request data before a block is generated.
+ */
 final class BlockInputSecurityValidationTest extends BlockBuilderTestCase
 {
     private string $temporaryDirectory;
@@ -39,6 +45,10 @@ final class BlockInputSecurityValidationTest extends BlockBuilderTestCase
         parent::tearDown();
     }
 
+    /**
+     * Confirms that missing labels are reported against their fields and direct the user to the
+     * labels tab.
+     */
     public function testLabelErrorsOpenTheLabelsTab(): void
     {
         $feedback = $this->getService(LabelsValidator::class)->validate([
@@ -59,6 +69,10 @@ final class BlockInputSecurityValidationTest extends BlockBuilderTestCase
         self::assertSame(['labels'], $feedback->tabsWithError);
     }
 
+    /**
+     * Confirms that either top or bottom add-button text is sufficient for the shared label
+     * requirement.
+     */
     public function testOneAddButtonLabelSatisfiesTheSharedLabelRequirement(): void
     {
         $feedback = $this->getService(LabelsValidator::class)->validate([
@@ -74,6 +88,9 @@ final class BlockInputSecurityValidationTest extends BlockBuilderTestCase
     }
 
     /**
+     * Confirms that traversal paths, nested paths, control characters, and protected generated
+     * files cannot be excluded from removal.
+     *
      * @dataProvider unsafeExclusionProvider
      */
     public function testUnsafeOrProtectedRemovalExclusionsAreRejected(
@@ -106,6 +123,10 @@ final class BlockInputSecurityValidationTest extends BlockBuilderTestCase
         ];
     }
 
+    /**
+     * Confirms that newline-separated plain file and directory names are valid removal
+     * exclusions.
+     */
     public function testPlainBasenamesCanBeExcludedFromRemoval(): void
     {
         $feedback = $this->getService(ExcludedFromRemovalValidator::class)->validate([
@@ -117,6 +138,10 @@ final class BlockInputSecurityValidationTest extends BlockBuilderTestCase
         self::assertSame([], $feedback->tabsWithError);
     }
 
+    /**
+     * Confirms that an upload transport error is reported before the validator tries to inspect
+     * the icon contents.
+     */
     public function testUploadErrorIsReportedBeforeReadingTheIcon(): void
     {
         $path = $this->writeFile('partial-upload.png', 'partial');
@@ -137,6 +162,9 @@ final class BlockInputSecurityValidationTest extends BlockBuilderTestCase
         $this->assertCustomIconFeedbackLocation($feedback);
     }
 
+    /**
+     * Confirms that an icon larger than one megabyte is rejected before image decoding.
+     */
     public function testOversizedIconIsRejectedBeforeImageParsing(): void
     {
         $path = $this->writeFile('large.png', str_repeat('x', 1_048_577));
@@ -156,6 +184,10 @@ final class BlockInputSecurityValidationTest extends BlockBuilderTestCase
         $this->assertCustomIconFeedbackLocation($feedback);
     }
 
+    /**
+     * Confirms that non-image bytes cannot be accepted merely because the uploaded file is named
+     * like a PNG.
+     */
     public function testNonImageIconIsRejected(): void
     {
         $path = $this->writeFile('not-an-image.png', 'not an image');
@@ -175,6 +207,10 @@ final class BlockInputSecurityValidationTest extends BlockBuilderTestCase
         $this->assertCustomIconFeedbackLocation($feedback);
     }
 
+    /**
+     * Confirms that server-inspected image bytes determine format and dimensions instead of
+     * untrusted filename and MIME metadata.
+     */
     public function testImageContentControlsMimeAndDimensionsRatherThanClientMetadata(): void
     {
         $gif = base64_decode('R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==', true);
@@ -196,6 +232,10 @@ final class BlockInputSecurityValidationTest extends BlockBuilderTestCase
         $this->assertCustomIconFeedbackLocation($feedback);
     }
 
+    /**
+     * Confirms that a genuine PNG is rejected when its dimensions are not exactly 97 by 97
+     * pixels.
+     */
     public function testPngWithWrongDimensionsIsRejected(): void
     {
         $path = $this->writeFile('small.png', $this->createPng(1, 1));
@@ -214,6 +254,10 @@ final class BlockInputSecurityValidationTest extends BlockBuilderTestCase
         $this->assertCustomIconFeedbackLocation($feedback);
     }
 
+    /**
+     * Confirms that a genuine 97-by-97 PNG is accepted despite an untrusted filename and client
+     * MIME type.
+     */
     public function testValidPngIconIsAccepted(): void
     {
         $path = $this->writeFile('valid.png', $this->createPng(97, 97));

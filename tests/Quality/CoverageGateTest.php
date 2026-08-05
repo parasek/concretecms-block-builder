@@ -7,6 +7,12 @@ namespace BlockBuilder\Tests\Quality;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
+/**
+ * Test type: Coverage policy quality test.
+ *
+ * Verifies that Clover reports enforce every configured coverage target, preserve useful
+ * diagnostics in report-only mode, and fail closed when coverage data is malformed.
+ */
 final class CoverageGateTest extends TestCase
 {
     private Filesystem $filesystem;
@@ -32,6 +38,10 @@ final class CoverageGateTest extends TestCase
         parent::tearDown();
     }
 
+    /**
+     * Confirms that a Clover report meeting the exact overall and critical thresholds exits
+     * successfully and reports the measured percentages.
+     */
     public function testPassingReportSatisfiesEveryTarget(): void
     {
         $cloverPath = $this->writeCloverReport(
@@ -53,6 +63,10 @@ final class CoverageGateTest extends TestCase
         self::assertSame('', $result['errorOutput']);
     }
 
+    /**
+     * Confirms that strict mode fails and lists every overall and critical line or branch target
+     * that the report misses.
+     */
     public function testFailingReportReturnsFailureAndListsEveryMissedTarget(): void
     {
         $cloverPath = $this->writeCloverReport(
@@ -75,6 +89,10 @@ final class CoverageGateTest extends TestCase
         self::assertStringContainsString('Critical branch coverage is 20.00%', $result['errorOutput']);
     }
 
+    /**
+     * Confirms that report-only mode exposes all below-threshold diagnostics while leaving the
+     * provisional baseline job successful.
+     */
     public function testReportOnlyModePreservesDiagnosticsWithoutFailingTheBaselineJob(): void
     {
         $cloverPath = $this->writeCloverReport(
@@ -95,6 +113,10 @@ final class CoverageGateTest extends TestCase
         self::assertStringContainsString('currently report-only', $result['output']);
     }
 
+    /**
+     * Confirms that malformed coverage XML fails even in report-only mode rather than silently
+     * passing without trustworthy measurements.
+     */
     public function testMalformedCloverReportFailsClosed(): void
     {
         $cloverPath = $this->temporaryDirectory . DIRECTORY_SEPARATOR . 'malformed.xml';

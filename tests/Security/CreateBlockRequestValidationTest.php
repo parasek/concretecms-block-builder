@@ -15,8 +15,18 @@ use BlockBuilder\Tests\Support\BlockBuilderTestCase;
 use Concrete\Core\Validation\CSRF\Token;
 use Symfony\Component\HttpFoundation\FileBag;
 
+/**
+ * Test type: Create-block request security validation unit test.
+ *
+ * Verifies that CSRF, permission, normalization, and business-validation stages run in the safe
+ * order and stop the request pipeline as soon as an earlier stage fails.
+ */
 final class CreateBlockRequestValidationTest extends BlockBuilderTestCase
 {
+    /**
+     * Confirms that a failed CSRF check returns immediately without running permissions,
+     * normalization, or business validation.
+     */
     public function testCsrfFailureStopsTheRequestPipeline(): void
     {
         $calls = new ArrayObject();
@@ -34,6 +44,10 @@ final class CreateBlockRequestValidationTest extends BlockBuilderTestCase
         self::assertSame(['csrf'], $calls->getArrayCopy());
     }
 
+    /**
+     * Confirms that denied permissions stop processing before request data is normalized or
+     * passed to business validators.
+     */
     public function testPermissionFailureStopsBeforeNormalization(): void
     {
         $calls = new ArrayObject();
@@ -51,6 +65,10 @@ final class CreateBlockRequestValidationTest extends BlockBuilderTestCase
         self::assertSame(['csrf', 'permissions'], $calls->getArrayCopy());
     }
 
+    /**
+     * Confirms that unsupported input is rejected during normalization before business
+     * validation is allowed to run.
+     */
     public function testNormalizationFailureStopsBeforeBusinessValidation(): void
     {
         $calls = new ArrayObject();
@@ -73,6 +91,10 @@ final class CreateBlockRequestValidationTest extends BlockBuilderTestCase
         self::assertSame(['csrf', 'permissions'], $calls->getArrayCopy());
     }
 
+    /**
+     * Confirms that valid normalized input and the trusted route-derived rebuild handle reach
+     * business validation without mutating the caller's input.
+     */
     public function testNormalizedDataAndTrustedRebuildSourceReachBusinessValidation(): void
     {
         $calls = new ArrayObject();
@@ -112,6 +134,9 @@ final class CreateBlockRequestValidationTest extends BlockBuilderTestCase
     }
 
     /**
+     * Confirms that the CSRF validator checks the create-block action and returns an error only
+     * when the supplied token is invalid.
+     *
      * @dataProvider csrfResultProvider
      */
     public function testCsrfValidatorUsesTheCreateBlockAction(bool $isValid, array $expectedErrors): void

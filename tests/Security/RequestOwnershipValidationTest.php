@@ -9,8 +9,18 @@ use BlockBuilder\Block\Validation\Validator\Block\BlockIconValidator;
 use BlockBuilder\Tests\Support\BlockBuilderTestCase;
 use Symfony\Component\HttpFoundation\FileBag;
 
+/**
+ * Test type: Request ownership security validation unit test.
+ *
+ * Verifies that rebuild requests belong to the loaded block configuration and that malformed
+ * custom icons are reported as validation errors instead of escaping the request pipeline.
+ */
 final class RequestOwnershipValidationTest extends BlockBuilderTestCase
 {
+    /**
+     * Confirms that a rebuild request cannot name a block handle different from the configuration
+     * loaded by the current route.
+     */
     public function testRebuildHandleMustMatchTheLoadedConfigRoute(): void
     {
         $feedback = $this->getService(BlockHandleValidator::class)->validate([
@@ -24,6 +34,10 @@ final class RequestOwnershipValidationTest extends BlockBuilderTestCase
         self::assertContains('blockHandle', $feedback->fieldsWithError);
     }
 
+    /**
+     * Confirms that an unexpected custom-icon upload shape becomes ordinary validation feedback
+     * instead of causing an unhandled request error.
+     */
     public function testMalformedCustomIconIsReportedAsValidationFeedback(): void
     {
         $files = new FileBag([

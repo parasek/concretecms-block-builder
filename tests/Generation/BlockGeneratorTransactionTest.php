@@ -33,6 +33,12 @@ use Symfony\Component\Filesystem\Filesystem;
 use Throwable;
 use Traversable;
 
+/**
+ * Test type: Transactional block-generation orchestration component test.
+ *
+ * Verifies generation order, locking, rebuild cleanup, and failure handling across rendering,
+ * writing, icon generation, lifecycle operations, rollback, and retained recovery backups.
+ */
 final class BlockGeneratorTransactionTest extends BlockBuilderTestCase
 {
     private Filesystem $filesystem;
@@ -58,6 +64,9 @@ final class BlockGeneratorTransactionTest extends BlockBuilderTestCase
         parent::tearDown();
     }
 
+    /**
+     * Verifies that new-block generation runs each phase in order and always releases its handle lock.
+     */
     public function testSuccessfulGenerationRunsInOrderAndReleasesLock(): void
     {
         $events = new BlockGeneratorTestEventLog();
@@ -90,6 +99,9 @@ final class BlockGeneratorTransactionTest extends BlockBuilderTestCase
         $this->assertLockReleased();
     }
 
+    /**
+     * Verifies that a successful rebuild completes its lifecycle and removes the no-longer-needed backup.
+     */
     public function testSuccessfulRebuildCleansBackupAfterLifecycleCompletes(): void
     {
         $events = new BlockGeneratorTestEventLog();
@@ -122,6 +134,9 @@ final class BlockGeneratorTransactionTest extends BlockBuilderTestCase
         $this->assertLockReleased();
     }
 
+    /**
+     * Verifies that backup-cleanup errors are logged without changing an otherwise successful result.
+     */
     public function testBackupCleanupFailureIsLoggedWithoutFailingSuccessfulGeneration(): void
     {
         $events = new BlockGeneratorTestEventLog();
@@ -174,6 +189,8 @@ final class BlockGeneratorTransactionTest extends BlockBuilderTestCase
     }
 
     /**
+     * Verifies that planning and rendering errors occur before any block directory is prepared or changed.
+     *
      * @dataProvider preDirectoryFailureProvider
      */
     public function testRenderingFailuresOccurBeforeDirectoryPreparation(string $failureEvent): void
@@ -214,6 +231,9 @@ final class BlockGeneratorTransactionTest extends BlockBuilderTestCase
         ];
     }
 
+    /**
+     * Verifies that a file-writing failure removes the partially generated new block directory.
+     */
     public function testWriterFailureRollsBackNewBlockDirectory(): void
     {
         $failure = new RuntimeException('simulated writer failure');
@@ -244,6 +264,9 @@ final class BlockGeneratorTransactionTest extends BlockBuilderTestCase
         $this->assertLockReleased();
     }
 
+    /**
+     * Verifies that an icon-generation failure restores an existing block from its backup.
+     */
     public function testIconFailureRestoresExistingBlockDirectory(): void
     {
         $failure = new RuntimeException('simulated icon failure');
@@ -282,6 +305,9 @@ final class BlockGeneratorTransactionTest extends BlockBuilderTestCase
         $this->assertLockReleased();
     }
 
+    /**
+     * Verifies that a post-commit lifecycle failure keeps both generated files and backup for manual recovery.
+     */
     public function testLifecycleFailureAfterCommitRetainsGeneratedFilesAndBackupForRecovery(): void
     {
         $failure = new RuntimeException('simulated lifecycle failure');
@@ -328,6 +354,9 @@ final class BlockGeneratorTransactionTest extends BlockBuilderTestCase
         $this->assertLockReleased();
     }
 
+    /**
+     * Verifies that an unsuccessful rollback reports both the generation error and the recovery error.
+     */
     public function testRollbackFailureReportsOriginalAndRecoveryFailure(): void
     {
         $failure = new RuntimeException('simulated writer failure');
@@ -364,6 +393,9 @@ final class BlockGeneratorTransactionTest extends BlockBuilderTestCase
         $this->assertLockReleased();
     }
 
+    /**
+     * Verifies that a lock-acquisition error is wrapped clearly before any generation phase begins.
+     */
     public function testLockAcquisitionFailureIsWrappedBeforeGenerationStarts(): void
     {
         $events = new BlockGeneratorTestEventLog();

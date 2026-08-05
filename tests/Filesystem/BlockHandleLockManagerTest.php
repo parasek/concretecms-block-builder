@@ -9,6 +9,12 @@ use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;
 
+/**
+ * Test type: Block handle locking filesystem component test.
+ *
+ * Verifies that generation locks are exclusive, can be acquired after release, and require an
+ * existing lock directory instead of silently creating one in an unexpected location.
+ */
 final class BlockHandleLockManagerTest extends TestCase
 {
     private string $lockDirectory;
@@ -26,6 +32,9 @@ final class BlockHandleLockManagerTest extends TestCase
         (new Filesystem())->remove($this->lockDirectory);
     }
 
+    /**
+     * Verifies that only one process can hold a block-handle lock until the owner releases it.
+     */
     public function testLockIsExclusiveUntilReleased(): void
     {
         $manager = new BlockHandleLockManager($this->lockDirectory);
@@ -46,6 +55,9 @@ final class BlockHandleLockManagerTest extends TestCase
         fclose($competingStream);
     }
 
+    /**
+     * Verifies that lock acquisition fails clearly when the configured lock directory does not exist.
+     */
     public function testMissingLockDirectoryIsRejected(): void
     {
         $manager = new BlockHandleLockManager($this->lockDirectory . DIRECTORY_SEPARATOR . 'missing');

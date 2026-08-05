@@ -9,6 +9,12 @@ use BlockBuilder\BlockGenerator\BlockIconGenerator;
 use BlockBuilder\Tests\Support\BlockBuilderTestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
+/**
+ * Test type: Block icon replacement filesystem security test.
+ *
+ * Verifies that replacing an icon unlinks symbolic and hard-link destinations first so their
+ * other targets or names are never overwritten through the generated block directory.
+ */
 final class BlockIconGeneratorTest extends BlockBuilderTestCase
 {
     private Filesystem $filesystem;
@@ -31,6 +37,9 @@ final class BlockIconGeneratorTest extends BlockBuilderTestCase
         parent::tearDown();
     }
 
+    /**
+     * Verifies that replacing a symlinked icon creates a real file without changing the symlink target.
+     */
     public function testReplacingSymlinkDoesNotModifyItsTarget(): void
     {
         $source = $this->getPackagePath('generator_files/icon.png');
@@ -51,6 +60,9 @@ final class BlockIconGeneratorTest extends BlockBuilderTestCase
         self::assertSame($this->readFile($source), $this->readFile($destination));
     }
 
+    /**
+     * Verifies that replacing a hard-linked icon does not alter the file referenced by its other name.
+     */
     public function testReplacingHardLinkDoesNotModifyItsOtherName(): void
     {
         $source = $this->getPackagePath('generator_files/icon.png');

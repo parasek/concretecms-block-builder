@@ -14,6 +14,12 @@ use RecursiveIteratorIterator;
 use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;
 
+/**
+ * Test type: Block directory rollback and recovery filesystem component test.
+ *
+ * Verifies transaction rollback, crash recovery, and cleanup while ensuring missing, malformed,
+ * or symbolic-link recovery artifacts fail safely without modifying unrelated files.
+ */
 final class BlockDirectoryTransactionTest extends TestCase
 {
     private Filesystem $filesystem;
@@ -33,6 +39,9 @@ final class BlockDirectoryTransactionTest extends TestCase
         $this->filesystem->remove($this->temporaryDirectory);
     }
 
+    /**
+     * Verifies that rolling back a new block removes its partially generated directory.
+     */
     public function testRollbackRemovesPartiallyGeneratedNewBlock(): void
     {
         $blockPath = $this->temporaryDirectory . DIRECTORY_SEPARATOR . 'new_block';
@@ -47,6 +56,9 @@ final class BlockDirectoryTransactionTest extends TestCase
         self::assertFalse($transaction->canRollback());
     }
 
+    /**
+     * Verifies that rollback restores every backed-up file with its original contents.
+     */
     public function testRollbackRestoresPreparedBackupByteForByte(): void
     {
         $blockPath = $this->temporaryDirectory . DIRECTORY_SEPARATOR . 'existing_block';
@@ -70,6 +82,9 @@ final class BlockDirectoryTransactionTest extends TestCase
         self::assertFileDoesNotExist($backupPath . '.state');
     }
 
+    /**
+     * Verifies that committed files cannot be rolled back and final cleanup removes recovery artifacts.
+     */
     public function testCommittedFilesCannotBeRolledBackAndCleanupRemovesRecoveryArtifacts(): void
     {
         [$blockPath, $backupPath, $transaction] = $this->createPreparedRealTransaction();
@@ -92,6 +107,9 @@ final class BlockDirectoryTransactionTest extends TestCase
         self::assertFileDoesNotExist($backupPath . '.state');
     }
 
+    /**
+     * Verifies that rollback stops safely when the prepared backup has disappeared.
+     */
     public function testRollbackFailsClosedWhenPreparedBackupDisappears(): void
     {
         [$blockPath, $backupPath, $transaction] = $this->createPreparedRealTransaction();
@@ -110,6 +128,9 @@ final class BlockDirectoryTransactionTest extends TestCase
         self::assertTrue($transaction->canRollback());
     }
 
+    /**
+     * Verifies that rollback rejects a symlinked backup without modifying the symlink target.
+     */
     public function testRollbackRejectsSymlinkedBackupWithoutTouchingTarget(): void
     {
         $blockPath = $this->temporaryDirectory . DIRECTORY_SEPARATOR . 'existing_block';
@@ -135,6 +156,9 @@ final class BlockDirectoryTransactionTest extends TestCase
         self::assertTrue(is_link($backupPath));
     }
 
+    /**
+     * Verifies that recovery restores a valid backup left in the prepared state.
+     */
     public function testRecoveryRestoresPreparedBackup(): void
     {
         [$blockPath, $backupPath] = $this->createRecoveryDirectories('prepared');
@@ -152,6 +176,9 @@ final class BlockDirectoryTransactionTest extends TestCase
         self::assertFileDoesNotExist($backupPath . '.state');
     }
 
+    /**
+     * Verifies that recovery does not overwrite committed generated files and requests manual action.
+     */
     public function testRecoveryRequiresManualActionAfterFilesWereCommitted(): void
     {
         [$blockPath, $backupPath] = $this->createRecoveryDirectories('files_committed');
@@ -176,6 +203,9 @@ final class BlockDirectoryTransactionTest extends TestCase
         self::assertFileExists($backupPath . '.state');
     }
 
+    /**
+     * Verifies that recovery removes an obsolete backup after the block lifecycle completed successfully.
+     */
     public function testRecoveryCleansBackupAfterLifecycleCompleted(): void
     {
         [$blockPath, $backupPath] = $this->createRecoveryDirectories('lifecycle_completed');
@@ -193,6 +223,9 @@ final class BlockDirectoryTransactionTest extends TestCase
         self::assertFileDoesNotExist($backupPath . '.state');
     }
 
+    /**
+     * Verifies that recovery retains the backup when a completed lifecycle has no destination directory.
+     */
     public function testRecoveryRetainsBackupWhenLifecycleDestinationIsMissing(): void
     {
         [$blockPath, $backupPath] = $this->createRecoveryDirectories('lifecycle_completed');
@@ -215,6 +248,9 @@ final class BlockDirectoryTransactionTest extends TestCase
         }
     }
 
+    /**
+     * Verifies that recovery retains the backup when the completed lifecycle destination is a symlink.
+     */
     public function testRecoveryRetainsBackupWhenLifecycleDestinationIsASymbolicLink(): void
     {
         [$blockPath, $backupPath] = $this->createRecoveryDirectories('lifecycle_completed');
@@ -245,6 +281,8 @@ final class BlockDirectoryTransactionTest extends TestCase
     }
 
     /**
+     * Verifies that recovery rejects a missing or unknown transaction state rather than guessing an action.
+     *
      * @dataProvider unrecognizedRecoveryStateProvider
      */
     public function testRecoveryRejectsMissingOrUnrecognizedState(?string $state): void
@@ -274,6 +312,9 @@ final class BlockDirectoryTransactionTest extends TestCase
         ];
     }
 
+    /**
+     * Verifies that recovery rejects a symlinked backup without changing either destination.
+     */
     public function testRecoveryRejectsSymlinkedBackupWithoutTouchingTarget(): void
     {
         $blockPath = $this->temporaryDirectory . DIRECTORY_SEPARATOR . 'existing_block';
@@ -304,6 +345,9 @@ final class BlockDirectoryTransactionTest extends TestCase
         self::assertSame('external', $this->readFile($externalPath . DIRECTORY_SEPARATOR . 'controller.php'));
     }
 
+    /**
+     * Verifies that recovery rejects a symlinked state marker without touching the block or backup.
+     */
     public function testRecoveryRejectsSymlinkedStateMarkerWithoutTouchingBackupOrTarget(): void
     {
         [$blockPath, $backupPath] = $this->createRecoveryDirectories(null);
@@ -332,6 +376,9 @@ final class BlockDirectoryTransactionTest extends TestCase
         self::assertTrue(is_link($backupPath . '.state'));
     }
 
+    /**
+     * Verifies that cleanup deletes the backup before removing the state marker that records it.
+     */
     public function testCleanupRemovesBackupBeforeStateMarker(): void
     {
         $removedPaths = [];
@@ -346,6 +393,9 @@ final class BlockDirectoryTransactionTest extends TestCase
         ], $removedPaths);
     }
 
+    /**
+     * Verifies that cleanup keeps the state marker when backup deletion fails so recovery remains possible.
+     */
     public function testCleanupRetainsStateMarkerWhenBackupRemovalFails(): void
     {
         $removedPaths = [];

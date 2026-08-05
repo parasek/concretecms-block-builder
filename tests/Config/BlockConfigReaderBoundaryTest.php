@@ -18,6 +18,12 @@ use BlockBuilder\Environment\EnvironmentService;
 use BlockBuilder\Tests\Support\BlockBuilderTestCase;
 use Closure;
 
+/**
+ * Test type: Configuration reader boundary and security component test.
+ *
+ * Verifies that configuration files are read only from valid locations and that malformed,
+ * oversized, mismatched, or unsupported documents are rejected at the correct boundaries.
+ */
 final class BlockConfigReaderBoundaryTest extends BlockBuilderTestCase
 {
     private const int MAXIMUM_CONFIG_FILE_SIZE = 5_242_880;
@@ -58,6 +64,9 @@ final class BlockConfigReaderBoundaryTest extends BlockBuilderTestCase
         parent::tearDown();
     }
 
+    /**
+     * Confirms that the public reader reports a clear error when a block has no configuration file.
+     */
     public function testMissingConfigIsReportedThroughThePublicReader(): void
     {
         $this->expectException(ConfigFileMissingException::class);
@@ -66,6 +75,9 @@ final class BlockConfigReaderBoundaryTest extends BlockBuilderTestCase
         $this->createReader()->getConfigFromApplicationFolder(self::SOURCE_HANDLE);
     }
 
+    /**
+     * Confirms that a directory cannot be treated as a readable configuration file.
+     */
     public function testDirectoryAtConfigPathIsRejected(): void
     {
         self::assertTrue(mkdir($this->getConfigPath()));
@@ -76,6 +88,9 @@ final class BlockConfigReaderBoundaryTest extends BlockBuilderTestCase
         $this->createReader()->getConfigFromApplicationFolder(self::SOURCE_HANDLE);
     }
 
+    /**
+     * Confirms that the reader refuses a symbolic link in place of the block configuration file.
+     */
     public function testSymlinkedConfigIsRejected(): void
     {
         $targetPath = $this->temporaryDirectory . DIRECTORY_SEPARATOR . 'target.json';
@@ -91,6 +106,8 @@ final class BlockConfigReaderBoundaryTest extends BlockBuilderTestCase
     }
 
     /**
+     * Confirms that malformed JSON and JSON roots with the wrong shape are rejected with the expected error.
+     *
      * @dataProvider invalidDocumentProvider
      */
     public function testInvalidDocumentsAreRejectedThroughThePublicReader(
@@ -128,6 +145,8 @@ final class BlockConfigReaderBoundaryTest extends BlockBuilderTestCase
     }
 
     /**
+     * Confirms that non-string and malformed Block Builder version values are rejected.
+     *
      * @dataProvider invalidVersionProvider
      */
     public function testInvalidVersionValuesAreRejected(mixed $version): void
@@ -155,6 +174,8 @@ final class BlockConfigReaderBoundaryTest extends BlockBuilderTestCase
     }
 
     /**
+     * Confirms that all supported semantic-version forms can be read and retained unchanged.
+     *
      * @dataProvider supportedVersionProvider
      */
     public function testSupportedSemanticVersionFormatsAreAccepted(string $version): void
@@ -178,6 +199,9 @@ final class BlockConfigReaderBoundaryTest extends BlockBuilderTestCase
         ];
     }
 
+    /**
+     * Confirms that a configuration created by a newer Block Builder version cannot be loaded silently.
+     */
     public function testFutureVersionIsRejected(): void
     {
         $data = $this->createValidConfigData();
@@ -190,6 +214,9 @@ final class BlockConfigReaderBoundaryTest extends BlockBuilderTestCase
         $this->createReader()->getConfigFromApplicationFolder(self::SOURCE_HANDLE);
     }
 
+    /**
+     * Confirms that an unsafe source handle is rejected before it can influence a filesystem lookup.
+     */
     public function testInvalidSourceHandleIsRejectedBeforeReadingTheFile(): void
     {
         $this->expectException(InvalidConfigFieldDataException::class);
@@ -198,6 +225,9 @@ final class BlockConfigReaderBoundaryTest extends BlockBuilderTestCase
         $this->createReader()->getConfigFromApplicationFolder('../unsafe');
     }
 
+    /**
+     * Confirms that the handle declared inside a configuration must match the block directory being read.
+     */
     public function testDeclaredHandleMustMatchTheSourceHandle(): void
     {
         $data = $this->createValidConfigData();
@@ -212,6 +242,8 @@ final class BlockConfigReaderBoundaryTest extends BlockBuilderTestCase
     }
 
     /**
+     * Confirms that invalid collection shapes and values beyond configured resource limits are rejected.
+     *
      * @dataProvider schemaLimitViolationProvider
      */
     public function testSchemaAndResourceLimitViolationsAreRejected(
@@ -329,6 +361,9 @@ final class BlockConfigReaderBoundaryTest extends BlockBuilderTestCase
         ];
     }
 
+    /**
+     * Confirms that valid configuration values exactly at the schema and collection limits remain accepted.
+     */
     public function testExactSchemaAndCollectionLimitsAreAccepted(): void
     {
         $data = $this->createValidConfigData();
@@ -360,6 +395,9 @@ final class BlockConfigReaderBoundaryTest extends BlockBuilderTestCase
         self::assertCount(1, $config->entries);
     }
 
+    /**
+     * Confirms that a valid configuration exactly at the five-megabyte file-size limit can be read.
+     */
     public function testMaximumConfigFileSizeIsAccepted(): void
     {
         $json = json_encode($this->createValidConfigData(), JSON_THROW_ON_ERROR);
@@ -374,6 +412,9 @@ final class BlockConfigReaderBoundaryTest extends BlockBuilderTestCase
         self::assertSame(self::MAXIMUM_CONFIG_FILE_SIZE, filesize($this->getConfigPath()));
     }
 
+    /**
+     * Confirms that a configuration one byte larger than the five-megabyte limit is rejected.
+     */
     public function testConfigOneByteOverMaximumSizeIsRejected(): void
     {
         $json = json_encode($this->createValidConfigData(), JSON_THROW_ON_ERROR);
@@ -387,6 +428,9 @@ final class BlockConfigReaderBoundaryTest extends BlockBuilderTestCase
         $this->createReader()->getConfigFromApplicationFolder(self::SOURCE_HANDLE);
     }
 
+    /**
+     * Confirms that a field-construction failure is preserved as the cause of the reader's public exception.
+     */
     public function testFieldFactoryFailuresRetainTheirPreviousException(): void
     {
         $data = $this->createValidConfigData();

@@ -19,6 +19,12 @@ use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Schema\Index;
 use JsonException;
 
+/**
+ * Test type: All-fields generation and persistence integration test.
+ *
+ * Uses the canonical all-fields preset in a real disposable Concrete installation to verify the
+ * generated schema, representative stored and rendered values, and complete block cleanup.
+ */
 final class AllFieldsGenerationIntegration extends ConcreteIntegrationTestCase
 {
     private const string BLOCK_HANDLE = 'block_builder_integration_all_fields';
@@ -35,6 +41,14 @@ final class AllFieldsGenerationIntegration extends ConcreteIntegrationTestCase
     }
 
     /**
+     * Generates and installs a disposable block from the canonical all-fields preset.
+     *
+     * The test confirms that representative basic and repeatable database columns and the
+     * repeatable-order index are created. It saves a real block with representative values,
+     * verifies those values directly in the database, and confirms that the generated controller
+     * exposes them to the view. Finally, it deletes the block data, uninstalls the block type, and
+     * removes the generated directory to prove that the complete cleanup lifecycle works.
+     *
      * @throws JsonException
      */
     public function testCanonicalAllFieldsPresetInstallsRepresentativeSchema(): void

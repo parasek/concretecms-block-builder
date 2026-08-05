@@ -10,8 +10,17 @@ use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\FieldType\FieldTypeRegistry;
 use BlockBuilder\Tests\Support\BlockBuilderTestCase;
 
+/**
+ * Test type: Field-type registry contract test.
+ *
+ * Verifies that every declared field type has one unambiguous implementation, generation
+ * contributor, and canonical set of metadata.
+ */
 final class FieldTypeCatalogTest extends BlockBuilderTestCase
 {
+    /**
+     * Confirms that every field-type enum has exactly one registered implementation and generation contributor.
+     */
     public function testEveryEnumHasOneFieldTypeAndOneGenerationContributor(): void
     {
         $fieldTypeRegistry = $this->getService(FieldTypeRegistry::class);
@@ -41,6 +50,9 @@ final class FieldTypeCatalogTest extends BlockBuilderTestCase
         ));
     }
 
+    /**
+     * Confirms that every registered field type exposes valid, unique, and non-duplicated canonical metadata.
+     */
     public function testFieldTypeMetadataIsCanonicalAndUnambiguous(): void
     {
         $handles = [];

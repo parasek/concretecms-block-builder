@@ -17,6 +17,12 @@ require_once dirname(__DIR__)
     . DIRECTORY_SEPARATOR
     . 'DisposableEnvironmentGuard.php';
 
+/**
+ * Test type: Disposable-environment security guard unit test.
+ *
+ * Verifies that destructive integration tests accept only an explicitly opted-in, privately
+ * marked, non-symlinked disposable site whose paths and database identity match exactly.
+ */
 final class DisposableEnvironmentGuardTest extends BlockBuilderTestCase
 {
     private const string DATABASE_NAME = 'block_builder_test_guard';
@@ -91,6 +97,10 @@ final class DisposableEnvironmentGuardTest extends BlockBuilderTestCase
         parent::tearDown();
     }
 
+    /**
+     * Confirms that integration mode must be explicitly enabled before any configured filesystem
+     * path is inspected.
+     */
     public function testExplicitOptInIsRequiredBeforePathsAreInspected(): void
     {
         $environment = $this->createEnvironment();
@@ -103,6 +113,10 @@ final class DisposableEnvironmentGuardTest extends BlockBuilderTestCase
         DisposableEnvironmentGuard::fromEnvironment($environment, $this->packageRoot);
     }
 
+    /**
+     * Confirms that a fully matching marked site, package, blocks directory, database, and site
+     * identity are accepted as disposable.
+     */
     public function testExactDisposableEnvironmentIsAccepted(): void
     {
         $guard = DisposableEnvironmentGuard::fromEnvironment(
@@ -117,6 +131,10 @@ final class DisposableEnvironmentGuardTest extends BlockBuilderTestCase
         self::assertSame(realpath($this->packageRoot), $guard->packageRoot);
     }
 
+    /**
+     * Confirms that relative public or blocks roots cannot be used for destructive integration
+     * operations.
+     */
     public function testConfiguredRootsMustBeAbsolute(): void
     {
         $environment = $this->createEnvironment();
@@ -128,6 +146,10 @@ final class DisposableEnvironmentGuardTest extends BlockBuilderTestCase
         DisposableEnvironmentGuard::fromEnvironment($environment, $this->packageRoot);
     }
 
+    /**
+     * Confirms that the writable blocks root must resolve to the selected site's exact
+     * application/blocks directory.
+     */
     public function testBlocksRootMustBeTheSitesApplicationBlocksDirectory(): void
     {
         $otherDirectory = $this->publicRoot . DIRECTORY_SEPARATOR . 'application' . DIRECTORY_SEPARATOR . 'other';
@@ -141,6 +163,9 @@ final class DisposableEnvironmentGuardTest extends BlockBuilderTestCase
         DisposableEnvironmentGuard::fromEnvironment($environment, $this->packageRoot);
     }
 
+    /**
+     * Confirms that a public-root path containing a symbolic-link component is rejected.
+     */
     public function testPublicRootMustNotContainSymlinkComponents(): void
     {
         $linkedProjectRoot = $this->temporaryRoot . DIRECTORY_SEPARATOR . 'linked-project';
@@ -156,6 +181,10 @@ final class DisposableEnvironmentGuardTest extends BlockBuilderTestCase
         DisposableEnvironmentGuard::fromEnvironment($environment, $this->packageRoot);
     }
 
+    /**
+     * Confirms that destructive integration tests refuse a project without the disposable-site
+     * marker.
+     */
     public function testMarkerMustExist(): void
     {
         self::assertTrue(unlink($this->markerPath));
@@ -166,6 +195,10 @@ final class DisposableEnvironmentGuardTest extends BlockBuilderTestCase
         DisposableEnvironmentGuard::fromEnvironment($this->createEnvironment(), $this->packageRoot);
     }
 
+    /**
+     * Confirms that the disposable-site marker must be a physical file rather than a symbolic
+     * link.
+     */
     public function testMarkerMustNotBeLinked(): void
     {
         $targetPath = $this->projectRoot . DIRECTORY_SEPARATOR . 'marker-target.json';
@@ -180,6 +213,9 @@ final class DisposableEnvironmentGuardTest extends BlockBuilderTestCase
         DisposableEnvironmentGuard::fromEnvironment($this->createEnvironment(), $this->packageRoot);
     }
 
+    /**
+     * Confirms that an unreadable disposable-site marker cannot authorize integration writes.
+     */
     public function testMarkerMustBeReadable(): void
     {
         self::assertTrue(chmod($this->markerPath, 0000));
@@ -193,6 +229,9 @@ final class DisposableEnvironmentGuardTest extends BlockBuilderTestCase
         DisposableEnvironmentGuard::fromEnvironment($this->createEnvironment(), $this->packageRoot);
     }
 
+    /**
+     * Confirms that the disposable-site marker must use owner-only permissions.
+     */
     public function testMarkerMustUsePrivatePermissions(): void
     {
         self::assertTrue(chmod($this->markerPath, 0644));
@@ -208,6 +247,9 @@ final class DisposableEnvironmentGuardTest extends BlockBuilderTestCase
     }
 
     /**
+     * Confirms that every identity recorded in the marker exactly matches the requested site and
+     * rejects non-string identity values.
+     *
      * @dataProvider markerMismatchProvider
      */
     public function testEveryMarkerIdentityPropertyMustMatch(string $property, mixed $value): void
@@ -232,6 +274,9 @@ final class DisposableEnvironmentGuardTest extends BlockBuilderTestCase
         ];
     }
 
+    /**
+     * Confirms that invalid JSON in the disposable-site marker fails closed.
+     */
     public function testMalformedMarkerJsonIsRejected(): void
     {
         $this->writeFile($this->markerPath, '{"purpose":');
@@ -242,6 +287,10 @@ final class DisposableEnvironmentGuardTest extends BlockBuilderTestCase
         DisposableEnvironmentGuard::fromEnvironment($this->createEnvironment(), $this->packageRoot);
     }
 
+    /**
+     * Confirms that the site's database configuration must be a physical file rather than a
+     * symbolic link.
+     */
     public function testDatabaseConfigMustNotBeLinked(): void
     {
         $targetPath = dirname($this->databaseConfigPath) . DIRECTORY_SEPARATOR . 'database-target.php';
@@ -256,6 +305,10 @@ final class DisposableEnvironmentGuardTest extends BlockBuilderTestCase
         DisposableEnvironmentGuard::fromEnvironment($this->createEnvironment(), $this->packageRoot);
     }
 
+    /**
+     * Confirms that symbolic links anywhere in the database configuration directory are rejected
+     * before booting Concrete.
+     */
     public function testDatabaseConfigurationDirectoryMustNotContainSymlinks(): void
     {
         $targetPath = $this->projectRoot . DIRECTORY_SEPARATOR . 'unrelated-config-target.php';
@@ -272,6 +325,9 @@ final class DisposableEnvironmentGuardTest extends BlockBuilderTestCase
     }
 
     /**
+     * Confirms that environment-specific database files cannot override the validated default
+     * database configuration.
+     *
      * @dataProvider databaseOverrideProvider
      */
     public function testEnvironmentSpecificDatabaseOverridesAreRejected(string $relativePath): void
@@ -294,6 +350,9 @@ final class DisposableEnvironmentGuardTest extends BlockBuilderTestCase
         ];
     }
 
+    /**
+     * Confirms that an unreadable database configuration cannot authorize integration writes.
+     */
     public function testDatabaseConfigMustBeReadable(): void
     {
         self::assertTrue(chmod($this->databaseConfigPath, 0000));
@@ -308,6 +367,9 @@ final class DisposableEnvironmentGuardTest extends BlockBuilderTestCase
     }
 
     /**
+     * Confirms that syntactically invalid or structurally incomplete database configurations are
+     * rejected instead of being interpreted permissively.
+     *
      * @dataProvider malformedDatabaseConfigProvider
      */
     public function testMalformedDatabaseConfigsAreRejected(string $contents): void
@@ -335,6 +397,10 @@ final class DisposableEnvironmentGuardTest extends BlockBuilderTestCase
         ];
     }
 
+    /**
+     * Confirms that the database named in database.php must match the disposable database before
+     * Concrete is booted.
+     */
     public function testConfiguredDatabaseMustMatchBeforeConcreteBoots(): void
     {
         $this->writeDatabaseConfig('block_builder_test_another_site');
@@ -345,6 +411,10 @@ final class DisposableEnvironmentGuardTest extends BlockBuilderTestCase
         DisposableEnvironmentGuard::fromEnvironment($this->createEnvironment(), $this->packageRoot);
     }
 
+    /**
+     * Confirms that the live Concrete connection is checked again and writes are refused if it
+     * points to another database after boot.
+     */
     public function testActiveDatabaseMustStillMatchAfterBoot(): void
     {
         $guard = DisposableEnvironmentGuard::fromEnvironment(

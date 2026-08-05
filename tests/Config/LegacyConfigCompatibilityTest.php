@@ -14,8 +14,17 @@ use BlockBuilder\FieldType\Type\Number\NumberFieldTypeDto;
 use BlockBuilder\Tests\Support\BlockBuilderTestCase;
 use ReflectionMethod;
 
+/**
+ * Test type: Legacy configuration compatibility test.
+ *
+ * Verifies that supported legacy configurations and aliases still load and normalize correctly
+ * without weakening validation of canonical configuration data.
+ */
 final class LegacyConfigCompatibilityTest extends BlockBuilderTestCase
 {
+    /**
+     * Confirms that a real 2.8.1 all-fields configuration loads with its legacy values normalized correctly.
+     */
     public function testLegacyAllFieldsConfigLoadsAndNormalizes(): void
     {
         $legacyData = $this->loadJsonFixture('all-fields-2.8.1.json');
@@ -99,6 +108,9 @@ final class LegacyConfigCompatibilityTest extends BlockBuilderTestCase
         self::assertSame('d.m.Y', $date->datePattern);
     }
 
+    /**
+     * Confirms that loading and re-encoding legacy data produces stable JSON using only canonical property names.
+     */
     public function testCanonicalJsonSurvivesARoundTrip(): void
     {
         $blockConfigDtoFactory = $this->createBlockConfigDtoFactory();
@@ -128,6 +140,9 @@ final class LegacyConfigCompatibilityTest extends BlockBuilderTestCase
         self::assertArrayNotHasKey('numberSize', $canonicalNumber);
     }
 
+    /**
+     * Confirms that the public preset reader can still load a predefined configuration shipped by version 2.8.1.
+     */
     public function testPublicReaderLoadsLegacyPredefinedConfig(): void
     {
         $config = $this->getService(BlockConfigReader::class)->getPredefinedConfig(
@@ -144,6 +159,9 @@ final class LegacyConfigCompatibilityTest extends BlockBuilderTestCase
         self::assertCount(6, $config->entries);
     }
 
+    /**
+     * Confirms that old configuration data without any Block Builder version remains loadable.
+     */
     public function testVersionlessLegacyConfigRemainsSupported(): void
     {
         $legacyData = $this->loadJsonFixture('all-fields-2.8.1.json');
@@ -159,6 +177,9 @@ final class LegacyConfigCompatibilityTest extends BlockBuilderTestCase
         self::assertNull($config->blockBuilderVersion);
     }
 
+    /**
+     * Confirms that an explicit canonical top-level value wins when its legacy alias is also present.
+     */
     public function testCanonicalTopLevelPropertiesTakePrecedenceOverLegacyProperties(): void
     {
         $legacyData = $this->loadJsonFixture('all-fields-2.8.1.json');
@@ -176,6 +197,9 @@ final class LegacyConfigCompatibilityTest extends BlockBuilderTestCase
         self::assertSame('Canonical URL ending help text', $config->urlEndingHelpTextLabel);
     }
 
+    /**
+     * Confirms that legacy normalization does not allow an unknown field property to bypass validation.
+     */
     public function testUnknownFieldPropertiesAreRejectedAfterLegacyAliasesAreNormalized(): void
     {
         $legacyData = $this->loadJsonFixture('all-fields-2.8.1.json');

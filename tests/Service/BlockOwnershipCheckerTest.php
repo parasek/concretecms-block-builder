@@ -12,8 +12,18 @@ use BlockBuilder\Tests\Support\BlockBuilderTestCase;
 use RuntimeException;
 use Throwable;
 
+/**
+ * Test type: Block ownership service unit test.
+ *
+ * Verifies that matching generated configurations establish ownership, expected loading failures
+ * mean unowned blocks, and unexpected reader failures remain visible to callers.
+ */
 final class BlockOwnershipCheckerTest extends BlockBuilderTestCase
 {
+    /**
+     * Confirms that a readable generated configuration whose handle matches identifies the
+     * application block as owned by Block Builder.
+     */
     public function testReadableMatchingConfigurationIdentifiesAnOwnedBlock(): void
     {
         $state = new BlockOwnershipCheckerTestState();
@@ -24,6 +34,10 @@ final class BlockOwnershipCheckerTest extends BlockBuilderTestCase
         self::assertSame(['all_field_types_test'], $state->requestedHandles);
     }
 
+    /**
+     * Confirms that the expected configuration-loading failure safely identifies a block as not
+     * owned by Block Builder.
+     */
     public function testExpectedConfigurationLoadingFailureIdentifiesAnUnownedBlock(): void
     {
         $state = new BlockOwnershipCheckerTestState();
@@ -34,6 +48,10 @@ final class BlockOwnershipCheckerTest extends BlockBuilderTestCase
         self::assertSame(['example_block'], $state->requestedHandles);
     }
 
+    /**
+     * Confirms that an unexpected reader failure is rethrown rather than being hidden as a simple
+     * unowned result.
+     */
     public function testUnexpectedReaderFailureIsNotMisreportedAsAnUnownedBlock(): void
     {
         $failure = new RuntimeException('unexpected reader infrastructure failure');

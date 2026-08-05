@@ -9,9 +9,17 @@ use BlockBuilder\BlockGenerator\FileGenerator\GeneratedTextFile;
 use BlockBuilder\BlockGenerator\FileGenerator\GeneratedTextFileCollection;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Test type: Generated text-file collection unit test.
+ *
+ * Verifies safe relative destinations, meaningful producer names, case-insensitive collision
+ * detection, and deterministic path ordering before generated files reach the filesystem.
+ */
 final class GeneratedTextFileCollectionTest extends TestCase
 {
     /**
+     * Verifies that absolute, traversing, or malformed generated-file destinations are rejected.
+     *
      * @dataProvider invalidDestinationProvider
      */
     public function testUnsafeDestinationIsRejected(string $relativePath): void
@@ -39,6 +47,9 @@ final class GeneratedTextFileCollectionTest extends TestCase
         ];
     }
 
+    /**
+     * Verifies that every generated file identifies the component that produced it.
+     */
     public function testBlankProducerIsRejected(): void
     {
         $this->expectException(GeneratedFileDefinitionException::class);
@@ -49,6 +60,9 @@ final class GeneratedTextFileCollectionTest extends TestCase
         ]);
     }
 
+    /**
+     * Verifies that case-insensitive path collisions are rejected and name both responsible producers.
+     */
     public function testCaseInsensitiveDestinationCollisionReportsBothProducers(): void
     {
         $collection = new GeneratedTextFileCollection([
@@ -67,6 +81,9 @@ final class GeneratedTextFileCollectionTest extends TestCase
         self::assertCount(1, $collection);
     }
 
+    /**
+     * Verifies that generated files are iterated in a predictable relative-path order.
+     */
     public function testIterationIsStableAndSortedByRelativePath(): void
     {
         $collection = new GeneratedTextFileCollection([

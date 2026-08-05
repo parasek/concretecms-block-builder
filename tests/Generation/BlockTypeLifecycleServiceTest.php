@@ -18,8 +18,17 @@ use Doctrine\ORM\EntityManagerInterface;
 use RuntimeException;
 use Throwable;
 
+/**
+ * Test type: Generated block lifecycle service unit test.
+ *
+ * Verifies when generated block types are left alone, installed, or refreshed, including entity
+ * lookup behavior and the domain exceptions produced when each lifecycle dependency fails.
+ */
 final class BlockTypeLifecycleServiceTest extends BlockBuilderTestCase
 {
+    /**
+     * Verifies that generating files alone does not install or refresh a Concrete block type.
+     */
     public function testCreatedStatePerformsNoConcreteLifecycleOperation(): void
     {
         $log = new BlockTypeLifecycleTestLog();
@@ -36,6 +45,9 @@ final class BlockTypeLifecycleServiceTest extends BlockBuilderTestCase
         self::assertSame([], $log->events);
     }
 
+    /**
+     * Verifies that an install request passes the generated block handle to the block-type installer.
+     */
     public function testInstallBranchPassesHandleToInstaller(): void
     {
         $log = new BlockTypeLifecycleTestLog();
@@ -53,6 +65,9 @@ final class BlockTypeLifecycleServiceTest extends BlockBuilderTestCase
         self::assertSame(['install:all_field_types_test'], $log->events);
     }
 
+    /**
+     * Verifies that an installer failure becomes a generation exception while retaining its original cause.
+     */
     public function testInstallFailureIsWrappedWithOriginalCause(): void
     {
         $failure = new RuntimeException('simulated install failure');
@@ -74,6 +89,9 @@ final class BlockTypeLifecycleServiceTest extends BlockBuilderTestCase
         self::assertSame(['install:all_field_types_test'], $log->events);
     }
 
+    /**
+     * Verifies that rebuild takes priority over install and refreshes the existing managed block entity.
+     */
     public function testRebuildTakesPrecedenceOverInstallAndRefreshesManagedEntity(): void
     {
         $log = new BlockTypeLifecycleTestLog();
@@ -99,6 +117,9 @@ final class BlockTypeLifecycleServiceTest extends BlockBuilderTestCase
         self::assertSame(['locate:all_field_types_test'], $log->events);
     }
 
+    /**
+     * Verifies that rebuilding fails clearly when Concrete cannot locate the existing block type.
+     */
     public function testRebuildFailsWhenBlockTypeCannotBeLocated(): void
     {
         $log = new BlockTypeLifecycleTestLog();
@@ -115,6 +136,9 @@ final class BlockTypeLifecycleServiceTest extends BlockBuilderTestCase
         );
     }
 
+    /**
+     * Verifies that rebuilding fails when the located block type cannot be loaded as a managed entity.
+     */
     public function testRebuildFailsWhenManagedEntityCannotBeLoaded(): void
     {
         $log = new BlockTypeLifecycleTestLog();
@@ -135,6 +159,9 @@ final class BlockTypeLifecycleServiceTest extends BlockBuilderTestCase
         );
     }
 
+    /**
+     * Verifies that a block-type lookup failure is wrapped while preserving the original exception.
+     */
     public function testLocatorFailureIsWrappedWithOriginalCause(): void
     {
         $failure = new RuntimeException('simulated locator failure');
@@ -145,6 +172,9 @@ final class BlockTypeLifecycleServiceTest extends BlockBuilderTestCase
         $this->assertRefreshFailureHasPrevious($service, $failure);
     }
 
+    /**
+     * Verifies that an entity-manager lookup failure is wrapped while preserving the original exception.
+     */
     public function testEntityManagerFailureIsWrappedWithOriginalCause(): void
     {
         $failure = new RuntimeException('simulated entity manager failure');
@@ -157,6 +187,9 @@ final class BlockTypeLifecycleServiceTest extends BlockBuilderTestCase
         $this->assertRefreshFailureHasPrevious($service, $failure);
     }
 
+    /**
+     * Verifies that an entity refresh failure is wrapped while preserving the original exception.
+     */
     public function testEntityRefreshFailureIsWrappedWithOriginalCause(): void
     {
         $failure = new RuntimeException('simulated refresh failure');
@@ -173,6 +206,9 @@ final class BlockTypeLifecycleServiceTest extends BlockBuilderTestCase
         $this->assertRefreshFailureHasPrevious($service, $failure);
     }
 
+    /**
+     * Verifies that a domain-specific refresh exception is rethrown unchanged instead of being wrapped again.
+     */
     public function testExistingRefreshExceptionIsPreserved(): void
     {
         $failure = new BlockGenerationRefreshException('specific refresh failure');

@@ -10,6 +10,12 @@ use Concrete\Core\Block\BlockController;
 use Concrete\Core\Block\BlockType\BlockType;
 use Concrete\Core\Entity\Block\BlockType\BlockType as BlockTypeEntity;
 
+/**
+ * Test type: Package upgrade compatibility integration test.
+ *
+ * Verifies that a real block generated and populated by version 2.8.1 keeps its configuration,
+ * registration, data, rendered output, and editability after upgrading to the current package.
+ */
 final class UpgradeCompatibilityIntegration extends ConcreteIntegrationTestCase
 {
     private const string BLOCK_HANDLE = 'block_builder_integration_upgrade_fixture';
@@ -25,6 +31,16 @@ final class UpgradeCompatibilityIntegration extends ConcreteIntegrationTestCase
         }
     }
 
+    /**
+     * Confirms that a block generated with Block Builder 2.8.1 still works after upgrading the package.
+     *
+     * Before this test runs, the guarded upgrade job uses version 2.8.1 to generate, install, and
+     * populate a real block, then overlays the current package and runs Concrete's package update.
+     * The test verifies that the original configuration, block registration, basic value, repeatable
+     * values, and repeatable order survived. It loads the old generated controller, checks its view
+     * data, edits the block, reverses the repeatable entries, and confirms that the new values and
+     * order are saved correctly after the upgrade.
+     */
     public function testLegacyGeneratedBlockAndDataSurvivePackageUpgrade(): void
     {
         $this->environmentGuard->assertActiveDatabase($this->connection);

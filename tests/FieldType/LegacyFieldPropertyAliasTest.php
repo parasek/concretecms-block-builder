@@ -10,9 +10,17 @@ use BlockBuilder\FieldType\Factory\FieldTypeDtoFactory;
 use BlockBuilder\FieldType\FieldTypeRegistry;
 use BlockBuilder\Tests\Support\BlockBuilderTestCase;
 
+/**
+ * Test type: Legacy field-property compatibility unit test.
+ *
+ * Verifies that every registered legacy property alias maps to its canonical property while
+ * matching duplicate values are accepted and conflicting values are rejected.
+ */
 final class LegacyFieldPropertyAliasTest extends BlockBuilderTestCase
 {
     /**
+     * Confirms that each legacy property is converted to its registered canonical property and normalized value.
+     *
      * @dataProvider legacyFieldPropertyAliasProvider
      */
     public function testLegacyPropertyMapsToExpectedCanonicalPropertyAndValue(
@@ -47,6 +55,9 @@ final class LegacyFieldPropertyAliasTest extends BlockBuilderTestCase
         self::assertSame($expectedCanonicalValue, $canonicalData[$canonicalProperty]);
     }
 
+    /**
+     * Confirms that the test cases cover every legacy alias currently registered by every field type.
+     */
     public function testProviderCoversEveryRegisteredLegacyPropertyAlias(): void
     {
         $providedAliases = [];
@@ -75,6 +86,9 @@ final class LegacyFieldPropertyAliasTest extends BlockBuilderTestCase
         self::assertSame($registeredAliases, $providedAliases);
     }
 
+    /**
+     * Confirms that supplying identical values under legacy and canonical property names is accepted and canonicalized.
+     */
     public function testMatchingLegacyAndCanonicalPropertiesAreAccepted(): void
     {
         $fieldData = $this->createFieldData(FieldTypeEnum::Number);
@@ -93,6 +107,9 @@ final class LegacyFieldPropertyAliasTest extends BlockBuilderTestCase
         self::assertArrayNotHasKey('numberSize', $canonicalData);
     }
 
+    /**
+     * Confirms that different values under legacy and canonical property names are rejected as ambiguous.
+     */
     public function testConflictingLegacyAndCanonicalPropertiesAreRejected(): void
     {
         $fieldData = $this->createFieldData(FieldTypeEnum::Number);
