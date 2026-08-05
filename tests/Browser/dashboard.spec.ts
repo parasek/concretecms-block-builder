@@ -1,10 +1,26 @@
 import AxeBuilder from '@axe-core/playwright';
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type Locator, type Page } from '@playwright/test';
 import { loginAsDisposableAdmin } from './support/authentication';
 import { assertDisposableBrowserEnvironment } from './support/environment';
 
 const generatedFixtureHandle = 'block_builder_browser_fixture';
 const exactGeneratedFixtureHandle = /^\s*block_builder_browser_fixture\s*$/;
+
+async function addFieldThroughChoices(
+    builder: Locator,
+    context: 'basic' | 'entries',
+    fieldTypeHandle: string,
+): Promise<void> {
+    const originalSelect = builder.locator(`select[data-add-entry][data-context="${context}"]`);
+    const choicesWidget = originalSelect.locator(
+        'xpath=ancestor::div[contains(concat(" ", normalize-space(@class), " "), " choices ")][1]',
+    );
+
+    await choicesWidget.locator('.choices__inner').click();
+    const fieldTypeChoice = choicesWidget.locator(`[data-choice][data-value="${fieldTypeHandle}"]`);
+    await expect(fieldTypeChoice).toBeVisible();
+    await fieldTypeChoice.click();
+}
 
 async function removeGeneratedFixtureThroughDashboard(page: Page): Promise<void> {
     for (let action = 0; action < 2; action += 1) {
@@ -78,8 +94,10 @@ test.describe('authenticated Block Builder dashboard', () => {
         await page.goto('/index.php/dashboard/blocks/block_builder/configs');
 
         await expect(page.locator('.bb-app-configs')).toBeVisible();
-        await expect(page.locator('.bb-block-type-handle', { hasText: 'all_fields' })).toBeVisible();
-        await expect(page.locator('.bb-block-type-handle', { hasText: 'single_multiple_choice_field' })).toBeVisible();
+        await expect(page.locator('.bb-block-type-handle').filter({ hasText: /^\s*all_fields\s*$/ })).toBeVisible();
+        await expect(page.locator('.bb-block-type-handle').filter({
+            hasText: /^\s*single_multiple_choice_field\s*$/,
+        })).toBeVisible();
 
         const accessibilityResult = await new AxeBuilder({ page })
             .include('.bb-app-configs')
@@ -108,7 +126,7 @@ test.describe('authenticated Block Builder dashboard', () => {
         await expect(page).toHaveURL(/#tab-basic-information$/);
         await expect(builder.locator('#ccm-tab-content-tab-basic-information')).toBeVisible();
 
-        await builder.locator('select[data-add-entry][data-context="basic"]').selectOption('text_field');
+        await addFieldThroughChoices(builder, 'basic', 'text_field');
         const addedField = builder.locator('#bb-field-entries-basic [data-entry]').last();
         await expect(addedField).toBeVisible();
         await addedField.locator('[data-entry-title-source]').fill('Product Name 2');
@@ -127,10 +145,8 @@ test.describe('authenticated Block Builder dashboard', () => {
     test('repeatable title source remains exclusive and entries can be removed', async ({ page }) => {
         const builder = page.locator('#bbAppBuilder');
         await builder.locator('[data-bb-tab="tab-repeatable-entries"]').click();
-        const addField = builder.locator('select[data-add-entry][data-context="entries"]');
-
-        await addField.selectOption('text_field');
-        await addField.selectOption('text_field');
+        await addFieldThroughChoices(builder, 'entries', 'text_field');
+        await addFieldThroughChoices(builder, 'entries', 'text_field');
         const entries = builder.locator('#bb-field-entries-entries [data-entry]');
         await expect(entries).toHaveCount(2);
         await entries.nth(0).locator('[data-entry-title-source]').fill('First title');
