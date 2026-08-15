@@ -888,6 +888,9 @@
 
     function initializeBlockBuilderForm(formContainer) {
         if (formContainer.dataset.blockBuilderInitialized === 'true') {
+            // WYSIWYG initializers may be attached after the add dialog's first initialization pass.
+            initializeWysiwygEditors(formContainer);
+
             return;
         }
 

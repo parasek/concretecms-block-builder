@@ -97,6 +97,11 @@ final class InMemoryGenerationTest extends BlockBuilderTestCase
         );
         self::assertStringNotContainsString('DOCUMENT_ROOT', $filesByPath['view.php']);
         self::assertStringNotContainsString('var_dump(', $filesByPath['view.php']);
+        self::assertStringContainsString(
+            "if (formContainer.dataset.blockBuilderInitialized === 'true') {\n            // WYSIWYG initializers may be attached after the add dialog's first initialization pass.\n            initializeWysiwygEditors(formContainer);",
+            $filesByPath['auto.js'],
+            'An initialized add form must retry WYSIWYG setup after its editor initializers become available.',
+        );
 
         $parser = (new ParserFactory())->createForNewestSupportedVersion();
         foreach ($filesByPath as $relativePath => $contents) {
