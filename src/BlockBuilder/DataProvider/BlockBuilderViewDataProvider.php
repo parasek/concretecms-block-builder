@@ -61,7 +61,7 @@ readonly class BlockBuilderViewDataProvider
             'excludedFromRemoval' => ['templates'],
             'basic' => [],
             'entries' => [],
-            'blockWidth' => 1000,
+            'blockWidth' => 1200,
             'blockHeight' => 650,
             'installBlock' => true,
             'maxNumberOfEntries' => 0,
