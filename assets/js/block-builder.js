@@ -1,4 +1,4 @@
-/* global _, Choices, Sortable */
+/* global _, document, window, confirm, localStorage, history, HTMLTemplateElement, Choices, Sortable */
 
 document.addEventListener('DOMContentLoaded', () => {
     const blockBuilder = (() => {
@@ -641,7 +641,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (target.closest('[data-image-create-fullscreen-image]')) toggleFullscreenImageOptions(e);
                 if (target.closest('[data-change-select-list-generation-method]')) toggleSelectListGenerationOptions(e);
             });
-
         };
 
         return {
