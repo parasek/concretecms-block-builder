@@ -9,7 +9,6 @@ use BlockBuilder\BlockGenerator\Generation\Plan\Support\SectionedCodeFragmentBui
 use BlockBuilder\BlockGenerator\Generation\Plan\Support\UniqueContributionCollection;
 use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
 use Concrete\Core\File\Tracker\FileTrackableInterface;
-use InvalidArgumentException;
 
 final class ControllerGenerationPlanBuilder
 {
@@ -125,7 +124,7 @@ final class ControllerGenerationPlanBuilder
     public function addMethodFragment(string $section, CodeFragment $fragment): self
     {
         if (ControllerMethodSectionEnum::tryFrom($section) === null) {
-            throw new InvalidArgumentException(sprintf('Unknown controller generation section "%s".', $section));
+            throw new \InvalidArgumentException(sprintf('Unknown controller generation section "%s".', $section));
         }
 
         $this->methodFragments->add($section, $fragment);
@@ -138,7 +137,7 @@ final class ControllerGenerationPlanBuilder
         $properties = $this->properties->values();
         usort(
             $properties,
-            static fn(ControllerProperty $first, ControllerProperty $second): int => $first->order <=> $second->order,
+            static fn (ControllerProperty $first, ControllerProperty $second): int => $first->order <=> $second->order,
         );
 
         return new ControllerGenerationPlan(

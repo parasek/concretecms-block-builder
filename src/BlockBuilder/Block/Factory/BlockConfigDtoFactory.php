@@ -38,8 +38,7 @@ readonly class BlockConfigDtoFactory
         array $data,
         bool $isBlockBeingGenerated,
         bool $validateFieldData,
-    ): BlockConfigDto
-    {
+    ): BlockConfigDto {
         foreach (FieldTypeContextEnum::cases() as $fieldTypeContext) {
             $collectionName = $fieldTypeContext->value;
             if (!array_key_exists($collectionName, $data)) {
@@ -150,7 +149,7 @@ readonly class BlockConfigDtoFactory
     private function transformFieldsToDto(array $fields, bool $validateFieldData): array
     {
         return array_values(array_map(
-            callback: fn(array $fieldData) => $validateFieldData
+            callback: fn (array $fieldData) => $validateFieldData
                 ? $this->fieldTypeDtoFactory->fromArray($fieldData)
                 : $this->fieldTypeDtoFactory->fromFormArray($fieldData),
             array: $fields
@@ -162,16 +161,12 @@ readonly class BlockConfigDtoFactory
         foreach (FieldTypeContextEnum::cases() as $fieldTypeContext) {
             $collectionName = $fieldTypeContext->value;
             if (!is_array($data[$collectionName])) {
-                throw new InvalidConfigFieldDataException(
-                    sprintf('The "%s" field collection must be an array.', $collectionName),
-                );
+                throw new InvalidConfigFieldDataException(sprintf('The "%s" field collection must be an array.', $collectionName));
             }
 
             foreach ($data[$collectionName] as $fieldIndex => $fieldData) {
                 if (!is_array($fieldData)) {
-                    throw new InvalidConfigFieldDataException(
-                        sprintf('Field %s in the "%s" collection must be an array.', $fieldIndex, $collectionName),
-                    );
+                    throw new InvalidConfigFieldDataException(sprintf('Field %s in the "%s" collection must be an array.', $fieldIndex, $collectionName));
                 }
             }
         }
@@ -186,9 +181,7 @@ readonly class BlockConfigDtoFactory
             }
 
             if (is_array($value) || is_object($value) || is_resource($value)) {
-                throw new InvalidConfigFieldDataException(
-                    sprintf('Configuration property "%s" must contain a scalar value or null.', $propertyName),
-                );
+                throw new InvalidConfigFieldDataException(sprintf('Configuration property "%s" must contain a scalar value or null.', $propertyName));
             }
         }
 

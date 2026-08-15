@@ -7,8 +7,6 @@ namespace BlockBuilder\Block\Service;
 use BlockBuilder\Block\Exception\BlockDirectoryRemovalException;
 use BlockBuilder\Block\Validation\BlockHandleFormat;
 use Concrete\Core\File\Service\File as FileService;
-use RuntimeException;
-use Throwable;
 
 readonly class BlockDirectoryRemover
 {
@@ -27,7 +25,7 @@ readonly class BlockDirectoryRemover
     {
         try {
             $error = $this->permissionChecker->getRemovalErrorMessage();
-        } catch (Throwable $throwable) {
+        } catch (\Throwable $throwable) {
             $this->throwLoggedFailure(
                 handle: $handle,
                 message: t('Unable to check permission for block type directory removal.'),
@@ -50,7 +48,7 @@ readonly class BlockDirectoryRemover
 
         try {
             $blockHandleLock = $this->blockHandleLockManager->acquire($handle);
-        } catch (Throwable $throwable) {
+        } catch (\Throwable $throwable) {
             $this->throwLoggedFailure(
                 handle: $handle,
                 message: t('Unable to acquire the directory operation lock for block type "%s".', $handle),
@@ -83,7 +81,7 @@ readonly class BlockDirectoryRemover
         }
         try {
             $isInstalled = $this->blockTypeLocator->isInstalled($handle);
-        } catch (Throwable $throwable) {
+        } catch (\Throwable $throwable) {
             $this->throwLoggedFailure(
                 handle: $handle,
                 message: t('Unable to determine whether block type "%s" is installed before directory removal.', $handle),
@@ -101,9 +99,9 @@ readonly class BlockDirectoryRemover
 
         try {
             if (!$this->fileService->removeAll($path, true)) {
-                throw new RuntimeException(sprintf('File service returned false while removing "%s".', $path));
+                throw new \RuntimeException(sprintf('File service returned false while removing "%s".', $path));
             }
-        } catch (Throwable $throwable) {
+        } catch (\Throwable $throwable) {
             $this->throwLoggedFailure(
                 handle: $handle,
                 message: t('Unable to remove block type directory "%s".', $path),
@@ -123,7 +121,7 @@ readonly class BlockDirectoryRemover
         string $handle,
         string $message,
         array $context = [],
-        ?Throwable $previous = null,
+        ?\Throwable $previous = null,
     ): never {
         $exception = new BlockDirectoryRemovalException(message: $message, previous: $previous);
         $this->lifecycleLogger->logFailure(

@@ -9,7 +9,6 @@ use BlockBuilder\BlockGenerator\BlockGenerationManifest;
 use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
 use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\FieldType\FieldTypeDtoInterface;
-use InvalidArgumentException;
 
 final readonly class FieldGenerationContext
 {
@@ -22,7 +21,7 @@ final readonly class FieldGenerationContext
         public int $position,
     ) {
         if ($position < 0) {
-            throw new InvalidArgumentException('The field position must be zero or greater.');
+            throw new \InvalidArgumentException('The field position must be zero or greater.');
         }
     }
 

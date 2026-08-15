@@ -20,7 +20,6 @@ use BlockBuilder\BlockGenerator\Generation\Plan\ViewVariableDocumentation;
 use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\FieldType\Type\WysiwygEditor\WysiwygEditorFieldTypeDto;
 use Concrete\Core\Editor\LinkAbstractor;
-use JsonException;
 
 readonly class WysiwygEditorFieldGenerationContributor implements FieldGenerationContributorInterface
 {
@@ -42,11 +41,7 @@ readonly class WysiwygEditorFieldGenerationContributor implements FieldGeneratio
         BlockGenerationPlanBuilder $planBuilder,
     ): void {
         if (!$context->fieldDto instanceof WysiwygEditorFieldTypeDto) {
-            throw new InvalidFieldGenerationDtoException(sprintf(
-                'WYSIWYG editor field generation requires DTO "%s"; "%s" was provided.',
-                WysiwygEditorFieldTypeDto::class,
-                $context->fieldDto::class,
-            ));
+            throw new InvalidFieldGenerationDtoException(sprintf('WYSIWYG editor field generation requires DTO "%s"; "%s" was provided.', WysiwygEditorFieldTypeDto::class, $context->fieldDto::class));
         }
 
         $field = $context->fieldDto;
@@ -322,17 +317,11 @@ readonly class WysiwygEditorFieldGenerationContributor implements FieldGeneratio
                 JSON_THROW_ON_ERROR,
             );
             $options = json_decode($field->customConfig, true, 512, JSON_THROW_ON_ERROR);
-        } catch (JsonException $exception) {
-            throw new InvalidFieldGenerationDtoException(
-                sprintf('WYSIWYG editor field "%s" contains invalid editor configuration JSON.', $field->handle),
-                previous: $exception,
-            );
+        } catch (\JsonException $exception) {
+            throw new InvalidFieldGenerationDtoException(sprintf('WYSIWYG editor field "%s" contains invalid editor configuration JSON.', $field->handle), previous: $exception);
         }
         if (!is_object($configurationObject) || !is_array($options)) {
-            throw new InvalidFieldGenerationDtoException(sprintf(
-                'WYSIWYG editor field "%s" editor configuration must decode to a JSON object.',
-                $field->handle,
-            ));
+            throw new InvalidFieldGenerationDtoException(sprintf('WYSIWYG editor field "%s" editor configuration must decode to a JSON object.', $field->handle));
         }
 
         return $options;

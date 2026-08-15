@@ -47,7 +47,7 @@ readonly class FormPhpFileGenerator implements FileGeneratorInterface
             $this->renderFragments(
                 $context->plan->form->getFragments(FormGenerationPlanBuilder::SECTION_VALIDATION),
             ),
-        ], static fn(string $section): bool => $section !== '');
+        ], static fn (string $section): bool => $section !== '');
 
         return [
             new GeneratedTextFile(
@@ -439,7 +439,7 @@ PHP;
 
         return implode(
             ', ',
-            array_map(static fn(string $variableName): string => '$' . $variableName, $variableNames),
+            array_map(static fn (string $variableName): string => '$' . $variableName, $variableNames),
         );
     }
 
@@ -450,7 +450,7 @@ PHP;
     {
         return implode(
             PHP_EOL . PHP_EOL,
-            array_map(static fn(CodeFragment $fragment): string => trim($fragment->code), $fragments),
+            array_map(static fn (CodeFragment $fragment): string => trim($fragment->code), $fragments),
         );
     }
 
@@ -461,7 +461,7 @@ PHP;
         return implode(
             PHP_EOL,
             array_map(
-                static fn(string $line): string => $line === '' ? '' : $indent . rtrim($line),
+                static fn (string $line): string => $line === '' ? '' : $indent . rtrim($line),
                 explode(PHP_EOL, trim($code)),
             ),
         );

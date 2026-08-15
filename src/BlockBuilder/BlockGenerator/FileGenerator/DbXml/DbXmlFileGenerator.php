@@ -10,8 +10,6 @@ use BlockBuilder\BlockGenerator\FileGenerator\FileGeneratorInterface;
 use BlockBuilder\BlockGenerator\FileGenerator\GeneratedTextFile;
 use BlockBuilder\BlockGenerator\Generation\Plan\DatabaseColumn;
 use BlockBuilder\BlockGenerator\Generation\Plan\DatabaseIndex;
-use DOMDocument;
-use DOMElement;
 
 readonly class DbXmlFileGenerator implements FileGeneratorInterface
 {
@@ -24,7 +22,7 @@ readonly class DbXmlFileGenerator implements FileGeneratorInterface
      */
     public function generate(BlockFileGenerationContext $context): array
     {
-        $document = new DOMDocument('1.0', 'UTF-8');
+        $document = new \DOMDocument('1.0', 'UTF-8');
         $document->formatOutput = true;
         $schema = $this->createElement($document, 'schema');
         $schema->setAttributeNS(
@@ -53,10 +51,7 @@ readonly class DbXmlFileGenerator implements FileGeneratorInterface
 
         $xml = $document->saveXML();
         if ($xml === false) {
-            throw new GeneratedFileDefinitionException(sprintf(
-                'Unable to serialize the database schema for block "%s".',
-                $context->config->blockHandle,
-            ));
+            throw new GeneratedFileDefinitionException(sprintf('Unable to serialize the database schema for block "%s".', $context->config->blockHandle));
         }
         $xml = $this->formatGeneratedXml($xml);
 
@@ -74,13 +69,12 @@ readonly class DbXmlFileGenerator implements FileGeneratorInterface
      * @param DatabaseIndex[] $indexes
      */
     private function writeTable(
-        DOMDocument $document,
-        DOMElement $schema,
+        \DOMDocument $document,
+        \DOMElement $schema,
         string $tableName,
         array $columns,
         array $indexes,
-    ): void
-    {
+    ): void {
         $table = $this->createElement($document, 'table');
         $table->setAttribute('name', $tableName);
         $schema->appendChild($table);
@@ -125,7 +119,7 @@ readonly class DbXmlFileGenerator implements FileGeneratorInterface
         }
     }
 
-    private function createElement(DOMDocument $document, string $name): DOMElement
+    private function createElement(\DOMDocument $document, string $name): \DOMElement
     {
         return $document->createElementNS(self::SCHEMA_NAMESPACE, $name);
     }
@@ -134,7 +128,7 @@ readonly class DbXmlFileGenerator implements FileGeneratorInterface
     {
         $xml = preg_replace_callback(
             '/^( +)/m',
-            static fn(array $matches): string => str_repeat(' ', strlen($matches[1]) * 2),
+            static fn (array $matches): string => str_repeat(' ', strlen($matches[1]) * 2),
             $xml,
         );
         if ($xml === null) {

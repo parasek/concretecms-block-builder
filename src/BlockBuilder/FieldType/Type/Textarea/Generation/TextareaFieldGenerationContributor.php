@@ -36,11 +36,7 @@ readonly class TextareaFieldGenerationContributor implements FieldGenerationCont
         BlockGenerationPlanBuilder $planBuilder,
     ): void {
         if (!$context->fieldDto instanceof TextareaFieldTypeDto) {
-            throw new InvalidFieldGenerationDtoException(sprintf(
-                'Textarea field generation requires DTO "%s"; "%s" was provided.',
-                TextareaFieldTypeDto::class,
-                $context->fieldDto::class,
-            ));
+            throw new InvalidFieldGenerationDtoException(sprintf('Textarea field generation requires DTO "%s"; "%s" was provided.', TextareaFieldTypeDto::class, $context->fieldDto::class));
         }
 
         $field = $context->fieldDto;

@@ -62,7 +62,7 @@ readonly class ViewPhpFileGenerator implements FileGeneratorInterface
     private function renderVariableDocumentation(BlockFileGenerationContext $context): string
     {
         $lines = array_map(
-            fn(ViewVariableDocumentation $variable): string => sprintf(
+            fn (ViewVariableDocumentation $variable): string => sprintf(
                 ' * @var %s $%s %s',
                 $variable->type,
                 $variable->name,
@@ -123,7 +123,7 @@ readonly class ViewPhpFileGenerator implements FileGeneratorInterface
     {
         return implode(
             PHP_EOL . PHP_EOL,
-            array_map(static fn(CodeFragment $fragment): string => trim($fragment->code), $fragments),
+            array_map(static fn (CodeFragment $fragment): string => trim($fragment->code), $fragments),
         );
     }
 
@@ -134,7 +134,7 @@ readonly class ViewPhpFileGenerator implements FileGeneratorInterface
         return implode(
             PHP_EOL,
             array_map(
-                static fn(string $line): string => $line === '' ? '' : $indent . rtrim($line),
+                static fn (string $line): string => $line === '' ? '' : $indent . rtrim($line),
                 explode(PHP_EOL, trim($code)),
             ),
         );

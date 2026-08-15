@@ -7,7 +7,6 @@ namespace BlockBuilder\BlockGenerator;
 use BlockBuilder\BlockGenerator\Exception\BlockIconGenerationException;
 use BlockBuilder\Environment\EnvironmentService;
 use Symfony\Component\Filesystem\Filesystem;
-use Throwable;
 
 readonly class BlockIconGenerator
 {
@@ -43,20 +42,17 @@ readonly class BlockIconGenerator
             $this->replaceDestination($temporaryPath, $destination);
             $temporaryPath = null;
             $this->assertValidPng($destination);
-        } catch (Throwable $throwable) {
+        } catch (\Throwable $throwable) {
             if ($throwable instanceof BlockIconGenerationException) {
                 throw $throwable;
             }
 
-            throw new BlockIconGenerationException(
-                message: sprintf('Unable to generate block icon at "%s".', $destination),
-                previous: $throwable,
-            );
+            throw new BlockIconGenerationException(message: sprintf('Unable to generate block icon at "%s".', $destination), previous: $throwable);
         } finally {
             if ($temporaryPath !== null && (file_exists($temporaryPath) || is_link($temporaryPath))) {
                 try {
                     $this->filesystem->remove($temporaryPath);
-                } catch (Throwable) {
+                } catch (\Throwable) {
                     // Keep the original generation failure as the reported error.
                 }
             }
@@ -67,9 +63,7 @@ readonly class BlockIconGenerator
     {
         if (file_exists($destination) || is_link($destination)) {
             if (!is_file($destination) && !is_link($destination)) {
-                throw new BlockIconGenerationException(
-                    sprintf('The block icon destination "%s" is not a file.', $destination),
-                );
+                throw new BlockIconGenerationException(sprintf('The block icon destination "%s" is not a file.', $destination));
             }
             $this->filesystem->remove($destination);
         }
@@ -81,16 +75,12 @@ readonly class BlockIconGenerator
     {
         $fileSize = is_file($path) ? filesize($path) : false;
         if ($fileSize === false || $fileSize === 0 || !is_readable($path)) {
-            throw new BlockIconGenerationException(
-                sprintf('The generated block icon at "%s" is missing, unreadable, or empty.', $path),
-            );
+            throw new BlockIconGenerationException(sprintf('The generated block icon at "%s" is missing, unreadable, or empty.', $path));
         }
 
         $imageInformation = getimagesize($path);
         if ($imageInformation === false || ($imageInformation[2] ?? null) !== IMAGETYPE_PNG) {
-            throw new BlockIconGenerationException(
-                sprintf('The generated block icon at "%s" is not a valid PNG image.', $path),
-            );
+            throw new BlockIconGenerationException(sprintf('The generated block icon at "%s" is not a valid PNG image.', $path));
         }
     }
 }

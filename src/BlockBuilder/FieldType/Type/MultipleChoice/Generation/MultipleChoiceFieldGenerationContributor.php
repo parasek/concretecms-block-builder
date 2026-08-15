@@ -39,11 +39,7 @@ readonly class MultipleChoiceFieldGenerationContributor implements FieldGenerati
         BlockGenerationPlanBuilder $planBuilder,
     ): void {
         if (!$context->fieldDto instanceof MultipleChoiceFieldTypeDto) {
-            throw new InvalidFieldGenerationDtoException(sprintf(
-                'Multiple choice field generation requires DTO "%s"; "%s" was provided.',
-                MultipleChoiceFieldTypeDto::class,
-                $context->fieldDto::class,
-            ));
+            throw new InvalidFieldGenerationDtoException(sprintf('Multiple choice field generation requires DTO "%s"; "%s" was provided.', MultipleChoiceFieldTypeDto::class, $context->fieldDto::class));
         }
 
         $field = $context->fieldDto;
@@ -428,7 +424,7 @@ PHP;
         return implode(
             PHP_EOL,
             array_map(
-                static fn(string $line): string => str_starts_with($line, '        ')
+                static fn (string $line): string => str_starts_with($line, '        ')
                     ? substr($line, 8)
                     : $line,
                 explode(PHP_EOL, $code),
@@ -449,7 +445,7 @@ PHP;
                 continue;
             }
 
-            $position++;
+            ++$position;
             $parts = array_map('trim', explode('::', $line, 2));
             $key = count($parts) === 2 ? $parts[0] : (string) $position;
             $label = count($parts) === 2 ? $parts[1] : $parts[0];
@@ -540,7 +536,7 @@ PHP;
         return implode(
             PHP_EOL,
             array_map(
-                static fn(string $line): string => $line === '' ? '' : $indentation . $line,
+                static fn (string $line): string => $line === '' ? '' : $indentation . $line,
                 explode(PHP_EOL, $code),
             ),
         );

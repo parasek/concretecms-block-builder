@@ -72,10 +72,7 @@ readonly class BlockGenerationPlanFactory
         }
 
         if (count($titleSourceHandles) > 1) {
-            throw new InvalidFieldGenerationDtoException(sprintf(
-                'Only one repeatable field may be used as the entry title source; received: %s.',
-                implode(', ', $titleSourceHandles),
-            ));
+            throw new InvalidFieldGenerationDtoException(sprintf('Only one repeatable field may be used as the entry title source; received: %s.', implode(', ', $titleSourceHandles)));
         }
     }
 

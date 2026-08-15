@@ -26,11 +26,7 @@ final class UniqueContributionCollection
             return;
         }
 
-        throw new GenerationContributionConflictException(sprintf(
-            'Conflicting contributions use key "%s" in %s.',
-            $key,
-            $this->scope,
-        ));
+        throw new GenerationContributionConflictException(sprintf('Conflicting contributions use key "%s" in %s.', $key, $this->scope));
     }
 
     public function values(): array

@@ -9,7 +9,7 @@ use Concrete\Core\Entity\Block\BlockType\BlockType as BlockTypeEntity;
 
 readonly class BlockTypeLocator
 {
-    public function findByIdentifier(null|int|string $blockTypeIdentifier): ?BlockTypeEntity
+    public function findByIdentifier(int|string|null $blockTypeIdentifier): ?BlockTypeEntity
     {
         $blockType = match (true) {
             is_int($blockTypeIdentifier), is_string($blockTypeIdentifier) && ctype_digit($blockTypeIdentifier) => BlockType::getByID((int) $blockTypeIdentifier),
@@ -20,7 +20,7 @@ readonly class BlockTypeLocator
         return $blockType instanceof BlockTypeEntity ? $blockType : null;
     }
 
-    public function isInstalled(null|BlockTypeEntity|int|string $blockType): bool
+    public function isInstalled(BlockTypeEntity|int|string|null $blockType): bool
     {
         return $blockType instanceof BlockTypeEntity || $this->findByIdentifier($blockType) !== null;
     }

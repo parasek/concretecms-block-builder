@@ -11,14 +11,14 @@ use Concrete\Core\System\Info as SystemInfo;
 
 readonly class EnvironmentService
 {
-    const string PACKAGE_HANDLE = 'block_builder';
+    public const string PACKAGE_HANDLE = 'block_builder';
 
-    const string PREDEFINED_CONFIGS_FOLDER = 'predefined_configs';
-    const string GENERATOR_FILES_FOLDER = 'generator_files';
-    const string SKELETONS_FOLDER = 'skeletons';
+    public const string PREDEFINED_CONFIGS_FOLDER = 'predefined_configs';
+    public const string GENERATOR_FILES_FOLDER = 'generator_files';
+    public const string SKELETONS_FOLDER = 'skeletons';
 
-    const string CONFIG_BB_JSON = 'config-bb.json';
-    const string SOURCE_BLOCK_ICON = 'icon.png';
+    public const string CONFIG_BB_JSON = 'config-bb.json';
+    public const string SOURCE_BLOCK_ICON = 'icon.png';
 
     public function __construct(
         private SystemInfo $systemInfo,

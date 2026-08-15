@@ -8,7 +8,6 @@ use BlockBuilder\Block\Validation\IntegerValueValidator;
 use BlockBuilder\FieldType\AbstractFieldType;
 use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
 use BlockBuilder\FieldType\Enum\FieldTypeEnum;
-use JsonException;
 
 class WysiwygEditorFieldType extends AbstractFieldType
 {
@@ -117,7 +116,7 @@ class WysiwygEditorFieldType extends AbstractFieldType
                     if (!is_object($decodedConfig)) {
                         $errors[] = 'customConfig|invalid_json';
                     }
-                } catch (JsonException) {
+                } catch (\JsonException) {
                     $errors[] = 'customConfig|invalid_json';
                 }
             }

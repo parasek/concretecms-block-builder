@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace BlockBuilder\FieldType\Type\SvgIconPicker;
 
 use BlockBuilder\Block\Validation\BlockConfigLimits;
-use DOMDocument;
 use enshrined\svgSanitize\Sanitizer;
-use Throwable;
 
 final readonly class SvgIconSanitizer
 {
@@ -38,14 +36,14 @@ final readonly class SvgIconSanitizer
             $sanitizer->removeXMLTag(true);
             $sanitizer->minify(true);
             $sanitizedSvg = $sanitizer->sanitize($svg);
-        } catch (Throwable) {
+        } catch (\Throwable) {
             return null;
         }
         if (!is_string($sanitizedSvg) || trim($sanitizedSvg) === '') {
             return null;
         }
 
-        $document = new DOMDocument();
+        $document = new \DOMDocument();
         $previousErrorHandling = libxml_use_internal_errors(true);
         try {
             $loaded = $document->loadXML($sanitizedSvg, LIBXML_NONET | LIBXML_NOWARNING);
@@ -69,7 +67,7 @@ final readonly class SvgIconSanitizer
             : null;
     }
 
-    private static function removeNonFragmentReferences(DOMDocument $document): bool
+    private static function removeNonFragmentReferences(\DOMDocument $document): bool
     {
         $referencesChanged = false;
         $elementsToRemove = [];

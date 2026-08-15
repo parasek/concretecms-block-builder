@@ -40,19 +40,11 @@ final class FieldGenerationContributorRegistry
         $expectedDtoClass = $fieldType::getDtoClass();
 
         if (!$context->fieldDto instanceof $expectedDtoClass) {
-            throw new InvalidFieldGenerationDtoException(sprintf(
-                'Field type "%s" requires DTO "%s" during generation; "%s" was provided.',
-                $context->fieldType->value,
-                $expectedDtoClass,
-                $context->fieldDto::class,
-            ));
+            throw new InvalidFieldGenerationDtoException(sprintf('Field type "%s" requires DTO "%s" during generation; "%s" was provided.', $context->fieldType->value, $expectedDtoClass, $context->fieldDto::class));
         }
 
         return $this->contributorsByType[$context->fieldType->value]
-            ?? throw new UnsupportedFieldGenerationException(sprintf(
-                'No generation contributor is registered for field type "%s".',
-                $context->fieldType->value,
-            ));
+            ?? throw new UnsupportedFieldGenerationException(sprintf('No generation contributor is registered for field type "%s".', $context->fieldType->value));
     }
 
     public function contribute(
@@ -67,10 +59,7 @@ final class FieldGenerationContributorRegistry
         $fieldTypeHandle = $contributor->getFieldType()->value;
 
         if (isset($this->contributorsByType[$fieldTypeHandle])) {
-            throw new GenerationContributionConflictException(sprintf(
-                'More than one generation contributor is registered for field type "%s".',
-                $fieldTypeHandle,
-            ));
+            throw new GenerationContributionConflictException(sprintf('More than one generation contributor is registered for field type "%s".', $fieldTypeHandle));
         }
 
         $this->contributorsByType[$fieldTypeHandle] = $contributor;

@@ -45,11 +45,7 @@ final readonly class FileSetFieldGenerationContributor implements FieldGeneratio
         BlockGenerationPlanBuilder $planBuilder,
     ): void {
         if (!$context->fieldDto instanceof FileSetFieldTypeDto) {
-            throw new InvalidFieldGenerationDtoException(sprintf(
-                'File Set field generation requires DTO "%s"; "%s" was provided.',
-                FileSetFieldTypeDto::class,
-                $context->fieldDto::class,
-            ));
+            throw new InvalidFieldGenerationDtoException(sprintf('File Set field generation requires DTO "%s"; "%s" was provided.', FileSetFieldTypeDto::class, $context->fieldDto::class));
         }
 
         $field = $context->fieldDto;

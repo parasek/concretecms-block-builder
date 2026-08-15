@@ -13,7 +13,6 @@ use BlockBuilder\BlockGenerator\FileGenerator\GeneratedTextFileCollection;
 use BlockBuilder\BlockGenerator\FileGenerator\GeneratedTextFileWriter;
 use BlockBuilder\BlockGenerator\Generation\BlockGenerationPlanFactory;
 use BlockBuilder\BlockGenerator\Lifecycle\BlockTypeLifecycleService;
-use Throwable;
 
 readonly class BlockGenerator
 {
@@ -32,11 +31,8 @@ readonly class BlockGenerator
     {
         try {
             $blockHandleLock = $this->blockHandleLockManager->acquire($config->blockHandle);
-        } catch (Throwable $throwable) {
-            throw new BlockGenerationException(
-                message: sprintf('Unable to acquire the generation lock for block "%s".', $config->blockHandle),
-                previous: $throwable,
-            );
+        } catch (\Throwable $throwable) {
+            throw new BlockGenerationException(message: sprintf('Unable to acquire the generation lock for block "%s".', $config->blockHandle), previous: $throwable);
         }
 
         try {
@@ -73,7 +69,7 @@ readonly class BlockGenerator
 
             // Record that the Concrete lifecycle operation completed successfully.
             $directoryTransaction->markLifecycleCompleted();
-        } catch (Throwable $throwable) {
+        } catch (\Throwable $throwable) {
             // Handle failures after the filesystem rollback boundary separately.
             if (!$directoryTransaction->canRollback()) {
                 // Preserve an exception that already describes a generation failure.
@@ -82,25 +78,15 @@ readonly class BlockGenerator
                 }
 
                 // Wrap an unexpected failure that occurred after files were committed.
-                throw new BlockGenerationException(
-                    message: sprintf('Unable to complete generation of block "%s" after its generated files were committed.', $config->blockHandle),
-                    previous: $throwable,
-                );
+                throw new BlockGenerationException(message: sprintf('Unable to complete generation of block "%s" after its generated files were committed.', $config->blockHandle), previous: $throwable);
             }
 
             // Try to restore the previous folder or remove the partial new folder.
             try {
                 $directoryTransaction->rollback();
-            } catch (Throwable $rollbackThrowable) {
+            } catch (\Throwable $rollbackThrowable) {
                 // Report both the original failure and the failed restoration.
-                throw new BlockGenerationException(
-                    message: sprintf(
-                        'Block generation and directory rollback failed for block "%s". Rollback error: %s',
-                        $config->blockHandle,
-                        $rollbackThrowable->getMessage(),
-                    ),
-                    previous: $throwable,
-                );
+                throw new BlockGenerationException(message: sprintf('Block generation and directory rollback failed for block "%s". Rollback error: %s', $config->blockHandle, $rollbackThrowable->getMessage()), previous: $throwable);
             }
 
             // Preserve an exception that already describes a generation failure.
@@ -109,10 +95,7 @@ readonly class BlockGenerator
             }
 
             // Wrap any other failure in the package-level generation exception.
-            throw new BlockGenerationException(
-                message: sprintf('Unable to generate block "%s".', $config->blockHandle),
-                previous: $throwable,
-            );
+            throw new BlockGenerationException(message: sprintf('Unable to generate block "%s".', $config->blockHandle), previous: $throwable);
         }
 
         // Remove the no-longer-needed backup without failing successful generation.
@@ -138,11 +121,8 @@ readonly class BlockGenerator
             );
         } catch (BlockGenerationException $exception) {
             throw $exception;
-        } catch (Throwable $throwable) {
-            throw new BlockGenerationException(
-                message: sprintf('Unable to prepare the generation plan for block "%s".', $config->blockHandle),
-                previous: $throwable,
-            );
+        } catch (\Throwable $throwable) {
+            throw new BlockGenerationException(message: sprintf('Unable to prepare the generation plan for block "%s".', $config->blockHandle), previous: $throwable);
         }
     }
 
@@ -156,11 +136,8 @@ readonly class BlockGenerator
             }
         } catch (BlockGenerationException $exception) {
             throw $exception;
-        } catch (Throwable $throwable) {
-            throw new BlockGenerationException(
-                message: sprintf('Unable to render generated files for block "%s".', $context->config->blockHandle),
-                previous: $throwable,
-            );
+        } catch (\Throwable $throwable) {
+            throw new BlockGenerationException(message: sprintf('Unable to render generated files for block "%s".', $context->config->blockHandle), previous: $throwable);
         }
 
         return $generatedFiles;

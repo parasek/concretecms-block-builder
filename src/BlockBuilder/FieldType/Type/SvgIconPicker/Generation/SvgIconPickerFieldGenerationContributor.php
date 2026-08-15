@@ -36,11 +36,7 @@ final readonly class SvgIconPickerFieldGenerationContributor implements FieldGen
     public function contribute(FieldGenerationContext $context, BlockGenerationPlanBuilder $planBuilder): void
     {
         if (!$context->fieldDto instanceof SvgIconPickerFieldTypeDto) {
-            throw new InvalidFieldGenerationDtoException(sprintf(
-                'SVG Icon Picker field generation requires DTO "%s"; "%s" was provided.',
-                SvgIconPickerFieldTypeDto::class,
-                $context->fieldDto::class,
-            ));
+            throw new InvalidFieldGenerationDtoException(sprintf('SVG Icon Picker field generation requires DTO "%s"; "%s" was provided.', SvgIconPickerFieldTypeDto::class, $context->fieldDto::class));
         }
 
         $field = $context->fieldDto;
@@ -272,6 +268,7 @@ PHP,
                 ? ''
                 : PHP_EOL . '    <div class="form-text"><?= t(' . $this->phpLiteralFormatter->format($field->helpText) . '); ?></div>',
         ];
+
         return $this->stubRenderer->render(
             'fragments/svg_icon_picker/form-' . ($basicField ? 'basic' : 'repeatable') . '.php.stub',
             $replacements,

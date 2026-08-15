@@ -19,7 +19,6 @@ use BlockBuilder\BlockGenerator\Generation\Plan\ViewGenerationPlanBuilder;
 use BlockBuilder\BlockGenerator\Generation\Plan\ViewVariableDocumentation;
 use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\FieldType\Type\DatePicker\DatePickerFieldTypeDto;
-use DateTimeImmutable;
 
 final readonly class DatePickerFieldGenerationContributor implements FieldGenerationContributorInterface
 {
@@ -42,11 +41,7 @@ final readonly class DatePickerFieldGenerationContributor implements FieldGenera
         BlockGenerationPlanBuilder $planBuilder,
     ): void {
         if (!$context->fieldDto instanceof DatePickerFieldTypeDto) {
-            throw new InvalidFieldGenerationDtoException(sprintf(
-                'Date Picker field generation requires DTO "%s"; "%s" was provided.',
-                DatePickerFieldTypeDto::class,
-                $context->fieldDto::class,
-            ));
+            throw new InvalidFieldGenerationDtoException(sprintf('Date Picker field generation requires DTO "%s"; "%s" was provided.', DatePickerFieldTypeDto::class, $context->fieldDto::class));
         }
 
         $field = $context->fieldDto;
@@ -105,7 +100,7 @@ final readonly class DatePickerFieldGenerationContributor implements FieldGenera
     private function contributeSharedCode(BlockGenerationPlanBuilder $planBuilder): void
     {
         $planBuilder->controller
-            ->addUseStatement(new ControllerUseStatement(DateTimeImmutable::class))
+            ->addUseStatement(new ControllerUseStatement(\DateTimeImmutable::class))
             ->addMethodFragment(
                 ControllerMethodSectionEnum::AdditionalMethods->value,
                 new CodeFragment(
@@ -544,24 +539,14 @@ PHP,
         foreach (['minimum' => $field->minDate, 'maximum' => $field->maxDate] as $limitName => $date) {
             $parsedDate = \DateTimeImmutable::createFromFormat('!Y-m-d', $date);
             if ($date !== '' && ($parsedDate === false || $parsedDate->format('Y-m-d') !== $date)) {
-                throw new InvalidFieldGenerationDtoException(sprintf(
-                    'Date Picker field "%s" requires a valid %s date.',
-                    $field->handle,
-                    $limitName,
-                ));
+                throw new InvalidFieldGenerationDtoException(sprintf('Date Picker field "%s" requires a valid %s date.', $field->handle, $limitName));
             }
         }
         if ($field->minDate !== '' && $field->maxDate !== '' && $field->minDate > $field->maxDate) {
-            throw new InvalidFieldGenerationDtoException(sprintf(
-                'Date Picker field "%s" requires its minimum date not to be later than its maximum date.',
-                $field->handle,
-            ));
+            throw new InvalidFieldGenerationDtoException(sprintf('Date Picker field "%s" requires its minimum date not to be later than its maximum date.', $field->handle));
         }
         if ($field->minuteInterval < 1 || $field->minuteInterval > 60 || 60 % $field->minuteInterval !== 0) {
-            throw new InvalidFieldGenerationDtoException(sprintf(
-                'Date Picker field "%s" requires a minute interval that divides 60 without a remainder.',
-                $field->handle,
-            ));
+            throw new InvalidFieldGenerationDtoException(sprintf('Date Picker field "%s" requires a minute interval that divides 60 without a remainder.', $field->handle));
         }
     }
 }

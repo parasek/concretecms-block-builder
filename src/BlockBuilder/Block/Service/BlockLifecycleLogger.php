@@ -6,7 +6,6 @@ namespace BlockBuilder\Block\Service;
 
 use Concrete\Core\User\User;
 use Psr\Log\LoggerInterface;
-use Throwable;
 
 readonly class BlockLifecycleLogger
 {
@@ -27,7 +26,7 @@ readonly class BlockLifecycleLogger
     public function logFailure(
         string $operation,
         string|int $target,
-        Throwable $exception,
+        \Throwable $exception,
         array $context = [],
     ): void {
         $this->logger->warning(

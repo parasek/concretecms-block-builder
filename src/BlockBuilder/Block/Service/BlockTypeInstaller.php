@@ -8,7 +8,6 @@ use BlockBuilder\Block\Exception\BlockTypeInstallException;
 use BlockBuilder\Block\Validation\BlockHandleFormat;
 use Concrete\Core\Block\BlockType\BlockType;
 use Concrete\Core\Entity\Block\BlockType\BlockType as BlockTypeEntity;
-use Throwable;
 
 readonly class BlockTypeInstaller
 {
@@ -25,7 +24,7 @@ readonly class BlockTypeInstaller
     {
         try {
             $error = $this->permissionChecker->getInstallationErrorMessage();
-        } catch (Throwable $throwable) {
+        } catch (\Throwable $throwable) {
             $this->throwLoggedFailure(
                 handle: $handle,
                 message: t('The block type installation permission could not be verified.'),
@@ -63,7 +62,7 @@ readonly class BlockTypeInstaller
 
         try {
             $isInstalled = $this->blockTypeLocator->isInstalled($handle);
-        } catch (Throwable $throwable) {
+        } catch (\Throwable $throwable) {
             $this->throwLoggedFailure(
                 handle: $handle,
                 message: t('Unable to determine whether block type "%s" is installed.', $handle),
@@ -81,7 +80,7 @@ readonly class BlockTypeInstaller
 
         try {
             $blockType = BlockType::installBlockType($handle);
-        } catch (Throwable $throwable) {
+        } catch (\Throwable $throwable) {
             $this->throwLoggedFailure(
                 handle: $handle,
                 message: t('Concrete CMS failed to install block type "%s".', $handle),
@@ -111,7 +110,7 @@ readonly class BlockTypeInstaller
         string $handle,
         string $message,
         array $context = [],
-        ?Throwable $previous = null,
+        ?\Throwable $previous = null,
     ): never {
         $exception = new BlockTypeInstallException(message: $message, previous: $previous);
         $this->lifecycleLogger->logFailure(

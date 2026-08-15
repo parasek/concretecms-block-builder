@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace BlockBuilder\FieldType\Enum;
 
-use JsonSerializable;
-
-enum FieldTypeEnum: string implements JsonSerializable
+enum FieldTypeEnum: string implements \JsonSerializable
 {
     case Text = 'text_field';
     case Textarea = 'textarea';

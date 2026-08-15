@@ -160,19 +160,14 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
                     || $existingUseStatement->alias !== $useStatement->alias
                 )
             ) {
-                throw new GenerationContributionConflictException(sprintf(
-                    'Controller imports "%s" and "%s" both bind the local symbol "%s".',
-                    $existingUseStatement->className,
-                    $useStatement->className,
-                    $useStatement->getKey(),
-                ));
+                throw new GenerationContributionConflictException(sprintf('Controller imports "%s" and "%s" both bind the local symbol "%s".', $existingUseStatement->className, $useStatement->className, $useStatement->getKey()));
             }
 
             $useStatements[$useStatementKey] = $useStatement;
         }
 
         $renderedUseStatements = array_map(
-            static fn(ControllerUseStatement $useStatement): string => sprintf(
+            static fn (ControllerUseStatement $useStatement): string => sprintf(
                 'use %s%s;',
                 $useStatement->className,
                 $useStatement->alias !== null ? ' as ' . $useStatement->alias : '',
@@ -243,15 +238,12 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
     {
         foreach ($context->plan->controller->properties as $property) {
             if (in_array(strtolower($property->name), self::RESERVED_GENERATED_PROPERTY_NAMES, true)) {
-                throw new GenerationContributionConflictException(sprintf(
-                    'Field property "%s" conflicts with generated controller state.',
-                    $property->name,
-                ));
+                throw new GenerationContributionConflictException(sprintf('Field property "%s" conflicts with generated controller state.', $property->name));
             }
         }
 
         $declarations = array_map(
-            static fn($property): string => $property->declaration,
+            static fn ($property): string => $property->declaration,
             $context->plan->controller->properties,
         );
 
@@ -545,13 +537,13 @@ PHP;
     ): string {
         $basicFieldColumns = array_filter(
             $context->plan->database->mainTableColumns,
-            static fn(DatabaseColumn $column): bool => $column->name !== 'bID',
+            static fn (DatabaseColumn $column): bool => $column->name !== 'bID',
         );
         if ($basicFieldColumns === []) {
             $code = '$args = [];';
         } else {
             $argumentLines = array_map(
-                fn(DatabaseColumn $column): string => sprintf(
+                fn (DatabaseColumn $column): string => sprintf(
                     '    %s => $this->%s ?? null,',
                     $this->phpLiteralFormatter->format($column->name),
                     $column->name,
@@ -613,7 +605,7 @@ PHP;
         return implode(
             PHP_EOL,
             array_map(
-                fn(ControllerAsset $asset): string => $asset->handle === null
+                fn (ControllerAsset $asset): string => $asset->handle === null
                     ? sprintf('$this->requireAsset(%s);', $this->phpLiteralFormatter->format($asset->type))
                     : sprintf(
                         '$this->requireAsset(%s, %s);',
@@ -811,7 +803,7 @@ PHP;
     {
         $code = implode(
             PHP_EOL . PHP_EOL,
-            array_map(static fn(CodeFragment $fragment): string => trim($fragment->code), $fragments),
+            array_map(static fn (CodeFragment $fragment): string => trim($fragment->code), $fragments),
         );
 
         return $this->indentCode($code, $indentation);
@@ -821,7 +813,7 @@ PHP;
     {
         $code = implode(
             PHP_EOL . PHP_EOL,
-            array_values(array_filter(array_map('trim', $parts), static fn(string $part): bool => $part !== '')),
+            array_values(array_filter(array_map('trim', $parts), static fn (string $part): bool => $part !== '')),
         );
 
         return $this->indentCode($code, $indentation);
@@ -847,7 +839,7 @@ PHP;
         return implode(
             PHP_EOL,
             array_map(
-                static fn(string $line): string => $line === '' ? '' : $indent . rtrim($line),
+                static fn (string $line): string => $line === '' ? '' : $indent . rtrim($line),
                 explode(PHP_EOL, trim($code)),
             ),
         );

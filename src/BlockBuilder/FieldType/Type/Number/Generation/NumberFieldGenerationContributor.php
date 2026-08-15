@@ -37,11 +37,7 @@ readonly class NumberFieldGenerationContributor implements FieldGenerationContri
         BlockGenerationPlanBuilder $planBuilder,
     ): void {
         if (!$context->fieldDto instanceof NumberFieldTypeDto) {
-            throw new InvalidFieldGenerationDtoException(sprintf(
-                'Number field generation requires DTO "%s"; "%s" was provided.',
-                NumberFieldTypeDto::class,
-                $context->fieldDto::class,
-            ));
+            throw new InvalidFieldGenerationDtoException(sprintf('Number field generation requires DTO "%s"; "%s" was provided.', NumberFieldTypeDto::class, $context->fieldDto::class));
         }
 
         $field = $context->fieldDto;
@@ -407,20 +403,14 @@ PHP,
             $field->size === null
             || preg_match('/^[1-9]\d*\.\d+$/', $field->size) !== 1
         ) {
-            throw new InvalidFieldGenerationDtoException(sprintf(
-                'Number field "%s" requires a decimal database size such as "10.2".',
-                $field->handle,
-            ));
+            throw new InvalidFieldGenerationDtoException(sprintf('Number field "%s" requires a decimal database size such as "10.2".', $field->handle));
         }
         if (
             $field->step === null
             || !is_numeric($field->step)
             || (float) $field->step <= 0
         ) {
-            throw new InvalidFieldGenerationDtoException(sprintf(
-                'Number field "%s" requires a step greater than zero.',
-                $field->handle,
-            ));
+            throw new InvalidFieldGenerationDtoException(sprintf('Number field "%s" requires a step greater than zero.', $field->handle));
         }
         if (
             $field->minimum === null
@@ -429,30 +419,20 @@ PHP,
             || !is_numeric($field->maximum)
             || (float) $field->minimum > (float) $field->maximum
         ) {
-            throw new InvalidFieldGenerationDtoException(sprintf(
-                'Number field "%s" requires a valid minimum that is not greater than its maximum.',
-                $field->handle,
-            ));
+            throw new InvalidFieldGenerationDtoException(sprintf('Number field "%s" requires a valid minimum that is not greater than its maximum.', $field->handle));
         }
         if (
             $field->displayedDecimals < 0
             || $field->displayedDecimals > NumberFieldType::MAXIMUM_DISPLAYED_DECIMALS
         ) {
-            throw new InvalidFieldGenerationDtoException(sprintf(
-                'Number field "%s" requires between 0 and %d displayed decimals.',
-                $field->handle,
-                NumberFieldType::MAXIMUM_DISPLAYED_DECIMALS,
-            ));
+            throw new InvalidFieldGenerationDtoException(sprintf('Number field "%s" requires between 0 and %d displayed decimals.', $field->handle, NumberFieldType::MAXIMUM_DISPLAYED_DECIMALS));
         }
         if (
             $field->displayedDecimalSeparator === null
             || $field->displayedDecimalSeparator === ''
             || $field->displayedThousandsSeparator === null
         ) {
-            throw new InvalidFieldGenerationDtoException(sprintf(
-                'Number field "%s" requires valid display separators.',
-                $field->handle,
-            ));
+            throw new InvalidFieldGenerationDtoException(sprintf('Number field "%s" requires valid display separators.', $field->handle));
         }
     }
 
@@ -461,7 +441,7 @@ PHP,
         return implode(
             PHP_EOL,
             array_map(
-                static fn(string $line): string => $line === '' ? '' : '    ' . $line,
+                static fn (string $line): string => $line === '' ? '' : '    ' . $line,
                 explode(PHP_EOL, $code),
             ),
         );

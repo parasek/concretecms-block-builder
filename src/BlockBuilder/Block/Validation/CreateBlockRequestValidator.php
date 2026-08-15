@@ -23,8 +23,7 @@ readonly class CreateBlockRequestValidator
         array $data,
         FileBag $files,
         ?string $rebuildSourceHandle = null,
-    ): ValidationResult
-    {
+    ): ValidationResult {
         $feedback = $this->csrfValidator->validate($data, $files);
         if ($feedback->errors !== []) {
             return $this->createResult([], $feedback);

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace BlockBuilder\FieldType\Exception;
 
-use RuntimeException;
-
-class FieldTypeDtoCreationException extends RuntimeException
+class FieldTypeDtoCreationException extends \RuntimeException
 {
 }

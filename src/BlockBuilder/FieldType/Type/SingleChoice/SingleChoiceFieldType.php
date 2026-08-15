@@ -100,7 +100,7 @@ class SingleChoiceFieldType extends AbstractFieldType
         $optionKeys = $this->getOptionKeys($optionsString);
         if (
             count($optionKeys) !== count(array_unique($optionKeys))
-            || array_any($optionKeys, static fn(string $key): bool => mb_strlen($key) > 255)
+            || array_any($optionKeys, static fn (string $key): bool => mb_strlen($key) > 255)
         ) {
             $errors[] = 'options|invalid_data';
 
@@ -128,7 +128,7 @@ class SingleChoiceFieldType extends AbstractFieldType
                 continue;
             }
 
-            $position++;
+            ++$position;
             $parts = array_map('trim', explode('::', $line, 2));
             $keys[] = count($parts) === 2 ? $parts[0] : (string) $position;
         }

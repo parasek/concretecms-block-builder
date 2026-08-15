@@ -152,7 +152,7 @@ final class CreateBlockInputNormalizer
             self::INTEGER_FIELDS,
             self::IGNORED_CONTROL_FIELDS,
             array_map(
-                static fn(FieldTypeContextEnum $context): string => $context->value,
+                static fn (FieldTypeContextEnum $context): string => $context->value,
                 FieldTypeContextEnum::cases(),
             ),
         );

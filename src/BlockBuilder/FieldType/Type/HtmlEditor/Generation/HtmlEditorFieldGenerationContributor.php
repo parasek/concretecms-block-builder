@@ -41,11 +41,7 @@ readonly class HtmlEditorFieldGenerationContributor implements FieldGenerationCo
         BlockGenerationPlanBuilder $planBuilder,
     ): void {
         if (!$context->fieldDto instanceof HtmlEditorFieldTypeDto) {
-            throw new InvalidFieldGenerationDtoException(sprintf(
-                'HTML editor field generation requires DTO "%s"; "%s" was provided.',
-                HtmlEditorFieldTypeDto::class,
-                $context->fieldDto::class,
-            ));
+            throw new InvalidFieldGenerationDtoException(sprintf('HTML editor field generation requires DTO "%s"; "%s" was provided.', HtmlEditorFieldTypeDto::class, $context->fieldDto::class));
         }
 
         $field = $context->fieldDto;

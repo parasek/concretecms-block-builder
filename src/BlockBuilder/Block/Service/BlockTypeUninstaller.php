@@ -6,7 +6,6 @@ namespace BlockBuilder\Block\Service;
 
 use BlockBuilder\Block\Exception\BlockTypeUninstallException;
 use Concrete\Core\Entity\Block\BlockType\BlockType as BlockTypeEntity;
-use Throwable;
 
 readonly class BlockTypeUninstaller
 {
@@ -23,7 +22,7 @@ readonly class BlockTypeUninstaller
     {
         try {
             $error = $this->permissionChecker->getRemovalErrorMessage();
-        } catch (Throwable $throwable) {
+        } catch (\Throwable $throwable) {
             $this->throwLoggedFailure(
                 blockTypeIdentifier: $blockTypeIdentifier,
                 message: t('The block type removal permission could not be verified.'),
@@ -39,7 +38,7 @@ readonly class BlockTypeUninstaller
 
         try {
             $blockType = $this->blockTypeLocator->findByIdentifier($blockTypeIdentifier);
-        } catch (Throwable $throwable) {
+        } catch (\Throwable $throwable) {
             $this->throwLoggedFailure(
                 blockTypeIdentifier: $blockTypeIdentifier,
                 message: t('Unable to locate block type "%s" for uninstallation.', $blockTypeIdentifier),
@@ -58,7 +57,7 @@ readonly class BlockTypeUninstaller
             $blockTypeName = $blockType->getBlockTypeName();
             $blockTypeId = $blockType->getBlockTypeID();
             $blockTypeHandle = $blockType->getBlockTypeHandle();
-        } catch (Throwable $throwable) {
+        } catch (\Throwable $throwable) {
             $this->throwLoggedFailure(
                 blockTypeIdentifier: $blockTypeIdentifier,
                 message: t('Unable to inspect block type "%s" before uninstallation.', $blockTypeIdentifier),
@@ -83,7 +82,7 @@ readonly class BlockTypeUninstaller
 
         try {
             $blockHandleLock = $this->blockHandleLockManager->acquire($blockTypeHandle);
-        } catch (Throwable $throwable) {
+        } catch (\Throwable $throwable) {
             $this->throwLoggedFailure(
                 blockTypeIdentifier: $blockTypeIdentifier,
                 message: t('Unable to acquire the operation lock before uninstalling block type "%s".', $blockTypeHandle),
@@ -103,7 +102,7 @@ readonly class BlockTypeUninstaller
 
             try {
                 $blockType->delete();
-            } catch (Throwable $throwable) {
+            } catch (\Throwable $throwable) {
                 $this->throwLoggedFailure(
                     blockTypeIdentifier: $blockTypeIdentifier,
                     message: t('The block type could not be uninstalled. Please check the logs for more information.'),
@@ -128,7 +127,7 @@ readonly class BlockTypeUninstaller
         int|string $blockTypeIdentifier,
         string $message,
         array $context = [],
-        ?Throwable $previous = null,
+        ?\Throwable $previous = null,
     ): never {
         $exception = new BlockTypeUninstallException(message: $message, previous: $previous);
         $this->lifecycleLogger->logFailure(

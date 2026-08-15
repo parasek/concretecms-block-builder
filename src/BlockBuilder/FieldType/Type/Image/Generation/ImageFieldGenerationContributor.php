@@ -44,11 +44,7 @@ final readonly class ImageFieldGenerationContributor implements FieldGenerationC
     public function contribute(FieldGenerationContext $context, BlockGenerationPlanBuilder $planBuilder): void
     {
         if (!$context->fieldDto instanceof ImageFieldTypeDto) {
-            throw new InvalidFieldGenerationDtoException(sprintf(
-                'Image field generation requires DTO "%s"; "%s" was provided.',
-                ImageFieldTypeDto::class,
-                $context->fieldDto::class,
-            ));
+            throw new InvalidFieldGenerationDtoException(sprintf('Image field generation requires DTO "%s"; "%s" was provided.', ImageFieldTypeDto::class, $context->fieldDto::class));
         }
 
         $field = $context->fieldDto;
@@ -807,8 +803,7 @@ PHP,
         ImageFieldTypeDto $field,
         string $imageDataExpression,
         bool $repeatable,
-    ): string
-    {
+    ): string {
         $handle = $field->handle;
         $lines = [
             sprintf('$imageData = $this->%s(%s);', self::NORMALIZE_DATA_METHOD, $imageDataExpression),
@@ -1044,7 +1039,7 @@ PHP,
                 ? '$' . $handle . ' ?? 0'
                 : '$entry[' . $this->phpLiteralFormatter->format($handle) . '] ?? 0';
         };
-        $entryField = static fn(string $suffix): string => $basicField
+        $entryField = static fn (string $suffix): string => $basicField
             ? ''
             : ' data-entry-field="' . $field->handle . '_' . $suffix . '"';
 
@@ -1102,7 +1097,7 @@ PHP,
         return implode(
             PHP_EOL,
             array_map(
-                static fn(string $line): string => trim($line) === '' ? '' : $indentation . $line,
+                static fn (string $line): string => trim($line) === '' ? '' : $indentation . $line,
                 explode(PHP_EOL, $markup),
             ),
         );
@@ -1112,14 +1107,13 @@ PHP,
         FieldGenerationContext $context,
         ImageFieldTypeDto $field,
         bool $fullscreen,
-    ): string
-    {
+    ): string {
         $suffixes = $fullscreen
             ? ['override_fullscreen_dimensions', 'custom_fullscreen_width', 'custom_fullscreen_height', 'custom_fullscreen_crop']
             : ['override_dimensions', 'custom_width', 'custom_height', 'custom_crop'];
         [$overrideSuffix, $widthSuffix, $heightSuffix, $cropSuffix] = $suffixes;
-        $key = static fn(string $suffix): string => $field->handle . '_' . $suffix;
-        $input = static fn(string $suffix): string => 'settings[' . $field->handle . '_' . $suffix . ']';
+        $key = static fn (string $suffix): string => $field->handle . '_' . $suffix;
+        $input = static fn (string $suffix): string => 'settings[' . $field->handle . '_' . $suffix . ']';
 
         return $this->stubRenderer->render('fragments/image/dimensions.php.stub', [
             '{{OVERRIDE_HANDLE_LITERAL}}' => $this->phpLiteralFormatter->format($input($overrideSuffix)),
@@ -1225,7 +1219,7 @@ PHP,
             PHP_EOL . PHP_EOL,
             array_filter(
                 [$thumbnailImage, $fullscreenImage, $originalImage],
-                static fn(string $image): bool => $image !== '',
+                static fn (string $image): bool => $image !== '',
             ),
         );
     }

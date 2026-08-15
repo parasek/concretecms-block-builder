@@ -124,7 +124,7 @@ class MultipleChoiceFieldType extends AbstractFieldType
 
         $values = array_map('trim', explode('|', $defaultValue));
         if (
-            array_any($values, static fn(string $value): bool => $value === '')
+            array_any($values, static fn (string $value): bool => $value === '')
             || count($values) !== count(array_unique($values))
         ) {
             return null;
@@ -146,7 +146,7 @@ class MultipleChoiceFieldType extends AbstractFieldType
                 continue;
             }
 
-            $position++;
+            ++$position;
             $parts = array_map('trim', explode('::', $line, 2));
             $keys[] = count($parts) === 2 ? $parts[0] : (string) $position;
         }

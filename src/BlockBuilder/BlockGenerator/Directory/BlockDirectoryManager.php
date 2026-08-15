@@ -10,7 +10,6 @@ use BlockBuilder\BlockGenerator\Exception\BlockDirectoryPreparationException;
 use Concrete\Core\File\Service\File as FileService;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use Throwable;
 
 readonly class BlockDirectoryManager
 {
@@ -33,16 +32,10 @@ readonly class BlockDirectoryManager
                 : null;
 
             if ($backupPath === null && (file_exists($manifest->blockPath) || is_link($manifest->blockPath))) {
-                throw new BlockDirectoryPreparationException(sprintf(
-                    'The destination for new block "%s" already exists.',
-                    $config->blockHandle,
-                ));
+                throw new BlockDirectoryPreparationException(sprintf('The destination for new block "%s" already exists.', $config->blockHandle));
             }
             if ($backupPath !== null && (!is_dir($manifest->blockPath) || is_link($manifest->blockPath))) {
-                throw new BlockDirectoryPreparationException(sprintf(
-                    'The rebuild destination for block "%s" must be an existing physical directory.',
-                    $config->blockHandle,
-                ));
+                throw new BlockDirectoryPreparationException(sprintf('The rebuild destination for block "%s" must be an existing physical directory.', $config->blockHandle));
             }
 
             $transaction = new BlockDirectoryTransaction(
@@ -65,20 +58,12 @@ readonly class BlockDirectoryManager
             $this->removeGeneratedContents($config, $manifest);
 
             return $transaction;
-        } catch (Throwable $throwable) {
+        } catch (\Throwable $throwable) {
             if ($transaction !== null) {
                 try {
                     $transaction->rollback();
-                } catch (Throwable $rollbackThrowable) {
-                    throw new BlockDirectoryPreparationException(
-                        message: sprintf(
-                            'Unable to prepare or restore directory "%s" for block "%s". Rollback error: %s',
-                            $manifest->blockPath,
-                            $config->blockHandle,
-                            $rollbackThrowable->getMessage(),
-                        ),
-                        previous: $throwable,
-                    );
+                } catch (\Throwable $rollbackThrowable) {
+                    throw new BlockDirectoryPreparationException(message: sprintf('Unable to prepare or restore directory "%s" for block "%s". Rollback error: %s', $manifest->blockPath, $config->blockHandle, $rollbackThrowable->getMessage()), previous: $throwable);
                 }
             }
 
@@ -86,14 +71,7 @@ readonly class BlockDirectoryManager
                 throw $throwable;
             }
 
-            throw new BlockDirectoryPreparationException(
-                message: sprintf(
-                    'Unable to prepare directory "%s" for block "%s".',
-                    $manifest->blockPath,
-                    $config->blockHandle,
-                ),
-                previous: $throwable,
-            );
+            throw new BlockDirectoryPreparationException(message: sprintf('Unable to prepare directory "%s" for block "%s".', $manifest->blockPath, $config->blockHandle), previous: $throwable);
         }
     }
 
@@ -123,9 +101,7 @@ readonly class BlockDirectoryManager
                 ],
             );
 
-            throw new BlockDirectoryPreparationException(
-                sprintf('Manual recovery is required because block "%s" has multiple stale backups.', $blockHandle),
-            );
+            throw new BlockDirectoryPreparationException(sprintf('Manual recovery is required because block "%s" has multiple stale backups.', $blockHandle));
         }
 
         foreach ($backupPaths as $backupPath) {

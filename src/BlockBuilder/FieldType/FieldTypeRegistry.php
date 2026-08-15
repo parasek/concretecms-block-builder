@@ -25,7 +25,6 @@ use BlockBuilder\FieldType\Type\Text\TextFieldType;
 use BlockBuilder\FieldType\Type\Textarea\TextareaFieldType;
 use BlockBuilder\FieldType\Type\UserSelector\UserSelectorFieldType;
 use BlockBuilder\FieldType\Type\WysiwygEditor\WysiwygEditorFieldType;
-use LogicException;
 
 /**
  * Canonical catalog of field types supported by Block Builder.
@@ -64,7 +63,7 @@ final class FieldTypeRegistry
         $this->register(new UserSelectorFieldType());
 
         if (count($this->fieldTypesByHandle) !== count(FieldTypeEnum::cases())) {
-            throw new LogicException('Every field type enum case must have exactly one registered field type.');
+            throw new \LogicException('Every field type enum case must have exactly one registered field type.');
         }
     }
 
@@ -91,7 +90,7 @@ final class FieldTypeRegistry
         $type = $fieldType::getFieldType();
         $handle = $type->value;
         if (isset($this->fieldTypesByHandle[$handle])) {
-            throw new LogicException(sprintf('Field type "%s" is registered more than once.', $handle));
+            throw new \LogicException(sprintf('Field type "%s" is registered more than once.', $handle));
         }
 
         $fieldType::getDtoClass();

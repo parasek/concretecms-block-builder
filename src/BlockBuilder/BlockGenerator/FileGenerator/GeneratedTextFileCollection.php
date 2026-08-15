@@ -4,16 +4,12 @@ declare(strict_types=1);
 
 namespace BlockBuilder\BlockGenerator\FileGenerator;
 
-use ArrayIterator;
 use BlockBuilder\BlockGenerator\Exception\GeneratedFileDefinitionException;
-use Countable;
-use IteratorAggregate;
-use Traversable;
 
 /**
- * @implements IteratorAggregate<int, GeneratedTextFile>
+ * @implements \IteratorAggregate<int, GeneratedTextFile>
  */
-final class GeneratedTextFileCollection implements Countable, IteratorAggregate
+final class GeneratedTextFileCollection implements \Countable, \IteratorAggregate
 {
     /**
      * @var array<string, GeneratedTextFile>
@@ -36,14 +32,7 @@ final class GeneratedTextFileCollection implements Countable, IteratorAggregate
         if (isset($this->generatedFilesByDestination[$destinationKey])) {
             $existingGeneratedFile = $this->generatedFilesByDestination[$destinationKey];
 
-            throw new GeneratedFileDefinitionException(
-                sprintf(
-                    'Generators "%s" and "%s" both declared the destination "%s".',
-                    $existingGeneratedFile->producer,
-                    $generatedFile->producer,
-                    $generatedFile->relativePath,
-                ),
-            );
+            throw new GeneratedFileDefinitionException(sprintf('Generators "%s" and "%s" both declared the destination "%s".', $existingGeneratedFile->producer, $generatedFile->producer, $generatedFile->relativePath));
         }
 
         $this->generatedFilesByDestination[$destinationKey] = $generatedFile;
@@ -65,18 +54,17 @@ final class GeneratedTextFileCollection implements Countable, IteratorAggregate
     }
 
     /**
-     * @return Traversable<int, GeneratedTextFile>
+     * @return \Traversable<int, GeneratedTextFile>
      */
-    public function getIterator(): Traversable
+    public function getIterator(): \Traversable
     {
         $generatedFiles = array_values($this->generatedFilesByDestination);
         usort(
             $generatedFiles,
-            static fn(GeneratedTextFile $first, GeneratedTextFile $second): int =>
-                strcmp($first->relativePath, $second->relativePath),
+            static fn (GeneratedTextFile $first, GeneratedTextFile $second): int => strcmp($first->relativePath, $second->relativePath),
         );
 
-        return new ArrayIterator($generatedFiles);
+        return new \ArrayIterator($generatedFiles);
     }
 
     private function validate(GeneratedTextFile $generatedFile): void
@@ -104,10 +92,7 @@ final class GeneratedTextFileCollection implements Countable, IteratorAggregate
 
         foreach (explode('/', $relativePath) as $pathSegment) {
             if ($pathSegment === '' || $pathSegment === '.' || $pathSegment === '..') {
-                throw $this->invalidPath(
-                    $generatedFile,
-                    'Empty, current-directory, and parent-directory path segments are not allowed.',
-                );
+                throw $this->invalidPath($generatedFile, 'Empty, current-directory, and parent-directory path segments are not allowed.');
             }
         }
     }

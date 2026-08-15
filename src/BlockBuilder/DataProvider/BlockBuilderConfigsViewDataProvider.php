@@ -28,7 +28,7 @@ readonly class BlockBuilderConfigsViewDataProvider
      */
     public function getApplicationConfigItems(array $configs): array
     {
-        return array_map(fn(BlockConfigDto $config): BlockConfigListItem => $this->createApplicationItem($config), $configs);
+        return array_map(fn (BlockConfigDto $config): BlockConfigListItem => $this->createApplicationItem($config), $configs);
     }
 
     /**
@@ -38,7 +38,7 @@ readonly class BlockBuilderConfigsViewDataProvider
      */
     public function getPredefinedConfigItems(array $configs): array
     {
-        return array_map(fn(BlockConfigDto $config): BlockConfigListItem => $this->createPredefinedItem($config), $configs);
+        return array_map(fn (BlockConfigDto $config): BlockConfigListItem => $this->createPredefinedItem($config), $configs);
     }
 
     public function getNewBlockUrl(): string

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace BlockBuilder\BlockGenerator\Generation\Plan\Support;
 
 use BlockBuilder\BlockGenerator\Generation\Plan\CodeFragment;
-use InvalidArgumentException;
 
 final class SectionedCodeFragmentBuilder
 {
@@ -22,7 +21,7 @@ final class SectionedCodeFragmentBuilder
     {
         $section = trim($section);
         if ($section === '') {
-            throw new InvalidArgumentException('A code fragment section cannot be empty.');
+            throw new \InvalidArgumentException('A code fragment section cannot be empty.');
         }
 
         $this->sections[$section] ??= new UniqueContributionCollection(sprintf(
@@ -43,7 +42,7 @@ final class SectionedCodeFragmentBuilder
             $fragments = $collection->values();
             usort(
                 $fragments,
-                static fn(CodeFragment $first, CodeFragment $second): int => $first->order <=> $second->order,
+                static fn (CodeFragment $first, CodeFragment $second): int => $first->order <=> $second->order,
             );
             $sections[$section] = $fragments;
         }

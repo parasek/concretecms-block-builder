@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace BlockBuilder\BlockGenerator\Generation\Plan;
 
-use InvalidArgumentException;
-
 final readonly class DatabaseColumn
 {
     private const array ALLOWED_TYPES = [
@@ -43,16 +41,16 @@ final readonly class DatabaseColumn
         public int $order = 0,
     ) {
         if (!preg_match('/^[A-Za-z_][A-Za-z0-9_]*$/', $name)) {
-            throw new InvalidArgumentException(sprintf('The database column name "%s" is invalid.', $name));
+            throw new \InvalidArgumentException(sprintf('The database column name "%s" is invalid.', $name));
         }
         if (!in_array($type, self::ALLOWED_TYPES, true)) {
-            throw new InvalidArgumentException(sprintf('The database column type "%s" is invalid.', $type));
+            throw new \InvalidArgumentException(sprintf('The database column type "%s" is invalid.', $type));
         }
         if ($size !== null && preg_match('/^[1-9][0-9]*(?:\.[0-9]+)?$/', $size) !== 1) {
-            throw new InvalidArgumentException(sprintf('The database column size "%s" is invalid.', $size));
+            throw new \InvalidArgumentException(sprintf('The database column size "%s" is invalid.', $size));
         }
         if (!$hasDefault && $defaultValue !== null) {
-            throw new InvalidArgumentException('A database default value requires hasDefault to be true.');
+            throw new \InvalidArgumentException('A database default value requires hasDefault to be true.');
         }
     }
 }

@@ -37,11 +37,7 @@ readonly class SingleChoiceFieldGenerationContributor implements FieldGeneration
         BlockGenerationPlanBuilder $planBuilder,
     ): void {
         if (!$context->fieldDto instanceof SingleChoiceFieldTypeDto) {
-            throw new InvalidFieldGenerationDtoException(sprintf(
-                'Single choice field generation requires DTO "%s"; "%s" was provided.',
-                SingleChoiceFieldTypeDto::class,
-                $context->fieldDto::class,
-            ));
+            throw new InvalidFieldGenerationDtoException(sprintf('Single choice field generation requires DTO "%s"; "%s" was provided.', SingleChoiceFieldTypeDto::class, $context->fieldDto::class));
         }
 
         $field = $context->fieldDto;
@@ -384,7 +380,7 @@ readonly class SingleChoiceFieldGenerationContributor implements FieldGeneration
         return implode(
             PHP_EOL,
             array_map(
-                static fn(string $line): string => str_starts_with($line, '        ')
+                static fn (string $line): string => str_starts_with($line, '        ')
                     ? substr($line, 8)
                     : $line,
                 explode(PHP_EOL, $code),
@@ -405,7 +401,7 @@ readonly class SingleChoiceFieldGenerationContributor implements FieldGeneration
                 continue;
             }
 
-            $position++;
+            ++$position;
             $parts = array_map('trim', explode('::', $line, 2));
             $key = count($parts) === 2 ? $parts[0] : (string) $position;
             $label = count($parts) === 2 ? $parts[1] : $parts[0];
@@ -496,7 +492,7 @@ readonly class SingleChoiceFieldGenerationContributor implements FieldGeneration
         return implode(
             PHP_EOL,
             array_map(
-                static fn(string $line): string => $line === '' ? '' : $indentation . $line,
+                static fn (string $line): string => $line === '' ? '' : $indentation . $line,
                 explode(PHP_EOL, $code),
             ),
         );

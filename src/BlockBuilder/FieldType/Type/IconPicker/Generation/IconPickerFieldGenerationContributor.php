@@ -39,11 +39,7 @@ final readonly class IconPickerFieldGenerationContributor implements FieldGenera
         BlockGenerationPlanBuilder $planBuilder,
     ): void {
         if (!$context->fieldDto instanceof IconPickerFieldTypeDto) {
-            throw new InvalidFieldGenerationDtoException(sprintf(
-                'Icon Picker field generation requires DTO "%s"; "%s" was provided.',
-                IconPickerFieldTypeDto::class,
-                $context->fieldDto::class,
-            ));
+            throw new InvalidFieldGenerationDtoException(sprintf('Icon Picker field generation requires DTO "%s"; "%s" was provided.', IconPickerFieldTypeDto::class, $context->fieldDto::class));
         }
 
         $field = $context->fieldDto;

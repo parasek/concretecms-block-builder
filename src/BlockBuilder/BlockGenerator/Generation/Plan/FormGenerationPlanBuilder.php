@@ -7,7 +7,6 @@ namespace BlockBuilder\BlockGenerator\Generation\Plan;
 use BlockBuilder\BlockGenerator\Exception\GenerationContributionConflictException;
 use BlockBuilder\BlockGenerator\Generation\Plan\Support\SectionedCodeFragmentBuilder;
 use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
-use InvalidArgumentException;
 
 final class FormGenerationPlanBuilder
 {
@@ -86,20 +85,14 @@ final class FormGenerationPlanBuilder
     public function addRepeatableDefaultValue(string $fieldHandle, mixed $value): self
     {
         if (!preg_match('/^[A-Za-z_][A-Za-z0-9_]*$/', $fieldHandle)) {
-            throw new InvalidArgumentException(sprintf(
-                'Invalid repeatable default-value field handle "%s".',
-                $fieldHandle,
-            ));
+            throw new \InvalidArgumentException(sprintf('Invalid repeatable default-value field handle "%s".', $fieldHandle));
         }
 
         if (
             array_key_exists($fieldHandle, $this->repeatableDefaultValues)
             && $this->repeatableDefaultValues[$fieldHandle] !== $value
         ) {
-            throw new GenerationContributionConflictException(sprintf(
-                'Conflicting repeatable default values were provided for field "%s".',
-                $fieldHandle,
-            ));
+            throw new GenerationContributionConflictException(sprintf('Conflicting repeatable default values were provided for field "%s".', $fieldHandle));
         }
 
         $this->repeatableDefaultValues[$fieldHandle] = $value;
@@ -116,17 +109,11 @@ final class FormGenerationPlanBuilder
     public function addRepeatableCapturedVariable(string $variableName): self
     {
         if (preg_match('/^[A-Za-z_][A-Za-z0-9_]*$/', $variableName) !== 1) {
-            throw new InvalidArgumentException(sprintf(
-                'Invalid repeatable-form captured variable name "%s". Pass the variable name without a leading dollar sign.',
-                $variableName,
-            ));
+            throw new \InvalidArgumentException(sprintf('Invalid repeatable-form captured variable name "%s". Pass the variable name without a leading dollar sign.', $variableName));
         }
 
         if (in_array($variableName, self::RESERVED_REPEATABLE_CAPTURE_NAMES, true)) {
-            throw new GenerationContributionConflictException(sprintf(
-                'Repeatable-form captured variable "%s" conflicts with PHP or generated renderer state.',
-                $variableName,
-            ));
+            throw new GenerationContributionConflictException(sprintf('Repeatable-form captured variable "%s" conflicts with PHP or generated renderer state.', $variableName));
         }
 
         $this->repeatableCapturedVariableNames[$variableName] = true;
@@ -143,7 +130,7 @@ final class FormGenerationPlanBuilder
             self::SECTION_SETTINGS,
             self::SECTION_VALIDATION,
         ], true)) {
-            throw new InvalidArgumentException(sprintf('Unknown form generation section "%s".', $section));
+            throw new \InvalidArgumentException(sprintf('Unknown form generation section "%s".', $section));
         }
 
         $this->fragments->add($section, $fragment);

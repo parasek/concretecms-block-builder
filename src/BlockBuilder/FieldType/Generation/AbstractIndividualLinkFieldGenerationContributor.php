@@ -37,18 +37,10 @@ abstract readonly class AbstractIndividualLinkFieldGenerationContributor impleme
             FieldTypeEnum::LinkFromSitemap => LinkFromSitemapFieldTypeDto::class,
             FieldTypeEnum::LinkFromFileManager => LinkFromFileManagerFieldTypeDto::class,
             FieldTypeEnum::ExternalLink => ExternalLinkFieldTypeDto::class,
-            default => throw new InvalidFieldGenerationDtoException(sprintf(
-                'Field type "%s" is not an individual link field.',
-                $this->getFieldType()->value,
-            )),
+            default => throw new InvalidFieldGenerationDtoException(sprintf('Field type "%s" is not an individual link field.', $this->getFieldType()->value)),
         };
         if (!$context->fieldDto instanceof $expectedDtoClass) {
-            throw new InvalidFieldGenerationDtoException(sprintf(
-                'Field type "%s" generation requires DTO "%s"; "%s" was provided.',
-                $this->getFieldType()->value,
-                $expectedDtoClass,
-                $context->fieldDto::class,
-            ));
+            throw new InvalidFieldGenerationDtoException(sprintf('Field type "%s" generation requires DTO "%s"; "%s" was provided.', $this->getFieldType()->value, $expectedDtoClass, $context->fieldDto::class));
         }
 
         /** @var ExternalLinkFieldTypeDto|LinkFromFileManagerFieldTypeDto|LinkFromSitemapFieldTypeDto $field */
@@ -93,6 +85,7 @@ abstract readonly class AbstractIndividualLinkFieldGenerationContributor impleme
 
     /**
      * @param ExternalLinkFieldTypeDto|LinkFromFileManagerFieldTypeDto|LinkFromSitemapFieldTypeDto $field
+     *
      * @return list<array{name: string, kind: string}>
      */
     private function getStoredFields(object $field): array
@@ -363,7 +356,7 @@ abstract readonly class AbstractIndividualLinkFieldGenerationContributor impleme
      */
     private function renderLinkDataArray(object $field, string $source): string
     {
-        $value = fn(string $name): string => match ($source) {
+        $value = fn (string $name): string => match ($source) {
             'properties' => sprintf('$this->%s ?? null', $name),
             'args' => sprintf('$args[%s] ?? null', $this->phpLiteralFormatter->format($name)),
             'entry' => sprintf('$entry[%s] ?? null', $this->phpLiteralFormatter->format($name)),
@@ -484,6 +477,7 @@ abstract readonly class AbstractIndividualLinkFieldGenerationContributor impleme
 
     /**
      * @param ExternalLinkFieldTypeDto|LinkFromFileManagerFieldTypeDto|LinkFromSitemapFieldTypeDto $field
+     *
      * @return string[]
      */
     private function renderBasicDerivedViewValues(object $field): array
@@ -825,7 +819,7 @@ abstract readonly class AbstractIndividualLinkFieldGenerationContributor impleme
                     : '',
             ];
         } else {
-            $key = fn(string $suffix): string => $this->phpLiteralFormatter->format($handle . $suffix);
+            $key = fn (string $suffix): string => $this->phpLiteralFormatter->format($handle . $suffix);
             $replacements = [
                 '{{LINK_KEY_LITERAL}}' => $key('_link'),
                 '{{ENDING_EXPRESSION}}' => $field->showEndingField
@@ -878,7 +872,7 @@ abstract readonly class AbstractIndividualLinkFieldGenerationContributor impleme
     private function indentCode(string $code): string
     {
         return implode(PHP_EOL, array_map(
-            static fn(string $line): string => $line === '' ? '' : '    ' . $line,
+            static fn (string $line): string => $line === '' ? '' : '    ' . $line,
             explode(PHP_EOL, $code),
         ));
     }

@@ -39,11 +39,7 @@ final readonly class FlexLinkFieldGenerationContributor implements FieldGenerati
         BlockGenerationPlanBuilder $planBuilder,
     ): void {
         if (!$context->fieldDto instanceof FlexLinkFieldTypeDto) {
-            throw new InvalidFieldGenerationDtoException(sprintf(
-                'Flex Link field generation requires DTO "%s"; "%s" was provided.',
-                FlexLinkFieldTypeDto::class,
-                $context->fieldDto::class,
-            ));
+            throw new InvalidFieldGenerationDtoException(sprintf('Flex Link field generation requires DTO "%s"; "%s" was provided.', FlexLinkFieldTypeDto::class, $context->fieldDto::class));
         }
 
         $field = $context->fieldDto;
@@ -113,7 +109,7 @@ final readonly class FlexLinkFieldGenerationContributor implements FieldGenerati
                     order: ($context->position * 10) + $documentationOffset,
                 ),
             );
-            $documentationOffset++;
+            ++$documentationOffset;
         }
 
         $planBuilder->form->addFieldFragment(
@@ -301,7 +297,7 @@ final readonly class FlexLinkFieldGenerationContributor implements FieldGenerati
     private function renderBasicViewPreparation(FlexLinkFieldTypeDto $field): string
     {
         $handle = $field->handle;
-        $variableName = fn(string $suffix): string => $this->phpLiteralFormatter->format($handle . $suffix);
+        $variableName = fn (string $suffix): string => $this->phpLiteralFormatter->format($handle . $suffix);
 
         return implode(PHP_EOL, [
             sprintf('$linkData = $this->%s($this->%s ?? \'\');', LinkFieldGenerationSupport::RESOLVE_METHOD, $handle),
@@ -325,7 +321,7 @@ final readonly class FlexLinkFieldGenerationContributor implements FieldGenerati
         string $handleLiteral,
     ): string {
         $handle = $field->handle;
-        $entryKey = fn(string $suffix): string => $this->phpLiteralFormatter->format($handle . $suffix);
+        $entryKey = fn (string $suffix): string => $this->phpLiteralFormatter->format($handle . $suffix);
 
         return implode(PHP_EOL, [
             sprintf('$linkData = $this->%s($entry[%s] ?? \'\');', LinkFieldGenerationSupport::RESOLVE_METHOD, $handleLiteral),

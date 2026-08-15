@@ -46,11 +46,7 @@ final readonly class ExpressFieldGenerationContributor implements FieldGeneratio
         BlockGenerationPlanBuilder $planBuilder,
     ): void {
         if (!$context->fieldDto instanceof ExpressFieldTypeDto) {
-            throw new InvalidFieldGenerationDtoException(sprintf(
-                'Express field generation requires DTO "%s"; "%s" was provided.',
-                ExpressFieldTypeDto::class,
-                $context->fieldDto::class,
-            ));
+            throw new InvalidFieldGenerationDtoException(sprintf('Express field generation requires DTO "%s"; "%s" was provided.', ExpressFieldTypeDto::class, $context->fieldDto::class));
         }
 
         $field = $context->fieldDto;

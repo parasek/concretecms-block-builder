@@ -41,11 +41,7 @@ final readonly class UserSelectorFieldGenerationContributor implements FieldGene
         BlockGenerationPlanBuilder $planBuilder,
     ): void {
         if (!$context->fieldDto instanceof UserSelectorFieldTypeDto) {
-            throw new InvalidFieldGenerationDtoException(sprintf(
-                'User Selector field generation requires DTO "%s"; "%s" was provided.',
-                UserSelectorFieldTypeDto::class,
-                $context->fieldDto::class,
-            ));
+            throw new InvalidFieldGenerationDtoException(sprintf('User Selector field generation requires DTO "%s"; "%s" was provided.', UserSelectorFieldTypeDto::class, $context->fieldDto::class));
         }
 
         $field = $context->fieldDto;

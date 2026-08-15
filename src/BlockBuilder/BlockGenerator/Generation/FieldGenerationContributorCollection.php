@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace BlockBuilder\BlockGenerator\Generation;
 
-use ArrayIterator;
 use BlockBuilder\FieldType\Type\ColorPicker\Generation\ColorPickerFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\ExternalLink\Generation\ExternalLinkFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\DatePicker\Generation\DatePickerFieldGenerationContributor;
@@ -25,13 +24,11 @@ use BlockBuilder\FieldType\Type\Text\Generation\TextFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\Textarea\Generation\TextareaFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\UserSelector\Generation\UserSelectorFieldGenerationContributor;
 use BlockBuilder\FieldType\Type\WysiwygEditor\Generation\WysiwygEditorFieldGenerationContributor;
-use IteratorAggregate;
-use Traversable;
 
 /**
- * @implements IteratorAggregate<int, FieldGenerationContributorInterface>
+ * @implements \IteratorAggregate<int, FieldGenerationContributorInterface>
  */
-readonly class FieldGenerationContributorCollection implements IteratorAggregate
+readonly class FieldGenerationContributorCollection implements \IteratorAggregate
 {
     public function __construct(
         private ColorPickerFieldGenerationContributor $colorPickerFieldGenerationContributor,
@@ -58,11 +55,11 @@ readonly class FieldGenerationContributorCollection implements IteratorAggregate
     }
 
     /**
-     * @return Traversable<int, FieldGenerationContributorInterface>
+     * @return \Traversable<int, FieldGenerationContributorInterface>
      */
-    public function getIterator(): Traversable
+    public function getIterator(): \Traversable
     {
-        return new ArrayIterator([
+        return new \ArrayIterator([
             $this->colorPickerFieldGenerationContributor,
             $this->datePickerFieldGenerationContributor,
             $this->externalLinkFieldGenerationContributor,

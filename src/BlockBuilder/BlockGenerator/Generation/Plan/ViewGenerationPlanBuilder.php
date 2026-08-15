@@ -7,7 +7,6 @@ namespace BlockBuilder\BlockGenerator\Generation\Plan;
 use BlockBuilder\BlockGenerator\Generation\Plan\Support\SectionedCodeFragmentBuilder;
 use BlockBuilder\BlockGenerator\Generation\Plan\Support\UniqueContributionCollection;
 use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
-use InvalidArgumentException;
 
 final class ViewGenerationPlanBuilder
 {
@@ -66,7 +65,7 @@ final class ViewGenerationPlanBuilder
             self::SECTION_BASIC_FIELDS,
             self::SECTION_REPEATABLE_FIELDS,
         ], true)) {
-            throw new InvalidArgumentException(sprintf('Unknown view generation section "%s".', $section));
+            throw new \InvalidArgumentException(sprintf('Unknown view generation section "%s".', $section));
         }
 
         $this->fragments->add($section, $fragment);
@@ -85,14 +84,14 @@ final class ViewGenerationPlanBuilder
 
     /**
      * @param ViewVariableDocumentation[] $documentation
+     *
      * @return ViewVariableDocumentation[]
      */
     private function sortDocumentation(array $documentation): array
     {
         usort(
             $documentation,
-            static fn(ViewVariableDocumentation $first, ViewVariableDocumentation $second): int =>
-                [$first->order, $first->name] <=> [$second->order, $second->name],
+            static fn (ViewVariableDocumentation $first, ViewVariableDocumentation $second): int => [$first->order, $first->name] <=> [$second->order, $second->name],
         );
 
         return $documentation;

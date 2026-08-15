@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace BlockBuilder\BlockGenerator\FileGenerator;
 
-use ArrayIterator;
 use BlockBuilder\BlockGenerator\FileGenerator\AutoCss\AutoCssFileGenerator;
 use BlockBuilder\BlockGenerator\FileGenerator\AutoJs\AutoJsFileGenerator;
 use BlockBuilder\BlockGenerator\FileGenerator\ConfigBbJson\ConfigBbJsonFileGenerator;
@@ -13,13 +12,11 @@ use BlockBuilder\BlockGenerator\FileGenerator\DbXml\DbXmlFileGenerator;
 use BlockBuilder\BlockGenerator\FileGenerator\FormPhp\FormPhpFileGenerator;
 use BlockBuilder\BlockGenerator\FileGenerator\Scaffold\ScaffoldFileGenerator;
 use BlockBuilder\BlockGenerator\FileGenerator\ViewPhp\ViewPhpFileGenerator;
-use IteratorAggregate;
-use Traversable;
 
 /**
- * @implements IteratorAggregate<int, FileGeneratorInterface>
+ * @implements \IteratorAggregate<int, FileGeneratorInterface>
  */
-readonly class FileGeneratorCollection implements IteratorAggregate
+readonly class FileGeneratorCollection implements \IteratorAggregate
 {
     public function __construct(
         private ConfigBbJsonFileGenerator $configBbJsonFileGenerator,
@@ -34,11 +31,11 @@ readonly class FileGeneratorCollection implements IteratorAggregate
     }
 
     /**
-     * @return Traversable<int, FileGeneratorInterface>
+     * @return \Traversable<int, FileGeneratorInterface>
      */
-    public function getIterator(): Traversable
+    public function getIterator(): \Traversable
     {
-        return new ArrayIterator([
+        return new \ArrayIterator([
             $this->configBbJsonFileGenerator,
             $this->scaffoldFileGenerator,
             $this->controllerPhpFileGenerator,

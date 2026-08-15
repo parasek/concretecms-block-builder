@@ -7,7 +7,6 @@ namespace BlockBuilder\BlockGenerator\FileGenerator;
 use BlockBuilder\BlockGenerator\BlockFileGenerationContext;
 use BlockBuilder\BlockGenerator\Exception\GeneratedFileWriteException;
 use Symfony\Component\Filesystem\Filesystem;
-use Throwable;
 
 readonly class GeneratedTextFileWriter
 {
@@ -33,16 +32,8 @@ readonly class GeneratedTextFileWriter
             $this->filesystem->dumpFile($path, $generatedFile->contents);
         } catch (GeneratedFileWriteException $exception) {
             throw $exception;
-        } catch (Throwable $throwable) {
-            throw new GeneratedFileWriteException(
-                message: sprintf(
-                    'Unable to generate file "%s" for block "%s" using "%s".',
-                    $path,
-                    $context->config->blockHandle,
-                    $generatedFile->producer,
-                ),
-                previous: $throwable,
-            );
+        } catch (\Throwable $throwable) {
+            throw new GeneratedFileWriteException(message: sprintf('Unable to generate file "%s" for block "%s" using "%s".', $path, $context->config->blockHandle, $generatedFile->producer), previous: $throwable);
         }
     }
 
@@ -51,18 +42,12 @@ readonly class GeneratedTextFileWriter
         BlockFileGenerationContext $context,
     ): void {
         if (is_link($context->manifest->blockPath)) {
-            throw new GeneratedFileWriteException(sprintf(
-                'Refusing to write generated files for block "%s" because its destination directory is a symbolic link.',
-                $context->config->blockHandle,
-            ));
+            throw new GeneratedFileWriteException(sprintf('Refusing to write generated files for block "%s" because its destination directory is a symbolic link.', $context->config->blockHandle));
         }
 
         $resolvedBlockPath = realpath($context->manifest->blockPath);
         if ($resolvedBlockPath === false || !is_dir($resolvedBlockPath)) {
-            throw new GeneratedFileWriteException(sprintf(
-                'The destination directory for block "%s" does not exist.',
-                $context->config->blockHandle,
-            ));
+            throw new GeneratedFileWriteException(sprintf('The destination directory for block "%s" does not exist.', $context->config->blockHandle));
         }
 
         $pathSegments = explode('/', $generatedFile->relativePath);
@@ -70,11 +55,7 @@ readonly class GeneratedTextFileWriter
         foreach ($pathSegments as $pathPosition => $pathSegment) {
             $currentPath .= DIRECTORY_SEPARATOR . $pathSegment;
             if (is_link($currentPath)) {
-                throw new GeneratedFileWriteException(sprintf(
-                    'Refusing to write generated file "%s" for block "%s" through a symbolic link.',
-                    $generatedFile->relativePath,
-                    $context->config->blockHandle,
-                ));
+                throw new GeneratedFileWriteException(sprintf('Refusing to write generated file "%s" for block "%s" through a symbolic link.', $generatedFile->relativePath, $context->config->blockHandle));
             }
 
             $isDestination = $pathPosition === array_key_last($pathSegments);
@@ -88,11 +69,7 @@ readonly class GeneratedTextFileWriter
                 || !is_dir($resolvedCurrentPath)
                 || !$this->isPathInsideDirectory($resolvedCurrentPath, $resolvedBlockPath)
             ) {
-                throw new GeneratedFileWriteException(sprintf(
-                    'Generated destination "%s" for block "%s" is not a directory inside the block folder.',
-                    $generatedFile->relativePath,
-                    $context->config->blockHandle,
-                ));
+                throw new GeneratedFileWriteException(sprintf('Generated destination "%s" for block "%s" is not a directory inside the block folder.', $generatedFile->relativePath, $context->config->blockHandle));
             }
 
             $currentPath = $resolvedCurrentPath;

@@ -36,11 +36,7 @@ readonly class TextFieldGenerationContributor implements FieldGenerationContribu
         BlockGenerationPlanBuilder $planBuilder,
     ): void {
         if (!$context->fieldDto instanceof TextFieldTypeDto) {
-            throw new InvalidFieldGenerationDtoException(sprintf(
-                'Text field generation requires DTO "%s"; "%s" was provided.',
-                TextFieldTypeDto::class,
-                $context->fieldDto::class,
-            ));
+            throw new InvalidFieldGenerationDtoException(sprintf('Text field generation requires DTO "%s"; "%s" was provided.', TextFieldTypeDto::class, $context->fieldDto::class));
         }
 
         $field = $context->fieldDto;
@@ -221,11 +217,7 @@ readonly class TextFieldGenerationContributor implements FieldGenerationContribu
                 'phone' => 'preg_match(\'/^(?=.*\d)[0-9+().\s-]+$/D\', $textValue) !== 1',
                 'email' => 'filter_var($textValue, FILTER_VALIDATE_EMAIL) === false',
                 'url' => 'filter_var($textValue, FILTER_VALIDATE_URL) === false',
-                default => throw new InvalidFieldGenerationDtoException(sprintf(
-                    'Text field "%s" uses unsupported additional validation "%s".',
-                    $field->handle,
-                    $field->additionalValidation,
-                )),
+                default => throw new InvalidFieldGenerationDtoException(sprintf('Text field "%s" uses unsupported additional validation "%s".', $field->handle, $field->additionalValidation)),
             };
             $validationMessage = match ($field->additionalValidation) {
                 'phone' => 'The field "%s"' . $entryText . ' must contain a valid phone number.',

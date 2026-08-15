@@ -38,11 +38,7 @@ final readonly class ColorPickerFieldGenerationContributor implements FieldGener
         BlockGenerationPlanBuilder $planBuilder,
     ): void {
         if (!$context->fieldDto instanceof ColorPickerFieldTypeDto) {
-            throw new InvalidFieldGenerationDtoException(sprintf(
-                'Color Picker field generation requires DTO "%s"; "%s" was provided.',
-                ColorPickerFieldTypeDto::class,
-                $context->fieldDto::class,
-            ));
+            throw new InvalidFieldGenerationDtoException(sprintf('Color Picker field generation requires DTO "%s"; "%s" was provided.', ColorPickerFieldTypeDto::class, $context->fieldDto::class));
         }
 
         $field = $context->fieldDto;

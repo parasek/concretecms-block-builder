@@ -6,7 +6,6 @@ namespace BlockBuilder\BlockGenerator;
 
 use BlockBuilder\Block\Dto\BlockConfigDto;
 use BlockBuilder\Block\Validation\BlockHandleFormat;
-use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 readonly class BlockGenerationManifestFactory
@@ -16,13 +15,9 @@ readonly class BlockGenerationManifestFactory
         bool $shouldRebuildBlock,
         ?string $blockIconPublicPath,
         ?UploadedFile $customBlockIcon,
-    ): BlockGenerationManifest
-    {
+    ): BlockGenerationManifest {
         if (!BlockHandleFormat::isValid($config->blockHandle)) {
-            throw new InvalidArgumentException(sprintf(
-                'Unable to create a generation manifest for invalid block handle "%s".',
-                $config->blockHandle,
-            ));
+            throw new \InvalidArgumentException(sprintf('Unable to create a generation manifest for invalid block handle "%s".', $config->blockHandle));
         }
 
         $blockHandlePascalCase = $this->convertHandleToPascalCase($config->blockHandle);

@@ -22,22 +22,16 @@ readonly class StubRenderer
         $stubPath = $this->resolveStubPath($relativeStubPath);
         $template = @file_get_contents($stubPath);
         if ($template === false) {
-            throw new StubRenderingException(
-                sprintf('Unable to read generator stub "%s".', $relativeStubPath),
-            );
+            throw new StubRenderingException(sprintf('Unable to read generator stub "%s".', $relativeStubPath));
         }
 
         foreach ($replacements as $placeholder => $replacement) {
             if (!is_string($placeholder) || !is_string($replacement)) {
-                throw new StubRenderingException(
-                    sprintf('Every replacement for generator stub "%s" must have a string key and value.', $relativeStubPath),
-                );
+                throw new StubRenderingException(sprintf('Every replacement for generator stub "%s" must have a string key and value.', $relativeStubPath));
             }
 
             if (preg_match('/^\{\{[A-Z][A-Z0-9_]*\}\}$/', $placeholder) !== 1) {
-                throw new StubRenderingException(
-                    sprintf('Replacement key "%s" is not a valid placeholder in generator stub "%s".', $placeholder, $relativeStubPath),
-                );
+                throw new StubRenderingException(sprintf('Replacement key "%s" is not a valid placeholder in generator stub "%s".', $placeholder, $relativeStubPath));
             }
         }
 
@@ -45,24 +39,12 @@ readonly class StubRenderer
         $requiredPlaceholders = array_values(array_unique($placeholderMatches[0]));
         $missingPlaceholders = array_values(array_diff($requiredPlaceholders, array_keys($replacements)));
         if ($missingPlaceholders !== []) {
-            throw new StubRenderingException(
-                sprintf(
-                    'Generator stub "%s" contains unresolved placeholders: %s.',
-                    $relativeStubPath,
-                    implode(', ', $missingPlaceholders),
-                ),
-            );
+            throw new StubRenderingException(sprintf('Generator stub "%s" contains unresolved placeholders: %s.', $relativeStubPath, implode(', ', $missingPlaceholders)));
         }
 
         $unknownPlaceholders = array_values(array_diff(array_keys($replacements), $requiredPlaceholders));
         if ($unknownPlaceholders !== []) {
-            throw new StubRenderingException(
-                sprintf(
-                    'Generator stub "%s" does not contain replacement placeholders: %s.',
-                    $relativeStubPath,
-                    implode(', ', $unknownPlaceholders),
-                ),
-            );
+            throw new StubRenderingException(sprintf('Generator stub "%s" does not contain replacement placeholders: %s.', $relativeStubPath, implode(', ', $unknownPlaceholders)));
         }
 
         return strtr($template, $replacements);
@@ -80,21 +62,15 @@ readonly class StubRenderer
         $candidatePath = $skeletonsPath . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $relativeStubPath);
         $resolvedStubPath = realpath($candidatePath);
         if ($resolvedStubPath === false || !is_file($resolvedStubPath)) {
-            throw new StubRenderingException(
-                sprintf('Generator stub "%s" does not exist.', $relativeStubPath),
-            );
+            throw new StubRenderingException(sprintf('Generator stub "%s" does not exist.', $relativeStubPath));
         }
 
         if (!str_starts_with($resolvedStubPath, $skeletonsPath . DIRECTORY_SEPARATOR)) {
-            throw new StubRenderingException(
-                sprintf('Generator stub "%s" resolves outside the generator skeleton directory.', $relativeStubPath),
-            );
+            throw new StubRenderingException(sprintf('Generator stub "%s" resolves outside the generator skeleton directory.', $relativeStubPath));
         }
 
         if (!is_readable($resolvedStubPath)) {
-            throw new StubRenderingException(
-                sprintf('Generator stub "%s" is unreadable.', $relativeStubPath),
-            );
+            throw new StubRenderingException(sprintf('Generator stub "%s" is unreadable.', $relativeStubPath));
         }
 
         return $resolvedStubPath;
@@ -120,9 +96,7 @@ readonly class StubRenderer
 
         foreach (explode('/', $relativeStubPath) as $pathSegment) {
             if ($pathSegment === '' || $pathSegment === '.' || $pathSegment === '..') {
-                throw new StubRenderingException(
-                    'Generator stub paths cannot contain empty, current-directory, or parent-directory segments.',
-                );
+                throw new StubRenderingException('Generator stub paths cannot contain empty, current-directory, or parent-directory segments.');
             }
         }
     }

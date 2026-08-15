@@ -6,7 +6,6 @@ namespace BlockBuilder\BlockGenerator\Generation\Plan;
 
 use BlockBuilder\BlockGenerator\Generation\Plan\Support\UniqueContributionCollection;
 use BlockBuilder\FieldType\Enum\FieldTypeContextEnum;
-use LogicException;
 
 final class DatabaseGenerationPlanBuilder
 {
@@ -69,7 +68,7 @@ final class DatabaseGenerationPlanBuilder
     {
         usort(
             $columns,
-            static fn(DatabaseColumn $first, DatabaseColumn $second): int => $first->order <=> $second->order,
+            static fn (DatabaseColumn $first, DatabaseColumn $second): int => $first->order <=> $second->order,
         );
 
         return $columns;
@@ -82,19 +81,14 @@ final class DatabaseGenerationPlanBuilder
     private function validateIndexes(array $indexes, array $columns, string $tableDescription): void
     {
         $columnNames = array_map(
-            static fn(DatabaseColumn $column): string => strtolower($column->name),
+            static fn (DatabaseColumn $column): string => strtolower($column->name),
             $columns,
         );
 
         foreach ($indexes as $index) {
             foreach ($index->columns as $column) {
                 if (!in_array(strtolower($column), $columnNames, true)) {
-                    throw new LogicException(sprintf(
-                        'Database index "%s" references missing column "%s" in the %s table.',
-                        $index->name,
-                        $column,
-                        $tableDescription,
-                    ));
+                    throw new \LogicException(sprintf('Database index "%s" references missing column "%s" in the %s table.', $index->name, $column, $tableDescription));
                 }
             }
         }

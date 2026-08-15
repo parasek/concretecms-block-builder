@@ -7,7 +7,6 @@ namespace BlockBuilder\BlockGenerator\Directory;
 use BlockBuilder\BlockGenerator\Exception\BlockDirectoryPreparationException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use Throwable;
 
 final class BlockDirectoryTransaction
 {
@@ -48,7 +47,7 @@ final class BlockDirectoryTransaction
 
         try {
             $this->writeState(self::STATE_LIFECYCLE_COMPLETED);
-        } catch (Throwable $throwable) {
+        } catch (\Throwable $throwable) {
             $this->logger->warning(
                 'Block Builder could not update the post-lifecycle transaction state for block "{blockHandle}".'
                     . PHP_EOL
@@ -74,7 +73,7 @@ final class BlockDirectoryTransaction
                 $this->filesystem->remove($this->backupPath);
                 $this->filesystem->remove($this->getStatePath());
             }
-        } catch (Throwable $throwable) {
+        } catch (\Throwable $throwable) {
             $this->logger->warning(
                 'Block Builder could not remove the post-commit backup for block "{blockHandle}" at "{backupPath}".'
                     . PHP_EOL
@@ -101,11 +100,7 @@ final class BlockDirectoryTransaction
             $this->filesystem->remove($this->blockPath);
         } elseif ($this->backupPrepared) {
             if (!is_dir($this->backupPath) || is_link($this->backupPath)) {
-                throw new BlockDirectoryPreparationException(sprintf(
-                    'Unable to roll back block "%s" because its prepared backup "%s" is missing or is not a physical directory.',
-                    $this->blockHandle,
-                    $this->backupPath,
-                ));
+                throw new BlockDirectoryPreparationException(sprintf('Unable to roll back block "%s" because its prepared backup "%s" is missing or is not a physical directory.', $this->blockHandle, $this->backupPath));
             }
 
             $this->filesystem->remove($this->blockPath);
@@ -138,11 +133,7 @@ final class BlockDirectoryTransaction
 
         try {
             if (!is_dir($backupPath) || is_link($backupPath)) {
-                throw new BlockDirectoryPreparationException(sprintf(
-                    'Manual recovery is required because backup "%s" for block "%s" is missing or is not a physical directory.',
-                    $backupPath,
-                    $blockHandle,
-                ));
+                throw new BlockDirectoryPreparationException(sprintf('Manual recovery is required because backup "%s" for block "%s" is missing or is not a physical directory.', $backupPath, $blockHandle));
             }
 
             $state = self::readStateSafely($statePath, $blockHandle);
@@ -161,18 +152,12 @@ final class BlockDirectoryTransaction
                     ['blockHandle' => $blockHandle, 'backupPath' => $backupPath],
                 );
 
-                throw new BlockDirectoryPreparationException(sprintf(
-                    'Manual recovery is required for the incomplete lifecycle operation of block "%s".',
-                    $blockHandle,
-                ));
+                throw new BlockDirectoryPreparationException(sprintf('Manual recovery is required for the incomplete lifecycle operation of block "%s".', $blockHandle));
             }
 
             if ($state === self::STATE_LIFECYCLE_COMPLETED) {
                 if (!is_dir($blockPath) || is_link($blockPath)) {
-                    throw new BlockDirectoryPreparationException(sprintf(
-                        'Manual recovery is required because the generated folder for block "%s" is missing or unsafe after its lifecycle completed.',
-                        $blockHandle,
-                    ));
+                    throw new BlockDirectoryPreparationException(sprintf('Manual recovery is required because the generated folder for block "%s" is missing or unsafe after its lifecycle completed.', $blockHandle));
                 }
 
                 $filesystem->remove($backupPath);
@@ -182,11 +167,8 @@ final class BlockDirectoryTransaction
             }
         } catch (BlockDirectoryPreparationException $exception) {
             throw $exception;
-        } catch (Throwable $throwable) {
-            throw new BlockDirectoryPreparationException(
-                message: sprintf('Unable to recover stale directory transaction for block "%s" from "%s".', $blockHandle, $backupPath),
-                previous: $throwable,
-            );
+        } catch (\Throwable $throwable) {
+            throw new BlockDirectoryPreparationException(message: sprintf('Unable to recover stale directory transaction for block "%s" from "%s".', $blockHandle, $backupPath), previous: $throwable);
         }
 
         $logger->error(
@@ -194,9 +176,7 @@ final class BlockDirectoryTransaction
             ['blockHandle' => $blockHandle, 'backupPath' => $backupPath],
         );
 
-        throw new BlockDirectoryPreparationException(
-            sprintf('Manual recovery is required for stale backup "%s" of block "%s".', $backupPath, $blockHandle),
-        );
+        throw new BlockDirectoryPreparationException(sprintf('Manual recovery is required for stale backup "%s" of block "%s".', $backupPath, $blockHandle));
     }
 
     private function writeState(string $state): void
@@ -231,18 +211,12 @@ final class BlockDirectoryTransaction
             || !is_readable($statePath)
             || $metadata['size'] > self::MAX_STATE_BYTES
         ) {
-            throw new BlockDirectoryPreparationException(sprintf(
-                'Manual recovery is required because the transaction state marker for block "%s" is missing or unsafe.',
-                $blockHandle,
-            ));
+            throw new BlockDirectoryPreparationException(sprintf('Manual recovery is required because the transaction state marker for block "%s" is missing or unsafe.', $blockHandle));
         }
 
         $state = file_get_contents($statePath);
         if ($state === false || strlen($state) > self::MAX_STATE_BYTES) {
-            throw new BlockDirectoryPreparationException(sprintf(
-                'Manual recovery is required because the transaction state marker for block "%s" could not be read safely.',
-                $blockHandle,
-            ));
+            throw new BlockDirectoryPreparationException(sprintf('Manual recovery is required because the transaction state marker for block "%s" could not be read safely.', $blockHandle));
         }
 
         return trim($state);
