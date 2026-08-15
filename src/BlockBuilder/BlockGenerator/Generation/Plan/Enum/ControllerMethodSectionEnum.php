@@ -15,6 +15,8 @@ enum ControllerMethodSectionEnum: string
     case SaveEntryFields = 'save_entry_fields';
     case ValidateBasicFields = 'validate_basic_fields';
     case ValidateEntryFields = 'validate_entry_fields';
+    case PrepareBasicFieldsForComposerValidation = 'prepare_basic_fields_for_composer_validation';
+    case PrepareEntryForComposerValidation = 'prepare_entry_for_composer_validation';
     case CollectUsedFilesFromBasicFields = 'collect_used_files_from_basic_fields';
     case CollectUsedFilesFromEntry = 'collect_used_files_from_entry';
     case PrepareEntryForEdit = 'prepare_entry_for_edit';

@@ -562,8 +562,16 @@ PHP;
                 . implode(PHP_EOL, $argumentLines) . PHP_EOL
                 . '];';
         }
+        $prepareBasicFields = $this->renderControllerFragments(
+            $context,
+            ControllerMethodSectionEnum::PrepareBasicFieldsForComposerValidation,
+            indentation: 0,
+        );
+        if ($prepareBasicFields !== '') {
+            $code .= PHP_EOL . PHP_EOL . $prepareBasicFields;
+        }
         if ($hasEntries) {
-            $code .= PHP_EOL . '$args[\'entry\'] = $this->getEntries(\'edit\');';
+            $code .= PHP_EOL . '$args[\'entry\'] = $this->getEntries(\'composer\');';
         }
         $code .= PHP_EOL . PHP_EOL . 'return $this->validate($args);';
 
@@ -629,13 +637,23 @@ PHP;
             ControllerMethodSectionEnum::PrepareEntryForView,
             indentation: 0,
         );
+        $prepareForComposerValidation = $this->renderControllerFragments(
+            $context,
+            ControllerMethodSectionEnum::PrepareEntryForComposerValidation,
+            indentation: 0,
+        );
+        $prepareForComposerValidation = $this->combineCode([
+            $prepareForEdit,
+            $prepareForComposerValidation,
+        ], 0);
         $preparation = '';
-        if ($prepareForEdit !== '' || $prepareForView !== '') {
+        if ($prepareForEdit !== '' || $prepareForView !== '' || $prepareForComposerValidation !== '') {
             $preparation = sprintf(
-                'foreach ($entries as &$entry) {%1$s    if ($outputMethod === \'edit\') {%1$s%2$s%1$s    } elseif ($outputMethod === \'view\') {%1$s%3$s%1$s    }%1$s}%1$sunset($entry);',
+                'foreach ($entries as &$entry) {%1$s    if ($outputMethod === \'edit\') {%1$s%2$s%1$s    } elseif ($outputMethod === \'view\') {%1$s%3$s%1$s    } elseif ($outputMethod === \'composer\') {%1$s%4$s%1$s    }%1$s}%1$sunset($entry);',
                 PHP_EOL,
                 $this->indentCode($prepareForEdit, 2),
                 $this->indentCode($prepareForView, 2),
+                $this->indentCode($prepareForComposerValidation, 2),
             );
         }
         $code = sprintf(

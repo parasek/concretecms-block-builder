@@ -262,6 +262,14 @@ PHP,
                     code: $this->renderValidationCode($field, '$args', false),
                     order: $position,
                 ),
+            )
+            ->addMethodFragment(
+                ControllerMethodSectionEnum::PrepareBasicFieldsForComposerValidation->value,
+                new CodeFragment(
+                    key: $fragmentKeyPrefix,
+                    code: $this->renderComposerValidationCode($field, '$args'),
+                    order: $position,
+                ),
             );
     }
 
@@ -333,6 +341,37 @@ PHP,
             $lines[] = sprintf('$entry[%s] = $dateTimeParts[\'hour\'];', $this->phpLiteralFormatter->format($field->handle . '_hour'));
             $lines[] = sprintf('$entry[%s] = $dateTimeParts[\'minute\'];', $this->phpLiteralFormatter->format($field->handle . '_minute'));
         }
+
+        return implode(PHP_EOL, $lines);
+    }
+
+    private function renderComposerValidationCode(DatePickerFieldTypeDto $field, string $sourceVariable): string
+    {
+        $handleLiteral = $this->phpLiteralFormatter->format($field->handle);
+        $lines = [
+            sprintf(
+                '$dateTimeParts = $this->%s(%s[%s] ?? null, %s);',
+                self::GET_FORM_PARTS_METHOD,
+                $sourceVariable,
+                $handleLiteral,
+                $field->attachTimeSelector ? 'true' : 'false',
+            ),
+            'if ($dateTimeParts[\'date\'] !== \'\') {',
+            sprintf('    %s[%s] = $dateTimeParts[\'date\'];', $sourceVariable, $handleLiteral),
+        ];
+        if ($field->attachTimeSelector) {
+            $lines[] = sprintf(
+                '    %s[%s] = $dateTimeParts[\'hour\'];',
+                $sourceVariable,
+                $this->phpLiteralFormatter->format($field->handle . '_hour'),
+            );
+            $lines[] = sprintf(
+                '    %s[%s] = $dateTimeParts[\'minute\'];',
+                $sourceVariable,
+                $this->phpLiteralFormatter->format($field->handle . '_minute'),
+            );
+        }
+        $lines[] = '}';
 
         return implode(PHP_EOL, $lines);
     }

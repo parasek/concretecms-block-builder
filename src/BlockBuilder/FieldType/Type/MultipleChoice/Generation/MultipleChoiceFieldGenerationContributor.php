@@ -209,6 +209,14 @@ readonly class MultipleChoiceFieldGenerationContributor implements FieldGenerati
                 order: $position,
             ),
         );
+        $planBuilder->controller->addMethodFragment(
+            ControllerMethodSectionEnum::PrepareBasicFieldsForComposerValidation->value,
+            new CodeFragment(
+                key: $fragmentKeyPrefix,
+                code: $this->renderComposerValidationCode('$args', $handleLiteral),
+                order: $position,
+            ),
+        );
     }
 
     private function contributeRepeatableControllerCode(
@@ -240,6 +248,26 @@ readonly class MultipleChoiceFieldGenerationContributor implements FieldGenerati
                 code: $this->renderEntryValidation($field, $handleLiteral, $optionsMethod),
                 order: $position,
             ),
+        );
+        $planBuilder->controller->addMethodFragment(
+            ControllerMethodSectionEnum::PrepareEntryForComposerValidation->value,
+            new CodeFragment(
+                key: $fragmentKeyPrefix,
+                code: $this->renderComposerValidationCode('$entry', $handleLiteral),
+                order: $position,
+            ),
+        );
+    }
+
+    private function renderComposerValidationCode(string $sourceVariable, string $handleLiteral): string
+    {
+        return sprintf(
+            'if (is_string(%1$s[%2$s] ?? null)) {%3$s'
+            . '    %1$s[%2$s] = %1$s[%2$s] === \'\' ? [] : explode(\'|\', %1$s[%2$s]);%3$s'
+            . '}',
+            $sourceVariable,
+            $handleLiteral,
+            PHP_EOL,
         );
     }
 
