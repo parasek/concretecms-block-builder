@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace BlockBuilder\Block\Service;
 
+use BlockBuilder\Block\Dto\BlockConfigCollectionLoadResult;
 use BlockBuilder\Block\Dto\BlockConfigDto;
 use BlockBuilder\Block\Exception\ConfigFileMissingException;
 use BlockBuilder\Block\Exception\ConfigFileTooLargeException;
 use BlockBuilder\Block\Exception\ConfigFileUnreadableException;
+use BlockBuilder\Block\Exception\ConfigLoadingException;
 use BlockBuilder\Block\Exception\ConfigVersionTooNewException;
 use BlockBuilder\Block\Exception\InvalidConfigFieldDataException;
 use BlockBuilder\Block\Exception\InvalidConfigJsonException;
@@ -53,14 +55,18 @@ readonly class BlockConfigReader
         return $this->loadConfig($path, $handle);
     }
 
-    public function getConfigsFromApplicationFolder(): array
+    public function getConfigsFromApplicationFolder(): BlockConfigCollectionLoadResult
     {
         $configs = [];
+        $errors = [];
 
-        $blockPaths = glob(DIR_FILES_BLOCK_TYPES . DIRECTORY_SEPARATOR . '*', GLOB_ONLYDIR);
+        $blockPaths = glob(
+            $this->blockDirectoryLocator->getApplicationBlocksPath() . DIRECTORY_SEPARATOR . '*',
+            GLOB_ONLYDIR,
+        );
 
         if (!is_array($blockPaths)) {
-            return $configs;
+            return new BlockConfigCollectionLoadResult(configs: [], errors: []);
         }
 
         foreach ($blockPaths as $blockPath) {
@@ -70,18 +76,25 @@ readonly class BlockConfigReader
                 continue;
             }
 
-            $blockDirectory = $this->blockDirectoryLocator->getSafeApplicationBlockDirectory($sourceHandle);
-            if ($blockDirectory === null) {
-                throw $this->createUnsafeApplicationDirectoryException($sourceHandle);
-            }
+            try {
+                $blockDirectory = $this->blockDirectoryLocator->getSafeApplicationBlockDirectory($sourceHandle);
+                if ($blockDirectory === null) {
+                    throw $this->createUnsafeApplicationDirectoryException($sourceHandle);
+                }
 
-            $configs[] = $this->loadConfig(
-                path: $blockDirectory . DIRECTORY_SEPARATOR . EnvironmentService::CONFIG_BB_JSON,
-                sourceHandle: $sourceHandle,
-            );
+                $configs[] = $this->loadConfig(
+                    path: $blockDirectory . DIRECTORY_SEPARATOR . EnvironmentService::CONFIG_BB_JSON,
+                    sourceHandle: $sourceHandle,
+                );
+            } catch (ConfigLoadingException $exception) {
+                $errors[] = $exception;
+            }
         }
 
-        return $this->sortByDateAndHandle($configs);
+        return new BlockConfigCollectionLoadResult(
+            configs: $this->sortByDateAndHandle($configs),
+            errors: $errors,
+        );
     }
 
     public function getPredefinedConfigs(): array

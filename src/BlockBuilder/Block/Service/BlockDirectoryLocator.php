@@ -15,14 +15,19 @@ readonly class BlockDirectoryLocator
     ) {
     }
 
+    public function getApplicationBlocksPath(): string
+    {
+        return DIR_FILES_BLOCK_TYPES;
+    }
+
     public function getApplicationBlockPath(string $handle): string
     {
-        return DIR_FILES_BLOCK_TYPES . DIRECTORY_SEPARATOR . $handle;
+        return $this->getApplicationBlocksPath() . DIRECTORY_SEPARATOR . $handle;
     }
 
     public function getSafeApplicationBlockDirectory(string $handle): ?string
     {
-        $rootPath = realpath(DIR_FILES_BLOCK_TYPES);
+        $rootPath = realpath($this->getApplicationBlocksPath());
         $candidatePath = $this->getApplicationBlockPath($handle);
 
         if ($rootPath === false || !is_dir($candidatePath) || is_link($candidatePath)) {

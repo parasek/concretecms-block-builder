@@ -42,13 +42,14 @@ class Configs extends BaseDashboardController
     {
         $configLoadingErrors = [];
 
-        try {
-            $configs = $this->blockConfigReader->getConfigsFromApplicationFolder();
-        } catch (ConfigLoadingException $exception) {
-            $configs = [];
+        $applicationConfigLoadResult = $this->blockConfigReader->getConfigsFromApplicationFolder();
+        foreach ($applicationConfigLoadResult->errors as $exception) {
             $configLoadingErrors[] = $this->getConfigLoadingErrorMessage($exception);
         }
-        $this->set('configItems', $this->viewDataProvider->getApplicationConfigItems($configs));
+        $this->set(
+            'configItems',
+            $this->viewDataProvider->getApplicationConfigItems($applicationConfigLoadResult->configs),
+        );
 
         try {
             $predefinedConfigs = $this->blockConfigReader->getPredefinedConfigs();
