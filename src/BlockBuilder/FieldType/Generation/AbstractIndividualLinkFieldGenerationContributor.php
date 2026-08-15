@@ -812,7 +812,7 @@ abstract readonly class AbstractIndividualLinkFieldGenerationContributor impleme
                 '{{HANDLE}}' => $handle,
                 '{{ENDING_EXPRESSION}}' => $field->showEndingField ? sprintf(' . ($%s_ending ?? \'\')', $handle) : '',
                 '{{TITLE_ATTRIBUTE}}' => $field->showTitleField
-                    ? sprintf(' title="<?= h($%s_title ?? \'\'); ?>"', $handle)
+                    ? sprintf('title="<?= h($%s_title ?? \'\'); ?>"', $handle)
                     : '',
                 '{{NEW_WINDOW_ATTRIBUTE}}' => $field->showNewWindowField
                     ? sprintf(' <?= $%s_new_window ?? \'\'; ?>', $handle)
@@ -832,7 +832,7 @@ abstract readonly class AbstractIndividualLinkFieldGenerationContributor impleme
                     ? sprintf(' . ($entry[%s] ?? \'\')', $key('_ending'))
                     : '',
                 '{{TITLE_ATTRIBUTE}}' => $field->showTitleField
-                    ? sprintf(' title="<?= h($entry[%s] ?? \'\'); ?>"', $key('_title'))
+                    ? sprintf('title="<?= h($entry[%s] ?? \'\'); ?>"', $key('_title'))
                     : '',
                 '{{NEW_WINDOW_ATTRIBUTE}}' => $field->showNewWindowField
                     ? sprintf(' <?= $entry[%s] ?? \'\'; ?>', $key('_new_window'))

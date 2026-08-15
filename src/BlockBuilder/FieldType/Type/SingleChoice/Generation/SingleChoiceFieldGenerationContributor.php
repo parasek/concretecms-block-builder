@@ -14,6 +14,7 @@ use BlockBuilder\BlockGenerator\Generation\Plan\CodeFragment;
 use BlockBuilder\BlockGenerator\Generation\Plan\ControllerProperty;
 use BlockBuilder\BlockGenerator\Generation\Plan\DatabaseColumn;
 use BlockBuilder\BlockGenerator\Generation\Plan\Enum\ControllerMethodSectionEnum;
+use BlockBuilder\BlockGenerator\Generation\Plan\FormGenerationPlanBuilder;
 use BlockBuilder\BlockGenerator\Generation\Plan\ViewVariableDocumentation;
 use BlockBuilder\FieldType\Enum\FieldTypeEnum;
 use BlockBuilder\FieldType\Type\SingleChoice\SingleChoiceFieldTypeDto;
@@ -101,6 +102,17 @@ readonly class SingleChoiceFieldGenerationContributor implements FieldGeneration
                 $planBuilder,
             );
             $planBuilder->form
+                ->addFragment(
+                    FormGenerationPlanBuilder::SECTION_SETUP,
+                    new CodeFragment(
+                        key: $fragmentKeyPrefix . '.options',
+                        code: sprintf(
+                            '<?php $%1$s = isset($%1$s) && is_array($%1$s) ? $%1$s : []; ?>',
+                            $optionNames['view'],
+                        ),
+                        order: $context->position,
+                    ),
+                )
                 ->addRepeatableCapturedVariable($optionNames['view'])
                 ->addRepeatableDefaultValue($field->handle, $field->defaultValue ?? '');
         }

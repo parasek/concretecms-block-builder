@@ -128,12 +128,12 @@ private function normalizeBlockBuilderColor(mixed $value): ?string
     // Accept RGBA colors with integer channels and alpha ranging from 0 to 1.
     if (preg_match('/^rgba\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*((?:0|1)(?:\.\d+)?|\.\d+)\s*\)$/iD', $color, $matches) === 1) {
         return (int) $matches[1] <= 255
-            && (int) $matches[2] <= 255
-            && (int) $matches[3] <= 255
-            && (float) $matches[4] >= 0.0
-            && (float) $matches[4] <= 1.0
-                ? $color
-                : null;
+        && (int) $matches[2] <= 255
+        && (int) $matches[3] <= 255
+        && (float) $matches[4] >= 0.0
+        && (float) $matches[4] <= 1.0
+            ? $color
+            : null;
     }
 
     return null;

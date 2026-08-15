@@ -207,19 +207,21 @@ private function getBlockBuilderLinkValidationError(mixed $value, bool $required
         return 'invalid_value';
     }
 
-    foreach ([
-        'link_type',
-        'show_additional_fields',
-        'link_from_sitemap',
-        'link_from_file_manager',
-        'protocol',
-        'external_link',
-        'ending',
-        'text',
-        'title',
-        'new_window',
-        'no_follow',
-    ] as $property) {
+    foreach (
+        [
+            'link_type',
+            'show_additional_fields',
+            'link_from_sitemap',
+            'link_from_file_manager',
+            'protocol',
+            'external_link',
+            'ending',
+            'text',
+            'title',
+            'new_window',
+            'no_follow',
+        ] as $property
+    ) {
         if (array_key_exists($property, $value) && $value[$property] !== null && !is_scalar($value[$property])) {
             return 'invalid_value';
         }

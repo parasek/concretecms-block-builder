@@ -58,6 +58,7 @@ readonly class DbXmlFileGenerator implements FileGeneratorInterface
                 $context->config->blockHandle,
             ));
         }
+        $xml = $this->formatGeneratedXml($xml);
 
         return [
             new GeneratedTextFile(
@@ -127,6 +128,35 @@ readonly class DbXmlFileGenerator implements FileGeneratorInterface
     private function createElement(DOMDocument $document, string $name): DOMElement
     {
         return $document->createElementNS(self::SCHEMA_NAMESPACE, $name);
+    }
+
+    private function formatGeneratedXml(string $xml): string
+    {
+        $xml = preg_replace_callback(
+            '/^( +)/m',
+            static fn(array $matches): string => str_repeat(' ', strlen($matches[1]) * 2),
+            $xml,
+        );
+        if ($xml === null) {
+            throw new GeneratedFileDefinitionException('Unable to format the generated database schema indentation.');
+        }
+
+        $schemaLocationAttribute = sprintf(
+            'xsi:schemaLocation="%s %s">',
+            self::SCHEMA_NAMESPACE,
+            self::SCHEMA_LOCATION,
+        );
+        $xml = str_replace(
+            ' ' . $schemaLocationAttribute,
+            PHP_EOL . '        ' . $schemaLocationAttribute,
+            $xml,
+            $replacementCount,
+        );
+        if ($replacementCount !== 1) {
+            throw new GeneratedFileDefinitionException('Unable to format the generated database schema declaration.');
+        }
+
+        return $xml;
     }
 
     private function formatDefaultValue(string|int|float|bool|null $defaultValue): string

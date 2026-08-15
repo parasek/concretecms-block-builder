@@ -273,8 +273,8 @@ private function getBlockBuilderFilesFromFolder(mixed $folderID, string $fileOrd
                 $comparison = strnatcasecmp($firstName, $secondName);
 
                 return $direction * ($comparison !== 0
-                    ? $comparison
-                    : $firstFile->getFileID() <=> $secondFile->getFileID());
+                        ? $comparison
+                        : $firstFile->getFileID() <=> $secondFile->getFileID());
             },
         );
     }

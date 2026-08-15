@@ -137,10 +137,13 @@
                     return;
                 }
 
-                concreteSelectorInstances.set(container, new Vue({
-                    el: container,
-                    components: config.components,
-                }));
+                concreteSelectorInstances.set(
+                    container,
+                    new Vue({
+                        el: container,
+                        components: config.components,
+                    })
+                );
             });
         });
     }
@@ -179,7 +182,7 @@
             state.value = expanded ? '1' : '0';
         }
         if (label) {
-            label.textContent = expanded ? toggle.dataset.hideLabel ?? '' : toggle.dataset.showLabel ?? '';
+            label.textContent = expanded ? (toggle.dataset.hideLabel ?? '') : (toggle.dataset.showLabel ?? '');
         }
         toggle.querySelector('i')?.classList.toggle('fa-rotate-90', expanded);
     }
@@ -187,17 +190,13 @@
     function initializeImageAdditionalFields(root) {
         root.querySelectorAll('[data-image-additional-toggle]').forEach((toggle) => {
             const state = toggle.parentElement?.querySelector('[data-image-additional-state]');
-            const expanded = state instanceof HTMLInputElement
-                ? state.value === '1'
-                : toggle.getAttribute('aria-expanded') === 'true';
+            const expanded = state instanceof HTMLInputElement ? state.value === '1' : toggle.getAttribute('aria-expanded') === 'true';
             updateImageAdditionalFields(toggle, expanded);
         });
     }
 
     function handleImageAdditionalFieldsClick(event) {
-        const toggle = event.target instanceof Element
-            ? event.target.closest('[data-image-additional-toggle]')
-            : null;
+        const toggle = event.target instanceof Element ? event.target.closest('[data-image-additional-toggle]') : null;
         if (!toggle) {
             return;
         }
@@ -225,9 +224,12 @@
                 return;
             }
 
-            enhancedSelectInstances.set(field, new globalThis.TomSelect(field, {
-                create: false,
-            }));
+            enhancedSelectInstances.set(
+                field,
+                new globalThis.TomSelect(field, {
+                    create: false,
+                })
+            );
         });
     }
 
@@ -271,11 +273,9 @@
                 input.value = editor.getValue();
             });
 
-            const resizeObserver = typeof ResizeObserver === 'function'
-                ? new ResizeObserver(() => editor.resize())
-                : null;
+            const resizeObserver = typeof ResizeObserver === 'function' ? new ResizeObserver(() => editor.resize()) : null;
             resizeObserver?.observe(container);
-            htmlEditorInstances.set(input, {editor, resizeObserver});
+            htmlEditorInstances.set(input, { editor, resizeObserver });
         });
     }
 
@@ -307,10 +307,7 @@
     function initializeWysiwygEditors(root) {
         root.querySelectorAll('[data-block-builder-wysiwyg]').forEach((field) => {
             const existingEditor = getWysiwygEditorInstance(field);
-            if (
-                field.dataset.wysiwygInitialized === 'true'
-                && existingEditor?.element?.$ === field
-            ) {
+            if (field.dataset.wysiwygInitialized === 'true' && existingEditor?.element?.$ === field) {
                 return;
             }
 
@@ -319,9 +316,7 @@
             }
 
             const formContainer = field.closest('[data-block-builder-form]');
-            const initializer = formContainer
-                ?.blockBuilderWysiwygEditorInitializers
-                ?.[field.dataset.wysiwygHandle];
+            const initializer = formContainer?.blockBuilderWysiwygEditorInitializers?.[field.dataset.wysiwygHandle];
             if (typeof initializer !== 'function') {
                 return;
             }
@@ -337,8 +332,7 @@
 
     // Repeatable field values
     function getRepeatableEntries(state) {
-        return Array.from(state.entriesContainer.children)
-            .filter((element) => element.matches('[data-entry]'));
+        return Array.from(state.entriesContainer.children).filter((element) => element.matches('[data-entry]'));
     }
 
     function groupEntryFields(entry) {
@@ -353,7 +347,7 @@
             const subfield = field.dataset.entrySubfield ?? '';
             const groupKey = `${handle}:${subfield}`;
             if (!fields.has(groupKey)) {
-                fields.set(groupKey, {handle, subfield, fields: []});
+                fields.set(groupKey, { handle, subfield, fields: [] });
             }
             fields.get(groupKey).fields.push(field);
         });
@@ -384,17 +378,16 @@
         if (firstField.matches('[data-block-builder-concrete-selector]')) {
             const selectorType = firstField.dataset.blockBuilderConcreteSelector;
             const concreteSelectorConfiguration = {
-                express: {element: 'concrete-express-entry-input', valueAttribute: 'entry-id'},
-                file: {element: 'concrete-file-input', valueAttribute: ':file-id'},
-                icon: {element: 'icon-selector', valueAttribute: 'selected'},
-                page: {element: 'concrete-page-input', valueAttribute: ':page-id'},
-                user: {element: 'concrete-user-input', valueAttribute: ':user-id'},
+                express: { element: 'concrete-express-entry-input', valueAttribute: 'entry-id' },
+                file: { element: 'concrete-file-input', valueAttribute: ':file-id' },
+                icon: { element: 'icon-selector', valueAttribute: 'selected' },
+                page: { element: 'concrete-page-input', valueAttribute: ':page-id' },
+                user: { element: 'concrete-user-input', valueAttribute: ':user-id' },
             }[selectorType];
             const selectedValue = String(value ?? (selectorType === 'icon' ? '' : '0'));
             firstField.dataset.selectedValue = selectedValue;
             if (concreteSelectorConfiguration) {
-                firstField.querySelector(concreteSelectorConfiguration.element)
-                    ?.setAttribute(concreteSelectorConfiguration.valueAttribute, selectedValue);
+                firstField.querySelector(concreteSelectorConfiguration.element)?.setAttribute(concreteSelectorConfiguration.valueAttribute, selectedValue);
             }
             return;
         }
@@ -409,9 +402,7 @@
         if (firstField instanceof HTMLInputElement && firstField.type === 'checkbox') {
             const selectedValues = normalizeMultipleFieldValue(value);
             fields.forEach((field) => {
-                field.checked = fields.length === 1 && typeof value === 'boolean'
-                    ? value
-                    : selectedValues.includes(String(field.value));
+                field.checked = fields.length === 1 && typeof value === 'boolean' ? value : selectedValues.includes(String(field.value));
             });
             return;
         }
@@ -441,9 +432,7 @@
                 return;
             }
 
-            const value = group.subfield
-                ? values[group.handle]?.[group.subfield]
-                : values[group.handle];
+            const value = group.subfield ? values[group.handle]?.[group.subfield] : values[group.handle];
             if (!group.subfield || (values[group.handle] && typeof values[group.handle] === 'object')) {
                 setEntryFieldValue(group.fields, value);
             }
@@ -461,15 +450,9 @@
 
         if (firstField.matches('[data-block-builder-concrete-selector]')) {
             const selectorType = firstField.dataset.blockBuilderConcreteSelector;
-            const selectedControl = firstField.querySelector(
-                selectorType === 'icon'
-                    ? 'select[name]'
-                    : 'input[type="hidden"][name]',
-            );
+            const selectedControl = firstField.querySelector(selectorType === 'icon' ? 'select[name]' : 'input[type="hidden"][name]');
 
-            return selectedControl?.value
-                ?? firstField.dataset.selectedValue
-                ?? (selectorType === 'icon' ? '' : '0');
+            return selectedControl?.value ?? firstField.dataset.selectedValue ?? (selectorType === 'icon' ? '' : '0');
         }
 
         if (firstField instanceof HTMLInputElement && firstField.type === 'radio') {
@@ -523,9 +506,7 @@
             toggle.classList.toggle('active', showAdditionalFields);
             const label = toggle.querySelector('[data-link-toggle-label]');
             if (label) {
-                label.textContent = showAdditionalFields
-                    ? toggle.dataset.hideLabel
-                    : toggle.dataset.showLabel;
+                label.textContent = showAdditionalFields ? toggle.dataset.hideLabel : toggle.dataset.showLabel;
             }
         }
         container.querySelectorAll('[data-link-additional-fields]').forEach((fields) => {
@@ -551,7 +532,7 @@
 
         event.preventDefault();
         additionalValue.value = additionalValue.value === '1' ? '0' : '1';
-        additionalValue.dispatchEvent(new Event('change', {bubbles: true}));
+        additionalValue.dispatchEvent(new Event('change', { bubbles: true }));
         updateLinkField(container);
     }
 
@@ -613,16 +594,11 @@
             return source.checked ? source.value : '';
         }
 
-        return 'value' in source
-            ? String(source.value).trim()
-            : (source.textContent ?? '').trim();
+        return 'value' in source ? String(source.value).trim() : (source.textContent ?? '').trim();
     }
 
     function updateEntryTitle(entry, position) {
-        const title = Array.from(entry.querySelectorAll('[data-entry-title-source]'))
-            .map(getTitleSourceValue)
-            .filter(Boolean)
-            .join(', ');
+        const title = Array.from(entry.querySelectorAll('[data-entry-title-source]')).map(getTitleSourceValue).filter(Boolean).join(', ');
         const titleElement = entry.querySelector('[data-entry-title]');
         if (titleElement) {
             titleElement.textContent = title === '' ? `#${position}` : `${title} #${position}`;
@@ -638,14 +614,8 @@
 
         content.hidden = !expanded;
         button.setAttribute('aria-expanded', String(expanded));
-        button.setAttribute(
-            'aria-label',
-            expanded ? button.dataset.collapseLabel : button.dataset.expandLabel,
-        );
-        button.setAttribute(
-            'title',
-            expanded ? button.dataset.collapseLabel : button.dataset.expandLabel,
-        );
+        button.setAttribute('aria-label', expanded ? button.dataset.collapseLabel : button.dataset.expandLabel);
+        button.setAttribute('title', expanded ? button.dataset.collapseLabel : button.dataset.expandLabel);
 
         const icon = button.querySelector('i');
         if (icon) {
@@ -665,12 +635,13 @@
         state.repeatable.querySelectorAll('[data-no-entries-message]').forEach((message) => {
             message.hidden = !noEntries;
         });
-        state.repeatable.querySelectorAll(
-            '[data-entry-action="add-top"], [data-entry-action="add-bottom"], '
-            + '[data-entry-action="duplicate"], [data-entry-action="duplicate-at-end"]',
-        ).forEach((button) => {
-            button.disabled = maxEntriesReached;
-        });
+        state.repeatable
+            .querySelectorAll(
+                '[data-entry-action="add-top"], [data-entry-action="add-bottom"], ' + '[data-entry-action="duplicate"], [data-entry-action="duplicate-at-end"]'
+            )
+            .forEach((button) => {
+                button.disabled = maxEntriesReached;
+            });
         state.repeatable.querySelectorAll('[data-entry-action="copy-last"]').forEach((button) => {
             button.disabled = noEntries || maxEntriesReached;
         });
@@ -692,10 +663,7 @@
         state.nextIndex += 1;
 
         const template = document.createElement('template');
-        template.innerHTML = state.entryTemplate.innerHTML
-            .split('__INDEX__')
-            .join(String(entryIndex))
-            .trim();
+        template.innerHTML = state.entryTemplate.innerHTML.split('__INDEX__').join(String(entryIndex)).trim();
         const entry = template.content.querySelector('[data-entry]');
         if (!entry) {
             console.error('Block Builder entry template is missing its data-entry element.');
@@ -706,7 +674,7 @@
         populateEntry(entry, values);
         state.entriesContainer.insertBefore(template.content, beforeEntry);
         initializeFieldWidgets(entry);
-        entry.dispatchEvent(new CustomEvent('blockbuilder:entry-added', {bubbles: true}));
+        entry.dispatchEvent(new CustomEvent('blockbuilder:entry-added', { bubbles: true }));
 
         const keepCollapsed = state.repeatable.querySelector('[data-keep-added-collapsed]')?.checked === true;
         setEntryExpanded(entry, !keepCollapsed);
@@ -717,11 +685,7 @@
 
             if (dialogContent) {
                 const scrollOffset = 10;
-                const entryScrollTop =
-                    dialogContent.scrollTop
-                    + entry.getBoundingClientRect().top
-                    - dialogContent.getBoundingClientRect().top
-                    - scrollOffset;
+                const entryScrollTop = dialogContent.scrollTop + entry.getBoundingClientRect().top - dialogContent.getBoundingClientRect().top - scrollOffset;
 
                 dialogContent.scrollTo({
                     top: entryScrollTop,
@@ -734,7 +698,7 @@
     }
 
     function removeEntryElement(entry) {
-        entry.dispatchEvent(new CustomEvent('blockbuilder:entry-before-remove', {bubbles: true}));
+        entry.dispatchEvent(new CustomEvent('blockbuilder:entry-before-remove', { bubbles: true }));
         destroyFieldWidgets(entry);
         entry.remove();
     }
@@ -838,11 +802,7 @@
     }
 
     function handleEntryMoveKeydown(event) {
-        if (
-            !(event.target instanceof Element)
-            || !event.target.matches('[data-entry-drag-handle]')
-            || !['ArrowUp', 'ArrowDown'].includes(event.key)
-        ) {
+        if (!(event.target instanceof Element) || !event.target.matches('[data-entry-drag-handle]') || !['ArrowUp', 'ArrowDown'].includes(event.key)) {
             return;
         }
 
@@ -894,21 +854,14 @@
         }
 
         const repeatableData = parseRepeatableData(repeatable);
-        const configuredMaxEntries = Number.parseInt(
-            entriesContainer.dataset.maxEntries ?? repeatableData.maxEntries,
-            10,
-        );
+        const configuredMaxEntries = Number.parseInt(entriesContainer.dataset.maxEntries ?? repeatableData.maxEntries, 10);
         const usedIndexes = Array.from(entriesContainer.querySelectorAll(':scope > [data-entry]'))
             .map((entry) => Number.parseInt(entry.dataset.entryIndex, 10))
             .filter(Number.isInteger);
         const state = {
             entriesContainer,
-            defaultValues: repeatableData.defaultValues && typeof repeatableData.defaultValues === 'object'
-                ? repeatableData.defaultValues
-                : {},
-            maxEntries: Number.isInteger(configuredMaxEntries) && configuredMaxEntries > 0
-                ? configuredMaxEntries
-                : Number.POSITIVE_INFINITY,
+            defaultValues: repeatableData.defaultValues && typeof repeatableData.defaultValues === 'object' ? repeatableData.defaultValues : {},
+            maxEntries: Number.isInteger(configuredMaxEntries) && configuredMaxEntries > 0 ? configuredMaxEntries : Number.POSITIVE_INFINITY,
             nextIndex: usedIndexes.length > 0 ? Math.max(...usedIndexes) + 1 : 0,
             repeatable,
             entryTemplate,
@@ -962,7 +915,7 @@
     }
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => initializeBlockBuilder(), {once: true});
+        document.addEventListener('DOMContentLoaded', () => initializeBlockBuilder(), { once: true });
     } else {
         initializeBlockBuilder();
     }
@@ -970,4 +923,4 @@
     if (globalThis.Concrete?.event && typeof globalThis.Concrete.event.bind === 'function') {
         globalThis.Concrete.event.bind('open.block.{{BLOCK_EVENT_NAME}}', () => initializeBlockBuilder());
     }
-}());
+})();

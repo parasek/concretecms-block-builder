@@ -60,6 +60,16 @@ final class InMemoryGenerationTest extends BlockBuilderTestCase
             'The repeatable-entry renderer must capture the application service.',
         );
         self::assertStringContainsString(
+            '<?php $entry_repeatableSelectField_options = isset($entry_repeatableSelectField_options) && is_array($entry_repeatableSelectField_options) ? $entry_repeatableSelectField_options : []; ?>',
+            $filesByPath['form.php'],
+            'Repeatable single-choice options must be initialized before the renderer captures them.',
+        );
+        self::assertStringContainsString(
+            '<?php $entry_repeatableSelectMultipleField_options = isset($entry_repeatableSelectMultipleField_options) && is_array($entry_repeatableSelectMultipleField_options) ? $entry_repeatableSelectMultipleField_options : []; ?>',
+            $filesByPath['form.php'],
+            'Repeatable multiple-choice options must be initialized before the renderer captures them.',
+        );
+        self::assertStringContainsString(
             'canViewPageInSitemap()',
             $filesByPath['controller.php'],
             'Page-link validation must enforce the editor sitemap permission.',
@@ -106,6 +116,12 @@ final class InMemoryGenerationTest extends BlockBuilderTestCase
             'http://www.concrete5.org/doctrine-xml/0.5',
             $databaseDocument->documentElement?->namespaceURI,
         );
+        self::assertStringContainsString(
+            PHP_EOL . '        xsi:schemaLocation="http://www.concrete5.org/doctrine-xml/0.5 https://concretecms.github.io/doctrine-xml/doctrine-xml-0.5.xsd">',
+            $filesByPath['db.xml'],
+        );
+        self::assertStringContainsString(PHP_EOL . '    <table ', $filesByPath['db.xml']);
+        self::assertStringNotContainsString(PHP_EOL . '  <table ', $filesByPath['db.xml']);
         self::assertSame(2, $databaseDocument->getElementsByTagNameNS(
             'http://www.concrete5.org/doctrine-xml/0.5',
             'table',

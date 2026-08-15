@@ -394,16 +394,21 @@ PHP,
             $lines[] = '    ' . $requiredError;
             $lines[] = '} elseif ($this->' . self::NORMALIZE_METHOD . '(';
         } else {
-            $lines[] = 'if ($hasDateValue && $this->' . self::NORMALIZE_METHOD . '(';
+            $lines[] = 'if (';
+            $lines[] = '    $hasDateValue';
+            $lines[] = '    &&';
+            $lines[] = '    $this->' . self::NORMALIZE_METHOD . '(';
         }
-        $lines[] = '    $dateValue,';
-        $lines[] = sprintf('    %s[%s] ?? null,', $sourceVariable, $hourLiteral);
-        $lines[] = sprintf('    %s[%s] ?? null,', $sourceVariable, $minuteLiteral);
-        $lines[] = sprintf('    %s,', $field->attachTimeSelector ? 'true' : 'false');
-        $lines[] = sprintf('    %d,', $field->minuteInterval);
-        $lines[] = sprintf('    %s,', $this->phpLiteralFormatter->format($field->minDate));
-        $lines[] = sprintf('    %s,', $this->phpLiteralFormatter->format($field->maxDate));
-        $lines[] = ') === null) {';
+        $argumentIndentation = $field->required ? '    ' : '        ';
+        $closingIndentation = $field->required ? '' : '    ';
+        $lines[] = $argumentIndentation . '$dateValue,';
+        $lines[] = sprintf('%s%s[%s] ?? null,', $argumentIndentation, $sourceVariable, $hourLiteral);
+        $lines[] = sprintf('%s%s[%s] ?? null,', $argumentIndentation, $sourceVariable, $minuteLiteral);
+        $lines[] = sprintf('%s%s,', $argumentIndentation, $field->attachTimeSelector ? 'true' : 'false');
+        $lines[] = sprintf('%s%d,', $argumentIndentation, $field->minuteInterval);
+        $lines[] = sprintf('%s%s,', $argumentIndentation, $this->phpLiteralFormatter->format($field->minDate));
+        $lines[] = sprintf('%s%s,', $argumentIndentation, $this->phpLiteralFormatter->format($field->maxDate));
+        $lines[] = $closingIndentation . ') === null) {';
         $lines[] = '    ' . $invalidError;
         $lines[] = '}';
 

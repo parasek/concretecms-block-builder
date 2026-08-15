@@ -1,9 +1,9 @@
 <?php if (!empty($entry[{{LINK_KEY_LITERAL}}])): ?>
     <a href="<?= h($entry[{{LINK_KEY_LITERAL}}] . ($entry[{{ENDING_KEY_LITERAL}}] ?? '')); ?>"
        title="<?= h($entry[{{TITLE_KEY_LITERAL}}] ?? ''); ?>"
-       <?= $entry[{{NEW_WINDOW_KEY_LITERAL}}] ?? ''; ?>
-       <?= $entry[{{NO_FOLLOW_KEY_LITERAL}}] ?? ''; ?>
+        <?= $entry[{{NEW_WINDOW_KEY_LITERAL}}] ?? ''; ?>
+        <?= $entry[{{NO_FOLLOW_KEY_LITERAL}}] ?? ''; ?>
     >
-       <?= nl2br(h($entry[{{TEXT_KEY_LITERAL}}] ?? ''), false); ?>
+        <?= nl2br(h($entry[{{TEXT_KEY_LITERAL}}] ?? ''), false); ?>
     </a>
 <?php endif; ?>

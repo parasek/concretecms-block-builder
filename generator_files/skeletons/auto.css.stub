@@ -92,7 +92,10 @@
     background: #fff;
     border: 1px solid #dedede;
     border-radius: 0.25rem;
-    transition: border-color 0.15s, box-shadow 0.15s, opacity 0.15s;
+    transition:
+        border-color 0.15s,
+        box-shadow 0.15s,
+        opacity 0.15s;
 }
 
 .bb-entry-dragging {
@@ -155,9 +158,9 @@
     fill: #1a1d20;
 }
 
-.ccm-ui .bb-entry-drag-handle[type=button]:not(:disabled),
-.ccm-ui .bb-entry-drag-handle[type=reset]:not(:disabled),
-.ccm-ui .bb-entry-drag-handle[type=submit]:not(:disabled),
+.ccm-ui .bb-entry-drag-handle[type='button']:not(:disabled),
+.ccm-ui .bb-entry-drag-handle[type='reset']:not(:disabled),
+.ccm-ui .bb-entry-drag-handle[type='submit']:not(:disabled),
 .ccm-ui button.bb-entry-drag-handle:not(:disabled) {
     cursor: move;
 }
