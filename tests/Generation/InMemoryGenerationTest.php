@@ -69,6 +69,12 @@ final class InMemoryGenerationTest extends BlockBuilderTestCase
             $filesByPath['form.php'],
             'Repeatable multiple-choice options must be initialized before the renderer captures them.',
         );
+        self::assertStringContainsString('$basicSvgIconPicker_iconPreviewSource = match', $filesByPath['form.php']);
+        self::assertStringContainsString('$repeatableSvgIconPicker_iconPreviewSource = match', $filesByPath['form.php']);
+        self::assertStringContainsString('$basicSvgIconPicker_iconData = match', $filesByPath['view.php']);
+        self::assertStringContainsString('$repeatableSvgIconPicker_iconData = match', $filesByPath['view.php']);
+        self::assertStringNotContainsString('$_blockBuilderSvgIcon', $filesByPath['form.php']);
+        self::assertStringNotContainsString('$_blockBuilderSvgIcon', $filesByPath['view.php']);
         self::assertStringContainsString(
             'canViewPageInSitemap()',
             $filesByPath['controller.php'],

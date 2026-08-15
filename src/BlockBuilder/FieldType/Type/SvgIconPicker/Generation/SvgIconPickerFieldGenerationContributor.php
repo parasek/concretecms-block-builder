@@ -266,7 +266,7 @@ PHP,
             '{{LABEL_LITERAL}}' => $this->phpLiteralFormatter->format($field->label),
             '{{REQUIRED_LABEL_SUFFIX}}' => $field->required ? ' . \' *\'' : '',
             '{{OPTIONS}}' => $this->renderOptions($field, $basicField),
-            '{{SVG_VARIABLE}}' => '_blockBuilderSvgIconPreview_' . $field->handle,
+            '{{SVG_VARIABLE}}' => $field->handle . '_iconPreviewSource',
             '{{PREVIEW_MAP}}' => $this->renderPreviewMap($field),
             '{{HELP_TEXT}}' => $field->helpText === null || $field->helpText === ''
                 ? ''
@@ -318,7 +318,7 @@ PHP,
         }
 
         $replacements = [
-            '{{SVG_VARIABLE}}' => '_blockBuilderSvgIcon_' . $field->handle,
+            '{{SVG_VARIABLE}}' => $field->handle . '_iconData',
             '{{SVG_MAP}}' => implode(PHP_EOL, $map),
         ];
         $replacements[$basicField ? '{{HANDLE}}' : '{{HANDLE_LITERAL}}'] = $basicField
