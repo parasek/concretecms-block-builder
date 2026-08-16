@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
-"POT-Creation-Date: 2026-08-16 17:58+0200\n"
+"Project-Id-Version: block_builder\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-16 10:44+0200\n"
 "PO-Revision-Date: 2026-08-16 17:59+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: pl_PL\n"
+"Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : ((n != 0 && n % 1000000 == 0) ? 1 : 2);\n"
 "X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../..\n"
 "X-Poedit-KeywordsList: t;t2;tc\n"
@@ -36,140 +36,105 @@ msgid "Block Builder"
 msgstr "Block Builder"
 
 #: controller.php:31
-msgid ""
-"Design, configure and build custom Concrete CMS blocks with a user‑friendly "
-"interface."
-msgstr ""
-"Projektuj, konfiguruj i twórz własne bloki Concrete CMS za pomocą "
-"przyjaznego dla użytkownika interfejsu."
+msgid "Design, configure and build custom Concrete CMS blocks with a user‑friendly interface."
+msgstr "Concevez, configurez et créez des blocs Concrete CMS personnalisés à l’aide d’une interface conviviale."
 
 #: controller.php:55
 msgid "Configs"
-msgstr "Konfiguracje"
+msgstr "Configurations"
 
 #: controllers/single_page/dashboard/blocks/block_builder.php:70
 msgid "The specified block config handle is invalid."
-msgstr "Podany identyfikator konfiguracji bloku jest nieprawidłowy."
+msgstr "L’identifiant de configuration de bloc indiqué n’est pas valide."
 
 #: controllers/single_page/dashboard/blocks/block_builder.php:85
-#, php-format
 msgid "Config loaded from block \"%s\""
-msgstr "Wczytano konfigurację z bloku \"%s\""
+msgstr "Configuration chargée depuis le bloc « %s »"
 
 #: controllers/single_page/dashboard/blocks/block_builder.php:95
 msgid "The specified predefined config handle is invalid."
-msgstr "Podany identyfikator predefiniowanej konfiguracji jest nieprawidłowy."
+msgstr "L’identifiant de configuration prédéfinie indiqué n’est pas valide."
 
 #: controllers/single_page/dashboard/blocks/block_builder.php:110
-#, php-format
 msgid "Config loaded from predefined JSON file \"%s\""
-msgstr "Wczytano konfigurację z predefiniowanego pliku JSON \"%s\""
+msgstr "Configuration chargée depuis le fichier JSON prédéfini « %s »"
 
 #: controllers/single_page/dashboard/blocks/block_builder.php:180
-#, php-format
 msgid "The block \"%s\" has been successfully rebuilt and refreshed."
-msgstr "Blok \"%s\" został pomyślnie przebudowany i odświeżony."
+msgstr "Le bloc « %s » a été recréé et actualisé."
 
 #: controllers/single_page/dashboard/blocks/block_builder.php:181
-#, php-format
 msgid "The block type \"%s\" has been successfully created and installed."
-msgstr "Typ bloku \"%s\" został pomyślnie utworzony i zainstalowany."
+msgstr "Le type de bloc « %s » a été créé et installé."
 
 #: controllers/single_page/dashboard/blocks/block_builder.php:182
-#, php-format
-msgid ""
-"The block type \"%s\" has been successfully created. Please install it "
-"manually now."
-msgstr ""
-"Typ bloku \"%s\" został pomyślnie utworzony. Zainstaluj go teraz ręcznie."
+msgid "The block type \"%s\" has been successfully created. Please install it manually now."
+msgstr "Le type de bloc « %s » a été créé. Veuillez maintenant l’installer manuellement."
 
 #: controllers/single_page/dashboard/blocks/block_builder/configs.php:64
 msgid "Browse existing configs"
-msgstr "Przeglądaj istniejące konfiguracje"
+msgstr "Parcourir les configurations existantes"
 
 #: controllers/single_page/dashboard/blocks/block_builder/configs.php:70
 #: controllers/single_page/dashboard/blocks/block_builder/configs.php:88
 #: controllers/single_page/dashboard/blocks/block_builder/configs.php:106
 msgid "Only POST requests are allowed."
-msgstr "Dozwolone są wyłącznie żądania POST."
+msgstr "Seules les requêtes POST sont autorisées."
 
 #: controllers/single_page/dashboard/blocks/block_builder/configs.php:76
-#, php-format
 msgid "The block type \"%s\" has been successfully installed."
-msgstr "Typ bloku \"%s\" został pomyślnie zainstalowany."
+msgstr "Le type de bloc « %s » a été installé."
 
 #: controllers/single_page/dashboard/blocks/block_builder/configs.php:94
-#, php-format
 msgid "The block type \"%s\" has been successfully uninstalled."
-msgstr "Typ bloku \"%s\" został pomyślnie odinstalowany."
+msgstr "Le type de bloc « %s » a été désinstallé."
 
 #: controllers/single_page/dashboard/blocks/block_builder/configs.php:112
-#, php-format
 msgid "The block type folder \"%s\" has been successfully deleted."
-msgstr "Folder typu bloku \"%s\" został pomyślnie usunięty."
+msgstr "Le dossier du type de bloc « %s » a été supprimé."
 
 #: controllers/single_page/dashboard/blocks/block_builder/configs.php:125
 msgid "Unable to find the block type specified."
-msgstr "Nie można znaleźć podanego typu bloku."
+msgstr "Impossible de trouver le type de bloc indiqué."
 
 #: elements/custom_code_in_option_list.php:4
-msgid ""
-"Custom PHP code that will be executed in the on_start() method in "
-"controller.php."
-msgstr ""
-"Niestandardowy kod PHP, który zostanie wykonany w metodzie on_start() w "
-"pliku controller.php."
+msgid "Custom PHP code that will be executed in the on_start() method in controller.php."
+msgstr "Code PHP personnalisé qui sera exécuté dans la méthode on_start() de controller.php."
 
 #: elements/custom_code_in_option_list.php:6
-msgid ""
-"This is especially useful when you want to list items from Express or any "
-"other custom source."
-msgstr ""
-"Jest to szczególnie przydatne, gdy chcesz wyświetlić listę elementów z "
-"Expressa lub dowolnego niestandardowego źródła."
+msgid "This is especially useful when you want to list items from Express or any other custom source."
+msgstr "Ceci est particulièrement utile pour répertorier des éléments provenant d’Express ou de toute autre source personnalisée."
 
 #: elements/custom_code_in_option_list.php:8
 #: elements/navigation_tab_content/custom_code.php:16
 #: elements/navigation_tab_content/custom_code.php:35
 #: elements/navigation_tab_content/custom_code.php:52
-msgid ""
-"Be careful when inserting custom code; invalid syntax can lead to errors."
-msgstr ""
-"Zachowaj ostrożność podczas wstawiania niestandardowego kodu; nieprawidłowa "
-"składnia może prowadzić do błędów."
+msgid "Be careful when inserting custom code; invalid syntax can lead to errors."
+msgstr "Soyez prudent lors de l’insertion de code personnalisé ; une syntaxe non valide peut provoquer des erreurs."
 
 #: elements/custom_code_in_option_list.php:10
 msgid "Example code for a field in the \"Basic Information\" tab"
-msgstr "Przykładowy kod dla pola w zakładce \"Podstawowe informacje\""
+msgstr "Exemple de code pour un champ de l’onglet « Informations de base »"
 
 #: elements/custom_code_in_option_list.php:12
-msgid ""
-"If the handle of this field is \"category\", option variables should be "
-"named like $category_options."
-msgstr ""
-"Jeśli identyfikator tego pola to \"category\", zmienne opcji powinny mieć "
-"nazwy takie jak $category_options."
+msgid "If the handle of this field is \"category\", option variables should be named like $category_options."
+msgstr "Si l’identifiant de ce champ est « category », les variables d’options doivent être nommées comme $category_options."
 
 #: elements/custom_code_in_option_list.php:14
 #: elements/custom_code_in_option_list.php:28
 #: elements/navigation_tab_content/custom_code.php:18
 #: elements/navigation_tab_content/custom_code.php:37
 #: elements/navigation_tab_content/custom_code.php:54
-#, php-format
 msgid "Use %s spaces for indentation."
-msgstr "Użyj %s spacji do tworzenia wcięć."
+msgstr "Utilisez %s espaces pour l’indentation."
 
 #: elements/custom_code_in_option_list.php:24
 msgid "Example code for a field in the \"Repeatable Entries\" tab"
-msgstr "Przykładowy kod dla pola w zakładce \"Wpisy powtarzalne\""
+msgstr "Exemple de code pour un champ de l’onglet « Entrées répétables »"
 
 #: elements/custom_code_in_option_list.php:26
-msgid ""
-"If the handle of this field is \"category\", option variables should be "
-"named like $entry_category_options."
-msgstr ""
-"Jeśli identyfikator tego pola to \"category\", zmienne opcji powinny mieć "
-"nazwy takie jak $entry_category_options."
+msgid "If the handle of this field is \"category\", option variables should be named like $entry_category_options."
+msgstr "Si l’identifiant de ce champ est « category », les variables d’options doivent être nommées comme $entry_category_options."
 
 #: elements/field_type_template/field_type_template.php:43
 #: elements/navigation_tab_content/entries.php:69
@@ -178,49 +143,49 @@ msgstr ""
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:54
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:84
 msgid "Are you sure?"
-msgstr "Czy na pewno?"
+msgstr "Êtes-vous sûr ?"
 
 #: elements/field_type_template/field_type_template.php:62
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:81
 msgid "Label"
-msgstr "Etykieta"
+msgstr "Libellé"
 
 #: elements/field_type_template/field_type_template.php:71
 msgid "Human-readable name, e.g., Product name"
-msgstr "Nazwa czytelna dla użytkownika, np. Nazwa produktu"
+msgstr "Nom lisible, par exemple Nom du produit"
 
 #: elements/field_type_template/field_type_template.php:76
 #: elements/field_type_template/partials/svg_icon_picker.php:20
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:82
 msgid "Handle"
-msgstr "Identyfikator"
+msgstr "Identifiant"
 
 #: elements/field_type_template/field_type_template.php:93
 msgid "Generating handle from label"
-msgstr "Generowanie identyfikatora na podstawie etykiety"
+msgstr "Générer l’identifiant à partir du libellé"
 
 #: elements/field_type_template/field_type_template.php:96
 msgid "Letters and underscores only, e.g., productName"
-msgstr "Tylko litery i znaki podkreślenia, np. productName"
+msgstr "Lettres et tirets bas uniquement, par exemple productName"
 
 #: elements/field_type_template/field_type_template.php:115
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:83
 msgid "Required"
-msgstr "Wymagane"
+msgstr "Obligatoire"
 
 #: elements/field_type_template/field_type_template.php:130
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:85
 msgid "Use this field as the title in repeatable entries"
-msgstr "Użyj tego pola jako tytułu powtarzalnych wpisów"
+msgstr "Utiliser ce champ comme titre des entrées répétables"
 
 #: elements/field_type_template/field_type_template.php:139
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:84
 msgid "Help text"
-msgstr "Tekst pomocniczy"
+msgstr "Texte d’aide"
 
 #: elements/field_type_template/field_type_template.php:146
 msgid "This is a preview of the help text."
-msgstr "To jest podgląd tekstu pomocniczego."
+msgstr "Ceci est un aperçu du texte d’aide."
 
 #: elements/field_type_template/partials/color_picker.php:8
 #: elements/field_type_template/partials/html_editor.php:8
@@ -233,136 +198,117 @@ msgstr "To jest podgląd tekstu pomocniczego."
 #: elements/field_type_template/partials/wysiwyg_editor.php:8
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:120
 msgid "Default value"
-msgstr "Domyślna wartość"
+msgstr "Valeur par défaut"
 
 #: elements/field_type_template/partials/color_picker.php:10
 msgid "Enter a hexadecimal, RGB, or RGBA color."
-msgstr "Wprowadź kolor w formacie szesnastkowym, RGB lub RGBA."
+msgstr "Saisissez une couleur hexadécimale, RVB ou RVBA."
 
 #: elements/field_type_template/partials/date_picker.php:9
 msgid "Time selector"
-msgstr "Pole wyboru czasu"
+msgstr "Sélecteur d’heure"
 
 #: elements/field_type_template/partials/date_picker.php:22
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:97
 msgid "Attach time selector"
-msgstr "Dodaj pole wyboru czasu"
+msgstr "Ajouter un sélecteur d’heure"
 
 #: elements/field_type_template/partials/date_picker.php:29
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:98
 msgid "Minute interval"
-msgstr "Odstęp w minutach"
+msgstr "Intervalle des minutes"
 
 #: elements/field_type_template/partials/date_picker.php:41
-msgid ""
-"Enter a positive integer that divides 60 without a remainder. For example, "
-"15 generates 00, 15, 30, and 45."
-msgstr ""
-"Wprowadź dodatnią liczbę całkowitą, przez którą 60 dzieli się bez reszty. Na "
-"przykład wartość 15 utworzy opcje 00, 15, 30 i 45."
+msgid "Enter a positive integer that divides 60 without a remainder. For example, 15 generates 00, 15, 30, and 45."
+msgstr "Saisissez un entier positif qui divise 60 sans reste. Par exemple, 15 génère 00, 15, 30 et 45."
 
 #: elements/field_type_template/partials/date_picker.php:51
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:95
 msgid "Minimum date"
-msgstr "Najwcześniejsza data"
+msgstr "Date minimale"
 
 #: elements/field_type_template/partials/date_picker.php:64
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:96
 msgid "Maximum date"
-msgstr "Najpóźniejsza data"
+msgstr "Date maximale"
 
 #: elements/field_type_template/partials/date_picker.php:78
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:94
 msgid "PHP date pattern"
-msgstr "Wzorzec daty PHP"
+msgstr "Motif de date PHP"
 
 #: elements/field_type_template/partials/date_picker.php:86
-msgid ""
-"Leave empty to use Concrete CMS's localized date format in the view template."
-msgstr ""
-"Pozostaw puste, aby w szablonie widoku użyć formatu daty Concrete CMS "
-"zgodnego z bieżącymi ustawieniami regionalnymi."
+msgid "Leave empty to use Concrete CMS's localized date format in the view template."
+msgstr "Laissez vide pour utiliser le format de date localisé de Concrete CMS dans le modèle de vue."
 
 #: elements/field_type_template/partials/date_picker.php:88
-msgid ""
-"Enter a PHP date pattern to customize the date displayed in the view "
-"template."
-msgstr ""
-"Wprowadź wzorzec daty PHP, aby dostosować sposób wyświetlania daty w "
-"szablonie widoku."
+msgid "Enter a PHP date pattern to customize the date displayed in the view template."
+msgstr "Saisissez un motif de date PHP pour personnaliser la date affichée dans le modèle de vue."
 
 #: elements/field_type_template/partials/date_picker.php:90
-#, php-format
-msgid ""
-"Check the %sPHP manual%s for supported patterns. Examples: <code>d.m.Y</"
-"code>, <code>Y-m-d</code>, or <code>d.m.Y H:i</code>."
-msgstr ""
-"Obsługiwane wzorce znajdziesz w %spodręczniku PHP%s. Przykłady: <code>d.m.Y</"
-"code>, <code>Y-m-d</code> lub <code>d.m.Y H:i</code>."
+msgid "Check the %sPHP manual%s for supported patterns. Examples: <code>d.m.Y</code>, <code>Y-m-d</code>, or <code>d.m.Y H:i</code>."
+msgstr "Consultez le %smanuel PHP%s pour connaître les motifs pris en charge. Exemples : <code>d.m.Y</code>, <code>Y-m-d</code> ou <code>d.m.Y H:i</code>."
 
 #: elements/field_type_template/partials/express.php:10
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:99
 msgid "Express object handle"
-msgstr "Identyfikator obiektu Express"
+msgstr "Identifiant de l’objet Express"
 
 #: elements/field_type_template/partials/external_link.php:17
 #: elements/field_type_template/partials/link_from_file_manager.php:17
 #: elements/field_type_template/partials/link_from_sitemap.php:17
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:102
 msgid "Show the \"Custom string at the end of URL\" field"
-msgstr "Pokaż pole \"Niestandardowy ciąg znaków na końcu adresu URL\""
+msgstr "Afficher le champ « Chaîne personnalisée à la fin de l’URL »"
 
 #: elements/field_type_template/partials/external_link.php:30
 #: elements/field_type_template/partials/link_from_file_manager.php:30
 #: elements/field_type_template/partials/link_from_sitemap.php:30
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:103
 msgid "Show the \"Text\" field"
-msgstr "Pokaż pole \"Tekst\""
+msgstr "Afficher le champ « Texte »"
 
 #: elements/field_type_template/partials/external_link.php:31
 #: elements/field_type_template/partials/link_from_file_manager.php:31
 #: elements/field_type_template/partials/link_from_sitemap.php:31
-#, php-format
 msgid "The text inside the %s tag, e.g., %s"
-msgstr "Tekst wewnątrz znacznika %s, np. %s"
+msgstr "Le texte à l’intérieur de la balise %s, par exemple %s"
 
 #: elements/field_type_template/partials/external_link.php:44
 #: elements/field_type_template/partials/link_from_file_manager.php:44
 #: elements/field_type_template/partials/link_from_sitemap.php:44
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:104
 msgid "Show the \"Title\" field"
-msgstr "Pokaż pole \"Tytuł\""
+msgstr "Afficher le champ « Titre »"
 
 #: elements/field_type_template/partials/external_link.php:45
 #: elements/field_type_template/partials/link_from_file_manager.php:45
 #: elements/field_type_template/partials/link_from_sitemap.php:45
-#, php-format
 msgid "The value of the title attribute, e.g., %s"
-msgstr "Wartość atrybutu title, np. %s"
+msgstr "La valeur de l’attribut title, par exemple %s"
 
 #: elements/field_type_template/partials/external_link.php:58
 #: elements/field_type_template/partials/link_from_file_manager.php:58
 #: elements/field_type_template/partials/link_from_sitemap.php:58
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:105
 msgid "Show the \"Open in new window\" field"
-msgstr "Pokaż pole \"Otwórz w nowym oknie\""
+msgstr "Afficher le champ « Ouvrir dans une nouvelle fenêtre »"
 
 #: elements/field_type_template/partials/external_link.php:71
 #: elements/field_type_template/partials/link_from_file_manager.php:71
 #: elements/field_type_template/partials/link_from_sitemap.php:71
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:106
 msgid "Show the \"Add nofollow attribute\" field"
-msgstr "Pokaż pole \"Dodaj atrybut nofollow\""
+msgstr "Afficher le champ « Ajouter l’attribut nofollow »"
 
 #: elements/field_type_template/partials/file_set.php:10
 msgid "Restrict File Set selection to sets whose names start with:"
-msgstr ""
-"Ogranicz wybór zestawów plików do tych, których nazwy zaczynają się od:"
+msgstr "Limiter la sélection des ensembles de fichiers à ceux dont le nom commence par :"
 
 #: elements/field_type_template/partials/files_from_folder.php:14
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:101
 msgid "File order"
-msgstr "Kolejność plików"
+msgstr "Ordre des fichiers"
 
 #: elements/field_type_template/partials/html_editor.php:16
 #: elements/field_type_template/partials/image.php:57
@@ -373,29 +319,24 @@ msgstr "Kolejność plików"
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:89
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:103
 msgid "Height"
-msgstr "Wysokość"
+msgstr "Hauteur"
 
 #: elements/field_type_template/partials/html_editor.php:29
-#, php-format
 msgid "Default height: %s"
-msgstr "Domyślna wysokość: %s"
+msgstr "Hauteur par défaut : %s"
 
 #: elements/field_type_template/partials/icon_picker.php:10
 msgid "Enter the icon CSS classes, for example \"fas fa-star\"."
-msgstr "Wprowadź klasy CSS ikony, na przykład \"fas fa-star\"."
+msgstr "Saisissez les classes CSS de l’icône, par exemple « fas fa-star »."
 
 #: elements/field_type_template/partials/image.php:17
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:107
 msgid "Show the \"Alt text\" field"
-msgstr "Pokaż pole \"Tekst alternatywny\""
+msgstr "Afficher le champ « Texte alternatif »"
 
 #: elements/field_type_template/partials/image.php:31
-msgid ""
-"Generate a thumbnail using the image helper (if the original image is larger "
-"than the specified dimensions)"
-msgstr ""
-"Wygeneruj miniaturę przy użyciu pomocnika obrazów (jeśli oryginalny obraz "
-"jest większy niż podane wymiary)"
+msgid "Generate a thumbnail using the image helper (if the original image is larger than the specified dimensions)"
+msgstr "Générer une vignette à l’aide de l’assistant d’image (si l’image d’origine est plus grande que les dimensions indiquées)"
 
 #: elements/field_type_template/partials/image.php:42
 #: elements/field_type_template/partials/image.php:125
@@ -404,7 +345,7 @@ msgstr ""
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:72
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:102
 msgid "Width"
-msgstr "Szerokość"
+msgstr "Largeur"
 
 #: elements/field_type_template/partials/image.php:70
 #: elements/field_type_template/partials/image.php:153
@@ -413,7 +354,7 @@ msgstr "Szerokość"
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:74
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:104
 msgid "Crop"
-msgstr "Przycinanie"
+msgstr "Recadrer"
 
 #: elements/field_type_template/partials/image.php:81
 #: elements/field_type_template/partials/image.php:97
@@ -426,179 +367,151 @@ msgstr "Przycinanie"
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:98
 #: src/BlockBuilder/Service/Option/BlockSettingsOptionProvider.php:36
 msgid "Yes"
-msgstr "Tak"
+msgstr "Oui"
 
 #: elements/field_type_template/partials/image.php:86
 #: elements/field_type_template/partials/image.php:169
 msgid "Editable"
-msgstr "Edytowalność"
+msgstr "Modifiable"
 
 #: elements/field_type_template/partials/image.php:114
-msgid ""
-"Generate a fullscreen image using the image helper (if the original image is "
-"larger than the specified dimensions)"
-msgstr ""
-"Wygeneruj obraz pełnoekranowy przy użyciu pomocnika obrazów (jeśli "
-"oryginalny obraz jest większy niż podane wymiary)"
+msgid "Generate a fullscreen image using the image helper (if the original image is larger than the specified dimensions)"
+msgstr "Générer une image plein écran à l’aide de l’assistant d’image (si l’image d’origine est plus grande que les dimensions indiquées)"
 
 #: elements/field_type_template/partials/number.php:13
 #: elements/field_type_template/partials/text_field.php:18
 #: elements/field_type_template/partials/textarea.php:13
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:121
 msgid "Placeholder"
-msgstr "Tekst zastępczy"
+msgstr "Texte indicatif"
 
 #: elements/field_type_template/partials/number.php:20
 #: elements/field_type_template/partials/text_field.php:53
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:87
 msgid "Field prefix"
-msgstr "Prefiks pola"
+msgstr "Préfixe du champ"
 
 #: elements/field_type_template/partials/number.php:22
 #: elements/field_type_template/partials/text_field.php:55
 msgid "Text displayed before the input, such as a currency symbol."
-msgstr "Tekst wyświetlany przed polem, na przykład symbol waluty."
+msgstr "Texte affiché avant la saisie, par exemple un symbole monétaire."
 
 #: elements/field_type_template/partials/number.php:25
 #: elements/field_type_template/partials/text_field.php:58
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:88
 msgid "Field suffix"
-msgstr "Sufiks pola"
+msgstr "Suffixe du champ"
 
 #: elements/field_type_template/partials/number.php:27
 #: elements/field_type_template/partials/text_field.php:60
 msgid "Text displayed after the input, such as a percent sign."
-msgstr "Tekst wyświetlany za polem, na przykład znak procentu."
+msgstr "Texte affiché après la saisie, par exemple un signe de pourcentage."
 
 #: elements/field_type_template/partials/number.php:34
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:126
 msgid "Size"
-msgstr "Rozmiar"
+msgstr "Taille"
 
 #: elements/field_type_template/partials/number.php:42
 msgid "Size of the DECIMAL field in the MySQL table."
-msgstr "Rozmiar pola typu DECIMAL w tabeli MySQL."
+msgstr "Taille du champ DECIMAL dans la table MySQL."
 
 #: elements/field_type_template/partials/number.php:44
-msgid ""
-"Value \"10.2\" means that the database field can store 8 digits for the "
-"integer part and 2 digits for the fractional part."
-msgstr ""
-"Wartość \"10.2\" oznacza, że pole w bazie danych może przechowywać 8 cyfr w "
-"części całkowitej i 2 cyfry w części ułamkowej."
+msgid "Value \"10.2\" means that the database field can store 8 digits for the integer part and 2 digits for the fractional part."
+msgstr "La valeur « 10.2 » signifie que le champ de base de données peut stocker 8 chiffres pour la partie entière et 2 chiffres pour la partie fractionnaire."
 
 #: elements/field_type_template/partials/number.php:46
-msgid ""
-"If you want to store integers in the database, write \"0\" after the dot "
-"(\"8.0\" or similar)."
-msgstr ""
-"Jeśli chcesz zapisywać liczby całkowite w bazie danych, wpisz \"0\" po "
-"kropce (\"8.0\" albo podobnie)."
+msgid "If you want to store integers in the database, write \"0\" after the dot (\"8.0\" or similar)."
+msgstr "Pour stocker des entiers dans la base de données, écrivez « 0 » après le point (« 8.0 » ou similaire)."
 
 #: elements/field_type_template/partials/number.php:48
-msgid ""
-"If you want to store standard money values in the database, write \"2\" "
-"after the dot (\"10.2\" or similar)."
-msgstr ""
-"Jeśli chcesz zapisywać standardowe wartości pieniężne w bazie danych, wpisz "
-"\"2\" po kropce (\"10.2\" albo podobnie)."
+msgid "If you want to store standard money values in the database, write \"2\" after the dot (\"10.2\" or similar)."
+msgstr "Pour stocker des montants monétaires courants dans la base de données, écrivez « 2 » après le point (« 10.2 » ou similaire)."
 
 #: elements/field_type_template/partials/number.php:50
-msgid ""
-"Warning: Changing this value after the block is installed can lead to data "
-"loss. Proceed with caution."
-msgstr ""
-"Ostrzeżenie: zmiana tej wartości po zainstalowaniu bloku może spowodować "
-"utratę danych. Zachowaj ostrożność."
+msgid "Warning: Changing this value after the block is installed can lead to data loss. Proceed with caution."
+msgstr "Attention : la modification de cette valeur après l’installation du bloc peut entraîner une perte de données. Procédez avec prudence."
 
 #: elements/field_type_template/partials/number.php:58
 msgid "Accepted values"
-msgstr "Dozwolone wartości"
+msgstr "Valeurs acceptées"
 
 #: elements/field_type_template/partials/number.php:63
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:127
 #: src/BlockBuilder/FieldType/Type/Number/NumberFieldType.php:86
 msgid "Step"
-msgstr "Krok"
+msgstr "Pas"
 
 #: elements/field_type_template/partials/number.php:70
-msgid ""
-"Value \"1\" accepts integers; use \"0.01\" when you want to use a standard "
-"money format."
-msgstr ""
-"Wartość \"1\" dopuszcza liczby całkowite. Użyj \"0.01\", aby stosować "
-"standardowy format kwot pieniężnych."
+msgid "Value \"1\" accepts integers; use \"0.01\" when you want to use a standard money format."
+msgstr "La valeur « 1 » accepte les entiers ; utilisez « 0.01 » pour un format monétaire courant."
 
 #: elements/field_type_template/partials/number.php:76
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:128
 #: src/BlockBuilder/FieldType/Type/Number/NumberFieldType.php:87
 msgid "Minimum"
-msgstr "Wartość minimalna"
+msgstr "Minimum"
 
 #: elements/field_type_template/partials/number.php:88
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:129
 #: src/BlockBuilder/FieldType/Type/Number/NumberFieldType.php:88
 msgid "Maximum"
-msgstr "Wartość maksymalna"
+msgstr "Maximum"
 
 #: elements/field_type_template/partials/number.php:101
 msgid "Value displayed in the view template"
-msgstr "Wartość wyświetlana w szablonie widoku"
+msgstr "Valeur affichée dans le modèle de vue"
 
 #: elements/field_type_template/partials/number.php:106
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:130
 msgid "Displayed decimals"
-msgstr "Liczba wyświetlanych miejsc dziesiętnych"
+msgstr "Décimales affichées"
 
 #: elements/field_type_template/partials/number.php:116
 msgid "How many decimals to display after the separator."
-msgstr "Liczba miejsc dziesiętnych wyświetlanych po separatorze."
+msgstr "Nombre de décimales à afficher après le séparateur."
 
 #: elements/field_type_template/partials/number.php:117
 #: elements/field_type_template/partials/number.php:133
 #: elements/field_type_template/partials/number.php:149
 msgid "Argument of the PHP function number_format()."
-msgstr "Argument funkcji PHP number_format()."
+msgstr "Argument de la fonction PHP number_format()."
 
 #: elements/field_type_template/partials/number.php:124
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:131
 msgid "Displayed decimal separator"
-msgstr "Separator dziesiętny w wyświetlanej wartości"
+msgstr "Séparateur décimal affiché"
 
 #: elements/field_type_template/partials/number.php:132
 msgid "Usually \",\" (comma) or \".\" (dot)."
-msgstr "Zazwyczaj \",\" (przecinek) lub \".\" (kropka)."
+msgstr "Généralement « , » (virgule) ou « . » (point)."
 
 #: elements/field_type_template/partials/number.php:140
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:132
 msgid "Displayed thousands separator"
-msgstr "Separator tysięcy w wyświetlanej wartości"
+msgstr "Séparateur des milliers affiché"
 
 #: elements/field_type_template/partials/number.php:148
-msgid ""
-"Usually \" \" (space), \".\" (dot), or \",\" (comma). You can also leave it "
-"empty."
-msgstr ""
-"Zazwyczaj jest to \" \" (spacja), \".\" (kropka) lub \",\" (przecinek). "
-"Możesz również pozostawić to pole puste."
+msgid "Usually \" \" (space), \".\" (dot), or \",\" (comma). You can also leave it empty."
+msgstr "Généralement «  » (espace), « . » (point) ou « , » (virgule). Vous pouvez également laisser ce champ vide."
 
 #: elements/field_type_template/partials/number.php:165
 #: elements/field_type_template/partials/text_field.php:76
 #: elements/field_type_template/partials/textarea.php:88
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:86
 msgid "Display zero (\"0\") in the view template"
-msgstr "Wyświetlaj zero (\"0\") w szablonie widoku"
+msgstr "Afficher zéro (« 0 ») dans le modèle de vue"
 
 #: elements/field_type_template/partials/select_field.php:16
 #: elements/field_type_template/partials/select_multiple_field.php:16
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:118
 msgid "Type"
-msgstr "Typ"
+msgstr "Type"
 
 #: elements/field_type_template/partials/select_field.php:33
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:119
 msgid "Add an empty option"
-msgstr "Dodaj pustą opcję"
+msgstr "Ajouter une option vide"
 
 #: elements/field_type_template/partials/select_field.php:40
 #: elements/navigation_tab_content/labels.php:183
@@ -607,96 +520,73 @@ msgstr "Dodaj pustą opcję"
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:99
 #: src/BlockBuilder/Service/Option/BlockSettingsOptionProvider.php:36
 msgid "No"
-msgstr "Nie"
+msgstr "Non"
 
 #: elements/field_type_template/partials/select_field.php:48
 msgid "Works only with the default and enhanced select fields."
-msgstr "Działa tylko z domyślnym i rozszerzonym polem wyboru."
+msgstr "Fonctionne uniquement avec les champs de sélection standard et améliorés."
 
 #: elements/field_type_template/partials/select_field.php:67
 #: elements/field_type_template/partials/select_multiple_field.php:48
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:123
 msgid "List generation method"
-msgstr "Metoda generowania listy"
+msgstr "Méthode de génération de la liste"
 
 #: elements/field_type_template/partials/select_field.php:88
 #: elements/field_type_template/partials/select_multiple_field.php:68
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:124
 msgid "Select options"
-msgstr "Opcje wyboru"
+msgstr "Options de sélection"
 
 #: elements/field_type_template/partials/select_field.php:90
 #: elements/field_type_template/partials/select_multiple_field.php:70
 msgid "Enter each option on a new line."
-msgstr "Wprowadź każdą opcję w osobnym wierszu."
+msgstr "Saisissez chaque option sur une nouvelle ligne."
 
 #: elements/field_type_template/partials/select_field.php:92
 #: elements/field_type_template/partials/select_multiple_field.php:72
-msgid ""
-"Use a double colon to specify the key (the value saved in the database) and "
-"the value (the displayed text). Keys must start with a letter or number and "
-"may contain letters, numbers, underscores, and hyphens."
-msgstr ""
-"Użyj podwójnego dwukropka, aby określić klucz (wartość zapisywaną w bazie "
-"danych) i wartość (wyświetlany tekst). Klucze muszą zaczynać się literą lub "
-"cyfrą i mogą zawierać litery, cyfry, znaki podkreślenia oraz łączniki."
+msgid "Use a double colon to specify the key (the value saved in the database) and the value (the displayed text). Keys must start with a letter or number and may contain letters, numbers, underscores, and hyphens."
+msgstr "Utilisez deux deux-points pour préciser la clé (la valeur enregistrée dans la base de données) et la valeur (le texte affiché). Les clés doivent commencer par une lettre ou un chiffre et peuvent contenir des lettres, des chiffres, des tirets bas et des traits d’union."
 
 #: elements/field_type_template/partials/select_field.php:94
 #: elements/field_type_template/partials/select_multiple_field.php:74
 msgid "no :: Don't show"
-msgstr "no :: Nie pokazuj"
+msgstr "no :: Ne pas afficher"
 
 #: elements/field_type_template/partials/select_field.php:96
 #: elements/field_type_template/partials/select_multiple_field.php:76
 msgid "yes :: Show"
-msgstr "yes :: Pokaż"
+msgstr "yes :: Afficher"
 
 #: elements/field_type_template/partials/select_field.php:100
 #: elements/field_type_template/partials/select_multiple_field.php:80
-msgid ""
-"Although keyless options are supported, using explicit keys is recommended."
-msgstr ""
-"Mimo że opcje bez kluczy są obsługiwane, zaleca się stosowanie jawnych "
-"kluczy."
+msgid "Although keyless options are supported, using explicit keys is recommended."
+msgstr "Bien que les options sans clé soient prises en charge, l’utilisation de clés explicites est recommandée."
 
 #: elements/field_type_template/partials/select_field.php:102
 #: elements/field_type_template/partials/select_multiple_field.php:82
-msgid ""
-"Keyless options receive numeric keys based on their position, starting from "
-"1."
-msgstr ""
-"Opcje bez kluczy otrzymują klucze liczbowe odpowiadające ich pozycji, "
-"począwszy od 1."
+msgid "Keyless options receive numeric keys based on their position, starting from 1."
+msgstr "Les options sans clé reçoivent des clés numériques basées sur leur position, à partir de 1."
 
 #: elements/field_type_template/partials/select_field.php:104
 #: elements/field_type_template/partials/select_multiple_field.php:84
-msgid ""
-"If an existing block uses keyless options, do not reorder or remove existing "
-"options, or insert new options between them. Add new options only at the end "
-"of the list."
-msgstr ""
-"Jeśli istniejący blok korzysta z opcji bez kluczy, nie zmieniaj kolejności "
-"ani nie usuwaj istniejących opcji i nie wstawiaj między nimi nowych. Nowe "
-"opcje dodawaj wyłącznie na końcu listy."
+msgid "If an existing block uses keyless options, do not reorder or remove existing options, or insert new options between them. Add new options only at the end of the list."
+msgstr "Si un bloc existant utilise des options sans clé, ne réorganisez ni ne supprimez les options existantes et n’insérez pas de nouvelles options entre elles. Ajoutez les nouvelles options uniquement à la fin de la liste."
 
 #: elements/field_type_template/partials/select_field.php:106
 #: elements/field_type_template/partials/select_multiple_field.php:86
-msgid ""
-"Alternatively, assign explicit keys matching the options’ current numeric "
-"keys before changing the list."
-msgstr ""
-"Możesz też przed zmianą listy przypisać jawne klucze odpowiadające bieżącym "
-"kluczom liczbowym opcji."
+msgid "Alternatively, assign explicit keys matching the options’ current numeric keys before changing the list."
+msgstr "Vous pouvez également attribuer des clés explicites correspondant aux clés numériques actuelles des options avant de modifier la liste."
 
 #: elements/field_type_template/partials/select_field.php:108
 #: elements/field_type_template/partials/select_multiple_field.php:88
 msgid "Don't show"
-msgstr "Nie pokazuj"
+msgstr "Ne pas afficher"
 
 #: elements/field_type_template/partials/select_field.php:110
 #: elements/field_type_template/partials/select_multiple_field.php:90
 msgid "Show"
-msgstr "Pokaż"
+msgstr "Afficher"
 
 #: elements/field_type_template/partials/select_field.php:126
 #: elements/field_type_template/partials/select_multiple_field.php:106
@@ -704,130 +594,124 @@ msgstr "Pokaż"
 #: src/BlockBuilder/NavigationTab/Enum/NavigationTabEnum.php:23
 #: src/BlockBuilder/Service/Option/FieldTypeOptionProvider.php:41
 msgid "Custom code"
-msgstr "Niestandardowy kod"
+msgstr "Code personnalisé"
 
 #: elements/field_type_template/partials/select_multiple_field.php:41
 msgid "Use the pipe character (|) to separate default values."
-msgstr "Użyj znaku pionowej kreski (|), aby rozdzielić wartości domyślne."
+msgstr "Utilisez la barre verticale (|) pour séparer les valeurs par défaut."
 
 #: elements/field_type_template/partials/svg_icon_picker.php:14
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:134
 msgid "SVG icons"
-msgstr "Ikony SVG"
+msgstr "Icônes SVG"
 
 #: elements/field_type_template/partials/svg_icon_picker.php:19
 msgid "Name"
-msgstr "Nazwa"
+msgstr "Nom"
 
 #: elements/field_type_template/partials/svg_icon_picker.php:21
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:137
 msgid "SVG content"
-msgstr "Zawartość SVG"
+msgstr "Contenu SVG"
 
 #: elements/field_type_template/partials/svg_icon_picker.php:22
 msgid "Actions"
-msgstr "Działania"
+msgstr "Actions"
 
 #: elements/field_type_template/partials/svg_icon_picker.php:59
 #: elements/field_type_template/partials/svg_icon_picker.php:103
 msgid "Remove icon"
-msgstr "Usuń ikonę"
+msgstr "Supprimer l’icône"
 
 #: elements/field_type_template/partials/svg_icon_picker.php:69
 msgid "Add icon"
-msgstr "Dodaj ikonę"
+msgstr "Ajouter une icône"
 
 #: elements/field_type_template/partials/svg_icon_picker.php:109
-msgid ""
-"Use unique lowercase handles containing letters and numbers separated by "
-"single hyphens or underscores. SVG content is sanitized before block "
-"generation."
-msgstr ""
-"Użyj unikatowych identyfikatorów zapisanych małymi literami, zawierających "
-"litery i cyfry rozdzielone pojedynczymi łącznikami lub znakami podkreślenia. "
-"Zawartość SVG jest oczyszczana przed wygenerowaniem bloku."
+msgid "Use unique lowercase handles containing letters and numbers separated by single hyphens or underscores. SVG content is sanitized before block generation."
+msgstr "Utilisez des identifiants uniques en minuscules, composés de lettres et de chiffres séparés par un seul trait d’union ou tiret bas. Le contenu SVG est nettoyé avant la génération du bloc."
 
 #: elements/field_type_template/partials/text_field.php:24
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:122
 msgid "Additional validation"
-msgstr "Dodatkowa walidacja"
+msgstr "Validation supplémentaire"
 
 #: elements/field_type_template/partials/text_field.php:35
 #: elements/field_type_template/partials/textarea.php:20
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:92
 msgid "Minimum length"
-msgstr "Minimalna długość"
+msgstr "Longueur minimale"
 
 #: elements/field_type_template/partials/text_field.php:38
 #: elements/field_type_template/partials/text_field.php:46
 #: elements/field_type_template/partials/textarea.php:23
 #: elements/field_type_template/partials/textarea.php:31
 msgid "chars"
-msgstr "znaków"
+msgstr "caractères"
 
 #: elements/field_type_template/partials/text_field.php:40
 #: elements/field_type_template/partials/textarea.php:25
 msgid "Leave empty for no minimum length."
-msgstr "Pozostaw puste, aby nie określać minimalnej długości."
+msgstr "Laissez vide pour ne définir aucune longueur minimale."
 
 #: elements/field_type_template/partials/text_field.php:43
 #: elements/field_type_template/partials/textarea.php:28
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:93
 msgid "Maximum length"
-msgstr "Maksymalna długość"
+msgstr "Longueur maximale"
 
 #: elements/field_type_template/partials/textarea.php:33
 msgid "Leave empty for no maximum length."
-msgstr "Pozostaw puste, aby nie określać maksymalnej długości."
+msgstr "Laissez vide pour ne définir aucune longueur maximale."
 
 #: elements/field_type_template/partials/textarea.php:41
 #: elements/field_type_template/partials/wysiwyg_editor.php:17
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:90
 msgid "Minimum height"
-msgstr "Minimalna wysokość"
+msgstr "Hauteur minimale"
 
 #: elements/field_type_template/partials/textarea.php:54
 msgid "Leave empty to use the default minimum height."
-msgstr "Pozostaw puste, aby użyć domyślnej minimalnej wysokości."
+msgstr "Laissez vide pour utiliser la hauteur minimale par défaut."
 
 #: elements/field_type_template/partials/textarea.php:59
 #: elements/field_type_template/partials/wysiwyg_editor.php:34
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:91
 msgid "Maximum height"
-msgstr "Maksymalna wysokość"
+msgstr "Hauteur maximale"
 
 #: elements/field_type_template/partials/textarea.php:72
 msgid "Leave empty for unlimited height."
-msgstr "Pozostaw puste, aby nie ograniczać wysokości."
+msgstr "Laissez vide pour ne pas limiter la hauteur."
 
 #: elements/field_type_template/partials/wysiwyg_editor.php:10
 msgid "You may enter HTML supported by the WYSIWYG editor."
-msgstr "Możesz wprowadzić kod HTML obsługiwany przez edytor WYSIWYG."
+msgstr "Vous pouvez saisir du HTML pris en charge par l’éditeur WYSIWYG."
 
 #: elements/field_type_template/partials/wysiwyg_editor.php:28
 msgid "Leave empty to use the editor default minimum height."
-msgstr "Pozostaw puste, aby użyć domyślnej minimalnej wysokości edytora."
+msgstr "Laissez vide pour utiliser la hauteur minimale par défaut de l’éditeur."
 
 #: elements/field_type_template/partials/wysiwyg_editor.php:45
 msgid "Leave empty to allow the editor to grow without a maximum height."
-msgstr "Pozostaw puste, aby edytor mógł zwiększać wysokość bez ograniczenia."
+msgstr "Laissez vide pour permettre à l’éditeur de s’agrandir sans hauteur maximale."
 
 #: elements/field_type_template/partials/wysiwyg_editor.php:54
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:133
 msgid "Custom editor configuration"
-msgstr "Niestandardowa konfiguracja edytora"
+msgstr "Configuration personnalisée de l’éditeur"
 
 #: elements/field_type_template/partials/wysiwyg_editor.php:60
 msgid "Enter the custom editor configuration as JSON."
-msgstr "Wprowadź niestandardową konfigurację edytora w formacie JSON."
+msgstr "Saisissez la configuration personnalisée de l’éditeur au format JSON."
 
 #: elements/field_type_template/partials/wysiwyg_editor.php:62
 msgid "Example configuration:"
-msgstr "Przykładowa konfiguracja:"
+msgstr "Exemple de configuration :"
 
 #: elements/info_table.php:13
 msgid "Current environment"
-msgstr "Bieżące środowisko"
+msgstr "Environnement actuel"
 
 #: elements/info_table.php:17 elements/info_table.php:21
 #: elements/info_table.php:25 elements/info_table.php:36
@@ -841,7 +725,7 @@ msgstr "Bieżące środowisko"
 #: single_pages/dashboard/blocks/block_builder/configs.php:229
 #: single_pages/dashboard/blocks/block_builder/configs.php:233
 msgid "No information"
-msgstr "Brak informacji"
+msgstr "Aucune information"
 
 #: elements/info_table.php:20 elements/info_table.php:39
 #: single_pages/dashboard/blocks/block_builder/configs.php:97
@@ -857,18 +741,18 @@ msgstr "PHP"
 
 #: elements/info_table.php:32
 msgid "Loaded configuration"
-msgstr "Wczytana konfiguracja"
+msgstr "Configuration chargée"
 
 #: elements/navigation_tab_content/block_settings.php:24
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:12
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockNameValidator.php:19
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockNameValidator.php:21
 msgid "Block name"
-msgstr "Nazwa bloku"
+msgstr "Nom du bloc"
 
 #: elements/navigation_tab_content/block_settings.php:26
 msgid "Human-readable name, e.g., Example block"
-msgstr "Nazwa czytelna dla użytkownika, np. Przykładowy blok"
+msgstr "Nom lisible, par exemple Bloc d’exemple"
 
 #: elements/navigation_tab_content/block_settings.php:29
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:13
@@ -879,176 +763,140 @@ msgstr "Nazwa czytelna dla użytkownika, np. Przykładowy blok"
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockHandleValidator.php:56
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockHandleValidator.php:64
 msgid "Block handle"
-msgstr "Identyfikator bloku"
+msgstr "Identifiant du bloc"
 
 #: elements/navigation_tab_content/block_settings.php:31
 msgid "Lowercase letters and underscores only, e.g., example_block"
-msgstr "Tylko małe litery i znaki podkreślenia, np. example_block"
+msgstr "Lettres minuscules et tirets bas uniquement, par exemple example_block"
 
 #: elements/navigation_tab_content/block_settings.php:34
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:14
 msgid "Block description"
-msgstr "Opis bloku"
+msgstr "Description du bloc"
 
 #: elements/navigation_tab_content/block_settings.php:38
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:15
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockWidthValidator.php:21
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockWidthValidator.php:24
 msgid "Block width"
-msgstr "Szerokość bloku"
+msgstr "Largeur du bloc"
 
 #: elements/navigation_tab_content/block_settings.php:45
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:16
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockHeightValidator.php:19
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockHeightValidator.php:22
 msgid "Block height"
-msgstr "Wysokość bloku"
+msgstr "Hauteur du bloc"
 
 #: elements/navigation_tab_content/block_settings.php:52
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:17
 msgid "Block type set"
-msgstr "Zestaw typów bloków"
+msgstr "Ensemble de types de blocs"
 
 #: elements/navigation_tab_content/block_settings.php:56
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:18
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockIconValidator.php:86
 msgid "Block icon"
-msgstr "Ikona bloku"
+msgstr "Icône du bloc"
 
 #: elements/navigation_tab_content/block_settings.php:60
 msgid "Preview"
-msgstr "Podgląd"
+msgstr "Aperçu"
 
 #: elements/navigation_tab_content/block_settings.php:72
 msgid "Choose from existing icons"
-msgstr "Wybierz spośród istniejących ikon"
+msgstr "Choisir parmi les icônes existantes"
 
 #: elements/navigation_tab_content/block_settings.php:76
 msgid "Upload a custom icon"
-msgstr "Prześlij własną ikonę"
+msgstr "Téléverser une icône personnalisée"
 
 #: elements/navigation_tab_content/block_settings.php:78
 msgid "Requirements: PNG image, 97 px × 97 px"
-msgstr "Wymagania: obraz PNG, 97 px × 97 px"
+msgstr "Exigences : image PNG, 97 px × 97 px"
 
 #: elements/navigation_tab_content/block_settings.php:88
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:19
 msgid "Cache block record"
-msgstr "Zapisuj rekord bloku w pamięci podręcznej"
+msgstr "Mettre en cache l’enregistrement du bloc"
 
 #: elements/navigation_tab_content/block_settings.php:91
-msgid ""
-"When block caching is enabled, cache the block's database record. This can "
-"almost always be enabled."
-msgstr ""
-"Gdy buforowanie bloków jest włączone, zapisuj rekord bloku z bazy danych w "
-"pamięci podręcznej. Tę opcję można włączyć niemal zawsze."
+msgid "When block caching is enabled, cache the block's database record. This can almost always be enabled."
+msgstr "Lorsque la mise en cache des blocs est activée, mettre en cache l’enregistrement du bloc dans la base de données. Cette option peut presque toujours être activée."
 
 #: elements/navigation_tab_content/block_settings.php:95
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:20
 msgid "Cache block output"
-msgstr "Zapisuj wynik renderowania bloku w pamięci podręcznej"
+msgstr "Mettre en cache la sortie du bloc"
 
 #: elements/navigation_tab_content/block_settings.php:98
-msgid ""
-"When block caching is enabled, cache the rendered output so it can be served "
-"without running view() or querying the block database."
-msgstr ""
-"Gdy buforowanie bloków jest włączone, zapisuj wynik renderowania bloku w "
-"pamięci podręcznej, aby można go było wyświetlić bez uruchamiania view() ani "
-"odpytywania bazy danych bloku."
+msgid "When block caching is enabled, cache the rendered output so it can be served without running view() or querying the block database."
+msgstr "Lorsque la mise en cache des blocs est activée, mettre en cache la sortie rendue afin qu’elle puisse être servie sans exécuter view() ni interroger la base de données du bloc."
 
 #: elements/navigation_tab_content/block_settings.php:102
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:21
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockNumericValuesValidator.php:30
 msgid "Cache block output lifetime"
-msgstr "Czas przechowywania wyniku renderowania bloku w pamięci podręcznej"
+msgstr "Durée de mise en cache de la sortie du bloc"
 
 #: elements/navigation_tab_content/block_settings.php:105
-msgid ""
-"Number of seconds before the cached output is refreshed. Use 0 for no time "
-"limit."
-msgstr ""
-"Liczba sekund, po których wynik renderowania bloku zapisany w pamięci "
-"podręcznej zostanie odświeżony. Wprowadź 0, aby nie ustawiać limitu czasu."
+msgid "Number of seconds before the cached output is refreshed. Use 0 for no time limit."
+msgstr "Nombre de secondes avant l’actualisation de la sortie mise en cache. Utilisez 0 pour ne définir aucune limite de temps."
 
 #: elements/navigation_tab_content/block_settings.php:109
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:22
 msgid "Cache block output for POST requests"
-msgstr "Zapisuj wynik renderowania bloku w pamięci podręcznej dla żądań POST"
+msgstr "Mettre en cache la sortie du bloc pour les requêtes POST"
 
 #: elements/navigation_tab_content/block_settings.php:112
-msgid ""
-"Allow cached output for HTTP POST requests. Disable this for blocks that "
-"must display POST-specific responses or error messages."
-msgstr ""
-"Zezwól na korzystanie z wyniku renderowania bloku zapisanego w pamięci "
-"podręcznej dla żądań HTTP POST. Wyłącz tę opcję dla bloków, które muszą "
-"wyświetlać odpowiedzi lub komunikaty o błędach właściwe dla żądań POST."
+msgid "Allow cached output for HTTP POST requests. Disable this for blocks that must display POST-specific responses or error messages."
+msgstr "Autoriser la sortie mise en cache pour les requêtes HTTP POST. Désactivez cette option pour les blocs qui doivent afficher des réponses ou des messages d’erreur propres aux requêtes POST."
 
 #: elements/navigation_tab_content/block_settings.php:116
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:23
 msgid "Cache block output in edit mode"
-msgstr "Zapisuj wynik renderowania bloku w pamięci podręcznej w trybie edycji"
+msgstr "Mettre en cache la sortie du bloc en mode édition"
 
 #: elements/navigation_tab_content/block_settings.php:119
-msgid ""
-"Allow cached output while the page is in edit mode. Disable this if the "
-"block displays edit-mode-specific content or controls."
-msgstr ""
-"Zezwól na korzystanie z wyniku renderowania bloku zapisanego w pamięci "
-"podręcznej, gdy strona jest w trybie edycji. Wyłącz tę opcję, jeśli blok "
-"wyświetla treść lub elementy sterujące przeznaczone dla trybu edycji."
+msgid "Allow cached output while the page is in edit mode. Disable this if the block displays edit-mode-specific content or controls."
+msgstr "Autoriser la sortie mise en cache lorsque la page est en mode édition. Désactivez cette option si le bloc affiche du contenu ou des commandes propres au mode édition."
 
 #: elements/navigation_tab_content/block_settings.php:123
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:24
 msgid "Cache block output for registered users"
-msgstr ""
-"Zapisuj wynik renderowania bloku w pamięci podręcznej dla zalogowanych "
-"użytkowników"
+msgstr "Mettre en cache la sortie du bloc pour les utilisateurs inscrits"
 
 #: elements/navigation_tab_content/block_settings.php:126
-msgid ""
-"Continue serving cached block output when the current user is logged in."
-msgstr ""
-"Nadal wyświetlaj wynik renderowania bloku zapisany w pamięci podręcznej, gdy "
-"bieżący użytkownik jest zalogowany."
+msgid "Continue serving cached block output when the current user is logged in."
+msgstr "Continuer à servir la sortie du bloc mise en cache lorsque l’utilisateur actuel est connecté."
 
 #: elements/navigation_tab_content/block_settings.php:130
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:25
 msgid "Support saving null values"
-msgstr "Obsługuj zapisywanie wartości NULL"
+msgstr "Prendre en charge l’enregistrement des valeurs nulles"
 
 #: elements/navigation_tab_content/block_settings.php:133
-msgid ""
-"Persist NULL values passed to save() or performSave(). When disabled, fields "
-"containing NULL are skipped."
-msgstr ""
-"Zapisuj wartości NULL przekazane do save() lub performSave(). Po wyłączeniu "
-"tej opcji pola zawierające NULL są pomijane."
+msgid "Persist NULL values passed to save() or performSave(). When disabled, fields containing NULL are skipped."
+msgstr "Conserver les valeurs NULL transmises à save() ou performSave(). Lorsque cette option est désactivée, les champs contenant NULL sont ignorés."
 
 #: elements/navigation_tab_content/block_settings.php:137
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:26
 msgid "Ignore page theme grid framework container"
-msgstr "Ignoruj kontener systemu siatki motywu strony"
+msgstr "Ignorer le conteneur du système de grille du thème de la page"
 
 #: elements/navigation_tab_content/block_settings.php:140
-msgid ""
-"Do not wrap this block in the page theme's grid framework container in edit "
-"mode."
-msgstr ""
-"Nie umieszczaj tego bloku w kontenerze systemu siatki motywu strony w trybie "
-"edycji."
+msgid "Do not wrap this block in the page theme's grid framework container in edit mode."
+msgstr "Ne pas envelopper ce bloc dans le conteneur du système de grille du thème de la page en mode édition."
 
 #: elements/navigation_tab_content/build_options.php:15
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:27
 msgid "Install the block after creation"
-msgstr "Zainstaluj blok po utworzeniu"
+msgstr "Installer le bloc après sa création"
 
 #: elements/navigation_tab_content/build_options.php:21
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:28
 msgid "Show the \"Entries\" tab first"
-msgstr "Wyświetl zakładkę \"Wpisy\" jako pierwszą"
+msgstr "Afficher d’abord l’onglet « Entrées »"
 
 #: elements/navigation_tab_content/build_options.php:25
 #: elements/navigation_tab_content/labels.php:88
@@ -1058,103 +906,88 @@ msgstr "Wyświetl zakładkę \"Wpisy\" jako pierwszą"
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockNumericValuesValidator.php:22
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:80
 msgid "Max. number of entries"
-msgstr "Maks. liczba wpisów"
+msgstr "Nombre max. d’entrées"
 
 #: elements/navigation_tab_content/build_options.php:25
 msgid "(0 for unlimited)"
-msgstr "(0 oznacza brak ograniczeń)"
+msgstr "(0 pour illimité)"
 
 #: elements/navigation_tab_content/build_options.php:31
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:30
 msgid "Highlight multi-element fields"
-msgstr "Wyróżnij wieloelementowe pola"
+msgstr "Mettre en évidence les champs à plusieurs éléments"
 
 #: elements/navigation_tab_content/build_options.php:36
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:32
 msgid "Message displayed in the \"Basic information\" tab"
-msgstr "Komunikat wyświetlany w zakładce \"Podstawowe informacje\""
+msgstr "Message affiché dans l’onglet « Informations de base »"
 
 #: elements/navigation_tab_content/build_options.php:44
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:33
 msgid "Message displayed in the \"Repeatable entries\" tab"
-msgstr "Komunikat wyświetlany w zakładce \"Wpisy powtarzalne\""
+msgstr "Message affiché dans l’onglet « Entrées répétables »"
 
 #: elements/navigation_tab_content/custom_code.php:11
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:34
 msgid "Custom code inside the registerViewAssets() method"
-msgstr "Niestandardowy kod w metodzie registerViewAssets()"
+msgstr "Code personnalisé dans la méthode registerViewAssets()"
 
 #: elements/navigation_tab_content/custom_code.php:14
 msgid "You can use this field to include JS/CSS assets."
-msgstr "Możesz użyć tego pola, aby dołączyć zasoby JS/CSS."
+msgstr "Vous pouvez utiliser ce champ pour inclure des ressources JS/CSS."
 
 #: elements/navigation_tab_content/custom_code.php:20
 #: elements/navigation_tab_content/custom_code.php:39
 #: elements/navigation_tab_content/custom_code.php:56
 msgid "Example code"
-msgstr "Przykładowy kod"
+msgstr "Exemple de code"
 
 #: elements/navigation_tab_content/custom_code.php:30
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:35
 msgid "Custom code inside the view() method"
-msgstr "Niestandardowy kod w metodzie view()"
+msgstr "Code personnalisé dans la méthode view()"
 
 #: elements/navigation_tab_content/custom_code.php:33
 msgid "You can use this field to include custom PHP code."
-msgstr "Możesz użyć tego pola, aby dodać niestandardowy kod PHP."
+msgstr "Vous pouvez utiliser ce champ pour inclure du code PHP personnalisé."
 
 #: elements/navigation_tab_content/custom_code.php:47
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:36
 msgid "Custom controller methods"
-msgstr "Niestandardowe metody kontrolera"
+msgstr "Méthodes personnalisées du contrôleur"
 
 #: elements/navigation_tab_content/custom_code.php:50
-msgid ""
-"You can use this field to add custom methods at the bottom of the controller "
-"class."
-msgstr ""
-"Możesz użyć tego pola, aby dodać niestandardowe metody na końcu klasy "
-"kontrolera."
+msgid "You can use this field to add custom methods at the bottom of the controller class."
+msgstr "Vous pouvez utiliser ce champ pour ajouter des méthodes personnalisées à la fin de la classe du contrôleur."
 
 #: elements/navigation_tab_content/custom_code.php:67
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:37
 msgid "Files and folders excluded when rebuilding the block"
-msgstr "Pliki i foldery wykluczone podczas przebudowy bloku"
+msgstr "Fichiers et dossiers exclus lors de la recréation du bloc"
 
 #: elements/navigation_tab_content/custom_code.php:70
-msgid ""
-"You can use this field to exclude your own files or folders when rebuilding "
-"the block (for example: you may not want to delete the \"templates\" folder)."
-msgstr ""
-"Możesz użyć tego pola, aby wykluczyć własne pliki lub foldery podczas "
-"przebudowy bloku (na przykład folder \"templates\", którego nie chcesz "
-"usuwać)."
+msgid "You can use this field to exclude your own files or folders when rebuilding the block (for example: you may not want to delete the \"templates\" folder)."
+msgstr "Vous pouvez utiliser ce champ pour exclure vos propres fichiers ou dossiers lors de la recréation du bloc (par exemple, si vous ne souhaitez pas supprimer le dossier « templates »)."
 
 #: elements/navigation_tab_content/custom_code.php:72
 msgid "You can exclude first-level files and folders only."
-msgstr "Możesz wykluczyć tylko pliki i foldery pierwszego poziomu."
+msgstr "Vous pouvez uniquement exclure les fichiers et dossiers de premier niveau."
 
 #: elements/navigation_tab_content/custom_code.php:74
 msgid "Do not exclude standard files or folders generated by Block Builder."
-msgstr ""
-"Nie wykluczaj standardowych plików ani folderów wygenerowanych przez Block "
-"Buildera."
+msgstr "N’excluez pas les fichiers ou dossiers standard générés par Block Builder."
 
 #: elements/navigation_tab_content/custom_code.php:76
-msgid ""
-"Each file or folder path should be relative to the directory containing "
-"controller.php (for example: templates) and placed on a new line."
-msgstr ""
-"Każdą ścieżkę pliku lub folderu podaj względem katalogu zawierającego plik "
-"controller.php (na przykład: templates) i umieść w osobnym wierszu."
+msgid "Each file or folder path should be relative to the directory containing controller.php (for example: templates) and placed on a new line."
+msgstr "Chaque chemin de fichier ou de dossier doit être relatif au répertoire contenant controller.php (par exemple : templates) et placé sur une nouvelle ligne."
 
 #: elements/navigation_tab_content/entries.php:20
 msgid "Add a new field"
-msgstr "Dodaj nowe pole"
+msgstr "Ajouter un nouveau champ"
 
 #: elements/navigation_tab_content/entries.php:43
 msgid "Scroll down"
-msgstr "Przewiń w dół"
+msgstr "Faire défiler vers le bas"
 
 #: elements/navigation_tab_content/entries.php:49
 #: elements/navigation_tab_content/entries.php:50
@@ -1163,7 +996,7 @@ msgstr "Przewiń w dół"
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:45
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:75
 msgid "Expand all"
-msgstr "Rozwiń wszystkie"
+msgstr "Tout développer"
 
 #: elements/navigation_tab_content/entries.php:55
 #: elements/navigation_tab_content/entries.php:56
@@ -1172,12 +1005,12 @@ msgstr "Rozwiń wszystkie"
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:44
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:74
 msgid "Collapse all"
-msgstr "Zwiń wszystkie"
+msgstr "Tout réduire"
 
 #: elements/navigation_tab_content/entries.php:61
 #: elements/navigation_tab_content/entries.php:62
 msgid "Back to top"
-msgstr "Wróć na górę"
+msgstr "Retour en haut"
 
 #: elements/navigation_tab_content/entries.php:66
 #: elements/navigation_tab_content/entries.php:70
@@ -1186,23 +1019,23 @@ msgstr "Wróć na górę"
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:46
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:76
 msgid "Remove all"
-msgstr "Usuń wszystkie"
+msgstr "Tout supprimer"
 
 #: elements/navigation_tab_content/labels.php:11
 msgid "Populate fields with"
-msgstr "Wypełnij pola"
+msgstr "Remplir les champs avec des libellés"
 
 #: elements/navigation_tab_content/labels.php:15
 msgid "translated"
-msgstr "przetłumaczonymi"
+msgstr "traduits"
 
 #: elements/navigation_tab_content/labels.php:20
 msgid "untranslated"
-msgstr "nieprzetłumaczonymi"
+msgstr "non traduits"
 
 #: elements/navigation_tab_content/labels.php:21
 msgid "default labels"
-msgstr "domyślnymi etykietami"
+msgstr "par défaut"
 
 #: elements/navigation_tab_content/labels.php:25
 #: elements/navigation_tab_content/labels.php:26
@@ -1210,11 +1043,11 @@ msgstr "domyślnymi etykietami"
 #: src/BlockBuilder/Block/Validation/Validator/Block/LabelsValidator.php:29
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:68
 msgid "Basic information"
-msgstr "Podstawowe informacje"
+msgstr "Informations de base"
 
 #: elements/navigation_tab_content/labels.php:27
 msgid "Displayed name of the \"Basic information\" tab"
-msgstr "Wyświetlana nazwa zakładki \"Podstawowe informacje\""
+msgstr "Nom affiché de l’onglet « Informations de base »"
 
 #: elements/navigation_tab_content/labels.php:31
 #: elements/navigation_tab_content/labels.php:32
@@ -1222,85 +1055,85 @@ msgstr "Wyświetlana nazwa zakładki \"Podstawowe informacje\""
 #: src/BlockBuilder/Block/Validation/Validator/Block/LabelsValidator.php:37
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:69
 msgid "Entries"
-msgstr "Wpisy"
+msgstr "Entrées"
 
 #: elements/navigation_tab_content/labels.php:33
 msgid "Displayed name of the \"Repeatable entries\" tab"
-msgstr "Wyświetlana nazwa zakładki \"Wpisy powtarzalne\""
+msgstr "Nom affiché de l’onglet « Entrées répétables »"
 
 #: elements/navigation_tab_content/labels.php:37
 #: elements/navigation_tab_content/labels.php:38
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:40
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:70
 msgid "Settings"
-msgstr "Ustawienia"
+msgstr "Paramètres"
 
 #: elements/navigation_tab_content/labels.php:39
 msgid "Displayed name of the \"Settings\" tab"
-msgstr "Wyświetlana nazwa zakładki \"Ustawienia\""
+msgstr "Nom affiché de l’onglet « Paramètres »"
 
 #: elements/navigation_tab_content/labels.php:43
 #: elements/navigation_tab_content/labels.php:44
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:41
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:71
 msgid "Add at the top"
-msgstr "Dodaj na górze"
+msgstr "Ajouter en haut"
 
 #: elements/navigation_tab_content/labels.php:48
 #: elements/navigation_tab_content/labels.php:49
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:42
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:72
 msgid "Add at the bottom"
-msgstr "Dodaj na dole"
+msgstr "Ajouter en bas"
 
 #: elements/navigation_tab_content/labels.php:53
 #: elements/navigation_tab_content/labels.php:54
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:43
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:73
 msgid "Copy last entry"
-msgstr "Skopiuj ostatni wpis"
+msgstr "Copier la dernière entrée"
 
 #: elements/navigation_tab_content/labels.php:73
 #: elements/navigation_tab_content/labels.php:74
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:47
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:77
 msgid "Disable smooth scroll"
-msgstr "Wyłącz płynne przewijanie"
+msgstr "Désactiver le défilement fluide"
 
 #: elements/navigation_tab_content/labels.php:78
 #: elements/navigation_tab_content/labels.php:79
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:48
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:78
 msgid "Keep added or copied entries collapsed"
-msgstr "Pozostaw dodane lub skopiowane wpisy zwinięte"
+msgstr "Garder les entrées ajoutées ou copiées réduites"
 
 #: elements/navigation_tab_content/labels.php:83
 #: elements/navigation_tab_content/labels.php:84
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:49
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:79
 msgid "No entries found."
-msgstr "Nie znaleziono wpisów."
+msgstr "Aucune entrée trouvée."
 
 #: elements/navigation_tab_content/labels.php:93
 #: elements/navigation_tab_content/labels.php:94
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:51
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:81
 msgid "Remove entry"
-msgstr "Usuń wpis"
+msgstr "Supprimer l’entrée"
 
 #: elements/navigation_tab_content/labels.php:98
 #: elements/navigation_tab_content/labels.php:99
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:52
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:82
 msgid "Duplicate entry"
-msgstr "Powiel wpis"
+msgstr "Dupliquer l’entrée"
 
 #: elements/navigation_tab_content/labels.php:103
 #: elements/navigation_tab_content/labels.php:104
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:53
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:83
 msgid "Duplicate entry and add at the end"
-msgstr "Powiel wpis i dodaj go na końcu"
+msgstr "Dupliquer l’entrée et l’ajouter à la fin"
 
 #: elements/navigation_tab_content/labels.php:113
 #: elements/navigation_tab_content/labels.php:114
@@ -1308,21 +1141,21 @@ msgstr "Powiel wpis i dodaj go na końcu"
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:55
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:85
 msgid "Required fields"
-msgstr "Wymagane pola"
+msgstr "Champs obligatoires"
 
 #: elements/navigation_tab_content/labels.php:118
 #: elements/navigation_tab_content/labels.php:119
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:56
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:86
 msgid "Custom string at the end of URL"
-msgstr "Niestandardowy ciąg znaków na końcu adresu URL"
+msgstr "Chaîne personnalisée à la fin de l’URL"
 
 #: elements/navigation_tab_content/labels.php:123
 #: elements/navigation_tab_content/labels.php:124
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:57
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:87
 msgid "(e.g. #contact-form or ?ccm_paging_p=2)"
-msgstr "(np. #formularz-kontaktowy lub ?ccm_paging_p=2)"
+msgstr "(par ex. #contact-form ou ?ccm_paging_p=2)"
 
 #: elements/navigation_tab_content/labels.php:128
 #: elements/navigation_tab_content/labels.php:129
@@ -1330,21 +1163,21 @@ msgstr "(np. #formularz-kontaktowy lub ?ccm_paging_p=2)"
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:88
 #: src/BlockBuilder/FieldType/Type/Text/TextFieldType.php:24
 msgid "Text"
-msgstr "Tekst"
+msgstr "Texte"
 
 #: elements/navigation_tab_content/labels.php:133
 #: elements/navigation_tab_content/labels.php:134
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:59
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:89
 msgid "Title"
-msgstr "Tytuł"
+msgstr "Titre"
 
 #: elements/navigation_tab_content/labels.php:138
 #: elements/navigation_tab_content/labels.php:139
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:60
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:90
 msgid "Alt text"
-msgstr "Tekst alternatywny"
+msgstr "Texte alternatif"
 
 #: elements/navigation_tab_content/labels.php:143
 #: elements/navigation_tab_content/labels.php:144
@@ -1352,7 +1185,7 @@ msgstr "Tekst alternatywny"
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:91
 #: src/BlockBuilder/FieldType/Type/LinkFromSitemap/LinkFromSitemapFieldType.php:28
 msgid "Link from Sitemap"
-msgstr "Link z mapy strony"
+msgstr "Lien depuis le plan du site"
 
 #: elements/navigation_tab_content/labels.php:148
 #: elements/navigation_tab_content/labels.php:149
@@ -1360,7 +1193,7 @@ msgstr "Link z mapy strony"
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:92
 #: src/BlockBuilder/FieldType/Type/LinkFromFileManager/LinkFromFileManagerFieldType.php:28
 msgid "Link from File Manager"
-msgstr "Link z menedżera plików"
+msgstr "Lien depuis le gestionnaire de fichiers"
 
 #: elements/navigation_tab_content/labels.php:153
 #: elements/navigation_tab_content/labels.php:154
@@ -1368,49 +1201,49 @@ msgstr "Link z menedżera plików"
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:93
 #: src/BlockBuilder/FieldType/Type/ExternalLink/ExternalLinkFieldType.php:28
 msgid "External link"
-msgstr "Link zewnętrzny"
+msgstr "Lien externe"
 
 #: elements/navigation_tab_content/labels.php:158
 #: elements/navigation_tab_content/labels.php:159
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:64
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:94
 msgid "Show additional fields"
-msgstr "Pokaż dodatkowe pola"
+msgstr "Afficher les champs supplémentaires"
 
 #: elements/navigation_tab_content/labels.php:163
 #: elements/navigation_tab_content/labels.php:164
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:65
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:95
 msgid "Hide additional fields"
-msgstr "Ukryj dodatkowe pola"
+msgstr "Masquer les champs supplémentaires"
 
 #: elements/navigation_tab_content/labels.php:168
 #: elements/navigation_tab_content/labels.php:169
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:66
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:96
 msgid "Open in new window"
-msgstr "Otwórz w nowym oknie"
+msgstr "Ouvrir dans une nouvelle fenêtre"
 
 #: elements/navigation_tab_content/labels.php:173
 #: elements/navigation_tab_content/labels.php:174
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:67
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:97
 msgid "Add nofollow attribute"
-msgstr "Dodaj atrybut nofollow"
+msgstr "Ajouter l’attribut nofollow"
 
 #: elements/navigation_tab_content/labels.php:188
 #: elements/navigation_tab_content/labels.php:189
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:70
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:100
 msgid "Override thumbnail dimensions"
-msgstr "Nadpisz wymiary miniatury"
+msgstr "Remplacer les dimensions de la vignette"
 
 #: elements/navigation_tab_content/labels.php:193
 #: elements/navigation_tab_content/labels.php:194
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:71
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:101
 msgid "Override fullscreen image dimensions"
-msgstr "Nadpisz wymiary obrazu pełnoekranowego"
+msgstr "Remplacer les dimensions de l’image plein écran"
 
 #: elements/navigation_tab_content/labels.php:213
 #: elements/navigation_tab_content/labels.php:214
@@ -1424,897 +1257,638 @@ msgstr "px"
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:76
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:106
 msgid "Nothing selected"
-msgstr "Nic nie wybrano"
+msgstr "Aucune sélection"
 
 #: elements/navigation_tab_content/labels.php:223
 #: elements/navigation_tab_content/labels.php:224
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:77
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:107
 msgid "No results matched {0}"
-msgstr "Brak wyników pasujących do {0}"
+msgstr "Aucun résultat ne correspond à {0}"
 
 #: elements/navigation_tab_content/labels.php:228
 #: elements/navigation_tab_content/labels.php:229
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:78
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:108
 msgid "Select all"
-msgstr "Zaznacz wszystkie"
+msgstr "Tout sélectionner"
 
 #: elements/navigation_tab_content/labels.php:233
 #: elements/navigation_tab_content/labels.php:234
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:79
 #: src/BlockBuilder/DataProvider/BlockBuilderViewDataProvider.php:109
 msgid "Deselect all"
-msgstr "Odznacz wszystkie"
+msgstr "Tout désélectionner"
 
 #: single_pages/dashboard/blocks/block_builder.php:47
 #: single_pages/dashboard/blocks/block_builder/configs.php:22
 msgid "New block"
-msgstr "Nowy blok"
+msgstr "Nouveau bloc"
 
 #: single_pages/dashboard/blocks/block_builder.php:51
 #: single_pages/dashboard/blocks/block_builder/configs.php:162
 #: single_pages/dashboard/blocks/block_builder/configs.php:245
 msgid "Load config"
-msgstr "Wczytaj konfigurację"
+msgstr "Charger la configuration"
 
 #: single_pages/dashboard/blocks/block_builder.php:57
 msgid "Close"
-msgstr "Zamknij"
+msgstr "Fermer"
 
 #: single_pages/dashboard/blocks/block_builder.php:148
 #: single_pages/dashboard/blocks/block_builder.php:150
 msgid "Build your block now!"
-msgstr "Zbuduj blok!"
+msgstr "Créez votre bloc maintenant !"
 
 #: single_pages/dashboard/blocks/block_builder.php:157
 #: single_pages/dashboard/blocks/block_builder.php:159
 msgid "Rebuild and refresh block"
-msgstr "Przebuduj i odśwież blok"
+msgstr "Recréer et actualiser le bloc"
 
 #: single_pages/dashboard/blocks/block_builder.php:168
 msgid "You haven't added any fields yet."
-msgstr "Nie dodano jeszcze żadnych pól."
+msgstr "Vous n’avez encore ajouté aucun champ."
 
 #: single_pages/dashboard/blocks/block_builder/configs.php:25
 msgid "Go back"
-msgstr "Wróć"
+msgstr "Retour"
 
 #: single_pages/dashboard/blocks/block_builder/configs.php:31
 msgid "Configuration files found in existing blocks"
-msgstr "Pliki konfiguracyjne znalezione w istniejących blokach"
+msgstr "Fichiers de configuration trouvés dans les blocs existants"
 
 #: single_pages/dashboard/blocks/block_builder/configs.php:59
 msgid "Installed"
-msgstr "Zainstalowany"
+msgstr "Installé"
 
 #: single_pages/dashboard/blocks/block_builder/configs.php:61
 msgid "Not installed"
-msgstr "Niezainstalowany"
+msgstr "Non installé"
 
 #: single_pages/dashboard/blocks/block_builder/configs.php:71
 #: single_pages/dashboard/blocks/block_builder/configs.php:217
 msgid "No description"
-msgstr "Brak opisu"
+msgstr "Aucune description"
 
 #: single_pages/dashboard/blocks/block_builder/configs.php:78
 msgid "Usage count"
-msgstr "Liczba użyć"
+msgstr "Nombre d’utilisations"
 
 #: single_pages/dashboard/blocks/block_builder/configs.php:82
 msgid "Usage count on active pages"
-msgstr "Liczba użyć na aktywnych stronach"
+msgstr "Nombre d’utilisations sur les pages actives"
 
 #: single_pages/dashboard/blocks/block_builder/configs.php:103
 #: single_pages/dashboard/blocks/block_builder/configs.php:232
 msgid "Created at"
-msgstr "Utworzono"
+msgstr "Créé le"
 
 #: single_pages/dashboard/blocks/block_builder/configs.php:114
-#, php-format
 msgid "This will install the %s block type. Are you sure?"
-msgstr ""
-"Typ bloku \"%s\" zostanie zainstalowany. Czy na pewno chcesz kontynuować?"
+msgstr "Ceci installera le type de bloc %s. Êtes-vous sûr ?"
 
 #: single_pages/dashboard/blocks/block_builder/configs.php:123
 msgid "Install"
-msgstr "Zainstaluj"
+msgstr "Installer"
 
 #: single_pages/dashboard/blocks/block_builder/configs.php:128
-#, php-format
-msgid ""
-"This will permanently delete the block folder \"%s\". This cannot be undone. "
-"Are you sure?"
-msgstr ""
-"Folder bloku \"%s\" zostanie trwale usunięty. Tej operacji nie można cofnąć. "
-"Czy na pewno chcesz kontynuować?"
+msgid "This will permanently delete the block folder \"%s\". This cannot be undone. Are you sure?"
+msgstr "Ceci supprimera définitivement le dossier du bloc « %s ». Cette action est irréversible. Êtes-vous sûr ?"
 
 #: single_pages/dashboard/blocks/block_builder/configs.php:137
 msgid "Delete folder"
-msgstr "Usuń folder"
+msgstr "Supprimer le dossier"
 
 #: single_pages/dashboard/blocks/block_builder/configs.php:144
-#, php-format
-msgid ""
-"This will remove all instances of the \"%s\" block type. This cannot be "
-"undone. Are you sure?"
-msgstr ""
-"Wszystkie wystąpienia typu bloku \"%s\" zostaną usunięte. Tej operacji nie "
-"można cofnąć. Czy na pewno chcesz kontynuować?"
+msgid "This will remove all instances of the \"%s\" block type. This cannot be undone. Are you sure?"
+msgstr "Ceci supprimera toutes les instances du type de bloc « %s ». Cette action est irréversible. Êtes-vous sûr ?"
 
 #: single_pages/dashboard/blocks/block_builder/configs.php:153
 msgid "Uninstall"
-msgstr "Odinstaluj"
+msgstr "Désinstaller"
 
 #: single_pages/dashboard/blocks/block_builder/configs.php:176
 msgid "No blocks created by Block Builder were found."
-msgstr "Nie znaleziono bloków utworzonych za pomocą Block Buildera."
+msgstr "Aucun bloc créé par Block Builder n’a été trouvé."
 
 #: single_pages/dashboard/blocks/block_builder/configs.php:181
 msgid "Predefined configuration files"
-msgstr "Predefiniowane pliki konfiguracyjne"
+msgstr "Fichiers de configuration prédéfinis"
 
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:31
 msgid "Rebuild block"
-msgstr "Przebuduj blok"
+msgstr "Recréer le bloc"
 
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:80
 msgid "Field type"
-msgstr "Typ pola"
+msgstr "Type de champ"
 
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:100
 msgid "File Set prefix"
-msgstr "Prefiks zestawu plików"
+msgstr "Préfixe de l’ensemble de fichiers"
 
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:108
 msgid "Generate a thumbnail"
-msgstr "Wygeneruj miniaturę"
+msgstr "Générer une vignette"
 
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:109
 msgid "Thumbnail width"
-msgstr "Szerokość miniatury"
+msgstr "Largeur de la vignette"
 
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:110
 msgid "Thumbnail height"
-msgstr "Wysokość miniatury"
+msgstr "Hauteur de la vignette"
 
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:111
 msgid "Crop thumbnail"
-msgstr "Przytnij miniaturę"
+msgstr "Recadrer la vignette"
 
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:112
 msgid "Editable thumbnail dimensions"
-msgstr "Edytowalne wymiary miniatury"
+msgstr "Dimensions de la vignette modifiables"
 
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:113
 msgid "Generate a fullscreen image"
-msgstr "Wygeneruj obraz pełnoekranowy"
+msgstr "Générer une image plein écran"
 
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:114
 msgid "Fullscreen image width"
-msgstr "Szerokość obrazu pełnoekranowego"
+msgstr "Largeur de l’image plein écran"
 
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:115
 msgid "Fullscreen image height"
-msgstr "Wysokość obrazu pełnoekranowego"
+msgstr "Hauteur de l’image plein écran"
 
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:116
 msgid "Crop fullscreen image"
-msgstr "Przytnij obraz pełnoekranowy"
+msgstr "Recadrer l’image plein écran"
 
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:117
 msgid "Editable fullscreen image dimensions"
-msgstr "Edytowalne wymiary obrazu pełnoekranowego"
+msgstr "Dimensions de l’image plein écran modifiables"
 
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:135
 msgid "SVG icon name"
-msgstr "Nazwa ikony SVG"
+msgstr "Nom de l’icône SVG"
 
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:136
 msgid "SVG icon handle"
-msgstr "Identyfikator ikony SVG"
+msgstr "Identifiant de l’icône SVG"
 
 #: src/BlockBuilder/Block/Request/CreateBlockInputNormalizer.php:163
 msgid "The request contains an unsupported field."
-msgstr "Żądanie zawiera nieobsługiwane pole."
+msgstr "La requête contient un champ non pris en charge."
 
 #: src/BlockBuilder/Block/Request/CreateBlockInputNormalizer.php:219
-#, php-format
 msgid "The field collection \"%s\" has an invalid structure."
-msgstr "Kolekcja pól \"%s\" ma nieprawidłową strukturę."
+msgstr "La collection de champs « %s » présente une structure non valide."
 
 #: src/BlockBuilder/Block/Request/CreateBlockInputNormalizer.php:230
-#, php-format
 msgid "The field collection \"%s\" must use numeric field indexes."
-msgstr "Indeksy pól w kolekcji \"%s\" muszą być liczbami."
+msgstr "La collection de champs « %s » doit utiliser des index de champ numériques."
 
 #: src/BlockBuilder/Block/Request/CreateBlockInputNormalizer.php:240
-#, php-format
 msgid "The field collection \"%s\" may contain at most %s fields."
-msgstr "Kolekcja pól \"%s\" może zawierać najwyżej %s pól."
+msgstr "La collection de champs « %s » peut contenir au maximum %s champs."
 
 #: src/BlockBuilder/Block/Request/CreateBlockInputNormalizer.php:251
-#, php-format
 msgid "A field in the \"%s\" collection has an invalid structure."
-msgstr "Pole w kolekcji \"%s\" ma nieprawidłową strukturę."
+msgstr "Un champ de la collection « %s » présente une structure non valide."
 
 #: src/BlockBuilder/Block/Request/CreateBlockInputNormalizer.php:267
-#, php-format
 msgid "A field in the \"%s\" collection uses an unsupported field type."
-msgstr "Pole w kolekcji \"%s\" używa nieobsługiwanego typu pola."
+msgstr "Un champ de la collection « %s » utilise un type de champ non pris en charge."
 
 #: src/BlockBuilder/Block/Request/CreateBlockInputNormalizer.php:278
-#, php-format
 msgid "A field in the \"%s\" collection contains an unsupported property."
-msgstr "Pole w kolekcji \"%s\" zawiera nieobsługiwaną właściwość."
+msgstr "Un champ de la collection « %s » contient une propriété non prise en charge."
 
 #: src/BlockBuilder/Block/Request/CreateBlockInputNormalizer.php:359
-#, php-format
 msgid "The field \"%s\" must use numeric icon indexes."
-msgstr "Indeksy ikon w polu \"%s\" muszą być liczbami."
+msgstr "Le champ « %s » doit utiliser des index d’icône numériques."
 
 #: src/BlockBuilder/Block/Request/CreateBlockInputNormalizer.php:370
-#, php-format
 msgid "The field \"%s\" may contain at most %s icons."
-msgstr "Pole \"%s\" może zawierać najwyżej %s ikon."
+msgstr "Le champ « %s » peut contenir au maximum %s icônes."
 
 #: src/BlockBuilder/Block/Request/CreateBlockInputNormalizer.php:390
-#, php-format
 msgid "The field \"%s\" contains an unsupported icon property."
-msgstr "Pole \"%s\" zawiera nieobsługiwaną właściwość ikony."
+msgstr "Le champ « %s » contient une propriété d’icône non prise en charge."
 
 #: src/BlockBuilder/Block/Request/CreateBlockInputNormalizer.php:448
-#, php-format
 msgid "The field \"%s\" exceeds the maximum allowed length of %s characters."
-msgstr "Pole \"%s\" przekracza maksymalną dozwoloną długość %s znaków."
+msgstr "Le champ « %s » dépasse la longueur maximale autorisée de %s caractères."
 
 #: src/BlockBuilder/Block/Request/CreateBlockInputNormalizer.php:532
-#, php-format
 msgid "The field \"%s\" may contain at most %s options."
-msgstr "Pole \"%s\" może zawierać najwyżej %s opcji."
+msgstr "Le champ « %s » peut contenir au maximum %s options."
 
 #: src/BlockBuilder/Block/Request/CreateBlockInputNormalizer.php:551
-#, php-format
 msgid "The field \"%s\" has an invalid value type."
-msgstr "Pole \"%s\" ma nieprawidłowy typ wartości."
+msgstr "Le champ « %s » possède un type de valeur non valide."
 
 #: src/BlockBuilder/Block/Request/CreateBlockInputNormalizer.php:567
-#, php-format
 msgid "A field in the \"%s\" collection has an invalid \"%s\" value."
-msgstr "Pole w kolekcji \"%s\" ma nieprawidłową wartość \"%s\"."
+msgstr "Un champ de la collection « %s » possède une valeur « %s » non valide."
 
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:121
-#, php-format
 msgid "The configuration file \"%s\" has an invalid source identifier."
-msgstr "Plik konfiguracyjny \"%s\" ma nieprawidłowy identyfikator źródła."
+msgstr "Le fichier de configuration « %s » possède un identifiant source non valide."
 
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:131
-#, php-format
 msgid "The configuration file \"%s\" contains invalid field data: %s"
-msgstr "Plik konfiguracyjny \"%s\" zawiera nieprawidłowe dane pól: %s"
+msgstr "Le fichier de configuration « %s » contient des données de champ non valides : %s"
 
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:133
-#, php-format
 msgid "The configuration file \"%s\" contains invalid field data."
-msgstr "Plik konfiguracyjny \"%s\" zawiera nieprawidłowe dane pól."
+msgstr "Le fichier de configuration « %s » contient des données de champ non valides."
 
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:137
-#, php-format
-msgid ""
-"The configuration file \"%s\" declares block handle \"%s\", but its source "
-"identifier is \"%s\"."
-msgstr ""
-"Plik konfiguracyjny \"%s\" deklaruje identyfikator bloku \"%s\", ale jego "
-"identyfikator źródła to \"%s\"."
+msgid "The configuration file \"%s\" declares block handle \"%s\", but its source identifier is \"%s\"."
+msgstr "Le fichier de configuration « %s » déclare l’identifiant de bloc « %s », mais son identifiant source est « %s »."
 
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:146
-#, php-format
 msgid "The configuration file \"%s\" could not be found."
-msgstr "Nie znaleziono pliku konfiguracyjnego \"%s\"."
+msgstr "Le fichier de configuration « %s » est introuvable."
 
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:150
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:155
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:163
-#, php-format
 msgid "The configuration file \"%s\" exists but could not be read."
-msgstr "Plik konfiguracyjny \"%s\" istnieje, ale nie można go odczytać."
+msgstr "Le fichier de configuration « %s » existe, mais n’a pas pu être lu."
 
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:172
-#, php-format
 msgid "The configuration file \"%s\" contains invalid JSON: %s"
-msgstr "Plik konfiguracyjny \"%s\" zawiera nieprawidłowy JSON: %s"
+msgstr "Le fichier de configuration « %s » contient du JSON non valide : %s"
 
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:176
-#, php-format
 msgid "The configuration file \"%s\" must contain a JSON object."
-msgstr "Plik konfiguracyjny \"%s\" musi zawierać obiekt JSON."
+msgstr "Le fichier de configuration « %s » doit contenir un objet JSON."
 
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:185
-#, php-format
-msgid ""
-"The configuration file \"%s\" must contain a JSON object rather than a JSON "
-"list."
-msgstr ""
-"Plik konfiguracyjny \"%s\" musi zawierać obiekt JSON, a nie listę JSON."
+msgid "The configuration file \"%s\" must contain a JSON object rather than a JSON list."
+msgstr "Le fichier de configuration « %s » doit contenir un objet JSON et non une liste JSON."
 
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:199
-#, php-format
 msgid "The configuration file \"%s\" contains an unsupported property \"%s\"."
-msgstr "Plik konfiguracyjny \"%s\" zawiera nieobsługiwaną właściwość \"%s\"."
+msgstr "Le fichier de configuration « %s » contient une propriété « %s » non prise en charge."
 
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:208
-#, php-format
-msgid ""
-"The property \"%s\" in the configuration file \"%s\" exceeds the maximum "
-"allowed length."
-msgstr ""
-"Właściwość \"%s\" w pliku konfiguracyjnym \"%s\" przekracza maksymalną "
-"dozwoloną długość."
+msgid "The property \"%s\" in the configuration file \"%s\" exceeds the maximum allowed length."
+msgstr "La propriété « %s » du fichier de configuration « %s » dépasse la longueur maximale autorisée."
 
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:222
-#, php-format
-msgid ""
-"The configuration file \"%s\" contains invalid Block Builder version "
-"information."
-msgstr ""
-"Plik konfiguracyjny \"%s\" zawiera nieprawidłowe informacje o wersji Block "
-"Buildera."
+msgid "The configuration file \"%s\" contains invalid Block Builder version information."
+msgstr "Le fichier de configuration « %s » contient des informations de version de Block Builder non valides."
 
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:228
-#, php-format
-msgid ""
-"The configuration file \"%s\" uses Block Builder version \"%s\", which is "
-"newer than the current environment version \"%s\"."
-msgstr ""
-"Plik konfiguracyjny \"%s\" używa wersji Block Buildera \"%s\", która jest "
-"nowsza niż wersja \"%s\" w bieżącym środowisku."
+msgid "The configuration file \"%s\" uses Block Builder version \"%s\", which is newer than the current environment version \"%s\"."
+msgstr "Le fichier de configuration « %s » utilise la version « %s » de Block Builder, qui est plus récente que la version « %s » de l’environnement actuel."
 
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:237
-#, php-format
-msgid ""
-"The \"%s\" field collection in the configuration file \"%s\" must be an "
-"array."
-msgstr ""
-"Sekcja pól \"%s\" w pliku konfiguracyjnym \"%s\" musi mieć postać tablicy."
+msgid "The \"%s\" field collection in the configuration file \"%s\" must be an array."
+msgstr "La collection de champs « %s » du fichier de configuration « %s » doit être un tableau."
 
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:241
-#, php-format
-msgid ""
-"The \"%s\" field collection in the configuration file \"%s\" may contain at "
-"most %s fields."
-msgstr ""
-"Sekcja pól \"%s\" w pliku konfiguracyjnym \"%s\" może zawierać najwyżej %s "
-"pól."
+msgid "The \"%s\" field collection in the configuration file \"%s\" may contain at most %s fields."
+msgstr "La collection de champs « %s » du fichier de configuration « %s » peut contenir au maximum %s champs."
 
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:246
-#, php-format
-msgid ""
-"Each field in the \"%s\" collection of the configuration file \"%s\" must be "
-"an array."
-msgstr ""
-"Każde pole w kolekcji \"%s\" pliku konfiguracyjnego \"%s\" musi mieć postać "
-"tablicy."
+msgid "Each field in the \"%s\" collection of the configuration file \"%s\" must be an array."
+msgstr "Chaque champ de la collection « %s » du fichier de configuration « %s » doit être un tableau."
 
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:269
-#, php-format
-msgid ""
-"Property \"%s\" of field %s in the \"%s\" collection of the configuration "
-"file \"%s\" exceeds the maximum allowed length."
-msgstr ""
-"Właściwość \"%s\" pola %s w sekcji \"%s\" pliku konfiguracyjnego \"%s\" "
-"przekracza maksymalną dozwoloną długość."
+msgid "Property \"%s\" of field %s in the \"%s\" collection of the configuration file \"%s\" exceeds the maximum allowed length."
+msgstr "La propriété « %s » du champ %s de la collection « %s » du fichier de configuration « %s » dépasse la longueur maximale autorisée."
 
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:275
-#, php-format
-msgid ""
-"Field %s in the \"%s\" collection of the configuration file \"%s\" may "
-"contain at most %s options."
-msgstr ""
-"Pole %s w sekcji \"%s\" pliku konfiguracyjnego \"%s\" może zawierać najwyżej "
-"%s opcji."
+msgid "Field %s in the \"%s\" collection of the configuration file \"%s\" may contain at most %s options."
+msgstr "Le champ %s de la collection « %s » du fichier de configuration « %s » peut contenir au maximum %s options."
 
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:285
-#, php-format
-msgid ""
-"Field %s in the \"%s\" collection of the configuration file \"%s\" may "
-"contain at most %s SVG icons."
-msgstr ""
-"Pole %s w sekcji \"%s\" pliku konfiguracyjnego \"%s\" może zawierać najwyżej "
-"%s ikon SVG."
+msgid "Field %s in the \"%s\" collection of the configuration file \"%s\" may contain at most %s SVG icons."
+msgstr "Le champ %s de la collection « %s » du fichier de configuration « %s » peut contenir au maximum %s icônes SVG."
 
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:300
-#, php-format
-msgid ""
-"An SVG icon property \"%s\" in field %s of the configuration file \"%s\" "
-"exceeds the maximum allowed length."
-msgstr ""
-"Właściwość ikony SVG \"%s\" w polu %s pliku konfiguracyjnego \"%s\" "
-"przekracza maksymalną dozwoloną długość."
+msgid "An SVG icon property \"%s\" in field %s of the configuration file \"%s\" exceeds the maximum allowed length."
+msgstr "Une propriété d’icône SVG « %s » du champ %s du fichier de configuration « %s » dépasse la longueur maximale autorisée."
 
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:320
-#, php-format
-msgid ""
-"The application block directory for \"%s\" does not exist or cannot be read "
-"safely."
-msgstr ""
-"Katalog bloków aplikacji dla \"%s\" nie istnieje lub nie można go "
-"bezpiecznie odczytać."
+msgid "The application block directory for \"%s\" does not exist or cannot be read safely."
+msgstr "Le répertoire des blocs d’application pour « %s » n’existe pas ou ne peut pas être lu en toute sécurité."
 
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:332
-#, php-format
-msgid ""
-"The configuration file \"%s\" exceeds the maximum allowed size of %s MB."
-msgstr ""
-"Plik konfiguracyjny \"%s\" przekracza maksymalny dozwolony rozmiar %s MB."
+msgid "The configuration file \"%s\" exceeds the maximum allowed size of %s MB."
+msgstr "Le fichier de configuration « %s » dépasse la taille maximale autorisée de %s Mo."
 
 #: src/BlockBuilder/Block/Service/BlockDirectoryRemover.php:31
 msgid "Unable to check permission for block type directory removal."
-msgstr "Nie udało się sprawdzić uprawnień do usunięcia katalogu typu bloku."
+msgstr "Impossible de vérifier l’autorisation de supprimer le répertoire du type de bloc."
 
 #: src/BlockBuilder/Block/Service/BlockDirectoryRemover.php:45
-#, php-format
 msgid "Invalid block type handle \"%s\" supplied for directory removal."
-msgstr ""
-"Podano nieprawidłowy identyfikator typu bloku \"%s\" do usunięcia katalogu."
+msgstr "L’identifiant de type de bloc « %s » fourni pour la suppression du répertoire n’est pas valide."
 
 #: src/BlockBuilder/Block/Service/BlockDirectoryRemover.php:54
-#, php-format
 msgid "Unable to acquire the directory operation lock for block type \"%s\"."
-msgstr "Nie udało się uzyskać blokady operacji na katalogu typu bloku \"%s\"."
+msgstr "Impossible d’acquérir le verrou d’opération sur le répertoire pour le type de bloc « %s »."
 
 #: src/BlockBuilder/Block/Service/BlockDirectoryRemover.php:72
-#, php-format
-msgid ""
-"The directory for block type \"%s\" is missing, linked, or outside the "
-"application block directory."
-msgstr ""
-"Katalog typu bloku \"%s\" nie istnieje, jest dowiązaniem lub znajduje się "
-"poza katalogiem bloków aplikacji."
+msgid "The directory for block type \"%s\" is missing, linked, or outside the application block directory."
+msgstr "Le répertoire du type de bloc « %s » est manquant, lié ou situé en dehors du répertoire des blocs d’application."
 
 #: src/BlockBuilder/Block/Service/BlockDirectoryRemover.php:78
-#, php-format
-msgid ""
-"The directory for block type \"%s\" does not contain a valid matching Block "
-"Builder configuration."
-msgstr ""
-"Katalog typu bloku \"%s\" nie zawiera prawidłowej, zgodnej konfiguracji "
-"Block Buildera."
+msgid "The directory for block type \"%s\" does not contain a valid matching Block Builder configuration."
+msgstr "Le répertoire du type de bloc « %s » ne contient pas de configuration Block Builder correspondante valide."
 
 #: src/BlockBuilder/Block/Service/BlockDirectoryRemover.php:87
-#, php-format
-msgid ""
-"Unable to determine whether block type \"%s\" is installed before directory "
-"removal."
-msgstr ""
-"Przed usunięciem katalogu nie udało się ustalić, czy typ bloku \"%s\" jest "
-"zainstalowany."
+msgid "Unable to determine whether block type \"%s\" is installed before directory removal."
+msgstr "Impossible de déterminer si le type de bloc « %s » est installé avant la suppression du répertoire."
 
 #: src/BlockBuilder/Block/Service/BlockDirectoryRemover.php:95
-#, php-format
 msgid "Attempted to remove the directory of installed block type \"%s\"."
-msgstr "Podjęto próbę usunięcia katalogu zainstalowanego typu bloku \"%s\"."
+msgstr "Tentative de suppression du répertoire du type de bloc installé « %s »."
 
 #: src/BlockBuilder/Block/Service/BlockDirectoryRemover.php:107
-#, php-format
 msgid "Unable to remove block type directory \"%s\"."
-msgstr "Nie udało się usunąć katalogu typu bloku \"%s\"."
+msgstr "Impossible de supprimer le répertoire du type de bloc « %s »."
 
 #: src/BlockBuilder/Block/Service/BlockTypeInstaller.php:30
 msgid "The block type installation permission could not be verified."
-msgstr "Nie udało się zweryfikować uprawnień do instalacji typu bloku."
+msgstr "Impossible de vérifier l’autorisation d’installation du type de bloc."
 
 #: src/BlockBuilder/Block/Service/BlockTypeInstaller.php:44
-#, php-format
 msgid "Invalid block type handle \"%s\" supplied for installation."
-msgstr "Podano nieprawidłowy identyfikator typu bloku \"%s\" do instalacji."
+msgstr "L’identifiant de type de bloc « %s » fourni pour l’installation n’est pas valide."
 
 #: src/BlockBuilder/Block/Service/BlockTypeInstaller.php:52
-#, php-format
-msgid ""
-"The block type directory for \"%s\" is missing, linked, or outside the "
-"application block directory."
-msgstr ""
-"Katalog typu bloku \"%s\" nie istnieje, jest dowiązaniem lub znajduje się "
-"poza katalogiem bloków aplikacji."
+msgid "The block type directory for \"%s\" is missing, linked, or outside the application block directory."
+msgstr "Le répertoire du type de bloc « %s » est manquant, lié ou situé en dehors du répertoire des blocs d’application."
 
 #: src/BlockBuilder/Block/Service/BlockTypeInstaller.php:58
-msgid ""
-"Only block types with a valid matching Block Builder configuration can be "
-"installed here."
-msgstr ""
-"Można tutaj instalować wyłącznie typy bloków z prawidłową, zgodną "
-"konfiguracją Block Buildera."
+msgid "Only block types with a valid matching Block Builder configuration can be installed here."
+msgstr "Seuls les types de blocs possédant une configuration Block Builder correspondante valide peuvent être installés ici."
 
 #: src/BlockBuilder/Block/Service/BlockTypeInstaller.php:68
-#, php-format
 msgid "Unable to determine whether block type \"%s\" is installed."
-msgstr "Nie udało się ustalić, czy typ bloku \"%s\" jest zainstalowany."
+msgstr "Impossible de déterminer si le type de bloc « %s » est installé."
 
 #: src/BlockBuilder/Block/Service/BlockTypeInstaller.php:76
-#, php-format
 msgid "Block type \"%s\" is already installed."
-msgstr "Typ bloku \"%s\" jest już zainstalowany."
+msgstr "Le type de bloc « %s » est déjà installé."
 
 #: src/BlockBuilder/Block/Service/BlockTypeInstaller.php:86
-#, php-format
 msgid "Concrete CMS failed to install block type \"%s\"."
-msgstr "Concrete CMS nie zdołał zainstalować typu bloku \"%s\"."
+msgstr "Concrete CMS n’a pas pu installer le type de bloc « %s »."
 
 #: src/BlockBuilder/Block/Service/BlockTypeInstaller.php:95
-#, php-format
-msgid ""
-"Concrete CMS did not return a block type entity after installing \"%s\"."
-msgstr "Concrete CMS nie zwrócił encji typu bloku po zainstalowaniu \"%s\"."
+msgid "Concrete CMS did not return a block type entity after installing \"%s\"."
+msgstr "Concrete CMS n’a renvoyé aucune entité de type de bloc après l’installation de « %s »."
 
 #: src/BlockBuilder/Block/Service/BlockTypePermissionChecker.php:20
 #: src/BlockBuilder/Block/Validation/Validator/Block/PermissionsValidator.php:20
 msgid "You do not have permission to install custom block types or add-ons."
-msgstr ""
-"Nie masz uprawnień do instalowania niestandardowych typów bloków ani "
-"pakietów."
+msgstr "Vous n’êtes pas autorisé à installer des types de blocs personnalisés ou des extensions."
 
 #: src/BlockBuilder/Block/Service/BlockTypePermissionChecker.php:26
 msgid "Only the super user may remove block types."
-msgstr "Tylko superużytkownik może usuwać typy bloków."
+msgstr "Seul le superutilisateur peut supprimer des types de blocs."
 
 #: src/BlockBuilder/Block/Service/BlockTypePermissionChecker.php:31
 msgid "You do not have permission to uninstall packages."
-msgstr "Nie masz uprawnień do odinstalowywania pakietów."
+msgstr "Vous n’êtes pas autorisé à désinstaller des extensions."
 
 #: src/BlockBuilder/Block/Service/BlockTypeUninstaller.php:28
 msgid "The block type removal permission could not be verified."
-msgstr "Nie udało się zweryfikować uprawnień do usunięcia typu bloku."
+msgstr "Impossible de vérifier l’autorisation de suppression du type de bloc."
 
 #: src/BlockBuilder/Block/Service/BlockTypeUninstaller.php:44
-#, php-format
 msgid "Unable to locate block type \"%s\" for uninstallation."
-msgstr "Nie udało się zlokalizować typu bloku \"%s\" do odinstalowania."
+msgstr "Impossible de localiser le type de bloc « %s » pour sa désinstallation."
 
 #: src/BlockBuilder/Block/Service/BlockTypeUninstaller.php:51
-#, php-format
 msgid "Unable to find block type \"%s\" for uninstallation."
-msgstr "Nie udało się znaleźć typu bloku \"%s\" do odinstalowania."
+msgstr "Impossible de trouver le type de bloc « %s » pour sa désinstallation."
 
 #: src/BlockBuilder/Block/Service/BlockTypeUninstaller.php:63
-#, php-format
 msgid "Unable to inspect block type \"%s\" before uninstallation."
-msgstr "Nie udało się sprawdzić typu bloku \"%s\" przed odinstalowaniem."
+msgstr "Impossible d’inspecter le type de bloc « %s » avant sa désinstallation."
 
 #: src/BlockBuilder/Block/Service/BlockTypeUninstaller.php:71
-#, php-format
 msgid "Attempted to uninstall internal block type \"%s\"."
-msgstr "Podjęto próbę odinstalowania wewnętrznego typu bloku \"%s\"."
+msgstr "Tentative de désinstallation du type de bloc interne « %s »."
 
 #: src/BlockBuilder/Block/Service/BlockTypeUninstaller.php:78
 msgid "The block type handle could not be determined before uninstallation."
-msgstr "Nie udało się ustalić identyfikatora typu bloku przed odinstalowaniem."
+msgstr "Impossible de déterminer l’identifiant du type de bloc avant sa désinstallation."
 
 #: src/BlockBuilder/Block/Service/BlockTypeUninstaller.php:88
-#, php-format
-msgid ""
-"Unable to acquire the operation lock before uninstalling block type \"%s\"."
-msgstr ""
-"Nie udało się uzyskać blokady operacji przed odinstalowaniem typu bloku "
-"\"%s\"."
+msgid "Unable to acquire the operation lock before uninstalling block type \"%s\"."
+msgstr "Impossible d’acquérir le verrou d’opération avant la désinstallation du type de bloc « %s »."
 
 #: src/BlockBuilder/Block/Service/BlockTypeUninstaller.php:98
-msgid ""
-"Only block types with a valid matching Block Builder configuration can be "
-"uninstalled here."
-msgstr ""
-"Można tutaj odinstalować wyłącznie typy bloków z prawidłową, zgodną "
-"konfiguracją Block Buildera."
+msgid "Only block types with a valid matching Block Builder configuration can be uninstalled here."
+msgstr "Seuls les types de blocs possédant une configuration Block Builder correspondante valide peuvent être désinstallés ici."
 
 #: src/BlockBuilder/Block/Service/BlockTypeUninstaller.php:108
-msgid ""
-"The block type could not be uninstalled. Please check the logs for more "
-"information."
-msgstr ""
-"Nie udało się odinstalować typu bloku. Więcej informacji znajdziesz w "
-"dziennikach."
+msgid "The block type could not be uninstalled. Please check the logs for more information."
+msgstr "Le type de bloc n’a pas pu être désinstallé. Consultez les journaux pour plus d’informations."
 
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockHandleValidator.php:35
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockHeightValidator.php:19
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockNameValidator.php:19
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockWidthValidator.php:21
-#, php-format
 msgid "The field \"%s\" is required (%s)."
-msgstr "Pole \"%s\" jest wymagane (%s)."
+msgstr "Le champ « %s » est obligatoire (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockHandleValidator.php:42
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockNameValidator.php:21
-#, php-format
 msgid "The field \"%s\" should be between %s and %s characters long (%s)."
-msgstr "Pole \"%s\" powinno mieć od %s do %s znaków (%s)."
+msgstr "Le champ « %s » doit comporter entre %s et %s caractères (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockHandleValidator.php:50
-#, php-format
-msgid ""
-"The field \"%s\" should consist only of lowercase letters and underscores "
-"(%s)."
-msgstr ""
-"Pole \"%s\" może zawierać wyłącznie małe litery i znaki podkreślenia (%s)."
+msgid "The field \"%s\" should consist only of lowercase letters and underscores (%s)."
+msgstr "Le champ « %s » ne doit contenir que des lettres minuscules et des tirets bas (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockHandleValidator.php:53
-#, php-format
 msgid "The field \"%s\" should not start or end with an underscore (%s)."
-msgstr ""
-"Pole \"%s\" nie powinno zaczynać się ani kończyć znakiem podkreślenia (%s)."
+msgstr "Le champ « %s » ne doit pas commencer ni se terminer par un tiret bas (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockHandleValidator.php:56
-#, php-format
-msgid ""
-"The field \"%s\" should not contain two or more consecutive underscores (%s)."
-msgstr ""
-"Pole \"%s\" nie powinno zawierać co najmniej dwóch kolejnych znaków "
-"podkreślenia (%s)."
+msgid "The field \"%s\" should not contain two or more consecutive underscores (%s)."
+msgstr "Le champ « %s » ne doit pas contenir deux tirets bas consécutifs ou plus (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockHandleValidator.php:64
-#, php-format
 msgid "The field \"%s\" contains a forbidden word. Use a different value (%s)."
-msgstr "Pole \"%s\" zawiera niedozwolone słowo. Użyj innej wartości (%s)."
+msgstr "Le champ « %s » contient un mot interdit. Utilisez une autre valeur (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockHandleValidator.php:72
 msgid "A block can only be rebuilt from its own loaded configuration."
-msgstr ""
-"Blok można przebudować tylko na podstawie jego własnej wczytanej "
-"konfiguracji."
+msgstr "Un bloc ne peut être recréé qu’à partir de sa propre configuration chargée."
 
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockHandleValidator.php:74
-msgid ""
-"The selected block does not have a valid Block Builder configuration. Build "
-"it as a new block instead."
-msgstr ""
-"Wybrany blok nie ma prawidłowej konfiguracji Block Buildera. Zamiast tego "
-"utwórz go jako nowy blok."
+msgid "The selected block does not have a valid Block Builder configuration. Build it as a new block instead."
+msgstr "Le bloc sélectionné ne possède pas de configuration Block Builder valide. Créez-le plutôt comme un nouveau bloc."
 
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockHandleValidator.php:76
-msgid ""
-"You cannot rebuild a block that is awaiting installation. Install it from "
-"the configuration list first."
-msgstr ""
-"Nie można przebudować bloku oczekującego na instalację. Najpierw zainstaluj "
-"go z listy konfiguracji."
+msgid "You cannot rebuild a block that is awaiting installation. Install it from the configuration list first."
+msgstr "Vous ne pouvez pas recréer un bloc en attente d’installation. Installez-le d’abord depuis la liste des configurations."
 
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockHandleValidator.php:84
-#, php-format
-msgid ""
-"The handle is already used by a Concrete CMS core block. Choose a different "
-"handle (%s)."
-msgstr ""
-"Ten identyfikator jest już używany przez systemowy blok Concrete CMS. "
-"Wybierz inny identyfikator (%s)."
+msgid "The handle is already used by a Concrete CMS core block. Choose a different handle (%s)."
+msgstr "L’identifiant est déjà utilisé par un bloc du noyau de Concrete CMS. Choisissez un autre identifiant (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockHandleValidator.php:88
-#, php-format
-msgid ""
-"A block type with this handle is already installed. Uninstall it from the "
-"configuration list before building it again. Alternatively, choose a "
-"different handle (%s)."
-msgstr ""
-"Typ bloku o tym identyfikatorze jest już zainstalowany. Przed ponownym "
-"utworzeniem odinstaluj go z listy konfiguracji. Możesz też wybrać inny "
-"identyfikator (%s)."
+msgid "A block type with this handle is already installed. Uninstall it from the configuration list before building it again. Alternatively, choose a different handle (%s)."
+msgstr "Un type de bloc portant cet identifiant est déjà installé. Désinstallez-le depuis la liste des configurations avant de le recréer. Vous pouvez également choisir un autre identifiant (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockHandleValidator.php:91
-#, php-format
-msgid ""
-"A block folder named \"%s\" already exists. Delete it from the configuration "
-"list or choose a different handle (%s)."
-msgstr ""
-"Folder bloku o nazwie \"%s\" już istnieje. Usuń go z listy konfiguracji lub "
-"wybierz inny identyfikator (%s)."
+msgid "A block folder named \"%s\" already exists. Delete it from the configuration list or choose a different handle (%s)."
+msgstr "Un dossier de bloc nommé « %s » existe déjà. Supprimez-le depuis la liste des configurations ou choisissez un autre identifiant (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockHeightValidator.php:22
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockWidthValidator.php:24
-#, php-format
 msgid "The field \"%s\" should be a number between %s and %s (%s)."
-msgstr "Pole \"%s\" powinno być liczbą od %s do %s (%s)."
+msgstr "Le champ « %s » doit être un nombre compris entre %s et %s (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockIconValidator.php:43
-#, php-format
 msgid "The uploaded value for \"Custom block icon\" is invalid (%s)."
-msgstr ""
-"Przesłana wartość pola \"Niestandardowa ikona bloku\" jest nieprawidłowa "
-"(%s)."
+msgstr "La valeur téléversée pour « Icône de bloc personnalisée » n’est pas valide (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockIconValidator.php:85
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockOptionValuesValidator.php:79
-#, php-format
 msgid "The field \"%s\" contains an invalid option (%s)."
-msgstr "Pole \"%s\" zawiera nieprawidłową opcję (%s)."
+msgstr "Le champ « %s » contient une option non valide (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockIconValidator.php:99
-#, php-format
 msgid "The file uploaded for \"Custom block icon\" is invalid (%s)."
-msgstr ""
-"Plik przesłany w polu \"Niestandardowa ikona bloku\" jest nieprawidłowy (%s)."
+msgstr "Le fichier téléversé pour « Icône de bloc personnalisée » n’est pas valide (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockIconValidator.php:113
-#, php-format
 msgid "The \"Custom block icon\" must not be larger than %s MB (%s)."
-msgstr "\"Niestandardowa ikona bloku\" nie może być większa niż %s MB (%s)."
+msgstr "L’« Icône de bloc personnalisée » ne doit pas dépasser %s Mo (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockIconValidator.php:128
-#, php-format
 msgid "The file uploaded for \"Custom block icon\" is not a valid image (%s)."
-msgstr ""
-"Plik przesłany w polu \"Niestandardowa ikona bloku\" nie jest prawidłowym "
-"obrazem (%s)."
+msgstr "Le fichier téléversé pour « Icône de bloc personnalisée » n’est pas une image valide (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockIconValidator.php:141
-#, php-format
 msgid "The \"Custom block icon\" must be a PNG image (%s)."
-msgstr "\"Niestandardowa ikona bloku\" musi być obrazem PNG (%s)."
+msgstr "L’« Icône de bloc personnalisée » doit être une image PNG (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockIconValidator.php:154
-#, php-format
-msgid ""
-"The \"Custom block icon\" must be exactly %s px × %s px. Current size: %s px "
-"× %s px (%s)."
-msgstr ""
-"\"Niestandardowa ikona bloku\" musi mieć dokładnie %s px × %s px. Obecny "
-"rozmiar: %s px × %s px (%s)."
+msgid "The \"Custom block icon\" must be exactly %s px × %s px. Current size: %s px × %s px (%s)."
+msgstr "L’« Icône de bloc personnalisée » doit mesurer exactement %s px × %s px. Taille actuelle : %s px × %s px (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockNumericValuesValidator.php:22
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockNumericValuesValidator.php:30
-#, php-format
 msgid "The field \"%s\" should be a non-negative whole number (%s)."
-msgstr "Pole \"%s\" powinno zawierać nieujemną liczbę całkowitą (%s)."
+msgstr "Le champ « %s » doit être un entier positif ou nul (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/Block/CsrfValidator.php:24
 msgid "Invalid CSRF token. Please refresh and try again."
-msgstr "Nieprawidłowy token CSRF. Odśwież stronę i spróbuj ponownie."
+msgstr "Jeton CSRF non valide. Actualisez la page et réessayez."
 
 #: src/BlockBuilder/Block/Validation/Validator/Block/ExcludedFromRemovalValidator.php:50
-#, php-format
 msgid "The exclusion \"%s\" must be a file or folder name, not a path (%s)."
-msgstr ""
-"Wykluczenie \"%s\" musi być nazwą pliku lub folderu, a nie ścieżką (%s)."
+msgstr "L’exclusion « %s » doit être un nom de fichier ou de dossier, et non un chemin (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/Block/ExcludedFromRemovalValidator.php:58
-#, php-format
 msgid "You cannot exclude \"%s\" (%s)."
-msgstr "Nie można wykluczyć \"%s\" (%s)."
+msgstr "Vous ne pouvez pas exclure « %s » (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/Block/LabelsValidator.php:21
-#, php-format
-msgid ""
-"At least one label for the buttons (\"Add at the top\" or \"Add at the "
-"bottom\") is required (%s)."
-msgstr ""
-"Wymagana jest etykieta co najmniej jednego z przycisków (\"Dodaj na górze\" "
-"lub \"Dodaj na dole\") (%s)."
+msgid "At least one label for the buttons (\"Add at the top\" or \"Add at the bottom\") is required (%s)."
+msgstr "Au moins un libellé pour les boutons (« Ajouter en haut » ou « Ajouter en bas ») est obligatoire (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/Block/LabelsValidator.php:29
 #: src/BlockBuilder/Block/Validation/Validator/Block/LabelsValidator.php:37
-#, php-format
 msgid "The label for \"%s\" is required (%s)."
-msgstr "Etykieta dla \"%s\" jest wymagana (%s)."
+msgstr "Le libellé de « %s » est obligatoire (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/FieldType/FieldTypeValidator.php:60
 msgid "Only one repeatable field can be used as the entry title source."
-msgstr "Tylko jedno pole powtarzalne może służyć jako źródło tytułu wpisu."
+msgstr "Un seul champ répétable peut être utilisé comme source du titre de l’entrée."
 
 #: src/BlockBuilder/Block/Validation/Validator/FieldType/FieldTypeValidator.php:267
-#, php-format
 msgid "Some \"Field type\" fields are empty (%s)."
-msgstr "Niektóre pola \"Typ pola\" są puste (%s)."
+msgstr "Certains champs « Type de champ » sont vides (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/FieldType/FieldTypeValidator.php:268
-#, php-format
 msgid "Some \"Field type\" fields contain an unsupported value (%s)."
-msgstr "Niektóre pola \"Typ pola\" zawierają nieobsługiwaną wartość (%s)."
+msgstr "Certains champs « Type de champ » contiennent une valeur non prise en charge (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/FieldType/FieldTypeValidator.php:269
-#, php-format
 msgid "Some \"Label\" fields are empty (%s)."
-msgstr "Niektóre pola \"Etykieta\" są puste (%s)."
+msgstr "Certains champs « Libellé » sont vides (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/FieldType/FieldTypeValidator.php:270
-#, php-format
 msgid "Some \"Label\" fields contain fewer than %s characters (%s)."
-msgstr "Niektóre pola \"Etykieta\" zawierają mniej niż %s znaków (%s)."
+msgstr "Certains champs « Libellé » contiennent moins de %s caractères (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/FieldType/FieldTypeValidator.php:272
-#, php-format
 msgid "Some \"Handle\" fields are empty (%s)."
-msgstr "Niektóre pola \"Identyfikator\" są puste (%s)."
+msgstr "Certains champs « Identifiant » sont vides (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/FieldType/FieldTypeValidator.php:273
-#, php-format
 msgid "Some \"Handle\" fields contain fewer than %s characters (%s)."
-msgstr "Niektóre pola \"Identyfikator\" zawierają mniej niż %s znaków (%s)."
+msgstr "Certains champs « Identifiant » contiennent moins de %s caractères (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/FieldType/FieldTypeValidator.php:274
-#, php-format
 msgid "Some \"Handle\" fields contain more than %s characters (%s)."
-msgstr "Niektóre pola \"Identyfikator\" zawierają więcej niż %s znaków (%s)."
+msgstr "Certains champs « Identifiant » contiennent plus de %s caractères (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/FieldType/FieldTypeValidator.php:275
-#, php-format
 msgid "Some \"Handle\" fields contain characters other than a-zA-Z_ (%s)."
-msgstr "Niektóre pola \"Identyfikator\" zawierają znaki inne niż a-zA-Z_ (%s)."
+msgstr "Certains champs « Identifiant » contiennent des caractères autres que a-zA-Z_ (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/FieldType/FieldTypeValidator.php:276
-#, php-format
 msgid "Some \"Handle\" fields start or end with an underscore (%s)."
-msgstr ""
-"Niektóre pola \"Identyfikator\" zaczynają się lub kończą znakiem "
-"podkreślenia (%s)."
+msgstr "Certains champs « Identifiant » commencent ou se terminent par un tiret bas (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/FieldType/FieldTypeValidator.php:277
-#, php-format
-msgid ""
-"Some \"Handle\" fields contain two or more consecutive underscores (%s)."
-msgstr ""
-"Niektóre pola \"Identyfikator\" zawierają co najmniej dwa kolejne znaki "
-"podkreślenia (%s)."
+msgid "Some \"Handle\" fields contain two or more consecutive underscores (%s)."
+msgstr "Certains champs « Identifiant » contiennent deux tirets bas consécutifs ou plus (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/FieldType/FieldTypeValidator.php:278
-#, php-format
 msgid "Some \"Handle\" fields start with an uppercase character (%s)."
-msgstr "Niektóre pola \"Identyfikator\" zaczynają się od wielkiej litery (%s)."
+msgstr "Certains champs « Identifiant » commencent par une majuscule (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/FieldType/FieldTypeValidator.php:279
-#, php-format
 msgid "Some \"Handle\" fields use forbidden words (%s)."
-msgstr "Niektóre pola \"Identyfikator\" zawierają niedozwolone słowa (%s)."
+msgstr "Certains champs « Identifiant » utilisent des mots interdits (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/FieldType/FieldTypeValidator.php:280
-#, php-format
 msgid "All \"Handle\" fields must be unique (%s)."
-msgstr "Wszystkie pola \"Identyfikator\" muszą być unikatowe (%s)."
+msgstr "Tous les champs « Identifiant » doivent être uniques (%s)."
 
 #: src/BlockBuilder/FieldType/Type/ColorPicker/ColorPickerFieldType.php:20
 msgid "Color Picker"
-msgstr "Wybór koloru"
+msgstr "Sélecteur de couleur"
 
 #: src/BlockBuilder/FieldType/Type/ColorPicker/ColorPickerFieldType.php:48
-#, php-format
-msgid ""
-"Some \"Color Picker/Default value\" fields contain an invalid color (%s)."
-msgstr ""
-"Niektóre pola \"Wybór koloru/Domyślna wartość\" zawierają nieprawidłowy "
-"kolor (%s)."
+msgid "Some \"Color Picker/Default value\" fields contain an invalid color (%s)."
+msgstr "Certains champs « Sélecteur de couleur/Valeur par défaut » contiennent une couleur non valide (%s)."
 
 #: src/BlockBuilder/FieldType/Type/DatePicker/DatePickerFieldType.php:24
 msgid "Date Picker"
-msgstr "Wybór daty"
+msgstr "Sélecteur de date"
 
 #: src/BlockBuilder/FieldType/Type/DatePicker/DatePickerFieldType.php:62
-#, php-format
-msgid ""
-"Some \"Date Picker/Minimum date\" fields must contain a valid date (%s)."
-msgstr ""
-"Niektóre pola \"Wybór daty/Najwcześniejsza data\" muszą zawierać prawidłową "
-"datę (%s)."
+msgid "Some \"Date Picker/Minimum date\" fields must contain a valid date (%s)."
+msgstr "Certains champs « Sélecteur de date/Date minimale » doivent contenir une date valide (%s)."
 
 #: src/BlockBuilder/FieldType/Type/DatePicker/DatePickerFieldType.php:63
-#, php-format
-msgid ""
-"Some \"Date Picker/Maximum date\" fields must contain a valid date (%s)."
-msgstr ""
-"Niektóre pola \"Wybór daty/Najpóźniejsza data\" muszą zawierać prawidłową "
-"datę (%s)."
+msgid "Some \"Date Picker/Maximum date\" fields must contain a valid date (%s)."
+msgstr "Certains champs « Sélecteur de date/Date maximale » doivent contenir une date valide (%s)."
 
 #: src/BlockBuilder/FieldType/Type/DatePicker/DatePickerFieldType.php:64
-#, php-format
-msgid ""
-"Some \"Date Picker/Minimum date\" fields contain a date later than the "
-"corresponding maximum date (%s)."
-msgstr ""
-"Niektóre pola \"Wybór daty/Najwcześniejsza data\" zawierają datę późniejszą "
-"niż odpowiadająca im najpóźniejsza data (%s)."
+msgid "Some \"Date Picker/Minimum date\" fields contain a date later than the corresponding maximum date (%s)."
+msgstr "Certains champs « Sélecteur de date/Date minimale » contiennent une date postérieure à la date maximale correspondante (%s)."
 
 #: src/BlockBuilder/FieldType/Type/DatePicker/DatePickerFieldType.php:65
-#, php-format
-msgid ""
-"Some \"Date Picker/Minute interval\" fields must contain a positive integer "
-"that divides 60 without a remainder (%s)."
-msgstr ""
-"Niektóre pola \"Wybór daty/Odstęp w minutach\" muszą zawierać dodatnią "
-"liczbę całkowitą, przez którą 60 dzieli się bez reszty (%s)."
+msgid "Some \"Date Picker/Minute interval\" fields must contain a positive integer that divides 60 without a remainder (%s)."
+msgstr "Certains champs « Sélecteur de date/Intervalle des minutes » doivent contenir un entier positif qui divise 60 sans reste (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Express/ExpressFieldType.php:20
 #: src/BlockBuilder/Service/Option/BlockSettingsOptionProvider.php:16
@@ -2322,619 +1896,356 @@ msgid "Express"
 msgstr "Express"
 
 #: src/BlockBuilder/FieldType/Type/Express/ExpressFieldType.php:50
-#, php-format
 msgid "There are some empty \"Express object handle\" fields (%s)."
-msgstr "Niektóre pola \"Identyfikator obiektu Express\" są puste (%s)."
+msgstr "Certains champs « Identifiant de l’objet Express » sont vides (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Express/ExpressFieldType.php:51
-#, php-format
-msgid ""
-"Some \"Express object handle\" fields are invalid (%s). Each value must "
-"start with a letter and contain only lowercase letters, numbers, and "
-"underscores."
-msgstr ""
-"Niektóre pola \"Identyfikator obiektu Express\" są nieprawidłowe (%s). "
-"Identyfikator musi zaczynać się od litery i może zawierać wyłącznie małe "
-"litery, cyfry oraz znaki podkreślenia."
+msgid "Some \"Express object handle\" fields are invalid (%s). Each value must start with a letter and contain only lowercase letters, numbers, and underscores."
+msgstr "Certains champs « Identifiant de l’objet Express » ne sont pas valides (%s). Chaque valeur doit commencer par une lettre et ne contenir que des lettres minuscules, des chiffres et des tirets bas."
 
 #: src/BlockBuilder/FieldType/Type/FileSet/FileSetFieldType.php:20
 msgid "File Set"
-msgstr "Zestaw plików"
+msgstr "Ensemble de fichiers"
 
 #: src/BlockBuilder/FieldType/Type/FilesFromFolder/FilesFromFolderFieldType.php:20
 msgid "Files from a Folder"
-msgstr "Pliki z folderu"
+msgstr "Fichiers d’un dossier"
 
 #: src/BlockBuilder/FieldType/Type/FilesFromFolder/FilesFromFolderFieldType.php:50
-#, php-format
 msgid "Some \"File order\" fields contain an invalid option (%s)."
-msgstr "Niektóre pola \"Kolejność plików\" zawierają nieprawidłową opcję (%s)."
+msgstr "Certains champs « Ordre des fichiers » contiennent une option non valide (%s)."
 
 #: src/BlockBuilder/FieldType/Type/FlexLink/FlexLinkFieldType.php:20
 msgid "Flex Link"
-msgstr "Elastyczny link"
+msgstr "Lien flexible"
 
 #: src/BlockBuilder/FieldType/Type/HtmlEditor/HtmlEditorFieldType.php:28
 msgid "HTML Editor"
-msgstr "Edytor HTML"
+msgstr "Éditeur HTML"
 
 #: src/BlockBuilder/FieldType/Type/HtmlEditor/HtmlEditorFieldType.php:61
-#, php-format
-msgid ""
-"Some \"HTML Editor/Height\" fields must contain a number between %s and %s "
-"or be empty (%s)."
-msgstr ""
-"Niektóre pola \"Edytor HTML/Wysokość\" muszą zawierać liczbę od %s do %s "
-"albo pozostać puste (%s)."
+msgid "Some \"HTML Editor/Height\" fields must contain a number between %s and %s or be empty (%s)."
+msgstr "Certains champs « Éditeur HTML/Hauteur » doivent contenir un nombre compris entre %s et %s ou être vides (%s)."
 
 #: src/BlockBuilder/FieldType/Type/IconPicker/IconPickerFieldType.php:20
 msgid "Icon Picker"
-msgstr "Wybór ikony"
+msgstr "Sélecteur d’icône"
 
 #: src/BlockBuilder/FieldType/Type/IconPicker/IconPickerFieldType.php:48
-#, php-format
-msgid ""
-"Some \"Icon Picker/Default value\" fields contain invalid icon classes (%s)."
-msgstr ""
-"Niektóre pola \"Wybór ikony/Domyślna wartość\" zawierają nieprawidłowe klasy "
-"ikony (%s)."
+msgid "Some \"Icon Picker/Default value\" fields contain invalid icon classes (%s)."
+msgstr "Certains champs « Sélecteur d’icône/Valeur par défaut » contiennent des classes d’icône non valides (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Image/ImageFieldType.php:35
 msgid "Image"
-msgstr "Obraz"
+msgstr "Image"
 
 #: src/BlockBuilder/FieldType/Type/Image/ImageFieldType.php:85
-#, php-format
-msgid ""
-"Some \"Image/Generate a thumbnail\" fields must specify a width, a height, "
-"or both (%s)."
-msgstr ""
-"Niektóre pola \"Obraz/Wygeneruj miniaturę\" muszą określać szerokość, "
-"wysokość albo obie wartości (%s)."
+msgid "Some \"Image/Generate a thumbnail\" fields must specify a width, a height, or both (%s)."
+msgstr "Certains champs « Image/Générer une vignette » doivent indiquer une largeur, une hauteur ou les deux (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Image/ImageFieldType.php:86
-#, php-format
-msgid ""
-"Some \"Image/Generate a thumbnail\" fields must specify both a width and a "
-"height when cropping the image (%s)."
-msgstr ""
-"Niektóre pola \"Obraz/Wygeneruj miniaturę\" muszą określać zarówno "
-"szerokość, jak i wysokość podczas przycinania obrazu (%s)."
+msgid "Some \"Image/Generate a thumbnail\" fields must specify both a width and a height when cropping the image (%s)."
+msgstr "Certains champs « Image/Générer une vignette » doivent indiquer une largeur et une hauteur lors du recadrage de l’image (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Image/ImageFieldType.php:87
-#, php-format
-msgid ""
-"Some \"Image/Generate a thumbnail/Width\" fields must contain a number "
-"greater than 0 or be empty (%s)."
-msgstr ""
-"Niektóre pola \"Obraz/Wygeneruj miniaturę/Szerokość\" muszą zawierać liczbę "
-"większą od 0 albo pozostać puste (%s)."
+msgid "Some \"Image/Generate a thumbnail/Width\" fields must contain a number greater than 0 or be empty (%s)."
+msgstr "Certains champs « Image/Générer une vignette/Largeur » doivent contenir un nombre supérieur à 0 ou être vides (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Image/ImageFieldType.php:88
-#, php-format
-msgid ""
-"Some \"Image/Generate a thumbnail/Height\" fields must contain a number "
-"greater than 0 or be empty (%s)."
-msgstr ""
-"Niektóre pola \"Obraz/Wygeneruj miniaturę/Wysokość\" muszą zawierać liczbę "
-"większą od 0 albo pozostać puste (%s)."
+msgid "Some \"Image/Generate a thumbnail/Height\" fields must contain a number greater than 0 or be empty (%s)."
+msgstr "Certains champs « Image/Générer une vignette/Hauteur » doivent contenir un nombre supérieur à 0 ou être vides (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Image/ImageFieldType.php:90
-#, php-format
-msgid ""
-"Some \"Image/Generate a fullscreen image\" fields must specify a width, a "
-"height, or both (%s)."
-msgstr ""
-"Niektóre pola \"Obraz/Wygeneruj obraz pełnoekranowy\" muszą określać "
-"szerokość, wysokość albo obie wartości (%s)."
+msgid "Some \"Image/Generate a fullscreen image\" fields must specify a width, a height, or both (%s)."
+msgstr "Certains champs « Image/Générer une image plein écran » doivent indiquer une largeur, une hauteur ou les deux (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Image/ImageFieldType.php:91
-#, php-format
-msgid ""
-"Some \"Image/Generate a fullscreen image\" fields must specify both a width "
-"and a height when cropping the image (%s)."
-msgstr ""
-"Niektóre pola \"Obraz/Wygeneruj obraz pełnoekranowy\" muszą określać zarówno "
-"szerokość, jak i wysokość podczas przycinania obrazu (%s)."
+msgid "Some \"Image/Generate a fullscreen image\" fields must specify both a width and a height when cropping the image (%s)."
+msgstr "Certains champs « Image/Générer une image plein écran » doivent indiquer une largeur et une hauteur lors du recadrage de l’image (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Image/ImageFieldType.php:92
-#, php-format
-msgid ""
-"Some \"Image/Generate a fullscreen image/Width\" fields must contain a "
-"number greater than 0 or be empty (%s)."
-msgstr ""
-"Niektóre pola \"Obraz/Wygeneruj obraz pełnoekranowy/Szerokość\" muszą "
-"zawierać liczbę większą od 0 albo pozostać puste (%s)."
+msgid "Some \"Image/Generate a fullscreen image/Width\" fields must contain a number greater than 0 or be empty (%s)."
+msgstr "Certains champs « Image/Générer une image plein écran/Largeur » doivent contenir un nombre supérieur à 0 ou être vides (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Image/ImageFieldType.php:93
-#, php-format
-msgid ""
-"Some \"Image/Generate a fullscreen image/Height\" fields must contain a "
-"number greater than 0 or be empty (%s)."
-msgstr ""
-"Niektóre pola \"Obraz/Wygeneruj obraz pełnoekranowy/Wysokość\" muszą "
-"zawierać liczbę większą od 0 albo pozostać puste (%s)."
+msgid "Some \"Image/Generate a fullscreen image/Height\" fields must contain a number greater than 0 or be empty (%s)."
+msgstr "Certains champs « Image/Générer une image plein écran/Hauteur » doivent contenir un nombre supérieur à 0 ou être vides (%s)."
 
 #: src/BlockBuilder/FieldType/Type/MultipleChoice/MultipleChoiceFieldType.php:29
 msgid "Multiple Choice Field"
-msgstr "Pole wielokrotnego wyboru"
+msgstr "Champ à choix multiples"
 
 #: src/BlockBuilder/FieldType/Type/MultipleChoice/MultipleChoiceFieldType.php:67
-#, php-format
-msgid ""
-"Some \"Multiple Choice Field/Type\" fields contain an invalid option (%s)."
-msgstr ""
-"Niektóre pola \"Pole wielokrotnego wyboru/Typ\" zawierają nieprawidłową "
-"opcję (%s)."
+msgid "Some \"Multiple Choice Field/Type\" fields contain an invalid option (%s)."
+msgstr "Certains champs « Champ à choix multiples/Type » contiennent une option non valide (%s)."
 
 #: src/BlockBuilder/FieldType/Type/MultipleChoice/MultipleChoiceFieldType.php:68
-#, php-format
-msgid ""
-"Some \"Multiple Choice Field/List generation method\" fields contain an "
-"invalid option (%s)."
-msgstr ""
-"Niektóre pola \"Pole wielokrotnego wyboru/Metoda generowania listy\" "
-"zawierają nieprawidłową opcję (%s)."
+msgid "Some \"Multiple Choice Field/List generation method\" fields contain an invalid option (%s)."
+msgstr "Certains champs « Champ à choix multiples/Méthode de génération de la liste » contiennent une option non valide (%s)."
 
 #: src/BlockBuilder/FieldType/Type/MultipleChoice/MultipleChoiceFieldType.php:69
-#, php-format
-msgid ""
-"There are some empty \"Multiple Choice Field/Select options\" fields (%s)."
-msgstr ""
-"Niektóre pola \"Pole wielokrotnego wyboru/Opcje wyboru\" są puste (%s)."
+msgid "There are some empty \"Multiple Choice Field/Select options\" fields (%s)."
+msgstr "Certains champs « Champ à choix multiples/Options de sélection » sont vides (%s)."
 
 #: src/BlockBuilder/FieldType/Type/MultipleChoice/MultipleChoiceFieldType.php:70
-#, php-format
-msgid ""
-"Some \"Multiple Choice Field/Select options\" fields contain invalid "
-"options. Use one option per line. Explicit keys must use \"key :: label\", "
-"start with a letter or number, and contain only letters, numbers, "
-"underscores, and hyphens (%s)."
-msgstr ""
-"Niektóre pola \"Pole wielokrotnego wyboru/Opcje wyboru\" zawierają "
-"nieprawidłowe opcje. Wpisz każdą opcję w osobnym wierszu. Jawne klucze muszą "
-"mieć postać \"klucz :: etykieta\", zaczynać się od litery lub cyfry i "
-"zawierać wyłącznie litery, cyfry, znaki podkreślenia oraz łączniki (%s)."
+msgid "Some \"Multiple Choice Field/Select options\" fields contain invalid options. Use one option per line. Explicit keys must use \"key :: label\", start with a letter or number, and contain only letters, numbers, underscores, and hyphens (%s)."
+msgstr "Certains champs « Champ à choix multiples/Options de sélection » contiennent des options non valides. Utilisez une option par ligne. Les clés explicites doivent utiliser le format « key :: label », commencer par une lettre ou un chiffre et ne contenir que des lettres, des chiffres, des tirets bas et des traits d’union (%s)."
 
 #: src/BlockBuilder/FieldType/Type/MultipleChoice/MultipleChoiceFieldType.php:71
-#, php-format
-msgid ""
-"The default value of a Multiple Choice Field contains an option that is not "
-"configured (%s)."
-msgstr ""
-"Wartość domyślna pola wielokrotnego wyboru zawiera opcję, która nie została "
-"skonfigurowana (%s)."
+msgid "The default value of a Multiple Choice Field contains an option that is not configured (%s)."
+msgstr "La valeur par défaut d’un champ à choix multiples contient une option qui n’est pas configurée (%s)."
 
 #: src/BlockBuilder/FieldType/Type/MultipleChoice/MultipleChoiceFieldType.php:72
-#, php-format
-msgid ""
-"The default value of a Multiple Choice Field must contain unique option keys "
-"separated by pipes (%s)."
-msgstr ""
-"Wartość domyślna pola wielokrotnego wyboru musi zawierać unikatowe klucze "
-"opcji rozdzielone pionowymi kreskami (%s)."
+msgid "The default value of a Multiple Choice Field must contain unique option keys separated by pipes (%s)."
+msgstr "La valeur par défaut d’un champ à choix multiples doit contenir des clés d’option uniques séparées par des barres verticales (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Number/NumberFieldType.php:33
 msgid "Number"
-msgstr "Liczba"
+msgstr "Nombre"
 
 #: src/BlockBuilder/FieldType/Type/Number/NumberFieldType.php:85
-#, php-format
-msgid ""
-"Some \"Number/Size\" fields must use a dot-separated decimal format such as "
-"10.2 or 8.0 (%s)."
-msgstr ""
-"Niektóre pola \"Liczba/Rozmiar\" muszą zawierać wartość w formacie "
-"dziesiętnym z kropką, np. 10.2 lub 8.0 (%s)."
+msgid "Some \"Number/Size\" fields must use a dot-separated decimal format such as 10.2 or 8.0 (%s)."
+msgstr "Certains champs « Nombre/Taille » doivent utiliser un format décimal séparé par un point, tel que 10.2 ou 8.0 (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Number/NumberFieldType.php:86
 #: src/BlockBuilder/FieldType/Type/Number/NumberFieldType.php:87
 #: src/BlockBuilder/FieldType/Type/Number/NumberFieldType.php:88
-#, php-format
-msgid ""
-"Some \"Number/%s\" fields must contain a numeric value such as 1 or 0.01 "
-"(%s)."
-msgstr ""
-"Niektóre pola \"Liczba/%s\" muszą zawierać wartość liczbową, np. 1 lub 0.01 "
-"(%s)."
+msgid "Some \"Number/%s\" fields must contain a numeric value such as 1 or 0.01 (%s)."
+msgstr "Certains champs « Nombre/%s » doivent contenir une valeur numérique telle que 1 ou 0.01 (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Number/NumberFieldType.php:89
-#, php-format
-msgid ""
-"Some \"Number/Step\" fields must contain a value greater than zero (%s)."
-msgstr ""
-"Niektóre pola \"Liczba/Krok\" muszą zawierać wartość większą od zera (%s)."
+msgid "Some \"Number/Step\" fields must contain a value greater than zero (%s)."
+msgstr "Certains champs « Nombre/Pas » doivent contenir une valeur supérieure à zéro (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Number/NumberFieldType.php:90
-#, php-format
-msgid ""
-"Some \"Number/Minimum\" fields contain a value greater than the "
-"corresponding maximum (%s)."
-msgstr ""
-"Niektóre pola \"Liczba/Wartość minimalna\" zawierają wartość większą od "
-"odpowiadającej wartości maksymalnej (%s)."
+msgid "Some \"Number/Minimum\" fields contain a value greater than the corresponding maximum (%s)."
+msgstr "Certains champs « Nombre/Minimum » contiennent une valeur supérieure au maximum correspondant (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Number/NumberFieldType.php:92
-#, php-format
-msgid ""
-"Some \"Displayed decimals\" fields must contain an integer between 0 and %s "
-"(%s)."
-msgstr ""
-"Niektóre pola \"Liczba wyświetlanych miejsc dziesiętnych\" muszą zawierać "
-"liczbę całkowitą od 0 do %s (%s)."
+msgid "Some \"Displayed decimals\" fields must contain an integer between 0 and %s (%s)."
+msgstr "Certains champs « Décimales affichées » doivent contenir un entier compris entre 0 et %s (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Number/NumberFieldType.php:96
-#, php-format
 msgid "Some \"Displayed decimal separator\" fields are empty (%s)."
-msgstr ""
-"Niektóre pola \"Separator dziesiętny w wyświetlanej wartości\" są puste (%s)."
+msgstr "Certains champs « Séparateur décimal affiché » sont vides (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Number/NumberFieldType.php:97
-#, php-format
 msgid "Some \"Number/Default value\" fields contain an invalid number (%s)."
-msgstr ""
-"Niektóre pola \"Liczba/Domyślna wartość\" zawierają nieprawidłową liczbę "
-"(%s)."
+msgstr "Certains champs « Nombre/Valeur par défaut » contiennent un nombre non valide (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Number/NumberFieldType.php:98
-#, php-format
-msgid ""
-"Some \"Number/Default value\" fields are outside their configured minimum-to-"
-"maximum range (%s)."
-msgstr ""
-"Niektóre pola \"Liczba/Domyślna wartość\" zawierają wartość spoza "
-"skonfigurowanego zakresu (%s)."
+msgid "Some \"Number/Default value\" fields are outside their configured minimum-to-maximum range (%s)."
+msgstr "Certains champs « Nombre/Valeur par défaut » sont en dehors de la plage minimale-maximale configurée (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Number/NumberFieldType.php:99
-#, php-format
-msgid ""
-"Some \"Number/Default value\" fields do not match their configured step (%s)."
-msgstr ""
-"Niektóre pola \"Liczba/Domyślna wartość\" zawierają wartość niezgodną ze "
-"skonfigurowanym krokiem (%s)."
+msgid "Some \"Number/Default value\" fields do not match their configured step (%s)."
+msgstr "Certains champs « Nombre/Valeur par défaut » ne correspondent pas au pas configuré (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Number/NumberFieldType.php:100
 #: src/BlockBuilder/FieldType/Type/Text/TextFieldType.php:69
-#, php-format
 msgid "Some \"Field prefix\" values contain more than %s characters (%s)."
-msgstr ""
-"Niektóre wartości \"Prefiks pola\" zawierają więcej niż %s znaków (%s)."
+msgstr "Certaines valeurs « Préfixe du champ » contiennent plus de %s caractères (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Number/NumberFieldType.php:101
 #: src/BlockBuilder/FieldType/Type/Text/TextFieldType.php:70
-#, php-format
 msgid "Some \"Field suffix\" values contain more than %s characters (%s)."
-msgstr "Niektóre wartości \"Sufiks pola\" zawierają więcej niż %s znaków (%s)."
+msgstr "Certaines valeurs « Suffixe du champ » contiennent plus de %s caractères (%s)."
 
 #: src/BlockBuilder/FieldType/Type/SingleChoice/SingleChoiceFieldType.php:30
 msgid "Single Choice Field"
-msgstr "Pole jednokrotnego wyboru"
+msgstr "Champ à choix unique"
 
 #: src/BlockBuilder/FieldType/Type/SingleChoice/SingleChoiceFieldType.php:70
-#, php-format
-msgid ""
-"Some \"Single Choice Field/Type\" fields contain an invalid option (%s)."
-msgstr ""
-"Niektóre pola \"Pole jednokrotnego wyboru/Typ\" zawierają nieprawidłową "
-"opcję (%s)."
+msgid "Some \"Single Choice Field/Type\" fields contain an invalid option (%s)."
+msgstr "Certains champs « Champ à choix unique/Type » contiennent une option non valide (%s)."
 
 #: src/BlockBuilder/FieldType/Type/SingleChoice/SingleChoiceFieldType.php:71
-#, php-format
-msgid ""
-"Some \"Single Choice Field/Add an empty option\" fields contain an invalid "
-"option (%s)."
-msgstr ""
-"Niektóre pola \"Pole jednokrotnego wyboru/Dodaj pustą opcję\" zawierają "
-"nieprawidłową opcję (%s)."
+msgid "Some \"Single Choice Field/Add an empty option\" fields contain an invalid option (%s)."
+msgstr "Certains champs « Champ à choix unique/Ajouter une option vide » contiennent une option non valide (%s)."
 
 #: src/BlockBuilder/FieldType/Type/SingleChoice/SingleChoiceFieldType.php:72
-#, php-format
-msgid ""
-"Some \"Single Choice Field/List generation method\" fields contain an "
-"invalid option (%s)."
-msgstr ""
-"Niektóre pola \"Pole jednokrotnego wyboru/Metoda generowania listy\" "
-"zawierają nieprawidłową opcję (%s)."
+msgid "Some \"Single Choice Field/List generation method\" fields contain an invalid option (%s)."
+msgstr "Certains champs « Champ à choix unique/Méthode de génération de la liste » contiennent une option non valide (%s)."
 
 #: src/BlockBuilder/FieldType/Type/SingleChoice/SingleChoiceFieldType.php:73
-#, php-format
-msgid ""
-"There are some empty \"Single Choice Field/Select options\" fields (%s)."
-msgstr ""
-"Niektóre pola \"Pole jednokrotnego wyboru/Opcje wyboru\" są puste (%s)."
+msgid "There are some empty \"Single Choice Field/Select options\" fields (%s)."
+msgstr "Certains champs « Champ à choix unique/Options de sélection » sont vides (%s)."
 
 #: src/BlockBuilder/FieldType/Type/SingleChoice/SingleChoiceFieldType.php:74
-#, php-format
-msgid ""
-"Some \"Single Choice Field/Select options\" fields contain invalid options. "
-"Use one option per line. Explicit keys must use \"key :: label\", start with "
-"a letter or number, and contain only letters, numbers, underscores, and "
-"hyphens (%s)."
-msgstr ""
-"Niektóre pola \"Pole jednokrotnego wyboru/Opcje wyboru\" zawierają "
-"nieprawidłowe opcje. Wpisz każdą opcję w osobnym wierszu. Jawne klucze muszą "
-"mieć postać \"klucz :: etykieta\", zaczynać się od litery lub cyfry i "
-"zawierać wyłącznie litery, cyfry, znaki podkreślenia oraz łączniki (%s)."
+msgid "Some \"Single Choice Field/Select options\" fields contain invalid options. Use one option per line. Explicit keys must use \"key :: label\", start with a letter or number, and contain only letters, numbers, underscores, and hyphens (%s)."
+msgstr "Certains champs « Champ à choix unique/Options de sélection » contiennent des options non valides. Utilisez une option par ligne. Les clés explicites doivent utiliser le format « key :: label », commencer par une lettre ou un chiffre et ne contenir que des lettres, des chiffres, des tirets bas et des traits d’union (%s)."
 
 #: src/BlockBuilder/FieldType/Type/SingleChoice/SingleChoiceFieldType.php:75
-#, php-format
-msgid ""
-"The default value of a Single Choice Field does not match any configured "
-"option (%s)."
-msgstr ""
-"Wartość domyślna pola jednokrotnego wyboru nie odpowiada żadnej "
-"skonfigurowanej opcji (%s)."
+msgid "The default value of a Single Choice Field does not match any configured option (%s)."
+msgstr "La valeur par défaut d’un champ à choix unique ne correspond à aucune option configurée (%s)."
 
 #: src/BlockBuilder/FieldType/Type/SvgIconPicker/SvgIconPickerFieldType.php:21
 msgid "SVG Icon Picker"
-msgstr "Wybór ikony SVG"
+msgstr "Sélecteur d’icône SVG"
 
 #: src/BlockBuilder/FieldType/Type/SvgIconPicker/SvgIconPickerFieldType.php:62
-#, php-format
 msgid "Some \"SVG Icon Picker/Icons\" fields do not contain any icons (%s)."
-msgstr ""
-"Niektóre pola \"Wybór ikony SVG/Ikony\" nie zawierają żadnych ikon (%s)."
+msgstr "Certains champs « Sélecteur d’icône SVG/Icônes » ne contiennent aucune icône (%s)."
 
 #: src/BlockBuilder/FieldType/Type/SvgIconPicker/SvgIconPickerFieldType.php:63
-#, php-format
 msgid "Some \"SVG Icon Picker/Icons\" fields contain more than %s icons (%s)."
-msgstr ""
-"Niektóre pola \"Wybór ikony SVG/Ikony\" zawierają więcej niż %s ikon (%s)."
+msgstr "Certains champs « Sélecteur d’icône SVG/Icônes » contiennent plus de %s icônes (%s)."
 
 #: src/BlockBuilder/FieldType/Type/SvgIconPicker/SvgIconPickerFieldType.php:64
-#, php-format
-msgid ""
-"Some \"SVG Icon Picker/Icons\" fields contain incomplete or invalid icon "
-"definitions (%s)."
-msgstr ""
-"Niektóre pola \"Wybór ikony SVG/Ikony\" zawierają niekompletne lub "
-"nieprawidłowe definicje ikon (%s)."
+msgid "Some \"SVG Icon Picker/Icons\" fields contain incomplete or invalid icon definitions (%s)."
+msgstr "Certains champs « Sélecteur d’icône SVG/Icônes » contiennent des définitions d’icône incomplètes ou non valides (%s)."
 
 #: src/BlockBuilder/FieldType/Type/SvgIconPicker/SvgIconPickerFieldType.php:65
-#, php-format
-msgid ""
-"Some \"SVG Icon Picker/Icons\" fields contain invalid icon handles (%s)."
-msgstr ""
-"Niektóre pola \"Wybór ikony SVG/Ikony\" zawierają nieprawidłowe "
-"identyfikatory ikon (%s)."
+msgid "Some \"SVG Icon Picker/Icons\" fields contain invalid icon handles (%s)."
+msgstr "Certains champs « Sélecteur d’icône SVG/Icônes » contiennent des identifiants d’icône non valides (%s)."
 
 #: src/BlockBuilder/FieldType/Type/SvgIconPicker/SvgIconPickerFieldType.php:66
-#, php-format
-msgid ""
-"Icon handles in each \"SVG Icon Picker/Icons\" field must be unique (%s)."
-msgstr ""
-"Identyfikatory ikon w każdym polu \"Wybór ikony SVG/Ikony\" muszą być "
-"unikatowe (%s)."
+msgid "Icon handles in each \"SVG Icon Picker/Icons\" field must be unique (%s)."
+msgstr "Les identifiants d’icône de chaque champ « Sélecteur d’icône SVG/Icônes » doivent être uniques (%s)."
 
 #: src/BlockBuilder/FieldType/Type/SvgIconPicker/SvgIconPickerFieldType.php:67
-#, php-format
 msgid "Some \"SVG Icon Picker/Icons\" fields contain invalid SVG content (%s)."
-msgstr ""
-"Niektóre pola \"Wybór ikony SVG/Ikony\" zawierają nieprawidłowy kod SVG (%s)."
+msgstr "Certains champs « Sélecteur d’icône SVG/Icônes » contiennent du contenu SVG non valide (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Text/TextFieldType.php:71
-#, php-format
-msgid ""
-"Some \"Text/Additional validation\" fields contain an invalid option (%s)."
-msgstr ""
-"Niektóre pola \"Tekst/Dodatkowa walidacja\" zawierają nieprawidłową opcję "
-"(%s)."
+msgid "Some \"Text/Additional validation\" fields contain an invalid option (%s)."
+msgstr "Certains champs « Texte/Validation supplémentaire » contiennent une option non valide (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Text/TextFieldType.php:72
-#, php-format
-msgid ""
-"Some \"Text/Minimum length\" fields must contain a number between 0 and %s "
-"or be empty (%s)."
-msgstr ""
-"Niektóre pola \"Tekst/Minimalna długość\" muszą zawierać liczbę od 0 do %s "
-"albo pozostać puste (%s)."
+msgid "Some \"Text/Minimum length\" fields must contain a number between 0 and %s or be empty (%s)."
+msgstr "Certains champs « Texte/Longueur minimale » doivent contenir un nombre compris entre 0 et %s ou être vides (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Text/TextFieldType.php:73
-#, php-format
-msgid ""
-"Some \"Text/Maximum length\" fields must contain a number between 1 and %s "
-"(%s)."
-msgstr ""
-"Niektóre pola \"Tekst/Maksymalna długość\" muszą zawierać liczbę od 1 do %s "
-"(%s)."
+msgid "Some \"Text/Maximum length\" fields must contain a number between 1 and %s (%s)."
+msgstr "Certains champs « Texte/Longueur maximale » doivent contenir un nombre compris entre 1 et %s (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Text/TextFieldType.php:74
-#, php-format
-msgid ""
-"The minimum length of a Text field cannot be greater than its maximum length "
-"(%s)."
-msgstr ""
-"Minimalna długość pola tekstowego nie może być większa od jego maksymalnej "
-"długości (%s)."
+msgid "The minimum length of a Text field cannot be greater than its maximum length (%s)."
+msgstr "La longueur minimale d’un champ Texte ne peut pas être supérieure à sa longueur maximale (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Text/TextFieldType.php:75
-#, php-format
-msgid ""
-"Some \"Text/Default value\" fields do not satisfy their configured minimum "
-"or maximum length (%s)."
-msgstr ""
-"Niektóre pola \"Tekst/Domyślna wartość\" nie spełniają wymagań dotyczących "
-"skonfigurowanej minimalnej lub maksymalnej długości (%s)."
+msgid "Some \"Text/Default value\" fields do not satisfy their configured minimum or maximum length (%s)."
+msgstr "Certains champs « Texte/Valeur par défaut » ne respectent pas leur longueur minimale ou maximale configurée (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Text/TextFieldType.php:76
-#, php-format
-msgid ""
-"Some \"Text/Default value\" fields do not satisfy the selected additional "
-"validation (%s)."
-msgstr ""
-"Niektóre pola \"Tekst/Domyślna wartość\" nie spełniają wybranego dodatkowego "
-"kryterium walidacji (%s)."
+msgid "Some \"Text/Default value\" fields do not satisfy the selected additional validation (%s)."
+msgstr "Certains champs « Texte/Valeur par défaut » ne respectent pas la validation supplémentaire sélectionnée (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Textarea/TextareaFieldType.php:29
 msgid "Textarea"
-msgstr "Obszar tekstowy"
+msgstr "Zone de texte"
 
 #: src/BlockBuilder/FieldType/Type/Textarea/TextareaFieldType.php:73
-#, php-format
-msgid ""
-"Some \"Textarea/Minimum height\" fields must contain a number between %s and "
-"%s or be empty (%s)."
-msgstr ""
-"Niektóre pola \"Obszar tekstowy/Minimalna wysokość\" muszą zawierać liczbę "
-"od %s do %s albo pozostać puste (%s)."
+msgid "Some \"Textarea/Minimum height\" fields must contain a number between %s and %s or be empty (%s)."
+msgstr "Certains champs « Zone de texte/Hauteur minimale » doivent contenir un nombre compris entre %s et %s ou être vides (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Textarea/TextareaFieldType.php:79
-#, php-format
-msgid ""
-"Some \"Textarea/Maximum height\" fields must contain a number between %s and "
-"%s or be empty (%s)."
-msgstr ""
-"Niektóre pola \"Obszar tekstowy/Maksymalna wysokość\" muszą zawierać liczbę "
-"od %s do %s albo pozostać puste (%s)."
+msgid "Some \"Textarea/Maximum height\" fields must contain a number between %s and %s or be empty (%s)."
+msgstr "Certains champs « Zone de texte/Hauteur maximale » doivent contenir un nombre compris entre %s et %s ou être vides (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Textarea/TextareaFieldType.php:85
-#, php-format
-msgid ""
-"The minimum height of a Textarea cannot be greater than its maximum height "
-"(%s)."
-msgstr ""
-"Minimalna wysokość obszaru tekstowego nie może być większa od jego "
-"maksymalnej wysokości (%s)."
+msgid "The minimum height of a Textarea cannot be greater than its maximum height (%s)."
+msgstr "La hauteur minimale d’une zone de texte ne peut pas être supérieure à sa hauteur maximale (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Textarea/TextareaFieldType.php:88
-#, php-format
-msgid ""
-"Some \"Textarea/Minimum length\" fields must contain a number between 0 and "
-"%s or be empty (%s)."
-msgstr ""
-"Niektóre pola \"Obszar tekstowy/Minimalna długość\" muszą zawierać liczbę od "
-"0 do %s albo pozostać puste (%s)."
+msgid "Some \"Textarea/Minimum length\" fields must contain a number between 0 and %s or be empty (%s)."
+msgstr "Certains champs « Zone de texte/Longueur minimale » doivent contenir un nombre compris entre 0 et %s ou être vides (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Textarea/TextareaFieldType.php:89
-#, php-format
-msgid ""
-"Some \"Textarea/Maximum length\" fields must contain a number between 1 and "
-"%s or be empty (%s)."
-msgstr ""
-"Niektóre pola \"Obszar tekstowy/Maksymalna długość\" muszą zawierać liczbę "
-"od 1 do %s albo pozostać puste (%s)."
+msgid "Some \"Textarea/Maximum length\" fields must contain a number between 1 and %s or be empty (%s)."
+msgstr "Certains champs « Zone de texte/Longueur maximale » doivent contenir un nombre compris entre 1 et %s ou être vides (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Textarea/TextareaFieldType.php:90
-#, php-format
-msgid ""
-"The minimum length of a Textarea cannot be greater than its maximum length "
-"(%s)."
-msgstr ""
-"Minimalna długość obszaru tekstowego nie może być większa od jego "
-"maksymalnej długości (%s)."
+msgid "The minimum length of a Textarea cannot be greater than its maximum length (%s)."
+msgstr "La longueur minimale d’une zone de texte ne peut pas être supérieure à sa longueur maximale (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Textarea/TextareaFieldType.php:91
-#, php-format
-msgid ""
-"Some \"Textarea/Default value\" fields do not satisfy their configured "
-"minimum or maximum length (%s)."
-msgstr ""
-"Niektóre pola \"Obszar tekstowy/Domyślna wartość\" nie spełniają wymagań "
-"dotyczących skonfigurowanej minimalnej lub maksymalnej długości (%s)."
+msgid "Some \"Textarea/Default value\" fields do not satisfy their configured minimum or maximum length (%s)."
+msgstr "Certains champs « Zone de texte/Valeur par défaut » ne respectent pas leur longueur minimale ou maximale configurée (%s)."
 
 #: src/BlockBuilder/FieldType/Type/UserSelector/UserSelectorFieldType.php:20
 msgid "User Selector"
-msgstr "Wybór użytkownika"
+msgstr "Sélecteur d’utilisateur"
 
 #: src/BlockBuilder/FieldType/Type/WysiwygEditor/WysiwygEditorFieldType.php:29
 msgid "WYSIWYG Editor"
-msgstr "Edytor WYSIWYG"
+msgstr "Éditeur WYSIWYG"
 
 #: src/BlockBuilder/FieldType/Type/WysiwygEditor/WysiwygEditorFieldType.php:65
-#, php-format
-msgid ""
-"Some \"WYSIWYG Editor/Minimum height\" fields must contain a number between "
-"%s and %s or be empty (%s)."
-msgstr ""
-"Niektóre pola \"Edytor WYSIWYG/Minimalna wysokość\" muszą zawierać liczbę od "
-"%s do %s albo pozostać puste (%s)."
+msgid "Some \"WYSIWYG Editor/Minimum height\" fields must contain a number between %s and %s or be empty (%s)."
+msgstr "Certains champs « Éditeur WYSIWYG/Hauteur minimale » doivent contenir un nombre compris entre %s et %s ou être vides (%s)."
 
 #: src/BlockBuilder/FieldType/Type/WysiwygEditor/WysiwygEditorFieldType.php:66
-#, php-format
-msgid ""
-"Some \"WYSIWYG Editor/Maximum height\" fields must contain a number between "
-"%s and %s or be empty (%s)."
-msgstr ""
-"Niektóre pola \"Edytor WYSIWYG/Maksymalna wysokość\" muszą zawierać liczbę "
-"od %s do %s albo pozostać puste (%s)."
+msgid "Some \"WYSIWYG Editor/Maximum height\" fields must contain a number between %s and %s or be empty (%s)."
+msgstr "Certains champs « Éditeur WYSIWYG/Hauteur maximale » doivent contenir un nombre compris entre %s et %s ou être vides (%s)."
 
 #: src/BlockBuilder/FieldType/Type/WysiwygEditor/WysiwygEditorFieldType.php:67
-#, php-format
-msgid ""
-"The minimum height of a WYSIWYG Editor cannot be greater than its maximum "
-"height (%s)."
-msgstr ""
-"Minimalna wysokość edytora WYSIWYG nie może być większa od jego maksymalnej "
-"wysokości (%s)."
+msgid "The minimum height of a WYSIWYG Editor cannot be greater than its maximum height (%s)."
+msgstr "La hauteur minimale d’un éditeur WYSIWYG ne peut pas être supérieure à sa hauteur maximale (%s)."
 
 #: src/BlockBuilder/FieldType/Type/WysiwygEditor/WysiwygEditorFieldType.php:68
-#, php-format
-msgid ""
-"Some \"WYSIWYG Editor/Custom editor configuration\" fields must contain a "
-"valid JSON object (%s)."
-msgstr ""
-"Niektóre pola \"Edytor WYSIWYG/Niestandardowa konfiguracja edytora\" muszą "
-"zawierać prawidłowy obiekt JSON (%s)."
+msgid "Some \"WYSIWYG Editor/Custom editor configuration\" fields must contain a valid JSON object (%s)."
+msgstr "Certains champs « Éditeur WYSIWYG/Configuration personnalisée de l’éditeur » doivent contenir un objet JSON valide (%s)."
 
 #: src/BlockBuilder/NavigationTab/Enum/NavigationTabEnum.php:21
 msgid "Block settings"
-msgstr "Ustawienia bloku"
+msgstr "Paramètres du bloc"
 
 #: src/BlockBuilder/NavigationTab/Enum/NavigationTabEnum.php:22
 msgid "Build options"
-msgstr "Opcje generowania"
+msgstr "Options de création"
 
 #: src/BlockBuilder/NavigationTab/Enum/NavigationTabEnum.php:24
 msgid "Labels"
-msgstr "Etykiety"
+msgstr "Libellés"
 
 #: src/BlockBuilder/NavigationTab/Enum/NavigationTabEnum.php:25
 msgid "Tab: Basic information"
-msgstr "Zakładka: Podstawowe informacje"
+msgstr "Onglet : Informations de base"
 
 #: src/BlockBuilder/NavigationTab/Enum/NavigationTabEnum.php:26
 msgid "Tab: Repeatable entries"
-msgstr "Zakładka: Wpisy powtarzalne"
+msgstr "Onglet : Entrées répétables"
 
 #: src/BlockBuilder/Service/Option/BlockIconOptionProvider.php:25
 msgid "Keep current icon"
-msgstr "Zachowaj bieżącą ikonę"
+msgstr "Conserver l’icône actuelle"
 
 #: src/BlockBuilder/Service/Option/BlockIconOptionProvider.php:31
 msgid "Default Block Builder icon"
-msgstr "Domyślna ikona Block Buildera"
+msgstr "Icône par défaut de Block Builder"
 
 #: src/BlockBuilder/Service/Option/BlockSettingsOptionProvider.php:13
 msgid "Basic"
-msgstr "Podstawowe"
+msgstr "Basique"
 
 #: src/BlockBuilder/Service/Option/BlockSettingsOptionProvider.php:14
 msgid "Navigation"
-msgstr "Nawigacja"
+msgstr "Navigation"
 
 #: src/BlockBuilder/Service/Option/BlockSettingsOptionProvider.php:15
 msgid "Forms"
-msgstr "Formularze"
+msgstr "Formulaires"
 
 #: src/BlockBuilder/Service/Option/BlockSettingsOptionProvider.php:17
 msgid "Social Networking"
-msgstr "Sieci społecznościowe"
+msgstr "Réseaux sociaux"
 
 #: src/BlockBuilder/Service/Option/BlockSettingsOptionProvider.php:18
 msgid "Calendar & Events"
-msgstr "Kalendarz i wydarzenia"
+msgstr "Calendrier et événements"
 
 #: src/BlockBuilder/Service/Option/BlockSettingsOptionProvider.php:19
 msgid "Multimedia"
-msgstr "Multimedia"
+msgstr "Multimédia"
 
 #: src/BlockBuilder/Service/Option/FieldTypeOptionProvider.php:12
 msgid "None"
-msgstr "Brak"
+msgstr "Aucun"
 
 #: src/BlockBuilder/Service/Option/FieldTypeOptionProvider.php:13
 msgid "Phone"
-msgstr "Telefon"
+msgstr "Téléphone"
 
 #: src/BlockBuilder/Service/Option/FieldTypeOptionProvider.php:14
 msgid "Email"
@@ -2946,44 +2257,44 @@ msgstr "URL"
 
 #: src/BlockBuilder/Service/Option/FieldTypeOptionProvider.php:22
 msgid "Default select field"
-msgstr "Domyślne pole wyboru"
+msgstr "Champ de sélection standard"
 
 #: src/BlockBuilder/Service/Option/FieldTypeOptionProvider.php:23
 msgid "Enhanced select field"
-msgstr "Rozszerzone pole wyboru"
+msgstr "Champ de sélection amélioré"
 
 #: src/BlockBuilder/Service/Option/FieldTypeOptionProvider.php:24
 msgid "Radio list"
-msgstr "Lista przycisków opcji"
+msgstr "Liste de boutons radio"
 
 #: src/BlockBuilder/Service/Option/FieldTypeOptionProvider.php:31
 msgid "Default multiselect field"
-msgstr "Domyślne pole wielokrotnego wyboru"
+msgstr "Champ de sélection multiple standard"
 
 #: src/BlockBuilder/Service/Option/FieldTypeOptionProvider.php:32
 msgid "Enhanced multiselect field"
-msgstr "Rozszerzone pole wielokrotnego wyboru"
+msgstr "Champ de sélection multiple amélioré"
 
 #: src/BlockBuilder/Service/Option/FieldTypeOptionProvider.php:33
 msgid "Checkbox list"
-msgstr "Lista pól wyboru"
+msgstr "Liste de cases à cocher"
 
 #: src/BlockBuilder/Service/Option/FieldTypeOptionProvider.php:40
 msgid "Basic list"
-msgstr "Podstawowa lista"
+msgstr "Liste de base"
 
 #: src/BlockBuilder/Service/Option/FieldTypeOptionProvider.php:48
 msgid "As in File Manager"
-msgstr "Jak w menedżerze plików"
+msgstr "Comme dans le gestionnaire de fichiers"
 
 #: src/BlockBuilder/Service/Option/FieldTypeOptionProvider.php:49
 msgid "Ascending"
-msgstr "Rosnąco"
+msgstr "Croissant"
 
 #: src/BlockBuilder/Service/Option/FieldTypeOptionProvider.php:50
 msgid "Descending"
-msgstr "Malejąco"
+msgstr "Décroissant"
 
 #: src/BlockBuilder/Service/Option/FieldTypeOptionProvider.php:51
 msgid "Random"
-msgstr "Losowo"
+msgstr "Aléatoire"
