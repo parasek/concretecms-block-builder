@@ -57,7 +57,7 @@
                   class="form-control"
         ><%-customConfig%></textarea>
         <div class="form-text">
-            <?= t('The custom editor configuration should be inserted as JSON.'); ?>
+            <?= t('Enter the custom editor configuration as JSON.'); ?>
             <br>
             <?= t('Example configuration:'); ?>
             <code class="bb-code-block">

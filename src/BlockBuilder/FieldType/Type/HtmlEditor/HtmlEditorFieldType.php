@@ -58,7 +58,7 @@ class HtmlEditorFieldType extends AbstractFieldType
     {
         return [
             'height|invalid_number' => t(
-                'Invalid entry in one of "HTML Editor/Height" fields, should be a number between %s and %s or empty (%s).',
+                'Some "HTML Editor/Height" fields must contain a number between %s and %s or be empty (%s).',
                 self::MINIMUM_EDITOR_HEIGHT,
                 self::MAXIMUM_EDITOR_HEIGHT,
                 $context->getTabName(),

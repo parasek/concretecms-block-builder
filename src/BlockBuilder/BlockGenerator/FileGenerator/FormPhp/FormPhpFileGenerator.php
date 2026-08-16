@@ -167,7 +167,7 @@ readonly class FormPhpFileGenerator implements FileGeneratorInterface
             'collapseAll' => $config->collapseAllLabel ?: 'Collapse all',
             'removeAll' => $config->removeAllLabel ?: 'Delete all',
             'disableSmoothScroll' => $config->disableSmoothScrollLabel ?: 'Disable smooth scroll',
-            'keepAddedCollapsed' => $config->keepAddedEntryCollapsedLabel ?: 'Keep added/copied entry collapsed',
+            'keepAddedCollapsed' => $config->keepAddedEntryCollapsedLabel ?: 'Keep added or copied entries collapsed',
             'noEntries' => $config->noEntriesFoundLabel ?: 'No entries found.',
             'maximum' => $config->maxNumberOfEntriesLabel ?: 'Maximum number of entries',
             'remove' => $config->removeEntryLabel ?: 'Delete entry',

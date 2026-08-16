@@ -40,7 +40,7 @@ readonly class BlockIconValidator implements ValidatorInterface
         if ($customIcon !== null) {
             $feedback->addError(
                 error: t(
-                    'The uploaded "Custom block icon" value is invalid (%s).',
+                    'The uploaded value for "Custom block icon" is invalid (%s).',
                     NavigationTabEnum::BlockSettings->getName(),
                 ),
                 field: 'customBlockIcon',
@@ -96,7 +96,7 @@ readonly class BlockIconValidator implements ValidatorInterface
         if (!$customIcon->isValid()) {
             $feedback->addError(
                 error: t(
-                    'The uploaded "Custom block icon" file is invalid (%s).',
+                    'The file uploaded for "Custom block icon" is invalid (%s).',
                     NavigationTabEnum::BlockSettings->getName(),
                 ),
                 field: 'customBlockIcon',
@@ -125,7 +125,7 @@ readonly class BlockIconValidator implements ValidatorInterface
         if ($imageSize === false) {
             $feedback->addError(
                 error: t(
-                    'The uploaded "Custom block icon" is not a valid image (%s).',
+                    'The file uploaded for "Custom block icon" is not a valid image (%s).',
                     NavigationTabEnum::BlockSettings->getName(),
                 ),
                 field: 'customBlockIcon',
@@ -151,7 +151,7 @@ readonly class BlockIconValidator implements ValidatorInterface
         if ($width !== self::REQUIRED_WIDTH || $height !== self::REQUIRED_HEIGHT) {
             $feedback->addError(
                 error: t(
-                    'The "Custom block icon" must be exactly %spx x %spx. Current size: %spx x %spx (%s).',
+                    'The "Custom block icon" must be exactly %s px × %s px. Current size: %s px × %s px (%s).',
                     self::REQUIRED_WIDTH,
                     self::REQUIRED_HEIGHT,
                     $width,

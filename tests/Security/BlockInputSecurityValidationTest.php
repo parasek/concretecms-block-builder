@@ -156,7 +156,7 @@ final class BlockInputSecurityValidationTest extends BlockBuilderTestCase
         $feedback = $this->validateUploadedIcon($uploadedFile);
 
         self::assertSame(
-            ['The uploaded "Custom block icon" file is invalid (Block settings).'],
+            ['The file uploaded for "Custom block icon" is invalid (Block settings).'],
             $feedback->errors,
         );
         $this->assertCustomIconFeedbackLocation($feedback);
@@ -201,7 +201,7 @@ final class BlockInputSecurityValidationTest extends BlockBuilderTestCase
         ));
 
         self::assertSame(
-            ['The uploaded "Custom block icon" is not a valid image (Block settings).'],
+            ['The file uploaded for "Custom block icon" is not a valid image (Block settings).'],
             $feedback->errors,
         );
         $this->assertCustomIconFeedbackLocation($feedback);
@@ -227,7 +227,7 @@ final class BlockInputSecurityValidationTest extends BlockBuilderTestCase
 
         self::assertSame([
             'The "Custom block icon" must be a PNG image (Block settings).',
-            'The "Custom block icon" must be exactly 97px x 97px. Current size: 1px x 1px (Block settings).',
+            'The "Custom block icon" must be exactly 97 px × 97 px. Current size: 1 px × 1 px (Block settings).',
         ], $feedback->errors);
         $this->assertCustomIconFeedbackLocation($feedback);
     }
@@ -249,7 +249,7 @@ final class BlockInputSecurityValidationTest extends BlockBuilderTestCase
         ));
 
         self::assertSame([
-            'The "Custom block icon" must be exactly 97px x 97px. Current size: 1px x 1px (Block settings).',
+            'The "Custom block icon" must be exactly 97 px × 97 px. Current size: 1 px × 1 px (Block settings).',
         ], $feedback->errors);
         $this->assertCustomIconFeedbackLocation($feedback);
     }

@@ -91,17 +91,17 @@
 
                         <div class="bb-block-type-badges text-muted small mb-3 mb-xxl-0">
                         <span class="badge small bb-block-type-info-badge mb-1">
-                           <span class="me-1 text-muted"><?= t('Block Builder'); ?>:</span> <?= h($config->blockBuilderVersion ?? t('No info')); ?>
+                           <span class="me-1 text-muted"><?= t('Block Builder'); ?>:</span> <?= h($config->blockBuilderVersion ?? t('No information')); ?>
                         </span>
                             <span class="badge small bb-block-type-info-badge mb-1">
-                            <span class="me-1 text-muted"><?= t('Concrete'); ?>:</span> <?= h($config->concreteVersion ?? t('No info')); ?>
+                            <span class="me-1 text-muted"><?= t('Concrete'); ?>:</span> <?= h($config->concreteVersion ?? t('No information')); ?>
                         </span>
                             <span class="badge small bb-block-type-info-badge mb-1">
-                            <span class="me-1 text-muted"><?= t('PHP'); ?>:</span> <?= h($config->phpVersion ?? t('No info')); ?>
+                            <span class="me-1 text-muted"><?= t('PHP'); ?>:</span> <?= h($config->phpVersion ?? t('No information')); ?>
                         </span>
                             <span class="badge small bb-block-type-info-badge mb-1">
-                            <span class="me-1 text-muted"><?= t('Created At'); ?>:</span>
-                            <?= h($config->createdAt ? date('Y-m-d H:i', strtotime($config->createdAt)) : t('No info')); ?>
+                            <span class="me-1 text-muted"><?= t('Created at'); ?>:</span>
+                            <?= h($config->createdAt ? date('Y-m-d H:i', strtotime($config->createdAt)) : t('No information')); ?>
                         </span>
                         </div>
 
@@ -220,17 +220,17 @@
 
                         <div class="bb-block-type-badges text-muted small mb-3 mb-xxl-0">
                         <span class="badge small bb-block-type-info-badge mb-1">
-                           <span class="me-1 text-muted"><?= t('Block Builder'); ?>:</span> <?= h($predefinedConfig->blockBuilderVersion ?? t('No info')); ?>
+                           <span class="me-1 text-muted"><?= t('Block Builder'); ?>:</span> <?= h($predefinedConfig->blockBuilderVersion ?? t('No information')); ?>
                         </span>
                             <span class="badge small bb-block-type-info-badge mb-1">
-                            <span class="me-1 text-muted"><?= t('Concrete'); ?>:</span> <?= h($predefinedConfig->concreteVersion ?? t('No info')); ?>
+                            <span class="me-1 text-muted"><?= t('Concrete'); ?>:</span> <?= h($predefinedConfig->concreteVersion ?? t('No information')); ?>
                         </span>
                             <span class="badge small bb-block-type-info-badge mb-1">
-                            <span class="me-1 text-muted"><?= t('PHP'); ?>:</span> <?= h($predefinedConfig->phpVersion ?? t('No info')); ?>
+                            <span class="me-1 text-muted"><?= t('PHP'); ?>:</span> <?= h($predefinedConfig->phpVersion ?? t('No information')); ?>
                         </span>
                             <span class="badge small bb-block-type-info-badge mb-1">
-                            <span class="me-1 text-muted"><?= t('Created At'); ?>:</span>
-                            <?= h($predefinedConfig->createdAt ? date('Y-m-d H:i', strtotime($predefinedConfig->createdAt)) : t('No info')); ?>
+                            <span class="me-1 text-muted"><?= t('Created at'); ?>:</span>
+                            <?= h($predefinedConfig->createdAt ? date('Y-m-d H:i', strtotime($predefinedConfig->createdAt)) : t('No information')); ?>
                         </span>
                         </div>
 

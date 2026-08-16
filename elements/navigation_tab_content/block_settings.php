@@ -75,7 +75,7 @@
                     <div class="">
                         <?= $form->label('customBlockIcon', t('Upload a custom icon')); ?>
                         <?= $form->file('customBlockIcon'); ?>
-                        <div class="form-text"><?= t('Requirements: PNG image, 97px x 97px'); ?></div>
+                        <div class="form-text"><?= t('Requirements: PNG image, 97 px × 97 px'); ?></div>
                     </div>
                 </div>
             </div>
@@ -106,7 +106,7 @@
             </div>
         </div>
         <div class="mb-4 <?= h(in_array('cacheBlockOutputOnPost', $fieldsWithError) ? 'bb-has-error' : null); ?>">
-            <?= $form->label('cacheBlockOutputOnPost', t('Cache block output on post')); ?>
+            <?= $form->label('cacheBlockOutputOnPost', t('Cache block output for POST requests')); ?>
             <?= $form->select('cacheBlockOutputOnPost', $cacheBlockOutputOnPostOptions, (int) $config->cacheBlockOutputOnPost); ?>
             <div class="form-text">
                 <?= t('Allow cached output for HTTP POST requests. Disable this for blocks that must display POST-specific responses or error messages.'); ?>

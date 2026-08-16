@@ -14,15 +14,15 @@
         </div>
         <div class="bb-info-entry">
             <?= t('Block Builder'); ?>:
-            <strong class="bb-info-entry-value"><?= h($environment->blockBuilderVersion ?? t('No info')); ?></strong>
+            <strong class="bb-info-entry-value"><?= h($environment->blockBuilderVersion ?? t('No information')); ?></strong>
         </div>
         <div class="bb-info-entry">
             <?= t('Concrete'); ?>:
-            <strong class="bb-info-entry-value"><?= h($environment->concreteVersion ?? t('No info')); ?></strong>
+            <strong class="bb-info-entry-value"><?= h($environment->concreteVersion ?? t('No information')); ?></strong>
         </div>
         <div class="bb-info-entry">
             <?= t('PHP'); ?>:
-            <strong class="bb-info-entry-value"><?= h($environment->phpVersion ?? t('No info')); ?></strong>
+            <strong class="bb-info-entry-value"><?= h($environment->phpVersion ?? t('No information')); ?></strong>
         </div>
     </div>
 
@@ -33,15 +33,15 @@
             </div>
             <div class="bb-info-entry">
                 <?= t('Block Builder'); ?>:
-                <strong class="bb-info-entry-value"><?= h($config->blockBuilderVersion ?? t('No info')); ?></strong>
+                <strong class="bb-info-entry-value"><?= h($config->blockBuilderVersion ?? t('No information')); ?></strong>
             </div>
             <div class="bb-info-entry">
                 <?= t('Concrete'); ?>:
-                <strong class="bb-info-entry-value"><?= h($config->concreteVersion ?? t('No info')); ?></strong>
+                <strong class="bb-info-entry-value"><?= h($config->concreteVersion ?? t('No information')); ?></strong>
             </div>
             <div class="bb-info-entry">
                 <?= t('PHP'); ?>:
-                <strong class="bb-info-entry-value"><?= h($config->phpVersion ?? t('No info')); ?></strong>
+                <strong class="bb-info-entry-value"><?= h($config->phpVersion ?? t('No information')); ?></strong>
             </div>
         </div>
     <?php endif; ?>

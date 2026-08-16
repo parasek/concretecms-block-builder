@@ -70,13 +70,13 @@ class TextareaFieldType extends AbstractFieldType
     {
         return [
             'minHeight|invalid_number' => t(
-                'Invalid entry in one of "Textarea/Minimum height" fields, should be a number between %s and %s or empty (%s).',
+                'Some "Textarea/Minimum height" fields must contain a number between %s and %s or be empty (%s).',
                 self::MINIMUM_HEIGHT,
                 self::MAXIMUM_HEIGHT,
                 $context->getTabName(),
             ),
             'maxHeight|invalid_number' => t(
-                'Invalid entry in one of "Textarea/Maximum height" fields, should be a number between %s and %s or empty (%s).',
+                'Some "Textarea/Maximum height" fields must contain a number between %s and %s or be empty (%s).',
                 self::MINIMUM_HEIGHT,
                 self::MAXIMUM_HEIGHT,
                 $context->getTabName(),

@@ -39,7 +39,7 @@
                value="<%-size%>"
         >
         <div class="form-text">
-            <?= t('Size of decimal field in MySQL table.'); ?>
+            <?= t('Size of the DECIMAL field in the MySQL table.'); ?>
             <br>
             <?= t('Value "10.2" means that the database field can store 8 digits for the integer part and 2 digits for the fractional part.'); ?>
             <br>
@@ -55,7 +55,7 @@
 
         <div class="col-lg-6">
 
-            <p class="text-body"><strong><?= t('Accepted value'); ?></strong></p>
+            <p class="text-body"><strong><?= t('Accepted values'); ?></strong></p>
 
             <div class="mb-4">
                 <label for="<%-context%>[<%-counter%>][step]"
@@ -98,7 +98,7 @@
 
         <div class="col-lg-6">
 
-            <p class="text-body"><strong><?= t('Displayed value in view template'); ?></strong></p>
+            <p class="text-body"><strong><?= t('Value displayed in the view template'); ?></strong></p>
 
             <div class="mb-4">
                 <label for="<%-context%>[<%-counter%>][displayedDecimals]"
@@ -114,7 +114,7 @@
                 >
                 <div class="form-text">
                     <?= t('How many decimals to display after the separator.'); ?>
-                    <br><?= t('Argument of PHP function number_format()'); ?>
+                    <br><?= t('Argument of the PHP function number_format().'); ?>
                 </div>
             </div>
 
@@ -130,7 +130,7 @@
                 >
                 <div class="form-text">
                     <?= t('Usually "," (comma) or "." (dot).'); ?>
-                    <br><?= t('Argument of PHP function number_format()'); ?>
+                    <br><?= t('Argument of the PHP function number_format().'); ?>
                 </div>
             </div>
 
@@ -145,8 +145,8 @@
                        value="<%-displayedThousandsSeparator%>"
                 >
                 <div class="form-text">
-                    <?= t('Usually " " (space), "." (dot) or "," (comma). You can also leave it empty.'); ?>
-                    <br><?= t('Argument of PHP function number_format()'); ?>
+                    <?= t('Usually " " (space), "." (dot), or "," (comma). You can also leave it empty.'); ?>
+                    <br><?= t('Argument of the PHP function number_format().'); ?>
                 </div>
             </div>
 

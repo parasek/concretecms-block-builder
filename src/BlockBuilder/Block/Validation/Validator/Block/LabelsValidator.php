@@ -34,7 +34,7 @@ class LabelsValidator implements ValidatorInterface
 
         if (!empty($data['entries']) && empty($data['entriesLabel'])) {
             $feedback->addError(
-                error: t('Label for "%s" is required (%s).', t('Entries'), NavigationTabEnum::Labels->getName()),
+                error: t('The label for "%s" is required (%s).', t('Entries'), NavigationTabEnum::Labels->getName()),
                 field: 'entriesLabel',
                 tab: NavigationTabEnum::Labels->getHandle(),
             );

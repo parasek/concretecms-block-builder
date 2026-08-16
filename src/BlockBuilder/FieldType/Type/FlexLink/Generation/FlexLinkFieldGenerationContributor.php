@@ -366,7 +366,7 @@ PHP;
             '{{HELP_TEXT}}' => $this->renderHelpText($field->helpText),
             '{{SITEMAP_LABEL_LITERAL}}' => $this->formatLabel($config->linkFromSitemapLabel, 'Link from Sitemap'),
             '{{FILE_LABEL_LITERAL}}' => $this->formatLabel($config->linkFromFileManagerLabel, 'Link from File Manager'),
-            '{{EXTERNAL_LABEL_LITERAL}}' => $this->formatLabel($config->externalLinkLabel, 'External Link'),
+            '{{EXTERNAL_LABEL_LITERAL}}' => $this->formatLabel($config->externalLinkLabel, 'External link'),
             '{{SHOW_ADDITIONAL_LABEL_LITERAL}}' => $this->formatLabel($config->showAdditionalFieldsLabel, 'Show additional fields'),
             '{{HIDE_ADDITIONAL_LABEL_LITERAL}}' => $this->formatLabel($config->hideAdditionalFieldsLabel, 'Hide additional fields'),
             '{{ENDING_LABEL_LITERAL}}' => $this->formatLabel($config->urlEndingLabel, 'Custom string at the end of URL'),

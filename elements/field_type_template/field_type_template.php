@@ -90,7 +90,7 @@
                             aria-hidden="true"
                         >
                             <i class="fas fa-circle-notch fa-spin"></i>
-                            <?= t('Generating handle from Label'); ?>
+                            <?= t('Generating handle from label'); ?>
                         </div>
                     </div>
                     <div class="form-text"><?= t('Letters and underscores only, e.g., productName'); ?></div>
@@ -127,7 +127,7 @@
                         >
                         <label for="<%-context%>[<%-counter%>][titleSource]"
                                class="form-check-label"
-                        ><?= t('Use this field as title in repeatable entries'); ?></label>
+                        ><?= t('Use this field as the title in repeatable entries'); ?></label>
                     </div>
                     <% } %>
 

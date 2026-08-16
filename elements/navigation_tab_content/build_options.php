@@ -18,7 +18,7 @@
 
 <div class="row">
     <div class="col-xl-6 mb-4 <?= h(in_array('entriesAsFirstTab', $fieldsWithError) ? 'bb-has-error' : null); ?>">
-        <?= $form->label('entriesAsFirstTab', t('Entries as the first tab')); ?>
+        <?= $form->label('entriesAsFirstTab', t('Show the "Entries" tab first')); ?>
         <?= $form->select('entriesAsFirstTab', $entriesAsFirstTabOptions, (int) $config->entriesAsFirstTab); ?>
     </div>
     <div class="col-xl-6 mb-4 <?= h(in_array('maxNumberOfEntries', $fieldsWithError) ? 'bb-has-error' : null); ?>">

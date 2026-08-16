@@ -82,15 +82,15 @@ class ImageFieldType extends AbstractFieldType
     public static function getErrorMessages(FieldTypeContextEnum $context): array
     {
         return [
-            'thumbnailOptions|empty_width_and_height' => t('Invalid entry in one of "Image/Generate thumbnail" fields, you should provide width, height or both (%s).', $context->getTabName()),
-            'thumbnailOptions|crop_requires_width_and_height' => t('Invalid entry in one of "Image/Generate thumbnail" fields, you should provide width and height if you want to crop image (%s).', $context->getTabName()),
-            'thumbnailWidth|invalid_number' => t('Invalid entry in one of "Image/Generate thumbnail/Width" fields, should be a number greater than 0 or empty (%s).', $context->getTabName()),
-            'thumbnailHeight|invalid_number' => t('Invalid entry in one of "Image/Generate thumbnail/Height" fields, should be a number greater than 0 or empty (%s).', $context->getTabName()),
+            'thumbnailOptions|empty_width_and_height' => t('Some "Image/Generate a thumbnail" fields must specify a width, a height, or both (%s).', $context->getTabName()),
+            'thumbnailOptions|crop_requires_width_and_height' => t('Some "Image/Generate a thumbnail" fields must specify both a width and a height when cropping the image (%s).', $context->getTabName()),
+            'thumbnailWidth|invalid_number' => t('Some "Image/Generate a thumbnail/Width" fields must contain a number greater than 0 or be empty (%s).', $context->getTabName()),
+            'thumbnailHeight|invalid_number' => t('Some "Image/Generate a thumbnail/Height" fields must contain a number greater than 0 or be empty (%s).', $context->getTabName()),
 
-            'fullscreenOptions|empty_width_and_height' => t('Invalid entry in one of "Image/Generate fullscreen thumbnail" fields, you should provide width, height or both (%s).', $context->getTabName()),
-            'fullscreenOptions|crop_requires_width_and_height' => t('Invalid entry in one of "Image/Generate fullscreen thumbnail" fields, you should provide width and height if you want to crop image (%s).', $context->getTabName()),
-            'fullscreenWidth|invalid_number' => t('Invalid entry in one of "Image/Generate fullscreen thumbnail/Width" fields, should be a number greater than 0 or empty (%s).', $context->getTabName()),
-            'fullscreenHeight|invalid_number' => t('Invalid entry in one of "Image/Generate fullscreen thumbnail/Height" fields, should be a number greater than 0 or empty (%s).', $context->getTabName()),
+            'fullscreenOptions|empty_width_and_height' => t('Some "Image/Generate a fullscreen image" fields must specify a width, a height, or both (%s).', $context->getTabName()),
+            'fullscreenOptions|crop_requires_width_and_height' => t('Some "Image/Generate a fullscreen image" fields must specify both a width and a height when cropping the image (%s).', $context->getTabName()),
+            'fullscreenWidth|invalid_number' => t('Some "Image/Generate a fullscreen image/Width" fields must contain a number greater than 0 or be empty (%s).', $context->getTabName()),
+            'fullscreenHeight|invalid_number' => t('Some "Image/Generate a fullscreen image/Height" fields must contain a number greater than 0 or be empty (%s).', $context->getTabName()),
         ];
     }
 

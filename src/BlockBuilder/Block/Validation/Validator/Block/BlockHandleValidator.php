@@ -61,7 +61,7 @@ readonly class BlockHandleValidator implements ValidatorInterface
         }
 
         if (!$this->reservedHandleChecker->isBlockHandleAllowed($blockHandle)) {
-            $errors[] = t('Your "%s" is a forbidden word. Use a different phrase (%s).', t('Block handle'), NavigationTabEnum::BlockSettings->getName());
+            $errors[] = t('The field "%s" contains a forbidden word. Use a different value (%s).', t('Block handle'), NavigationTabEnum::BlockSettings->getName());
 
             return $this->createFeedback($errors);
         }
@@ -73,7 +73,7 @@ readonly class BlockHandleValidator implements ValidatorInterface
             } elseif (!$this->blockOwnershipChecker->isOwnedApplicationBlock($blockHandle)) {
                 $errors[] = t('The selected block does not have a valid Block Builder configuration. Build it as a new block instead.');
             } elseif (!$this->blockTypeLocator->isInstalled($blockHandle)) {
-                $errors[] = t('You cannot rebuild a block that is awaiting installation. Install it from the config list first.');
+                $errors[] = t('You cannot rebuild a block that is awaiting installation. Install it from the configuration list first.');
             }
 
             return $this->createFeedback($errors);

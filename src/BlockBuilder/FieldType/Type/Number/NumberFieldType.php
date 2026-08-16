@@ -82,20 +82,20 @@ class NumberFieldType extends AbstractFieldType
     public static function getErrorMessages(FieldTypeContextEnum $context): array
     {
         return [
-            'size|invalid_format' => t('Invalid entry in one of "Number/Size" fields, should be a dot-separated decimal format like 10.2 or 8.0 (%s).', $context->getTabName()),
-            'step|invalid_format' => t('Invalid entry in one of "Number/%s" fields, should be a numeric value like 1 or 0.01 (%s).', t('Step'), $context->getTabName()),
-            'minimum|invalid_format' => t('Invalid entry in one of "Number/%s" fields, should be a numeric value like 1 or 0.01 (%s).', t('Minimum'), $context->getTabName()),
-            'maximum|invalid_format' => t('Invalid entry in one of "Number/%s" fields, should be a numeric value like 1 or 0.01 (%s).', t('Maximum'), $context->getTabName()),
-            'step|not_positive' => t('Some "Number/Step" fields are not greater than zero (%s).', $context->getTabName()),
-            'minimum|greater_than_maximum' => t('Some "Number/Minimum" fields are greater than their maximum (%s).', $context->getTabName()),
+            'size|invalid_format' => t('Some "Number/Size" fields must use a dot-separated decimal format such as 10.2 or 8.0 (%s).', $context->getTabName()),
+            'step|invalid_format' => t('Some "Number/%s" fields must contain a numeric value such as 1 or 0.01 (%s).', t('Step'), $context->getTabName()),
+            'minimum|invalid_format' => t('Some "Number/%s" fields must contain a numeric value such as 1 or 0.01 (%s).', t('Minimum'), $context->getTabName()),
+            'maximum|invalid_format' => t('Some "Number/%s" fields must contain a numeric value such as 1 or 0.01 (%s).', t('Maximum'), $context->getTabName()),
+            'step|not_positive' => t('Some "Number/Step" fields must contain a value greater than zero (%s).', $context->getTabName()),
+            'minimum|greater_than_maximum' => t('Some "Number/Minimum" fields contain a value greater than the corresponding maximum (%s).', $context->getTabName()),
             'displayedDecimals|invalid_number' => t(
-                'Invalid entry in one of "Displayed decimals" fields, should be an integer between 0 and %s (%s).',
+                'Some "Displayed decimals" fields must contain an integer between 0 and %s (%s).',
                 self::MAXIMUM_DISPLAYED_DECIMALS,
                 $context->getTabName(),
             ),
             'displayedDecimalSeparator|invalid_value' => t('Some "Displayed decimal separator" fields are empty (%s).', $context->getTabName()),
             'defaultValue|invalid_number' => t('Some "Number/Default value" fields contain an invalid number (%s).', $context->getTabName()),
-            'defaultValue|outside_range' => t('Some "Number/Default value" fields are outside their configured minimum and maximum (%s).', $context->getTabName()),
+            'defaultValue|outside_range' => t('Some "Number/Default value" fields are outside their configured minimum-to-maximum range (%s).', $context->getTabName()),
             'defaultValue|invalid_step' => t('Some "Number/Default value" fields do not match their configured step (%s).', $context->getTabName()),
             'prefix|too_long' => t('Some "Field prefix" values contain more than %s characters (%s).', self::MAXIMUM_AFFIX_LENGTH, $context->getTabName()),
             'suffix|too_long' => t('Some "Field suffix" values contain more than %s characters (%s).', self::MAXIMUM_AFFIX_LENGTH, $context->getTabName()),

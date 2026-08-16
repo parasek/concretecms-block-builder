@@ -75,8 +75,8 @@
 </div>
 
 <div class="mb-4 <?= h(in_array('keepAddedEntryCollapsedLabel', $fieldsWithError) ? 'bb-has-error' : null); ?>">
-    <?= $form->label('keepAddedEntryCollapsedLabel', t('Keep added/copied entry collapsed')); ?>
-    <?= $form->text('keepAddedEntryCollapsedLabel', $config->keepAddedEntryCollapsedLabel, ['data-translated-text' => t('Keep added/copied entry collapsed'), 'data-untranslated-text' => 'Keep added/copied entry collapsed']); ?>
+    <?= $form->label('keepAddedEntryCollapsedLabel', t('Keep added or copied entries collapsed')); ?>
+    <?= $form->text('keepAddedEntryCollapsedLabel', $config->keepAddedEntryCollapsedLabel, ['data-translated-text' => t('Keep added or copied entries collapsed'), 'data-untranslated-text' => 'Keep added or copied entries collapsed']); ?>
 </div>
 
 <div class="mb-4 <?= h(in_array('noEntriesFoundLabel', $fieldsWithError) ? 'bb-has-error' : null); ?>">
@@ -150,8 +150,8 @@
 </div>
 
 <div class="mb-4 <?= h(in_array('externalLinkLabel', $fieldsWithError) ? 'bb-has-error' : null); ?>">
-    <?= $form->label('externalLinkLabel', t('External Link')); ?>
-    <?= $form->text('externalLinkLabel', $config->externalLinkLabel, ['data-translated-text' => t('External Link'), 'data-untranslated-text' => 'External Link']); ?>
+    <?= $form->label('externalLinkLabel', t('External link')); ?>
+    <?= $form->text('externalLinkLabel', $config->externalLinkLabel, ['data-translated-text' => t('External link'), 'data-untranslated-text' => 'External link']); ?>
 </div>
 
 <div class="mb-4 <?= h(in_array('showAdditionalFieldsLabel', $fieldsWithError) ? 'bb-has-error' : null); ?>">
@@ -185,13 +185,13 @@
 </div>
 
 <div class="mb-4 <?= h(in_array('overrideThumbnailDimensionsLabel', $fieldsWithError) ? 'bb-has-error' : null); ?>">
-    <?= $form->label('overrideThumbnailDimensionsLabel', t('Override Thumbnail dimensions')); ?>
-    <?= $form->text('overrideThumbnailDimensionsLabel', $config->overrideThumbnailDimensionsLabel, ['data-translated-text' => t('Override Thumbnail dimensions'), 'data-untranslated-text' => 'Override Thumbnail dimensions']); ?>
+    <?= $form->label('overrideThumbnailDimensionsLabel', t('Override thumbnail dimensions')); ?>
+    <?= $form->text('overrideThumbnailDimensionsLabel', $config->overrideThumbnailDimensionsLabel, ['data-translated-text' => t('Override thumbnail dimensions'), 'data-untranslated-text' => 'Override thumbnail dimensions']); ?>
 </div>
 
 <div class="mb-4 <?= h(in_array('overrideFullscreenImageDimensionsLabel', $fieldsWithError) ? 'bb-has-error' : null); ?>">
-    <?= $form->label('overrideFullscreenImageDimensionsLabel', t('Override Fullscreen Image dimensions')); ?>
-    <?= $form->text('overrideFullscreenImageDimensionsLabel', $config->overrideFullscreenImageDimensionsLabel, ['data-translated-text' => t('Override Fullscreen Image dimensions'), 'data-untranslated-text' => 'Override Fullscreen Image dimensions']); ?>
+    <?= $form->label('overrideFullscreenImageDimensionsLabel', t('Override fullscreen image dimensions')); ?>
+    <?= $form->text('overrideFullscreenImageDimensionsLabel', $config->overrideFullscreenImageDimensionsLabel, ['data-translated-text' => t('Override fullscreen image dimensions'), 'data-untranslated-text' => 'Override fullscreen image dimensions']); ?>
 </div>
 
 <div class="mb-4 <?= h(in_array('widthLabel', $fieldsWithError) ? 'bb-has-error' : null); ?>">
@@ -225,11 +225,11 @@
 </div>
 
 <div class="mb-4 <?= h(in_array('selectAllLabel', $fieldsWithError) ? 'bb-has-error' : null); ?>">
-    <?= $form->label('selectAllLabel', t('Select All')); ?>
-    <?= $form->text('selectAllLabel', $config->selectAllLabel, ['data-translated-text' => t('Select All'), 'data-untranslated-text' => 'Select All']); ?>
+    <?= $form->label('selectAllLabel', t('Select all')); ?>
+    <?= $form->text('selectAllLabel', $config->selectAllLabel, ['data-translated-text' => t('Select all'), 'data-untranslated-text' => 'Select all']); ?>
 </div>
 
 <div class="mb-4 <?= h(in_array('deselectAllLabel', $fieldsWithError) ? 'bb-has-error' : null); ?>">
-    <?= $form->label('deselectAllLabel', t('Deselect All')); ?>
-    <?= $form->text('deselectAllLabel', $config->deselectAllLabel, ['data-translated-text' => t('Deselect All'), 'data-untranslated-text' => 'Deselect All']); ?>
+    <?= $form->label('deselectAllLabel', t('Deselect all')); ?>
+    <?= $form->text('deselectAllLabel', $config->deselectAllLabel, ['data-translated-text' => t('Deselect all'), 'data-untranslated-text' => 'Deselect all']); ?>
 </div>
