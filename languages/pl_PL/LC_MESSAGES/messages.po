@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2026-08-15 18:06+0200\n"
-"PO-Revision-Date: 2026-08-15 18:21+0200\n"
+"POT-Creation-Date: 2026-08-16 10:44+0200\n"
+"PO-Revision-Date: 2026-08-16 10:44+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pl_PL\n"
@@ -1745,8 +1745,8 @@ msgstr "Plik konfiguracyjny \"%s\" zawiera nieobsługiwaną właściwość \"%s\
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:208
 #, php-format
 msgid ""
-"The property \"%s\" in the configuration file \"%s\" exceeds the maximum allowed "
-"length."
+"The property \"%s\" in the configuration file \"%s\" exceeds the maximum "
+"allowed length."
 msgstr ""
 "Właściwość \"%s\" w pliku konfiguracyjnym \"%s\" przekracza maksymalną "
 "dozwoloną długość."
@@ -1772,14 +1772,16 @@ msgstr ""
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:237
 #, php-format
 msgid ""
-"The \"%s\" field collection in the configuration file \"%s\" must be an array."
+"The \"%s\" field collection in the configuration file \"%s\" must be an "
+"array."
 msgstr ""
 "Sekcja pól \"%s\" w pliku konfiguracyjnym \"%s\" musi mieć postać tablicy."
 
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:241
 #, php-format
 msgid ""
-"The \"%s\" field collection in the configuration file \"%s\" may contain at most %s fields."
+"The \"%s\" field collection in the configuration file \"%s\" may contain at "
+"most %s fields."
 msgstr ""
 "Sekcja pól \"%s\" w pliku konfiguracyjnym \"%s\" może zawierać najwyżej %s "
 "pól."
@@ -1796,8 +1798,8 @@ msgstr ""
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:269
 #, php-format
 msgid ""
-"Property \"%s\" of field %s in the \"%s\" collection of the configuration file "
-"\"%s\" exceeds the maximum allowed length."
+"Property \"%s\" of field %s in the \"%s\" collection of the configuration "
+"file \"%s\" exceeds the maximum allowed length."
 msgstr ""
 "Właściwość \"%s\" pola %s w sekcji \"%s\" pliku konfiguracyjnego \"%s\" "
 "przekracza maksymalną dozwoloną długość."
@@ -1805,8 +1807,8 @@ msgstr ""
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:275
 #, php-format
 msgid ""
-"Field %s in the \"%s\" collection of the configuration file \"%s\" may contain at "
-"most %s options."
+"Field %s in the \"%s\" collection of the configuration file \"%s\" may "
+"contain at most %s options."
 msgstr ""
 "Pole %s w sekcji \"%s\" pliku konfiguracyjnego \"%s\" może zawierać najwyżej "
 "%s opcji."
@@ -1814,8 +1816,8 @@ msgstr ""
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:285
 #, php-format
 msgid ""
-"Field %s in the \"%s\" collection of the configuration file \"%s\" may contain at "
-"most %s SVG icons."
+"Field %s in the \"%s\" collection of the configuration file \"%s\" may "
+"contain at most %s SVG icons."
 msgstr ""
 "Pole %s w sekcji \"%s\" pliku konfiguracyjnego \"%s\" może zawierać najwyżej "
 "%s ikon SVG."
@@ -1823,8 +1825,8 @@ msgstr ""
 #: src/BlockBuilder/Block/Service/BlockConfigReader.php:300
 #, php-format
 msgid ""
-"An SVG icon property \"%s\" in field %s of the configuration file \"%s\" exceeds "
-"the maximum allowed length."
+"An SVG icon property \"%s\" in field %s of the configuration file \"%s\" "
+"exceeds the maximum allowed length."
 msgstr ""
 "Właściwość ikony SVG \"%s\" w polu %s pliku konfiguracyjnego \"%s\" "
 "przekracza maksymalną dozwoloną długość."
@@ -2126,8 +2128,7 @@ msgstr "Pole \"%s\" zawiera nieprawidłową opcję (%s)."
 #, php-format
 msgid "The file uploaded for \"Custom block icon\" is invalid (%s)."
 msgstr ""
-"Plik przesłany w polu \"Niestandardowa ikona bloku\" jest nieprawidłowy "
-"(%s)."
+"Plik przesłany w polu \"Niestandardowa ikona bloku\" jest nieprawidłowy (%s)."
 
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockIconValidator.php:113
 #, php-format
@@ -2328,8 +2329,9 @@ msgstr "Niektóre pola \"Identyfikator obiektu Express\" są puste (%s)."
 #: src/BlockBuilder/FieldType/Type/Express/ExpressFieldType.php:51
 #, php-format
 msgid ""
-"Some \"Express object handle\" fields are invalid (%s). Each value must start "
-"with a letter and contain only lowercase letters, numbers, and underscores."
+"Some \"Express object handle\" fields are invalid (%s). Each value must "
+"start with a letter and contain only lowercase letters, numbers, and "
+"underscores."
 msgstr ""
 "Niektóre pola \"Identyfikator obiektu Express\" są nieprawidłowe (%s). "
 "Identyfikator musi zaczynać się od litery i może zawierać wyłącznie małe "
@@ -2359,8 +2361,8 @@ msgstr "Edytor HTML"
 #: src/BlockBuilder/FieldType/Type/HtmlEditor/HtmlEditorFieldType.php:61
 #, php-format
 msgid ""
-"Some \"HTML Editor/Height\" fields must contain a number between %s and %s or "
-"be empty (%s)."
+"Some \"HTML Editor/Height\" fields must contain a number between %s and %s "
+"or be empty (%s)."
 msgstr ""
 "Niektóre pola \"Edytor HTML/Wysokość\" muszą zawierać liczbę od %s do %s "
 "albo pozostać puste (%s)."
@@ -2384,8 +2386,8 @@ msgstr "Obraz"
 #: src/BlockBuilder/FieldType/Type/Image/ImageFieldType.php:85
 #, php-format
 msgid ""
-"Some \"Image/Generate a thumbnail\" fields must specify a width, a height, or "
-"both (%s)."
+"Some \"Image/Generate a thumbnail\" fields must specify a width, a height, "
+"or both (%s)."
 msgstr ""
 "Niektóre pola \"Obraz/Wygeneruj miniaturę\" muszą określać szerokość, "
 "wysokość albo obie wartości (%s)."
@@ -2396,14 +2398,14 @@ msgid ""
 "Some \"Image/Generate a thumbnail\" fields must specify both a width and a "
 "height when cropping the image (%s)."
 msgstr ""
-"Niektóre pola \"Obraz/Wygeneruj miniaturę\" muszą określać zarówno szerokość, "
-"jak i wysokość podczas przycinania obrazu (%s)."
+"Niektóre pola \"Obraz/Wygeneruj miniaturę\" muszą określać zarówno "
+"szerokość, jak i wysokość podczas przycinania obrazu (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Image/ImageFieldType.php:87
 #, php-format
 msgid ""
-"Some \"Image/Generate a thumbnail/Width\" fields must contain a number greater "
-"than 0 or be empty (%s)."
+"Some \"Image/Generate a thumbnail/Width\" fields must contain a number "
+"greater than 0 or be empty (%s)."
 msgstr ""
 "Niektóre pola \"Obraz/Wygeneruj miniaturę/Szerokość\" muszą zawierać liczbę "
 "większą od 0 albo pozostać puste (%s)."
@@ -2411,8 +2413,8 @@ msgstr ""
 #: src/BlockBuilder/FieldType/Type/Image/ImageFieldType.php:88
 #, php-format
 msgid ""
-"Some \"Image/Generate a thumbnail/Height\" fields must contain a number greater "
-"than 0 or be empty (%s)."
+"Some \"Image/Generate a thumbnail/Height\" fields must contain a number "
+"greater than 0 or be empty (%s)."
 msgstr ""
 "Niektóre pola \"Obraz/Wygeneruj miniaturę/Wysokość\" muszą zawierać liczbę "
 "większą od 0 albo pozostać puste (%s)."
@@ -2438,8 +2440,8 @@ msgstr ""
 #: src/BlockBuilder/FieldType/Type/Image/ImageFieldType.php:92
 #, php-format
 msgid ""
-"Some \"Image/Generate a fullscreen image/Width\" fields must contain a number "
-"greater than 0 or be empty (%s)."
+"Some \"Image/Generate a fullscreen image/Width\" fields must contain a "
+"number greater than 0 or be empty (%s)."
 msgstr ""
 "Niektóre pola \"Obraz/Wygeneruj obraz pełnoekranowy/Szerokość\" muszą "
 "zawierać liczbę większą od 0 albo pozostać puste (%s)."
@@ -2447,8 +2449,8 @@ msgstr ""
 #: src/BlockBuilder/FieldType/Type/Image/ImageFieldType.php:93
 #, php-format
 msgid ""
-"Some \"Image/Generate a fullscreen image/Height\" fields must contain a number "
-"greater than 0 or be empty (%s)."
+"Some \"Image/Generate a fullscreen image/Height\" fields must contain a "
+"number greater than 0 or be empty (%s)."
 msgstr ""
 "Niektóre pola \"Obraz/Wygeneruj obraz pełnoekranowy/Wysokość\" muszą "
 "zawierać liczbę większą od 0 albo pozostać puste (%s)."
@@ -2522,8 +2524,8 @@ msgid ""
 "Some \"Number/Size\" fields must use a dot-separated decimal format such as "
 "10.2 or 8.0 (%s)."
 msgstr ""
-"Niektóre pola \"Liczba/Rozmiar\" muszą zawierać wartość w formacie dziesiętnym "
-"z kropką, np. 10.2 lub 8.0 (%s)."
+"Niektóre pola \"Liczba/Rozmiar\" muszą zawierać wartość w formacie "
+"dziesiętnym z kropką, np. 10.2 lub 8.0 (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Number/NumberFieldType.php:86
 #: src/BlockBuilder/FieldType/Type/Number/NumberFieldType.php:87
@@ -2538,15 +2540,16 @@ msgstr ""
 
 #: src/BlockBuilder/FieldType/Type/Number/NumberFieldType.php:89
 #, php-format
-msgid "Some \"Number/Step\" fields must contain a value greater than zero (%s)."
+msgid ""
+"Some \"Number/Step\" fields must contain a value greater than zero (%s)."
 msgstr ""
 "Niektóre pola \"Liczba/Krok\" muszą zawierać wartość większą od zera (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Number/NumberFieldType.php:90
 #, php-format
 msgid ""
-"Some \"Number/Minimum\" fields contain a value greater than the corresponding "
-"maximum (%s)."
+"Some \"Number/Minimum\" fields contain a value greater than the "
+"corresponding maximum (%s)."
 msgstr ""
 "Niektóre pola \"Liczba/Wartość minimalna\" zawierają wartość większą od "
 "odpowiadającej wartości maksymalnej (%s)."
@@ -2772,8 +2775,8 @@ msgid ""
 "Some \"Textarea/Minimum height\" fields must contain a number between %s and "
 "%s or be empty (%s)."
 msgstr ""
-"Niektóre pola \"Obszar tekstowy/Minimalna wysokość\" muszą zawierać liczbę od "
-"%s do %s albo pozostać puste (%s)."
+"Niektóre pola \"Obszar tekstowy/Minimalna wysokość\" muszą zawierać liczbę "
+"od %s do %s albo pozostać puste (%s)."
 
 #: src/BlockBuilder/FieldType/Type/Textarea/TextareaFieldType.php:79
 #, php-format
@@ -2840,8 +2843,8 @@ msgstr "Edytor WYSIWYG"
 #: src/BlockBuilder/FieldType/Type/WysiwygEditor/WysiwygEditorFieldType.php:65
 #, php-format
 msgid ""
-"Some \"WYSIWYG Editor/Minimum height\" fields must contain a number between %s "
-"and %s or be empty (%s)."
+"Some \"WYSIWYG Editor/Minimum height\" fields must contain a number between "
+"%s and %s or be empty (%s)."
 msgstr ""
 "Niektóre pola \"Edytor WYSIWYG/Minimalna wysokość\" muszą zawierać liczbę od "
 "%s do %s albo pozostać puste (%s)."
@@ -2849,11 +2852,11 @@ msgstr ""
 #: src/BlockBuilder/FieldType/Type/WysiwygEditor/WysiwygEditorFieldType.php:66
 #, php-format
 msgid ""
-"Some \"WYSIWYG Editor/Maximum height\" fields must contain a number between %s "
-"and %s or be empty (%s)."
+"Some \"WYSIWYG Editor/Maximum height\" fields must contain a number between "
+"%s and %s or be empty (%s)."
 msgstr ""
-"Niektóre pola \"Edytor WYSIWYG/Maksymalna wysokość\" muszą zawierać liczbę od "
-"%s do %s albo pozostać puste (%s)."
+"Niektóre pola \"Edytor WYSIWYG/Maksymalna wysokość\" muszą zawierać liczbę "
+"od %s do %s albo pozostać puste (%s)."
 
 #: src/BlockBuilder/FieldType/Type/WysiwygEditor/WysiwygEditorFieldType.php:67
 #, php-format
