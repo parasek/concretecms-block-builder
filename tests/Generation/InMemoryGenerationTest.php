@@ -93,7 +93,7 @@ final class InMemoryGenerationTest extends BlockBuilderTestCase
         self::assertStringContainsString(
             'if (!$rootFolder instanceof FileFolder)',
             $filesByPath['controller.php'],
-            'Files from Folder must tolerate a missing File Manager root folder.',
+            'Files from a Folder must tolerate a missing File Manager root folder.',
         );
         self::assertStringNotContainsString('DOCUMENT_ROOT', $filesByPath['view.php']);
         self::assertStringNotContainsString('var_dump(', $filesByPath['view.php']);

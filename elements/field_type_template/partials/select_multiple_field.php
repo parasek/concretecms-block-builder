@@ -67,7 +67,7 @@
                class="form-label"
         ><?= t('Select options'); ?></label>
         <p class="small text-muted">
-            <?= t('Enter each option on a new line'); ?>
+                <?= t('Enter each option on a new line.'); ?>
             <br>
             <?= t('Use a double colon to specify the key (the value saved in the database) and the value (the displayed text). Keys must start with a letter or number and may contain letters, numbers, underscores, and hyphens.'); ?>
             <code class="bb-code-block">

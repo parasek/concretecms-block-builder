@@ -205,7 +205,7 @@ readonly class BlockConfigReader
                 && is_string($value)
                 && mb_strlen($value) > BlockConfigLimits::getTopLevelStringMaximum($propertyName)
             ) {
-                throw new UnsupportedConfigSchemaException(message: t('The property "%s" in configuration file "%s" exceeds the maximum allowed length.', $propertyName, $this->getConfigIdentifier($path)));
+                throw new UnsupportedConfigSchemaException(message: t('The property "%s" in the configuration file "%s" exceeds the maximum allowed length.', $propertyName, $this->getConfigIdentifier($path)));
             }
         }
 
@@ -234,16 +234,16 @@ readonly class BlockConfigReader
         foreach (FieldTypeContextEnum::cases() as $fieldTypeContext) {
             $collectionName = $fieldTypeContext->value;
             if (!isset($data[$collectionName]) || !is_array($data[$collectionName])) {
-                throw new InvalidConfigFieldDataException(message: t('The "%s" fields in configuration file "%s" must be provided as an array.', $collectionName, $this->getConfigIdentifier($path)));
+                throw new InvalidConfigFieldDataException(message: t('The "%s" field collection in the configuration file "%s" must be an array.', $collectionName, $this->getConfigIdentifier($path)));
             }
 
             if (count($data[$collectionName]) > BlockConfigLimits::MAX_FIELDS_PER_COLLECTION) {
-                throw new InvalidConfigFieldDataException(message: t('The "%s" fields in configuration file "%s" may contain at most %s fields.', $collectionName, $this->getConfigIdentifier($path), BlockConfigLimits::MAX_FIELDS_PER_COLLECTION));
+                throw new InvalidConfigFieldDataException(message: t('The "%s" field collection in the configuration file "%s" may contain at most %s fields.', $collectionName, $this->getConfigIdentifier($path), BlockConfigLimits::MAX_FIELDS_PER_COLLECTION));
             }
 
             foreach ($data[$collectionName] as $fieldIndex => $fieldData) {
                 if (!is_array($fieldData)) {
-                    throw new InvalidConfigFieldDataException(message: t('A field in the "%s" fields of configuration file "%s" must be provided as an array.', $collectionName, $this->getConfigIdentifier($path)));
+                    throw new InvalidConfigFieldDataException(message: t('Each field in the "%s" collection of the configuration file "%s" must be an array.', $collectionName, $this->getConfigIdentifier($path)));
                 }
 
                 $this->validateFieldDataLimits($fieldData, $fieldIndex, $collectionName, $path);
@@ -266,13 +266,13 @@ readonly class BlockConfigReader
                 is_string($value)
                 && mb_strlen($value) > BlockConfigLimits::getFieldStringMaximum($propertyName)
             ) {
-                throw new InvalidConfigFieldDataException(message: t('Property "%s" of field %s in the "%s" fields of configuration file "%s" exceeds the maximum allowed length.', $propertyName, $fieldIndex, $collectionName, $this->getConfigIdentifier($path)));
+                throw new InvalidConfigFieldDataException(message: t('Property "%s" of field %s in the "%s" collection of the configuration file "%s" exceeds the maximum allowed length.', $propertyName, $fieldIndex, $collectionName, $this->getConfigIdentifier($path)));
             }
 
             if ($propertyName === 'options' && is_string($value)) {
                 $options = preg_split('/\R/u', $value);
                 if (is_array($options) && count($options) > BlockConfigLimits::MAX_OPTIONS_PER_FIELD) {
-                    throw new InvalidConfigFieldDataException(message: t('Field %s in the "%s" fields of configuration file "%s" may contain at most %s options.', $fieldIndex, $collectionName, $this->getConfigIdentifier($path), BlockConfigLimits::MAX_OPTIONS_PER_FIELD));
+                    throw new InvalidConfigFieldDataException(message: t('Field %s in the "%s" collection of the configuration file "%s" may contain at most %s options.', $fieldIndex, $collectionName, $this->getConfigIdentifier($path), BlockConfigLimits::MAX_OPTIONS_PER_FIELD));
                 }
             }
         }
@@ -282,7 +282,7 @@ readonly class BlockConfigReader
             return;
         }
         if (count($icons) > BlockConfigLimits::MAX_SVG_ICONS_PER_FIELD) {
-            throw new InvalidConfigFieldDataException(message: t('Field %s in the "%s" fields of configuration file "%s" may contain at most %s SVG icons.', $fieldIndex, $collectionName, $this->getConfigIdentifier($path), BlockConfigLimits::MAX_SVG_ICONS_PER_FIELD));
+            throw new InvalidConfigFieldDataException(message: t('Field %s in the "%s" collection of the configuration file "%s" may contain at most %s SVG icons.', $fieldIndex, $collectionName, $this->getConfigIdentifier($path), BlockConfigLimits::MAX_SVG_ICONS_PER_FIELD));
         }
 
         $maximumLengths = [
@@ -297,7 +297,7 @@ readonly class BlockConfigReader
             foreach ($maximumLengths as $propertyName => $maximumLength) {
                 $value = $icon[$propertyName] ?? null;
                 if (is_string($value) && mb_strlen($value) > $maximumLength) {
-                    throw new InvalidConfigFieldDataException(message: t('An SVG icon property "%s" in field %s of configuration file "%s" exceeds the maximum allowed length.', $propertyName, $fieldIndex, $this->getConfigIdentifier($path)));
+                    throw new InvalidConfigFieldDataException(message: t('An SVG icon property "%s" in field %s of the configuration file "%s" exceeds the maximum allowed length.', $propertyName, $fieldIndex, $this->getConfigIdentifier($path)));
                 }
             }
         }

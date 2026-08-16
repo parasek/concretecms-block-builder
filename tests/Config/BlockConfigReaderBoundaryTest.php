@@ -277,21 +277,21 @@ final class BlockConfigReaderBoundaryTest extends BlockBuilderTestCase
                     unset($data['basic']);
                 },
                 InvalidConfigFieldDataException::class,
-                '"basic" fields',
+                '"basic" field collection',
             ],
             'non-array entries collection' => [
                 static function (array &$data): void {
                     $data['entries'] = 'invalid';
                 },
                 InvalidConfigFieldDataException::class,
-                'must be provided as an array',
+                'must be an array',
             ],
             'non-array field' => [
                 static function (array &$data): void {
                     $data['basic'] = ['invalid'];
                 },
                 InvalidConfigFieldDataException::class,
-                'must be provided as an array',
+                'must be an array',
             ],
             'too many fields' => [
                 static function (array &$data) use ($textField): void {

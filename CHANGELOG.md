@@ -1,7 +1,7 @@
 ##### 3.0.0 (unreleased)
 - Raised the minimum requirements to Concrete CMS 9.5.2 and PHP 8.4.
 - Added a User Selector field backed by Concrete's user selector widget.
-- Added a Files from Folder field with direct-child file listing and configurable File Manager, ascending, descending, or random ordering.
+- Added a Files from a Folder field with direct-child file listing and configurable File Manager, ascending, descending, or random ordering.
 - Added an SVG Icon Picker field with sanitized custom icon definitions, generated select controls, and live previews.
 - Added an in-memory PHPUnit suite covering the 2.8.1 config schema and view-variable contract, every registered field type, and generated PHP, JSON, and Doctrine XML.
 - Expanded the fast suite with boundary, validation, request-security, generated-artifact, lifecycle-service, and filesystem transaction regressions.

@@ -61,7 +61,7 @@ class DatePickerFieldType extends AbstractFieldType
         return [
             'minDate|invalid' => t('Some "Date Picker/Minimum date" fields must contain a valid date (%s).', $context->getTabName()),
             'maxDate|invalid' => t('Some "Date Picker/Maximum date" fields must contain a valid date (%s).', $context->getTabName()),
-            'dateRange|invalid' => t('Some "Date Picker/Minimum date" fields must not be later than their maximum date (%s).', $context->getTabName()),
+            'dateRange|invalid' => t('Some "Date Picker/Minimum date" fields contain a date later than the corresponding maximum date (%s).', $context->getTabName()),
             'minuteInterval|invalid' => t('Some "Date Picker/Minute interval" fields must contain a positive integer that divides 60 without a remainder (%s).', $context->getTabName()),
         ];
     }

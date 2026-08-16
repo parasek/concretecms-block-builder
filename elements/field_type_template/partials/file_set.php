@@ -7,7 +7,7 @@
     <div class="">
         <label for="<%-context%>[<%-counter%>][fileSetPrefix]"
                class="form-label"
-        ><?= t('Restrict File Set selection to those starting with:'); ?></label>
+        ><?= t('Restrict File Set selection to sets whose names start with:'); ?></label>
 
         <input type="text"
                id="<%-context%>[<%-counter%>][fileSetPrefix]"

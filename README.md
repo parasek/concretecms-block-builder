@@ -61,7 +61,7 @@ This addon speeds up block development by generating the necessary files through
     - Image
     - Express
     - File Set
-    - Files from Folder
+    - Files from a Folder
     - HTML Editor
     - Date Picker
     - Color Picker
