@@ -182,11 +182,19 @@ test.describe('authenticated Block Builder dashboard', () => {
 
         const firstTitleSource = entries.nth(0).locator('[data-use-field-as-title-in-repeatable-entries]');
         const secondTitleSource = entries.nth(1).locator('[data-use-field-as-title-in-repeatable-entries]');
+        const firstTitleIndicator = entries.nth(0).locator('[data-entry-title-source-indicator]');
+        const secondTitleIndicator = entries.nth(1).locator('[data-entry-title-source-indicator]');
+        await expect(firstTitleIndicator).toBeHidden();
+        await expect(secondTitleIndicator).toBeHidden();
         await firstTitleSource.check();
         await expect(firstTitleSource).toBeChecked();
+        await expect(firstTitleIndicator).toBeVisible();
+        await expect(firstTitleIndicator).toHaveText('Entry title');
         await secondTitleSource.check();
         await expect(secondTitleSource).toBeChecked();
         await expect(firstTitleSource).not.toBeChecked();
+        await expect(firstTitleIndicator).toBeHidden();
+        await expect(secondTitleIndicator).toBeVisible();
 
         page.once('dialog', (dialog) => dialog.accept());
         await entries.nth(0).locator('[data-remove-entry]').click();

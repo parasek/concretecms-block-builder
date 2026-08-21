@@ -1,5 +1,5 @@
 ##### 3.0.0 (unreleased)
-- Added a live required-field asterisk to field titles in the Block Builder editor.
+- Added live required and repeatable-entry-title markers to field headers in the Block Builder editor.
 - Added live block-handle generation from the block name with the same manual override and restart behavior as field handles.
 - Moved persistent handle locks and transactional rebuild backups into dedicated `application/files/block_builder` runtime directories.
 - Raised the minimum requirements to Concrete CMS 9.5.2 and PHP 8.4.

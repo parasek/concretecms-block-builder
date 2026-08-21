@@ -212,6 +212,10 @@ msgstr "Nur Buchstaben und Unterstriche, z. B. productName"
 msgid "Required"
 msgstr "Erforderlich"
 
+#: elements/field_type_template/field_type_template.php:46
+msgid "Entry title"
+msgstr "Eintragstitel"
+
 #: elements/field_type_template/field_type_template.php:130
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:85
 msgid "Use this field as the title in repeatable entries"

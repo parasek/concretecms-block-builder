@@ -173,6 +173,10 @@ msgstr "Lettres et tirets bas uniquement, par exemple productName"
 msgid "Required"
 msgstr "Obligatoire"
 
+#: elements/field_type_template/field_type_template.php:46
+msgid "Entry title"
+msgstr "Titre de l’entrée"
+
 #: elements/field_type_template/field_type_template.php:130
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:85
 msgid "Use this field as the title in repeatable entries"

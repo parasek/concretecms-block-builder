@@ -399,13 +399,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const formContainer = clickedCheckbox.closest('[data-tab-content]');
             if (!formContainer) return;
 
-            if (clickedCheckbox.checked) {
-                formContainer.querySelectorAll('[data-use-field-as-title-in-repeatable-entries]').forEach((item) => {
-                    if (item.getAttribute('name') !== clickedCheckbox.getAttribute('name')) {
-                        item.checked = false;
-                    }
-                });
-            }
+            formContainer.querySelectorAll('[data-use-field-as-title-in-repeatable-entries]').forEach((item) => {
+                if (clickedCheckbox.checked && item.getAttribute('name') !== clickedCheckbox.getAttribute('name')) {
+                    item.checked = false;
+                }
+
+                const indicator = item.closest('[data-entry]')?.querySelector('[data-entry-title-source-indicator]');
+                indicator?.toggleAttribute('hidden', !item.checked);
+            });
         };
 
         const toggleThumbnailOptions = (e) => {

@@ -208,6 +208,10 @@ msgstr "Tylko litery i znaki podkreślenia, np. productName"
 msgid "Required"
 msgstr "Wymagane"
 
+#: elements/field_type_template/field_type_template.php:46
+msgid "Entry title"
+msgstr "Tytuł wpisu"
+
 #: elements/field_type_template/field_type_template.php:130
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:85
 msgid "Use this field as the title in repeatable entries"

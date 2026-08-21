@@ -39,7 +39,11 @@
                     data-entry-required-indicator
                     aria-hidden="true"
                     <% if (!(required === true || required === 1 || required === '1')) { %> hidden<% } %>
-                > *</span><i class="<%-fieldTypeIcon%> m-2 ms-2"></i><span><%-fieldTypeName%></span>
+                > *</span><i class="<%-fieldTypeIcon%> m-2 ms-2"></i><span><%-fieldTypeName%></span><span
+                    class="badge bg-primary ms-2"
+                    data-entry-title-source-indicator
+                    <% if (!(context === 'entries' && ['text_field', 'textarea'].includes(fieldTypeHandle) && (titleSource === true || titleSource === 1 || titleSource === '1'))) { %> hidden<% } %>
+                ><i class="fas fa-heading me-1" aria-hidden="true"></i><?= t('Entry title'); ?></span>
             </div>
 
             <div class="bb-entry-header-remove-entry text-danger text-danger-hover"
