@@ -494,16 +494,24 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    color: var(--bs-success);
+    color: #527a61;
     opacity: 0;
     pointer-events: none;
     visibility: hidden;
+    transition: opacity 180ms ease-in-out, visibility 0s linear 180ms;
 }
 
 .bb-entry[data-handle-generated='1'] .bb-handle-autogeneration-status,
 [data-block-identity][data-handle-generated='1'] .bb-handle-autogeneration-status {
     opacity: 1;
     visibility: visible;
+    transition-delay: 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bb-handle-autogeneration-status {
+        transition: none;
+    }
 }
 
 .bb-app .bb-entry-hr {
@@ -519,6 +527,10 @@
 
 [data-bs-theme='dark'] .bb-info-entry-title {
     background: #454545;
+}
+
+[data-bs-theme='dark'] .bb-handle-autogeneration-status {
+    color: #86a990;
 }
 
 [data-bs-theme='dark'] .bb-block-type:hover {
