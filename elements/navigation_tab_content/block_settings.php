@@ -48,6 +48,10 @@
                 <div class="form-text"><?= t('Lowercase letters and underscores only, e.g., example_block'); ?></div>
             </div>
         </div>
+        <div class="mb-4 <?= h(in_array('blockTypeSet', $fieldsWithError) ? 'bb-has-error' : null); ?>">
+            <?= $form->label('blockTypeSet', t('Block type set')); ?>
+            <?= $form->select('blockTypeSet', $blockTypeSets, $config->blockTypeSet); ?>
+        </div>
         <div class="mb-4 <?= h(in_array('blockDescription', $fieldsWithError) ? 'bb-has-error' : null); ?>">
             <?= $form->label('blockDescription', t('Block description')); ?>
             <?= $form->textarea('blockDescription', $config->blockDescription, ['maxlength' => '100']); ?>
@@ -65,10 +69,6 @@
                 <?= $form->text('blockHeight', $config->blockHeight); ?>
                 <span class="input-group-text">px</span>
             </div>
-        </div>
-        <div class="mb-4 <?= h(in_array('blockTypeSet', $fieldsWithError) ? 'bb-has-error' : null); ?>">
-            <?= $form->label('blockTypeSet', t('Block type set')); ?>
-            <?= $form->select('blockTypeSet', $blockTypeSets, $config->blockTypeSet); ?>
         </div>
         <div class="mb-4 <?= h(in_array('blockIcon', $fieldsWithError) ? 'bb-has-error' : null); ?>">
             <?= $form->label('blockIcon', t('Block icon')); ?>
