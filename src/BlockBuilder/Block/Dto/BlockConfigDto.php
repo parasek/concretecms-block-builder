@@ -89,4 +89,9 @@ readonly class BlockConfigDto
         public array $entries,
     ) {
     }
+
+    public function hasFields(): bool
+    {
+        return $this->basic !== [] || $this->entries !== [];
+    }
 }

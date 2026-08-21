@@ -24,34 +24,13 @@ class Controller extends BlockController{{IMPLEMENTED_INTERFACES}}
 {{SEARCHABLE_CONTENT_METHOD}}
 {{USED_FILES_METHOD}}
 {{ON_START_METHOD}}
-
-    public function add(): void
-    {
-        $this->addEdit();
-{{ADD_CONTENT}}
-    }
-
-    public function edit(): void
-    {
-        $this->addEdit();
-{{EDIT_CONTENT}}
-    }
-
-    private function addEdit(): void
-    {
-{{ADD_EDIT_CONTENT}}
-    }
+{{FORM_METHODS}}
 {{VIEW_METHOD}}
 {{SAVE_METHOD}}
 {{DUPLICATE_METHOD}}
 {{DELETE_METHOD}}
 {{VALIDATION_METHODS}}
-
-    public function composer(): void
-    {
-{{COMPOSER_ASSETS}}
-        $this->edit();
-    }
+{{COMPOSER_METHOD}}
 {{GET_ENTRIES_METHOD}}
 {{REPEATABLE_EXPORT_IMPORT_METHODS}}
 {{REGISTER_VIEW_ASSETS_METHOD}}

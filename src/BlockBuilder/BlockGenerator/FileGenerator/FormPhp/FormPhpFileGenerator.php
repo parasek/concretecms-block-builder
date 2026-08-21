@@ -25,6 +25,10 @@ readonly class FormPhpFileGenerator implements FileGeneratorInterface
      */
     public function generate(BlockFileGenerationContext $context): array
     {
+        if (!$context->config->hasFields()) {
+            return [];
+        }
+
         $basicFields = $this->renderFragments(
             $context->plan->form->getFragments(FormGenerationPlanBuilder::SECTION_BASIC_FIELDS),
         );

@@ -20,6 +20,10 @@ readonly class AutoJsFileGenerator implements FileGeneratorInterface
      */
     public function generate(BlockFileGenerationContext $context): array
     {
+        if (!$context->config->hasFields()) {
+            return [];
+        }
+
         return [
             new GeneratedTextFile(
                 relativePath: 'auto.js',

@@ -1,4 +1,5 @@
 ##### 3.0.0 (unreleased)
+- Generated fieldless blocks without an empty editing interface.
 - Preserved loaded configuration details after failed build submissions.
 - Added live required and repeatable-entry-title markers to field headers in the Block Builder editor.
 - Added live block-handle generation from the block name with the same manual override and restart behavior as field handles.

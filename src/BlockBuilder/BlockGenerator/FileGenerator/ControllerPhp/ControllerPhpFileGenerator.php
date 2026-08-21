@@ -60,6 +60,7 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
      */
     public function generate(BlockFileGenerationContext $context): array
     {
+        $hasFields = $context->config->hasFields();
         $hasEntries = $context->config->entries !== [];
         $hasValidation = $hasEntries
             || $context->plan->controller->getMethodFragments(
@@ -74,6 +75,7 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
                     '{{IMPLEMENTED_INTERFACES}}' => $this->renderImplementedInterfaces($context),
                     '{{USE_STATEMENTS}}' => $this->renderUseStatements(
                         $context,
+                        $hasFields,
                         $hasEntries,
                         $hasValidation,
                     ),
@@ -84,31 +86,7 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
                     '{{SEARCHABLE_CONTENT_METHOD}}' => $this->renderSearchableContentMethod($context),
                     '{{USED_FILES_METHOD}}' => $this->renderUsedFilesMethod($context),
                     '{{ON_START_METHOD}}' => $this->renderOnStartMethod($context),
-                    '{{ADD_CONTENT}}' => $this->combineCode([
-                        $this->renderControllerFragments(
-                            $context,
-                            ControllerMethodSectionEnum::Add,
-                            indentation: 0,
-                        ),
-                        $hasEntries ? '$this->set(\'entries\', []);' : '',
-                    ], 2),
-                    '{{EDIT_CONTENT}}' => $this->combineCode([
-                        $this->renderControllerFragments(
-                            $context,
-                            ControllerMethodSectionEnum::Edit,
-                            indentation: 0,
-                        ),
-                        $hasEntries ? '$this->set(\'entries\', $this->getEntries(\'edit\'));' : '',
-                    ], 2),
-                    '{{ADD_EDIT_CONTENT}}' => $this->combineCode([
-                        $this->renderRequiredAssets($context),
-                        '$this->set(\'app\', $this->app);',
-                        $this->renderControllerFragments(
-                            $context,
-                            ControllerMethodSectionEnum::AddEdit,
-                            indentation: 0,
-                        ),
-                    ], 2),
+                    '{{FORM_METHODS}}' => $hasFields ? $this->renderFormMethods($context, $hasEntries) : '',
                     '{{VIEW_METHOD}}' => $this->renderViewMethod($context, $hasEntries),
                     '{{SAVE_METHOD}}' => $this->renderSaveMethod($context, $hasEntries),
                     '{{DUPLICATE_METHOD}}' => $hasEntries ? $this->renderDuplicateMethod($context) : '',
@@ -116,7 +94,7 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
                     '{{VALIDATION_METHODS}}' => $hasValidation
                         ? $this->renderValidationMethods($context, $hasEntries)
                         : '',
-                    '{{COMPOSER_ASSETS}}' => $this->renderComposerAssets($context),
+                    '{{COMPOSER_METHOD}}' => $hasFields ? $this->renderComposerMethod($context) : '',
                     '{{GET_ENTRIES_METHOD}}' => $hasEntries ? $this->renderGetEntriesMethod($context) : '',
                     '{{REPEATABLE_EXPORT_IMPORT_METHODS}}' => $hasEntries
                         ? $this->renderRepeatableExportImportMethods($context)
@@ -131,13 +109,17 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
 
     private function renderUseStatements(
         BlockFileGenerationContext $context,
+        bool $hasFields,
         bool $hasEntries,
         bool $usesErrorList,
     ): string {
         $useStatements = [
-            'assetlist' => new ControllerUseStatement('Concrete\\Core\\Asset\\AssetList'),
             'blockcontroller' => new ControllerUseStatement('Concrete\\Core\\Block\\BlockController'),
         ];
+
+        if ($hasFields) {
+            $useStatements['assetlist'] = new ControllerUseStatement('Concrete\\Core\\Asset\\AssetList');
+        }
 
         if ($usesErrorList) {
             $useStatements['errorlist'] = new ControllerUseStatement('Concrete\\Core\\Error\\ErrorList\\ErrorList');
@@ -585,6 +567,61 @@ PHP;
         );
 
         return $validateMethod . $composerValidationMethod;
+    }
+
+    private function renderFormMethods(BlockFileGenerationContext $context, bool $hasEntries): string
+    {
+        $addContent = $this->combineCode([
+            $this->renderControllerFragments(
+                $context,
+                ControllerMethodSectionEnum::Add,
+                indentation: 0,
+            ),
+            $hasEntries ? '$this->set(\'entries\', []);' : '',
+        ], 2);
+        $editContent = $this->combineCode([
+            $this->renderControllerFragments(
+                $context,
+                ControllerMethodSectionEnum::Edit,
+                indentation: 0,
+            ),
+            $hasEntries ? '$this->set(\'entries\', $this->getEntries(\'edit\'));' : '',
+        ], 2);
+        $addEditContent = $this->combineCode([
+            $this->renderRequiredAssets($context),
+            '$this->set(\'app\', $this->app);',
+            $this->renderControllerFragments(
+                $context,
+                ControllerMethodSectionEnum::AddEdit,
+                indentation: 0,
+            ),
+        ], 2);
+
+        return PHP_EOL
+            . '    public function add(): void' . PHP_EOL
+            . '    {' . PHP_EOL
+            . '        $this->addEdit();'
+            . ($addContent !== '' ? PHP_EOL . $addContent : '') . PHP_EOL
+            . '    }' . PHP_EOL . PHP_EOL
+            . '    public function edit(): void' . PHP_EOL
+            . '    {' . PHP_EOL
+            . '        $this->addEdit();'
+            . ($editContent !== '' ? PHP_EOL . $editContent : '') . PHP_EOL
+            . '    }' . PHP_EOL . PHP_EOL
+            . '    private function addEdit(): void' . PHP_EOL
+            . '    {' . PHP_EOL
+            . $addEditContent . PHP_EOL
+            . '    }' . PHP_EOL;
+    }
+
+    private function renderComposerMethod(BlockFileGenerationContext $context): string
+    {
+        return PHP_EOL
+            . '    public function composer(): void' . PHP_EOL
+            . '    {' . PHP_EOL
+            . $this->renderComposerAssets($context)
+            . '        $this->edit();' . PHP_EOL
+            . '    }' . PHP_EOL;
     }
 
     private function renderComposerAssets(BlockFileGenerationContext $context): string

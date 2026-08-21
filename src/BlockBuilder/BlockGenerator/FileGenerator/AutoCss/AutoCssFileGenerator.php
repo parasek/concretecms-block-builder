@@ -20,6 +20,10 @@ readonly class AutoCssFileGenerator implements FileGeneratorInterface
      */
     public function generate(BlockFileGenerationContext $context): array
     {
+        if (!$context->config->hasFields()) {
+            return [];
+        }
+
         return [
             new GeneratedTextFile(
                 relativePath: 'auto.css',

@@ -18,11 +18,44 @@ use PhpParser\ParserFactory;
 final class InMemoryGenerationTest extends BlockBuilderTestCase
 {
     /**
+     * Verifies that a block without fields uses Concrete's form-less block behavior.
+     */
+    public function testBlockWithoutFieldsOmitsEditingInterfaceFiles(): void
+    {
+        $config = $this->createBlockConfigDtoFactory()->fromGenerationArray([
+            'blockName' => 'Empty Block Test',
+            'blockHandle' => 'empty_block_test',
+            'basic' => [],
+            'entries' => [],
+        ]);
+        self::assertFalse($config->hasFields());
+
+        $generatedFiles = $this->generateTextFiles($this->createGenerationContext($config));
+        $filesByPath = [];
+        foreach ($generatedFiles as $generatedFile) {
+            $filesByPath[$generatedFile->relativePath] = $generatedFile->contents;
+        }
+
+        self::assertSame([
+            'config-bb.json',
+            'controller.php',
+            'db.xml',
+            'scrapbook.php',
+            'view.php',
+        ], array_keys($filesByPath));
+        self::assertStringNotContainsString('use Concrete\\Core\\Asset\\AssetList;', $filesByPath['controller.php']);
+        self::assertStringNotContainsString('public function add()', $filesByPath['controller.php']);
+        self::assertStringNotContainsString('public function edit()', $filesByPath['controller.php']);
+        self::assertStringNotContainsString('public function composer()', $filesByPath['controller.php']);
+    }
+
+    /**
      * Verifies that every supported field type produces valid, complete block files without disk writes.
      */
     public function testAllFieldTypesGenerateValidTextFilesInMemory(): void
     {
         $config = $this->createAllFieldTypesConfig();
+        self::assertTrue($config->hasFields());
         $generationContext = $this->createGenerationContext($config);
         $generatedFiles = $this->generateTextFiles($generationContext);
         $filesByPath = [];

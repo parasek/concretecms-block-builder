@@ -29,6 +29,12 @@ readonly class ScaffoldFileGenerator implements FileGeneratorInterface
     {
         $generatedFiles = [];
         foreach (self::STUBS_BY_DESTINATION as $relativePath => $stubPath) {
+            if (
+                !$context->config->hasFields()
+                && in_array($relativePath, [FILENAME_BLOCK_ADD, FILENAME_BLOCK_EDIT, FILENAME_BLOCK_COMPOSER], true)
+            ) {
+                continue;
+            }
             $generatedFiles[] = new GeneratedTextFile(
                 relativePath: $relativePath,
                 contents: $this->stubRenderer->render($stubPath),
