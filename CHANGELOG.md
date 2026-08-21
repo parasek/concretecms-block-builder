@@ -1,4 +1,5 @@
 ##### 3.0.0 (unreleased)
+- Added live block-handle generation from the block name with the same manual override and restart behavior as field handles.
 - Moved persistent handle locks and transactional rebuild backups into dedicated `application/files/block_builder` runtime directories.
 - Raised the minimum requirements to Concrete CMS 9.5.2 and PHP 8.4.
 - Added a User Selector field backed by Concrete's user selector widget.

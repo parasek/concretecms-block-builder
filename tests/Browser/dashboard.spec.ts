@@ -131,12 +131,19 @@ test.describe('authenticated Block Builder dashboard', () => {
 
         await expect(builder.locator('[data-bb-tab-active]')).toHaveAttribute('data-bb-tab', 'block-settings');
         await builder.locator('#blockName').fill('Browser Fixture 42');
-        await builder.locator('#blockName').blur();
         await expect(builder.locator('#blockHandle')).toHaveValue('browser_fixture_four_two');
+        await expect(builder.locator('[data-block-identity] [data-handle-autogeneration-overlay]')).toBeVisible();
+        await builder.locator('#blockName').blur();
+        await expect(builder.locator('[data-block-identity] [data-handle-autogeneration-overlay]')).toBeHidden();
         await builder.locator('#blockHandle').fill('manual_browser_handle');
         await builder.locator('#blockName').fill('A different browser name');
-        await builder.locator('#blockName').blur();
         await expect(builder.locator('#blockHandle')).toHaveValue('manual_browser_handle');
+        await builder.locator('#blockName').blur();
+        await builder.locator('#blockHandle').fill('');
+        await builder.locator('#blockHandle').blur();
+        await builder.locator('#blockName').fill('Regenerated Browser 7');
+        await expect(builder.locator('#blockHandle')).toHaveValue('regenerated_browser_seven');
+        await builder.locator('#blockName').blur();
 
         await builder.locator('[data-bb-tab="tab-basic-information"]').click();
         await expect(page).toHaveURL(/#tab-basic-information$/);

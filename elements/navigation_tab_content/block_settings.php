@@ -20,15 +20,33 @@
 <div class="row gx-5">
     <div class="col-xl-6">
 
-        <div class="mb-4 <?= h(in_array('blockName', $fieldsWithError) ? 'bb-has-error' : null); ?>">
-            <?= $form->label('blockName', t('Block name') . ' *'); ?>
-            <?= $form->text('blockName', $config->blockName, ['maxlength' => '100']); ?>
-            <div class="form-text"><?= t('Human-readable name, e.g., Example block'); ?></div>
-        </div>
-        <div class="mb-4 <?= h(in_array('blockHandle', $fieldsWithError) ? 'bb-has-error' : null); ?>">
-            <?= $form->label('blockHandle', t('Block handle') . ' *'); ?>
-            <?= $form->text('blockHandle', $config->blockHandle, ['maxlength' => '50']); ?>
-            <div class="form-text"><?= t('Lowercase letters and underscores only, e.g., example_block'); ?></div>
+        <div data-block-identity>
+            <div class="mb-4 <?= h(in_array('blockName', $fieldsWithError) ? 'bb-has-error' : null); ?>">
+                <?= $form->label('blockName', t('Block name') . ' *'); ?>
+                <?= $form->text('blockName', $config->blockName, [
+                    'data-block-name-source' => 'true',
+                    'maxlength' => '100',
+                ]); ?>
+                <div class="form-text"><?= t('Human-readable name, e.g., Example block'); ?></div>
+            </div>
+            <div class="mb-4 <?= h(in_array('blockHandle', $fieldsWithError) ? 'bb-has-error' : null); ?>">
+                <?= $form->label('blockHandle', t('Block handle') . ' *'); ?>
+                <div class="bb-handle-input">
+                    <?= $form->text('blockHandle', $config->blockHandle, [
+                        'data-block-handle' => 'true',
+                        'maxlength' => '50',
+                    ]); ?>
+                    <div
+                        class="bb-handle-autogeneration-overlay"
+                        data-handle-autogeneration-overlay
+                        aria-hidden="true"
+                    >
+                        <i class="fas fa-circle-notch fa-spin"></i>
+                        <?= t('Generating handle from block name'); ?>
+                    </div>
+                </div>
+                <div class="form-text"><?= t('Lowercase letters and underscores only, e.g., example_block'); ?></div>
+            </div>
         </div>
         <div class="mb-4 <?= h(in_array('blockDescription', $fieldsWithError) ? 'bb-has-error' : null); ?>">
             <?= $form->label('blockDescription', t('Block description')); ?>

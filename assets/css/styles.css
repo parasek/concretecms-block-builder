@@ -478,7 +478,8 @@
     visibility: hidden;
 }
 
-.bb-entry[data-handle-generated='1'] .bb-handle-autogeneration-overlay {
+.bb-entry[data-handle-generated='1'] .bb-handle-autogeneration-overlay,
+[data-block-identity][data-handle-generated='1'] .bb-handle-autogeneration-overlay {
     opacity: 1;
     visibility: visible;
 }

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: block_builder\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-08-16 10:44+0200\n"
-"PO-Revision-Date: 2026-08-16 17:59+0200\n"
+"PO-Revision-Date: 2026-08-21 10:07+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -764,6 +764,10 @@ msgstr "Nom lisible, par exemple Bloc d’exemple"
 #: src/BlockBuilder/Block/Validation/Validator/Block/BlockHandleValidator.php:64
 msgid "Block handle"
 msgstr "Identifiant du bloc"
+
+#: elements/navigation_tab_content/block_settings.php:45
+msgid "Generating handle from block name"
+msgstr "Générer l’identifiant à partir du nom du bloc"
 
 #: elements/navigation_tab_content/block_settings.php:31
 msgid "Lowercase letters and underscores only, e.g., example_block"
