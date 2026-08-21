@@ -7,6 +7,7 @@ namespace BlockBuilder\BlockGenerator\Lifecycle;
 use BlockBuilder\Block\Dto\BlockConfigDto;
 use BlockBuilder\Block\Service\BlockTypeInstaller;
 use BlockBuilder\Block\Service\BlockTypeLocator;
+use BlockBuilder\Block\Service\BlockTypeSetSynchronizer;
 use BlockBuilder\BlockGenerator\BlockGenerationManifest;
 use BlockBuilder\BlockGenerator\Enum\PostGenerationBlockStateEnum;
 use BlockBuilder\BlockGenerator\Exception\BlockGenerationInstallationException;
@@ -20,6 +21,7 @@ readonly class BlockTypeLifecycleService
         private EntityManagerInterface $entityManager,
         private BlockTypeInstaller $blockTypeInstaller,
         private BlockTypeLocator $blockTypeLocator,
+        private BlockTypeSetSynchronizer $blockTypeSetSynchronizer,
     ) {
     }
 
@@ -38,6 +40,7 @@ readonly class BlockTypeLifecycleService
                 }
 
                 $blockType->refresh();
+                $this->blockTypeSetSynchronizer->synchronize($blockType, $config->blockTypeSet);
             } catch (BlockGenerationRefreshException $exception) {
                 throw $exception;
             } catch (\Throwable $throwable) {

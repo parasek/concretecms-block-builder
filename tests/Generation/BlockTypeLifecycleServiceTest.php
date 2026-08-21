@@ -7,6 +7,7 @@ namespace BlockBuilder\Tests\Generation;
 use BlockBuilder\Block\Dto\BlockConfigDto;
 use BlockBuilder\Block\Service\BlockTypeInstaller;
 use BlockBuilder\Block\Service\BlockTypeLocator;
+use BlockBuilder\Block\Service\BlockTypeSetSynchronizer;
 use BlockBuilder\BlockGenerator\BlockGenerationManifest;
 use BlockBuilder\BlockGenerator\Enum\PostGenerationBlockStateEnum;
 use BlockBuilder\BlockGenerator\Exception\BlockGenerationInstallationException;
@@ -100,16 +101,20 @@ final class BlockTypeLifecycleServiceTest extends BlockBuilderTestCase
             ->onlyMethods(['refresh'])
             ->getMock();
         $managedBlockType->expects(self::once())->method('refresh');
+        $blockTypeSetSynchronizer = $this->createMock(BlockTypeSetSynchronizer::class);
+        $blockTypeSetSynchronizer->expects(self::once())
+            ->method('synchronize')
+            ->with($managedBlockType, 'multimedia');
         $log->locatorResult = $locatedBlockType;
         $entityManager = $this->createMock(EntityManagerInterface::class);
         $entityManager->expects(self::once())
             ->method('find')
             ->with(BlockTypeEntity::class, 42)
             ->willReturn($managedBlockType);
-        $service = $this->createService($log, $entityManager);
+        $service = $this->createService($log, $entityManager, $blockTypeSetSynchronizer);
 
         $state = $service->installOrRefresh(
-            $this->createAllFieldTypesConfig(),
+            $this->withBlockTypeSet($this->createAllFieldTypesConfig(), 'multimedia'),
             $this->createLifecycleManifest(true, true),
         );
 
@@ -207,6 +212,26 @@ final class BlockTypeLifecycleServiceTest extends BlockBuilderTestCase
     }
 
     /**
+     * Verifies that a block type set synchronization failure is reported as a refresh failure.
+     */
+    public function testBlockTypeSetSynchronizationFailureIsWrappedWithOriginalCause(): void
+    {
+        $failure = new RuntimeException('simulated block type set synchronization failure');
+        $log = new BlockTypeLifecycleTestLog();
+        $log->locatorResult = $this->createBlockTypeWithIdentifier(42);
+        $managedBlockType = $this->getMockBuilder(BlockTypeEntity::class)
+            ->onlyMethods(['refresh'])
+            ->getMock();
+        $entityManager = $this->createMock(EntityManagerInterface::class);
+        $entityManager->method('find')->willReturn($managedBlockType);
+        $blockTypeSetSynchronizer = $this->createMock(BlockTypeSetSynchronizer::class);
+        $blockTypeSetSynchronizer->method('synchronize')->willThrowException($failure);
+        $service = $this->createService($log, $entityManager, $blockTypeSetSynchronizer);
+
+        $this->assertRefreshFailureHasPrevious($service, $failure);
+    }
+
+    /**
      * Verifies that a domain-specific refresh exception is rethrown unchanged instead of being wrapped again.
      */
     public function testExistingRefreshExceptionIsPreserved(): void
@@ -236,12 +261,22 @@ final class BlockTypeLifecycleServiceTest extends BlockBuilderTestCase
     private function createService(
         BlockTypeLifecycleTestLog $log,
         EntityManagerInterface $entityManager,
+        ?BlockTypeSetSynchronizer $blockTypeSetSynchronizer = null,
     ): BlockTypeLifecycleService {
         return new BlockTypeLifecycleService(
             $entityManager,
             new LifecycleTestBlockTypeInstaller($log),
             new LifecycleTestBlockTypeLocator($log),
+            $blockTypeSetSynchronizer ?? $this->createStub(BlockTypeSetSynchronizer::class),
         );
+    }
+
+    private function withBlockTypeSet(BlockConfigDto $config, string $blockTypeSet): BlockConfigDto
+    {
+        $properties = get_object_vars($config);
+        $properties['blockTypeSet'] = $blockTypeSet;
+
+        return new BlockConfigDto(...$properties);
     }
 
     private function createLifecycleManifest(bool $shouldInstallBlock, bool $shouldRebuildBlock): BlockGenerationManifest
