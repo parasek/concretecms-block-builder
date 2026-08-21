@@ -395,11 +395,11 @@ msgstr "Pokaż pole \"Tekst alternatywny\""
 
 #: elements/field_type_template/partials/image.php:31
 msgid ""
-"Generate a thumbnail using the image helper (if the original image is larger "
-"than the specified dimensions)"
+"Generate a thumbnail using the image helper class (if the original image is "
+"larger than the specified dimensions)"
 msgstr ""
-"Wygeneruj miniaturę przy użyciu pomocnika obrazów (jeśli oryginalny obraz "
-"jest większy niż podane wymiary)"
+"Wygeneruj miniaturę za pomocą klasy pomocniczej do obsługi obrazów (jeśli "
+"oryginalny obraz jest większy niż podane wymiary)"
 
 #: elements/field_type_template/partials/image.php:42
 #: elements/field_type_template/partials/image.php:125
@@ -439,11 +439,11 @@ msgstr "Edytowalność"
 
 #: elements/field_type_template/partials/image.php:114
 msgid ""
-"Generate a fullscreen image using the image helper (if the original image is "
-"larger than the specified dimensions)"
+"Generate a fullscreen image using the image helper class (if the original "
+"image is larger than the specified dimensions)"
 msgstr ""
-"Wygeneruj obraz pełnoekranowy przy użyciu pomocnika obrazów (jeśli "
-"oryginalny obraz jest większy niż podane wymiary)"
+"Wygeneruj obraz pełnoekranowy za pomocą klasy pomocniczej do obsługi obrazów "
+"(jeśli oryginalny obraz jest większy niż podane wymiary)"
 
 #: elements/field_type_template/partials/number.php:13
 #: elements/field_type_template/partials/text_field.php:18

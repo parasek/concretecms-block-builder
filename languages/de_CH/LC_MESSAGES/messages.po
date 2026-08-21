@@ -400,11 +400,11 @@ msgstr "Feld „Alternativtext“ anzeigen"
 
 #: elements/field_type_template/partials/image.php:31
 msgid ""
-"Generate a thumbnail using the image helper (if the original image is larger "
-"than the specified dimensions)"
+"Generate a thumbnail using the image helper class (if the original image is "
+"larger than the specified dimensions)"
 msgstr ""
-"Mit dem Bildhelfer ein Vorschaubild erzeugen (wenn das Originalbild grösser "
-"als die angegebenen Abmessungen ist)"
+"Mithilfe der Hilfsklasse für Bilder ein Vorschaubild erzeugen (wenn das "
+"Originalbild grösser als die angegebenen Abmessungen ist)"
 
 #: elements/field_type_template/partials/image.php:42
 #: elements/field_type_template/partials/image.php:125
@@ -444,11 +444,11 @@ msgstr "Bearbeitbar"
 
 #: elements/field_type_template/partials/image.php:114
 msgid ""
-"Generate a fullscreen image using the image helper (if the original image is "
-"larger than the specified dimensions)"
+"Generate a fullscreen image using the image helper class (if the original "
+"image is larger than the specified dimensions)"
 msgstr ""
-"Mit dem Bildhelfer ein Vollbild erzeugen (wenn das Originalbild grösser als "
-"die angegebenen Abmessungen ist)"
+"Mithilfe der Hilfsklasse für Bilder ein Vollbild erzeugen (wenn das "
+"Originalbild grösser als die angegebenen Abmessungen ist)"
 
 #: elements/field_type_template/partials/number.php:13
 #: elements/field_type_template/partials/text_field.php:18

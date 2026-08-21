@@ -339,8 +339,8 @@ msgid "Show the \"Alt text\" field"
 msgstr "Afficher le champ « Texte alternatif »"
 
 #: elements/field_type_template/partials/image.php:31
-msgid "Generate a thumbnail using the image helper (if the original image is larger than the specified dimensions)"
-msgstr "Générer une vignette à l’aide de l’assistant d’image (si l’image d’origine est plus grande que les dimensions indiquées)"
+msgid "Generate a thumbnail using the image helper class (if the original image is larger than the specified dimensions)"
+msgstr "Générer une vignette à l’aide de la classe utilitaire de traitement d’images (si l’image d’origine est plus grande que les dimensions indiquées)"
 
 #: elements/field_type_template/partials/image.php:42
 #: elements/field_type_template/partials/image.php:125
@@ -379,8 +379,8 @@ msgid "Editable"
 msgstr "Modifiable"
 
 #: elements/field_type_template/partials/image.php:114
-msgid "Generate a fullscreen image using the image helper (if the original image is larger than the specified dimensions)"
-msgstr "Générer une image plein écran à l’aide de l’assistant d’image (si l’image d’origine est plus grande que les dimensions indiquées)"
+msgid "Generate a fullscreen image using the image helper class (if the original image is larger than the specified dimensions)"
+msgstr "Générer une image plein écran à l’aide de la classe utilitaire de traitement d’images (si l’image d’origine est plus grande que les dimensions indiquées)"
 
 #: elements/field_type_template/partials/number.php:13
 #: elements/field_type_template/partials/text_field.php:18

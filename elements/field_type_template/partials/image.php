@@ -28,7 +28,7 @@
         >
         <label for="<%-context%>[<%-counter%>][createThumbnailImage]"
                class="form-check-label"
-        ><?= t('Generate a thumbnail using the image helper (if the original image is larger than the specified dimensions)'); ?></label>
+        ><?= t('Generate a thumbnail using the image helper class (if the original image is larger than the specified dimensions)'); ?></label>
     </div>
 
     <div class="row mt-2 <?= '<% if (!(createThumbnailImage === true || createThumbnailImage === 1 || createThumbnailImage === \'1\')) { %>d-none<% } %>'; ?>"
@@ -111,7 +111,7 @@
         >
         <label for="<%-context%>[<%-counter%>][createFullscreenImage]"
                class="form-check-label"
-        ><?= t('Generate a fullscreen image using the image helper (if the original image is larger than the specified dimensions)'); ?></label>
+        ><?= t('Generate a fullscreen image using the image helper class (if the original image is larger than the specified dimensions)'); ?></label>
     </div>
 
     <div class="row mt-2 <?= '<% if (!(createFullscreenImage === true || createFullscreenImage === 1 || createFullscreenImage === \'1\')) { %>d-none<% } %>'; ?>"
