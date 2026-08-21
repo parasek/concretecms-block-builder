@@ -1,4 +1,5 @@
 ##### 3.0.0 (unreleased)
+- Displayed generated controller property names beside advanced block settings.
 - Synchronized the selected block type set when rebuilding a block.
 - Generated Image settings and variant code only for enabled thumbnail and fullscreen options.
 - Hid generated form tabs when the block has only one form section.

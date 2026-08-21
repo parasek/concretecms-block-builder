@@ -138,6 +138,17 @@ test.describe('authenticated Block Builder dashboard', () => {
         const builder = page.locator('#bbAppBuilder');
 
         await expect(builder.locator('[data-bb-tab-active]')).toHaveAttribute('data-bb-tab', 'block-settings');
+        await expect(builder.locator('[data-controller-property]')).toHaveCount(8);
+        expect(await builder.locator('[data-controller-property]').allTextContents()).toEqual([
+            '$btCacheBlockRecord',
+            '$btCacheBlockOutput',
+            '$btCacheBlockOutputLifetime',
+            '$btCacheBlockOutputOnPost',
+            '$btCacheBlockOutputOnEditMode',
+            '$btCacheBlockOutputForRegisteredUsers',
+            '$supportSavingNullValues',
+            '$btIgnorePageThemeGridFrameworkContainer',
+        ]);
         await builder.locator('#blockName').fill('Browser Fixture 42');
         await expect(builder.locator('#blockHandle')).toHaveValue('browser_fixture_four_two');
         await expect(builder.locator('[data-block-identity] [data-handle-autogeneration-overlay]')).toBeVisible();

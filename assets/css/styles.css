@@ -36,6 +36,27 @@
     font-weight: 500 !important;
 }
 
+.bb-controller-property-label {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.bb-controller-property-tag {
+    position: relative;
+    inset-block-start: -0.125rem;
+    padding-block: 0.1rem;
+    padding-inline: 0.4rem;
+    color: var(--bs-secondary-color);
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1.25;
+    background: var(--bb-gray-200);
+    border: 1px solid var(--bb-gray-300);
+    border-radius: var(--bs-border-radius-sm);
+}
+
 /************************************************************/
 /* Environment info block
 /************************************************************/
@@ -505,6 +526,12 @@
 
 [data-bs-theme='dark'] .bb-block-type-info-badge {
     background-color: #535353 !important;
+}
+
+[data-bs-theme='dark'] .bb-controller-property-tag {
+    color: #d8d8d8;
+    background: #454545;
+    border-color: #535353;
 }
 
 [data-bs-theme='dark'] .bb-code-block {
