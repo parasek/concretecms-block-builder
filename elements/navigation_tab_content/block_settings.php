@@ -43,21 +43,21 @@ $renderControllerPropertyLabel = static function (
                 <div class="form-text"><?= t('Human-readable name, e.g., Example block'); ?></div>
             </div>
             <div class="mb-4 <?= h(in_array('blockHandle', $fieldsWithError) ? 'bb-has-error' : null); ?>">
-                <?= $form->label('blockHandle', t('Block handle') . ' *'); ?>
-                <div class="bb-handle-input">
-                    <?= $form->text('blockHandle', $config->blockHandle, [
-                        'data-block-handle' => 'true',
-                        'maxlength' => '50',
-                    ]); ?>
-                    <div
-                        class="bb-handle-autogeneration-overlay"
+                <div class="bb-handle-label">
+                    <?= $form->label('blockHandle', t('Block handle') . ' *'); ?>
+                    <span
+                        class="bb-handle-autogeneration-status"
                         data-handle-autogeneration-overlay
                         aria-hidden="true"
                     >
                         <i class="fas fa-circle-notch fa-spin"></i>
                         <?= t('Generating handle from block name'); ?>
-                    </div>
+                    </span>
                 </div>
+                <?= $form->text('blockHandle', $config->blockHandle, [
+                    'data-block-handle' => 'true',
+                    'maxlength' => '50',
+                ]); ?>
                 <div class="form-text"><?= t('Lowercase letters and underscores only, e.g., example_block'); ?></div>
             </div>
         </div>

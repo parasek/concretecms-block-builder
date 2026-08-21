@@ -80,27 +80,27 @@
                 </div>
 
                 <div class="col-lg-6 mb-4">
-                    <label for="<%-context%>[<%-counter%>][handle]" class="form-label">
-                        <?= t('Handle'); ?> *
-                    </label>
-                    <div class="bb-handle-input">
-                        <input type="text"
-                               id="<%-context%>[<%-counter%>][handle]"
-                               name="<%-context%>[<%-counter%>][handle]"
-                               class="form-control"
-                               value="<%-handle%>"
-                               maxlength="50"
-                               data-entry-handle
-                        >
-                        <div
-                            class="bb-handle-autogeneration-overlay"
+                    <div class="bb-handle-label">
+                        <label for="<%-context%>[<%-counter%>][handle]" class="form-label">
+                            <?= t('Handle'); ?> *
+                        </label>
+                        <span
+                            class="bb-handle-autogeneration-status"
                             data-handle-autogeneration-overlay
                             aria-hidden="true"
                         >
                             <i class="fas fa-circle-notch fa-spin"></i>
                             <?= t('Generating handle from label'); ?>
-                        </div>
+                        </span>
                     </div>
+                    <input type="text"
+                           id="<%-context%>[<%-counter%>][handle]"
+                           name="<%-context%>[<%-counter%>][handle]"
+                           class="form-control"
+                           value="<%-handle%>"
+                           maxlength="50"
+                           data-entry-handle
+                    >
                     <div class="form-text"><?= t('Letters and underscores only, e.g., productName'); ?></div>
                 </div>
 
