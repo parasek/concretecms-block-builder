@@ -335,6 +335,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
+        const toggleEntryRequiredIndicator = (requiredField) => {
+            const indicator = requiredField.closest('[data-entry]')?.querySelector('[data-entry-required-indicator]');
+            indicator?.toggleAttribute('hidden', !requiredField.checked);
+        };
+
         const autoGenerateBlockHandle = (blockNameElement) => {
             const blockIdentity = blockNameElement.closest('[data-block-identity]');
             if (!blockIdentity) return;
@@ -648,6 +653,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const target = e.target;
 
                 if (target.closest('[data-use-field-as-title-in-repeatable-entries]')) handleTitleInRepeatableEntries(e);
+                if (target.matches('[data-entry-required-source]')) toggleEntryRequiredIndicator(target);
                 if (target.closest('[data-image-create-thumbnail-image]')) toggleThumbnailOptions(e);
                 if (target.closest('[data-image-create-fullscreen-image]')) toggleFullscreenImageOptions(e);
                 if (target.closest('[data-change-select-list-generation-method]')) toggleSelectListGenerationOptions(e);

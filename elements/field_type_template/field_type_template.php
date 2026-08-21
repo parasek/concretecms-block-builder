@@ -35,7 +35,11 @@
                     <% } else { %>
                     #<%-counter%>
                     <% } %>
-                </strong><i class="<%-fieldTypeIcon%> m-2 ms-2"></i><span><%-fieldTypeName%></span>
+                </strong><span
+                    data-entry-required-indicator
+                    aria-hidden="true"
+                    <% if (!(required === true || required === 1 || required === '1')) { %> hidden<% } %>
+                > *</span><i class="<%-fieldTypeIcon%> m-2 ms-2"></i><span><%-fieldTypeName%></span>
             </div>
 
             <div class="bb-entry-header-remove-entry text-danger text-danger-hover"
@@ -108,6 +112,7 @@
                                name="<%-context%>[<%-counter%>][required]"
                                id="<%-context%>[<%-counter%>][required]"
                                value="1"
+                               data-entry-required-source
                         <% if (required === true || required === 1 || required === '1') { %> checked="checked" <% } %>
                         >
                         <label for="<%-context%>[<%-counter%>][required]"

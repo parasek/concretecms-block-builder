@@ -152,10 +152,15 @@ test.describe('authenticated Block Builder dashboard', () => {
         await addFieldThroughChoices(builder, 'basic', 'text_field');
         const addedField = builder.locator('#bb-field-entries-basic [data-entry]').last();
         await expect(addedField).toBeVisible();
+        const requiredIndicator = addedField.locator('[data-entry-required-indicator]');
+        await expect(requiredIndicator).toBeHidden();
         await addedField.locator('[data-entry-title-source]').fill('Product Name 2');
         await addedField.locator('[data-entry-title-source]').blur();
         await expect(addedField.locator('[data-entry-title]')).toHaveText('Product Name 2');
         await expect(addedField.locator('[data-entry-handle]')).toHaveValue('productNameTwo');
+        await addedField.locator('[data-entry-required-source]').check();
+        await expect(requiredIndicator).toBeVisible();
+        await expect(addedField.locator('.bb-entry-header-title')).toContainText('Product Name 2 *');
         await addedField.locator('[data-entry-handle]').fill('manualProductName');
         await addedField.locator('[data-entry-title-source]').fill('Changed product name');
         await expect(addedField.locator('[data-entry-handle]')).toHaveValue('manualProductName');
