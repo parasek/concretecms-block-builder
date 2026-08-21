@@ -25,8 +25,11 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 final class BlockDirectoryManagerTest extends BlockBuilderTestCase
 {
+    private const string BLOCK_HANDLE = 'all_field_types_test';
+
     private Filesystem $filesystem;
     private string $temporaryDirectory;
+    private string $backupDirectory;
 
     protected function setUp(): void
     {
@@ -36,7 +39,12 @@ final class BlockDirectoryManagerTest extends BlockBuilderTestCase
         $this->temporaryDirectory = sys_get_temp_dir()
             . DIRECTORY_SEPARATOR
             . 'block-builder-directory-manager-test-' . bin2hex(random_bytes(8));
-        $this->filesystem->mkdir($this->temporaryDirectory);
+        $this->backupDirectory = $this->temporaryDirectory
+            . DIRECTORY_SEPARATOR
+            . 'runtime'
+            . DIRECTORY_SEPARATOR
+            . 'backups';
+        $this->filesystem->mkdir([$this->temporaryDirectory, $this->backupDirectory]);
     }
 
     protected function tearDown(): void
@@ -150,13 +158,14 @@ final class BlockDirectoryManagerTest extends BlockBuilderTestCase
         self::assertSame('custom', $this->readFile(
             $blockPath . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'custom.php',
         ));
-        self::assertCount(1, $this->findBackupDirectories($blockPath));
+        self::assertCount(1, $this->findBackupDirectories());
+        self::assertSame([], glob($blockPath . '.block-builder-backup-*'));
 
         $this->writeFile($blockPath . DIRECTORY_SEPARATOR . 'controller.php', 'generated controller');
         $transaction->rollback();
 
         self::assertSame($originalSnapshot, $this->snapshotDirectory($blockPath));
-        self::assertSame([], $this->findBackupDirectories($blockPath));
+        self::assertSame([], $this->findBackupDirectories());
     }
 
     /**
@@ -217,7 +226,7 @@ final class BlockDirectoryManagerTest extends BlockBuilderTestCase
         }
 
         self::assertSame($originalSnapshot, $this->snapshotDirectory($blockPath));
-        self::assertSame([], $this->findBackupDirectories($blockPath));
+        self::assertSame([], $this->findBackupDirectories());
     }
 
     /**
@@ -253,8 +262,8 @@ final class BlockDirectoryManagerTest extends BlockBuilderTestCase
     public function testMultipleStaleBackupsRequireManualRecovery(): void
     {
         $blockPath = $this->temporaryDirectory . DIRECTORY_SEPARATOR . 'existing_block';
-        $firstBackupPath = $blockPath . '.block-builder-backup-1111111111111111';
-        $secondBackupPath = $blockPath . '.block-builder-backup-2222222222222222';
+        $firstBackupPath = $this->getBackupPath('1111111111111111');
+        $secondBackupPath = $this->getBackupPath('2222222222222222');
         $this->filesystem->mkdir([$blockPath, $firstBackupPath, $secondBackupPath]);
         $logger = $this->createMock(LoggerInterface::class);
         $logger->expects(self::once())->method('error');
@@ -280,7 +289,7 @@ final class BlockDirectoryManagerTest extends BlockBuilderTestCase
     public function testOrphanedStateMarkerRequiresManualRecovery(): void
     {
         $blockPath = $this->temporaryDirectory . DIRECTORY_SEPARATOR . 'existing_block';
-        $backupPath = $blockPath . '.block-builder-backup-1111111111111111';
+        $backupPath = $this->getBackupPath('1111111111111111');
         $statePath = $backupPath . '.state';
         $this->filesystem->mkdir($blockPath);
         $this->writeFile($blockPath . DIRECTORY_SEPARATOR . 'controller.php', 'generated');
@@ -308,6 +317,7 @@ final class BlockDirectoryManagerTest extends BlockBuilderTestCase
             new FileService(),
             $filesystem ?? $this->filesystem,
             $logger ?? $this->createStub(LoggerInterface::class),
+            $this->backupDirectory,
         );
     }
 
@@ -342,13 +352,25 @@ final class BlockDirectoryManagerTest extends BlockBuilderTestCase
     /**
      * @return string[]
      */
-    private function findBackupDirectories(string $blockPath): array
+    private function findBackupDirectories(): array
     {
-        $backupPaths = glob($blockPath . '.block-builder-backup-*', GLOB_ONLYDIR);
+        $backupPaths = glob(
+            $this->backupDirectory . DIRECTORY_SEPARATOR . self::BLOCK_HANDLE . '.block-builder-backup-*',
+            GLOB_ONLYDIR,
+        );
         self::assertIsArray($backupPaths);
         sort($backupPaths, SORT_STRING);
 
         return $backupPaths;
+    }
+
+    private function getBackupPath(string $transactionIdentifier): string
+    {
+        return $this->backupDirectory
+            . DIRECTORY_SEPARATOR
+            . self::BLOCK_HANDLE
+            . '.block-builder-backup-'
+            . $transactionIdentifier;
     }
 
     /**

@@ -1,4 +1,5 @@
 ##### 3.0.0 (unreleased)
+- Moved persistent handle locks and transactional rebuild backups into dedicated `application/files/block_builder` runtime directories.
 - Raised the minimum requirements to Concrete CMS 9.5.2 and PHP 8.4.
 - Added a User Selector field backed by Concrete's user selector widget.
 - Added a Files from a Folder field with direct-child file listing and configurable File Manager, ascending, descending, or random ordering.

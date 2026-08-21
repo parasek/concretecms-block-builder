@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BlockBuilder\Tests\Integration;
 
+use BlockBuilder\Environment\RuntimeDirectory;
 use BlockBuilder\Tests\Integration\Support\ConcreteIntegrationTestCase;
 use Concrete\Core\Entity\Package as PackageEntity;
 use Concrete\Core\Package\PackageService;
@@ -58,6 +59,9 @@ final class PackageInstallationIntegration extends ConcreteIntegrationTestCase
             $this->environmentGuard->packageRoot,
             realpath(DIR_PACKAGES . DIRECTORY_SEPARATOR . 'block_builder'),
         );
+        self::assertSame(RuntimeDirectory::getPath(), realpath(RuntimeDirectory::getPath()));
+        self::assertSame(RuntimeDirectory::getLocksPath(), realpath(RuntimeDirectory::getLocksPath()));
+        self::assertSame(RuntimeDirectory::getBackupsPath(), realpath(RuntimeDirectory::getBackupsPath()));
 
         $this->environmentGuard->assertActiveDatabase($this->connection);
     }

@@ -7,6 +7,7 @@ namespace BlockBuilder\BlockGenerator\Directory;
 use BlockBuilder\Block\Dto\BlockConfigDto;
 use BlockBuilder\BlockGenerator\BlockGenerationManifest;
 use BlockBuilder\BlockGenerator\Exception\BlockDirectoryPreparationException;
+use BlockBuilder\Environment\RuntimeDirectory;
 use Concrete\Core\File\Service\File as FileService;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -17,6 +18,7 @@ readonly class BlockDirectoryManager
         private FileService $fileService,
         private Filesystem $filesystem,
         private LoggerInterface $logger,
+        private ?string $backupDirectory = null,
     ) {
     }
 
@@ -28,7 +30,11 @@ readonly class BlockDirectoryManager
             $this->recoverStaleBackups($config->blockHandle, $manifest->blockPath);
 
             $backupPath = $manifest->shouldRebuildBlock
-                ? $manifest->blockPath . '.block-builder-backup-' . bin2hex(random_bytes(8))
+                ? $this->getBackupDirectory()
+                    . DIRECTORY_SEPARATOR
+                    . $config->blockHandle
+                    . '.block-builder-backup-'
+                    . bin2hex(random_bytes(8))
                 : null;
 
             if ($backupPath === null && (file_exists($manifest->blockPath) || is_link($manifest->blockPath))) {
@@ -77,7 +83,12 @@ readonly class BlockDirectoryManager
 
     private function recoverStaleBackups(string $blockHandle, string $blockPath): void
     {
-        $artifactPaths = glob($blockPath . '.block-builder-backup-*');
+        $artifactPaths = glob(
+            $this->getBackupDirectory()
+                . DIRECTORY_SEPARATOR
+                . $blockHandle
+                . '.block-builder-backup-*',
+        );
         if ($artifactPaths === false || $artifactPaths === []) {
             return;
         }
@@ -113,6 +124,11 @@ readonly class BlockDirectoryManager
                 logger: $this->logger,
             );
         }
+    }
+
+    private function getBackupDirectory(): string
+    {
+        return $this->backupDirectory ?? RuntimeDirectory::getBackupsPath();
     }
 
     private function removeGeneratedContents(BlockConfigDto $config, BlockGenerationManifest $manifest): void

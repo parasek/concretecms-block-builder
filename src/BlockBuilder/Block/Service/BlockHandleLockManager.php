@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace BlockBuilder\Block\Service;
 
+use BlockBuilder\Environment\RuntimeDirectory;
+
 final readonly class BlockHandleLockManager
 {
     public function __construct(private ?string $lockDirectory = null)
@@ -12,9 +14,9 @@ final readonly class BlockHandleLockManager
 
     public function acquire(string $blockHandle): BlockHandleLock
     {
-        $lockDirectory = $this->lockDirectory ?? DIR_FILES_BLOCK_TYPES;
+        $lockDirectory = $this->lockDirectory ?? RuntimeDirectory::getLocksPath();
         if (!is_dir($lockDirectory)) {
-            throw new \RuntimeException(sprintf('Unable to lock block "%s" because the application block directory does not exist.', $blockHandle));
+            throw new \RuntimeException(sprintf('Unable to lock block "%s" because the Block Builder lock directory does not exist.', $blockHandle));
         }
 
         $lockPath = $lockDirectory
