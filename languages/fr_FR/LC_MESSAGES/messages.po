@@ -1916,7 +1916,7 @@ msgid "File Set"
 msgstr "Ensemble de fichiers"
 
 #: src/BlockBuilder/FieldType/Type/FilesFromFolder/FilesFromFolderFieldType.php:20
-msgid "Files from a Folder"
+msgid "Files from Folder"
 msgstr "Fichiers d’un dossier"
 
 #: src/BlockBuilder/FieldType/Type/FilesFromFolder/FilesFromFolderFieldType.php:50

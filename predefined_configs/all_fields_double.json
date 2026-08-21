@@ -492,7 +492,7 @@
         },
         {
             "fieldType": "files_from_folder",
-            "label": "Basic Files from a Folder 1",
+            "label": "Basic Files from Folder 1",
             "handle": "basicFilesFromFolderFirst",
             "required": false,
             "helpText": "",
@@ -508,7 +508,7 @@
         },
         {
             "fieldType": "files_from_folder",
-            "label": "Basic Files from a Folder 2",
+            "label": "Basic Files from Folder 2",
             "handle": "basicFilesFromFolderSecond",
             "required": false,
             "helpText": "",
@@ -1052,7 +1052,7 @@
         },
         {
             "fieldType": "files_from_folder",
-            "label": "Repeatable Files from a Folder 1",
+            "label": "Repeatable Files from Folder 1",
             "handle": "repeatableFilesFromFolderFirst",
             "required": false,
             "helpText": "",
@@ -1068,7 +1068,7 @@
         },
         {
             "fieldType": "files_from_folder",
-            "label": "Repeatable Files from a Folder 2",
+            "label": "Repeatable Files from Folder 2",
             "handle": "repeatableFilesFromFolderSecond",
             "required": false,
             "helpText": "",

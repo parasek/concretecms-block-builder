@@ -2389,7 +2389,7 @@ msgid "File Set"
 msgstr "Dateisatz"
 
 #: src/BlockBuilder/FieldType/Type/FilesFromFolder/FilesFromFolderFieldType.php:20
-msgid "Files from a Folder"
+msgid "Files from Folder"
 msgstr "Dateien aus einem Ordner"
 
 #: src/BlockBuilder/FieldType/Type/FilesFromFolder/FilesFromFolderFieldType.php:50

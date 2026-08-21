@@ -51,7 +51,7 @@ final readonly class FilesFromFolderFieldGenerationContributor implements FieldG
         BlockGenerationPlanBuilder $planBuilder,
     ): void {
         if (!$context->fieldDto instanceof FilesFromFolderFieldTypeDto) {
-            throw new InvalidFieldGenerationDtoException(sprintf('Files from a Folder field generation requires DTO "%s"; "%s" was provided.', FilesFromFolderFieldTypeDto::class, $context->fieldDto::class));
+            throw new InvalidFieldGenerationDtoException(sprintf('Files from Folder field generation requires DTO "%s"; "%s" was provided.', FilesFromFolderFieldTypeDto::class, $context->fieldDto::class));
         }
 
         $field = $context->fieldDto;

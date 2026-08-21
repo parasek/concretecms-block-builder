@@ -17,7 +17,7 @@ final class FilesFromFolderFieldType extends AbstractFieldType
 
     public static function getLabel(): string
     {
-        return t('Files from a Folder');
+        return t('Files from Folder');
     }
 
     public static function getIcon(): string

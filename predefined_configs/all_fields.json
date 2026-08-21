@@ -287,7 +287,7 @@
         },
         {
             "fieldType": "files_from_folder",
-            "label": "Basic Files from a Folder 1",
+            "label": "Basic Files from Folder 1",
             "handle": "basicFilesFromFolderFirst",
             "required": false,
             "helpText": "",
@@ -568,7 +568,7 @@
         },
         {
             "fieldType": "files_from_folder",
-            "label": "Repeatable Files from a Folder 1",
+            "label": "Repeatable Files from Folder 1",
             "handle": "repeatableFilesFromFolderFirst",
             "required": false,
             "helpText": "",
