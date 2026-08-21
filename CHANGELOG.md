@@ -1,107 +1,35 @@
 ##### 3.0.0 (unreleased)
-- Displayed generated controller property names beside advanced block settings.
-- Synchronized the selected block type set when rebuilding a block.
-- Generated Image settings and variant code only for enabled thumbnail and fullscreen options.
-- Hid generated form tabs when the block has only one form section.
-- Generated fieldless blocks without an empty editing interface.
-- Preserved loaded configuration details after failed build submissions.
-- Added live required and repeatable-entry-title markers to field headers in the Block Builder editor.
-- Added live block-handle generation from the block name with the same manual override and restart behavior as field handles.
-- Moved persistent handle locks and transactional rebuild backups into dedicated `application/files/block_builder` runtime directories.
 - Raised the minimum requirements to Concrete CMS 9.5.2 and PHP 8.4.
-- Added a User Selector field backed by Concrete's user selector widget.
-- Added a Files from Folder field with direct-child file listing and configurable File Manager, ascending, descending, or random ordering.
-- Added an SVG Icon Picker field with sanitized custom icon definitions, generated select controls, and live previews.
-- Added an in-memory PHPUnit suite covering the 2.8.1 config schema and view-variable contract, every registered field type, and generated PHP, JSON, and Doctrine XML.
-- Expanded the fast suite with boundary, validation, request-security, generated-artifact, lifecycle-service, and filesystem transaction regressions.
-- Added fail-closed disposable Concrete integration and browser suites covering installation, generation, persistence, rebuild, duplication, deletion, upgrade, dashboard behavior, CSRF forms, and accessibility smoke checks.
-- Added PHP and Concrete version matrices, line/branch/changed-line coverage baseline reports with provisional ratchet targets, scheduled mutation testing, and retained browser diagnostics in CI.
-- Hardened transaction recovery against missing, linked, and unsafe backups, destinations, and state markers, and stopped generation when orphaned transaction artifacts require manual recovery.
-- Removed non-fragment SVG href and CSS references after sanitization so remote, data, file, and script-like references cannot survive in custom icon definitions.
-- Preserved the complete 2.8.1 Flex Link view-variable contract for rebuilt blocks and made `$app` available to every generated `view.php`.
-- Prevented field handles from shadowing generated export and edit-mode cache controller properties.
-- Serialized generation, uninstallation, and directory removal per block handle, safely replaced retained icons, and made stale-backup cleanup recoverable.
-- Restricted rebuild, install, uninstall, and directory-removal actions to matching Block Builder configurations.
-- Enforced editor permissions for submitted page, file, image, and Express selectors and removed debug output and server paths from generated Express examples.
-- Escaped loaded field values in dashboard templates and rejected unknown or oversized configuration data while retaining the 2.8.1 schema aliases.
-- Simplified field-type metadata to one canonical `getFieldType()` method and moved runtime generation values out of the persisted DTO namespace.
-- Added optional phone, email, and URL validation to generated Text fields.
-- Restored optional visual highlighting for compound Flex Link, link, and Image form fields.
+- Extensively reworked Block Builder while maintaining compatibility with 2.8.1 configuration files and generated view variables wherever possible.
+- Redesigned and polished the Dashboard interface for creating and managing blocks.
+- Added dark mode support to the Block Builder Dashboard and generated block forms.
+- Added support for custom block icons, including uploaded PNG icons and icons selected from Concrete CMS.
+- Block and field handles are now generated automatically from their corresponding names and labels, while still allowing manual edits.
+- Added controls for installing and uninstalling custom block types and deleting uninstalled block folders directly from the configuration list.
+- Improved configuration loading, validation, and error feedback, and preserved loaded configuration details after unsuccessful build attempts.
+- Modernized generated block data import and export, including file and folder references and cleaner repeatable-entry exports.
+- Generated blocks now use Concrete CMS's current Doctrine XML database schema format.
+- Added Concrete CMS file-usage tracking to generated blocks that use supported file fields.
+- Added settings for caching block output in edit mode and for registered users.
+- Advanced block settings now show their corresponding generated controller property names.
+- Added configurable messages for the "Basic information" and "Repeatable entries" tabs.
+- Added an option to display zero values in generated Text, Textarea, and Number field output.
+- Removed the deprecated horizontal-divider settings (`fieldsDivider` and `entryFieldsDivider`) from generated block configurations.
+- Textarea fields now resize automatically and support configurable minimum and maximum heights instead of a fixed height.
+- WYSIWYG Editor fields now support configurable minimum and maximum heights instead of a fixed height.
+- Date Picker fields now use native HTML date controls and support optional time selection, minute intervals, minimum and maximum dates, and custom PHP date formats.
+- Added configurable prefixes and suffixes to generated Text and Number controls.
 - Added configurable placeholders to generated Text, Textarea, and Number fields.
-- Refactored block creation into dedicated request, validation, DTO, service, and generator components for PHP 8.4.
-- Added configuration and controller generation for Concrete's `btCacheBlockOutputOnEditMode` cache setting.
-- Replaced native repeatable-entry dragging with Concrete's jQuery UI Sortable behavior and a visible vertical placeholder.
-- Added explicit generation metadata handling without overwriting metadata when legacy configs are read.
-- Added controlled handling for missing, malformed, and invalid block configuration files.
-- Added permission, request method, CSRF, handle, folder, and installation-state checks to block installation actions.
-- Added safe validation for missing and unsupported field types and missing request fields.
-- Fixed validation state reuse, label tab highlighting, the block height validation message, nullable block icons, and missing config dates.
-- Changed controller actions to return redirect responses without sending them directly.
-- Made pre-lifecycle file generation transactional so rendering, writing, or icon failures restore the previous block folder or remove a partial new folder.
-- Centralized initial values and selectable options for the block creation form in its view data provider.
-- Added a shared marker interface for immutable field configuration DTOs.
-- Renamed the flat persisted configuration model to `BlockConfigDto` to distinguish it from runtime block-creation data.
-- Split block generation into directory transactions, generated-file writing, icon generation, and Concrete block lifecycle services.
-- Generated text files now replace their targets instead of appending content.
-- File generators now declare their own relative destination paths.
-- Added an explicit iterable collection as the registration point for generated text files.
-- Added server-side allow-list validation for global and field-specific select values.
-- Added contextual generation exceptions for directory preparation, file writing, icons, installation, and refresh failures.
-- Added safe controller-level handling and logging for block generation failures.
-- Restricted file rollback to the pre-lifecycle phase, made backup cleanup best-effort, and added state-aware stale-backup recovery.
-- Added distinct configuration-loading failures and accurate, path-safe dashboard feedback.
-- Replaced container-based factory lookup in the JSON configuration service with constructor injection.
-- Renamed the read-only JSON configuration service to `BlockConfigReader`.
-- Added controlled field DTO creation errors for missing or unknown field types, malformed field data, and invalid value types.
-- Added reusable server-side integer validation for block limits, cache lifetime, image dimensions, and editor heights.
-- Added structural validation for configuration collections, field entries, scalar properties, excluded paths, and choice-option lists before DTO mapping.
-- Made validation feedback immutable, removed reusable validator state, and introduced an explicitly ordered create-block validator collection.
-- Split create-block validation into short-circuiting request-method, CSRF, authorization, input-shape, and business-validation stages.
-- Split block type lookup, permissions, installation, uninstallation, directory lookup/removal, and icon discovery into focused services.
-- Split option lists into focused block-settings, field-type, and icon providers.
-- Separated reserved-word datasets and handle normalization from reserved-handle policy checks.
-- Renamed runtime generation DTOs to `BlockGenerationManifest` and `BlockGenerationResult`, and clarified the text-only generated-file writer name.
-- Flattened field implementation directories and moved block type lifecycle orchestration into the generator lifecycle namespace.
-- Fixed block creation without basic or repeatable fields by normalizing omitted field collections to empty arrays.
-- Replaced the draft controller-only strategy layer with a field contribution plan shared by controller, database, form, view, JavaScript, and CSS generators.
-- Added safe, collision-checked text artifact rendering for the complete generated block scaffold, with unsupported field types rejected before the block directory is modified.
-- Added generation for basic and repeatable Text fields, including schema columns, controller persistence and search code, escaped edit/view markup, translated validation, and server-side length checks.
-- Made repeatable entry replacement, duplication, and deletion transactional and server-rendered existing entry controls before JavaScript enhancement to prevent accidental data loss.
-- Hardened configuration loading with canonical source-handle checks, safe application-directory resolution, symlink rejection, and a bounded JSON file size.
-- Replaced HTML lifecycle actions in validation errors with escaped plain-text guidance and removed their obsolete AJAX routes and controllers.
-- Added path-safe rebuild exclusions and a maximum custom block icon upload size.
-- Aligned form context, generation manifest, and reserved-handle class names with their responsibilities and removed one-consumer helper services.
-- Removed the pass-through create-block request wrapper, simplified validator aggregation, and derived validation success directly from reported errors.
-- Consolidated duplicate JavaScript and CSS plan layers into a shared mutable frontend-asset builder and immutable frontend-asset plan.
-- Replaced split field-type contracts and proxy definitions with one explicit contract, a convention-based base class, and a direct field-type registry.
-- Grouped concrete field implementations under `FieldType/Type`, separate from shared contracts, factories, validation, enums, and exceptions.
-- Centralized build-page URLs, navigation metadata, icon previews, and option lists in its view-data provider.
-- Simplified controlled dashboard exceptions to use one administrator-facing message while retaining full exception context in logs.
-- Centralized block handle length and format rules across form validation, configuration loading, and lifecycle actions.
-- Renamed the create-block validator collection to remove unnecessary business-layer terminology.
-- Clarified block lifecycle method names to describe installation, refresh, and lifecycle completion explicitly.
-- Changed generated PHP array literals from legacy `array (...)` syntax to modern short `[...]` syntax.
-- Simplified text file generators to return explicit file lists instead of lazy generators.
-- Scoped generated form-instance identifiers to `form.php` instead of storing them in every block controller.
-- Migrated generated database schemas from legacy AXMLS 0.3 to Concrete’s Doctrine XML 0.5 format.
-- Excluded repeatable-entry auto-increment values from block export and import data.
-- Added database-index generation and indexed repeatable entries by block ID and position.
-- Added Composer validation that reuses normal field validation for persisted block data.
-- Added controller-plan support for implemented interfaces and content/file-folder export metadata.
-- Added opt-in Concrete file-usage tracking with raw repeatable-entry collection and post-save tracker refresh.
-- Modernized generated form service imports and hardened text rendering against invalid non-scalar values.
-- Removed obsolete and no-op generated controller methods when their block features do not require them.
-- Added tabbed generated forms and a plain-JavaScript repeatable-entry interface with matching shared form styles.
-- Added basic and repeatable Flex Link generation with page, file, and external destinations, reusable compound-field controls, server-side validation, and compatibility with 2.8.1 configuration, stored JSON data, and generated view variable names.
-- Added basic and repeatable Sitemap Link, File Manager Link, and External Link generation while preserving their 2.8.1 configuration aliases, database columns, and generated `view.php` variable names.
-- Fixed saved Sitemap Link, File Manager Link, and External Link options being displayed as unchecked when their JSON values are booleans.
-- Fixed valid File Manager Link selections being rejected because Concrete file-version methods were checked on the proxying file entity.
-- Added generated `view.php` documentation for basic variables, choice-option maps, Flex Link values, and repeatable-entry array keys.
-- Added basic and repeatable Image generation with image-only file selection, file tracking, collapsible per-image alt text and dimension overrides, repeatable-field-wide defaults in the Settings tab, original/thumbnail/fullscreen view data, and 2.8.1 configuration and view-variable compatibility.
-- Fixed generated Image fields passing a file version instead of the Concrete file entity to the thumbnail helper.
-- Added configurable field prefixes and suffixes to generated Text and Number form controls.
-- Added add-form and repeatable-entry default values for Text, Textarea, Number, WYSIWYG Editor, HTML Editor, Color Picker, and Icon Picker fields.
-- Added configurable Text and Textarea length limits with live character counters in generated forms.
+- Added configurable default values for newly added basic and repeatable Text, Textarea, Number, WYSIWYG Editor, HTML Editor, Color Picker, and Icon Picker fields.
+- Added configurable length limits and live character counters to generated Text and Textarea fields.
+- Added optional phone, email, and URL validation to generated Text fields.
+- Added a User Selector field type using Concrete CMS's user selector.
+- Added an SVG Icon Picker field type for defining and selecting custom SVG icons.
+- Added a Files from Folder field type with ordering that can match File Manager or use ascending, descending, or random order.
+- Added "Required" and "Use this field as the title in repeatable entries" indicators to field headers in the Block Builder editor.
+- Generated `view.php` files now document available values with `@var` annotations.
+- Rebuilding a block now correctly synchronizes its block type set.
+- Updated and completed the German, Swiss German, French, and Polish translations.
 
 ##### 2.8.1
 - Fixed undefined PHP 8 errors for the Image field type.
