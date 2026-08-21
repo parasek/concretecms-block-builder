@@ -38,6 +38,14 @@ async function submitBuildForm(page: Page, builder: Locator): Promise<void> {
     ]);
 }
 
+async function getLoadedConfigurationValues(builder: Locator): Promise<string[]> {
+    const loadedConfigurationRow = builder.locator('.bb-info-row').filter({ hasText: 'Loaded configuration' });
+    await expect(loadedConfigurationRow).toHaveCount(1);
+
+    return (await loadedConfigurationRow.locator('.bb-info-entry-value').allTextContents())
+        .map((value) => value.trim());
+}
+
 async function removeGeneratedFixtureThroughDashboard(page: Page): Promise<void> {
     for (let action = 0; action < 2; action += 1) {
         await page.goto('/index.php/dashboard/blocks/block_builder/configs');
@@ -247,6 +255,21 @@ test.describe('authenticated Block Builder dashboard', () => {
         await expect(page.locator('.bb-alert-list')).not.toContainText(/97px|PNG image/i);
     });
 
+    test('failed predefined-config POST retains the loaded configuration details', async ({ page }) => {
+        await page.goto('/index.php/dashboard/blocks/block_builder/predefined_config/all_fields');
+        const builder = page.locator('#bbAppBuilder');
+        const loadedConfigurationValues = await getLoadedConfigurationValues(builder);
+        expect(loadedConfigurationValues).not.toContain('No information');
+
+        await builder.locator('[data-bb-tab="labels"]').click();
+        await builder.locator('#addAtTheTopLabel').fill('');
+        await builder.locator('#addAtTheBottomLabel').fill('');
+        await submitBuildForm(page, builder);
+
+        await expect(builder.locator('.bb-alert-list')).toContainText('At least one label');
+        expect(await getLoadedConfigurationValues(builder)).toEqual(loadedConfigurationValues);
+    });
+
     test('generated config escapes stored names and rejects unguarded lifecycle requests', async ({ page, context }) => {
         test.setTimeout(90_000);
 
@@ -266,6 +289,13 @@ test.describe('authenticated Block Builder dashboard', () => {
             await builder.locator('#installBlock').selectOption('0');
             await submitBuildForm(page, builder);
             await expect(page).toHaveURL(/\/dashboard\/blocks\/block_builder\/config\/block_builder_browser_fixture/);
+
+            const generatedBuilder = page.locator('#bbAppBuilder');
+            const loadedConfigurationValues = await getLoadedConfigurationValues(generatedBuilder);
+            expect(loadedConfigurationValues).not.toContain('No information');
+            await submitBuildForm(page, generatedBuilder);
+            await expect(generatedBuilder.locator('.bb-alert-list')).toContainText('already exists');
+            expect(await getLoadedConfigurationValues(generatedBuilder)).toEqual(loadedConfigurationValues);
 
             await page.goto('/index.php/dashboard/blocks/block_builder/configs');
             const fixture = page.locator('.bb-block-type').filter({

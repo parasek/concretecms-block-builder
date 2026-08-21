@@ -45,6 +45,7 @@ class BlockBuilder extends BaseDashboardController
         $this->set('errors', []);
         $this->set('fieldsWithError', []);
         $this->set('tabsWithError', []);
+        $this->set('loadedConfig', null);
     }
 
     public function view(): ?Response
@@ -76,6 +77,7 @@ class BlockBuilder extends BaseDashboardController
             return $this->redirectToConfigsWithError($this->getConfigLoadingErrorMessage($exception));
         }
         $this->set('config', $config);
+        $this->set('loadedConfig', $config);
 
         $response = $this->handlePostRequest(rebuildSourceHandle: $handle);
         if ($response) {
@@ -101,6 +103,7 @@ class BlockBuilder extends BaseDashboardController
             return $this->redirectToConfigsWithError($this->getConfigLoadingErrorMessage($exception));
         }
         $this->set('config', $config);
+        $this->set('loadedConfig', $config);
 
         $response = $this->handlePostRequest();
         if ($response) {

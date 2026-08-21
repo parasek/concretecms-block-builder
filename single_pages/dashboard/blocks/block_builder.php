@@ -7,6 +7,7 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
  * @var Concrete\Package\BlockBuilder\Controller\SinglePage\Dashboard\Blocks\BlockBuilder $controller
  * @var BlockBuilder\Environment\Dto\EnvironmentDto $environment
  * @var BlockBuilder\Block\Dto\BlockConfigDto $config
+ * @var BlockBuilder\Block\Dto\BlockConfigDto|null $loadedConfig
  * @var BlockBuilder\NavigationTab\Enum\NavigationTabEnum[] $navigationTabEnums
  * @var Concrete\Core\Editor\EditorInterface $editor
  * @var Concrete\Core\Form\Service\Form $form
@@ -65,8 +66,8 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
 
     <?php
     $infoTable = ['environment' => $environment];
-    if (in_array($controller->getAction(), [BlockFormContextEnum::Config->value, BlockFormContextEnum::PredefinedConfig->value], true)) {
-        $infoTable = array_merge($infoTable, ['config' => $config]);
+    if ($loadedConfig instanceof BlockBuilder\Block\Dto\BlockConfigDto) {
+        $infoTable['config'] = $loadedConfig;
     }
     View::element('info_table', $infoTable, 'block_builder');
     ?>
