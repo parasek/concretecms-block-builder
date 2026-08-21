@@ -61,7 +61,7 @@ class Configs extends BaseDashboardController
         $this->set('configLoadingErrors', array_unique($configLoadingErrors));
         $this->set('newBlockUrl', $this->viewDataProvider->getNewBlockUrl());
 
-        $this->set('pageTitle', t('Block Builder') . ' - ' . t('Browse existing configs'));
+        $this->set('pageTitle', t('Block Builder') . ' - ' . t('Browse existing configurations'));
     }
 
     public function install(string $blockTypeHandle): RedirectResponse
@@ -122,7 +122,7 @@ class Configs extends BaseDashboardController
     {
         $blockType = $blockTypeId > 0 ? $this->blockTypeLocator->findByIdentifier((int) $blockTypeId) : null;
         if ($blockType === null) {
-            $this->flash('error', t('Unable to find the block type specified.'));
+            $this->flash('error', t('Unable to find the specified block type.'));
 
             return $this->app->make(ResponseFactoryInterface::class)->redirect(
                 $this->app->make(ResolverManagerInterface::class)->resolve(['/dashboard/blocks/types']),

@@ -7,7 +7,7 @@
     >
         <concrete-user-input
             :user-id="<?= (int) ($entry[{{HANDLE_LITERAL}}] ?? 0); ?>"
-            choose-text="<?= t('Choose a User'); ?>"
+            choose-text="<?= t('Choose user'); ?>"
             input-name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
         ></concrete-user-input>
     </div>{{HELP_TEXT}}

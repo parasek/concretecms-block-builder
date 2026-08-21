@@ -688,7 +688,7 @@ abstract readonly class AbstractIndividualLinkFieldGenerationContributor impleme
                 '{{COMPONENT_NAME}}' => $pageSelector ? 'concrete-page-input' : 'concrete-file-input',
                 '{{IDENTIFIER_ATTRIBUTE}}' => $pageSelector ? 'page-id' : 'file-id',
                 '{{CHOOSE_LABEL_LITERAL}}' => $this->phpLiteralFormatter->format(
-                    $pageSelector ? 'Choose Page' : 'Choose File',
+                    $pageSelector ? 'Choose page' : 'Choose file',
                 ),
             ],
         );
@@ -701,7 +701,7 @@ abstract readonly class AbstractIndividualLinkFieldGenerationContributor impleme
         bool $ending = false,
     ): string {
         $label = $ending
-            ? ($context->config->urlEndingLabel ?: 'Custom string at the end of URL')
+            ? ($context->config->urlEndingLabel ?: 'Custom string at the end of the URL')
             : (str_ends_with($handle, '_text')
                 ? ($context->config->textLabel ?: 'Text')
                 : ($context->config->titleLabel ?: 'Title'));
@@ -738,7 +738,7 @@ abstract readonly class AbstractIndividualLinkFieldGenerationContributor impleme
             ? PHP_EOL . sprintf(
                 '    <div class="form-text"><?= t(%s); ?></div>',
                 $this->phpLiteralFormatter->format(
-                    $context->config->urlEndingHelpTextLabel ?: '(e.g. #contact-form or ?ccm_paging_p=2)',
+                    $context->config->urlEndingHelpTextLabel ?: '(e.g., #contact-form or ?ccm_paging_p=2)',
                 ),
             )
             : '';
@@ -760,7 +760,7 @@ abstract readonly class AbstractIndividualLinkFieldGenerationContributor impleme
     ): string {
         $label = $newWindow
             ? ($context->config->newWindowLabel ?: 'Open in new window')
-            : ($context->config->noFollowLabel ?: 'Add nofollow attribute');
+            : ($context->config->noFollowLabel ?: 'Add the nofollow attribute');
         $yes = $context->config->yesLabel ?: 'Yes';
         $no = $context->config->noLabel ?: 'No';
         $handleLiteral = $this->phpLiteralFormatter->format($handle);

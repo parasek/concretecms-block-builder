@@ -26,7 +26,7 @@ class MultipleChoiceFieldType extends AbstractFieldType
 
     public static function getLabel(): string
     {
-        return t('Multiple Choice Field');
+        return t('Multiple Choice');
     }
 
     public static function getIcon(): string
@@ -64,12 +64,12 @@ class MultipleChoiceFieldType extends AbstractFieldType
     public static function getErrorMessages(FieldTypeContextEnum $context): array
     {
         return [
-            'displayType|invalid_option' => t('Some "Multiple Choice Field/Type" fields contain an invalid option (%s).', $context->getTabName()),
-            'listGenerationMethod|invalid_option' => t('Some "Multiple Choice Field/List generation method" fields contain an invalid option (%s).', $context->getTabName()),
-            'options|empty' => t('There are some empty "Multiple Choice Field/Select options" fields (%s).', $context->getTabName()),
-            'options|invalid_data' => t('Some "Multiple Choice Field/Select options" fields contain invalid options. Use one option per line. Explicit keys must use "key :: label", start with a letter or number, and contain only letters, numbers, underscores, and hyphens (%s).', $context->getTabName()),
-            'defaultValue|invalid_option' => t('The default value of a Multiple Choice Field contains an option that is not configured (%s).', $context->getTabName()),
-            'defaultValue|invalid_data' => t('The default value of a Multiple Choice Field must contain unique option keys separated by pipes (%s).', $context->getTabName()),
+            'displayType|invalid_option' => t('Some "Multiple Choice/Type" fields contain an invalid option (%s).', $context->getTabName()),
+            'listGenerationMethod|invalid_option' => t('Some "Multiple Choice/List generation method" fields contain an invalid option (%s).', $context->getTabName()),
+            'options|empty' => t('Some "Multiple Choice/Select options" fields are empty (%s).', $context->getTabName()),
+            'options|invalid_data' => t('Some "Multiple Choice/Select options" fields contain invalid options. Use one option per line. Explicit keys must use "key :: label", start with a letter or number, and contain only letters, numbers, underscores, and hyphens (%s).', $context->getTabName()),
+            'defaultValue|invalid_option' => t('The default value of a Multiple Choice field contains an option that is not configured (%s).', $context->getTabName()),
+            'defaultValue|invalid_data' => t('The default value of a Multiple Choice field must contain unique option keys separated by pipe characters (%s).', $context->getTabName()),
         ];
     }
 

@@ -12,5 +12,5 @@
         data-block-builder-autosize
         data-entry-field="{{HANDLE}}"{{TITLE_SOURCE_ATTRIBUTE}}{{HEIGHT_STYLE_ATTRIBUTE}}{{MAXIMUM_LENGTH_ATTRIBUTE}}
     ><?= h(isset($entry[{{HANDLE_LITERAL}}]) && is_scalar($entry[{{HANDLE_LITERAL}}]) ? (string) $entry[{{HANDLE_LITERAL}}] : ''); ?></textarea>
-    <div class="form-text text-end" data-block-builder-character-counter><span data-character-count-current>0</span>{{COUNTER_MAXIMUM}} <?= t('chars'); ?></div>{{HELP_TEXT}}
+    <div class="form-text text-end" data-block-builder-character-counter><span data-character-count-current>0</span>{{COUNTER_MAXIMUM}} <?= t('characters'); ?></div>{{HELP_TEXT}}
 </div>

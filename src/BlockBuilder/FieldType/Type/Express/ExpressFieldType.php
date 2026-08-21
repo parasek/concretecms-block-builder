@@ -47,7 +47,7 @@ class ExpressFieldType extends AbstractFieldType
     public static function getErrorMessages(FieldTypeContextEnum $context): array
     {
         return [
-            'expressHandle|empty' => t('There are some empty "Express object handle" fields (%s).', $context->getTabName()),
+            'expressHandle|empty' => t('Some "Express object handle" fields are empty (%s).', $context->getTabName()),
             'expressHandle|invalid' => t('Some "Express object handle" fields are invalid (%s). Each value must start with a letter and contain only lowercase letters, numbers, and underscores.', $context->getTabName()),
         ];
     }

@@ -31,7 +31,7 @@
     <div class="mb-4">
         <label for="<%-context%>[<%-counter%>][size]"
                class="form-label"
-        ><?= t('Size'); ?></label>
+        ><?= t('Database precision and scale'); ?></label>
         <input type="text"
                id="<%-context%>[<%-counter%>][size]"
                name="<%-context%>[<%-counter%>][size]"
@@ -39,13 +39,13 @@
                value="<%-size%>"
         >
         <div class="form-text">
-            <?= t('Size of the DECIMAL field in the MySQL table.'); ?>
+            <?= t('Precision and scale of the DECIMAL column in the MySQL table.'); ?>
             <br>
-            <?= t('Value "10.2" means that the database field can store 8 digits for the integer part and 2 digits for the fractional part.'); ?>
+            <?= t('A value of "10.2" allows the database column to store 8 integer digits and 2 fractional digits.'); ?>
             <br>
-            <?= t('If you want to store integers in the database, write "0" after the dot ("8.0" or similar).'); ?>
+            <?= t('To store integers, use a scale of 0, for example "8.0".'); ?>
             <br>
-            <?= t('If you want to store standard money values in the database, write "2" after the dot ("10.2" or similar).'); ?>
+            <?= t('To store typical currency values, use a scale of 2, for example "10.2".'); ?>
             <br>
             <?= t('Warning: Changing this value after the block is installed can lead to data loss. Proceed with caution.'); ?>
         </div>
@@ -55,7 +55,7 @@
 
         <div class="col-lg-6">
 
-            <p class="text-body"><strong><?= t('Accepted values'); ?></strong></p>
+            <p class="text-body"><strong><?= t('Value constraints'); ?></strong></p>
 
             <div class="mb-4">
                 <label for="<%-context%>[<%-counter%>][step]"
@@ -67,7 +67,7 @@
                        class="form-control"
                        value="<%-step%>"
                 >
-                <div class="form-text"><?= t('Value "1" accepts integers; use "0.01" when you want to use a standard money format.'); ?></div>
+                <div class="form-text"><?= t('Use "1" for whole-number increments or "0.01" for currency increments.'); ?></div>
             </div>
 
             <div class="mb-4">
@@ -113,8 +113,8 @@
                        step="1"
                 >
                 <div class="form-text">
-                    <?= t('How many decimals to display after the separator.'); ?>
-                    <br><?= t('Argument of the PHP function number_format().'); ?>
+                    <?= t('Number of decimal places to display.'); ?>
+                    <br><?= t('Argument passed to PHP\'s number_format() function.'); ?>
                 </div>
             </div>
 
@@ -130,7 +130,7 @@
                 >
                 <div class="form-text">
                     <?= t('Usually "," (comma) or "." (dot).'); ?>
-                    <br><?= t('Argument of the PHP function number_format().'); ?>
+                    <br><?= t('Argument passed to PHP\'s number_format() function.'); ?>
                 </div>
             </div>
 
@@ -146,7 +146,7 @@
                 >
                 <div class="form-text">
                     <?= t('Usually " " (space), "." (dot), or "," (comma). You can also leave it empty.'); ?>
-                    <br><?= t('Argument of the PHP function number_format().'); ?>
+                    <br><?= t('Argument passed to PHP\'s number_format() function.'); ?>
                 </div>
             </div>
 

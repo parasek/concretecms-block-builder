@@ -1,6 +1,6 @@
 <?php if (isset($entry[{{HANDLE_LITERAL}}]) && $entry[{{HANDLE_LITERAL}}] !== ''): ?>
     <?php $selectedValues = explode('|', $entry[{{HANDLE_LITERAL}}]); ?>
-    <?= t('Selected keys/values'); ?>:<br>
+    <?= t('Selected keys and values'); ?>:<br>
     <?php foreach ($selectedValues as $selectedValue): ?>
         <?= h($selectedValue); ?>: <?= h(${{OPTIONS_VARIABLE}}[$selectedValue] ?? ''); ?><br>
     <?php endforeach; ?>

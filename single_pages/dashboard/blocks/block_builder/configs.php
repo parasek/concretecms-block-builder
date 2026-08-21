@@ -75,11 +75,11 @@
                         <?php if ($item->installed): ?>
                             <div class="bb-block-type-usage text-muted small mb-2 d-xxl-flex">
                                 <div class="me-xxl-3">
-                                    <?= t('Usage count'); ?>:
+                                    <?= t('Total instances'); ?>:
                                     <?= h($item->usageCount); ?>
                                 </div>
                                 <div class="">
-                                    <?= t('Usage count on active pages'); ?>:
+                                    <?= t('Instances on active pages'); ?>:
                                     <a href="<?= h($item->usageUrl); ?>"
                                        target="_blank"
                                     >
@@ -91,17 +91,17 @@
 
                         <div class="bb-block-type-badges text-muted small mb-3 mb-xxl-0">
                         <span class="badge small bb-block-type-info-badge mb-1">
-                           <span class="me-1 text-muted"><?= t('Block Builder'); ?>:</span> <?= h($config->blockBuilderVersion ?? t('No information')); ?>
+                           <span class="me-1 text-muted"><?= t('Block Builder'); ?>:</span> <?= h($config->blockBuilderVersion ?? t('Not available')); ?>
                         </span>
                             <span class="badge small bb-block-type-info-badge mb-1">
-                            <span class="me-1 text-muted"><?= t('Concrete'); ?>:</span> <?= h($config->concreteVersion ?? t('No information')); ?>
+                            <span class="me-1 text-muted"><?= t('Concrete CMS'); ?>:</span> <?= h($config->concreteVersion ?? t('Not available')); ?>
                         </span>
                             <span class="badge small bb-block-type-info-badge mb-1">
-                            <span class="me-1 text-muted"><?= t('PHP'); ?>:</span> <?= h($config->phpVersion ?? t('No information')); ?>
+                            <span class="me-1 text-muted"><?= t('PHP'); ?>:</span> <?= h($config->phpVersion ?? t('Not available')); ?>
                         </span>
                             <span class="badge small bb-block-type-info-badge mb-1">
-                            <span class="me-1 text-muted"><?= t('Created at'); ?>:</span>
-                            <?= h($config->createdAt ? date('Y-m-d H:i', strtotime($config->createdAt)) : t('No information')); ?>
+                            <span class="me-1 text-muted"><?= t('Created'); ?>:</span>
+                            <?= h($config->createdAt ? date('Y-m-d H:i', strtotime($config->createdAt)) : t('Not available')); ?>
                         </span>
                         </div>
 
@@ -111,7 +111,7 @@
 
                         <?php if (!$item->installed): ?>
                             <div class="bb-block-type-action bb-block-type-action-install mb-2">
-                                <?php $installConfirmationQuestion = t('This will install the %s block type. Are you sure?', $config->blockName); ?>
+                                <?php $installConfirmationQuestion = t('This will install the "%s" block type. Are you sure?', $config->blockName); ?>
                                 <form action="<?= h($item->installUrl); ?>"
                                       method="post"
                                       data-confirm-question="<?= h($installConfirmationQuestion); ?>"
@@ -159,7 +159,7 @@
                             <a href="<?= h($item->loadUrl); ?>"
                                class="btn btn-primary"
                             >
-                                <i class="fas fa-upload me-2"></i><?= t('Load config'); ?>
+                                <i class="fas fa-upload me-2"></i><?= t('Load configuration'); ?>
                             </a>
                         </div>
 
@@ -220,17 +220,17 @@
 
                         <div class="bb-block-type-badges text-muted small mb-3 mb-xxl-0">
                         <span class="badge small bb-block-type-info-badge mb-1">
-                           <span class="me-1 text-muted"><?= t('Block Builder'); ?>:</span> <?= h($predefinedConfig->blockBuilderVersion ?? t('No information')); ?>
+                           <span class="me-1 text-muted"><?= t('Block Builder'); ?>:</span> <?= h($predefinedConfig->blockBuilderVersion ?? t('Not available')); ?>
                         </span>
                             <span class="badge small bb-block-type-info-badge mb-1">
-                            <span class="me-1 text-muted"><?= t('Concrete'); ?>:</span> <?= h($predefinedConfig->concreteVersion ?? t('No information')); ?>
+                            <span class="me-1 text-muted"><?= t('Concrete CMS'); ?>:</span> <?= h($predefinedConfig->concreteVersion ?? t('Not available')); ?>
                         </span>
                             <span class="badge small bb-block-type-info-badge mb-1">
-                            <span class="me-1 text-muted"><?= t('PHP'); ?>:</span> <?= h($predefinedConfig->phpVersion ?? t('No information')); ?>
+                            <span class="me-1 text-muted"><?= t('PHP'); ?>:</span> <?= h($predefinedConfig->phpVersion ?? t('Not available')); ?>
                         </span>
                             <span class="badge small bb-block-type-info-badge mb-1">
-                            <span class="me-1 text-muted"><?= t('Created at'); ?>:</span>
-                            <?= h($predefinedConfig->createdAt ? date('Y-m-d H:i', strtotime($predefinedConfig->createdAt)) : t('No information')); ?>
+                            <span class="me-1 text-muted"><?= t('Created'); ?>:</span>
+                            <?= h($predefinedConfig->createdAt ? date('Y-m-d H:i', strtotime($predefinedConfig->createdAt)) : t('Not available')); ?>
                         </span>
                         </div>
 
@@ -242,7 +242,7 @@
                             <a href="<?= h($item->loadUrl); ?>"
                                class="btn btn-primary"
                             >
-                                <i class="fas fa-upload me-2"></i><?= t('Load config'); ?>
+                                <i class="fas fa-upload me-2"></i><?= t('Load configuration'); ?>
                             </a>
                         </div>
 

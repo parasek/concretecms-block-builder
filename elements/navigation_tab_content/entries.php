@@ -17,7 +17,7 @@
                 data-context="<?= h($fieldTypeContextEnum->value); ?>"
                 name="addEntry"
         >
-            <option value="" data-icon="fas fa-plus"><?= t('Add a new field'); ?></option>
+            <option value="" data-icon="fas fa-plus"><?= t('Add field'); ?></option>
             <?php foreach ($fieldTypes as $fieldType): ?>
                 <option value="<?= h($fieldType::getFieldType()->value); ?>"
                         data-icon="<?= h($fieldType::getIcon()); ?>"
@@ -63,11 +63,11 @@
 
         <a href="#"
            class="text-danger text-danger-hover ms-auto js-remove-all"
-           title="<?= t('Remove all'); ?>"
+           title="<?= t('Remove all fields'); ?>"
            data-remove-all
            data-group-handle="<?= h($fieldTypeContextEnum->value); ?>"
            data-confirm-text="<?= t('Are you sure?'); ?>"
-        ><i class="fas fa-times-circle me-2"></i><span class="d-none d-xl-inline"><?= t('Remove all'); ?></span></a>
+        ><i class="fas fa-times-circle me-2"></i><span class="d-none d-xl-inline"><?= t('Remove all fields'); ?></span></a>
 
     </div>
 

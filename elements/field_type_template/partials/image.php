@@ -28,7 +28,7 @@
         >
         <label for="<%-context%>[<%-counter%>][createThumbnailImage]"
                class="form-check-label"
-        ><?= t('Generate a thumbnail using the image helper class (if the original image is larger than the specified dimensions)'); ?></label>
+        ><?= t('Use the image helper class to generate a thumbnail if the original image is larger than the specified dimensions.'); ?></label>
     </div>
 
     <div class="row mt-2 <?= '<% if (!(createThumbnailImage === true || createThumbnailImage === 1 || createThumbnailImage === \'1\')) { %>d-none<% } %>'; ?>"
@@ -67,8 +67,7 @@
         </div>
 
         <div class="col-lg-2 mb-4">
-            <label class="form-label"><?= t('Crop'); ?></label>
-            <div class="form-check">
+            <div class="form-check mt-4">
                 <input type="checkbox"
                        class="form-check-input"
                        name="<%-context%>[<%-counter%>][thumbnailCrop]"
@@ -78,13 +77,12 @@
                 >
                 <label for="<%-context%>[<%-counter%>][thumbnailCrop]"
                        class="form-check-label"
-                ><?= t('Yes'); ?></label>
+                ><?= t('Crop image'); ?></label>
             </div>
         </div>
 
         <div class="col-lg-2 mb-4">
-            <label class="form-label"><?= t('Editable dimensions'); ?></label>
-            <div class="form-check">
+            <div class="form-check mt-4">
                 <input type="checkbox"
                        class="form-check-input"
                        name="<%-context%>[<%-counter%>][thumbnailEditable]"
@@ -94,7 +92,7 @@
                 >
                 <label for="<%-context%>[<%-counter%>][thumbnailEditable]"
                        class="form-check-label"
-                ><?= t('Yes'); ?></label>
+                ><?= t('Allow dimension editing'); ?></label>
             </div>
         </div>
 
@@ -111,7 +109,7 @@
         >
         <label for="<%-context%>[<%-counter%>][createFullscreenImage]"
                class="form-check-label"
-        ><?= t('Generate a fullscreen image using the image helper class (if the original image is larger than the specified dimensions)'); ?></label>
+        ><?= t('Use the image helper class to generate a fullscreen image if the original image is larger than the specified dimensions.'); ?></label>
     </div>
 
     <div class="row mt-2 <?= '<% if (!(createFullscreenImage === true || createFullscreenImage === 1 || createFullscreenImage === \'1\')) { %>d-none<% } %>'; ?>"
@@ -150,8 +148,7 @@
         </div>
 
         <div class="col-lg-2 mb-4">
-            <label class="form-label"><?= t('Crop'); ?></label>
-            <div class="form-check">
+            <div class="form-check mt-4">
                 <input type="checkbox"
                        class="form-check-input"
                        name="<%-context%>[<%-counter%>][fullscreenCrop]"
@@ -161,13 +158,12 @@
                 >
                 <label for="<%-context%>[<%-counter%>][fullscreenCrop]"
                        class="form-check-label"
-                ><?= t('Yes'); ?></label>
+                ><?= t('Crop image'); ?></label>
             </div>
         </div>
 
         <div class="col-lg-2 mb-4">
-            <label class="form-label"><?= t('Editable dimensions'); ?></label>
-            <div class="form-check">
+            <div class="form-check mt-4">
                 <input type="checkbox"
                        class="form-check-input"
                        name="<%-context%>[<%-counter%>][fullscreenEditable]"
@@ -177,7 +173,7 @@
                 >
                 <label for="<%-context%>[<%-counter%>][fullscreenEditable]"
                        class="form-check-label"
-                ><?= t('Yes'); ?></label>
+                ><?= t('Allow dimension editing'); ?></label>
             </div>
         </div>
 

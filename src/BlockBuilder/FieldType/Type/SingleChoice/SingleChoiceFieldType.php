@@ -27,7 +27,7 @@ class SingleChoiceFieldType extends AbstractFieldType
 
     public static function getLabel(): string
     {
-        return t('Single Choice Field');
+        return t('Single Choice');
     }
 
     public static function getIcon(): string
@@ -67,12 +67,12 @@ class SingleChoiceFieldType extends AbstractFieldType
     public static function getErrorMessages(FieldTypeContextEnum $context): array
     {
         return [
-            'displayType|invalid_option' => t('Some "Single Choice Field/Type" fields contain an invalid option (%s).', $context->getTabName()),
-            'addEmptyOption|invalid_option' => t('Some "Single Choice Field/Add an empty option" fields contain an invalid option (%s).', $context->getTabName()),
-            'listGenerationMethod|invalid_option' => t('Some "Single Choice Field/List generation method" fields contain an invalid option (%s).', $context->getTabName()),
-            'options|empty' => t('There are some empty "Single Choice Field/Select options" fields (%s).', $context->getTabName()),
-            'options|invalid_data' => t('Some "Single Choice Field/Select options" fields contain invalid options. Use one option per line. Explicit keys must use "key :: label", start with a letter or number, and contain only letters, numbers, underscores, and hyphens (%s).', $context->getTabName()),
-            'defaultValue|invalid_option' => t('The default value of a Single Choice Field does not match any configured option (%s).', $context->getTabName()),
+            'displayType|invalid_option' => t('Some "Single Choice/Type" fields contain an invalid option (%s).', $context->getTabName()),
+            'addEmptyOption|invalid_option' => t('Some "Single Choice/Add an empty option" fields contain an invalid option (%s).', $context->getTabName()),
+            'listGenerationMethod|invalid_option' => t('Some "Single Choice/List generation method" fields contain an invalid option (%s).', $context->getTabName()),
+            'options|empty' => t('Some "Single Choice/Select options" fields are empty (%s).', $context->getTabName()),
+            'options|invalid_data' => t('Some "Single Choice/Select options" fields contain invalid options. Use one option per line. Explicit keys must use "key :: label", start with a letter or number, and contain only letters, numbers, underscores, and hyphens (%s).', $context->getTabName()),
+            'defaultValue|invalid_option' => t('The default value of a Single Choice field does not match any configured option (%s).', $context->getTabName()),
         ];
     }
 

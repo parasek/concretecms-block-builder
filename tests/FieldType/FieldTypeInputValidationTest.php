@@ -236,11 +236,11 @@ final class FieldTypeInputValidationTest extends BlockBuilderTestCase
 
         self::assertSame([
             'Some "Text/Additional validation" fields contain an invalid option (Tab: Basic information).',
-            'Some "Single Choice Field/Type" fields contain an invalid option (Tab: Basic information).',
-            'Some "Single Choice Field/Add an empty option" fields contain an invalid option (Tab: Basic information).',
-            'Some "Single Choice Field/List generation method" fields contain an invalid option (Tab: Basic information).',
-            'Some "Multiple Choice Field/Type" fields contain an invalid option (Tab: Basic information).',
-            'Some "Multiple Choice Field/List generation method" fields contain an invalid option (Tab: Basic information).',
+            'Some "Single Choice/Type" fields contain an invalid option (Tab: Basic information).',
+            'Some "Single Choice/Add an empty option" fields contain an invalid option (Tab: Basic information).',
+            'Some "Single Choice/List generation method" fields contain an invalid option (Tab: Basic information).',
+            'Some "Multiple Choice/Type" fields contain an invalid option (Tab: Basic information).',
+            'Some "Multiple Choice/List generation method" fields contain an invalid option (Tab: Basic information).',
             'Some "File order" fields contain an invalid option (Tab: Basic information).',
         ], $feedback->errors);
         self::assertSame([

@@ -19,7 +19,7 @@
                 <label
                     class="form-check-label"
                     for="<%-context%>[<%-counter%>][attachTimeSelector]"
-                ><?= t('Attach time selector'); ?></label>
+                ><?= t('Enable time selection'); ?></label>
             </div>
         </div>
         <div class="col-md-6">
@@ -75,7 +75,7 @@
     <div class="mb-4">
         <label for="<%-context%>[<%-counter%>][datePattern]"
                class="form-label"
-        ><?= t('PHP date pattern'); ?></label>
+        ><?= t('PHP date format'); ?></label>
         <input type="text"
                id="<%-context%>[<%-counter%>][datePattern]"
                name="<%-context%>[<%-counter%>][datePattern]"
@@ -85,9 +85,9 @@
         <div class="form-text">
             <?= t('Leave empty to use Concrete CMS\'s localized date format in the view template.'); ?>
             <br>
-            <?= t('Enter a PHP date pattern to customize the date displayed in the view template.'); ?>
+            <?= t('Enter a PHP date format to customize how the date is displayed in the view template.'); ?>
             <br>
-            <?= t('Check the %sPHP manual%s for supported patterns. Examples: <code>d.m.Y</code>, <code>Y-m-d</code>, or <code>d.m.Y H:i</code>.', '<a href="https://www.php.net/manual/en/datetime.format.php" target="_blank" rel="noopener noreferrer">', '</a>'); ?>
+            <?= t('See the %sPHP manual%s for supported date format characters. Examples: <code>d.m.Y</code>, <code>Y-m-d</code>, or <code>d.m.Y H:i</code>.', '<a href="https://www.php.net/manual/en/datetime.format.php" target="_blank" rel="noopener noreferrer">', '</a>'); ?>
         </div>
     </div>
 

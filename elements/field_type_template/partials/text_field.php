@@ -35,7 +35,7 @@
             <label class="form-label" for="<%-context%>[<%-counter%>][minimumLength]"><?= t('Minimum length'); ?></label>
             <div class="input-group">
                 <input class="form-control" id="<%-context%>[<%-counter%>][minimumLength]" min="0" max="255" name="<%-context%>[<%-counter%>][minimumLength]" step="1" type="number" value="<%-minimumLength%>">
-                <span class="input-group-text"><?= t('chars'); ?></span>
+                <span class="input-group-text"><?= t('characters'); ?></span>
             </div>
             <div class="form-text"><?= t('Leave empty for no minimum length.'); ?></div>
         </div>
@@ -43,7 +43,7 @@
             <label class="form-label" for="<%-context%>[<%-counter%>][maximumLength]"><?= t('Maximum length'); ?></label>
             <div class="input-group">
                 <input class="form-control" id="<%-context%>[<%-counter%>][maximumLength]" min="1" max="255" name="<%-context%>[<%-counter%>][maximumLength]" step="1" type="number" value="<%-maximumLength%>">
-                <span class="input-group-text"><?= t('chars'); ?></span>
+                <span class="input-group-text"><?= t('characters'); ?></span>
             </div>
         </div>
     </div>

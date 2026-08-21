@@ -14,10 +14,10 @@
             data-block-builder-color-picker
             data-cancel-text="<?= t('Cancel'); ?>"
             data-choose-text="<?= t('Choose'); ?>"
-            data-toggle-palette-more-text="<?= t('more'); ?>"
-            data-toggle-palette-less-text="<?= t('less'); ?>"
-            data-no-color-selected-text="<?= t('No Color Selected'); ?>"
-            data-clear-text="<?= t('Clear Color Selection'); ?>"
+            data-toggle-palette-more-text="<?= t('More'); ?>"
+            data-toggle-palette-less-text="<?= t('Less'); ?>"
+            data-no-color-selected-text="<?= t('No color selected'); ?>"
+            data-clear-text="<?= t('Clear color selection'); ?>"
         >{{HELP_TEXT}}
     </div>
 </div>

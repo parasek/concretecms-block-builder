@@ -7,7 +7,7 @@
     <div class="mb-4">
         <label class="form-label" for="<%-context%>[<%-counter%>][defaultValue]"><?= t('Default value'); ?></label>
         <textarea class="form-control" id="<%-context%>[<%-counter%>][defaultValue]" name="<%-context%>[<%-counter%>][defaultValue]" rows="4"><%-defaultValue%></textarea>
-        <div class="form-text"><?= t('You may enter HTML supported by the WYSIWYG editor.'); ?></div>
+        <div class="form-text"><?= t('You may enter any HTML supported by the WYSIWYG editor.'); ?></div>
     </div>
 
     <div class="row mb-4">
@@ -25,7 +25,7 @@
                 <span class="input-group-text">px</span>
             </div>
             <div class="form-text">
-                <?= t('Leave empty to use the editor default minimum height.'); ?>
+                <?= t('Leave empty to use the editor\'s default minimum height.'); ?>
             </div>
         </div>
         <div class="col-xl-4">

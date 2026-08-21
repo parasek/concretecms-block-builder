@@ -8,7 +8,7 @@
         <icon-selector
             name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
             selected="<?= h($entry[{{HANDLE_LITERAL}}] ?? ''); ?>"
-            title="<?= t('Choose Icon'); ?>"
+            title="<?= t('Choose icon'); ?>"
             empty-option-label="<?= tc('Icon', '** None Selected'); ?>"
         ></icon-selector>
     </div>{{HELP_TEXT}}

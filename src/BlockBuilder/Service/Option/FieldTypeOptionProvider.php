@@ -45,7 +45,7 @@ readonly class FieldTypeOptionProvider
     public function getFilesFromFolderOrders(): array
     {
         return [
-            'file_manager' => t('As in File Manager'),
+            'file_manager' => t('As displayed in File Manager'),
             'ascending' => t('Ascending'),
             'descending' => t('Descending'),
             'random' => t('Random'),

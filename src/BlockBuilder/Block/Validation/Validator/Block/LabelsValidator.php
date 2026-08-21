@@ -18,7 +18,7 @@ class LabelsValidator implements ValidatorInterface
 
         if (!$data['addAtTheTopLabel'] && !$data['addAtTheBottomLabel']) {
             $feedback->addError(
-                error: t('At least one label for the buttons ("Add at the top" or "Add at the bottom") is required (%s).', NavigationTabEnum::Labels->getName()),
+                error: t('At least one of the "Add at the top" and "Add at the bottom" buttons must have a label (%s).', NavigationTabEnum::Labels->getName()),
                 field: 'addAtTheTopLabel',
                 tab: NavigationTabEnum::Labels->getHandle(),
             );

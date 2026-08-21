@@ -12,7 +12,7 @@
 ?>
 
 <div class="mb-4 <?= h(in_array('installBlock', $fieldsWithError) ? 'bb-has-error' : null); ?>">
-    <?= $form->label('installBlock', t('Install the block after creation')); ?>
+    <?= $form->label('installBlock', t('Install the block type after creation')); ?>
     <?= $form->select('installBlock', $installBlockOptions, (int) $config->installBlock); ?>
 </div>
 
@@ -22,13 +22,13 @@
         <?= $form->select('entriesAsFirstTab', $entriesAsFirstTabOptions, (int) $config->entriesAsFirstTab); ?>
     </div>
     <div class="col-xl-6 mb-4 <?= h(in_array('maxNumberOfEntries', $fieldsWithError) ? 'bb-has-error' : null); ?>">
-        <?= $form->label('maxNumberOfEntries', t('Max. number of entries') . ' ' . t('(0 for unlimited)')); ?>
+        <?= $form->label('maxNumberOfEntries', t('Maximum number of entries') . ' ' . t('(0 for unlimited)')); ?>
         <?= $form->number('maxNumberOfEntries', $config->maxNumberOfEntries); ?>
     </div>
 </div>
 
 <div class="mb-4 <?= h(in_array('highlightMultiElementFields', $fieldsWithError) ? 'bb-has-error' : null); ?>">
-    <?= $form->label('highlightMultiElementFields', t('Highlight multi-element fields')); ?>
+    <?= $form->label('highlightMultiElementFields', t('Highlight fields with multiple inputs')); ?>
     <?= $form->select('highlightMultiElementFields', $highlightMultiElementFieldsOptions, (int) $config->highlightMultiElementFields); ?>
 </div>
 

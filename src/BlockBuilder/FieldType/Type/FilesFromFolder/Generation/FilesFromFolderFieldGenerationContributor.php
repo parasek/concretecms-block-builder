@@ -147,7 +147,7 @@ private function getBlockBuilderFileFolders(): array
 {
     $filesystem = new Filesystem();
     $rootFolder = $filesystem->getRootFolder();
-    $options = [0 => t('----')];
+    $options = [0 => '----'];
     if (!$rootFolder instanceof FileFolder) {
         return $options;
     }

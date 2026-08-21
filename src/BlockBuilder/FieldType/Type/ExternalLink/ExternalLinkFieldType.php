@@ -25,7 +25,7 @@ class ExternalLinkFieldType extends AbstractFieldType
 
     public static function getLabel(): string
     {
-        return t('External link');
+        return t('External Link');
     }
 
     public static function getIcon(): string

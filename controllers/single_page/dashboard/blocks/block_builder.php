@@ -68,7 +68,7 @@ class BlockBuilder extends BaseDashboardController
     public function config(string $handle): ?Response
     {
         if (!BlockHandleFormat::isValid($handle)) {
-            return $this->redirectToConfigsWithError(t('The specified block config handle is invalid.'));
+            return $this->redirectToConfigsWithError(t('The specified block configuration handle is invalid.'));
         }
 
         try {
@@ -84,7 +84,7 @@ class BlockBuilder extends BaseDashboardController
             return $response;
         }
 
-        $this->set('pageTitle', t('Block Builder') . ' - ' . t('Config loaded from block "%s"', $config->blockName));
+        $this->set('pageTitle', t('Block Builder') . ' - ' . t('Configuration loaded from block "%s".', $config->blockName));
         $this->set('formActionPath', BlockFormContextEnum::Config->value . '/' . $handle);
         $this->setFormViewData(context: BlockFormContextEnum::Config, blockHandle: $config->blockHandle);
 
@@ -94,7 +94,7 @@ class BlockBuilder extends BaseDashboardController
     public function predefined_config(string $handle): ?Response
     {
         if (!BlockHandleFormat::isValid($handle)) {
-            return $this->redirectToConfigsWithError(t('The specified predefined config handle is invalid.'));
+            return $this->redirectToConfigsWithError(t('The specified predefined configuration handle is invalid.'));
         }
 
         try {
@@ -110,7 +110,7 @@ class BlockBuilder extends BaseDashboardController
             return $response;
         }
 
-        $this->set('pageTitle', t('Block Builder') . ' - ' . t('Config loaded from predefined JSON file "%s"', $config->blockName));
+        $this->set('pageTitle', t('Block Builder') . ' - ' . t('Configuration loaded from predefined JSON file "%s".', $config->blockName));
         $this->set('formActionPath', BlockFormContextEnum::PredefinedConfig->value . '/' . $handle);
         $this->setFormViewData(context: BlockFormContextEnum::PredefinedConfig, blockHandle: $config->blockHandle);
 

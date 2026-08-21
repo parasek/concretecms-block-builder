@@ -56,7 +56,7 @@ class Controller extends Package
 
         // Added in version 3.0.0
         $page = SinglePage::add('/dashboard/blocks/block_builder/configs', $package);
-        $page->updateCollectionName(t('Configs'));
+        $page->updateCollectionName(t('Configurations'));
         $page->setAttribute('exclude_nav', true);
     }
 

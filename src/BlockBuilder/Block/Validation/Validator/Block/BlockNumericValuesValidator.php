@@ -19,7 +19,7 @@ class BlockNumericValuesValidator implements ValidatorInterface
 
         if (!IntegerValueValidator::isInRange($data['maxNumberOfEntries'] ?? null, 0)) {
             $feedback->addError(
-                error: t('The field "%s" should be a non-negative whole number (%s).', t('Max. number of entries'), NavigationTabEnum::BuildOptions->getName()),
+                error: t('The field "%s" must be a non-negative whole number (%s).', t('Maximum number of entries'), NavigationTabEnum::BuildOptions->getName()),
                 field: 'maxNumberOfEntries',
                 tab: NavigationTabEnum::BuildOptions->getHandle(),
             );
@@ -27,7 +27,7 @@ class BlockNumericValuesValidator implements ValidatorInterface
 
         if (!IntegerValueValidator::isInRange($data['cacheBlockOutputLifetime'] ?? null, 0)) {
             $feedback->addError(
-                error: t('The field "%s" should be a non-negative whole number (%s).', t('Cache block output lifetime'), NavigationTabEnum::BlockSettings->getName()),
+                error: t('The field "%s" must be a non-negative whole number (%s).', t('Cache block output lifetime'), NavigationTabEnum::BlockSettings->getName()),
                 field: 'cacheBlockOutputLifetime',
                 tab: NavigationTabEnum::BlockSettings->getHandle(),
             );

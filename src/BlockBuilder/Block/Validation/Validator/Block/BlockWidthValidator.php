@@ -21,7 +21,7 @@ class BlockWidthValidator implements ValidatorInterface
             $errors[] = t('The field "%s" is required (%s).', t('Block width'), NavigationTabEnum::BlockSettings->getName());
         } else {
             if (!is_string($blockWidth) || !ctype_digit($blockWidth) || $blockWidth < 300 || $blockWidth > 2000) {
-                $errors[] = t('The field "%s" should be a number between %s and %s (%s).', t('Block width'), 300, 2000, NavigationTabEnum::BlockSettings->getName());
+                $errors[] = t('The field "%s" must be a number between %s and %s (%s).', t('Block width'), 300, 2000, NavigationTabEnum::BlockSettings->getName());
             }
         }
 

@@ -82,7 +82,7 @@ class NumberFieldType extends AbstractFieldType
     public static function getErrorMessages(FieldTypeContextEnum $context): array
     {
         return [
-            'size|invalid_format' => t('Some "Number/Size" fields must use a dot-separated decimal format such as 10.2 or 8.0 (%s).', $context->getTabName()),
+            'size|invalid_format' => t('Some "Number/Database precision and scale" fields must use a dot-separated precision-and-scale format such as 10.2 or 8.0 (%s).', $context->getTabName()),
             'step|invalid_format' => t('Some "Number/%s" fields must contain a numeric value such as 1 or 0.01 (%s).', t('Step'), $context->getTabName()),
             'minimum|invalid_format' => t('Some "Number/%s" fields must contain a numeric value such as 1 or 0.01 (%s).', t('Minimum'), $context->getTabName()),
             'maximum|invalid_format' => t('Some "Number/%s" fields must contain a numeric value such as 1 or 0.01 (%s).', t('Maximum'), $context->getTabName()),
@@ -95,7 +95,7 @@ class NumberFieldType extends AbstractFieldType
             ),
             'displayedDecimalSeparator|invalid_value' => t('Some "Displayed decimal separator" fields are empty (%s).', $context->getTabName()),
             'defaultValue|invalid_number' => t('Some "Number/Default value" fields contain an invalid number (%s).', $context->getTabName()),
-            'defaultValue|outside_range' => t('Some "Number/Default value" fields are outside their configured minimum-to-maximum range (%s).', $context->getTabName()),
+            'defaultValue|outside_range' => t('Some "Number/Default value" fields are outside their configured range (%s).', $context->getTabName()),
             'defaultValue|invalid_step' => t('Some "Number/Default value" fields do not match their configured step (%s).', $context->getTabName()),
             'prefix|too_long' => t('Some "Field prefix" values contain more than %s characters (%s).', self::MAXIMUM_AFFIX_LENGTH, $context->getTabName()),
             'suffix|too_long' => t('Some "Field suffix" values contain more than %s characters (%s).', self::MAXIMUM_AFFIX_LENGTH, $context->getTabName()),

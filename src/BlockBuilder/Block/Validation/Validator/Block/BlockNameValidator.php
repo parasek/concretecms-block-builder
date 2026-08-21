@@ -18,7 +18,7 @@ class BlockNameValidator implements ValidatorInterface
         if (empty($data['blockName'])) {
             $errors[] = t('The field "%s" is required (%s).', t('Block name'), NavigationTabEnum::BlockSettings->getName());
         } elseif (mb_strlen($data['blockName']) < 3 || mb_strlen($data['blockName']) > 100) {
-            $errors[] = t('The field "%s" should be between %s and %s characters long (%s).', t('Block name'), 3, 100, NavigationTabEnum::BlockSettings->getName());
+            $errors[] = t('The field "%s" must be between %s and %s characters long (%s).', t('Block name'), 3, 100, NavigationTabEnum::BlockSettings->getName());
         }
 
         return new ValidationFeedback(

@@ -39,7 +39,7 @@ readonly class BlockHandleValidator implements ValidatorInterface
 
         if (!BlockHandleFormat::isLengthValid($blockHandle)) {
             $errors[] = t(
-                'The field "%s" should be between %s and %s characters long (%s).',
+                'The field "%s" must be between %s and %s characters long (%s).',
                 t('Block handle'),
                 BlockHandleFormat::MIN_LENGTH,
                 BlockHandleFormat::MAX_LENGTH,
@@ -47,13 +47,13 @@ readonly class BlockHandleValidator implements ValidatorInterface
             );
         }
         if (!BlockHandleFormat::containsOnlyAllowedCharacters($blockHandle)) {
-            $errors[] = t('The field "%s" should consist only of lowercase letters and underscores (%s).', t('Block handle'), NavigationTabEnum::BlockSettings->getName());
+            $errors[] = t('The field "%s" must consist only of lowercase letters and underscores (%s).', t('Block handle'), NavigationTabEnum::BlockSettings->getName());
         }
         if (!BlockHandleFormat::hasValidBoundaryCharacters($blockHandle)) {
-            $errors[] = t('The field "%s" should not start or end with an underscore (%s).', t('Block handle'), NavigationTabEnum::BlockSettings->getName());
+            $errors[] = t('The field "%s" must not start or end with an underscore (%s).', t('Block handle'), NavigationTabEnum::BlockSettings->getName());
         }
         if (BlockHandleFormat::containsConsecutiveUnderscores($blockHandle)) {
-            $errors[] = t('The field "%s" should not contain two or more consecutive underscores (%s).', t('Block handle'), NavigationTabEnum::BlockSettings->getName());
+            $errors[] = t('The field "%s" must not contain two or more consecutive underscores (%s).', t('Block handle'), NavigationTabEnum::BlockSettings->getName());
         }
 
         if ($errors !== []) {

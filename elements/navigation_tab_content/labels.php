@@ -8,35 +8,34 @@
 ?>
 
 <div class="mb-4 populate-translation-fields">
-    <i class="fas fa-book"></i> <?= t('Populate fields with'); ?>
+    <i class="fas fa-book"></i>
     <a href="#"
        data-populate-translation-fields
        data-type="translated"
-    ><?= t('translated'); ?></a>
+    ><?= t('Use translated default labels'); ?></a>
     /
     <a href="#"
        data-populate-translation-fields
        data-type="untranslated"
-    ><?= t('untranslated'); ?></a>
-    <?= t('default labels'); ?>
+    ><?= t('Use English default labels'); ?></a>
 </div>
 
 <div class="mb-4 <?= h(in_array('basicLabel', $fieldsWithError) ? 'bb-has-error' : null); ?>">
     <?= $form->label('basicLabel', t('Basic information')); ?>
     <?= $form->text('basicLabel', $config->basicLabel, ['data-translated-text' => t('Basic information'), 'data-untranslated-text' => 'Basic information']); ?>
-    <div class="form-text"><?= t('Displayed name of the "Basic information" tab'); ?></div>
+    <div class="form-text"><?= t('Label displayed on the "Basic information" tab'); ?></div>
 </div>
 
 <div class="mb-4 <?= h(in_array('entriesLabel', $fieldsWithError) ? 'bb-has-error' : null); ?>">
     <?= $form->label('entriesLabel', t('Entries')); ?>
     <?= $form->text('entriesLabel', $config->entriesLabel, ['data-translated-text' => t('Entries'), 'data-untranslated-text' => 'Entries']); ?>
-    <div class="form-text"><?= t('Displayed name of the "Repeatable entries" tab'); ?></div>
+    <div class="form-text"><?= t('Label displayed on the "Repeatable entries" tab'); ?></div>
 </div>
 
 <div class="mb-4 <?= h(in_array('settingsLabel', $fieldsWithError) ? 'bb-has-error' : null); ?>">
     <?= $form->label('settingsLabel', t('Settings')); ?>
     <?= $form->text('settingsLabel', $config->settingsLabel, ['data-translated-text' => t('Settings'), 'data-untranslated-text' => 'Settings']); ?>
-    <div class="form-text"><?= t('Displayed name of the "Settings" tab'); ?></div>
+    <div class="form-text"><?= t('Label displayed on the "Settings" tab'); ?></div>
 </div>
 
 <div class="mb-4 <?= h(in_array('addAtTheTopLabel', $fieldsWithError) ? 'bb-has-error' : null); ?>">
@@ -85,8 +84,8 @@
 </div>
 
 <div class="mb-4 <?= h(in_array('maxNumberOfEntriesLabel', $fieldsWithError) ? 'bb-has-error' : null); ?>">
-    <?= $form->label('maxNumberOfEntriesLabel', t('Max. number of entries')); ?>
-    <?= $form->text('maxNumberOfEntriesLabel', $config->maxNumberOfEntriesLabel, ['data-translated-text' => t('Max. number of entries'), 'data-untranslated-text' => 'Max. number of entries']); ?>
+    <?= $form->label('maxNumberOfEntriesLabel', t('Maximum number of entries')); ?>
+    <?= $form->text('maxNumberOfEntriesLabel', $config->maxNumberOfEntriesLabel, ['data-translated-text' => t('Maximum number of entries'), 'data-untranslated-text' => 'Maximum number of entries']); ?>
 </div>
 
 <div class="mb-4 <?= h(in_array('removeEntryLabel', $fieldsWithError) ? 'bb-has-error' : null); ?>">
@@ -100,8 +99,8 @@
 </div>
 
 <div class="mb-4 <?= h(in_array('duplicateEntryAndAddAtTheEndLabel', $fieldsWithError) ? 'bb-has-error' : null); ?>">
-    <?= $form->label('duplicateEntryAndAddAtTheEndLabel', t('Duplicate entry and add at the end')); ?>
-    <?= $form->text('duplicateEntryAndAddAtTheEndLabel', $config->duplicateEntryAndAddAtTheEndLabel, ['data-translated-text' => t('Duplicate entry and add at the end'), 'data-untranslated-text' => 'Duplicate entry and add at the end']); ?>
+    <?= $form->label('duplicateEntryAndAddAtTheEndLabel', t('Duplicate entry at the end')); ?>
+    <?= $form->text('duplicateEntryAndAddAtTheEndLabel', $config->duplicateEntryAndAddAtTheEndLabel, ['data-translated-text' => t('Duplicate entry at the end'), 'data-untranslated-text' => 'Duplicate entry at the end']); ?>
 </div>
 
 <div class="mb-4 <?= h(in_array('areYouSureLabel', $fieldsWithError) ? 'bb-has-error' : null); ?>">
@@ -115,13 +114,13 @@
 </div>
 
 <div class="mb-4 <?= h(in_array('urlEndingLabel', $fieldsWithError) ? 'bb-has-error' : null); ?>">
-    <?= $form->label('urlEndingLabel', t('Custom string at the end of URL')); ?>
-    <?= $form->text('urlEndingLabel', $config->urlEndingLabel, ['data-translated-text' => t('Custom string at the end of URL'), 'data-untranslated-text' => 'Custom string at the end of URL']); ?>
+    <?= $form->label('urlEndingLabel', t('Custom string at the end of the URL')); ?>
+    <?= $form->text('urlEndingLabel', $config->urlEndingLabel, ['data-translated-text' => t('Custom string at the end of the URL'), 'data-untranslated-text' => 'Custom string at the end of the URL']); ?>
 </div>
 
 <div class="mb-4 <?= h(in_array('urlEndingHelpTextLabel', $fieldsWithError) ? 'bb-has-error' : null); ?>">
-    <?= $form->label('urlEndingHelpTextLabel', t('(e.g. #contact-form or ?ccm_paging_p=2)')); ?>
-    <?= $form->text('urlEndingHelpTextLabel', $config->urlEndingHelpTextLabel, ['data-translated-text' => t('(e.g. #contact-form or ?ccm_paging_p=2)'), 'data-untranslated-text' => '(e.g. #contact-form or ?ccm_paging_p=2)']); ?>
+    <?= $form->label('urlEndingHelpTextLabel', t('(e.g., #contact-form or ?ccm_paging_p=2)')); ?>
+    <?= $form->text('urlEndingHelpTextLabel', $config->urlEndingHelpTextLabel, ['data-translated-text' => t('(e.g., #contact-form or ?ccm_paging_p=2)'), 'data-untranslated-text' => '(e.g., #contact-form or ?ccm_paging_p=2)']); ?>
 </div>
 
 <div class="mb-4 <?= h(in_array('textLabel', $fieldsWithError) ? 'bb-has-error' : null); ?>">
@@ -150,8 +149,8 @@
 </div>
 
 <div class="mb-4 <?= h(in_array('externalLinkLabel', $fieldsWithError) ? 'bb-has-error' : null); ?>">
-    <?= $form->label('externalLinkLabel', t('External link')); ?>
-    <?= $form->text('externalLinkLabel', $config->externalLinkLabel, ['data-translated-text' => t('External link'), 'data-untranslated-text' => 'External link']); ?>
+    <?= $form->label('externalLinkLabel', t('External Link')); ?>
+    <?= $form->text('externalLinkLabel', $config->externalLinkLabel, ['data-translated-text' => t('External Link'), 'data-untranslated-text' => 'External Link']); ?>
 </div>
 
 <div class="mb-4 <?= h(in_array('showAdditionalFieldsLabel', $fieldsWithError) ? 'bb-has-error' : null); ?>">
@@ -170,8 +169,8 @@
 </div>
 
 <div class="mb-4 <?= h(in_array('noFollowLabel', $fieldsWithError) ? 'bb-has-error' : null); ?>">
-    <?= $form->label('noFollowLabel', t('Add nofollow attribute')); ?>
-    <?= $form->text('noFollowLabel', $config->noFollowLabel, ['data-translated-text' => t('Add nofollow attribute'), 'data-untranslated-text' => 'Add nofollow attribute']); ?>
+    <?= $form->label('noFollowLabel', t('Add the nofollow attribute')); ?>
+    <?= $form->text('noFollowLabel', $config->noFollowLabel, ['data-translated-text' => t('Add the nofollow attribute'), 'data-untranslated-text' => 'Add the nofollow attribute']); ?>
 </div>
 
 <div class="mb-4 <?= h(in_array('yesLabel', $fieldsWithError) ? 'bb-has-error' : null); ?>">

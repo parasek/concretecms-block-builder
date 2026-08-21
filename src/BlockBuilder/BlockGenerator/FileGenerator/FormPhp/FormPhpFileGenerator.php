@@ -202,14 +202,14 @@ readonly class FormPhpFileGenerator implements FileGeneratorInterface
             'copyLast' => $config->copyLastEntryLabel ?: 'Copy last entry',
             'expandAll' => $config->expandAllLabel ?: 'Expand all',
             'collapseAll' => $config->collapseAllLabel ?: 'Collapse all',
-            'removeAll' => $config->removeAllLabel ?: 'Delete all',
+            'removeAll' => $config->removeAllLabel ?: 'Remove all',
             'disableSmoothScroll' => $config->disableSmoothScrollLabel ?: 'Disable smooth scroll',
             'keepAddedCollapsed' => $config->keepAddedEntryCollapsedLabel ?: 'Keep added or copied entries collapsed',
             'noEntries' => $config->noEntriesFoundLabel ?: 'No entries found.',
             'maximum' => $config->maxNumberOfEntriesLabel ?: 'Maximum number of entries',
-            'remove' => $config->removeEntryLabel ?: 'Delete entry',
+            'remove' => $config->removeEntryLabel ?: 'Remove entry',
             'duplicate' => $config->duplicateEntryLabel ?: 'Duplicate entry',
-            'duplicateAtEnd' => $config->duplicateEntryAndAddAtTheEndLabel ?: 'Duplicate entry and add at the end',
+            'duplicateAtEnd' => $config->duplicateEntryAndAddAtTheEndLabel ?: 'Duplicate entry at the end',
             'confirm' => $config->areYouSureLabel ?: 'Are you sure?',
         ];
 

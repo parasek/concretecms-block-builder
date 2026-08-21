@@ -152,7 +152,7 @@ final class LegacyConfigCompatibilityTest extends BlockBuilderTestCase
         self::assertSame('2.8.1', $config->blockBuilderVersion);
         self::assertSame('single_multiple_choice_field', $config->blockHandle);
         self::assertSame(
-            '(e.g. #contact-form or ?ccm_paging_p=2)',
+            '(e.g., #contact-form or ?ccm_paging_p=2)',
             $config->urlEndingHelpTextLabel,
         );
         self::assertCount(6, $config->basic);

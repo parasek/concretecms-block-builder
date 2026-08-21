@@ -133,7 +133,7 @@ final readonly class FileSetFieldGenerationContributor implements FieldGeneratio
                     code: <<<'PHP'
 private function getBlockBuilderFileSets(string $fileSetPrefix = ''): array
 {
-    $options = [0 => t('----')];
+    $options = [0 => '----'];
     $fileSetList = new FileSetList();
 
     foreach ($fileSetList->get() as $fileSet) {

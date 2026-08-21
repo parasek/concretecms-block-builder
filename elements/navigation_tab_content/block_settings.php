@@ -119,7 +119,7 @@ $renderControllerPropertyLabel = static function (
             <?php $renderControllerPropertyLabel('cacheBlockRecord', t('Cache block record'), '$btCacheBlockRecord'); ?>
             <?= $form->select('cacheBlockRecord', $cacheBlockRecordOptions, (int) $config->cacheBlockRecord); ?>
             <div class="form-text">
-                <?= t('When block caching is enabled, cache the block\'s database record. This can almost always be enabled.'); ?>
+                <?= t('When block caching is enabled, cache the block\'s database record. You can enable this for most blocks.'); ?>
             </div>
         </div>
         <div class="mb-4 <?= h(in_array('cacheBlockOutput', $fieldsWithError) ? 'bb-has-error' : null); ?>">

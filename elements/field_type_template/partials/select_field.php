@@ -45,7 +45,7 @@
             </option>
         </select>
         <div class="form-text">
-            <?= t('Works only with the default and enhanced select fields.'); ?>
+            <?= t('Available only for the default and enhanced select field types.'); ?>
         </div>
     </div>
 
@@ -89,11 +89,11 @@
             <p class="small text-muted">
                 <?= t('Enter each option on a new line.'); ?>
                 <br>
-                <?= t('Use a double colon to specify the key (the value saved in the database) and the value (the displayed text). Keys must start with a letter or number and may contain letters, numbers, underscores, and hyphens.'); ?>
+                <?= t('Use a double colon (::) to separate the key stored in the database from the displayed label. Keys must start with a letter or number and may contain letters, numbers, underscores, and hyphens.'); ?>
                 <code class="bb-code-block">
-                    <?= t('no :: Don\'t show'); ?>
+                    no :: <?= t('Don\'t show'); ?>
                     <br>
-                    <?= t('yes :: Show'); ?>
+                    yes :: <?= t('Show'); ?>
                 </code>
             </p>
             <p class="small text-muted">

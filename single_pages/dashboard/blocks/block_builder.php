@@ -49,7 +49,7 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
         <a href="<?= h($configsUrl); ?>"
            class="btn btn-secondary"
         >
-            <i class="fas fa-upload me-2"></i><?= t('Load config'); ?>
+            <i class="fas fa-upload me-2"></i><?= t('Load configuration'); ?>
         </a>
     </div>
 
@@ -146,9 +146,9 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
                         class="btn btn-primary float-end"
                         value="1"
                         name="buildBlock"
-                        title="<?= t('Build your block now!'); ?>"
+                        title="<?= t('Build block'); ?>"
                 >
-                    <i class="fas fa-hammer me-lg-2"></i><span class="d-none d-lg-inline"><?= t('Build your block now!'); ?></span>
+                    <i class="fas fa-hammer me-lg-2"></i><span class="d-none d-lg-inline"><?= t('Build block'); ?></span>
                 </button>
                 <?php if ($controller->getAction() === BlockFormContextEnum::Config->value || $this->post('sourceAction') === BlockFormContextEnum::Config->value): ?>
                     <button type="submit"
@@ -166,7 +166,7 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
     </form>
 
     <script type="text/template" id="templateNoEntries">
-        <div class="alert alert-info mb-4" data-alert-no-entries><?= t('You haven\'t added any fields yet.'); ?></div>
+        <div class="alert alert-info mb-4" data-alert-no-entries><?= t('You have not added any fields yet.'); ?></div>
     </script>
 
     <?php View::element('field_type_template/field_type_template', [

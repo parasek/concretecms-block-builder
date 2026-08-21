@@ -61,7 +61,7 @@
             <concrete-page-input
                 :page-id="<?= (int) ($blockBuilderLink['link_from_sitemap'] ?? 0); ?>"
                 input-name="<?= h($view->field({{HANDLE_LITERAL}})); ?>[link_from_sitemap]"
-                choose-text="<?= t('Choose Page'); ?>"
+                choose-text="<?= t('Choose page'); ?>"
             ></concrete-page-input>
         </div>
     </div>
@@ -78,7 +78,7 @@
             <concrete-file-input
                 :file-id="<?= (int) ($blockBuilderLink['link_from_file_manager'] ?? 0); ?>"
                 input-name="<?= h($view->field({{HANDLE_LITERAL}})); ?>[link_from_file_manager]"
-                choose-text="<?= t('Choose File'); ?>"
+                choose-text="<?= t('Choose file'); ?>"
             ></concrete-file-input>
         </div>
     </div>

@@ -1,9 +1,9 @@
 {
     "version": "2.8.1",
     "createdAt": "2025-10-10 13:40:01",
-    "blockName": "Single\/Multiple Choice Field x2",
+    "blockName": "Single\/Multiple Choice x2",
     "blockHandle": "single_multiple_choice_field_double",
-    "blockDescription": "All types of Single\/Multiple Choice Fields (Basic + Repeatable) x2",
+    "blockDescription": "All types of Single\/Multiple Choices (Basic + Repeatable) x2",
     "installBlock": "1",
     "blockWidth": "1000",
     "blockHeight": "650",
@@ -39,24 +39,24 @@
     "disableSmoothScrollLabel": "Disable smooth scroll",
     "keepAddedEntryCollapsedLabel": "Keep added\/copied entry collapsed",
     "noEntriesFoundLabel": "No entries found.",
-    "maxNumberOfEntriesLabel": "Max. number of entries",
+    "maxNumberOfEntriesLabel": "Maximum number of entries",
     "removeEntryLabel": "Remove entry",
     "duplicateEntryLabel": "Duplicate entry",
-    "duplicateEntryAndAddAtTheEndLabel": "Duplicate entry and add at the end",
+    "duplicateEntryAndAddAtTheEndLabel": "Duplicate entry at the end",
     "areYouSureLabel": "Are you sure?",
     "requiredFieldsLabel": "Required fields",
-    "urlEndingLabel": "Custom string at the end of URL",
-    "urlEndingHelpText": "(e.g. #contact-form or ?ccm_paging_p=2)",
+    "urlEndingLabel": "Custom string at the end of the URL",
+    "urlEndingHelpText": "(e.g., #contact-form or ?ccm_paging_p=2)",
     "textLabel": "Text",
     "titleLabel": "Title",
     "altTextLabel": "Alt text",
     "linkFromSitemapLabel": "Link from Sitemap",
     "linkFromFileManagerLabel": "Link from File Manager",
-    "externalLinkLabel": "External link",
+    "externalLinkLabel": "External Link",
     "showAdditionalFieldsLabel": "Show additional fields",
     "hideAdditionalFieldsLabel": "Hide additional fields",
     "newWindowLabel": "Open in new window",
-    "noFollowLabel": "Add nofollow attribute",
+    "noFollowLabel": "Add the nofollow attribute",
     "yesLabel": "Yes",
     "noLabel": "No",
     "overrideThumbnailDimensionsLabel": "Override thumbnail dimensions",
@@ -72,7 +72,7 @@
     "basic": {
         "1": {
             "fieldType": "select_field",
-            "label": "Basic Single Choice Field Default 1",
+            "label": "Basic Single Choice Default 1",
             "handle": "basic_single_choice_field_default_first",
             "helpText": "",
             "displayType": "default_select",
@@ -84,7 +84,7 @@
         },
         "2": {
             "fieldType": "select_field",
-            "label": "Basic Single Choice Field Default 2",
+            "label": "Basic Single Choice Default 2",
             "handle": "basic_single_choice_field_default_second",
             "helpText": "",
             "displayType": "default_select",
@@ -96,7 +96,7 @@
         },
         "3": {
             "fieldType": "select_field",
-            "label": "Basic Single Choice Field Enhanced 1",
+            "label": "Basic Single Choice Enhanced 1",
             "handle": "basic_single_choice_field_enhanced_first",
             "helpText": "",
             "displayType": "enhanced_select",
@@ -108,7 +108,7 @@
         },
         "4": {
             "fieldType": "select_field",
-            "label": "Basic Single Choice Field Enhanced 2",
+            "label": "Basic Single Choice Enhanced 2",
             "handle": "basic_single_choice_field_enhanced_second",
             "helpText": "",
             "displayType": "enhanced_select",
@@ -120,7 +120,7 @@
         },
         "5": {
             "fieldType": "select_field",
-            "label": "Basic Single Choice Field Radio List 1",
+            "label": "Basic Single Choice Radio List 1",
             "handle": "basic_single_choice_field_radio_list_first",
             "helpText": "",
             "displayType": "radio_list",
@@ -132,7 +132,7 @@
         },
         "6": {
             "fieldType": "select_field",
-            "label": "Basic Single Choice Field Radio List 2",
+            "label": "Basic Single Choice Radio List 2",
             "handle": "basic_single_choice_field_radio_list_second",
             "helpText": "",
             "displayType": "radio_list",
@@ -144,7 +144,7 @@
         },
         "7": {
             "fieldType": "select_multiple_field",
-            "label": "Basic Multiple Choice Field Default 1",
+            "label": "Basic Multiple Choice Default 1",
             "handle": "basic_multiple_choice_field_default_first",
             "helpText": "",
             "displayType": "default_multiselect",
@@ -155,7 +155,7 @@
         },
         "8": {
             "fieldType": "select_multiple_field",
-            "label": "Basic Multiple Choice Field Default 2",
+            "label": "Basic Multiple Choice Default 2",
             "handle": "basic_multiple_choice_field_default_second",
             "helpText": "",
             "displayType": "default_multiselect",
@@ -166,7 +166,7 @@
         },
         "9": {
             "fieldType": "select_multiple_field",
-            "label": "Basic Multiple Choice Field Enhanced 1",
+            "label": "Basic Multiple Choice Enhanced 1",
             "handle": "basic_multiple_choice_field_enhanced_first",
             "helpText": "",
             "displayType": "enhanced_multiselect",
@@ -177,7 +177,7 @@
         },
         "10": {
             "fieldType": "select_multiple_field",
-            "label": "Basic Multiple Choice Field Enhanced 2",
+            "label": "Basic Multiple Choice Enhanced 2",
             "handle": "basic_multiple_choice_field_enhanced_second",
             "helpText": "",
             "displayType": "enhanced_multiselect",
@@ -188,7 +188,7 @@
         },
         "11": {
             "fieldType": "select_multiple_field",
-            "label": "Basic Multiple Choice Field Checkbox List 1",
+            "label": "Basic Multiple Choice Checkbox List 1",
             "handle": "basic_multiple_choice_field_checkbox_list_first",
             "helpText": "",
             "displayType": "checkbox_list",
@@ -199,7 +199,7 @@
         },
         "12": {
             "fieldType": "select_multiple_field",
-            "label": "Basic Multiple Choice Field Checkbox List 2",
+            "label": "Basic Multiple Choice Checkbox List 2",
             "handle": "basic_multiple_choice_field_checkbox_list_second",
             "helpText": "",
             "displayType": "checkbox_list",
@@ -212,7 +212,7 @@
     "entries": {
         "1": {
             "fieldType": "select_field",
-            "label": "Repeatable Single Choice Field Default 1",
+            "label": "Repeatable Single Choice Default 1",
             "handle": "repeatable_single_choice_field_default_first",
             "helpText": "",
             "displayType": "default_select",
@@ -224,7 +224,7 @@
         },
         "2": {
             "fieldType": "select_field",
-            "label": "Repeatable Single Choice Field Default 2",
+            "label": "Repeatable Single Choice Default 2",
             "handle": "repeatable_single_choice_field_default_second",
             "helpText": "",
             "displayType": "default_select",
@@ -236,7 +236,7 @@
         },
         "3": {
             "fieldType": "select_field",
-            "label": "Repeatable Single Choice Field Enhanced 1",
+            "label": "Repeatable Single Choice Enhanced 1",
             "handle": "repeatable_single_choice_field_enhanced_first",
             "helpText": "",
             "displayType": "enhanced_select",
@@ -248,7 +248,7 @@
         },
         "4": {
             "fieldType": "select_field",
-            "label": "Repeatable Single Choice Field Enhanced 2",
+            "label": "Repeatable Single Choice Enhanced 2",
             "handle": "repeatable_single_choice_field_enhanced_second",
             "helpText": "",
             "displayType": "enhanced_select",
@@ -260,7 +260,7 @@
         },
         "5": {
             "fieldType": "select_field",
-            "label": "Repeatable Single Choice Field Radio List 1",
+            "label": "Repeatable Single Choice Radio List 1",
             "handle": "repeatable_single_choice_field_radio_list_first",
             "helpText": "",
             "displayType": "radio_list",
@@ -272,7 +272,7 @@
         },
         "6": {
             "fieldType": "select_field",
-            "label": "Repeatable Single Choice Field Radio List 2",
+            "label": "Repeatable Single Choice Radio List 2",
             "handle": "repeatable_single_choice_field_radio_list_second",
             "helpText": "",
             "displayType": "radio_list",
@@ -284,7 +284,7 @@
         },
         "7": {
             "fieldType": "select_multiple_field",
-            "label": "Repeatable Multiple Choice Field Default 1",
+            "label": "Repeatable Multiple Choice Default 1",
             "handle": "repeatable_multiple_choice_field_default_first",
             "helpText": "",
             "displayType": "default_multiselect",
@@ -295,7 +295,7 @@
         },
         "8": {
             "fieldType": "select_multiple_field",
-            "label": "Repeatable Multiple Choice Field Default 2",
+            "label": "Repeatable Multiple Choice Default 2",
             "handle": "repeatable_multiple_choice_field_default_second",
             "helpText": "",
             "displayType": "default_multiselect",
@@ -306,7 +306,7 @@
         },
         "9": {
             "fieldType": "select_multiple_field",
-            "label": "Repeatable Multiple Choice Field Enhanced 1",
+            "label": "Repeatable Multiple Choice Enhanced 1",
             "handle": "repeatable_multiple_choice_field_enhanced_first",
             "helpText": "",
             "displayType": "enhanced_multiselect",
@@ -317,7 +317,7 @@
         },
         "10": {
             "fieldType": "select_multiple_field",
-            "label": "Repeatable Multiple Choice Field Enhanced 2",
+            "label": "Repeatable Multiple Choice Enhanced 2",
             "handle": "repeatable_multiple_choice_field_enhanced_second",
             "helpText": "",
             "displayType": "enhanced_multiselect",
@@ -328,7 +328,7 @@
         },
         "11": {
             "fieldType": "select_multiple_field",
-            "label": "Repeatable Multiple Choice Field Checkbox List 1",
+            "label": "Repeatable Multiple Choice Checkbox List 1",
             "handle": "repeatable_multiple_choice_field_checkbox_first",
             "helpText": "",
             "displayType": "checkbox_list",
@@ -339,7 +339,7 @@
         },
         "12": {
             "fieldType": "select_multiple_field",
-            "label": "Repeatable Multiple Choice Field Checkbox List 2",
+            "label": "Repeatable Multiple Choice Checkbox List 2",
             "handle": "repeatable_multiple_choice_field_checkbox_second",
             "helpText": "",
             "displayType": "checkbox_list",

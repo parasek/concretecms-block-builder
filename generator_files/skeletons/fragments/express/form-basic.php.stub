@@ -9,7 +9,7 @@
                 entity-id="<?= h(${{ENTITY_IDENTIFIER_VARIABLE}}); ?>"
                 entry-id="<?= (int) (${{HANDLE}} ?? 0); ?>"
                 input-name="<?= h($view->field({{HANDLE_LITERAL}})); ?>"
-                choose-text="<?= t('Choose Entry'); ?>"
+                choose-text="<?= t('Choose entry'); ?>"
             ></concrete-express-entry-input>
         </div>
     <?php else: ?>

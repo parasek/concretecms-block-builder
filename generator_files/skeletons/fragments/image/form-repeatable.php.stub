@@ -11,7 +11,7 @@
                 :filters='<?= json_encode([["field" => "type", "type" => \Concrete\Core\File\Type\Type::T_IMAGE]]); ?>'
                 :file-id="<?= (int) ($entry[{{HANDLE_LITERAL}}] ?? 0); ?>"
                 input-name="<?= h($view->field('entry')); ?>[<?= h((string) $entryIndex); ?>][{{HANDLE}}]"
-                choose-text="<?= t('Choose Image'); ?>"
+                choose-text="<?= t('Choose image'); ?>"
             ></concrete-file-input>
         </div>{{ADDITIONAL_FIELDS}}
     </div>{{HELP_TEXT}}

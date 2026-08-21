@@ -259,7 +259,7 @@ test.describe('authenticated Block Builder dashboard', () => {
 
         await expect(page).toHaveURL(/#labels$/);
         await expect(page.locator('[data-bb-tab="labels"]')).toHaveClass(/bb-tab-has-error/);
-        await expect(page.locator('.bb-alert-list')).toContainText('At least one label');
+        await expect(page.locator('.bb-alert-list')).toContainText('must have a label');
         await expect(page.locator('#blockName')).toHaveValue('Retained browser name');
         await expect(page.locator('#blockHandle')).toHaveValue('retained_browser_handle');
         await expect(page.locator('#blockDescription')).toHaveValue('Retained browser description');
@@ -270,14 +270,14 @@ test.describe('authenticated Block Builder dashboard', () => {
         await page.goto('/index.php/dashboard/blocks/block_builder/predefined_config/all_fields');
         const builder = page.locator('#bbAppBuilder');
         const loadedConfigurationValues = await getLoadedConfigurationValues(builder);
-        expect(loadedConfigurationValues).not.toContain('No information');
+        expect(loadedConfigurationValues).not.toContain('Not available');
 
         await builder.locator('[data-bb-tab="labels"]').click();
         await builder.locator('#addAtTheTopLabel').fill('');
         await builder.locator('#addAtTheBottomLabel').fill('');
         await submitBuildForm(page, builder);
 
-        await expect(builder.locator('.bb-alert-list')).toContainText('At least one label');
+        await expect(builder.locator('.bb-alert-list')).toContainText('must have a label');
         expect(await getLoadedConfigurationValues(builder)).toEqual(loadedConfigurationValues);
     });
 
@@ -303,7 +303,7 @@ test.describe('authenticated Block Builder dashboard', () => {
 
             const generatedBuilder = page.locator('#bbAppBuilder');
             const loadedConfigurationValues = await getLoadedConfigurationValues(generatedBuilder);
-            expect(loadedConfigurationValues).not.toContain('No information');
+            expect(loadedConfigurationValues).not.toContain('Not available');
             await submitBuildForm(page, generatedBuilder);
             await expect(generatedBuilder.locator('.bb-alert-list')).toContainText('already exists');
             expect(await getLoadedConfigurationValues(generatedBuilder)).toEqual(loadedConfigurationValues);
