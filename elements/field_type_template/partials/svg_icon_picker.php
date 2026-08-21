@@ -97,7 +97,7 @@
                         rows="4"
                     ></textarea>
                 </td>
-                <td class="text-end">
+                <td class="text-center">
                     <button class="btn btn-danger" type="button" data-remove-svg-icon>
                         <i class="fas fa-times" aria-hidden="true"></i>
                         <span class="visually-hidden"><?= t('Remove icon'); ?></span>
