@@ -1,4 +1,6 @@
 ##### 3.0.0 (unreleased)
+- Generated Image settings and variant code only for enabled thumbnail and fullscreen options.
+- Hid generated form tabs when the block has only one form section.
 - Generated fieldless blocks without an empty editing interface.
 - Preserved loaded configuration details after failed build submissions.
 - Added live required and repeatable-entry-title markers to field headers in the Block Builder editor.

@@ -1,7 +1,7 @@
 <?php
 
 use Concrete\Core\Application\Application;
-use Concrete\Core\Application\Service\UserInterface;
+{{USER_INTERFACE_USE}}
 use Concrete\Core\Block\View\BlockView;
 use Concrete\Core\Form\Service\Form;
 use Concrete\Core\Utility\Service\Identifier;
@@ -14,7 +14,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
  * @var Form $form
  */
 
-$userInterface = $app->make(UserInterface::class);
+{{USER_INTERFACE_SETUP}}
 $formInstanceIdentifier = $app
     ->make(Identifier::class)
     ->getString(18);

@@ -87,8 +87,8 @@ final readonly class ImageFieldGenerationContributor implements FieldGenerationC
             ),
         );
 
-        if ($context->isRepeatableField() && ($field->thumbnailEditable || $field->fullscreenEditable)) {
-            $this->contributeEditableSettings($context, $field, $fragmentKeyPrefix, $planBuilder);
+        if ($context->isRepeatableField() && $this->hasEditableVariant($field)) {
+            $this->contributeRepeatableEditableSettings($context, $field, $fragmentKeyPrefix, $planBuilder);
         }
     }
 
@@ -285,7 +285,7 @@ PHP,
             $planBuilder->database->addColumn($context->fieldContext, $column);
         }
 
-        if ($context->isRepeatableField() && ($field->thumbnailEditable || $field->fullscreenEditable)) {
+        if ($context->isRepeatableField() && $this->hasEditableVariant($field)) {
             $planBuilder->database->addColumn(
                 FieldTypeContextEnum::BasicFields,
                 new DatabaseColumn(name: 'settings', type: 'text', order: -100),
@@ -388,7 +388,7 @@ PHP,
         );
 
         $validationCode = $this->renderFileValidation($field, '$args[' . $handleLiteral . '] ?? null');
-        if ($field->thumbnailEditable || $field->fullscreenEditable) {
+        if ($this->hasEditableVariant($field)) {
             $validationCode .= PHP_EOL . PHP_EOL . $this->renderInlineDimensionsValidationCode(
                 $field,
                 '$args',
@@ -474,7 +474,7 @@ PHP,
             '$entry[' . $handleLiteral . '] ?? null',
             repeatable: true,
         );
-        if ($field->thumbnailEditable || $field->fullscreenEditable) {
+        if ($this->hasEditableVariant($field)) {
             $validationCode .= PHP_EOL . PHP_EOL . $this->renderInlineDimensionsValidationCode(
                 $field,
                 '$entry',
@@ -482,12 +482,15 @@ PHP,
             );
         }
 
-        $planBuilder->controller
-            ->addMethodFragment(ControllerMethodSectionEnum::View->value, new CodeFragment(
+        if ($field->createThumbnailImage || $field->createFullscreenImage) {
+            $planBuilder->controller->addMethodFragment(ControllerMethodSectionEnum::View->value, new CodeFragment(
                 key: $fragmentKeyPrefix . '.defaults',
                 code: $this->renderRepeatableDefaultViewVariables($field),
                 order: $context->position,
-            ))
+            ));
+        }
+
+        $planBuilder->controller
             ->addMethodFragment(ControllerMethodSectionEnum::SaveEntryFields->value, new CodeFragment(
                 key: $fragmentKeyPrefix,
                 code: implode(PHP_EOL, $saveLines),
@@ -510,7 +513,7 @@ PHP,
             ));
     }
 
-    private function contributeEditableSettings(
+    private function contributeRepeatableEditableSettings(
         FieldGenerationContext $context,
         ImageFieldTypeDto $field,
         string $fragmentKeyPrefix,
@@ -576,8 +579,8 @@ PHP,
         $settingsExpression = '(is_array($args[\'settings\'] ?? null) ? $args[\'settings\'] : [])';
         $lines = ['$submittedImageSettings = ' . $settingsExpression . ';'];
         foreach ([
-            ['enabled' => $field->thumbnailEditable, 'override' => 'override_dimensions', 'width' => 'custom_width', 'height' => 'custom_height', 'crop' => 'custom_crop', 'label' => 'thumbnail'],
-            ['enabled' => $field->fullscreenEditable, 'override' => 'override_fullscreen_dimensions', 'width' => 'custom_fullscreen_width', 'height' => 'custom_fullscreen_height', 'crop' => 'custom_fullscreen_crop', 'label' => 'fullscreen image'],
+            ['enabled' => $this->isThumbnailEditable($field), 'override' => 'override_dimensions', 'width' => 'custom_width', 'height' => 'custom_height', 'crop' => 'custom_crop', 'label' => 'thumbnail'],
+            ['enabled' => $this->isFullscreenEditable($field), 'override' => 'override_fullscreen_dimensions', 'width' => 'custom_fullscreen_width', 'height' => 'custom_fullscreen_height', 'crop' => 'custom_fullscreen_crop', 'label' => 'fullscreen image'],
         ] as $variant) {
             if (!$variant['enabled']) {
                 continue;
@@ -646,8 +649,8 @@ PHP,
     ): string {
         $lines = [];
         foreach ([
-            ['enabled' => $field->thumbnailEditable, 'override' => 'override_dimensions', 'width' => 'custom_width', 'height' => 'custom_height', 'crop' => 'custom_crop', 'label' => 'thumbnail'],
-            ['enabled' => $field->fullscreenEditable, 'override' => 'override_fullscreen_dimensions', 'width' => 'custom_fullscreen_width', 'height' => 'custom_fullscreen_height', 'crop' => 'custom_fullscreen_crop', 'label' => 'fullscreen image'],
+            ['enabled' => $this->isThumbnailEditable($field), 'override' => 'override_dimensions', 'width' => 'custom_width', 'height' => 'custom_height', 'crop' => 'custom_crop', 'label' => 'thumbnail'],
+            ['enabled' => $this->isFullscreenEditable($field), 'override' => 'override_fullscreen_dimensions', 'width' => 'custom_fullscreen_width', 'height' => 'custom_fullscreen_height', 'crop' => 'custom_fullscreen_crop', 'label' => 'fullscreen image'],
         ] as $variant) {
             if (!$variant['enabled']) {
                 continue;
@@ -743,33 +746,37 @@ PHP,
                 $field->showAltTextField ? '$this->' . $handle . '_alt ?? \'\'' : '\'\'',
             ),
         ];
-        foreach ($this->getResolvedVariableSuffixes(includeObject: true) as $suffix => $resolvedKey) {
+        foreach ($this->getResolvedVariableSuffixes($field, includeObject: true) as $suffix => $resolvedKey) {
             $lines[] = sprintf(
                 '$this->set(%s, $resolvedImage[%s]);',
                 $this->phpLiteralFormatter->format($handle . $suffix),
                 $this->phpLiteralFormatter->format($resolvedKey),
             );
         }
-        $lines[] = sprintf(
-            '$this->set(%s, %s);',
-            $this->phpLiteralFormatter->format($handle . '_defaultThumbnailWidth'),
-            $field->thumbnailWidth ?? 0,
-        );
-        $lines[] = sprintf(
-            '$this->set(%s, %s);',
-            $this->phpLiteralFormatter->format($handle . '_defaultThumbnailHeight'),
-            $field->thumbnailHeight ?? 0,
-        );
-        $lines[] = sprintf(
-            '$this->set(%s, %s);',
-            $this->phpLiteralFormatter->format($handle . '_defaultFullscreenWidth'),
-            $field->fullscreenWidth ?? 0,
-        );
-        $lines[] = sprintf(
-            '$this->set(%s, %s);',
-            $this->phpLiteralFormatter->format($handle . '_defaultFullscreenHeight'),
-            $field->fullscreenHeight ?? 0,
-        );
+        if ($field->createThumbnailImage) {
+            $lines[] = sprintf(
+                '$this->set(%s, %s);',
+                $this->phpLiteralFormatter->format($handle . '_defaultThumbnailWidth'),
+                $field->thumbnailWidth ?? 0,
+            );
+            $lines[] = sprintf(
+                '$this->set(%s, %s);',
+                $this->phpLiteralFormatter->format($handle . '_defaultThumbnailHeight'),
+                $field->thumbnailHeight ?? 0,
+            );
+        }
+        if ($field->createFullscreenImage) {
+            $lines[] = sprintf(
+                '$this->set(%s, %s);',
+                $this->phpLiteralFormatter->format($handle . '_defaultFullscreenWidth'),
+                $field->fullscreenWidth ?? 0,
+            );
+            $lines[] = sprintf(
+                '$this->set(%s, %s);',
+                $this->phpLiteralFormatter->format($handle . '_defaultFullscreenHeight'),
+                $field->fullscreenHeight ?? 0,
+            );
+        }
 
         return implode(PHP_EOL, $lines);
     }
@@ -788,7 +795,7 @@ PHP,
                 $field->showAltTextField ? '$entry[' . $altHandleLiteral . '] ?? \'\'' : '\'\'',
             ),
         ];
-        foreach ($this->getResolvedVariableSuffixes(includeObject: false) as $suffix => $resolvedKey) {
+        foreach ($this->getResolvedVariableSuffixes($field, includeObject: false) as $suffix => $resolvedKey) {
             $lines[] = sprintf(
                 '$entry[%s] = $resolvedImage[%s];',
                 $this->phpLiteralFormatter->format($field->handle . $suffix),
@@ -807,16 +814,28 @@ PHP,
         $handle = $field->handle;
         $lines = [
             sprintf('$imageData = $this->%s(%s);', self::NORMALIZE_DATA_METHOD, $imageDataExpression),
-            '$thumbnailWidth = ' . ($field->thumbnailWidth ?? 0) . ';',
-            '$thumbnailHeight = ' . ($field->thumbnailHeight ?? 0) . ';',
-            '$thumbnailCrop = ' . ($field->thumbnailCrop ? 'true' : 'false') . ';',
-            '$fullscreenWidth = ' . ($field->fullscreenWidth ?? 0) . ';',
-            '$fullscreenHeight = ' . ($field->fullscreenHeight ?? 0) . ';',
-            '$fullscreenCrop = ' . ($field->fullscreenCrop ? 'true' : 'false') . ';',
         ];
-        if ($repeatable) {
+        if ($field->createThumbnailImage) {
+            array_push(
+                $lines,
+                '$thumbnailWidth = ' . ($field->thumbnailWidth ?? 0) . ';',
+                '$thumbnailHeight = ' . ($field->thumbnailHeight ?? 0) . ';',
+                '$thumbnailCrop = ' . ($field->thumbnailCrop ? 'true' : 'false') . ';',
+            );
+        }
+        if ($field->createFullscreenImage) {
+            array_push(
+                $lines,
+                '$fullscreenWidth = ' . ($field->fullscreenWidth ?? 0) . ';',
+                '$fullscreenHeight = ' . ($field->fullscreenHeight ?? 0) . ';',
+                '$fullscreenCrop = ' . ($field->fullscreenCrop ? 'true' : 'false') . ';',
+            );
+        }
+        if ($repeatable && $this->hasEditableVariant($field)) {
             $prefix = $this->phpLiteralFormatter->format($handle . '_');
             $lines[] = sprintf('$imageSettings = $this->%s($this->settings ?? []);', self::DECODE_DATA_METHOD);
+        }
+        if ($repeatable && $this->isThumbnailEditable($field)) {
             $lines[] = sprintf(
                 'if (!empty($imageSettings[%1$s . \'override_dimensions\'])) {%2$s'
                 . '    $thumbnailWidth = $imageSettings[%1$s . \'custom_width\'] ?? 0;%2$s'
@@ -826,6 +845,8 @@ PHP,
                 $prefix,
                 PHP_EOL,
             );
+        }
+        if ($repeatable && $this->isFullscreenEditable($field)) {
             $lines[] = sprintf(
                 'if (!empty($imageSettings[%1$s . \'override_fullscreen_dimensions\'])) {%2$s'
                 . '    $fullscreenWidth = $imageSettings[%1$s . \'custom_fullscreen_width\'] ?? 0;%2$s'
@@ -836,25 +857,33 @@ PHP,
                 PHP_EOL,
             );
         }
-        $lines[] = 'if (!empty($imageData[\'override_dimensions\'])) {';
-        $lines[] = '    $thumbnailWidth = $imageData[\'custom_width\'];';
-        $lines[] = '    $thumbnailHeight = $imageData[\'custom_height\'];';
-        $lines[] = '    $thumbnailCrop = !empty($imageData[\'custom_crop\']);';
-        $lines[] = '}';
-        $lines[] = 'if (!empty($imageData[\'override_fullscreen_dimensions\'])) {';
-        $lines[] = '    $fullscreenWidth = $imageData[\'custom_fullscreen_width\'];';
-        $lines[] = '    $fullscreenHeight = $imageData[\'custom_fullscreen_height\'];';
-        $lines[] = '    $fullscreenCrop = !empty($imageData[\'custom_fullscreen_crop\']);';
-        $lines[] = '}';
+        if ($this->isThumbnailEditable($field)) {
+            $lines[] = 'if (!empty($imageData[\'override_dimensions\'])) {';
+            $lines[] = '    $thumbnailWidth = $imageData[\'custom_width\'];';
+            $lines[] = '    $thumbnailHeight = $imageData[\'custom_height\'];';
+            $lines[] = '    $thumbnailCrop = !empty($imageData[\'custom_crop\']);';
+            $lines[] = '}';
+        }
+        if ($this->isFullscreenEditable($field)) {
+            $lines[] = 'if (!empty($imageData[\'override_fullscreen_dimensions\'])) {';
+            $lines[] = '    $fullscreenWidth = $imageData[\'custom_fullscreen_width\'];';
+            $lines[] = '    $fullscreenHeight = $imageData[\'custom_fullscreen_height\'];';
+            $lines[] = '    $fullscreenCrop = !empty($imageData[\'custom_fullscreen_crop\']);';
+            $lines[] = '}';
+        }
         $lines[] = '$imageOptions = [';
-        $lines[] = '    \'thumbnail\' => ' . ($field->createThumbnailImage ? 'true' : 'false') . ',';
-        $lines[] = '    \'thumbnailWidth\' => $thumbnailWidth,';
-        $lines[] = '    \'thumbnailHeight\' => $thumbnailHeight,';
-        $lines[] = '    \'thumbnailCrop\' => $thumbnailCrop,';
-        $lines[] = '    \'fullscreen\' => ' . ($field->createFullscreenImage ? 'true' : 'false') . ',';
-        $lines[] = '    \'fullscreenWidth\' => $fullscreenWidth,';
-        $lines[] = '    \'fullscreenHeight\' => $fullscreenHeight,';
-        $lines[] = '    \'fullscreenCrop\' => $fullscreenCrop,';
+        if ($field->createThumbnailImage) {
+            $lines[] = '    \'thumbnail\' => true,';
+            $lines[] = '    \'thumbnailWidth\' => $thumbnailWidth,';
+            $lines[] = '    \'thumbnailHeight\' => $thumbnailHeight,';
+            $lines[] = '    \'thumbnailCrop\' => $thumbnailCrop,';
+        }
+        if ($field->createFullscreenImage) {
+            $lines[] = '    \'fullscreen\' => true,';
+            $lines[] = '    \'fullscreenWidth\' => $fullscreenWidth,';
+            $lines[] = '    \'fullscreenHeight\' => $fullscreenHeight,';
+            $lines[] = '    \'fullscreenCrop\' => $fullscreenCrop,';
+        }
         $lines[] = '];';
 
         return implode(PHP_EOL, $lines);
@@ -874,13 +903,21 @@ PHP,
             '_link' => ['string', 'Original image URL for ' . $field->label],
             '_width' => ['int', 'Original image width for ' . $field->label],
             '_height' => ['int', 'Original image height for ' . $field->label],
-            '_fullscreenLink' => ['string', 'Fullscreen image URL for ' . $field->label],
-            '_fullscreenWidth' => ['int', 'Fullscreen image width for ' . $field->label],
-            '_fullscreenHeight' => ['int', 'Fullscreen image height for ' . $field->label],
-            '_thumbnailLink' => ['string', 'Thumbnail URL for ' . $field->label],
-            '_thumbnailWidth' => ['int', 'Thumbnail width for ' . $field->label],
-            '_thumbnailHeight' => ['int', 'Thumbnail height for ' . $field->label],
         ];
+        if ($field->createThumbnailImage) {
+            $variables += [
+                '_thumbnailLink' => ['string', 'Thumbnail URL for ' . $field->label],
+                '_thumbnailWidth' => ['int', 'Thumbnail width for ' . $field->label],
+                '_thumbnailHeight' => ['int', 'Thumbnail height for ' . $field->label],
+            ];
+        }
+        if ($field->createFullscreenImage) {
+            $variables += [
+                '_fullscreenLink' => ['string', 'Fullscreen image URL for ' . $field->label],
+                '_fullscreenWidth' => ['int', 'Fullscreen image width for ' . $field->label],
+                '_fullscreenHeight' => ['int', 'Fullscreen image height for ' . $field->label],
+            ];
+        }
         if ($context->isBasicField()) {
             $variables = ['_object' => ['\Concrete\Core\Entity\File\File|false', 'File object for ' . $field->label], ...$variables];
         }
@@ -897,19 +934,29 @@ PHP,
             );
         }
 
-        $defaultVariables = $context->isBasicField()
-            ? [
-                '_defaultThumbnailWidth' => ['int', 'Default thumbnail width for ' . $field->label],
-                '_defaultThumbnailHeight' => ['int', 'Default thumbnail height for ' . $field->label],
-                '_defaultFullscreenWidth' => ['int', 'Default fullscreen width for ' . $field->label],
-                '_defaultFullscreenHeight' => ['int', 'Default fullscreen height for ' . $field->label],
-            ]
-            : [
-                '_defaultRepeatableThumbnailWidth' => ['int', 'Default repeatable thumbnail width for ' . $field->label],
-                '_defaultRepeatableThumbnailHeight' => ['int', 'Default repeatable thumbnail height for ' . $field->label],
-                '_defaultRepeatableFullscreenWidth' => ['int', 'Default repeatable fullscreen width for ' . $field->label],
-                '_defaultRepeatableFullscreenHeight' => ['int', 'Default repeatable fullscreen height for ' . $field->label],
-            ];
+        $defaultVariables = [];
+        if ($field->createThumbnailImage) {
+            $defaultVariables += $context->isBasicField()
+                ? [
+                    '_defaultThumbnailWidth' => ['int', 'Default thumbnail width for ' . $field->label],
+                    '_defaultThumbnailHeight' => ['int', 'Default thumbnail height for ' . $field->label],
+                ]
+                : [
+                    '_defaultRepeatableThumbnailWidth' => ['int', 'Default repeatable thumbnail width for ' . $field->label],
+                    '_defaultRepeatableThumbnailHeight' => ['int', 'Default repeatable thumbnail height for ' . $field->label],
+                ];
+        }
+        if ($field->createFullscreenImage) {
+            $defaultVariables += $context->isBasicField()
+                ? [
+                    '_defaultFullscreenWidth' => ['int', 'Default fullscreen width for ' . $field->label],
+                    '_defaultFullscreenHeight' => ['int', 'Default fullscreen height for ' . $field->label],
+                ]
+                : [
+                    '_defaultRepeatableFullscreenWidth' => ['int', 'Default repeatable fullscreen width for ' . $field->label],
+                    '_defaultRepeatableFullscreenHeight' => ['int', 'Default repeatable fullscreen height for ' . $field->label],
+                ];
+        }
         foreach ($defaultVariables as $suffix => [$type, $description]) {
             $planBuilder->view->addVariable(new ViewVariableDocumentation(
                 name: $field->handle . $suffix,
@@ -922,12 +969,19 @@ PHP,
 
     private function renderRepeatableDefaultViewVariables(ImageFieldTypeDto $field): string
     {
-        $defaults = [
-            '_defaultRepeatableThumbnailWidth' => $field->thumbnailWidth ?? 0,
-            '_defaultRepeatableThumbnailHeight' => $field->thumbnailHeight ?? 0,
-            '_defaultRepeatableFullscreenWidth' => $field->fullscreenWidth ?? 0,
-            '_defaultRepeatableFullscreenHeight' => $field->fullscreenHeight ?? 0,
-        ];
+        $defaults = [];
+        if ($field->createThumbnailImage) {
+            $defaults += [
+                '_defaultRepeatableThumbnailWidth' => $field->thumbnailWidth ?? 0,
+                '_defaultRepeatableThumbnailHeight' => $field->thumbnailHeight ?? 0,
+            ];
+        }
+        if ($field->createFullscreenImage) {
+            $defaults += [
+                '_defaultRepeatableFullscreenWidth' => $field->fullscreenWidth ?? 0,
+                '_defaultRepeatableFullscreenHeight' => $field->fullscreenHeight ?? 0,
+            ];
+        }
         $lines = [];
         foreach ($defaults as $suffix => $value) {
             $lines[] = sprintf(
@@ -965,10 +1019,10 @@ PHP,
                 $basicField ? '' : ' data-entry-field="' . $field->handle . '_alt"',
             );
         }
-        if ($field->thumbnailEditable) {
+        if ($this->isThumbnailEditable($field)) {
             $additionalFields[] = $this->renderInlineDimensionsFragment($context, $field, false);
         }
-        if ($field->fullscreenEditable) {
+        if ($this->isFullscreenEditable($field)) {
             $additionalFields[] = $this->renderInlineDimensionsFragment($context, $field, true);
         }
         $highlightField = $context->config->highlightMultiElementFields && $additionalFields !== [];
@@ -1072,10 +1126,10 @@ PHP,
 
     private function renderSettingsFragment(FieldGenerationContext $context, ImageFieldTypeDto $field): string
     {
-        $thumbnailSettings = $field->thumbnailEditable
+        $thumbnailSettings = $this->isThumbnailEditable($field)
             ? $this->renderDimensionsFragment($context, $field, false)
             : '';
-        $fullscreenSettings = $field->fullscreenEditable
+        $fullscreenSettings = $this->isFullscreenEditable($field)
             ? $this->renderDimensionsFragment($context, $field, true)
             : '';
 
@@ -1230,10 +1284,10 @@ PHP,
     private function getImageDataKeys(ImageFieldTypeDto $field): array
     {
         $keys = ['show_additional_fields'];
-        if ($field->thumbnailEditable) {
+        if ($this->isThumbnailEditable($field)) {
             array_push($keys, 'override_dimensions', 'custom_width', 'custom_height', 'custom_crop');
         }
-        if ($field->fullscreenEditable) {
+        if ($this->isFullscreenEditable($field)) {
             array_push(
                 $keys,
                 'override_fullscreen_dimensions',
@@ -1252,7 +1306,7 @@ PHP,
     private function getEditableSettingDefinitions(ImageFieldTypeDto $field): array
     {
         $definitions = [];
-        if ($field->thumbnailEditable) {
+        if ($this->isThumbnailEditable($field)) {
             $definitions = [
                 ['suffix' => 'override_dimensions', 'kind' => 'boolean'],
                 ['suffix' => 'custom_width', 'kind' => 'integer'],
@@ -1260,7 +1314,7 @@ PHP,
                 ['suffix' => 'custom_crop', 'kind' => 'boolean'],
             ];
         }
-        if ($field->fullscreenEditable) {
+        if ($this->isFullscreenEditable($field)) {
             array_push(
                 $definitions,
                 ['suffix' => 'override_fullscreen_dimensions', 'kind' => 'boolean'],
@@ -1273,10 +1327,25 @@ PHP,
         return $definitions;
     }
 
+    private function hasEditableVariant(ImageFieldTypeDto $field): bool
+    {
+        return $this->isThumbnailEditable($field) || $this->isFullscreenEditable($field);
+    }
+
+    private function isThumbnailEditable(ImageFieldTypeDto $field): bool
+    {
+        return $field->createThumbnailImage && $field->thumbnailEditable;
+    }
+
+    private function isFullscreenEditable(ImageFieldTypeDto $field): bool
+    {
+        return $field->createFullscreenImage && $field->fullscreenEditable;
+    }
+
     /**
      * @return array<string, string>
      */
-    private function getResolvedVariableSuffixes(bool $includeObject): array
+    private function getResolvedVariableSuffixes(ImageFieldTypeDto $field, bool $includeObject): array
     {
         $variables = [
             '' => 'fileID',
@@ -1287,13 +1356,21 @@ PHP,
             '_link' => 'link',
             '_width' => 'width',
             '_height' => 'height',
-            '_fullscreenLink' => 'fullscreenLink',
-            '_fullscreenWidth' => 'fullscreenWidth',
-            '_fullscreenHeight' => 'fullscreenHeight',
-            '_thumbnailLink' => 'thumbnailLink',
-            '_thumbnailWidth' => 'thumbnailWidth',
-            '_thumbnailHeight' => 'thumbnailHeight',
         ];
+        if ($field->createThumbnailImage) {
+            $variables += [
+                '_thumbnailLink' => 'thumbnailLink',
+                '_thumbnailWidth' => 'thumbnailWidth',
+                '_thumbnailHeight' => 'thumbnailHeight',
+            ];
+        }
+        if ($field->createFullscreenImage) {
+            $variables += [
+                '_fullscreenLink' => 'fullscreenLink',
+                '_fullscreenWidth' => 'fullscreenWidth',
+                '_fullscreenHeight' => 'fullscreenHeight',
+            ];
+        }
 
         return $includeObject ? ['_object' => 'object', ...$variables] : $variables;
     }

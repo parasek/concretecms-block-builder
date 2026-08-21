@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace BlockBuilder\Tests\Generation;
 
+use BlockBuilder\FieldType\Enum\FieldTypeEnum;
+use BlockBuilder\FieldType\Type\Text\TextFieldType;
 use BlockBuilder\Tests\Support\BlockBuilderTestCase;
 use DOMDocument;
 use PhpParser\Error as PhpParserError;
@@ -17,6 +19,41 @@ use PhpParser\ParserFactory;
  */
 final class InMemoryGenerationTest extends BlockBuilderTestCase
 {
+    /**
+     * Verifies that a single generated form section is rendered without tab navigation.
+     */
+    public function testSingleBasicSectionOmitsTabNavigation(): void
+    {
+        $config = $this->createBlockConfigDtoFactory()->fromGenerationArray([
+            'blockName' => 'Single Section Test',
+            'blockHandle' => 'single_section_test',
+            'basic' => [[
+                'fieldType' => FieldTypeEnum::Text->value,
+                'label' => 'Title',
+                'handle' => 'title',
+                'required' => false,
+                'helpText' => '',
+                ...TextFieldType::getDefaultValues(),
+            ]],
+            'entries' => [],
+        ]);
+        $generatedFiles = $this->generateTextFiles($this->createGenerationContext($config));
+        $formContents = '';
+        foreach ($generatedFiles as $generatedFile) {
+            if ($generatedFile->relativePath === 'form.php') {
+                $formContents = $generatedFile->contents;
+                break;
+            }
+        }
+
+        self::assertNotSame('', $formContents);
+        self::assertStringContainsString('$view->field(\'title\')', $formContents);
+        self::assertStringNotContainsString('$userInterface->tabs(', $formContents);
+        self::assertStringNotContainsString('UserInterface', $formContents);
+        self::assertStringNotContainsString('class="tab-content', $formContents);
+        self::assertStringNotContainsString('class="tab-pane', $formContents);
+    }
+
     /**
      * Verifies that a block without fields uses Concrete's form-less block behavior.
      */
@@ -104,6 +141,9 @@ final class InMemoryGenerationTest extends BlockBuilderTestCase
         );
         self::assertStringContainsString('$basicSvgIconPicker_iconPreviewSource = match', $filesByPath['form.php']);
         self::assertStringContainsString('$repeatableSvgIconPicker_iconPreviewSource = match', $filesByPath['form.php']);
+        self::assertStringContainsString('$userInterface->tabs(', $filesByPath['form.php']);
+        self::assertStringContainsString('use Concrete\Core\Application\Service\UserInterface;', $filesByPath['form.php']);
+        self::assertGreaterThanOrEqual(3, substr_count($filesByPath['form.php'], 'class="tab-pane'));
         self::assertStringContainsString('$basicSvgIconPicker_iconData = match', $filesByPath['view.php']);
         self::assertStringContainsString('$repeatableSvgIconPicker_iconData = match', $filesByPath['view.php']);
         self::assertStringNotContainsString('$_blockBuilderSvgIcon', $filesByPath['form.php']);

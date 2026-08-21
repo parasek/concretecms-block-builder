@@ -38,6 +38,7 @@ readonly class FormPhpFileGenerator implements FileGeneratorInterface
         $repeatableSection = $context->config->entries !== []
             ? $this->renderRepeatableSection($context)
             : '';
+        $usesTabs = $this->countFormSections($context, $basicFields, $repeatableSection, $settings) > 1;
         $formSections = array_filter([
             $this->renderFragments(
                 $context->plan->form->getFragments(FormGenerationPlanBuilder::SECTION_SETUP),
@@ -59,10 +60,29 @@ readonly class FormPhpFileGenerator implements FileGeneratorInterface
                 contents: $this->stubRenderer->render('form.php.stub', [
                     '{{FORM_SECTIONS}}' => implode(PHP_EOL . PHP_EOL, $formSections),
                     '{{BLOCK_EVENT_NAME}}' => $context->manifest->blockHandleKebabCase,
+                    '{{USER_INTERFACE_USE}}' => $usesTabs
+                        ? 'use Concrete\Core\Application\Service\UserInterface;'
+                        : '',
+                    '{{USER_INTERFACE_SETUP}}' => $usesTabs
+                        ? '$userInterface = $app->make(UserInterface::class);'
+                        : '',
                 ]),
                 producer: self::class,
             ),
         ];
+    }
+
+    private function countFormSections(
+        BlockFileGenerationContext $context,
+        string $basicFields,
+        string $repeatableSection,
+        string $settings,
+    ): int {
+        return count(array_filter([
+            $basicFields !== '' || trim((string) $context->config->messageBasicTab) !== '',
+            $repeatableSection !== '',
+            $settings !== '',
+        ]));
     }
 
     private function renderFormContent(
@@ -71,15 +91,17 @@ readonly class FormPhpFileGenerator implements FileGeneratorInterface
         string $repeatableSection,
         string $settings,
     ): string {
-        $tabs = [
-            'basic-information' => [
+        $basicContent = $this->prependTabMessage(
+            message: $context->config->messageBasicTab,
+            content: $basicFields,
+        );
+        $tabs = [];
+        if ($basicContent !== '') {
+            $tabs['basic-information'] = [
                 'label' => $context->config->basicLabel ?: 'Basic information',
-                'content' => $this->prependTabMessage(
-                    message: $context->config->messageBasicTab,
-                    content: $basicFields,
-                ),
-            ],
-        ];
+                'content' => $basicContent,
+            ];
+        }
         if ($repeatableSection !== '') {
             $tabs['entries'] = [
                 'label' => $context->config->entriesLabel ?: 'Entries',
@@ -99,6 +121,17 @@ readonly class FormPhpFileGenerator implements FileGeneratorInterface
             $entriesTab = $tabs['entries'];
             unset($tabs['entries']);
             $tabs = ['entries' => $entriesTab, ...$tabs];
+        }
+
+        if (count($tabs) === 1) {
+            $onlyTab = reset($tabs);
+
+            return sprintf(
+                '<div id="form-container-<?= h($formInstanceIdentifier); ?>" data-block-builder-form>%1$s'
+                . '%2$s%1$s</div>',
+                PHP_EOL,
+                $this->indentCode($onlyTab['content'], 1),
+            );
         }
 
         $tabDefinitions = [];
