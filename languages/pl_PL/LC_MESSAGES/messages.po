@@ -434,8 +434,8 @@ msgstr "Tak"
 
 #: elements/field_type_template/partials/image.php:86
 #: elements/field_type_template/partials/image.php:169
-msgid "Editable"
-msgstr "Edytowalność"
+msgid "Editable dimensions"
+msgstr "Edycja wymiarów"
 
 #: elements/field_type_template/partials/image.php:114
 msgid ""

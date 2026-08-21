@@ -83,7 +83,7 @@
         </div>
 
         <div class="col-lg-2 mb-4">
-            <label class="form-label"><?= t('Editable'); ?></label>
+            <label class="form-label"><?= t('Editable dimensions'); ?></label>
             <div class="form-check">
                 <input type="checkbox"
                        class="form-check-input"
@@ -166,7 +166,7 @@
         </div>
 
         <div class="col-lg-2 mb-4">
-            <label class="form-label"><?= t('Editable'); ?></label>
+            <label class="form-label"><?= t('Editable dimensions'); ?></label>
             <div class="form-check">
                 <input type="checkbox"
                        class="form-check-input"

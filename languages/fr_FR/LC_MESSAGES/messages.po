@@ -375,8 +375,8 @@ msgstr "Oui"
 
 #: elements/field_type_template/partials/image.php:86
 #: elements/field_type_template/partials/image.php:169
-msgid "Editable"
-msgstr "Modifiable"
+msgid "Editable dimensions"
+msgstr "Dimensions modifiables"
 
 #: elements/field_type_template/partials/image.php:114
 msgid "Generate a fullscreen image using the image helper class (if the original image is larger than the specified dimensions)"
