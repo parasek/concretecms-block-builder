@@ -27,7 +27,6 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
         'entries',
         'settings',
         'label',
-        'description',
         'forminstanceidentifier',
         'bttable',
         'btexporttables',

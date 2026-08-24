@@ -286,7 +286,6 @@ final class ReservedWordCatalog
         'entries',
         'settings',
         'label',
-        'description',
         'formInstanceIdentifier',
         'btTable',
         'btExportTables',
