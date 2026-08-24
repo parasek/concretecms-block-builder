@@ -268,7 +268,7 @@
 
 .bb-custom-code {
     border: 1px solid #f0f0f0;
-    background: #fafafa;
+    background: var(--bs-body-bg);
     border-radius: var(--bb-input-border-radius);
     padding: 15px 20px;
 }
@@ -580,3 +580,8 @@
 [data-bs-theme='dark'] .bb-app .choices__list[aria-expanded] .choices__item--selectable.is-highlighted {
     background: #1e1e1e;
 }
+
+[data-bs-theme='dark'] .bb-entry[data-recently-added] .bb-entry-header {
+    background: #161616;
+}
+
