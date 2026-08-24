@@ -530,7 +530,7 @@
         top: 110px;
     }
 
-    .bb-tabs > li > a:not(:hover, [data-bb-tab-active]) {
+    .bb-tabs > li > a:not(:hover, [data-bb-tab-active], .bb-tab-has-error) {
         background: var(--bs-body-bg)
     }
 }
