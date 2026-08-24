@@ -77,7 +77,7 @@ use BlockBuilder\NavigationTab\Enum\NavigationTabEnum;
 
         <?php if (!empty($navigationTabEnums)): ?>
 
-            <ul class="bb-tabs mb-4" id="bb-tabs">
+            <ul class="bb-tabs pb-4 pt-2" id="bb-tabs">
                 <?php foreach ($navigationTabEnums as $navigationTabEnum): ?>
                     <li>
                         <a href="#"

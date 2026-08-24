@@ -518,6 +518,23 @@
     margin: 0 0 1.5rem;
 }
 
+@media (min-width: 1920px) {
+    .bb-tabs {
+        position: sticky;
+        top: 48px;
+        z-index: 1;
+        background: var(--bs-body-bg)
+    }
+
+    .bb-field-type-actions {
+        top: 110px;
+    }
+
+    .bb-tabs > li > a:not(:hover, [data-bb-tab-active]) {
+        background: var(--bs-body-bg)
+    }
+}
+
 /************************************************************/
 /* Dark mode
 /************************************************************/

@@ -6,7 +6,7 @@
  */
 ?>
 
-<div class="bb-info mb-4">
+<div class="bb-info mb-3">
 
     <div class="bb-info-row">
         <div class="bb-info-entry bb-info-entry-title">
