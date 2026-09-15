@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Concrete\Package\BlockBuilder;
 
 use BlockBuilder\Environment\RuntimeDirectory;
+use BlockBuilder\Console\GenerateBlockCommand;
 use Concrete\Core\Entity\Package as PackageEntity;
 use Concrete\Core\Package\Package;
 use Concrete\Core\Page\Single as SinglePage;
@@ -26,6 +27,13 @@ class Controller extends Package
     public function getPackageName(): string
     {
         return t('Block Builder');
+    }
+
+    public function on_start(): void
+    {
+        if ($this->app->bound('console')) {
+            $this->app->make('console')->add($this->app->make(GenerateBlockCommand::class));
+        }
     }
 
     public function getPackageDescription(): string

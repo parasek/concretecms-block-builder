@@ -115,9 +115,21 @@ readonly class BlockConfigReader
         return $predefinedConfigs;
     }
 
-    private function loadConfig(string $path, string $sourceHandle): BlockConfigDto
+    /**
+     * Load a local configuration whose filename need not match its block handle.
+     */
+    public function getConfigFromFile(string $path): BlockConfigDto
     {
-        if (!BlockHandleFormat::isValid($sourceHandle)) {
+        if ($path === '' || str_contains($path, "\0") || str_contains($path, '://')) {
+            throw new ConfigFileUnreadableException(message: t('Provide a local configuration file path.'));
+        }
+
+        return $this->loadConfig($path, null);
+    }
+
+    private function loadConfig(string $path, ?string $sourceHandle): BlockConfigDto
+    {
+        if ($sourceHandle !== null && !BlockHandleFormat::isValid($sourceHandle)) {
             throw new InvalidConfigFieldDataException(message: t('The configuration file "%s" has an invalid source identifier.', $this->getConfigIdentifier($path)));
         }
 
@@ -133,7 +145,7 @@ readonly class BlockConfigReader
             throw new InvalidConfigFieldDataException(message: t('The configuration file "%s" contains invalid field data.', $this->getConfigIdentifier($path)), previous: $throwable);
         }
 
-        if ($config->blockHandle !== $sourceHandle) {
+        if ($sourceHandle !== null && $config->blockHandle !== $sourceHandle) {
             throw new InvalidConfigFieldDataException(message: t('The configuration file "%s" declares block handle "%s", but its source identifier is "%s".', $this->getConfigIdentifier($path), $config->blockHandle, $sourceHandle));
         }
 

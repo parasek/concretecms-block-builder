@@ -37,6 +37,23 @@ Block Builder creates the files and field-handling code required by a working bl
 
 All field types can be used as standalone fields or in repeatable entries.
 
+## Console generation
+
+With the package installed, run from the project root (containing `public`):
+
+```bash
+php public/concrete/bin/concrete block-builder:generate /path/to/config.json --validate-only
+php public/concrete/bin/concrete block-builder:generate /path/to/config.json --no-interaction
+```
+
+The JSON uses the same format as `config-bb.json` and `predefined_configs`. Its filename can be arbitrary; `blockHandle` determines the output directory under `application/blocks`. Relative input paths are resolved from the current working directory.
+
+`--validate-only` checks configuration and handle availability without writing block files or installing a block type. Generation honors `installBlock`: `true` installs the generated type; `false` leaves installation to the administrator. Existing blocks are rejected. The command does not rebuild or overwrite them.
+
+Use trusted JSON files: custom controller code is copied into executable PHP. Successful execution returns exit code `0`; validation or generation failures return a nonzero code. If installation fails after the files are committed, inspect the generated directory before retrying.
+
+For AI agents, [SKILL.md](SKILL.md) explains configuration authoring and points to field definitions and examples.
+
 ## Requirements
 
 | Block Builder version | Concrete CMS version | PHP version |

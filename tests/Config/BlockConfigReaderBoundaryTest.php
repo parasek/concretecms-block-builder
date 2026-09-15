@@ -31,6 +31,35 @@ final class BlockConfigReaderBoundaryTest extends BlockBuilderTestCase
 
     private string $temporaryDirectory;
 
+    public function testLocalFileNameNeedNotMatchBlockHandle(): void
+    {
+        $path = $this->temporaryDirectory . '/arbitrary-name.json';
+        file_put_contents($path, json_encode([
+            'blockHandle' => 'local_example',
+            'basic' => [],
+            'entries' => [],
+        ], JSON_THROW_ON_ERROR));
+
+        self::assertSame('local_example', $this->createReader()->getConfigFromFile($path)->blockHandle);
+    }
+
+    /** @dataProvider unsafeLocalPathProvider */
+    public function testUnsafeLocalFilePathsAreRejected(string $path): void
+    {
+        $this->expectException(ConfigFileUnreadableException::class);
+        $this->createReader()->getConfigFromFile($path);
+    }
+
+    public static function unsafeLocalPathProvider(): array
+    {
+        return [
+            'empty' => [''],
+            'null byte' => ["config\0.json"],
+            'remote URL' => ['https://example.com/config.json'],
+            'stream wrapper' => ['php://memory'],
+        ];
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
