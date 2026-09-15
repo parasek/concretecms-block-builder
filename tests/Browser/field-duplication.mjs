@@ -24,7 +24,9 @@ try {
     });
     await page.addScriptTag({ path: require.resolve('lodash/lodash.js') });
     await page.evaluate(() => {
-        window.Choices = class {};
+        window.Choices = class {
+            setChoiceByValue() {}
+        };
         window.Sortable = class {};
         localStorage.setItem('scrollDisabled', '1');
     });
@@ -138,6 +140,63 @@ try {
             assert.deepEqual(after, before);
         }
     }
+    // Use the real responsive stylesheet to verify add/duplicate scrolling across the sticky breakpoint.
+    await page.evaluate(() => {
+        const toolbar = document.createElement('div');
+        toolbar.id = 'ccm-toolbar';
+        toolbar.style.height = '44px';
+        document.body.prepend(toolbar);
+        const tabs = document.createElement('div');
+        tabs.className = 'bb-tabs';
+        tabs.style.height = '64px';
+        document.querySelector('#bbAppBuilder').prepend(tabs);
+        document.querySelectorAll('[data-tab-content]').forEach((content) => {
+            const actions = document.createElement('div');
+            actions.dataset.fieldTypeActions = '';
+            actions.className = 'bb-field-type-actions';
+            actions.style.cssText = 'height: 80px; box-sizing: border-box;';
+            content.prepend(actions);
+        });
+        window.scrollCalls = [];
+        window.scrollTo = (options) => window.scrollCalls.push(options);
+        localStorage.removeItem('scrollDisabled');
+    });
+    for (const width of [1919, 1920, 2200, 1919]) {
+        await page.setViewportSize({ width, height: 900 });
+        for (const context of ['basic', 'entries']) {
+            for (const action of ['add', 'after', 'at-end']) {
+                await page.evaluate(({ context, action }) => {
+                    window.scrollCalls = [];
+                    const container = document.querySelector(`#bb-field-entries-${context}`);
+                    if (action === 'add') {
+                        const dropdown = document.querySelector(`[data-add-entry][data-context="${context}"]`);
+                        dropdown.value = 'text_field';
+                        dropdown.dispatchEvent(new Event('change', { bubbles: true }));
+                    } else {
+                        container.querySelector(`[data-duplicate-entry="${action}"]`).click();
+                    }
+                }, { context, action });
+                const result = await page.evaluate((context) => {
+                    const entry = document.querySelector(`#bb-field-entries-${context} [data-recently-added]`);
+                    return {
+                        calls: window.scrollCalls,
+                        entryTop: entry.getBoundingClientRect().top + window.scrollY,
+                        tabsPosition: getComputedStyle(document.querySelector('.bb-tabs')).position,
+                    };
+                }, context);
+                assert.equal(result.tabsPosition === 'sticky', width >= 1920);
+                assert.equal(result.calls.length, 1);
+                assert.equal(result.calls[0].behavior, 'smooth');
+                assert.equal(result.calls[0].top, result.entryTop - 44 - 80 - (width >= 1920 ? 64 : 0));
+            }
+        }
+    }
+    await page.evaluate(() => {
+        localStorage.setItem('scrollDisabled', '1');
+        window.scrollCalls = [];
+        document.querySelector('[data-duplicate-entry="after"]').click();
+    });
+    assert.equal(await page.evaluate(() => window.scrollCalls.length), 0);
     const identifiers = await page.locator('[id]').evaluateAll((elements) => elements.map((element) => element.id));
     assert.equal(new Set(identifiers).size, identifiers.length, 'DOM IDs must remain unique');
     assert.deepEqual(errors, []);

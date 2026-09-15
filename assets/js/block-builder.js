@@ -110,6 +110,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const getEntriesContainer = (context) => bbContainer.querySelector(`#bb-field-entries-${context}`);
 
+        const scrollToEntry = (entry) => {
+            if (localStorage.getItem('scrollDisabled')) return;
+
+            const toolbarHeight = document.querySelector('#ccm-toolbar')?.offsetHeight || 0;
+            const tabs = bbContainer.querySelector('.bb-tabs');
+            const stickyTabsHeight = tabs && window.getComputedStyle(tabs).position === 'sticky' ? tabs.offsetHeight : 0;
+            const actionsHeight = entry.closest('[data-tab-content]').querySelector('[data-field-type-actions]')?.offsetHeight || 0;
+
+            window.scrollTo({
+                top: entry.getBoundingClientRect().top + window.scrollY - toolbarHeight - stickyTabsHeight - actionsHeight,
+                behavior: 'smooth',
+            });
+        };
+
         const addEntry = (entry, context, fieldType, counter) => {
             const container = getEntriesContainer(context);
             if (!container) return;
@@ -173,14 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (button.dataset.duplicateEntry !== 'at-end') sourceEntry.after(newEntry);
             container.querySelectorAll('[data-recently-added]').forEach((entry) => entry.removeAttribute('data-recently-added'));
             newEntry.setAttribute('data-recently-added', 'true');
-            if (!localStorage.getItem('scrollDisabled')) {
-                const toolbarHeight = document.querySelector('#ccm-toolbar')?.offsetHeight || 0;
-                const actionsHeight = newEntry.closest('[data-tab-content]').querySelector('[data-field-type-actions]')?.offsetHeight || 0;
-                window.scrollTo({
-                    top: newEntry.getBoundingClientRect().top + window.scrollY - toolbarHeight - actionsHeight,
-                    behavior: 'smooth',
-                });
-            }
+            scrollToEntry(newEntry);
         };
 
         const populateFields = (context) => {
@@ -592,18 +599,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
 
                         // Smooth scroll
-                        if (!localStorage.getItem('scrollDisabled')) {
-                            const targetEntry = getEntriesContainer(context).querySelector(`[data-entry][data-counter="${globalCounter[context] - 1}"]`);
-                            if (targetEntry) {
-                                const concreteBarHeight = document.querySelector('#ccm-toolbar')?.offsetHeight || 0;
-                                const bbActionsBarHeight =
-                                    targetEntry.closest('[data-tab-content]').querySelector('[data-field-type-actions]')?.offsetHeight || 0;
-                                window.scrollTo({
-                                    top: targetEntry.getBoundingClientRect().top + window.scrollY - concreteBarHeight - bbActionsBarHeight,
-                                    behavior: 'smooth',
-                                });
-                            }
-                        }
+                        if (newField) scrollToEntry(newField);
 
                         // Reset field
                         choices.setChoiceByValue('');
