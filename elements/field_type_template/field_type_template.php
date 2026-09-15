@@ -54,8 +54,8 @@
 
             <div class="bb-entry-header-duplicate-at-end-entry text-body text-body-hover"
                  data-duplicate-entry="at-end"
-                 title="<?= t('Duplicate entry and add at the end'); ?>"
-                 aria-label="<?= t('Duplicate entry and add at the end'); ?>"
+                 title="<?= t('Duplicate entry at the end'); ?>"
+                 aria-label="<?= t('Duplicate entry at the end'); ?>"
             ><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free v5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M464 0H144c-26.51 0-48 21.49-48 48v48H48c-26.51 0-48 21.49-48 48v320c0 26.51 21.49 48 48 48h320c26.51 0 48-21.49 48-48v-48h48c26.51 0 48-21.49 48-48V48c0-26.51-21.49-48-48-48M362 464H54a6 6 0 0 1-6-6V150a6 6 0 0 1 6-6h42v224c0 26.51 21.49 48 48 48h224v42a6 6 0 0 1-6 6m96-96H150a6 6 0 0 1-6-6V54a6 6 0 0 1 6-6h308a6 6 0 0 1 6 6v308a6 6 0 0 1-6 6"/><path d="m295.304 273.181-81.3-92.93c-9.595-10.933-1.798-28.106 12.764-28.106H389.37a16.952 16.952 0 0 1 12.764 28.123l-81.3 92.896a16.952 16.952 0 0 1-25.53 0z" style="stroke-width:1"/></svg></div>
 
             <div class="bb-entry-header-remove-entry text-danger text-danger-hover"
