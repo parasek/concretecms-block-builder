@@ -1,9 +1,11 @@
-##### 3.0.0 (unreleased)
+##### 3.0.0
 - Raised the minimum requirements to Concrete CMS 9.5.2 and PHP 8.4.
 - Extensively reworked Block Builder while maintaining compatibility with 2.8.1 configuration files and generated view variables wherever possible.
+- Added a console command for generating blocks and a SKILL.md guide for AI agents.
 - Redesigned and polished the Dashboard interface for creating and managing blocks.
 - Added dark mode support to the Block Builder Dashboard and generated block forms.
 - Added support for custom block icons, including uploaded PNG icons and icons selected from Concrete CMS.
+- Added the ability to duplicate fields on the block creation page.
 - Block and field handles are now generated automatically from their corresponding names and labels, while still allowing manual edits.
 - Added controls for installing and uninstalling custom block types and deleting uninstalled block folders directly from the configuration list.
 - Improved configuration loading, validation, and error feedback, and preserved loaded configuration details after unsuccessful build attempts.
@@ -17,6 +19,7 @@
 - Removed the deprecated horizontal-divider settings (`fieldsDivider` and `entryFieldsDivider`) from generated block configurations.
 - Textarea fields now resize automatically and support configurable minimum and maximum heights instead of a fixed height.
 - WYSIWYG Editor fields now support configurable minimum and maximum heights instead of a fixed height.
+- Added presets for the WYSIWYG editor.
 - Date Picker fields now use native HTML date controls and support optional time selection, minute intervals, minimum and maximum dates, and custom PHP date formats.
 - Added configurable prefixes and suffixes to generated Text and Number controls.
 - Added configurable placeholders to generated Text, Textarea, and Number fields.
