@@ -56,7 +56,7 @@ try {
             await dialog.dismiss();
         };
         page.on('dialog', rejectPreset);
-        await preset.selectOption('simple_editor');
+        await preset.selectOption('basic_editor');
         assert.equal(warningCount, 1);
         assert.equal(await allowedTags.inputValue(), '<p>');
         assert.equal(await customConfig.inputValue(), '{"toolbar":[]}');
@@ -75,13 +75,13 @@ try {
             await dialog.accept();
         };
         page.on('dialog', acceptPreset);
-        await preset.selectOption('simple_editor');
+        await preset.selectOption('basic_editor');
         assert.equal(await allowedTags.inputValue(), '<span><b><strong><i><em><u><sub><sup><br>');
         assert.deepEqual(
             JSON.parse(await customConfig.inputValue()).toolbar.map((group) => group.name),
             ['document', 'basicstyles', 'links']
         );
-        await preset.selectOption('editor_without_links');
+        await preset.selectOption('basic_editor_with_styles');
         assert.equal(await allowedTags.inputValue(), '<div><p><blockquote><span><b><strong><i><em><u><sub><sup><br><h1><h2><h3><h4><h5><h6><ul><ol><li>');
         assert.deepEqual(
             JSON.parse(await customConfig.inputValue()).toolbar.map((group) => group.name),
@@ -91,7 +91,7 @@ try {
         assert.equal(await allowedTags.inputValue(), '');
         assert.equal(await customConfig.inputValue(), '');
         assert.equal(warningCount, 6);
-        await preset.selectOption('simple_editor');
+        await preset.selectOption('basic_editor');
         assert.equal(warningCount, 6, 'Empty fields must not prompt');
         assert.equal(await preset.inputValue(), '');
         page.off('dialog', acceptPreset);

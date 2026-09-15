@@ -2846,12 +2846,12 @@ msgstr ""
 "dozwolone"
 
 #: src/BlockBuilder/FieldType/Type/WysiwygEditor/WysiwygEditorPresets.php:26
-msgid "Simple editor"
-msgstr "Prosty edytor"
+msgid "Basic editor"
+msgstr "Podstawowy edytor"
 
 #: src/BlockBuilder/FieldType/Type/WysiwygEditor/WysiwygEditorPresets.php:31
-msgid "Editor without links"
-msgstr "Edytor bez linków"
+msgid "Basic editor with styles"
+msgstr "Podstawowy edytor ze stylami"
 
 #: src/BlockBuilder/NavigationTab/Enum/NavigationTabEnum.php:21
 msgid "Block settings"

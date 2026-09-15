@@ -22,13 +22,13 @@ final class WysiwygEditorPresets
                 'allowedTags' => '',
                 'customConfig' => '',
             ],
-            'simple_editor' => [
-                'label' => t('Simple editor'),
+            'basic_editor' => [
+                'label' => t('Basic editor'),
                 'allowedTags' => '<span><b><strong><i><em><u><sub><sup><br>',
                 'customConfig' => json_encode(['toolbar' => [$document, $basicStyles, $links]], JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR),
             ],
-            'editor_without_links' => [
-                'label' => t('Editor without links'),
+            'basic_editor_with_styles' => [
+                'label' => t('Basic editor with styles'),
                 'allowedTags' => '<div><p><blockquote><span><b><strong><i><em><u><sub><sup><br><h1><h2><h3><h4><h5><h6><ul><ol><li>',
                 'customConfig' => json_encode(['toolbar' => [
                     $document,

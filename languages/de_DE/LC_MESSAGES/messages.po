@@ -2886,12 +2886,12 @@ msgstr ""
 "Standardeditor – keine benutzerdefinierte Konfiguration, alle Tags erlaubt"
 
 #: src/BlockBuilder/FieldType/Type/WysiwygEditor/WysiwygEditorPresets.php:26
-msgid "Simple editor"
-msgstr "Einfacher Editor"
+msgid "Basic editor"
+msgstr "Basis-Editor"
 
 #: src/BlockBuilder/FieldType/Type/WysiwygEditor/WysiwygEditorPresets.php:31
-msgid "Editor without links"
-msgstr "Editor ohne Links"
+msgid "Basic editor with styles"
+msgstr "Basis-Editor mit Stilen"
 
 #: src/BlockBuilder/NavigationTab/Enum/NavigationTabEnum.php:21
 msgid "Block settings"

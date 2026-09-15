@@ -2908,12 +2908,12 @@ msgstr ""
 "autorisées"
 
 #: src/BlockBuilder/FieldType/Type/WysiwygEditor/WysiwygEditorPresets.php:26
-msgid "Simple editor"
-msgstr "Éditeur simple"
+msgid "Basic editor"
+msgstr "Éditeur de base"
 
 #: src/BlockBuilder/FieldType/Type/WysiwygEditor/WysiwygEditorPresets.php:31
-msgid "Editor without links"
-msgstr "Éditeur sans liens"
+msgid "Basic editor with styles"
+msgstr "Éditeur de base avec styles"
 
 #: src/BlockBuilder/NavigationTab/Enum/NavigationTabEnum.php:21
 msgid "Block settings"
