@@ -450,6 +450,8 @@
 
 .bb-entry-header-move-entry,
 .bb-entry-header-toggle-entry,
+.bb-entry-header-duplicate-entry,
+.bb-entry-header-duplicate-at-end-entry,
 .bb-entry-header-remove-entry {
     position: absolute;
     top: 23px;
@@ -465,13 +467,33 @@
     left: 53px;
 }
 
+.bb-entry-header-toggle-entry {
+    left: 53px;
+}
+
 .bb-entry-header-remove-entry {
     right: 20px;
 }
 
 .bb-entry-header-title {
     text-align: center;
-    margin: 0 30px 0 60px;
+    margin-block: 0;
+    margin-inline: 60px 100px;
+}
+
+.bb-entry-header-duplicate-entry {
+    right: 79px;
+}
+
+.bb-entry-header-duplicate-at-end-entry {
+    right: 48px;
+    top: 21px;
+}
+
+.bb-entry-header-duplicate-at-end-entry svg {
+    inline-size: 1em;
+    block-size: 1em;
+    fill: currentColor;
 }
 
 .bb-entry-content {
@@ -498,7 +520,9 @@
     opacity: 0;
     pointer-events: none;
     visibility: hidden;
-    transition: opacity 180ms ease-in-out, visibility 0s linear 180ms;
+    transition:
+        opacity 180ms ease-in-out,
+        visibility 0s linear 180ms;
 }
 
 .bb-entry[data-handle-generated='1'] .bb-handle-autogeneration-status,
@@ -523,7 +547,7 @@
         position: sticky;
         top: 48px;
         z-index: 1;
-        background: var(--bs-body-bg)
+        background: var(--bs-body-bg);
     }
 
     .bb-field-type-actions {
@@ -531,7 +555,7 @@
     }
 
     .bb-tabs > li > a:not(:hover, [data-bb-tab-active], .bb-tab-has-error) {
-        background: var(--bs-body-bg)
+        background: var(--bs-body-bg);
     }
 }
 
@@ -601,4 +625,3 @@
 [data-bs-theme='dark'] .bb-entry[data-recently-added] .bb-entry-header {
     background: #161616;
 }
-

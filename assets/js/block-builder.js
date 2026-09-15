@@ -134,6 +134,53 @@ document.addEventListener('DOMContentLoaded', () => {
             container.insertAdjacentHTML('beforeend', renderTemplate.entry(data));
 
             globalCounter[context]++;
+
+            return container.lastElementChild;
+        };
+
+        const duplicateEntry = (button) => {
+            const sourceEntry = button.closest('[data-entry]');
+            const container = sourceEntry.parentElement;
+            const context = container.id.replace('bb-field-entries-', '');
+            const sourcePrefix = `${context}[${sourceEntry.dataset.counter}]`;
+            const fieldTypeHandle = sourceEntry.querySelector('[name$="[fieldType]"]').value;
+            const fieldType = getFieldTypeMetadata(context, fieldTypeHandle);
+            if (!fieldType) return;
+
+            // Read live controls instead of cloning markup with stale values and duplicate IDs.
+            const values = {};
+            const controls = Array.from(sourceEntry.querySelectorAll('input, textarea, select'));
+            fieldType.properties.forEach((property) => {
+                const control = controls.find((element) => element.name === `${sourcePrefix}[${property}]`);
+                if (!control) return;
+                const isBooleanSelect =
+                    control.tagName === 'SELECT' &&
+                    control.options.length === 2 &&
+                    Array.from(control.options).every((option) => ['0', '1'].includes(option.value));
+                values[property] = control.type === 'checkbox' ? control.checked : isBooleanSelect ? control.value === '1' : control.value;
+            });
+            if (fieldTypeHandle === 'svg_icon_picker') {
+                values.icons = Array.from(sourceEntry.querySelectorAll('[data-svg-icon-definition-row]'), (row) => {
+                    const icon = {};
+                    ['name', 'handle', 'svg'].forEach((property) => {
+                        icon[property] = row.querySelector(`[name$="[${property}]"]`).value;
+                    });
+                    return icon;
+                });
+            }
+
+            const newEntry = addEntry(values, context, fieldType, globalCounter[context]);
+            if (button.dataset.duplicateEntry !== 'at-end') sourceEntry.after(newEntry);
+            container.querySelectorAll('[data-recently-added]').forEach((entry) => entry.removeAttribute('data-recently-added'));
+            newEntry.setAttribute('data-recently-added', 'true');
+            if (!localStorage.getItem('scrollDisabled')) {
+                const toolbarHeight = document.querySelector('#ccm-toolbar')?.offsetHeight || 0;
+                const actionsHeight = newEntry.closest('[data-tab-content]').querySelector('[data-field-type-actions]')?.offsetHeight || 0;
+                window.scrollTo({
+                    top: newEntry.getBoundingClientRect().top + window.scrollY - toolbarHeight - actionsHeight,
+                    behavior: 'smooth',
+                });
+            }
         };
 
         const populateFields = (context) => {
@@ -244,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const backToTop = (e) => {
             e.preventDefault();
-            const navTabs = document.querySelector('#bb-tabs');
+            const navTabs = document.querySelector('#bbAppBuilder');
 
             if (navTabs) {
                 const concreteBarHeight = document.querySelector('#ccm-toolbar')?.offsetHeight || 0;
@@ -624,6 +671,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (target.closest('[data-populate-translation-fields]')) populateTranslationFields(e);
                 if (target.closest('[data-toggle-entry]')) toggleEntry(e);
                 if (target.closest('[data-remove-entry]')) removeEntry(e);
+                if (target.closest('[data-duplicate-entry]')) duplicateEntry(target.closest('[data-duplicate-entry]'));
                 if (target.closest('[data-back-to-top]')) backToTop(e);
                 if (target.closest('[data-expand-all]')) expandAllEntries(e);
                 if (target.closest('[data-collapse-all]')) collapseAllEntries(e);
