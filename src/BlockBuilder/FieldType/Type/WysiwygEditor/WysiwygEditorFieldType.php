@@ -41,6 +41,7 @@ class WysiwygEditorFieldType extends AbstractFieldType
             'minHeight' => '',
             'maxHeight' => '',
             'customConfig' => '',
+            'allowedTags' => '',
         ];
     }
 
@@ -56,6 +57,7 @@ class WysiwygEditorFieldType extends AbstractFieldType
             minHeight: !empty($data['minHeight']) ? (int) $data['minHeight'] : null,
             maxHeight: !empty($data['maxHeight']) ? (int) $data['maxHeight'] : null,
             customConfig: $data['customConfig'] ?? '',
+            allowedTags: trim($data['allowedTags'] ?? ''),
         );
     }
 

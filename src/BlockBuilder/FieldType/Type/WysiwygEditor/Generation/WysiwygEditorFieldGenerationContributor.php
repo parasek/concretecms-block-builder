@@ -394,20 +394,21 @@ readonly class WysiwygEditorFieldGenerationContributor implements FieldGeneratio
     private function renderViewFragment(WysiwygEditorFieldTypeDto $field, bool $basicField): string
     {
         $handleLiteral = $this->phpLiteralFormatter->format($field->handle);
+        $valueExpression = $basicField ? '$' . $field->handle : '$entry[' . $handleLiteral . ']';
+        $outputExpression = $field->allowedTags === ''
+            ? $valueExpression
+            : sprintf('strip_tags(%s, %s)', $valueExpression, $this->phpLiteralFormatter->format($field->allowedTags));
+        // Replace the longer ending first so that " />" does not leave a trailing space.
+        $outputExpression = sprintf("str_replace([' />', '/>'], '>', %s)", $outputExpression);
 
         return $this->stubRenderer->render(
             $basicField
                 ? 'fragments/wysiwyg_editor/view-basic.php.stub'
                 : 'fragments/wysiwyg_editor/view-repeatable.php.stub',
-            $basicField
-                ? [
-                    '{{HANDLE}}' => $field->handle,
-                    '{{DISPLAY_CONDITION}}' => sprintf('!empty($%s)', $field->handle),
-                ]
-                : [
-                    '{{HANDLE_LITERAL}}' => $handleLiteral,
-                    '{{DISPLAY_CONDITION}}' => sprintf('!empty($entry[%s])', $handleLiteral),
-                ],
+            [
+                '{{OUTPUT_EXPRESSION}}' => $outputExpression,
+                '{{DISPLAY_CONDITION}}' => sprintf('!empty(%s)', $valueExpression),
+            ],
         );
     }
 }

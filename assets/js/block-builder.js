@@ -664,6 +664,18 @@ document.addEventListener('DOMContentLoaded', () => {
             button.closest('[data-svg-icon-definition-row]')?.remove();
         };
 
+        const applyEditorPreset = (selectField) => {
+            if (!selectField.value) return;
+            const preset = selectField.selectedOptions[0];
+            const entry = selectField.closest('[data-entry]');
+            const allowedTags = entry.querySelector('[name$="[allowedTags]"]');
+            const customConfig = entry.querySelector('[name$="[customConfig]"]');
+            selectField.value = '';
+            if ((allowedTags.value !== '' || customConfig.value !== '') && !confirm(selectField.dataset.confirmText)) return;
+            allowedTags.value = preset.dataset.allowedTags;
+            customConfig.value = preset.dataset.customConfig;
+        };
+
         const bindFunctions = () => {
             bbContainer.addEventListener('click', (e) => {
                 const target = e.target;
@@ -706,6 +718,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (target.closest('[data-image-create-thumbnail-image]')) toggleThumbnailOptions(e);
                 if (target.closest('[data-image-create-fullscreen-image]')) toggleFullscreenImageOptions(e);
                 if (target.closest('[data-change-select-list-generation-method]')) toggleSelectListGenerationOptions(e);
+                if (target.matches('[data-load-editor-preset]')) applyEditorPreset(target);
             });
         };
 

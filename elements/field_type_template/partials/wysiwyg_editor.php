@@ -47,7 +47,34 @@
         </div>
     </div>
 
-    <div class="">
+    <div class="mb-4">
+        <label class="form-label" for="<%-context%>[<%-counter%>][loadPreset]"><?= t('Load preset'); ?></label>
+        <select class="form-select"
+                id="<%-context%>[<%-counter%>][loadPreset]"
+                data-load-editor-preset
+                data-confirm-text="<?= t('Loading this preset will overwrite Allowed Tags and Custom editor configuration. Continue?'); ?>">
+            <option value="">---</option>
+            <?php foreach (\BlockBuilder\FieldType\Type\WysiwygEditor\WysiwygEditorPresets::getAll() as $presetHandle => $preset) { ?>
+                <option value="<?= h($presetHandle); ?>"
+                        data-allowed-tags="<?= h($preset['allowedTags']); ?>"
+                        data-custom-config="<?= h($preset['customConfig']); ?>"><?= $preset['label']; ?></option>
+            <?php } ?>
+        </select>
+    </div>
+
+    <div class="mb-4">
+        <label class="form-label" for="<%-context%>[<%-counter%>][allowedTags]"><?= t('Allowed Tags'); ?></label>
+        <input type="text" class="form-control"
+               id="<%-context%>[<%-counter%>][allowedTags]"
+               name="<%-context%>[<%-counter%>][allowedTags]"
+               value="<%-allowedTags%>">
+        <div class="form-text">
+            <?= t('Enter tags to keep. Leave empty to allow all tags.'); ?>
+            <code>&lt;span&gt;&lt;strong&gt;&lt;br&gt;</code>
+        </div>
+    </div>
+
+    <div>
 
         <label for="<%-context%>[<%-counter%>][customConfig]"
                class="form-label"
@@ -58,27 +85,6 @@
         ><%-customConfig%></textarea>
         <div class="form-text">
             <?= t('Enter the custom editor configuration as JSON.'); ?>
-            <br>
-            <?= t('Example configuration:'); ?>
-            <code class="bb-code-block">
-                {
-                <br>&nbsp;&nbsp;"toolbar": [
-                <br>&nbsp;&nbsp;&nbsp;&nbsp;{
-                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"name": "document",
-                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"items": ["Source", "-"]
-                <br>&nbsp;&nbsp;&nbsp;&nbsp;},
-                <br>&nbsp;&nbsp;&nbsp;&nbsp;{
-                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"name": "basicstyles",
-                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"items": ["Bold", "Italic", "Underline", "Strike", "Subscript",
-                "Superscript", "-", "RemoveFormat"]
-                <br>&nbsp;&nbsp;&nbsp;&nbsp;},
-                <br>&nbsp;&nbsp;&nbsp;&nbsp;{
-                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"name": "styles",
-                <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"items": ["Styles", "Format"]
-                <br>&nbsp;&nbsp;&nbsp;&nbsp;}
-                <br>&nbsp;&nbsp;]
-                <br>}
-            </code>
         </div>
     </div>
 
