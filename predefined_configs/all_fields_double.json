@@ -181,7 +181,8 @@
             "defaultValue": "",
             "minHeight": null,
             "maxHeight": null,
-            "customConfig": ""
+            "customConfig": "",
+            "allowedTags": ""
         },
         {
             "fieldType": "wysiwyg_editor",
@@ -192,7 +193,8 @@
             "defaultValue": "",
             "minHeight": null,
             "maxHeight": 80,
-            "customConfig": "{\r\n  \"toolbar\": [\r\n    {\r\n      \"name\": \"document\",\r\n      \"items\": [\"Source\", \"-\"]\r\n    },\r\n    {\r\n      \"name\": \"basicstyles\",\r\n      \"items\": [\"Bold\", \"Italic\", \"Underline\", \"Strike\", \"Subscript\", \"Superscript\", \"-\", \"RemoveFormat\"]\r\n    },\r\n    {\r\n      \"name\": \"styles\",\r\n      \"items\": [\"Styles\", \"Format\"]\r\n    }\r\n  ]\r\n}"
+            "customConfig": "{\r\n  \"toolbar\": [\r\n    {\r\n      \"name\": \"document\",\r\n      \"items\": [\"Source\", \"-\"]\r\n    },\r\n    {\r\n      \"name\": \"basicstyles\",\r\n      \"items\": [\"Bold\", \"Italic\", \"Underline\", \"Strike\", \"Subscript\", \"Superscript\", \"-\", \"RemoveFormat\"]\r\n    },\r\n    {\r\n      \"name\": \"styles\",\r\n      \"items\": [\"Styles\", \"Format\"]\r\n    }\r\n  ]\r\n}",
+            "allowedTags": ""
         },
         {
             "fieldType": "select_field",
@@ -741,7 +743,8 @@
             "defaultValue": "",
             "minHeight": null,
             "maxHeight": null,
-            "customConfig": ""
+            "customConfig": "",
+            "allowedTags": ""
         },
         {
             "fieldType": "wysiwyg_editor",
@@ -752,7 +755,8 @@
             "defaultValue": "",
             "minHeight": null,
             "maxHeight": 90,
-            "customConfig": "{\r\n  \"toolbar\": [\r\n    {\r\n      \"name\": \"document\",\r\n      \"items\": [\"Source\", \"-\"]\r\n    },\r\n    {\r\n      \"name\": \"basicstyles\",\r\n      \"items\": [\"Bold\", \"Italic\", \"Underline\", \"Strike\", \"Subscript\", \"Superscript\", \"-\", \"RemoveFormat\"]\r\n    },\r\n    {\r\n      \"name\": \"styles\",\r\n      \"items\": [\"Styles\", \"Format\"]\r\n    }\r\n  ]\r\n}"
+            "customConfig": "{\r\n  \"toolbar\": [\r\n    {\r\n      \"name\": \"document\",\r\n      \"items\": [\"Source\", \"-\"]\r\n    },\r\n    {\r\n      \"name\": \"basicstyles\",\r\n      \"items\": [\"Bold\", \"Italic\", \"Underline\", \"Strike\", \"Subscript\", \"Superscript\", \"-\", \"RemoveFormat\"]\r\n    },\r\n    {\r\n      \"name\": \"styles\",\r\n      \"items\": [\"Styles\", \"Format\"]\r\n    }\r\n  ]\r\n}",
+            "allowedTags": ""
         },
         {
             "fieldType": "select_field",

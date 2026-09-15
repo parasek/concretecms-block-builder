@@ -131,7 +131,8 @@
             "defaultValue": "",
             "minHeight": null,
             "maxHeight": null,
-            "customConfig": ""
+            "customConfig": "",
+            "allowedTags": ""
         },
         {
             "fieldType": "select_field",
@@ -412,7 +413,8 @@
             "defaultValue": "",
             "minHeight": null,
             "maxHeight": null,
-            "customConfig": ""
+            "customConfig": "",
+            "allowedTags": ""
         },
         {
             "fieldType": "select_field",
