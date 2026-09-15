@@ -42,7 +42,9 @@ The default configuration explicitly excludes `tests/Integration` and `tests/Bro
 Coverage requires Xdebug with coverage mode enabled:
 
 ```bash
-XDEBUG_MODE=coverage vendor/bin/phpunit -c public/packages/block_builder/phpunit.coverage.xml.dist
+XDEBUG_MODE=coverage php -d memory_limit=1G \
+    -d auto_prepend_file=public/packages/block_builder/tests/coverage-prepend.php \
+    vendor/bin/phpunit -c public/packages/block_builder/phpunit.coverage.xml.dist
 BLOCK_BUILDER_COVERAGE_REPORT_ONLY=1 php public/packages/block_builder/tests/Quality/assert-coverage.php public/packages/block_builder/build/coverage/clover.xml
 ```
 
@@ -55,7 +57,9 @@ The first Xdebug CI run establishes a trustworthy baseline. Until that baseline 
 
 Missing, malformed, or internally inconsistent coverage data still fails CI. After the first baseline is reviewed, the targets should be ratcheted to measured values and `BLOCK_BUILDER_COVERAGE_REPORT_ONLY=1` removed. Running the assertion command without that variable enforces the configured percentages immediately.
 
-HTML, Clover, Cobertura, and text reports are written below `build/coverage`, which is ignored by Git. The current development container has no coverage driver, so coverage must run in CI or another Xdebug-enabled environment.
+The prepend file applies Xdebug's source filter before PHPUnit and Concrete dependencies are loaded. Keep it in the coverage command: filtering files after they have been compiled cannot prevent their instrumentation. Branch/path coverage also requires more memory than the default PHP CLI limit, so the command allows up to 1 GB.
+
+HTML, Clover, Cobertura, and text reports are written below `build/coverage`, which is ignored by Git. Run coverage in an Xdebug-enabled environment.
 
 ## Complete disposable run in GitHub Actions
 

@@ -91,7 +91,10 @@ jobs:
               env:
                   XDEBUG_MODE: coverage
               run: |
-                  "${BLOCK_BUILDER_CI_SITE_ROOT}/vendor/bin/phpunit" -c "${BLOCK_BUILDER_CI_PACKAGE_ROOT}/phpunit.coverage.xml.dist"
+                  php -d memory_limit=1G \
+                      -d "auto_prepend_file=${BLOCK_BUILDER_CI_PACKAGE_ROOT}/tests/coverage-prepend.php" \
+                      "${BLOCK_BUILDER_CI_SITE_ROOT}/vendor/bin/phpunit" \
+                      -c "${BLOCK_BUILDER_CI_PACKAGE_ROOT}/phpunit.coverage.xml.dist"
             - name: Report provisional coverage targets
               env:
                   BASE_COMMIT: ${{ github.event.pull_request.base.sha }}
