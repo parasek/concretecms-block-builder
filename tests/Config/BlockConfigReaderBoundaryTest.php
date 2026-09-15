@@ -301,9 +301,9 @@ final class BlockConfigReaderBoundaryTest extends BlockBuilderTestCase
         $svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1"><path d="M0 0h1v1z"></path></svg>';
 
         return [
-            'missing basic collection' => [
+            'null basic collection' => [
                 static function (array &$data): void {
-                    unset($data['basic']);
+                    $data['basic'] = null;
                 },
                 InvalidConfigFieldDataException::class,
                 '"basic" field collection',
@@ -478,6 +478,44 @@ final class BlockConfigReaderBoundaryTest extends BlockBuilderTestCase
             self::assertNotNull($exception->getPrevious());
             self::assertStringContainsString('Unknown field type', $exception->getPrevious()->getMessage());
         }
+    }
+
+    /** @dataProvider omittedCollectionsProvider */
+    public function testOmittedCollectionsAreLoadedAsEmptyArrays(array $omittedCollections): void
+    {
+        $data = $this->createValidConfigData();
+        foreach (['basic', 'entries'] as $collectionName) {
+            $data[$collectionName] = [[
+                'fieldType' => 'text_field',
+                'label' => 'Example field',
+                'handle' => 'exampleField',
+            ]];
+        }
+        foreach ($omittedCollections as $collectionName) {
+            unset($data[$collectionName]);
+        }
+        $this->writeConfig($data);
+
+        $reader = $this->createReader();
+        foreach ([$reader->getConfigFromApplicationFolder(self::SOURCE_HANDLE), $reader->getConfigFromFile($this->getConfigPath())] as $config) {
+            foreach (['basic', 'entries'] as $collectionName) {
+                if (in_array($collectionName, $omittedCollections, true)) {
+                    self::assertSame([], $config->{$collectionName});
+                } else {
+                    self::assertCount(1, $config->{$collectionName});
+                    self::assertSame('exampleField', $config->{$collectionName}[0]->handle);
+                }
+            }
+        }
+    }
+
+    public static function omittedCollectionsProvider(): array
+    {
+        return [
+            'without basic' => [['basic']],
+            'without entries' => [['entries']],
+            'without either collection' => [['basic', 'entries']],
+        ];
     }
 
     private function createReader(): BlockConfigReader

@@ -245,7 +245,11 @@ readonly class BlockConfigReader
     {
         foreach (FieldTypeContextEnum::cases() as $fieldTypeContext) {
             $collectionName = $fieldTypeContext->value;
-            if (!isset($data[$collectionName]) || !is_array($data[$collectionName])) {
+            // Older configurations may omit unused collections; the DTO factory supplies [].
+            if (!array_key_exists($collectionName, $data)) {
+                continue;
+            }
+            if (!is_array($data[$collectionName])) {
                 throw new InvalidConfigFieldDataException(message: t('The "%s" field collection in the configuration file "%s" must be an array.', $collectionName, $this->getConfigIdentifier($path)));
             }
 

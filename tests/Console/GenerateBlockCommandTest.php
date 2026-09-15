@@ -110,7 +110,7 @@ final class GenerateBlockCommandTest extends BlockBuilderTestCase
         return [
             'malformed JSON' => ['{'],
             'list' => ['[]'],
-            'missing collections' => ['{"blockHandle":"example"}'],
+            'null collection' => ['{"blockHandle":"example","basic":null}'],
             'unsupported rebuild flag' => ['{"basic":[],"entries":[],"rebuildBlock":true}'],
             'unknown field type' => ['{"basic":[{"fieldType":"unknown"}],"entries":[]}'],
         ];
