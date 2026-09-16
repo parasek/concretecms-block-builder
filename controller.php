@@ -6,6 +6,7 @@ namespace Concrete\Package\BlockBuilder;
 
 use BlockBuilder\Environment\RuntimeDirectory;
 use BlockBuilder\Console\GenerateBlockCommand;
+use BlockBuilder\Console\RebuildBlockCommand;
 use Concrete\Core\Entity\Package as PackageEntity;
 use Concrete\Core\Package\Package;
 use Concrete\Core\Page\Single as SinglePage;
@@ -33,6 +34,7 @@ class Controller extends Package
     {
         if ($this->app->bound('console')) {
             $this->app->make('console')->add($this->app->make(GenerateBlockCommand::class));
+            $this->app->make('console')->add($this->app->make(RebuildBlockCommand::class));
         }
     }
 

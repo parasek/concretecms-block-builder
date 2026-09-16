@@ -1,6 +1,6 @@
 ---
 name: block-builder
-description: Create Concrete CMS blocks from Block Builder JSON configurations using the console generator. Use for choosing block fields, defining repeatable entries, and generating application block files.
+description: Create or rebuild Concrete CMS blocks from Block Builder JSON configurations using console commands. Use for choosing block fields, defining repeatable entries, and generating application block files.
 ---
 
 # Generate a Concrete CMS block
@@ -63,4 +63,38 @@ Generation writes to `application/blocks/<blockHandle>` under the site's web roo
 
 Treat the generated `config-bb.json` as the source of truth. Keep custom controller methods in `customControllerMethods`, view setup in `viewCustomCode`, and asset setup in `registerViewAssetsCustomCode`, synchronized with the generated controller. Use fully qualified class names in these snippets; do not add `<?php` tags. Configuration code becomes executable PHP, so inspect supplied snippets before generation.
 
-Customize templates and styles as required by the task. Escape user-controlled values when rendering. Keep generated field handling, persistence, and database metadata managed by Block Builder. This console command creates new blocks only; it has no rebuild or overwrite option.
+Customize templates and styles as required by the task. Escape user-controlled values when rendering. Keep generated field handling, persistence, and database metadata managed by Block Builder. The `generate` command creates new blocks only. Use `rebuild` for existing installed Block Builder blocks.
+
+## Rebuild an existing block
+
+Inspect both `application/blocks/<handle>/config-bb.json` and its generated PHP before editing. Update the existing configuration without changing `blockHandle`; the command reads this file directly and rejects a mismatched handle, unsafe directory, invalid configuration, or uninstalled block.
+
+### Check existing field compatibility
+
+Before changing existing fields, compare the proposed configuration with the previous configuration, generated `db.xml`, and controller. Match fields by collection (`basic` or `entries`) and handle. Keeping the same handle does not make a field type change safe. If the JSON has already been edited, use the existing generated files or version history to establish the previous storage format; do not assume the new JSON describes the stored data.
+
+- Inspect the old and new field generation contributors for column names, types, sizes, nullability, serialization, and save/render behavior. Check storage-affecting option changes even when `fieldType` stays the same. Renaming, removing, or moving a field between collections also requires assessing existing data.
+- `--validate-only` validates the proposed configuration, not compatibility with the previous schema or stored values. A successful validation does not establish that a rebuild will preserve data or that schema refresh will succeed.
+- For live data checks, discover and use the Concrete CMS MCP tools first, following project access rules. Include repeatable entries and retained block versions where applicable. If existing values cannot be inspected, report the uncertainty instead of assuming the field is empty or convertible.
+- For incompatible or uncertain conversions, prepare a concrete migration proposal before rebuilding: identify affected columns and values, conversion rules, handling of invalid/empty/out-of-range values, and a database backup and recovery procedure. Obtain approval for unresolved conversion choices or destructive changes before executing them. Do not silently cast, truncate, replace invalid values with zero, discard data, or rename the field to bypass the issue. A generator directory backup does not protect database contents.
+- A compatible change may proceed within the task's existing authorization and command approval rules once storage and content behavior have been checked. Do not require a migration solely because the field type identifier changes.
+
+Examples in this generator:
+
+- `text_field` or `textarea` to `number`: `number` stores a `decimal` with configured precision and scale. Check all affected values for numeric validity, range, and precision, including empty strings and nulls. Existing text can cause schema conversion errors or lossy conversion; do not rebuild until an approved conversion strategy is ready.
+- `textarea` to `wysiwyg_editor`: both generate a `text` column, so the column types are compatible. A simple editor toolbar does not change that storage type. Still check existing content and templates: plain text becomes HTML content, which can change the interpretation of literal tags, special characters, and line breaks. Preserve the intended text and formatting; arrange content conversion if needed rather than assuming identical rendering.
+
+### Run the rebuild
+
+From the project root:
+
+```bash
+php public/concrete/bin/concrete block-builder:rebuild example_block --validate-only
+php public/concrete/bin/concrete block-builder:rebuild example_block --no-interaction
+```
+
+Follow the project's approval rules before running the rebuild. It replaces generated files and refreshes the installed block type (including its database schema), regardless of `installBlock`. It does not add blocks to pages. Validation alone does not write files or refresh the block.
+
+Before rebuilding, synchronize custom controller code with the configuration and review customized templates, styles, and `excludedFromRemoval`. Files outside the exclusions are removed before generation; exclusions prevent removal but do not prevent generated files from overwriting the same paths. The existing block icon is preserved. Save any custom changes that the generator would overwrite before running the command.
+
+On failure, read the error and inspect the block state before retrying. The generator can restore the directory for failures before generated files are committed; a refresh failure retains the new files and recovery backup and does not roll back database changes.
