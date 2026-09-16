@@ -7,8 +7,8 @@ Block Builder creates the files and field-handling code required by a working bl
 ## Features
 
 - Generate complete Concrete CMS blocks through an intuitive Dashboard interface.
+- Create and rebuild blocks with AI coding assistants using console commands and the included [agent instructions](SKILL.md).
 - Use fields as standalone block fields or as part of a repeatable set.
-- Generate block and field handles automatically while retaining full control over manual edits.
 - Load an existing Block Builder configuration as the starting point for a new block.
 - Rebuild existing blocks when their configuration changes.
 
@@ -37,22 +37,29 @@ Block Builder creates the files and field-handling code required by a working bl
 
 All field types can be used as standalone fields or in repeatable entries.
 
-## Console generation
+## Console generation and rebuilding
 
-With the package installed, run from the project root (containing `public`):
+With the package installed, run from the project root (containing `public`). Add `--validate-only` to either command to check the configuration without changing files or the database.
+
+### Generate a new block
 
 ```bash
-php public/concrete/bin/concrete block-builder:generate /path/to/config.json --validate-only
 php public/concrete/bin/concrete block-builder:generate /path/to/config.json --no-interaction
 ```
 
-The JSON uses the same format as `config-bb.json` and `predefined_configs`. Its filename can be arbitrary; `blockHandle` determines the output directory under `application/blocks`. Relative input paths are resolved from the current working directory.
+Creates `application/blocks/<blockHandle>` from a Block Builder JSON configuration. Set `installBlock: true` to also install it. Existing blocks are never overwritten.
 
-`--validate-only` checks configuration and handle availability without writing block files or installing a block type. Generation honors `installBlock`: `true` installs the generated type; `false` leaves installation to the administrator. Existing blocks are rejected. The command does not rebuild or overwrite them.
+### Rebuild an existing block
 
-Use trusted JSON files: custom controller code is copied into executable PHP. Successful execution returns exit code `0`; validation or generation failures return a nonzero code. If installation fails after the files are committed, inspect the generated directory before retrying.
+```bash
+php public/concrete/bin/concrete block-builder:rebuild example_block --no-interaction
+```
 
-For AI agents, [SKILL.md](SKILL.md) explains configuration authoring and points to field definitions and examples.
+Regenerates an installed Block Builder block from its `config-bb.json` and refreshes its database schema. Use it after configuration changes or a Block Builder/Concrete CMS upgrade.
+
+Save customized views, templates, and styles outside the block directory before rebuilding, then restore or adapt them afterward. Check existing data before changing field types: `--validate-only` does not verify data compatibility.
+
+AI agents should follow [SKILL.md](SKILL.md) for configuration, generation, and rebuilding workflows.
 
 ## Requirements
 

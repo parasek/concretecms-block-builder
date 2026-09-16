@@ -71,18 +71,24 @@ Inspect both `application/blocks/<handle>/config-bb.json` and its generated PHP 
 
 ### Check existing field compatibility
 
-Before changing existing fields, compare the proposed configuration with the previous configuration, generated `db.xml`, and controller. Match fields by collection (`basic` or `entries`) and handle. Keeping the same handle does not make a field type change safe. If the JSON has already been edited, use the existing generated files or version history to establish the previous storage format; do not assume the new JSON describes the stored data.
+Compare old and proposed fields in `basic` and `entries` against the existing `db.xml` and controller. Check type, storage options, renames, removals, and moves between collections. The same handle does not guarantee compatibility, and `--validate-only` does not check stored data.
 
-- Inspect the old and new field generation contributors for column names, types, sizes, nullability, serialization, and save/render behavior. Check storage-affecting option changes even when `fieldType` stays the same. Renaming, removing, or moving a field between collections also requires assessing existing data.
-- `--validate-only` validates the proposed configuration, not compatibility with the previous schema or stored values. A successful validation does not establish that a rebuild will preserve data or that schema refresh will succeed.
-- For live data checks, discover and use the Concrete CMS MCP tools first, following project access rules. Include repeatable entries and retained block versions where applicable. If existing values cannot be inspected, report the uncertainty instead of assuming the field is empty or convertible.
-- For incompatible or uncertain conversions, prepare a concrete migration proposal before rebuilding: identify affected columns and values, conversion rules, handling of invalid/empty/out-of-range values, and a database backup and recovery procedure. Obtain approval for unresolved conversion choices or destructive changes before executing them. Do not silently cast, truncate, replace invalid values with zero, discard data, or rename the field to bypass the issue. A generator directory backup does not protect database contents.
-- A compatible change may proceed within the task's existing authorization and command approval rules once storage and content behavior have been checked. Do not require a migration solely because the field type identifier changes.
+For every field conversion, check the old and new storage format, save/render behavior, and compatibility of existing values, including empty/null values and any size, range, precision, or serialization constraints. Discover Concrete CMS MCP tools first for live data checks; unavailable data is not evidence of compatibility.
 
-Examples in this generator:
+For incompatible or uncertain changes, prepare a migration and database recovery plan before rebuilding. Obtain approval for unresolved conversion choices or destructive changes before executing them. Do not silently cast, truncate, replace invalid values with zero, discard data, or rename the field to bypass the issue.
 
-- `text_field` or `textarea` to `number`: `number` stores a `decimal` with configured precision and scale. Check all affected values for numeric validity, range, and precision, including empty strings and nulls. Existing text can cause schema conversion errors or lossy conversion; do not rebuild until an approved conversion strategy is ready.
-- `textarea` to `wysiwyg_editor`: both generate a `text` column, so the column types are compatible. A simple editor toolbar does not change that storage type. Still check existing content and templates: plain text becomes HTML content, which can change the interpretation of literal tags, special characters, and line breaks. Preserve the intended text and formatting; arrange content conversion if needed rather than assuming identical rendering.
+Examples (not an exhaustive list):
+
+- Text to `number` changes storage to `decimal`: check numeric validity, empty/null handling, range, and precision.
+- `textarea` to `wysiwyg_editor` keeps `text` storage, including with a simple toolbar. Check HTML interpretation and line breaks, but do not require a database migration solely because the field type changed.
+
+### Preserve customized views
+
+Keep presentation customizations in `view.php` and `templates/`; keep custom controller methods and setup code in the corresponding JSON properties. Before rebuilding, save copies of the existing views and templates outside the block directory, together with the old configuration. Preserve their PHP logic, HTML wrappers, classes, and styling as the basis for the final result.
+
+- For a Block Builder/Concrete upgrade without field changes, restore the original `view.php` and `templates/` after generation. Compare the new generated controller and view contract first; make only compatibility changes required by the new version, preserving the layout and behavior.
+- When fields change, adapt the saved views and every affected template using the new generated variables: update renamed references, remove code specific to deleted fields without removing shared wrappers, and place new fields where they fit the existing layout and conventions. Preserve unrelated PHP and markup; do not replace customized views with the generated default.
+- Review the final diff and check PHP syntax and field references in restored or adapted templates. Keep the saved copies until verification is complete.
 
 ### Run the rebuild
 
