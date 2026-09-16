@@ -1,7 +1,7 @@
 ##### 3.0.0
 - Raised the minimum requirements to Concrete CMS 9.5.2 and PHP 8.4.
 - Extensively reworked Block Builder while maintaining compatibility with 2.8.1 configuration files and generated view variables wherever possible.
-- Added a console command for generating blocks and a SKILL.md guide for AI agents.
+- Added a console commands for generating/rebuilding blocks and a SKILL.md guide for AI agents.
 - Redesigned and polished the Dashboard interface for creating and managing blocks.
 - Added dark mode support to the Block Builder Dashboard and generated block forms.
 - Added support for custom block icons, including uploaded PNG icons and icons selected from Concrete CMS.

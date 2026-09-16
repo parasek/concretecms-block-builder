@@ -25,7 +25,7 @@ Use these authoring defaults in both `basic` and `entries`. Set choice fields' `
 | Requested input | `fieldType` | Configuration guidance |
 | --- | --- | --- |
 | Short text, heading, or caption | `text_field` | Plain text on one line. |
-| Multiline plain text | `textarea` | Use when formatting controls are unnecessary. |
+| Multiline plain text | `wysiwyg_editor` | Use WYSIWYG editor with `basic_editor` preset instead `textarea`. |
 | Formatted content | `wysiwyg_editor` | Use for editor-authored rich text; `html_editor` is for editing HTML source. |
 | Image | `image` | Use the image field for image selection, alt text, and image variants. |
 | Single checkbox / on-off setting | `select_multiple_field` | Set `displayType: "checkbox_list"` and define one option. Leave `required: false` when unchecked is valid. |
