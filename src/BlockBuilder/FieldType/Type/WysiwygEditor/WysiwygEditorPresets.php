@@ -23,7 +23,7 @@ final class WysiwygEditorPresets
                 'customConfig' => '',
             ],
             'basic_editor' => [
-                'label' => t('Basic editor'),
+                'label' => t('Basic editor (without paragraphs)'),
                 'allowedTags' => '<span><b><strong><i><em><u><sub><sup><br>',
                 'customConfig' => json_encode(['toolbar' => [$document, $basicStyles, $links]], JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR),
             ],

@@ -1,14 +1,14 @@
 ##### 3.0.0
 - Raised the minimum requirements to Concrete CMS 9.5.2 and PHP 8.4.
 - Extensively reworked Block Builder while maintaining compatibility with 2.8.1 configuration files and generated view variables wherever possible.
-- Added a console commands for generating/rebuilding blocks and a SKILL.md guide for AI agents.
+- Added a console commands for generating/rebuilding blocks.
+- Added a SKILL.md guide for AI agents.
 - Redesigned and polished the Dashboard interface for creating and managing blocks.
 - Added dark mode support to the Block Builder Dashboard and generated block forms.
 - Added support for custom block icons, including uploaded PNG icons and icons selected from Concrete CMS.
 - Added the ability to duplicate fields on the block creation page.
 - Block and field handles are now generated automatically from their corresponding names and labels, while still allowing manual edits.
 - Added controls for installing and uninstalling custom block types and deleting uninstalled block folders directly from the configuration list.
-- Improved configuration loading, validation, and error feedback, and preserved loaded configuration details after unsuccessful build attempts.
 - Modernized generated block data import and export, including file and folder references and cleaner repeatable-entry exports.
 - Generated blocks now use Concrete CMS's current Doctrine XML database schema format.
 - Added Concrete CMS file-usage tracking to generated blocks that use supported file fields.

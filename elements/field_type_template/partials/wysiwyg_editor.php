@@ -70,12 +70,10 @@
                value="<%-allowedTags%>">
         <div class="form-text">
             <?= t('Enter tags to keep. Leave empty to allow all tags.'); ?>
-            <code>&lt;span&gt;&lt;strong&gt;&lt;br&gt;</code>
         </div>
     </div>
 
     <div>
-
         <label for="<%-context%>[<%-counter%>][customConfig]"
                class="form-label"
         ><?= t('Custom editor configuration'); ?></label>

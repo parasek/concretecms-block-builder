@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: block_builder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-15 14:10+0200\n"
-"PO-Revision-Date: 2026-09-15 14:10+0200\n"
+"POT-Creation-Date: 2026-10-06 18:17+0200\n"
+"PO-Revision-Date: 2026-10-06 18:17+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr_FR\n"
@@ -25,7 +25,7 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-6: tests\n"
 "X-Poedit-SearchPathExcluded-7: vendor\n"
 
-#: controller.php:29 controller.php:49
+#: controller.php:30 controller.php:51
 #: controllers/single_page/dashboard/blocks/block_builder.php:61
 #: controllers/single_page/dashboard/blocks/block_builder.php:87
 #: controllers/single_page/dashboard/blocks/block_builder.php:113
@@ -36,7 +36,7 @@ msgstr ""
 msgid "Block Builder"
 msgstr "Block Builder"
 
-#: controller.php:41
+#: controller.php:43
 msgid ""
 "Design, configure and build custom Concrete CMS blocks with a user‑friendly "
 "interface."
@@ -44,7 +44,7 @@ msgstr ""
 "Concevez, configurez et créez des blocs Concrete CMS personnalisés à l’aide "
 "d’une interface conviviale."
 
-#: controller.php:67
+#: controller.php:69
 msgid "Configurations"
 msgstr "Configurations"
 
@@ -838,12 +838,12 @@ msgstr ""
 "Saisissez les balises à conserver. Laissez ce champ vide pour autoriser "
 "toutes les balises."
 
-#: elements/field_type_template/partials/wysiwyg_editor.php:81
+#: elements/field_type_template/partials/wysiwyg_editor.php:80
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:133
 msgid "Custom editor configuration"
 msgstr "Configuration personnalisée de l’éditeur"
 
-#: elements/field_type_template/partials/wysiwyg_editor.php:87
+#: elements/field_type_template/partials/wysiwyg_editor.php:86
 msgid "Enter the custom editor configuration as JSON."
 msgstr "Saisissez la configuration personnalisée de l’éditeur au format JSON."
 
@@ -2908,8 +2908,8 @@ msgstr ""
 "autorisées"
 
 #: src/BlockBuilder/FieldType/Type/WysiwygEditor/WysiwygEditorPresets.php:26
-msgid "Basic editor"
-msgstr "Éditeur de base"
+msgid "Basic editor (without paragraphs)"
+msgstr "Éditeur de base (sans paragraphes)"
 
 #: src/BlockBuilder/FieldType/Type/WysiwygEditor/WysiwygEditorPresets.php:31
 msgid "Basic editor with styles"

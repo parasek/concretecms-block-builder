@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: block_builder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-15 14:11+0200\n"
-"PO-Revision-Date: 2026-09-15 14:11+0200\n"
+"POT-Creation-Date: 2026-10-06 18:16+0200\n"
+"PO-Revision-Date: 2026-10-06 18:17+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -24,7 +24,7 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-6: tests\n"
 "X-Poedit-SearchPathExcluded-7: vendor\n"
 
-#: controller.php:29 controller.php:49
+#: controller.php:30 controller.php:51
 #: controllers/single_page/dashboard/blocks/block_builder.php:61
 #: controllers/single_page/dashboard/blocks/block_builder.php:87
 #: controllers/single_page/dashboard/blocks/block_builder.php:113
@@ -35,7 +35,7 @@ msgstr ""
 msgid "Block Builder"
 msgstr "Block Builder"
 
-#: controller.php:41
+#: controller.php:43
 msgid ""
 "Design, configure and build custom Concrete CMS blocks with a user‑friendly "
 "interface."
@@ -43,7 +43,7 @@ msgstr ""
 "Benutzerdefinierte Concrete-CMS-Blöcke über eine benutzerfreundliche "
 "Oberfläche entwerfen, konfigurieren und erstellen."
 
-#: controller.php:67
+#: controller.php:69
 msgid "Configurations"
 msgstr "Konfigurationen"
 
@@ -839,12 +839,12 @@ msgstr ""
 "Geben Sie die Tags ein, die beibehalten werden sollen. Lassen Sie das Feld "
 "leer, um alle Tags zu erlauben."
 
-#: elements/field_type_template/partials/wysiwyg_editor.php:81
+#: elements/field_type_template/partials/wysiwyg_editor.php:80
 #: src/BlockBuilder/Block/Request/BlockFormFieldLabelProvider.php:133
 msgid "Custom editor configuration"
 msgstr "Benutzerdefinierte Editorkonfiguration"
 
-#: elements/field_type_template/partials/wysiwyg_editor.php:87
+#: elements/field_type_template/partials/wysiwyg_editor.php:86
 msgid "Enter the custom editor configuration as JSON."
 msgstr "Geben Sie die benutzerdefinierte Editorkonfiguration als JSON ein."
 
@@ -2886,8 +2886,8 @@ msgstr ""
 "Standardeditor – keine benutzerdefinierte Konfiguration, alle Tags erlaubt"
 
 #: src/BlockBuilder/FieldType/Type/WysiwygEditor/WysiwygEditorPresets.php:26
-msgid "Basic editor"
-msgstr "Basis-Editor"
+msgid "Basic editor (without paragraphs)"
+msgstr "Basis-Editor (ohne Absätze)"
 
 #: src/BlockBuilder/FieldType/Type/WysiwygEditor/WysiwygEditorPresets.php:31
 msgid "Basic editor with styles"
