@@ -55,6 +55,7 @@ readonly class BlockBuilderViewDataProvider
             'highlightMultiElementFields' => true,
             'messageBasicTab' => '',
             'messageEntriesTab' => '',
+            'onStartCustomCode' => '',
             'registerViewAssetsCustomCode' => '',
             'viewCustomCode' => '',
             'customControllerMethods' => '',

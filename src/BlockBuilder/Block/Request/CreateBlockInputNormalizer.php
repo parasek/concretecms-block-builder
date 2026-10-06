@@ -40,6 +40,7 @@ final class CreateBlockInputNormalizer
         'blockIcon',
         'messageBasicTab',
         'messageEntriesTab',
+        'onStartCustomCode',
         'registerViewAssetsCustomCode',
         'viewCustomCode',
         'customControllerMethods',

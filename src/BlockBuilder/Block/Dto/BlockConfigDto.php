@@ -33,6 +33,7 @@ readonly class BlockConfigDto
         public bool $highlightMultiElementFields,
         public ?string $messageBasicTab,
         public ?string $messageEntriesTab,
+        public ?string $onStartCustomCode,
         public ?string $registerViewAssetsCustomCode,
         public ?string $viewCustomCode,
         public ?string $customControllerMethods,

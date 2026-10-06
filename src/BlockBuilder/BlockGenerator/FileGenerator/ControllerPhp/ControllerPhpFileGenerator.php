@@ -271,14 +271,21 @@ readonly class ControllerPhpFileGenerator implements FileGeneratorInterface
             ControllerMethodSectionEnum::OnStart,
             indentation: 0,
         );
-        if ($content === '') {
+        $customCode = $this->prepareCustomCode((string) $context->config->onStartCustomCode);
+        if ($content === '' && $customCode === '') {
             return '';
         }
 
-        return $this->renderMethod(
-            'public function on_start(): void',
-            'parent::on_start();' . PHP_EOL . PHP_EOL . $content,
-        );
+        $methodParts = [$this->combineCode(['parent::on_start();', $content], 2)];
+        if ($customCode !== '') {
+            $methodParts[] = $customCode;
+        }
+
+        return PHP_EOL
+            . '    public function on_start(): void' . PHP_EOL
+            . '    {' . PHP_EOL
+            . implode(PHP_EOL . PHP_EOL, $methodParts) . PHP_EOL
+            . '    }' . PHP_EOL;
     }
 
     private function renderControllerFragments(

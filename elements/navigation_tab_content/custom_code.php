@@ -7,6 +7,18 @@
  */
 ?>
 
+<div class="bb-custom-code mb-4 <?= h(in_array('onStartCustomCode', $fieldsWithError) ? 'bb-has-error' : null); ?>">
+    <?= $form->label('onStartCustomCode', t('Custom code in the on_start() method')); ?>
+    <?= $form->textarea('onStartCustomCode', $config->onStartCustomCode, ['style' => 'min-height: 200px;']); ?>
+    <div class="form-text">
+        <?= t('Use this field for shared controller initialization. Runs after parent::on_start() and generated initialization.'); ?>
+        <br>
+        <?= t('Be careful when inserting custom code; invalid syntax can lead to errors.'); ?>
+        <br>
+        <?= t('Use %s spaces for indentation.', 8); ?>
+    </div>
+</div>
+
 <div class="bb-custom-code mb-4 <?= h(in_array('registerViewAssetsCustomCode', $fieldsWithError) ? 'bb-has-error' : null); ?>">
     <?= $form->label('registerViewAssetsCustomCode', t('Custom code in the registerViewAssets() method')); ?>
     <?= $form->textarea('registerViewAssetsCustomCode', $config->registerViewAssetsCustomCode, ['style' => 'min-height: 200px;']); ?>

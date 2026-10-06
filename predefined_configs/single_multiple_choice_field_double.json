@@ -21,6 +21,7 @@
     "highlightMultiElementFields": "1",
     "messageBasicTab": "",
     "messageEntriesTab": "",
+    "onStartCustomCode": "",
     "registerViewAssetsCustomCode": "",
     "viewCustomCode": "",
     "customControllerMethods": "",

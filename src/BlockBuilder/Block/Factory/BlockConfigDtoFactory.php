@@ -88,6 +88,7 @@ readonly class BlockConfigDtoFactory
             highlightMultiElementFields: $this->transformZeroOneBoolField($data['highlightMultiElementFields'] ?? null),
             messageBasicTab: trim($data['messageBasicTab'] ?? ''),
             messageEntriesTab: trim($data['messageEntriesTab'] ?? ''),
+            onStartCustomCode: (string) ($data['onStartCustomCode'] ?? ''),
             registerViewAssetsCustomCode: (string) ($data['registerViewAssetsCustomCode'] ?? ''),
             viewCustomCode: (string) ($data['viewCustomCode'] ?? ''),
             customControllerMethods: (string) ($data['customControllerMethods'] ?? ''),

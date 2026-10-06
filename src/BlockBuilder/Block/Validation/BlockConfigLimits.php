@@ -26,6 +26,7 @@ final class BlockConfigLimits
     ];
 
     private const array TOP_LEVEL_CUSTOM_CODE_PROPERTIES = [
+        'onStartCustomCode',
         'registerViewAssetsCustomCode',
         'viewCustomCode',
         'customControllerMethods',

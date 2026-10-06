@@ -31,6 +31,7 @@ final readonly class BlockFormFieldLabelProvider
             'rebuildBlock' => t('Rebuild block'),
             'messageBasicTab' => t('Message displayed in the "Basic information" tab'),
             'messageEntriesTab' => t('Message displayed in the "Repeatable entries" tab'),
+            'onStartCustomCode' => t('Custom code in the on_start() method'),
             'registerViewAssetsCustomCode' => t('Custom code in the registerViewAssets() method'),
             'viewCustomCode' => t('Custom code in the view() method'),
             'customControllerMethods' => t('Custom controller methods'),
