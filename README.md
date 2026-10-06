@@ -1,6 +1,6 @@
 # Block Builder
 
-Design, configure, and generate custom Concrete CMS blocks through a user-friendly Dashboard interface.
+Design, configure, and generate custom Concrete CMS blocks through a user-friendly Dashboard interface or with the help of an AI coding agent.
 
 Block Builder creates the files and field-handling code required by a working block. You can then customize the generated templates, styles, and behavior for your project.
 

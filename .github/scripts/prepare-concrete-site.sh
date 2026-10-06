@@ -60,6 +60,26 @@ composer --working-dir="${BLOCK_BUILDER_CI_SITE_ROOT}" require \
     --no-update \
     "concrete5/core:${BLOCK_BUILDER_CI_CORE_CONSTRAINT}"
 
+# Concrete 9.5.2 requires Flysystem 1.x. Allow these known advisories only for
+# this disposable compatibility-test site, while retaining audit reporting.
+# Remove the exceptions when the tested core no longer needs affected versions.
+composer --working-dir="${BLOCK_BUILDER_CI_SITE_ROOT}" config \
+    --json \
+    --merge \
+    policy.advisories.ignore-id \
+    '{
+        "PKSA-w9tt-7782-78jx": {
+            "on-block": true,
+            "on-audit": false,
+            "reason": "Concrete requires Flysystem 1.x in this disposable CI compatibility-test site."
+        },
+        "PKSA-pwh8-d4fr-nywn": {
+            "on-block": true,
+            "on-audit": false,
+            "reason": "Concrete requires Flysystem 1.x in this disposable CI compatibility-test site."
+        }
+    }'
+
 # Codeberg's archive API is unreliable under concurrent CI downloads. Install this one dependency
 # from the immutable Git source reference selected by Composer, while retaining dist archives for
 # every other dependency.
