@@ -25,8 +25,5 @@
             "name": "Jarosław Radomski",
             "role": "Developer"
         }
-    ],
-    "audit": {
-        "block-insecure": false
-    }
+    ]
 }

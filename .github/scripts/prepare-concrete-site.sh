@@ -60,8 +60,8 @@ composer --working-dir="${BLOCK_BUILDER_CI_SITE_ROOT}" require \
     --no-update \
     "concrete5/core:${BLOCK_BUILDER_CI_CORE_CONSTRAINT}"
 
-# Concrete 9.5.2 requires Flysystem 1.x. Allow these known advisories only for
-# this disposable compatibility-test site, while retaining audit reporting.
+# Concrete 9.5.2 requires Flysystem 1.x and SVG Sanitizer 0.22.x. Allow these
+# known advisories only for this disposable compatibility-test site, while retaining audit reporting.
 # Remove the exceptions when the tested core no longer needs affected versions.
 composer --working-dir="${BLOCK_BUILDER_CI_SITE_ROOT}" config \
     --json \
@@ -77,6 +77,21 @@ composer --working-dir="${BLOCK_BUILDER_CI_SITE_ROOT}" config \
             "on-block": true,
             "on-audit": false,
             "reason": "Concrete requires Flysystem 1.x in this disposable CI compatibility-test site."
+        },
+        "PKSA-8j6w-3kr7-s9xk": {
+            "on-block": true,
+            "on-audit": false,
+            "reason": "Concrete 9.5.2 requires SVG Sanitizer 0.22.x in this disposable CI compatibility-test site."
+        },
+        "PKSA-6j95-1jtb-x6wc": {
+            "on-block": true,
+            "on-audit": false,
+            "reason": "Concrete 9.5.2 requires SVG Sanitizer 0.22.x in this disposable CI compatibility-test site."
+        },
+        "PKSA-cbx2-m9db-bmzd": {
+            "on-block": true,
+            "on-audit": false,
+            "reason": "Concrete 9.5.2 requires SVG Sanitizer 0.22.x in this disposable CI compatibility-test site."
         }
     }'
 
