@@ -1,4 +1,4 @@
-##### 3.0.0 (development notes)
+##### 3.0.0
 - Raised the minimum requirements to Concrete CMS 9.5.2 and PHP 8.4.
 - Extensively reworked Block Builder while maintaining compatibility with 2.8.1 configuration files and generated view variables wherever possible.
 - Added a console commands for generating/rebuilding blocks.
