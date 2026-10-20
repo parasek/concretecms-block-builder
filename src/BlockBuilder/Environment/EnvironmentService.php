@@ -7,7 +7,6 @@ namespace BlockBuilder\Environment;
 use BlockBuilder\Environment\Dto\EnvironmentDto;
 use Concrete\Core\Config\Repository\Repository as Config;
 use Concrete\Core\Package\PackageService;
-use Concrete\Core\System\Info as SystemInfo;
 
 readonly class EnvironmentService
 {
@@ -21,7 +20,6 @@ readonly class EnvironmentService
     public const string SOURCE_BLOCK_ICON = 'icon.png';
 
     public function __construct(
-        private SystemInfo $systemInfo,
         private Config $config,
         private PackageService $packageService,
     ) {
@@ -34,7 +32,7 @@ readonly class EnvironmentService
         return new EnvironmentDto(
             blockBuilderVersion: $package->getPackageVersion(),
             concreteVersion: $this->config->get('concrete.version'),
-            phpVersion: $this->systemInfo->getPhpVersion(),
+            phpVersion: PHP_VERSION,
             packageHandle: $package->getPackageHandle(),
         );
     }

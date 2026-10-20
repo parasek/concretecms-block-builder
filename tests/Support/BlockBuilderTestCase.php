@@ -16,7 +16,6 @@ use BlockBuilder\FieldType\Factory\FieldTypeDtoFactory;
 use BlockBuilder\FieldType\FieldTypeRegistry;
 use Concrete\Core\Config\Repository\Repository as ConfigRepository;
 use Concrete\Core\Package\PackageService;
-use Concrete\Core\System\Info as SystemInfo;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionNamedType;
@@ -175,12 +174,6 @@ abstract class BlockBuilderTestCase extends TestCase
 
     private function createEnvironmentService(): EnvironmentService
     {
-        $systemInfo = $this->getMockBuilder(SystemInfo::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['getPhpVersion'])
-            ->getMock();
-        $systemInfo->method('getPhpVersion')->willReturn('8.4.0');
-
         $config = $this->getMockBuilder(ConfigRepository::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['get'])
@@ -206,6 +199,6 @@ abstract class BlockBuilderTestCase extends TestCase
             ->with(EnvironmentService::PACKAGE_HANDLE)
             ->willReturn($package);
 
-        return new EnvironmentService($systemInfo, $config, $packageService);
+        return new EnvironmentService($config, $packageService);
     }
 }
