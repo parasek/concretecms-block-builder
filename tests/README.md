@@ -286,13 +286,14 @@ The `--rm` database container is removed when it stops. The temporary Concrete p
 
 ## Mutation testing
 
-`infection.json5.dist` limits mutation testing to the critical configuration, validation, generation, transaction, lifecycle, and SVG icon sanitization code and requires an 80% mutation score and an 80% covered-code mutation score. The scheduled workflow installs Infection only inside its disposable Composer project and publishes the report from `build/infection`.
+`infection.json5.dist` limits mutation testing to the critical configuration, validation, generation, transaction, lifecycle, and SVG icon sanitization code and requires an 80% mutation score and an 80% covered-code mutation score. The scheduled workflow installs the standalone Infection 0.31.9 PHAR through `setup-php` and publishes the report from `build/infection`. This keeps Infection's Symfony dependencies separate from Concrete's; PHPUnit still runs from the disposable project's `vendor` directory.
 
-A local Infection installation is a Composer dependency operation and requires explicit approval. Once available in the disposable project, use its explicit executable and package configuration paths:
+For local runs, use the same standalone PHAR, available as `infection` on your path, and run it from the disposable package directory so the configured PHPUnit path resolves correctly:
 
 ```bash
-"$BLOCK_BUILDER_CI_SITE_ROOT/vendor/bin/infection" \
-    --configuration="$BLOCK_BUILDER_CI_PACKAGE_ROOT/infection.json5.dist" \
+cd "$BLOCK_BUILDER_CI_PACKAGE_ROOT"
+infection \
+    --configuration=infection.json5.dist \
     --threads=max
 ```
 
